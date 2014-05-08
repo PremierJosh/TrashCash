@@ -1,0 +1,776 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{399D43DF-B197-40D1-9395-8033EE91A312}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <StartupObject>TrashCash.My.MyApplication</StartupObject>
+    <RootNamespace>TrashCash</RootNamespace>
+    <AssemblyName>TrashCash</AssemblyName>
+    <FileAlignment>512</FileAlignment>
+    <MyType>WindowsForms</MyType>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <SccProjectName>
+    </SccProjectName>
+    <SccLocalPath>
+    </SccLocalPath>
+    <SccAuxPath>
+    </SccAuxPath>
+    <SccProvider>
+    </SccProvider>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>Full</DebugType>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DocumentationFile>TrashCash.xml</DocumentationFile>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+    <Optimize>false</Optimize>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugType>Full</DebugType>
+    <DefineDebug>false</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DocumentationFile>TrashCash.xml</DocumentationFile>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+    <DebugSymbols>true</DebugSymbols>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionExplicit>On</OptionExplicit>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionCompare>Binary</OptionCompare>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionStrict>Off</OptionStrict>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionInfer>On</OptionInfer>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationManifest>My Project\app.manifest</ApplicationManifest>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>false</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>app.ico</ApplicationIcon>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Calendar.NET">
+      <HintPath>.\Calendar.NET.dll</HintPath>
+    </Reference>
+    <Reference Include="CrystalDecisions.CrystalReports.Engine, Version=13.0.2000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL" />
+    <Reference Include="CrystalDecisions.ReportSource, Version=13.0.2000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL" />
+    <Reference Include="CrystalDecisions.Shared, Version=13.0.2000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL" />
+    <Reference Include="CrystalDecisions.Windows.Forms, Version=13.0.2000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL" />
+    <Reference Include="FlashControlV71, Version=1.0.3187.32366, Culture=neutral, PublicKeyToken=692fbea5521e1304" />
+    <Reference Include="Microsoft.ReportViewer.Common, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+    <Reference Include="Microsoft.ReportViewer.WinForms, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.SqlServer.ConnectionInfo, Version=10.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Program Files (x86)\Microsoft SQL Server\110\SDK\Assemblies\Microsoft.SqlServer.ConnectionInfo.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.SqlServer.Management.Sdk.Sfc, Version=10.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Program Files (x86)\Microsoft SQL Server\110\SDK\Assemblies\Microsoft.SqlServer.Management.Sdk.Sfc.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.SqlServer.Smo, Version=10.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Program Files (x86)\Microsoft SQL Server\110\SDK\Assemblies\Microsoft.SqlServer.Smo.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.SqlServer.SqlEnum, Version=10.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Program Files (x86)\Microsoft SQL Server\110\SDK\Assemblies\Microsoft.SqlServer.SqlEnum.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.VisualBasic.PowerPacks.Vs, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+  </ItemGroup>
+  <ItemGroup>
+    <Import Include="Microsoft.VisualBasic" />
+    <Import Include="System" />
+    <Import Include="System.Collections" />
+    <Import Include="System.Collections.Generic" />
+    <Import Include="System.Data" />
+    <Import Include="System.Drawing" />
+    <Import Include="System.Diagnostics" />
+    <Import Include="System.Windows.Forms" />
+    <Import Include="System.Linq" />
+    <Import Include="System.Xml.Linq" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Admin\AdminHome.Designer.vb">
+      <DependentUpon>AdminHome.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\AdminHome.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Admin\App_Defaults.Designer.vb">
+      <DependentUpon>App_Defaults.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\App_Defaults.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Admin\BankMaint.Designer.vb">
+      <DependentUpon>BankMaint.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\BankMaint.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Admin\ImportWork.Designer.vb">
+      <DependentUpon>ImportWork.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\ImportWork.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Admin\UC_BankMaint.Designer.vb">
+      <DependentUpon>UC_BankMaint.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\UC_BankMaint.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Admin\UserSelection.Designer.vb">
+      <DependentUpon>UserSelection.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\UserSelection.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ApplicationEvents.vb" />
+    <Compile Include="Admin\BouncedBankSelection.Designer.vb">
+      <DependentUpon>BouncedBankSelection.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\BouncedBankSelection.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Admin\PaymentHistory.Designer.vb">
+      <DependentUpon>PaymentHistory.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\PaymentHistory.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Classes\Reporting2.vb" />
+    <Compile Include="Classes\QB_Procedures2.vb" />
+    <Compile Include="Classes\QB_Queries2.vb" />
+    <Compile Include="Classes\ts_Customer.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Classes\TrashCash_Utils.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Classes\QB_Batching.vb" />
+    <Compile Include="Connection.Designer.vb">
+      <DependentUpon>Connection.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Connection.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\BatchingPrep.Designer.vb">
+      <DependentUpon>BatchingPrep.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\BatchingPrep.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Admin\InvoiceVoid.Designer.vb">
+      <DependentUpon>InvoiceVoid.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\InvoiceVoid.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\CalendarView.Designer.vb">
+      <DependentUpon>CalendarView.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\CalendarView.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\CustomInvoice_DescRemind.Designer.vb">
+      <DependentUpon>CustomInvoice_DescRemind.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\CustomInvoice_DescRemind.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Invoicing.Designer.vb">
+      <DependentUpon>Invoicing.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Invoicing.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Admin\ServiceTypes.Designer.vb">
+      <DependentUpon>ServiceTypes.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\ServiceTypes.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Payments.Designer.vb">
+      <DependentUpon>Payments.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Payments.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Customer.Designer.vb">
+      <DependentUpon>Customer.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Customer.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\PendingApprovals.Designer.vb">
+      <DependentUpon>PendingApprovals.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\PendingApprovals.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\RecurringService.Designer.vb">
+      <DependentUpon>RecurringService.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\RecurringService.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Login.Designer.vb">
+      <DependentUpon>Login.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Login.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="My Project\Resources.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="My Project\Settings.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\RecSrvcNote.Designer.vb">
+      <DependentUpon>RecSrvcNote.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\RecSrvcNote.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\RecurringServicesForm.Designer.vb">
+      <DependentUpon>RecurringServicesForm.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\RecurringServicesForm.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Reporting\f_DaysEvents.Designer.vb">
+      <DependentUpon>f_DaysEvents.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Reporting\f_DaysEvents.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Reporting\f_PaymentsReceived.Designer.vb">
+      <DependentUpon>f_PaymentsReceived.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Reporting\f_PaymentsReceived.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Reporting\f_UnderOverEven.Designer.vb">
+      <DependentUpon>f_UnderOverEven.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Reporting\f_UnderOverEven.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Reporting\r_AllCustBalances.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>r_AllCustBalances.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reporting\f_AllCustBalances.Designer.vb">
+      <DependentUpon>f_AllCustBalances.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Reporting\f_AllCustBalances.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Reporting\r_DaysEvents.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>r_DaysEvents.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reporting\r_PaymentsReceived.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>r_PaymentsReceived.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reporting\r_UnderOverEven.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>r_UnderOverEven.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Settings.vb" />
+    <Compile Include="SplashScreen.Designer.vb">
+      <DependentUpon>SplashScreen.vb</DependentUpon>
+    </Compile>
+    <Compile Include="SplashScreen.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TrashCash_Home.Designer.vb">
+      <DependentUpon>TrashCash_Home.vb</DependentUpon>
+    </Compile>
+    <Compile Include="TrashCash_Home.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UserControls\UC_CustomerInfoBoxes.Designer.vb">
+      <DependentUpon>UC_CustomerInfoBoxes.vb</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\UC_CustomerInfoBoxes.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserControls\UC_InvoiceDetails.Designer.vb">
+      <DependentUpon>UC_InvoiceDetails.vb</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\UC_InvoiceDetails.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserControls\UC_PaymentDetails.Designer.vb">
+      <DependentUpon>UC_PaymentDetails.vb</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\UC_PaymentDetails.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserControls\UC_Quickbooks.Designer.vb">
+      <DependentUpon>UC_Quickbooks.vb</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\UC_Quickbooks.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserControls\UC_CustomerNotes.Designer.vb">
+      <DependentUpon>UC_CustomerNotes.vb</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\UC_CustomerNotes.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserControls\UC_PreparedItems.Designer.vb">
+      <DependentUpon>UC_PreparedItems.vb</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\UC_PreparedItems.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserControls\UC_RecSrvcDetails.Designer.vb">
+      <DependentUpon>UC_RecSrvcDetails.vb</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\UC_RecSrvcDetails.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserControls\UC_RecurringService.Designer.vb">
+      <DependentUpon>UC_RecurringService.vb</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\UC_RecurringService.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Admin\UC_ServiceTypesDetails.Designer.vb">
+      <DependentUpon>UC_ServiceTypesDetails.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\UC_ServiceTypesDetails.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="_DataSets\DataSet.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DataSet.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="_DataSets\DataSet.vb">
+      <DependentUpon>DataSet.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\NewCustomer.Designer.vb">
+      <DependentUpon>NewCustomer.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\NewCustomer.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="My Project\AssemblyInfo.vb" />
+    <Compile Include="My Project\Application.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Application.myapp</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\CustomerNote.Designer.vb">
+      <DependentUpon>CustomerNote.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\CustomerNote.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="_DataSets\ds_Display.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ds_Display.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="_DataSets\ds_Program.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ds_Program.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="_DataSets\Report_DataSet.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Report_DataSet.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="_DataSets\Report_DataSet.vb">
+      <DependentUpon>Report_DataSet.xsd</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Admin\AdminHome.resx">
+      <DependentUpon>AdminHome.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Admin\App_Defaults.resx">
+      <DependentUpon>App_Defaults.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Admin\BankMaint.resx">
+      <DependentUpon>BankMaint.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Admin\BouncedBankSelection.resx">
+      <DependentUpon>BouncedBankSelection.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Admin\ImportWork.resx">
+      <DependentUpon>ImportWork.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Admin\PaymentHistory.resx">
+      <DependentUpon>PaymentHistory.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Admin\UC_BankMaint.resx">
+      <DependentUpon>UC_BankMaint.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Admin\UserSelection.resx">
+      <DependentUpon>UserSelection.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Connection.resx">
+      <DependentUpon>Connection.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\BatchingPrep.resx">
+      <DependentUpon>BatchingPrep.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Admin\InvoiceVoid.resx">
+      <DependentUpon>InvoiceVoid.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\CalendarView.resx">
+      <DependentUpon>CalendarView.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\CustomInvoice_DescRemind.resx">
+      <DependentUpon>CustomInvoice_DescRemind.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Invoicing.resx">
+      <DependentUpon>Invoicing.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Admin\ServiceTypes.resx">
+      <DependentUpon>ServiceTypes.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Payments.resx">
+      <DependentUpon>Payments.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Customer.resx">
+      <DependentUpon>Customer.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\PendingApprovals.resx">
+      <DependentUpon>PendingApprovals.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\RecSrvcNote.resx">
+      <DependentUpon>RecSrvcNote.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\NewCustomer.resx">
+      <DependentUpon>NewCustomer.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\RecurringService.resx">
+      <DependentUpon>RecurringService.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Login.resx">
+      <DependentUpon>Login.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="My Project\Resources.resx">
+      <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
+      <CustomToolNamespace>My.Resources</CustomToolNamespace>
+      <SubType>Designer</SubType>
+      <LastGenOutput>Resources.Designer.vb</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\CustomerNote.resx">
+      <DependentUpon>CustomerNote.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\RecurringServicesForm.resx">
+      <DependentUpon>RecurringServicesForm.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reporting\f_AllCustBalances.resx">
+      <DependentUpon>f_AllCustBalances.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reporting\f_DaysEvents.resx">
+      <DependentUpon>f_DaysEvents.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reporting\f_PaymentsReceived.resx">
+      <DependentUpon>f_PaymentsReceived.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reporting\f_UnderOverEven.resx">
+      <DependentUpon>f_UnderOverEven.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reporting\r_AllCustBalances.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>r_AllCustBalances.vb</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reporting\r_DaysEvents.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>r_DaysEvents.vb</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reporting\r_PaymentsReceived.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>r_PaymentsReceived.vb</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reporting\r_UnderOverEven.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>r_UnderOverEven.vb</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SplashScreen.resx">
+      <DependentUpon>SplashScreen.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TrashCash_Home.resx">
+      <DependentUpon>TrashCash_Home.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserControls\UC_CustomerInfoBoxes.resx">
+      <DependentUpon>UC_CustomerInfoBoxes.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserControls\UC_InvoiceDetails.resx">
+      <DependentUpon>UC_InvoiceDetails.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserControls\UC_PaymentDetails.resx">
+      <DependentUpon>UC_PaymentDetails.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserControls\UC_Quickbooks.resx">
+      <DependentUpon>UC_Quickbooks.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserControls\UC_CustomerNotes.resx">
+      <DependentUpon>UC_CustomerNotes.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserControls\UC_PreparedItems.resx">
+      <DependentUpon>UC_PreparedItems.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserControls\UC_RecSrvcDetails.resx">
+      <DependentUpon>UC_RecSrvcDetails.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserControls\UC_RecurringService.resx">
+      <DependentUpon>UC_RecurringService.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Admin\UC_ServiceTypesDetails.resx">
+      <DependentUpon>UC_ServiceTypesDetails.vb</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="My Project\Settings.settings">
+      <CustomToolNamespace>My</CustomToolNamespace>
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.vb</LastGenOutput>
+    </None>
+    <None Include="_DataSets\DataSet.xsc">
+      <DependentUpon>DataSet.xsd</DependentUpon>
+    </None>
+    <None Include="_DataSets\DataSet.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>DataSet.Designer.vb</LastGenOutput>
+    </None>
+    <None Include="_DataSets\DataSet.xss">
+      <DependentUpon>DataSet.xsd</DependentUpon>
+    </None>
+    <None Include="My Project\app.manifest" />
+    <None Include="My Project\Application.myapp">
+      <Generator>MyApplicationCodeGenerator</Generator>
+      <LastGenOutput>Application.Designer.vb</LastGenOutput>
+    </None>
+    <None Include="_DataSets\ds_Display.xsc">
+      <DependentUpon>ds_Display.xsd</DependentUpon>
+    </None>
+    <None Include="_DataSets\ds_Display.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>ds_Display.Designer.vb</LastGenOutput>
+    </None>
+    <None Include="_DataSets\ds_Display.xss">
+      <DependentUpon>ds_Display.xsd</DependentUpon>
+    </None>
+    <None Include="_DataSets\ds_Program.xsc">
+      <DependentUpon>ds_Program.xsd</DependentUpon>
+    </None>
+    <None Include="_DataSets\ds_Program.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>ds_Program.Designer.vb</LastGenOutput>
+    </None>
+    <None Include="_DataSets\ds_Program.xss">
+      <DependentUpon>ds_Program.xsd</DependentUpon>
+    </None>
+    <None Include="_DataSets\Report_DataSet.xsc">
+      <DependentUpon>Report_DataSet.xsd</DependentUpon>
+    </None>
+    <None Include="_DataSets\Report_DataSet.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>Report_DataSet.Designer.vb</LastGenOutput>
+    </None>
+    <None Include="_DataSets\Report_DataSet.xss">
+      <DependentUpon>Report_DataSet.xsd</DependentUpon>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.0,Profile=Client">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4 Client Profile %28x86 and x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Windows.Installer.3.1">
+      <Visible>False</Visible>
+      <ProductName>Windows Installer 3.1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Images\iconAddNewCustomer.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Images\invoicingIcon.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Images\Payments-icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Images\batchIcon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Images\search-icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Images\Refresh-icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Images\remove.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{C0C07587-41A7-46C8-8FBD-3F9C8EBE2DDC}" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Images\reports.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Images\calendar image.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Images\batchIcon1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Images\calendar image1.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Images\iconAddNewCustomer1.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Images\invoicingIcon1.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Images\Payments-icon1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Images\Refresh-icon1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Images\remove1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Images\reports1.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Images\search-icon1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Images\newTab_Icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Images\plus-icon.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="app.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <COMReference Include="QBFC12Lib">
+      <Guid>{7BB6E3D2-F8F6-4509-84E2-62C95D444E35}</Guid>
+      <VersionMajor>1</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>tlbimp</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <UserProperties BuildVersion_StartDate="2014/3/2" BuildVersion_BuildVersioningStyle="None.None.None.Increment" BuildVersion_UpdateFileVersion="True" BuildVersion_UpdateAssemblyVersion="True" BuildVersion_AssemblyInfoFilename="My Project\AssemblyInfo.vb" />
+    </VisualStudio>
+  </ProjectExtensions>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

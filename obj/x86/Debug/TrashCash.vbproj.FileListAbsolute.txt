@@ -1,0 +1,125 @@
+\\Krusty\MyDocuments$\joshudy\My Documents\Visual Studio 2010\Projects\TrashCash\TrashCash\bin\Debug\TrashCash.exe.config
+\\Krusty\MyDocuments$\joshudy\My Documents\Visual Studio 2010\Projects\TrashCash\TrashCash\obj\x86\Debug\Interop.QBFC12Lib.dll
+\\Krusty\MyDocuments$\joshudy\My Documents\Visual Studio 2010\Projects\TrashCash\TrashCash\obj\x86\Debug\TrashCash.vbproj.ResolveComReference.cache
+\\Krusty\MyDocuments$\joshudy\My Documents\Visual Studio 2010\Projects\TrashCash\TrashCash\bin\Debug\TrashCash.exe
+\\Krusty\MyDocuments$\joshudy\My Documents\Visual Studio 2010\Projects\TrashCash\TrashCash\obj\x86\Debug\ResolveAssemblyReference.cache
+\\Krusty\MyDocuments$\joshudy\My Documents\Visual Studio 2010\Projects\TrashCash\TrashCash\obj\x86\Debug\TrashCash.CustomerForm.resources
+\\Krusty\MyDocuments$\joshudy\My Documents\Visual Studio 2010\Projects\TrashCash\TrashCash\obj\x86\Debug\TrashCash.HomeForm.resources
+\\Krusty\MyDocuments$\joshudy\My Documents\Visual Studio 2010\Projects\TrashCash\TrashCash\obj\x86\Debug\TrashCash.Resources.resources
+\\Krusty\MyDocuments$\joshudy\My Documents\Visual Studio 2010\Projects\TrashCash\TrashCash\obj\x86\Debug\TrashCash.Testing.resources
+\\Krusty\MyDocuments$\joshudy\My Documents\Visual Studio 2010\Projects\TrashCash\TrashCash\obj\x86\Debug\GenerateResource.read.1.tlog
+\\Krusty\MyDocuments$\joshudy\My Documents\Visual Studio 2010\Projects\TrashCash\TrashCash\obj\x86\Debug\GenerateResource.write.1.tlog
+\\Krusty\MyDocuments$\joshudy\My Documents\Visual Studio 2010\Projects\TrashCash\TrashCash\obj\x86\Debug\TrashCash.exe
+\\Krusty\MyDocuments$\joshudy\My Documents\Visual Studio 2010\Projects\QB2\QB2\bin\Debug\TrashCash.exe.config
+\\Krusty\MyDocuments$\joshudy\My Documents\Visual Studio 2010\Projects\QB2\QB2\bin\Debug\TrashCash.exe
+C:\Projects\QB2\QB2\bin\Debug\TrashCash.exe.config
+C:\Projects\QB2\QB2\bin\Debug\TrashCash.exe
+C:\Projects\QB2\QB2\bin\Debug\TrashCash.pdb
+C:\Projects\QB2\QB2\bin\Debug\TrashCash.xml
+C:\Projects\TrashCash - Copy\TrashCash\bin\Debug\TrashCash.exe.config
+C:\Projects\TrashCash - Copy\TrashCash\obj\x86\Debug\Interop.QBFC12Lib.dll
+C:\Projects\TrashCash - Copy\TrashCash\obj\x86\Debug\TrashCash.vbproj.ResolveComReference.cache
+C:\Projects\TrashCash - Copy\TrashCash\obj\x86\Debug\ResolveAssemblyReference.cache
+C:\Projects\TrashCash - Copy\TrashCash\obj\x86\Debug\TrashCash.NewSrvcNote.resources
+C:\Projects\TrashCash - Copy\TrashCash\obj\x86\Debug\TrashCash.NewRecurringService.resources
+C:\Projects\TrashCash - Copy\TrashCash\obj\x86\Debug\TrashCash.RecurringServices.resources
+C:\Projects\TrashCash - Copy\TrashCash\obj\x86\Debug\TrashCash.ModifyRecurringService.resources
+C:\Projects\TrashCash - Copy\TrashCash\obj\x86\Debug\TrashCash.NewCustomer.resources
+C:\Projects\TrashCash - Copy\TrashCash\obj\x86\Debug\TrashCash.ModifyInvoice.resources
+C:\Projects\TrashCash - Copy\TrashCash\obj\x86\Debug\TrashCash.Customer.resources
+C:\Projects\TrashCash - Copy\TrashCash\obj\x86\Debug\TrashCash.Home.resources
+C:\Projects\TrashCash - Copy\TrashCash\obj\x86\Debug\TrashCash.Invoicing.resources
+C:\Projects\TrashCash - Copy\TrashCash\obj\x86\Debug\TrashCash.LoadSplash.resources
+C:\Projects\TrashCash - Copy\TrashCash\obj\x86\Debug\TrashCash.Resources.resources
+C:\Projects\TrashCash - Copy\TrashCash\obj\x86\Debug\TrashCash.NewInvoice.resources
+C:\Projects\TrashCash - Copy\TrashCash\obj\x86\Debug\TrashCash.NewCustNote.resources
+C:\Projects\TrashCash - Copy\TrashCash\obj\x86\Debug\TrashCash.Notes.resources
+C:\Projects\TrashCash - Copy\TrashCash\obj\x86\Debug\TrashCash.ModifyPayment.resources
+C:\Projects\TrashCash - Copy\TrashCash\obj\x86\Debug\TrashCash.NewPayment.resources
+C:\Projects\TrashCash - Copy\TrashCash\obj\x86\Debug\TrashCash.Payments.resources
+C:\Projects\TrashCash - Copy\TrashCash\obj\x86\Debug\TrashCash.Testing.resources
+C:\Projects\TrashCash - Copy\TrashCash\obj\x86\Debug\GenerateResource.read.1.tlog
+C:\Projects\TrashCash - Copy\TrashCash\obj\x86\Debug\GenerateResource.write.1.tlog
+C:\Projects\TrashCash\TrashCash\obj\x86\Debug\ResolveAssemblyReference.cache
+C:\Projects\TrashCash\TrashCash\obj\x86\Debug\Interop.QBFC12Lib.dll
+C:\Projects\TrashCash\TrashCash\obj\x86\Debug\TrashCash.vbproj.ResolveComReference.cache
+C:\Projects\TrashCash\TrashCash\obj\x86\Debug\TrashCash.BatchingPrep.resources
+C:\Projects\TrashCash\TrashCash\obj\x86\Debug\TrashCash.InvoicingForm.resources
+C:\Projects\TrashCash\TrashCash\obj\x86\Debug\TrashCash.Master.resources
+C:\Projects\TrashCash\TrashCash\obj\x86\Debug\TrashCash.NewCustomer.resources
+C:\Projects\TrashCash\TrashCash\obj\x86\Debug\TrashCash.LoadSplash.resources
+C:\Projects\TrashCash\TrashCash\obj\x86\Debug\TrashCash.Resources.resources
+C:\Projects\TrashCash\TrashCash\obj\x86\Debug\TrashCash.PaymentForm.resources
+C:\Projects\TrashCash\TrashCash\obj\x86\Debug\TrashCash.RecurringServicesForm.resources
+C:\Projects\TrashCash\TrashCash\obj\x86\Debug\TrashCash.UC_CustomerInfoBoxes.resources
+C:\Projects\TrashCash\TrashCash\obj\x86\Debug\TrashCash.UC_InvoiceDetails.resources
+C:\Projects\TrashCash\TrashCash\obj\x86\Debug\TrashCash.UC_PaymentDetails.resources
+C:\Projects\TrashCash\TrashCash\obj\x86\Debug\TrashCash.UC_Quickbooks.resources
+C:\Projects\TrashCash\TrashCash\obj\x86\Debug\TrashCash.UC_CustomerNotes.resources
+C:\Projects\TrashCash\TrashCash\obj\x86\Debug\TrashCash.UC_PreparedItems.resources
+C:\Projects\TrashCash\TrashCash\obj\x86\Debug\TrashCash.UC_RecSrvcDetails.resources
+C:\Projects\TrashCash\TrashCash\obj\x86\Debug\TrashCash.UC_RecurringService.resources
+C:\Projects\TrashCash\TrashCash\obj\x86\Debug\GenerateResource.read.1.tlog
+C:\Projects\TrashCash\TrashCash\obj\x86\Debug\GenerateResource.write.1.tlog
+C:\Projects\TrashCash\TrashCash\bin\Debug\TrashCash.exe.config
+C:\Projects\TrashCash\TrashCash\bin\Debug\TrashCash.exe
+C:\Projects\TrashCash\TrashCash\bin\Debug\TrashCash.pdb
+C:\Projects\TrashCash\TrashCash\bin\Debug\TrashCash.xml
+C:\Projects\TrashCash\TrashCash\bin\Debug\CustomDataGridViewColumns.dll
+C:\Projects\TrashCash\TrashCash\obj\x86\Debug\TrashCash.exe
+C:\Projects\TrashCash\TrashCash\obj\x86\Debug\TrashCash.xml
+C:\Projects\TrashCash\TrashCash\obj\x86\Debug\TrashCash.pdb
+C:\Projects\TrashCash\TrashCash\obj\x86\Debug\TrashCash.RecSrvcNote.resources
+C:\Projects\TrashCash\TrashCash\obj\x86\Debug\TrashCash.CustomerNote.resources
+D:\VS2010 Projects\TrashCash\TrashCash\bin\Debug\TrashCash.exe.config
+D:\VS2010 Projects\TrashCash\TrashCash\obj\x86\Debug\TrashCash.vbproj.ResolveComReference.cache
+D:\VS2010 Projects\TrashCash\TrashCash\obj\x86\Debug\TrashCash.exe
+D:\VS2010 Projects\TrashCash\TrashCash\obj\x86\Debug\TrashCash.xml
+D:\VS2010 Projects\TrashCash\TrashCash\obj\x86\Debug\TrashCash.pdb
+D:\VS2010 Projects\TrashCash\TrashCash\obj\x86\Debug\TrashCash.BatchingPrep.resources
+D:\VS2010 Projects\TrashCash\TrashCash\obj\x86\Debug\TrashCash.RecSrvcNote.resources
+D:\VS2010 Projects\TrashCash\TrashCash\obj\x86\Debug\TrashCash.NewCustomer.resources
+D:\VS2010 Projects\TrashCash\TrashCash\obj\x86\Debug\TrashCash.Resources.resources
+D:\VS2010 Projects\TrashCash\TrashCash\obj\x86\Debug\TrashCash.CustomerNote.resources
+D:\VS2010 Projects\TrashCash\TrashCash\obj\x86\Debug\TrashCash.RecurringServicesForm.resources
+D:\VS2010 Projects\TrashCash\TrashCash\obj\x86\Debug\TrashCash.UC_CustomerInfoBoxes.resources
+D:\VS2010 Projects\TrashCash\TrashCash\obj\x86\Debug\TrashCash.UC_InvoiceDetails.resources
+D:\VS2010 Projects\TrashCash\TrashCash\obj\x86\Debug\TrashCash.UC_PaymentDetails.resources
+D:\VS2010 Projects\TrashCash\TrashCash\obj\x86\Debug\TrashCash.UC_Quickbooks.resources
+D:\VS2010 Projects\TrashCash\TrashCash\obj\x86\Debug\TrashCash.UC_CustomerNotes.resources
+D:\VS2010 Projects\TrashCash\TrashCash\obj\x86\Debug\TrashCash.UC_PreparedItems.resources
+D:\VS2010 Projects\TrashCash\TrashCash\obj\x86\Debug\TrashCash.UC_RecSrvcDetails.resources
+D:\VS2010 Projects\TrashCash\TrashCash\obj\x86\Debug\TrashCash.UC_RecurringService.resources
+D:\VS2010 Projects\TrashCash\TrashCash\obj\x86\Debug\TrashCash.vbproj.GenerateResource.Cache
+D:\VS2010 Projects\TrashCash\TrashCash\bin\Debug\TrashCash.exe
+D:\VS2010 Projects\TrashCash\TrashCash\bin\Debug\TrashCash.pdb
+D:\VS2010 Projects\TrashCash\TrashCash\bin\Debug\TrashCash.xml
+D:\VS2010 Projects\TrashCash\TrashCash\obj\x86\Debug\Interop.QBFC12Lib.dll
+D:\VS2010 Projects\TrashCash\TrashCash\obj\x86\Debug\TrashCash.ServiceTypes.resources
+D:\VS2010 Projects\TrashCash\TrashCash\obj\x86\Debug\TrashCash.UC_ServiceTypesDetails.resources
+D:\VS2010 Projects\TrashCash\TrashCash\obj\x86\Debug\TrashCash.InvoiceVoid.resources
+D:\VS2010 Projects\TrashCash\TrashCash\obj\x86\Debug\TrashCash.vbprojResolveAssemblyReference.cache
+D:\VS2010 Projects\TrashCash\TrashCash\obj\x86\Debug\TrashCash.PaymentHistory.resources
+D:\VS2010 Projects\TrashCash\TrashCash\obj\x86\Debug\TrashCash.BouncedBankSelection.resources
+D:\VS2010 Projects\TrashCash\TrashCash\obj\x86\Debug\TrashCash.AdminHome.resources
+D:\VS2010 Projects\TrashCash\TrashCash\obj\x86\Debug\TrashCash.BankMaint.resources
+D:\VS2010 Projects\TrashCash\TrashCash\obj\x86\Debug\TrashCash.UC_BankMaint.resources
+D:\VS2010 Projects\TrashCash\TrashCash\bin\Debug\Calendar.NET.dll
+D:\VS2010 Projects\TrashCash\TrashCash\obj\x86\Debug\TrashCash.CalendarView.resources
+D:\VS2010 Projects\TrashCash\TrashCash\obj\x86\Debug\TrashCash.CustomInvoice_DescRemind.resources
+D:\VS2010 Projects\TrashCash\TrashCash\obj\x86\Debug\TrashCash.App_Defaults.resources
+D:\VS2010 Projects\TrashCash\TrashCash\obj\x86\Debug\TrashCash.Connection.resources
+D:\VS2010 Projects\TrashCash\TrashCash\obj\x86\Debug\TrashCash.Invoicing.resources
+D:\VS2010 Projects\TrashCash\TrashCash\obj\x86\Debug\TrashCash.Payments.resources
+D:\VS2010 Projects\TrashCash\TrashCash\obj\x86\Debug\TrashCash.TrashCash_Home.resources
+D:\VS2010 Projects\TrashCash\TrashCash\obj\x86\Debug\TrashCash.Customer.resources
+D:\VS2010 Projects\TrashCash\TrashCash\obj\x86\Debug\TrashCash.f_AllCustBalances.resources
+D:\VS2010 Projects\TrashCash\TrashCash\obj\x86\Debug\TrashCash.f_PaymentsReceived.resources
+D:\VS2010 Projects\TrashCash\TrashCash\obj\x86\Debug\TrashCash.f_DaysEvents.resources
+D:\VS2010 Projects\TrashCash\TrashCash\obj\x86\Debug\TrashCash.UserSelection.resources
+D:\VS2010 Projects\TrashCash\TrashCash\obj\x86\Debug\TrashCash.Login.resources
+D:\VS2010 Projects\TrashCash\TrashCash\obj\x86\Debug\TrashCash.f_UnderOverEven.resources
+D:\VS2010 Projects\TrashCash\TrashCash\obj\x86\Debug\TrashCash.SplashScreen.resources
+D:\VS2010 Projects\TrashCash\TrashCash\obj\x86\Debug\TrashCash.ImportWork.resources
+D:\VS2010 Projects\TrashCash\TrashCash\obj\x86\Debug\TrashCash.RecurringService.resources
+D:\VS2010 Projects\TrashCash\TrashCash\obj\x86\Debug\TrashCash.PendingApprovals.resources
