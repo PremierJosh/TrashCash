@@ -23,11 +23,11 @@ Partial Class PaymentHistory
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
-        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle5 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle6 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(PaymentHistory))
-        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle7 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle8 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.pnl_Top = New System.Windows.Forms.Panel()
         Me.pnl_TopContent = New System.Windows.Forms.Panel()
         Me.Ts_M_Customer = New TrashCash.ts_M_Customer()
@@ -36,8 +36,9 @@ Partial Class PaymentHistory
         Me.AmountDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.DateReceivedDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.RefNumber = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.cm_BounceCheck = New System.Windows.Forms.ContextMenuStrip(Me.components)
-        Me.cm_i_BouncedCheck = New System.Windows.Forms.ToolStripMenuItem()
+        Me.cm_AlterPayment = New System.Windows.Forms.ContextMenuStrip(Me.components)
+        Me.cm_i_BounceCheck = New System.Windows.Forms.ToolStripMenuItem()
+        Me.cm_i_MovePayment = New System.Windows.Forms.ToolStripMenuItem()
         Me.PaymentHistoryBindingSource = New System.Windows.Forms.BindingSource(Me.components)
         Me.DataSet = New TrashCash.DataSet()
         Me.PaymentHistoryTableAdapter = New TrashCash.DataSetTableAdapters.PaymentHistoryTableAdapter()
@@ -56,7 +57,7 @@ Partial Class PaymentHistory
         Me.pnl_Top.SuspendLayout()
         Me.pnl_TopContent.SuspendLayout()
         CType(Me.dg_PaymentHistory, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.cm_BounceCheck.SuspendLayout()
+        Me.cm_AlterPayment.SuspendLayout()
         CType(Me.PaymentHistoryBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.DataSet, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.pnl_Filter.SuspendLayout()
@@ -101,7 +102,7 @@ Partial Class PaymentHistory
         Me.dg_PaymentHistory.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
         Me.dg_PaymentHistory.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.dg_PaymentHistory.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.PaymentTypeNameDataGridViewTextBoxColumn, Me.AmountDataGridViewTextBoxColumn, Me.DateReceivedDataGridViewTextBoxColumn, Me.RefNumber})
-        Me.dg_PaymentHistory.ContextMenuStrip = Me.cm_BounceCheck
+        Me.dg_PaymentHistory.ContextMenuStrip = Me.cm_AlterPayment
         Me.dg_PaymentHistory.DataSource = Me.PaymentHistoryBindingSource
         Me.dg_PaymentHistory.Dock = System.Windows.Forms.DockStyle.Fill
         Me.dg_PaymentHistory.Location = New System.Drawing.Point(0, 117)
@@ -123,8 +124,8 @@ Partial Class PaymentHistory
         'AmountDataGridViewTextBoxColumn
         '
         Me.AmountDataGridViewTextBoxColumn.DataPropertyName = "Amount"
-        DataGridViewCellStyle1.Format = "C2"
-        Me.AmountDataGridViewTextBoxColumn.DefaultCellStyle = DataGridViewCellStyle1
+        DataGridViewCellStyle5.Format = "C2"
+        Me.AmountDataGridViewTextBoxColumn.DefaultCellStyle = DataGridViewCellStyle5
         Me.AmountDataGridViewTextBoxColumn.HeaderText = "Amount"
         Me.AmountDataGridViewTextBoxColumn.Name = "AmountDataGridViewTextBoxColumn"
         Me.AmountDataGridViewTextBoxColumn.ReadOnly = True
@@ -132,8 +133,8 @@ Partial Class PaymentHistory
         'DateReceivedDataGridViewTextBoxColumn
         '
         Me.DateReceivedDataGridViewTextBoxColumn.DataPropertyName = "DateReceived"
-        DataGridViewCellStyle2.Format = "d"
-        Me.DateReceivedDataGridViewTextBoxColumn.DefaultCellStyle = DataGridViewCellStyle2
+        DataGridViewCellStyle6.Format = "d"
+        Me.DateReceivedDataGridViewTextBoxColumn.DefaultCellStyle = DataGridViewCellStyle6
         Me.DateReceivedDataGridViewTextBoxColumn.HeaderText = "Date Received"
         Me.DateReceivedDataGridViewTextBoxColumn.Name = "DateReceivedDataGridViewTextBoxColumn"
         Me.DateReceivedDataGridViewTextBoxColumn.ReadOnly = True
@@ -145,17 +146,23 @@ Partial Class PaymentHistory
         Me.RefNumber.Name = "RefNumber"
         Me.RefNumber.ReadOnly = True
         '
-        'cm_BounceCheck
+        'cm_AlterPayment
         '
-        Me.cm_BounceCheck.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.cm_i_BouncedCheck})
-        Me.cm_BounceCheck.Name = "cm_BounceCheck"
-        Me.cm_BounceCheck.Size = New System.Drawing.Size(158, 26)
+        Me.cm_AlterPayment.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.cm_i_BounceCheck, Me.cm_i_MovePayment})
+        Me.cm_AlterPayment.Name = "cm_BounceCheck"
+        Me.cm_AlterPayment.Size = New System.Drawing.Size(155, 48)
         '
-        'cm_i_BouncedCheck
+        'cm_i_BounceCheck
         '
-        Me.cm_i_BouncedCheck.Name = "cm_i_BouncedCheck"
-        Me.cm_i_BouncedCheck.Size = New System.Drawing.Size(157, 22)
-        Me.cm_i_BouncedCheck.Text = "Bounced Check"
+        Me.cm_i_BounceCheck.Name = "cm_i_BounceCheck"
+        Me.cm_i_BounceCheck.Size = New System.Drawing.Size(154, 22)
+        Me.cm_i_BounceCheck.Text = "Bounce Check"
+        '
+        'cm_i_MovePayment
+        '
+        Me.cm_i_MovePayment.Name = "cm_i_MovePayment"
+        Me.cm_i_MovePayment.Size = New System.Drawing.Size(154, 22)
+        Me.cm_i_MovePayment.Text = "Move Payment"
         '
         'PaymentHistoryBindingSource
         '
@@ -258,8 +265,8 @@ Partial Class PaymentHistory
         'DataGridViewTextBoxColumn2
         '
         Me.DataGridViewTextBoxColumn2.DataPropertyName = "Amount"
-        DataGridViewCellStyle3.Format = "C2"
-        Me.DataGridViewTextBoxColumn2.DefaultCellStyle = DataGridViewCellStyle3
+        DataGridViewCellStyle7.Format = "C2"
+        Me.DataGridViewTextBoxColumn2.DefaultCellStyle = DataGridViewCellStyle7
         Me.DataGridViewTextBoxColumn2.HeaderText = "Amount"
         Me.DataGridViewTextBoxColumn2.Name = "DataGridViewTextBoxColumn2"
         Me.DataGridViewTextBoxColumn2.ReadOnly = True
@@ -268,8 +275,8 @@ Partial Class PaymentHistory
         'DataGridViewTextBoxColumn3
         '
         Me.DataGridViewTextBoxColumn3.DataPropertyName = "DateReceived"
-        DataGridViewCellStyle4.Format = "d"
-        Me.DataGridViewTextBoxColumn3.DefaultCellStyle = DataGridViewCellStyle4
+        DataGridViewCellStyle8.Format = "d"
+        Me.DataGridViewTextBoxColumn3.DefaultCellStyle = DataGridViewCellStyle8
         Me.DataGridViewTextBoxColumn3.HeaderText = "Date Received"
         Me.DataGridViewTextBoxColumn3.Name = "DataGridViewTextBoxColumn3"
         Me.DataGridViewTextBoxColumn3.ReadOnly = True
@@ -301,7 +308,7 @@ Partial Class PaymentHistory
         Me.pnl_TopContent.ResumeLayout(False)
         Me.pnl_TopContent.PerformLayout()
         CType(Me.dg_PaymentHistory, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.cm_BounceCheck.ResumeLayout(False)
+        Me.cm_AlterPayment.ResumeLayout(False)
         CType(Me.PaymentHistoryBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.DataSet, System.ComponentModel.ISupportInitialize).EndInit()
         Me.pnl_Filter.ResumeLayout(False)
@@ -322,8 +329,8 @@ Partial Class PaymentHistory
     Friend WithEvents Label1 As System.Windows.Forms.Label
     Friend WithEvents dtp_StartDate As System.Windows.Forms.DateTimePicker
     Friend WithEvents lbl_DateFilter As System.Windows.Forms.Label
-    Friend WithEvents cm_BounceCheck As System.Windows.Forms.ContextMenuStrip
-    Friend WithEvents cm_i_BouncedCheck As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents cm_AlterPayment As System.Windows.Forms.ContextMenuStrip
+    Friend WithEvents cm_i_BounceCheck As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents Ts_M_Customer As TrashCash.ts_M_Customer
     Friend WithEvents PaymentTypeNameDataGridViewTextBoxColumn As System.Windows.Forms.DataGridViewTextBoxColumn
     Friend WithEvents AmountDataGridViewTextBoxColumn As System.Windows.Forms.DataGridViewTextBoxColumn
@@ -334,4 +341,5 @@ Partial Class PaymentHistory
     Friend WithEvents DataGridViewTextBoxColumn3 As System.Windows.Forms.DataGridViewTextBoxColumn
     Friend WithEvents DataGridViewTextBoxColumn4 As System.Windows.Forms.DataGridViewTextBoxColumn
     Friend WithEvents Cmb_PaymentTypes As TrashCash.Database_ComboBoxes.cmb_PaymentTypes
+    Friend WithEvents cm_i_MovePayment As System.Windows.Forms.ToolStripMenuItem
 End Class

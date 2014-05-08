@@ -160,6 +160,12 @@
     <Compile Include="Admin\ImportWork.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Admin\MovePayment.Designer.vb">
+      <DependentUpon>MovePayment.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\MovePayment.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Admin\UC_BankMaint.Designer.vb">
       <DependentUpon>UC_BankMaint.vb</DependentUpon>
     </Compile>
@@ -434,6 +440,14 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ds_Display.xsd</DependentUpon>
     </Compile>
+    <Compile Include="_DataSets\ds_Display.vb">
+      <DependentUpon>ds_Display.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="_DataSets\ds_Payments.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ds_Payments.xsd</DependentUpon>
+    </Compile>
     <Compile Include="_DataSets\ds_Program.Designer.vb">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -464,6 +478,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Admin\ImportWork.resx">
       <DependentUpon>ImportWork.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Admin\MovePayment.resx">
+      <DependentUpon>MovePayment.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Admin\PaymentHistory.resx">
       <DependentUpon>PaymentHistory.vb</DependentUpon>
@@ -606,6 +623,7 @@
     <None Include="App.config">
       <SubType>Designer</SubType>
     </None>
+    <None Include="ClassDiagram1.cd" />
     <None Include="My Project\Settings.settings">
       <CustomToolNamespace>My</CustomToolNamespace>
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -637,6 +655,17 @@
     </None>
     <None Include="_DataSets\ds_Display.xss">
       <DependentUpon>ds_Display.xsd</DependentUpon>
+    </None>
+    <None Include="_DataSets\ds_Payments.xsc">
+      <DependentUpon>ds_Payments.xsd</DependentUpon>
+    </None>
+    <None Include="_DataSets\ds_Payments.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>ds_Payments.Designer.vb</LastGenOutput>
+    </None>
+    <None Include="_DataSets\ds_Payments.xss">
+      <DependentUpon>ds_Payments.xsd</DependentUpon>
     </None>
     <None Include="_DataSets\ds_Program.xsc">
       <DependentUpon>ds_Program.xsd</DependentUpon>
@@ -763,7 +792,7 @@
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties BuildVersion_StartDate="2014/3/2" BuildVersion_BuildVersioningStyle="None.None.None.Increment" BuildVersion_UpdateFileVersion="True" BuildVersion_UpdateAssemblyVersion="True" BuildVersion_AssemblyInfoFilename="My Project\AssemblyInfo.vb" />
+      <UserProperties BuildVersion_AssemblyInfoFilename="My Project\AssemblyInfo.vb" BuildVersion_UpdateAssemblyVersion="True" BuildVersion_UpdateFileVersion="True" BuildVersion_BuildVersioningStyle="None.None.None.Increment" BuildVersion_StartDate="2014/3/2" />
     </VisualStudio>
   </ProjectExtensions>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

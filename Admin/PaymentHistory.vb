@@ -109,11 +109,11 @@
         Next
     End Sub
 
-    Private Sub cm_i_BouncedCheck_Click(sender As System.Object, e As System.EventArgs) Handles cm_i_BouncedCheck.Click
+    Private Sub cm_i_BouncedCheck_Click(sender As System.Object, e As System.EventArgs) Handles cm_i_BounceCheck.Click
         If (dg_PaymentHistory.SelectedRows.Count = 1) Then
             ' easier refrence
             Dim dvRow As DataRowView = dg_PaymentHistory.SelectedRows(0).DataBoundItem
-            Dim row As DataSet.PaymentHistoryRow = CType(dvRow.Row, DataSet.PaymentHistoryRow)
+            Dim row As DataSet.PaymentHistoryRow = dvRow.Row
 
             If (row.PaymentTypeID = 2) Then
                 If (Not row.Bounced) Then
@@ -147,6 +147,21 @@
     End Sub
 
     Private Sub Cmb_PaymentTypes_SelectionChangeCommitted(sender As System.Object, e As System.EventArgs) Handles Cmb_PaymentTypes.SelectionChangeCommitted
+
+    End Sub
+
+    Private Sub cm_i_MovePayment_Click(sender As System.Object, e As System.EventArgs) Handles cm_i_MovePayment.Click
+        If (dg_PaymentHistory.SelectedRows.Count = 1) Then
+            ' easier refrence
+            Dim dvRow As DataRowView = dg_PaymentHistory.SelectedRows(0).DataBoundItem
+            Dim row As DataSet.PaymentHistoryRow = dvRow.Row
+
+            If (Not row.Bounced) Then
+
+            Else
+                MessageBox.Show("This payment has been marked as a bounced check.", "Unable to Move Payment", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            End If
+        End If
 
     End Sub
 End Class

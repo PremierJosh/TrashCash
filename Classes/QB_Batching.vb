@@ -393,22 +393,27 @@ Public MustInherit Class QB_Batching
                                     ta.PaymentHistory_Insert(row.CustomerNumber,
                                                         Nothing,
                                                         row.TxnID,
+                                                        row.EditSequence,
                                                         row.WorkingPaymentsType,
                                                         row.WorkingPaymentsAmount,
                                                         row.TIME_RECEIVED,
-                                                       Nothing,
-                                                        BatchID)
+                                                        Nothing,
+                                                        BatchID,
+                                                        row.InsertedByUser
+                                                                            )
 
                                 Else
                                     ' insert for non cash
                                     ta.PaymentHistory_Insert(row.CustomerNumber,
                                                         row.WorkingPaymentsCheckNum,
                                                         row.TxnID,
+                                                        row.EditSequence,
                                                         row.WorkingPaymentsType,
                                                         row.WorkingPaymentsAmount,
                                                         row.TIME_RECEIVED,
                                                         row.DATE_ON_CHECK,
-                                                        BatchID)
+                                                        BatchID,
+                                                        row.InsertedByUser)
 
                                 End If
 
@@ -453,6 +458,7 @@ Public MustInherit Class QB_Batching
             recPayment.IncludeRetElementList.Add("RefNumber")
             recPayment.IncludeRetElementList.Add("TxnID")
             recPayment.IncludeRetElementList.Add("TimeCreated")
+            recPayment.IncludeRetElementList.Add("EditSequence")
 
             ' grabbing list id
             recPayment.CustomerRef.ListID.SetValue(row.CustomerListID)
@@ -481,7 +487,11 @@ Public MustInherit Class QB_Batching
 
                     ' update to complete
                     row.WorkingPaymentsStatus = 7
+                    ' get other values for history insert
                     row.TxnID = recPaymentRet.TxnID.GetValue
+                    row.EditSequence = recPaymentRet.EditSequence.GetValue
+
+
                     If (recPaymentRet.RefNumber IsNot Nothing) Then
                         row.TxnNumber = recPaymentRet.RefNumber.GetValue
                     End If
