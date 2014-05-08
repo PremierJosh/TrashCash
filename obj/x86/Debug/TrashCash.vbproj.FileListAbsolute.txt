@@ -123,3 +123,4 @@ D:\VS2010 Projects\TrashCash\TrashCash\obj\x86\Debug\TrashCash.SplashScreen.reso
 D:\VS2010 Projects\TrashCash\TrashCash\obj\x86\Debug\TrashCash.ImportWork.resources
 D:\VS2010 Projects\TrashCash\TrashCash\obj\x86\Debug\TrashCash.RecurringService.resources
 D:\VS2010 Projects\TrashCash\TrashCash\obj\x86\Debug\TrashCash.PendingApprovals.resources
+D:\VS2010 Projects\TrashCash\TrashCash\obj\x86\Debug\TrashCash.MovePayment.resources

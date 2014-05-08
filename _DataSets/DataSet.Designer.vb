@@ -6052,6 +6052,10 @@ Partial Public Class DataSet
         
         Private columnDATE_ON_CHECK As Global.System.Data.DataColumn
         
+        Private columnInsertedByUser As Global.System.Data.DataColumn
+        
+        Private columnEditSequence As Global.System.Data.DataColumn
+        
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
         Public Sub New()
@@ -6200,6 +6204,22 @@ Partial Public Class DataSet
         End Property
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        Public ReadOnly Property InsertedByUserColumn() As Global.System.Data.DataColumn
+            Get
+                Return Me.columnInsertedByUser
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        Public ReadOnly Property EditSequenceColumn() As Global.System.Data.DataColumn
+            Get
+                Return Me.columnEditSequence
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0"),  _
          Global.System.ComponentModel.Browsable(false)>  _
         Public ReadOnly Property Count() As Integer
@@ -6236,9 +6256,9 @@ Partial Public Class DataSet
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Overloads Function AddBATCH_WorkingPaymentsRow(ByVal CustomerNumber As Decimal, ByVal WorkingPaymentsAmount As Decimal, ByVal WorkingPaymentsCheckNum As String, ByVal WorkingPaymentsStatus As Byte, ByVal CustomerListID As String, ByVal QB_REFRENCE As String, ByVal CustomerFullName As String, ByVal TxnID As String, ByVal TxnNumber As String, ByVal DateReceived As Date, ByVal WorkingPaymentsType As Decimal, ByVal TIME_RECEIVED As Date, ByVal DATE_ON_CHECK As Date) As BATCH_WorkingPaymentsRow
+        Public Overloads Function AddBATCH_WorkingPaymentsRow(ByVal CustomerNumber As Decimal, ByVal WorkingPaymentsAmount As Decimal, ByVal WorkingPaymentsCheckNum As String, ByVal WorkingPaymentsStatus As Byte, ByVal CustomerListID As String, ByVal QB_REFRENCE As String, ByVal CustomerFullName As String, ByVal TxnID As String, ByVal TxnNumber As String, ByVal DateReceived As Date, ByVal WorkingPaymentsType As Decimal, ByVal TIME_RECEIVED As Date, ByVal DATE_ON_CHECK As Date, ByVal InsertedByUser As String, ByVal EditSequence As String) As BATCH_WorkingPaymentsRow
             Dim rowBATCH_WorkingPaymentsRow As BATCH_WorkingPaymentsRow = CType(Me.NewRow,BATCH_WorkingPaymentsRow)
-            Dim columnValuesArray() As Object = New Object() {Nothing, CustomerNumber, WorkingPaymentsAmount, WorkingPaymentsCheckNum, WorkingPaymentsStatus, CustomerListID, QB_REFRENCE, CustomerFullName, TxnID, TxnNumber, DateReceived, WorkingPaymentsType, TIME_RECEIVED, DATE_ON_CHECK}
+            Dim columnValuesArray() As Object = New Object() {Nothing, CustomerNumber, WorkingPaymentsAmount, WorkingPaymentsCheckNum, WorkingPaymentsStatus, CustomerListID, QB_REFRENCE, CustomerFullName, TxnID, TxnNumber, DateReceived, WorkingPaymentsType, TIME_RECEIVED, DATE_ON_CHECK, InsertedByUser, EditSequence}
             rowBATCH_WorkingPaymentsRow.ItemArray = columnValuesArray
             Me.Rows.Add(rowBATCH_WorkingPaymentsRow)
             Return rowBATCH_WorkingPaymentsRow
@@ -6281,6 +6301,8 @@ Partial Public Class DataSet
             Me.columnWorkingPaymentsType = MyBase.Columns("WorkingPaymentsType")
             Me.columnTIME_RECEIVED = MyBase.Columns("TIME_RECEIVED")
             Me.columnDATE_ON_CHECK = MyBase.Columns("DATE_ON_CHECK")
+            Me.columnInsertedByUser = MyBase.Columns("InsertedByUser")
+            Me.columnEditSequence = MyBase.Columns("EditSequence")
         End Sub
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
@@ -6314,6 +6336,10 @@ Partial Public Class DataSet
             MyBase.Columns.Add(Me.columnTIME_RECEIVED)
             Me.columnDATE_ON_CHECK = New Global.System.Data.DataColumn("DATE_ON_CHECK", GetType(Date), Nothing, Global.System.Data.MappingType.Element)
             MyBase.Columns.Add(Me.columnDATE_ON_CHECK)
+            Me.columnInsertedByUser = New Global.System.Data.DataColumn("InsertedByUser", GetType(String), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnInsertedByUser)
+            Me.columnEditSequence = New Global.System.Data.DataColumn("EditSequence", GetType(String), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnEditSequence)
             Me.Constraints.Add(New Global.System.Data.UniqueConstraint("Constraint1", New Global.System.Data.DataColumn() {Me.columnWorkingPaymentsID}, true))
             Me.columnWorkingPaymentsID.AutoIncrement = true
             Me.columnWorkingPaymentsID.AutoIncrementSeed = -1
@@ -6331,6 +6357,7 @@ Partial Public Class DataSet
             Me.columnCustomerFullName.MaxLength = 200
             Me.columnWorkingPaymentsType.AllowDBNull = false
             Me.columnTIME_RECEIVED.AllowDBNull = false
+            Me.columnInsertedByUser.MaxLength = 50
         End Sub
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
@@ -10970,6 +10997,37 @@ Partial Public Class DataSet
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        Public Property InsertedByUser() As String
+            Get
+                Try 
+                    Return CType(Me(Me.tableBATCH_WorkingPayments.InsertedByUserColumn),String)
+                Catch e As Global.System.InvalidCastException
+                    Throw New Global.System.Data.StrongTypingException("The value for column 'InsertedByUser' in table 'BATCH_WorkingPayments' is DBNull."& _ 
+                            "", e)
+                End Try
+            End Get
+            Set
+                Me(Me.tableBATCH_WorkingPayments.InsertedByUserColumn) = value
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        Public Property EditSequence() As String
+            Get
+                Try 
+                    Return CType(Me(Me.tableBATCH_WorkingPayments.EditSequenceColumn),String)
+                Catch e As Global.System.InvalidCastException
+                    Throw New Global.System.Data.StrongTypingException("The value for column 'EditSequence' in table 'BATCH_WorkingPayments' is DBNull.", e)
+                End Try
+            End Get
+            Set
+                Me(Me.tableBATCH_WorkingPayments.EditSequenceColumn) = value
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
         Public Function IsWorkingPaymentsCheckNumNull() As Boolean
             Return Me.IsNull(Me.tableBATCH_WorkingPayments.WorkingPaymentsCheckNumColumn)
         End Function
@@ -11050,6 +11108,30 @@ Partial Public Class DataSet
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
         Public Sub SetDATE_ON_CHECKNull()
             Me(Me.tableBATCH_WorkingPayments.DATE_ON_CHECKColumn) = Global.System.Convert.DBNull
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        Public Function IsInsertedByUserNull() As Boolean
+            Return Me.IsNull(Me.tableBATCH_WorkingPayments.InsertedByUserColumn)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        Public Sub SetInsertedByUserNull()
+            Me(Me.tableBATCH_WorkingPayments.InsertedByUserColumn) = Global.System.Convert.DBNull
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        Public Function IsEditSequenceNull() As Boolean
+            Return Me.IsNull(Me.tableBATCH_WorkingPayments.EditSequenceColumn)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        Public Sub SetEditSequenceNull()
+            Me(Me.tableBATCH_WorkingPayments.EditSequenceColumn) = Global.System.Convert.DBNull
         End Sub
     End Class
     
@@ -17142,6 +17224,7 @@ Namespace DataSetTableAdapters
             tableMapping.ColumnMappings.Add("WorkingPaymentsType", "WorkingPaymentsType")
             tableMapping.ColumnMappings.Add("TIME_RECEIVED", "TIME_RECEIVED")
             tableMapping.ColumnMappings.Add("DATE_ON_CHECK", "DATE_ON_CHECK")
+            tableMapping.ColumnMappings.Add("InsertedByUser", "InsertedByUser")
             Me._adapter.TableMappings.Add(tableMapping)
             Me._adapter.UpdateCommand = New Global.System.Data.SqlClient.SqlCommand()
             Me._adapter.UpdateCommand.Connection = Me.Connection
@@ -17198,11 +17281,13 @@ Namespace DataSetTableAdapters
             Me._commandCollection(3).Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@CustomerNumber", Global.System.Data.SqlDbType.[Decimal], 9, Global.System.Data.ParameterDirection.Input, 18, 0, Nothing, Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
             Me._commandCollection(3).Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@RefNumber", Global.System.Data.SqlDbType.VarChar, 50, Global.System.Data.ParameterDirection.Input, 0, 0, Nothing, Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
             Me._commandCollection(3).Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@PaymentTxnID", Global.System.Data.SqlDbType.VarChar, 50, Global.System.Data.ParameterDirection.Input, 0, 0, Nothing, Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
+            Me._commandCollection(3).Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@EditSequence", Global.System.Data.SqlDbType.VarChar, 16, Global.System.Data.ParameterDirection.Input, 0, 0, Nothing, Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
             Me._commandCollection(3).Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@PaymentTypeID", Global.System.Data.SqlDbType.[Decimal], 9, Global.System.Data.ParameterDirection.Input, 18, 0, Nothing, Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
             Me._commandCollection(3).Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@Amount", Global.System.Data.SqlDbType.[Decimal], 9, Global.System.Data.ParameterDirection.Input, 18, 2, Nothing, Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
             Me._commandCollection(3).Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@DateReceived", Global.System.Data.SqlDbType.[Date], 3, Global.System.Data.ParameterDirection.Input, 10, 0, Nothing, Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
             Me._commandCollection(3).Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@DateOnCheck", Global.System.Data.SqlDbType.[Date], 3, Global.System.Data.ParameterDirection.Input, 10, 0, Nothing, Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
             Me._commandCollection(3).Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@BATCH_PAY_ID", Global.System.Data.SqlDbType.Int, 4, Global.System.Data.ParameterDirection.Input, 10, 0, Nothing, Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
+            Me._commandCollection(3).Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@InsertedByUser", Global.System.Data.SqlDbType.VarChar, 50, Global.System.Data.ParameterDirection.Input, 0, 0, Nothing, Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
         End Sub
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
@@ -17384,7 +17469,7 @@ Namespace DataSetTableAdapters
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0"),  _
          Global.System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")>  _
-        Public Overloads Overridable Function PaymentHistory_Insert(ByVal CustomerNumber As Global.System.Nullable(Of Decimal), ByVal RefNumber As String, ByVal PaymentTxnID As String, ByVal PaymentTypeID As Global.System.Nullable(Of Decimal), ByVal Amount As Global.System.Nullable(Of Decimal), ByVal DateReceived As Global.System.Nullable(Of Date), ByVal DateOnCheck As Global.System.Nullable(Of Date), ByVal BATCH_PAY_ID As Global.System.Nullable(Of Integer)) As Integer
+        Public Overloads Overridable Function PaymentHistory_Insert(ByVal CustomerNumber As Global.System.Nullable(Of Decimal), ByVal RefNumber As String, ByVal PaymentTxnID As String, ByVal EditSequence As String, ByVal PaymentTypeID As Global.System.Nullable(Of Decimal), ByVal Amount As Global.System.Nullable(Of Decimal), ByVal DateReceived As Global.System.Nullable(Of Date), ByVal DateOnCheck As Global.System.Nullable(Of Date), ByVal BATCH_PAY_ID As Global.System.Nullable(Of Integer), ByVal InsertedByUser As String) As Integer
             Dim command As Global.System.Data.SqlClient.SqlCommand = Me.CommandCollection(3)
             If (CustomerNumber.HasValue = true) Then
                 command.Parameters(1).Value = CType(CustomerNumber.Value,Decimal)
@@ -17401,30 +17486,40 @@ Namespace DataSetTableAdapters
             Else
                 command.Parameters(3).Value = CType(PaymentTxnID,String)
             End If
-            If (PaymentTypeID.HasValue = true) Then
-                command.Parameters(4).Value = CType(PaymentTypeID.Value,Decimal)
-            Else
+            If (EditSequence Is Nothing) Then
                 command.Parameters(4).Value = Global.System.DBNull.Value
+            Else
+                command.Parameters(4).Value = CType(EditSequence,String)
             End If
-            If (Amount.HasValue = true) Then
-                command.Parameters(5).Value = CType(Amount.Value,Decimal)
+            If (PaymentTypeID.HasValue = true) Then
+                command.Parameters(5).Value = CType(PaymentTypeID.Value,Decimal)
             Else
                 command.Parameters(5).Value = Global.System.DBNull.Value
             End If
-            If (DateReceived.HasValue = true) Then
-                command.Parameters(6).Value = CType(DateReceived.Value,Date)
+            If (Amount.HasValue = true) Then
+                command.Parameters(6).Value = CType(Amount.Value,Decimal)
             Else
                 command.Parameters(6).Value = Global.System.DBNull.Value
             End If
-            If (DateOnCheck.HasValue = true) Then
-                command.Parameters(7).Value = CType(DateOnCheck.Value,Date)
+            If (DateReceived.HasValue = true) Then
+                command.Parameters(7).Value = CType(DateReceived.Value,Date)
             Else
                 command.Parameters(7).Value = Global.System.DBNull.Value
             End If
-            If (BATCH_PAY_ID.HasValue = true) Then
-                command.Parameters(8).Value = CType(BATCH_PAY_ID.Value,Integer)
+            If (DateOnCheck.HasValue = true) Then
+                command.Parameters(8).Value = CType(DateOnCheck.Value,Date)
             Else
                 command.Parameters(8).Value = Global.System.DBNull.Value
+            End If
+            If (BATCH_PAY_ID.HasValue = true) Then
+                command.Parameters(9).Value = CType(BATCH_PAY_ID.Value,Integer)
+            Else
+                command.Parameters(9).Value = Global.System.DBNull.Value
+            End If
+            If (InsertedByUser Is Nothing) Then
+                command.Parameters(10).Value = Global.System.DBNull.Value
+            Else
+                command.Parameters(10).Value = CType(InsertedByUser,String)
             End If
             Dim previousConnectionState As Global.System.Data.ConnectionState = command.Connection.State
             If ((command.Connection.State And Global.System.Data.ConnectionState.Open)  _
