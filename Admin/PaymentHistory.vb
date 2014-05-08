@@ -2,6 +2,9 @@
     ' home form ref var
     Private _home As TrashCash_Home
 
+    ' move payment form ref
+    Friend WithEvents f_movePayment As MovePayment
+
     ' property to keep last selected customer
     Private _CurrentCustomer As Integer
     Public Property CurrentCustomer As Integer
@@ -157,7 +160,8 @@
             Dim row As DataSet.PaymentHistoryRow = dvRow.Row
 
             If (Not row.Bounced) Then
-
+                ' create move payment form
+                f_movePayment = New MovePayment(_home, row)
             Else
                 MessageBox.Show("This payment has been marked as a bounced check.", "Unable to Move Payment", MessageBoxButtons.OK, MessageBoxIcon.Error)
             End If
