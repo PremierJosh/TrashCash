@@ -629,15 +629,16 @@ retry:
         Public BalanceRemaining
     End Class
 
-    Public Function Payment_EditSequenceCheck(ByVal PaymentTxnID As String) As String
-        ' return bool if edit sequence doesn't match
-        Dim currEditSeq As String = Nothing
+    Public Function Payment_GetAppliedTxns(ByRef Row As ds_Payments.PaymentHistory_DBRow) As List(Of String)
+        ' list im going to gather of applied txns to this payment
+        Dim appTxnList As List(Of String) = Nothing
 
         Dim payQuery As IReceivePaymentQuery = MsgSetRequest.AppendReceivePaymentQueryRq
-        payQuery.ORTxnQuery.TxnIDList.Add(PaymentTxnID)
+        payQuery.ORTxnQuery.TxnIDList.Add(Row.PaymentTxnID)
 
         ' only need edit sequence back
         payQuery.IncludeRetElementList.Add("EditSequence")
+        payQuery.IncludeRetElementList.Add("AppliedToTxnRetList")
 
         Dim msgSetResp As IMsgSetResponse = SessionManager.DoRequests(MsgSetRequest)
         Dim respList As IResponseList = msgSetResp.ResponseList
@@ -650,27 +651,77 @@ retry:
             If (resp.StatusCode = 0) Then
                 Dim payRetList As IReceivePaymentRetList = resp.Detail
                 For l = 0 To payRetList.Count - 1
-                    Dim payRet As IReceivePaymentRet = payRetList.GetAt(i)
+                    Dim payRet As IReceivePaymentRet = payRetList.GetAt(l)
 
                     ' grabbing edit seq for return
-                    currEditSeq = payRet.EditSequence.GetValue
+                    Row.PaymentEditSeq = payRet.EditSequence.GetValue
+
+                    ' looping through applied to txn list to get txn this is applied to, then have to query each to find oldest date
+                    Dim appliedTxnList As IAppliedToTxnRetList = payRet.AppliedToTxnRetList
+                    For j = 0 To appliedTxnList.Count - 1
+                        Dim appTxn As IAppliedToTxnRet = appliedTxnList.GetAt(j)
+
+                        ' add inv id to list of applied txns
+                        appTxnList.Add(appTxn.TxnID.GetValue)
+                    Next
                 Next
             Else
                 ResponseErr_Misc(resp)
             End If
         Next
 
-        Return currEditSeq
+        Return appTxnList
+    End Function
+    Public Function Invoices_EarliestCreationDate(ByVal InvoiceTxnIDList As List(Of String)) As Date
+        ' return date var
+        Dim earliestDate As Date = Nothing
+
+        For Each txnID As String In InvoiceTxnIDList
+            Dim invQuery As IInvoiceQuery = MsgSetRequest.AppendInvoiceQueryRq
+            invQuery.ORInvoiceQuery.TxnIDList.Add(txnID)
+
+            ' only need creation date back
+            invQuery.IncludeRetElementList.Add("TimeCreated")
+
+            Dim msgSetResp As IMsgSetResponse = SessionManager.DoRequests(MsgSetRequest)
+            Dim respList As IResponseList = msgSetResp.ResponseList
+
+            MsgSetRequest.ClearRequests()
+
+            For i = 0 To respList.Count - 1
+                Dim resp As IResponse = respList.GetAt(i)
+                Dim invRet As IInvoiceRet = resp.Detail
+
+                ' checking if this create date is before the earliest we have so far
+                If (invRet.TimeCreated.GetValue < earliestDate) Then
+                    earliestDate = invRet.TimeCreated.GetValue
+                End If
+            Next
+        Next
+
+        Return earliestDate
     End Function
 
-    Public Sub Payment_MoveToCustomer(ByVal PaymentTxnID As String, ByVal EditSequence As String, ByVal NewCustomerNumber As Integer)
+    Public Sub Payment_MoveToCustomer(ByVal PaymentHistoryRow As ds_Payments.PaymentHistory_DBRow, ByVal NewCustomerNumber As Integer)
+        ' need to get current edit sequence first (which function updates row by ref) and list of applied txns
+        Dim appliedList As List(Of String) = Payment_GetAppliedTxns(PaymentHistoryRow)
+
+        ' now pass this list and get earliest creation date this payment we are about to move paid for on this orig customer
+        ' this date will be used later to unapply any payments or credits created
+
         Dim recPayMod As IReceivePaymentMod = MsgSetRequest.AppendReceivePaymentModRq
 
         ' payment im talking about
-        recPayMod.TxnID.SetValue(PaymentTxnID)
-        recPayMod.EditSequence.SetValue(EditSequence)
+        recPayMod.TxnID.SetValue(PaymentHistoryRow.PaymentTxnID)
+        recPayMod.EditSequence.SetValue(PaymentHistoryRow.PaymentEditSeq)
 
         ' who its going to now
+        Using ta As New ds_CustomerTableAdapters.QueriesTableAdapter
+            recPayMod.CustomerRef.ListID.SetValue(ta.Customer_GetListID(NewCustomerNumber))
+        End Using
+
+        ' wiping applied txns
+        Dim appliedTxnList As IAppliedToTxnModList = recPayMod.AppliedToTxnModList
 
     End Sub
 
