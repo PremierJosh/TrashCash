@@ -12,6 +12,22 @@
             _payHisRow = value
 
             ' update controls on form
+            cmb_CurrCustomer.SelectedValue = value.CustomerNumber
+            tb_Amount.Text = FormatCurrency(value.Amount)
+            dtp_RecDateTime.Value = value.DateReceived
+            lbl_InputBy.Text = "Input By: " & value.
+
+            ' checking if its cash - if not set controls and make visible
+            If (value.PaymentID <> 1) Then
+                tb_RefNum.Text = value.RefNumber
+                dtp_DateOnChk.Value = value.DateOnCheck
+
+                ' making controls visible
+                lbl_RefNum.Visible = True
+                lbl_DateOnCk.Visible = True
+                tb_RefNum.Visible = True
+                dtp_DateOnChk.Visible = True
+            End If
 
         End Set
     End Property
@@ -37,7 +53,15 @@
 
         ' Add any initialization after the InitializeComponent() call.
         HomeForm = _HomeForm
+
+        ' fill customer list table
+        Me.Customer_ListByActiveTableAdapter.Fill(Me.Ds_Customer.Customer_ListByActive, False)
+
         ' set various vars qb will need in mod request
         PaymentID = _PaymentID
+    End Sub
+
+    Private Sub btn_MovePay_Click(sender As System.Object, e As System.EventArgs) Handles btn_MovePay.Click
+
     End Sub
 End Class
