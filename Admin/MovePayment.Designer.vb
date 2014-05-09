@@ -27,28 +27,28 @@ Partial Class MovePayment
         Me.pnl_top = New System.Windows.Forms.Panel()
         Me.lbl_FormInfo = New System.Windows.Forms.Label()
         Me.grp_CurPayInfo = New System.Windows.Forms.GroupBox()
-        Me.lbl_CurrCustomer = New System.Windows.Forms.Label()
-        Me.cmb_CurrCustomer = New System.Windows.Forms.ComboBox()
-        Me.Ds_Customer = New TrashCash.ds_Customer()
-        Me.CustomerListByActiveBindingSource = New System.Windows.Forms.BindingSource(Me.components)
-        Me.Customer_ListByActiveTableAdapter = New TrashCash.ds_CustomerTableAdapters.Customer_ListByActiveTableAdapter()
-        Me.lbl_Amount = New System.Windows.Forms.Label()
-        Me.tb_Amount = New System.Windows.Forms.TextBox()
-        Me.lbl_RefNum = New System.Windows.Forms.Label()
-        Me.tb_RefNum = New System.Windows.Forms.TextBox()
-        Me.lbl_RecDate = New System.Windows.Forms.Label()
-        Me.dtp_RecDateTime = New System.Windows.Forms.DateTimePicker()
-        Me.lbl_DateOnCk = New System.Windows.Forms.Label()
-        Me.dtp_DateOnChk = New System.Windows.Forms.DateTimePicker()
         Me.lbl_InputBy = New System.Windows.Forms.Label()
+        Me.dtp_DateOnChk = New System.Windows.Forms.DateTimePicker()
+        Me.lbl_DateOnCk = New System.Windows.Forms.Label()
+        Me.dtp_RecDateTime = New System.Windows.Forms.DateTimePicker()
+        Me.lbl_RecDate = New System.Windows.Forms.Label()
+        Me.tb_RefNum = New System.Windows.Forms.TextBox()
+        Me.lbl_RefNum = New System.Windows.Forms.Label()
+        Me.tb_Amount = New System.Windows.Forms.TextBox()
+        Me.lbl_Amount = New System.Windows.Forms.Label()
+        Me.cmb_CurrCustomer = New System.Windows.Forms.ComboBox()
+        Me.CustomerListByActiveBindingSource = New System.Windows.Forms.BindingSource(Me.components)
+        Me.Ds_Customer = New TrashCash.ds_Customer()
+        Me.lbl_CurrCustomer = New System.Windows.Forms.Label()
+        Me.Customer_ListByActiveTableAdapter = New TrashCash.ds_CustomerTableAdapters.Customer_ListByActiveTableAdapter()
         Me.lbl_NewCust = New System.Windows.Forms.Label()
         Me.cmb_MoveToCust = New System.Windows.Forms.ComboBox()
         Me.ck_ApplyOpen = New System.Windows.Forms.CheckBox()
         Me.btn_MovePay = New System.Windows.Forms.Button()
         Me.pnl_top.SuspendLayout()
         Me.grp_CurPayInfo.SuspendLayout()
-        CType(Me.Ds_Customer, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.CustomerListByActiveBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.Ds_Customer, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'pnl_top
@@ -93,14 +93,85 @@ Partial Class MovePayment
         Me.grp_CurPayInfo.TabStop = False
         Me.grp_CurPayInfo.Text = "Current Payment Information"
         '
-        'lbl_CurrCustomer
+        'lbl_InputBy
         '
-        Me.lbl_CurrCustomer.AutoSize = True
-        Me.lbl_CurrCustomer.Location = New System.Drawing.Point(6, 25)
-        Me.lbl_CurrCustomer.Name = "lbl_CurrCustomer"
-        Me.lbl_CurrCustomer.Size = New System.Drawing.Size(91, 13)
-        Me.lbl_CurrCustomer.TabIndex = 0
-        Me.lbl_CurrCustomer.Text = "Current Customer:"
+        Me.lbl_InputBy.AutoSize = True
+        Me.lbl_InputBy.Location = New System.Drawing.Point(406, 91)
+        Me.lbl_InputBy.Name = "lbl_InputBy"
+        Me.lbl_InputBy.Size = New System.Drawing.Size(87, 13)
+        Me.lbl_InputBy.TabIndex = 10
+        Me.lbl_InputBy.Text = "Input By: Premier"
+        '
+        'dtp_DateOnChk
+        '
+        Me.dtp_DateOnChk.Format = System.Windows.Forms.DateTimePickerFormat.[Short]
+        Me.dtp_DateOnChk.Location = New System.Drawing.Point(284, 87)
+        Me.dtp_DateOnChk.Name = "dtp_DateOnChk"
+        Me.dtp_DateOnChk.Size = New System.Drawing.Size(85, 20)
+        Me.dtp_DateOnChk.TabIndex = 9
+        Me.dtp_DateOnChk.Visible = False
+        '
+        'lbl_DateOnCk
+        '
+        Me.lbl_DateOnCk.AutoSize = True
+        Me.lbl_DateOnCk.Location = New System.Drawing.Point(197, 91)
+        Me.lbl_DateOnCk.Name = "lbl_DateOnCk"
+        Me.lbl_DateOnCk.Size = New System.Drawing.Size(81, 13)
+        Me.lbl_DateOnCk.TabIndex = 8
+        Me.lbl_DateOnCk.Text = "Date on check:"
+        Me.lbl_DateOnCk.Visible = False
+        '
+        'dtp_RecDateTime
+        '
+        Me.dtp_RecDateTime.CustomFormat = "ddddd, MMMM dd, yyyy hh:mm tt"
+        Me.dtp_RecDateTime.Format = System.Windows.Forms.DateTimePickerFormat.Custom
+        Me.dtp_RecDateTime.Location = New System.Drawing.Point(276, 61)
+        Me.dtp_RecDateTime.Name = "dtp_RecDateTime"
+        Me.dtp_RecDateTime.Size = New System.Drawing.Size(232, 20)
+        Me.dtp_RecDateTime.TabIndex = 7
+        '
+        'lbl_RecDate
+        '
+        Me.lbl_RecDate.AutoSize = True
+        Me.lbl_RecDate.Location = New System.Drawing.Point(197, 64)
+        Me.lbl_RecDate.Name = "lbl_RecDate"
+        Me.lbl_RecDate.Size = New System.Drawing.Size(73, 13)
+        Me.lbl_RecDate.TabIndex = 6
+        Me.lbl_RecDate.Text = "Received On:"
+        '
+        'tb_RefNum
+        '
+        Me.tb_RefNum.Location = New System.Drawing.Point(80, 87)
+        Me.tb_RefNum.Name = "tb_RefNum"
+        Me.tb_RefNum.Size = New System.Drawing.Size(100, 20)
+        Me.tb_RefNum.TabIndex = 5
+        Me.tb_RefNum.Visible = False
+        '
+        'lbl_RefNum
+        '
+        Me.lbl_RefNum.AutoSize = True
+        Me.lbl_RefNum.Location = New System.Drawing.Point(4, 91)
+        Me.lbl_RefNum.Name = "lbl_RefNum"
+        Me.lbl_RefNum.Size = New System.Drawing.Size(70, 13)
+        Me.lbl_RefNum.TabIndex = 4
+        Me.lbl_RefNum.Text = "Reference #:"
+        Me.lbl_RefNum.Visible = False
+        '
+        'tb_Amount
+        '
+        Me.tb_Amount.Location = New System.Drawing.Point(80, 61)
+        Me.tb_Amount.Name = "tb_Amount"
+        Me.tb_Amount.Size = New System.Drawing.Size(100, 20)
+        Me.tb_Amount.TabIndex = 3
+        '
+        'lbl_Amount
+        '
+        Me.lbl_Amount.AutoSize = True
+        Me.lbl_Amount.Location = New System.Drawing.Point(28, 64)
+        Me.lbl_Amount.Name = "lbl_Amount"
+        Me.lbl_Amount.Size = New System.Drawing.Size(46, 13)
+        Me.lbl_Amount.TabIndex = 2
+        Me.lbl_Amount.Text = "Amount:"
         '
         'cmb_CurrCustomer
         '
@@ -113,99 +184,28 @@ Partial Class MovePayment
         Me.cmb_CurrCustomer.Size = New System.Drawing.Size(267, 21)
         Me.cmb_CurrCustomer.TabIndex = 1
         '
-        'Ds_Customer
-        '
-        Me.Ds_Customer.DataSetName = "ds_Customer"
-        Me.Ds_Customer.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema
-        '
         'CustomerListByActiveBindingSource
         '
         Me.CustomerListByActiveBindingSource.DataMember = "Customer_ListByActive"
         Me.CustomerListByActiveBindingSource.DataSource = Me.Ds_Customer
         '
+        'Ds_Customer
+        '
+        Me.Ds_Customer.DataSetName = "ds_Customer"
+        Me.Ds_Customer.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema
+        '
+        'lbl_CurrCustomer
+        '
+        Me.lbl_CurrCustomer.AutoSize = True
+        Me.lbl_CurrCustomer.Location = New System.Drawing.Point(6, 25)
+        Me.lbl_CurrCustomer.Name = "lbl_CurrCustomer"
+        Me.lbl_CurrCustomer.Size = New System.Drawing.Size(91, 13)
+        Me.lbl_CurrCustomer.TabIndex = 0
+        Me.lbl_CurrCustomer.Text = "Current Customer:"
+        '
         'Customer_ListByActiveTableAdapter
         '
         Me.Customer_ListByActiveTableAdapter.ClearBeforeFill = True
-        '
-        'lbl_Amount
-        '
-        Me.lbl_Amount.AutoSize = True
-        Me.lbl_Amount.Location = New System.Drawing.Point(28, 64)
-        Me.lbl_Amount.Name = "lbl_Amount"
-        Me.lbl_Amount.Size = New System.Drawing.Size(46, 13)
-        Me.lbl_Amount.TabIndex = 2
-        Me.lbl_Amount.Text = "Amount:"
-        '
-        'tb_Amount
-        '
-        Me.tb_Amount.Location = New System.Drawing.Point(80, 61)
-        Me.tb_Amount.Name = "tb_Amount"
-        Me.tb_Amount.Size = New System.Drawing.Size(100, 20)
-        Me.tb_Amount.TabIndex = 3
-        '
-        'lbl_RefNum
-        '
-        Me.lbl_RefNum.AutoSize = True
-        Me.lbl_RefNum.Location = New System.Drawing.Point(4, 91)
-        Me.lbl_RefNum.Name = "lbl_RefNum"
-        Me.lbl_RefNum.Size = New System.Drawing.Size(70, 13)
-        Me.lbl_RefNum.TabIndex = 4
-        Me.lbl_RefNum.Text = "Reference #:"
-        Me.lbl_RefNum.Visible = False
-        '
-        'tb_RefNum
-        '
-        Me.tb_RefNum.Location = New System.Drawing.Point(80, 87)
-        Me.tb_RefNum.Name = "tb_RefNum"
-        Me.tb_RefNum.Size = New System.Drawing.Size(100, 20)
-        Me.tb_RefNum.TabIndex = 5
-        Me.tb_RefNum.Visible = False
-        '
-        'lbl_RecDate
-        '
-        Me.lbl_RecDate.AutoSize = True
-        Me.lbl_RecDate.Location = New System.Drawing.Point(197, 64)
-        Me.lbl_RecDate.Name = "lbl_RecDate"
-        Me.lbl_RecDate.Size = New System.Drawing.Size(73, 13)
-        Me.lbl_RecDate.TabIndex = 6
-        Me.lbl_RecDate.Text = "Received On:"
-        '
-        'dtp_RecDateTime
-        '
-        Me.dtp_RecDateTime.CustomFormat = "MM/dd/yyyy/ - hh:mm"
-        Me.dtp_RecDateTime.Format = System.Windows.Forms.DateTimePickerFormat.Custom
-        Me.dtp_RecDateTime.Location = New System.Drawing.Point(276, 61)
-        Me.dtp_RecDateTime.Name = "dtp_RecDateTime"
-        Me.dtp_RecDateTime.Size = New System.Drawing.Size(139, 20)
-        Me.dtp_RecDateTime.TabIndex = 7
-        '
-        'lbl_DateOnCk
-        '
-        Me.lbl_DateOnCk.AutoSize = True
-        Me.lbl_DateOnCk.Location = New System.Drawing.Point(197, 91)
-        Me.lbl_DateOnCk.Name = "lbl_DateOnCk"
-        Me.lbl_DateOnCk.Size = New System.Drawing.Size(81, 13)
-        Me.lbl_DateOnCk.TabIndex = 8
-        Me.lbl_DateOnCk.Text = "Date on check:"
-        Me.lbl_DateOnCk.Visible = False
-        '
-        'dtp_DateOnChk
-        '
-        Me.dtp_DateOnChk.Format = System.Windows.Forms.DateTimePickerFormat.[Short]
-        Me.dtp_DateOnChk.Location = New System.Drawing.Point(284, 87)
-        Me.dtp_DateOnChk.Name = "dtp_DateOnChk"
-        Me.dtp_DateOnChk.Size = New System.Drawing.Size(85, 20)
-        Me.dtp_DateOnChk.TabIndex = 9
-        Me.dtp_DateOnChk.Visible = False
-        '
-        'lbl_InputBy
-        '
-        Me.lbl_InputBy.AutoSize = True
-        Me.lbl_InputBy.Location = New System.Drawing.Point(435, 64)
-        Me.lbl_InputBy.Name = "lbl_InputBy"
-        Me.lbl_InputBy.Size = New System.Drawing.Size(87, 13)
-        Me.lbl_InputBy.TabIndex = 10
-        Me.lbl_InputBy.Text = "Input By: Premier"
         '
         'lbl_NewCust
         '
@@ -266,8 +266,8 @@ Partial Class MovePayment
         Me.pnl_top.ResumeLayout(False)
         Me.grp_CurPayInfo.ResumeLayout(False)
         Me.grp_CurPayInfo.PerformLayout()
-        CType(Me.Ds_Customer, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.CustomerListByActiveBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.Ds_Customer, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 

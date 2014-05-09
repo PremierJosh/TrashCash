@@ -62,6 +62,13 @@
     End Sub
 
     Private Sub btn_MovePay_Click(sender As System.Object, e As System.EventArgs) Handles btn_MovePay.Click
-
+        ' order of process:
+        ' 1. check edit seq of payment
+        '   if off prompt and exit
+        ' 2. check if applied to txn
+        '   prompt and ask if want to remove - warn those invoices will go unpaid
+        '   if confirm, remove applied to txn and mod to new customer with auto apply
+        '   then on old customer, unapply any payments rec after this pay date
+        '   then query for open invoices and reapply payments
     End Sub
 End Class
