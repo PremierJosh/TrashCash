@@ -161,7 +161,7 @@
 
             If (Not row.Bounced) Then
                 ' create move payment form
-                f_movePayment = New MovePayment(_home, row)
+                f_movePayment = New MovePayment(_home, row.PaymentID)
             Else
                 MessageBox.Show("This payment has been marked as a bounced check.", "Unable to Move Payment", MessageBoxButtons.OK, MessageBoxIcon.Error)
             End If

@@ -29,8 +29,10 @@ Partial Class MovePayment
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(680, 320)
+        Me.MaximizeBox = False
+        Me.MinimizeBox = False
         Me.Name = "MovePayment"
-        Me.Text = "MovePayment"
+        Me.Text = "Move Payment"
         Me.ResumeLayout(False)
 
     End Sub
