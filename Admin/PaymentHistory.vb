@@ -149,7 +149,7 @@
         _home = HomeForm
     End Sub
 
-    Private Sub Cmb_PaymentTypes_SelectionChangeCommitted(sender As System.Object, e As System.EventArgs) Handles Cmb_PaymentTypes.SelectionChangeCommitted
+    Private Sub Cmb_PaymentTypes_SelectionChangeCommitted(sender As System.Object, e As System.EventArgs)
 
     End Sub
 

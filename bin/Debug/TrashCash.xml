@@ -707,6 +707,58 @@ Used to sort self-referenced table's rows
 	<summary>
 TableAdapterManager is used to coordinate TableAdapters in the dataset to enable Hierarchical Update scenarios
 </summary>
+</member><member name="T:TrashCash.ds_Customer.Customer_ListByActiveDataTable">
+	<summary>
+Represents the strongly named DataTable class.
+</summary>
+</member><member name="T:TrashCash.ds_Customer.Customer_ListByActiveRow">
+	<summary>
+Represents strongly named DataRow class.
+</summary>
+</member><member name="T:TrashCash.ds_Customer.Customer_ListByActiveRowChangeEvent">
+	<summary>
+Row event argument class
+</summary>
+</member><member name="T:TrashCash.ds_Customer">
+	<summary>
+Represents a strongly typed in-memory cache of data.
+</summary>
+</member><member name="T:TrashCash.ds_CustomerTableAdapters.Customer_ListByActiveTableAdapter">
+	<summary>
+Represents the connection and commands used to retrieve and save data.
+</summary>
+</member><member name="M:TrashCash.ds_CustomerTableAdapters.TableAdapterManager.UpdateUpdatedRows(TrashCash.ds_Customer,System.Collections.Generic.List{System.Data.DataRow},System.Collections.Generic.List{System.Data.DataRow})">
+	<summary>
+Update rows in top-down order.
+</summary>
+</member><member name="M:TrashCash.ds_CustomerTableAdapters.TableAdapterManager.UpdateInsertedRows(TrashCash.ds_Customer,System.Collections.Generic.List{System.Data.DataRow})">
+	<summary>
+Insert rows in top-down order.
+</summary>
+</member><member name="M:TrashCash.ds_CustomerTableAdapters.TableAdapterManager.UpdateDeletedRows(TrashCash.ds_Customer,System.Collections.Generic.List{System.Data.DataRow})">
+	<summary>
+Delete rows in bottom-up order.
+</summary>
+</member><member name="M:TrashCash.ds_CustomerTableAdapters.TableAdapterManager.GetRealUpdatedRows(System.Data.DataRow[],System.Collections.Generic.List{System.Data.DataRow})">
+	<summary>
+Remove inserted rows that become updated rows after calling TableAdapter.Update(inserted rows) first
+</summary>
+</member><member name="M:TrashCash.ds_CustomerTableAdapters.TableAdapterManager.UpdateAll(TrashCash.ds_Customer)">
+	<summary>
+Update all changes to the dataset.
+</summary>
+</member><member name="T:TrashCash.ds_CustomerTableAdapters.TableAdapterManager.UpdateOrderOption">
+	<summary>
+Update Order Option
+</summary>
+</member><member name="T:TrashCash.ds_CustomerTableAdapters.TableAdapterManager.SelfReferenceComparer">
+	<summary>
+Used to sort self-referenced table's rows
+</summary>
+</member><member name="T:TrashCash.ds_CustomerTableAdapters.TableAdapterManager">
+	<summary>
+TableAdapterManager is used to coordinate TableAdapters in the dataset to enable Hierarchical Update scenarios
+</summary>
 </member><member name="T:TrashCash.ds_Payments.PaymentHistory_DisplayDataTable">
 	<summary>
 Represents the strongly named DataTable class.

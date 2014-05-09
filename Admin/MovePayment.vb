@@ -15,7 +15,7 @@
             cmb_CurrCustomer.SelectedValue = value.CustomerNumber
             tb_Amount.Text = FormatCurrency(value.Amount)
             dtp_RecDateTime.Value = value.DateReceived
-            lbl_InputBy.Text = "Input By: " & value.
+            lbl_InputBy.Text = "Input By: " & value.InsertedByUser
 
             ' checking if its cash - if not set controls and make visible
             If (value.PaymentID <> 1) Then
