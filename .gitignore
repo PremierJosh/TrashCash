@@ -1,2 +1,5 @@
 *.cache
 *.exe
+[Bb]in
+[Dd]ebug*/
+[Rr]elease*/

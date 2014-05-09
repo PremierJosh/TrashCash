@@ -707,15 +707,27 @@ Used to sort self-referenced table's rows
 	<summary>
 TableAdapterManager is used to coordinate TableAdapters in the dataset to enable Hierarchical Update scenarios
 </summary>
-</member><member name="T:TrashCash.ds_Payments.PaymentHistoryDataTable">
+</member><member name="T:TrashCash.ds_Payments.PaymentHistory_DisplayDataTable">
 	<summary>
 Represents the strongly named DataTable class.
 </summary>
-</member><member name="T:TrashCash.ds_Payments.PaymentHistoryRow">
+</member><member name="T:TrashCash.ds_Payments.PaymentHistory_DBDataTable">
+	<summary>
+Represents the strongly named DataTable class.
+</summary>
+</member><member name="T:TrashCash.ds_Payments.PaymentHistory_DisplayRow">
 	<summary>
 Represents strongly named DataRow class.
 </summary>
-</member><member name="T:TrashCash.ds_Payments.PaymentHistoryRowChangeEvent">
+</member><member name="T:TrashCash.ds_Payments.PaymentHistory_DBRow">
+	<summary>
+Represents strongly named DataRow class.
+</summary>
+</member><member name="T:TrashCash.ds_Payments.PaymentHistory_DisplayRowChangeEvent">
+	<summary>
+Row event argument class
+</summary>
+</member><member name="T:TrashCash.ds_Payments.PaymentHistory_DBRowChangeEvent">
 	<summary>
 Row event argument class
 </summary>
@@ -723,7 +735,15 @@ Row event argument class
 	<summary>
 Represents a strongly typed in-memory cache of data.
 </summary>
-</member><member name="T:TrashCash.ds_PaymentsTableAdapters.PaymentHistoryTableAdapter">
+</member><member name="T:TrashCash.ds_PaymentsTableAdapters.PaymentHistory_DisplayTableAdapter">
+	<summary>
+Represents the connection and commands used to retrieve and save data.
+</summary>
+</member><member name="T:TrashCash.ds_PaymentsTableAdapters.PaymentHistory_DBTableAdapter">
+	<summary>
+Represents the connection and commands used to retrieve and save data.
+</summary>
+</member><member name="T:TrashCash.ds_PaymentsTableAdapters.QueriesTableAdapter">
 	<summary>
 Represents the connection and commands used to retrieve and save data.
 </summary>

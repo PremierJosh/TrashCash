@@ -62,7 +62,7 @@
     Private Sub PaymentHistory_Load(sender As Object, e As System.EventArgs) Handles Me.Load
         ' new stuff
         _dv = New DataView
-        _dv.Table = Me.DataSet.PaymentHistory
+        _dv.Table = Me.Ds_Payments.PaymentHistory_Display
         _dv.Sort = "DateReceived DESC"
         dg_PaymentHistory.DataSource = _dv
 
@@ -91,7 +91,7 @@
         If (CurrentCustomer > 0) Then
             ' making sure we have a customer
             Try
-                Me.PaymentHistoryTableAdapter.Fill(Me.DataSet.PaymentHistory, CurrentCustomer, dtp_StartDate.Value.Date, dtp_EndDate.Value.Date)
+                Me.PaymentHistory_DisplayTableAdapter.Fill(Me.Ds_Payments.PaymentHistory_Display, CurrentCustomer, dtp_StartDate.Value.Date, dtp_EndDate.Value.Date)
             Catch ex As Exception
                 MsgBox(ex.Message)
             End Try

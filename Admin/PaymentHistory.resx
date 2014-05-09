@@ -118,27 +118,59 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <metadata name="Ts_M_Customer.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>685, 17</value>
-  </metadata>
-  <metadata name="Ts_M_Customer.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>685, 17</value>
-  </metadata>
-  <metadata name="RefNumber.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
+    <value>163, 17</value>
   </metadata>
   <metadata name="cm_AlterPayment.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>539, 17</value>
-  </metadata>
-  <metadata name="PaymentHistoryBindingSource.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>111, 17</value>
-  </metadata>
-  <metadata name="DataSet.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 17</value>
   </metadata>
-  <metadata name="DataSet.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>17, 17</value>
+  <metadata name="PaymentHistoryDisplayBindingSource.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>423, 17</value>
   </metadata>
-  <metadata name="PaymentHistoryTableAdapter.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>328, 17</value>
+  <metadata name="Ds_Payments.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>300, 17</value>
+  </metadata>
+  <data name="Cmb_PaymentTypes.DataSource" mimetype="application/x-microsoft.net.object.binary.base64">
+    <value>
+        AAEAAAD/////AQAAAAAAAAAMAgAAAEVUcmFzaENhc2gsIFZlcnNpb249MS41MC4xNDYuNDM4LCBDdWx0
+        dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPW51bGwFAQAAACdUcmFzaENhc2guRGF0YVNldCtQYXlt
+        ZW50VHlwZXNEYXRhVGFibGUDAAAAGURhdGFUYWJsZS5SZW1vdGluZ1ZlcnNpb24JWG1sU2NoZW1hC1ht
+        bERpZmZHcmFtAwEBDlN5c3RlbS5WZXJzaW9uAgAAAAkDAAAABgQAAACqCTw/eG1sIHZlcnNpb249IjEu
+        MCIgZW5jb2Rpbmc9InV0Zi0xNiI/Pg0KPHhzOnNjaGVtYSB4bWxucz0iIiB4bWxuczp4cz0iaHR0cDov
+        L3d3dy53My5vcmcvMjAwMS9YTUxTY2hlbWEiIHhtbG5zOm1zZGF0YT0idXJuOnNjaGVtYXMtbWljcm9z
+        b2Z0LWNvbTp4bWwtbXNkYXRhIj4NCiAgPHhzOmVsZW1lbnQgbmFtZT0iUGF5bWVudFR5cGVzIj4NCiAg
+        ICA8eHM6Y29tcGxleFR5cGU+DQogICAgICA8eHM6c2VxdWVuY2U+DQogICAgICAgIDx4czplbGVtZW50
+        IG5hbWU9IlBheW1lbnRUeXBlSUQiIG1zZGF0YTpSZWFkT25seT0idHJ1ZSIgbXNkYXRhOkF1dG9JbmNy
+        ZW1lbnQ9InRydWUiIG1zZGF0YTpBdXRvSW5jcmVtZW50U2VlZD0iLTEiIG1zZGF0YTpBdXRvSW5jcmVt
+        ZW50U3RlcD0iLTEiIHR5cGU9InhzOmRlY2ltYWwiIG1zZGF0YTp0YXJnZXROYW1lc3BhY2U9IiIgLz4N
+        CiAgICAgICAgPHhzOmVsZW1lbnQgbmFtZT0iUGF5bWVudFR5cGVOYW1lIiBtc2RhdGE6dGFyZ2V0TmFt
+        ZXNwYWNlPSIiPg0KICAgICAgICAgIDx4czpzaW1wbGVUeXBlPg0KICAgICAgICAgICAgPHhzOnJlc3Ry
+        aWN0aW9uIGJhc2U9InhzOnN0cmluZyI+DQogICAgICAgICAgICAgIDx4czptYXhMZW5ndGggdmFsdWU9
+        IjUwIiAvPg0KICAgICAgICAgICAgPC94czpyZXN0cmljdGlvbj4NCiAgICAgICAgICA8L3hzOnNpbXBs
+        ZVR5cGU+DQogICAgICAgIDwveHM6ZWxlbWVudD4NCiAgICAgIDwveHM6c2VxdWVuY2U+DQogICAgPC94
+        czpjb21wbGV4VHlwZT4NCiAgPC94czplbGVtZW50Pg0KICA8eHM6ZWxlbWVudCBuYW1lPSJ0bXBEYXRh
+        U2V0IiBtc2RhdGE6SXNEYXRhU2V0PSJ0cnVlIiBtc2RhdGE6TWFpbkRhdGFUYWJsZT0iUGF5bWVudFR5
+        cGVzIiBtc2RhdGE6VXNlQ3VycmVudExvY2FsZT0idHJ1ZSI+DQogICAgPHhzOmNvbXBsZXhUeXBlPg0K
+        ICAgICAgPHhzOmNob2ljZSBtaW5PY2N1cnM9IjAiIG1heE9jY3Vycz0idW5ib3VuZGVkIiAvPg0KICAg
+        IDwveHM6Y29tcGxleFR5cGU+DQogICAgPHhzOnVuaXF1ZSBuYW1lPSJDb25zdHJhaW50MSIgbXNkYXRh
+        OlByaW1hcnlLZXk9InRydWUiPg0KICAgICAgPHhzOnNlbGVjdG9yIHhwYXRoPSIuLy9QYXltZW50VHlw
+        ZXMiIC8+DQogICAgICA8eHM6ZmllbGQgeHBhdGg9IlBheW1lbnRUeXBlSUQiIC8+DQogICAgPC94czp1
+        bmlxdWU+DQogIDwveHM6ZWxlbWVudD4NCjwveHM6c2NoZW1hPgYFAAAAxQU8ZGlmZmdyOmRpZmZncmFt
+        IHhtbG5zOm1zZGF0YT0idXJuOnNjaGVtYXMtbWljcm9zb2Z0LWNvbTp4bWwtbXNkYXRhIiB4bWxuczpk
+        aWZmZ3I9InVybjpzY2hlbWFzLW1pY3Jvc29mdC1jb206eG1sLWRpZmZncmFtLXYxIj4NCiAgPHRtcERh
+        dGFTZXQ+DQogICAgPFBheW1lbnRUeXBlcyBkaWZmZ3I6aWQ9IlBheW1lbnRUeXBlczEiIG1zZGF0YTpy
+        b3dPcmRlcj0iMCI+DQogICAgICA8UGF5bWVudFR5cGVJRD4xPC9QYXltZW50VHlwZUlEPg0KICAgICAg
+        PFBheW1lbnRUeXBlTmFtZT5DYXNoPC9QYXltZW50VHlwZU5hbWU+DQogICAgPC9QYXltZW50VHlwZXM+
+        DQogICAgPFBheW1lbnRUeXBlcyBkaWZmZ3I6aWQ9IlBheW1lbnRUeXBlczIiIG1zZGF0YTpyb3dPcmRl
+        cj0iMSI+DQogICAgICA8UGF5bWVudFR5cGVJRD4yPC9QYXltZW50VHlwZUlEPg0KICAgICAgPFBheW1l
+        bnRUeXBlTmFtZT5DaGVjazwvUGF5bWVudFR5cGVOYW1lPg0KICAgIDwvUGF5bWVudFR5cGVzPg0KICAg
+        IDxQYXltZW50VHlwZXMgZGlmZmdyOmlkPSJQYXltZW50VHlwZXMzIiBtc2RhdGE6cm93T3JkZXI9IjIi
+        Pg0KICAgICAgPFBheW1lbnRUeXBlSUQ+MzwvUGF5bWVudFR5cGVJRD4NCiAgICAgIDxQYXltZW50VHlw
+        ZU5hbWU+TW9uZXkgT3JkZXI8L1BheW1lbnRUeXBlTmFtZT4NCiAgICA8L1BheW1lbnRUeXBlcz4NCiAg
+        PC90bXBEYXRhU2V0Pg0KPC9kaWZmZ3I6ZGlmZmdyYW0+BAMAAAAOU3lzdGVtLlZlcnNpb24EAAAABl9N
+        YWpvcgZfTWlub3IGX0J1aWxkCV9SZXZpc2lvbgAAAAAICAgIAgAAAAAAAAD//////////ws=
+</value>
+  </data>
+  <metadata name="PaymentHistory_DisplayTableAdapter.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>679, 17</value>
   </metadata>
 </root>

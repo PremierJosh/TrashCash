@@ -23,25 +23,17 @@ Partial Class PaymentHistory
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
-        Dim DataGridViewCellStyle5 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle6 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(PaymentHistory))
-        Dim DataGridViewCellStyle7 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle8 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.pnl_Top = New System.Windows.Forms.Panel()
         Me.pnl_TopContent = New System.Windows.Forms.Panel()
         Me.Ts_M_Customer = New TrashCash.ts_M_Customer()
         Me.dg_PaymentHistory = New System.Windows.Forms.DataGridView()
-        Me.PaymentTypeNameDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.AmountDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.DateReceivedDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.RefNumber = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.cm_AlterPayment = New System.Windows.Forms.ContextMenuStrip(Me.components)
         Me.cm_i_BounceCheck = New System.Windows.Forms.ToolStripMenuItem()
         Me.cm_i_MovePayment = New System.Windows.Forms.ToolStripMenuItem()
-        Me.PaymentHistoryBindingSource = New System.Windows.Forms.BindingSource(Me.components)
-        Me.DataSet = New TrashCash.DataSet()
-        Me.PaymentHistoryTableAdapter = New TrashCash.DataSetTableAdapters.PaymentHistoryTableAdapter()
         Me.pnl_Filter = New System.Windows.Forms.Panel()
         Me.Cmb_PaymentTypes = New TrashCash.Database_ComboBoxes.cmb_PaymentTypes()
         Me.ck_All = New System.Windows.Forms.CheckBox()
@@ -54,13 +46,24 @@ Partial Class PaymentHistory
         Me.DataGridViewTextBoxColumn2 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.DataGridViewTextBoxColumn3 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.DataGridViewTextBoxColumn4 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.PaymentHistoryDisplayBindingSource = New System.Windows.Forms.BindingSource(Me.components)
+        Me.Ds_Payments = New TrashCash.ds_Payments()
+        Me.PaymentHistory_DisplayTableAdapter = New TrashCash.ds_PaymentsTableAdapters.PaymentHistory_DisplayTableAdapter()
+        Me.PaymentIDDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.CustomerNumberDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.PaymentTypeIDDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.PaymentTypeNameDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.RefNumberDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.AmountDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.DateReceivedDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.BouncedDataGridViewCheckBoxColumn = New System.Windows.Forms.DataGridViewCheckBoxColumn()
         Me.pnl_Top.SuspendLayout()
         Me.pnl_TopContent.SuspendLayout()
         CType(Me.dg_PaymentHistory, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.cm_AlterPayment.SuspendLayout()
-        CType(Me.PaymentHistoryBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.DataSet, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.pnl_Filter.SuspendLayout()
+        CType(Me.PaymentHistoryDisplayBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.Ds_Payments, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'pnl_Top
@@ -101,9 +104,9 @@ Partial Class PaymentHistory
         Me.dg_PaymentHistory.AutoGenerateColumns = False
         Me.dg_PaymentHistory.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
         Me.dg_PaymentHistory.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.dg_PaymentHistory.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.PaymentTypeNameDataGridViewTextBoxColumn, Me.AmountDataGridViewTextBoxColumn, Me.DateReceivedDataGridViewTextBoxColumn, Me.RefNumber})
+        Me.dg_PaymentHistory.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.PaymentIDDataGridViewTextBoxColumn, Me.CustomerNumberDataGridViewTextBoxColumn, Me.PaymentTypeIDDataGridViewTextBoxColumn, Me.PaymentTypeNameDataGridViewTextBoxColumn, Me.RefNumberDataGridViewTextBoxColumn, Me.AmountDataGridViewTextBoxColumn, Me.DateReceivedDataGridViewTextBoxColumn, Me.BouncedDataGridViewCheckBoxColumn})
         Me.dg_PaymentHistory.ContextMenuStrip = Me.cm_AlterPayment
-        Me.dg_PaymentHistory.DataSource = Me.PaymentHistoryBindingSource
+        Me.dg_PaymentHistory.DataSource = Me.PaymentHistoryDisplayBindingSource
         Me.dg_PaymentHistory.Dock = System.Windows.Forms.DockStyle.Fill
         Me.dg_PaymentHistory.Location = New System.Drawing.Point(0, 117)
         Me.dg_PaymentHistory.MultiSelect = False
@@ -113,38 +116,6 @@ Partial Class PaymentHistory
         Me.dg_PaymentHistory.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
         Me.dg_PaymentHistory.Size = New System.Drawing.Size(869, 341)
         Me.dg_PaymentHistory.TabIndex = 16
-        '
-        'PaymentTypeNameDataGridViewTextBoxColumn
-        '
-        Me.PaymentTypeNameDataGridViewTextBoxColumn.DataPropertyName = "PaymentTypeName"
-        Me.PaymentTypeNameDataGridViewTextBoxColumn.HeaderText = "Payment Method"
-        Me.PaymentTypeNameDataGridViewTextBoxColumn.Name = "PaymentTypeNameDataGridViewTextBoxColumn"
-        Me.PaymentTypeNameDataGridViewTextBoxColumn.ReadOnly = True
-        '
-        'AmountDataGridViewTextBoxColumn
-        '
-        Me.AmountDataGridViewTextBoxColumn.DataPropertyName = "Amount"
-        DataGridViewCellStyle5.Format = "C2"
-        Me.AmountDataGridViewTextBoxColumn.DefaultCellStyle = DataGridViewCellStyle5
-        Me.AmountDataGridViewTextBoxColumn.HeaderText = "Amount"
-        Me.AmountDataGridViewTextBoxColumn.Name = "AmountDataGridViewTextBoxColumn"
-        Me.AmountDataGridViewTextBoxColumn.ReadOnly = True
-        '
-        'DateReceivedDataGridViewTextBoxColumn
-        '
-        Me.DateReceivedDataGridViewTextBoxColumn.DataPropertyName = "DateReceived"
-        DataGridViewCellStyle6.Format = "d"
-        Me.DateReceivedDataGridViewTextBoxColumn.DefaultCellStyle = DataGridViewCellStyle6
-        Me.DateReceivedDataGridViewTextBoxColumn.HeaderText = "Date Received"
-        Me.DateReceivedDataGridViewTextBoxColumn.Name = "DateReceivedDataGridViewTextBoxColumn"
-        Me.DateReceivedDataGridViewTextBoxColumn.ReadOnly = True
-        '
-        'RefNumber
-        '
-        Me.RefNumber.DataPropertyName = "RefNumber"
-        Me.RefNumber.HeaderText = "RefNumber"
-        Me.RefNumber.Name = "RefNumber"
-        Me.RefNumber.ReadOnly = True
         '
         'cm_AlterPayment
         '
@@ -163,20 +134,6 @@ Partial Class PaymentHistory
         Me.cm_i_MovePayment.Name = "cm_i_MovePayment"
         Me.cm_i_MovePayment.Size = New System.Drawing.Size(154, 22)
         Me.cm_i_MovePayment.Text = "Move Payment"
-        '
-        'PaymentHistoryBindingSource
-        '
-        Me.PaymentHistoryBindingSource.DataMember = "PaymentHistory"
-        Me.PaymentHistoryBindingSource.DataSource = Me.DataSet
-        '
-        'DataSet
-        '
-        Me.DataSet.DataSetName = "DataSet"
-        Me.DataSet.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema
-        '
-        'PaymentHistoryTableAdapter
-        '
-        Me.PaymentHistoryTableAdapter.ClearBeforeFill = True
         '
         'pnl_Filter
         '
@@ -265,8 +222,8 @@ Partial Class PaymentHistory
         'DataGridViewTextBoxColumn2
         '
         Me.DataGridViewTextBoxColumn2.DataPropertyName = "Amount"
-        DataGridViewCellStyle7.Format = "C2"
-        Me.DataGridViewTextBoxColumn2.DefaultCellStyle = DataGridViewCellStyle7
+        DataGridViewCellStyle2.Format = "C2"
+        Me.DataGridViewTextBoxColumn2.DefaultCellStyle = DataGridViewCellStyle2
         Me.DataGridViewTextBoxColumn2.HeaderText = "Amount"
         Me.DataGridViewTextBoxColumn2.Name = "DataGridViewTextBoxColumn2"
         Me.DataGridViewTextBoxColumn2.ReadOnly = True
@@ -275,8 +232,8 @@ Partial Class PaymentHistory
         'DataGridViewTextBoxColumn3
         '
         Me.DataGridViewTextBoxColumn3.DataPropertyName = "DateReceived"
-        DataGridViewCellStyle8.Format = "d"
-        Me.DataGridViewTextBoxColumn3.DefaultCellStyle = DataGridViewCellStyle8
+        DataGridViewCellStyle3.Format = "d"
+        Me.DataGridViewTextBoxColumn3.DefaultCellStyle = DataGridViewCellStyle3
         Me.DataGridViewTextBoxColumn3.HeaderText = "Date Received"
         Me.DataGridViewTextBoxColumn3.Name = "DataGridViewTextBoxColumn3"
         Me.DataGridViewTextBoxColumn3.ReadOnly = True
@@ -289,6 +246,82 @@ Partial Class PaymentHistory
         Me.DataGridViewTextBoxColumn4.Name = "DataGridViewTextBoxColumn4"
         Me.DataGridViewTextBoxColumn4.ReadOnly = True
         Me.DataGridViewTextBoxColumn4.Width = 216
+        '
+        'PaymentHistoryDisplayBindingSource
+        '
+        Me.PaymentHistoryDisplayBindingSource.DataMember = "PaymentHistory_Display"
+        Me.PaymentHistoryDisplayBindingSource.DataSource = Me.Ds_Payments
+        '
+        'Ds_Payments
+        '
+        Me.Ds_Payments.DataSetName = "ds_Payments"
+        Me.Ds_Payments.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema
+        '
+        'PaymentHistory_DisplayTableAdapter
+        '
+        Me.PaymentHistory_DisplayTableAdapter.ClearBeforeFill = True
+        '
+        'PaymentIDDataGridViewTextBoxColumn
+        '
+        Me.PaymentIDDataGridViewTextBoxColumn.DataPropertyName = "PaymentID"
+        Me.PaymentIDDataGridViewTextBoxColumn.HeaderText = "PaymentID"
+        Me.PaymentIDDataGridViewTextBoxColumn.Name = "PaymentIDDataGridViewTextBoxColumn"
+        Me.PaymentIDDataGridViewTextBoxColumn.ReadOnly = True
+        Me.PaymentIDDataGridViewTextBoxColumn.Visible = False
+        '
+        'CustomerNumberDataGridViewTextBoxColumn
+        '
+        Me.CustomerNumberDataGridViewTextBoxColumn.DataPropertyName = "CustomerNumber"
+        Me.CustomerNumberDataGridViewTextBoxColumn.HeaderText = "CustomerNumber"
+        Me.CustomerNumberDataGridViewTextBoxColumn.Name = "CustomerNumberDataGridViewTextBoxColumn"
+        Me.CustomerNumberDataGridViewTextBoxColumn.ReadOnly = True
+        Me.CustomerNumberDataGridViewTextBoxColumn.Visible = False
+        '
+        'PaymentTypeIDDataGridViewTextBoxColumn
+        '
+        Me.PaymentTypeIDDataGridViewTextBoxColumn.DataPropertyName = "PaymentTypeID"
+        Me.PaymentTypeIDDataGridViewTextBoxColumn.HeaderText = "PaymentTypeID"
+        Me.PaymentTypeIDDataGridViewTextBoxColumn.Name = "PaymentTypeIDDataGridViewTextBoxColumn"
+        Me.PaymentTypeIDDataGridViewTextBoxColumn.ReadOnly = True
+        Me.PaymentTypeIDDataGridViewTextBoxColumn.Visible = False
+        '
+        'PaymentTypeNameDataGridViewTextBoxColumn
+        '
+        Me.PaymentTypeNameDataGridViewTextBoxColumn.DataPropertyName = "PaymentTypeName"
+        Me.PaymentTypeNameDataGridViewTextBoxColumn.HeaderText = "Payment Type"
+        Me.PaymentTypeNameDataGridViewTextBoxColumn.Name = "PaymentTypeNameDataGridViewTextBoxColumn"
+        Me.PaymentTypeNameDataGridViewTextBoxColumn.ReadOnly = True
+        '
+        'RefNumberDataGridViewTextBoxColumn
+        '
+        Me.RefNumberDataGridViewTextBoxColumn.DataPropertyName = "RefNumber"
+        Me.RefNumberDataGridViewTextBoxColumn.HeaderText = "Ref #"
+        Me.RefNumberDataGridViewTextBoxColumn.Name = "RefNumberDataGridViewTextBoxColumn"
+        Me.RefNumberDataGridViewTextBoxColumn.ReadOnly = True
+        '
+        'AmountDataGridViewTextBoxColumn
+        '
+        Me.AmountDataGridViewTextBoxColumn.DataPropertyName = "Amount"
+        Me.AmountDataGridViewTextBoxColumn.HeaderText = "Amount"
+        Me.AmountDataGridViewTextBoxColumn.Name = "AmountDataGridViewTextBoxColumn"
+        Me.AmountDataGridViewTextBoxColumn.ReadOnly = True
+        '
+        'DateReceivedDataGridViewTextBoxColumn
+        '
+        Me.DateReceivedDataGridViewTextBoxColumn.DataPropertyName = "DateReceived"
+        DataGridViewCellStyle1.Format = "d"
+        Me.DateReceivedDataGridViewTextBoxColumn.DefaultCellStyle = DataGridViewCellStyle1
+        Me.DateReceivedDataGridViewTextBoxColumn.HeaderText = "Date Received"
+        Me.DateReceivedDataGridViewTextBoxColumn.Name = "DateReceivedDataGridViewTextBoxColumn"
+        Me.DateReceivedDataGridViewTextBoxColumn.ReadOnly = True
+        '
+        'BouncedDataGridViewCheckBoxColumn
+        '
+        Me.BouncedDataGridViewCheckBoxColumn.DataPropertyName = "Bounced"
+        Me.BouncedDataGridViewCheckBoxColumn.HeaderText = "Bounced"
+        Me.BouncedDataGridViewCheckBoxColumn.Name = "BouncedDataGridViewCheckBoxColumn"
+        Me.BouncedDataGridViewCheckBoxColumn.ReadOnly = True
+        Me.BouncedDataGridViewCheckBoxColumn.Visible = False
         '
         'PaymentHistory
         '
@@ -309,19 +342,16 @@ Partial Class PaymentHistory
         Me.pnl_TopContent.PerformLayout()
         CType(Me.dg_PaymentHistory, System.ComponentModel.ISupportInitialize).EndInit()
         Me.cm_AlterPayment.ResumeLayout(False)
-        CType(Me.PaymentHistoryBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.DataSet, System.ComponentModel.ISupportInitialize).EndInit()
         Me.pnl_Filter.ResumeLayout(False)
         Me.pnl_Filter.PerformLayout()
+        CType(Me.PaymentHistoryDisplayBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.Ds_Payments, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub
     Friend WithEvents pnl_Top As System.Windows.Forms.Panel
     Friend WithEvents pnl_TopContent As System.Windows.Forms.Panel
     Friend WithEvents dg_PaymentHistory As System.Windows.Forms.DataGridView
-    Friend WithEvents PaymentHistoryBindingSource As System.Windows.Forms.BindingSource
-    Friend WithEvents DataSet As TrashCash.DataSet
-    Friend WithEvents PaymentHistoryTableAdapter As TrashCash.DataSetTableAdapters.PaymentHistoryTableAdapter
     Friend WithEvents pnl_Filter As System.Windows.Forms.Panel
     Friend WithEvents ck_All As System.Windows.Forms.CheckBox
     Friend WithEvents Label2 As System.Windows.Forms.Label
@@ -332,14 +362,21 @@ Partial Class PaymentHistory
     Friend WithEvents cm_AlterPayment As System.Windows.Forms.ContextMenuStrip
     Friend WithEvents cm_i_BounceCheck As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents Ts_M_Customer As TrashCash.ts_M_Customer
-    Friend WithEvents PaymentTypeNameDataGridViewTextBoxColumn As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents AmountDataGridViewTextBoxColumn As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents DateReceivedDataGridViewTextBoxColumn As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents RefNumber As System.Windows.Forms.DataGridViewTextBoxColumn
     Friend WithEvents DataGridViewTextBoxColumn1 As System.Windows.Forms.DataGridViewTextBoxColumn
     Friend WithEvents DataGridViewTextBoxColumn2 As System.Windows.Forms.DataGridViewTextBoxColumn
     Friend WithEvents DataGridViewTextBoxColumn3 As System.Windows.Forms.DataGridViewTextBoxColumn
     Friend WithEvents DataGridViewTextBoxColumn4 As System.Windows.Forms.DataGridViewTextBoxColumn
     Friend WithEvents Cmb_PaymentTypes As TrashCash.Database_ComboBoxes.cmb_PaymentTypes
     Friend WithEvents cm_i_MovePayment As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents PaymentHistoryDisplayBindingSource As System.Windows.Forms.BindingSource
+    Friend WithEvents Ds_Payments As TrashCash.ds_Payments
+    Friend WithEvents PaymentHistory_DisplayTableAdapter As TrashCash.ds_PaymentsTableAdapters.PaymentHistory_DisplayTableAdapter
+    Friend WithEvents PaymentIDDataGridViewTextBoxColumn As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents CustomerNumberDataGridViewTextBoxColumn As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents PaymentTypeIDDataGridViewTextBoxColumn As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents PaymentTypeNameDataGridViewTextBoxColumn As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents RefNumberDataGridViewTextBoxColumn As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents AmountDataGridViewTextBoxColumn As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents DateReceivedDataGridViewTextBoxColumn As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents BouncedDataGridViewCheckBoxColumn As System.Windows.Forms.DataGridViewCheckBoxColumn
 End Class
