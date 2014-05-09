@@ -62,6 +62,19 @@
     End Sub
 
     Private Sub btn_MovePay_Click(sender As System.Object, e As System.EventArgs) Handles btn_MovePay.Click
+        If (cmb_MoveToCust.SelectedValue <> cmb_CurrCustomer.SelectedValue) Then
+            ' prompting to confirm move
+            Dim result As DialogResult = MessageBox.Show("Move payment for " & FormatCurrency(PaymentHistoryRow.Amount) & ", receieved on " & FormatDateTime(PaymentHistoryRow.DateReceived, DateFormat.GeneralDate) & " for " & _
+                                                         "Customer: " & cmb_CurrCustomer.SelectedItem.ToString & " to Customer: " & cmb_MoveToCust.SelectedItem.ToString & "?", "Confirm moving payment", MessageBoxButtons.YesNo, MessageBoxIcon.Question)
+
+            If (result = Windows.Forms.DialogResult.Yes) Then
+
+            End If
+        Else
+            ' same customer selected both times
+            MessageBox.Show("Payment already on that Customer.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        End If
+
         ' order of process:
         ' 1. check edit seq of payment
         '   if off prompt and exit

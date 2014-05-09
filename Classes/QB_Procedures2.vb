@@ -629,6 +629,38 @@ retry:
         Public BalanceRemaining
     End Class
 
+    Public Function Payment_EditSequenceCheck(ByVal PaymentTxnID As String, ByVal EditSequence As String) As Boolean
+        ' return bool if edit sequence doesn't match
+        Dim editSeqOk As Boolean = False
+
+        Dim payQuery As IReceivePaymentQuery = MsgSetRequest.AppendReceivePaymentQueryRq
+        payQuery.ORTxnQuery.TxnIDList.Add(PaymentTxnID)
+
+        ' only need edit sequence back
+        payQuery.IncludeRetElementList.Add("EditSequence")
+
+        Dim msgSetResp As IMsgSetResponse = SessionManager.DoRequests(MsgSetRequest)
+        Dim respList As IResponseList = msgSetResp.ResponseList
+
+        MsgSetRequest.ClearRequests()
+
+        ' loop through response
+        For i = 0 To respList.Count
+            Dim resp As IResponse = respList.GetAt(i)
+            Dim payRetList As IReceivePaymentRetList = resp.Detail
+            For l = 0 To payRetList.Count - 1
+                Dim payRet As IReceivePaymentRet = payRetList.GetAt(i)
+
+                ' checking if edit sequence match
+                If (payRet.EditSequence.GetValue = EditSequence) Then
+                    editSeqOk = True
+                End If
+            Next
+        Next
+
+        Return editSeqOk
+    End Function
+
 
 
     Public Function Invoicing_Custom(ByRef CustomerNumber As Integer, ByRef PostDate As Date, ByRef DueDate As Date, ByRef Print As Boolean,
