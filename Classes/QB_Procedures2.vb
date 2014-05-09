@@ -629,9 +629,9 @@ retry:
         Public BalanceRemaining
     End Class
 
-    Public Function Payment_EditSequenceCheck(ByVal PaymentTxnID As String, ByVal EditSequence As String) As Boolean
+    Public Function Payment_EditSequenceCheck(ByVal PaymentTxnID As String) As String
         ' return bool if edit sequence doesn't match
-        Dim editSeqOk As Boolean = False
+        Dim currEditSeq As String = Nothing
 
         Dim payQuery As IReceivePaymentQuery = MsgSetRequest.AppendReceivePaymentQueryRq
         payQuery.ORTxnQuery.TxnIDList.Add(PaymentTxnID)
@@ -647,19 +647,32 @@ retry:
         ' loop through response
         For i = 0 To respList.Count
             Dim resp As IResponse = respList.GetAt(i)
-            Dim payRetList As IReceivePaymentRetList = resp.Detail
-            For l = 0 To payRetList.Count - 1
-                Dim payRet As IReceivePaymentRet = payRetList.GetAt(i)
+            If (resp.StatusCode = 0) Then
+                Dim payRetList As IReceivePaymentRetList = resp.Detail
+                For l = 0 To payRetList.Count - 1
+                    Dim payRet As IReceivePaymentRet = payRetList.GetAt(i)
 
-                ' checking if edit sequence match
-                If (payRet.EditSequence.GetValue = EditSequence) Then
-                    editSeqOk = True
-                End If
-            Next
+                    ' grabbing edit seq for return
+                    currEditSeq = payRet.EditSequence.GetValue
+                Next
+            Else
+                ResponseErr_Misc(resp)
+            End If
         Next
 
-        Return editSeqOk
+        Return currEditSeq
     End Function
+
+    Public Sub Payment_MoveToCustomer(ByVal PaymentTxnID As String, ByVal EditSequence As String, ByVal NewCustomerNumber As Integer)
+        Dim recPayMod As IReceivePaymentMod = MsgSetRequest.AppendReceivePaymentModRq
+
+        ' payment im talking about
+        recPayMod.TxnID.SetValue(PaymentTxnID)
+        recPayMod.EditSequence.SetValue(EditSequence)
+
+        ' who its going to now
+
+    End Sub
 
 
 

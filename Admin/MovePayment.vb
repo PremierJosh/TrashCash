@@ -68,7 +68,14 @@
                                                          "Customer: " & cmb_CurrCustomer.SelectedItem.ToString & " to Customer: " & cmb_MoveToCust.SelectedItem.ToString & "?", "Confirm moving payment", MessageBoxButtons.YesNo, MessageBoxIcon.Question)
 
             If (result = Windows.Forms.DialogResult.Yes) Then
+                ' edit sequence check and warn if mismatch but still move payment
+                Dim currEditSeq As String = HomeForm.Procedures.Payment_EditSequenceCheck(PaymentHistoryRow.PaymentTxnID)
+                If (currEditSeq <> PaymentHistoryRow.PaymentEditSeq) Then
+                    ' payment modified and db doesn't know this
+                    MessageBox.Show("This payment has been modified outside of TrashCash. This payment will still be moved to the new Customer.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+                End If
 
+                ' move payment passing currEditSeq
             End If
         Else
             ' same customer selected both times
