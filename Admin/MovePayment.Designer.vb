@@ -43,7 +43,6 @@ Partial Class MovePayment
         Me.Customer_ListByActiveTableAdapter = New TrashCash.ds_CustomerTableAdapters.Customer_ListByActiveTableAdapter()
         Me.lbl_NewCust = New System.Windows.Forms.Label()
         Me.cmb_MoveToCust = New System.Windows.Forms.ComboBox()
-        Me.ck_ApplyOpen = New System.Windows.Forms.CheckBox()
         Me.btn_MovePay = New System.Windows.Forms.Button()
         Me.pnl_top.SuspendLayout()
         Me.grp_CurPayInfo.SuspendLayout()
@@ -181,7 +180,7 @@ Partial Class MovePayment
         Me.cmb_CurrCustomer.FormattingEnabled = True
         Me.cmb_CurrCustomer.Location = New System.Drawing.Point(103, 22)
         Me.cmb_CurrCustomer.Name = "cmb_CurrCustomer"
-        Me.cmb_CurrCustomer.Size = New System.Drawing.Size(267, 21)
+        Me.cmb_CurrCustomer.Size = New System.Drawing.Size(351, 21)
         Me.cmb_CurrCustomer.TabIndex = 1
         '
         'CustomerListByActiveBindingSource
@@ -224,24 +223,14 @@ Partial Class MovePayment
         Me.cmb_MoveToCust.FormattingEnabled = True
         Me.cmb_MoveToCust.Location = New System.Drawing.Point(116, 224)
         Me.cmb_MoveToCust.Name = "cmb_MoveToCust"
-        Me.cmb_MoveToCust.Size = New System.Drawing.Size(267, 21)
+        Me.cmb_MoveToCust.Size = New System.Drawing.Size(361, 21)
         Me.cmb_MoveToCust.TabIndex = 3
-        '
-        'ck_ApplyOpen
-        '
-        Me.ck_ApplyOpen.AutoSize = True
-        Me.ck_ApplyOpen.Location = New System.Drawing.Point(398, 228)
-        Me.ck_ApplyOpen.Name = "ck_ApplyOpen"
-        Me.ck_ApplyOpen.Size = New System.Drawing.Size(156, 17)
-        Me.ck_ApplyOpen.TabIndex = 4
-        Me.ck_ApplyOpen.Text = "Apply to any Open Invoices"
-        Me.ck_ApplyOpen.UseVisualStyleBackColor = True
         '
         'btn_MovePay
         '
         Me.btn_MovePay.AutoSize = True
         Me.btn_MovePay.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.btn_MovePay.Location = New System.Drawing.Point(203, 279)
+        Me.btn_MovePay.Location = New System.Drawing.Point(214, 267)
         Me.btn_MovePay.Name = "btn_MovePay"
         Me.btn_MovePay.Size = New System.Drawing.Size(108, 26)
         Me.btn_MovePay.TabIndex = 5
@@ -254,7 +243,6 @@ Partial Class MovePayment
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(565, 324)
         Me.Controls.Add(Me.btn_MovePay)
-        Me.Controls.Add(Me.ck_ApplyOpen)
         Me.Controls.Add(Me.cmb_MoveToCust)
         Me.Controls.Add(Me.lbl_NewCust)
         Me.Controls.Add(Me.grp_CurPayInfo)
@@ -291,6 +279,5 @@ Partial Class MovePayment
     Friend WithEvents lbl_Amount As System.Windows.Forms.Label
     Friend WithEvents lbl_NewCust As System.Windows.Forms.Label
     Friend WithEvents cmb_MoveToCust As System.Windows.Forms.ComboBox
-    Friend WithEvents ck_ApplyOpen As System.Windows.Forms.CheckBox
     Friend WithEvents btn_MovePay As System.Windows.Forms.Button
 End Class

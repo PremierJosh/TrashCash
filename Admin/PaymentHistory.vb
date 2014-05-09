@@ -149,10 +149,6 @@
         _home = HomeForm
     End Sub
 
-    Private Sub Cmb_PaymentTypes_SelectionChangeCommitted(sender As System.Object, e As System.EventArgs)
-
-    End Sub
-
     Private Sub cm_i_MovePayment_Click(sender As System.Object, e As System.EventArgs) Handles cm_i_MovePayment.Click
         If (dg_PaymentHistory.SelectedRows.Count = 1) Then
             ' easier refrence
