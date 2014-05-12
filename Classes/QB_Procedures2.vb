@@ -693,6 +693,8 @@ retry:
                         qta.PaymentHistory_MovePayToCust(PaymentHistoryRow.PaymentID, NewCustomerNumber, payRet.EditSequence.GetValue)
                     End Using
 
+                    ' reset payments on orig customer after this date
+
                     ' TODO: using startResetDate from above, query invoices with a txndate after this, getting linkedtxns.
                     ' if linktxntype is recpayment, add txnid to list. after list compiled for all invoices, query for rec pay edit seq and amount
                     ' mod all payments to unapply and update db edit seqs
@@ -706,8 +708,63 @@ retry:
         Next
 
     End Sub
+    Private Sub Payments_ResetAfterDate(ByVal CustomerNumber As Integer, ByVal AfterDate As Date)
+        ' getting customerlistid
+        Dim custListID As String = Nothing
+        Using qta As New ds_CustomerTableAdapters.QueriesTableAdapter
 
-    Private Function Invoicing_()
+        End Using
+    End Sub
+
+    Private Function Invoicing_PayTxnIDsOnInvsAfterDate(ByVal CustomerListID As String, ByVal AfterDate As Date) As List(Of String)
+        ' return list of pays need to unapply
+        Dim applyPayIDs As List(Of String) = Nothing
+
+        Dim invQuery As IInvoiceQuery = MsgSetRequest.AppendInvoiceQueryRq
+        ' setting customer and date
+        invQuery.ORInvoiceQuery.InvoiceFilter.EntityFilter.OREntityFilter.ListIDList.Add(CustomerListID)
+        ' note qbfc says itll return any from OR on this date forward
+        invQuery.ORInvoiceQuery.InvoiceFilter.ORDateRangeFilter.TxnDateRangeFilter.ORTxnDateRangeFilter.TxnDateFilter.FromTxnDate.SetValue(AfterDate)
+
+        ' making sure getting linked txns to get rec pays used for this inv
+        invQuery.IncludeLinkedTxns.SetValue(True)
+
+        ' go
+        Dim msgSetResp As IMsgSetResponse = SessionManager.DoRequests(MsgSetRequest)
+        Dim respList As IResponseList = msgSetResp.ResponseList
+
+        MsgSetRequest.ClearRequests()
+
+        ' looping
+        For i = 0 To respList.Count - 1
+            Dim resp As IResponse = respList.GetAt(i)
+
+            ' status check
+            If (resp.StatusCode = 0) Then
+                Dim invRetList As IInvoiceRetList = resp.Detail
+
+                ' loop to get linked tnxs
+                For l = 0 To invRetList.Count - 1
+                    Dim invRet As IInvoiceRet = invRetList.GetAt(l)
+
+                    ' loop to get link txns that are rec pays and get their txnids
+                    For j = 0 To invRet.LinkedTxnList.Count - 1
+                        Dim linkedTxn As ILinkedTxn = invRet.LinkedTxnList.GetAt(j)
+
+                        ' type check
+                        If (linkedTxn.TxnType.GetValue = QBFC12Lib.ENTxnType.ttReceivePayment) Then
+                            ' add to return list
+                            applyPayIDs.Add(linkedTxn.TxnID.GetValue)
+                        End If
+                    Next
+                Next
+            Else
+                ResponseErr_Misc(resp)
+            End If
+        Next
+
+        Return applyPayIDs
+    End Function
 
 
 
