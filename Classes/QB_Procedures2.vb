@@ -417,7 +417,7 @@ retry:
             End If
         Next i
     End Sub
-    
+
     Public Sub RecurringService_Credit(ByRef row As ds_Program.RecurringServiceRow, ByVal creditAmount As Double,
                                 ByVal newEndDate As Date)
 
@@ -712,8 +712,15 @@ retry:
         ' getting customerlistid
         Dim custListID As String = Nothing
         Using qta As New ds_CustomerTableAdapters.QueriesTableAdapter
-
+            custListID = qta.Customer_GetListID(CustomerNumber)
         End Using
+
+        ' need to get list of rec pay txnID's that pay invoices after this date
+        Dim appliedRecPayIDs As List(Of String) = Invoicing_PayTxnIDsOnInvsAfterDate(custListID, AfterDate)
+
+        ' now need to mod all these payments with a blank attached txn list
+        ' also need to get their new edit seq and update the db accordingly
+        ' finally, return a datatable of these txns
     End Sub
 
     Private Function Invoicing_PayTxnIDsOnInvsAfterDate(ByVal CustomerListID As String, ByVal AfterDate As Date) As List(Of String)
