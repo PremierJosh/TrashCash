@@ -287,7 +287,7 @@
                 Dim result As DialogResult = MessageBox.Show("Keeping this Last Date of Service will cause a credit to be issued for " & FormatCurrency(crediting) & "." & vbCrLf & _
                                                              "Do you want to issue this credit?", "Crediting Customer for End Date Overlap", MessageBoxButtons.YesNo, MessageBoxIcon.Warning)
                 If (result = Windows.Forms.DialogResult.Yes) Then
-                    HomeForm.Procedures.Customer_CreditMemoForRecService2(RecurringServiceRow, crediting, dtp_EndDate.Value.Date)
+                    HomeForm.Procedures.RecurringService_Credit(RecurringServiceRow, crediting, dtp_EndDate.Value.Date)
                     ' setting balance change
                     _BalanceChanged = True
                 Else

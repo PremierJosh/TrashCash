@@ -417,56 +417,8 @@ retry:
             End If
         Next i
     End Sub
-    Public Sub Customer_CreditMemoForRecService(ByRef row As DataSet.RecurringServiceRow, ByVal creditAmount As Double,
-                                ByVal newEndDate As Date)
-
-        Dim creditMemoAdd As ICreditMemoAdd = MsgSetRequest.AppendCreditMemoAddRq
-
-        ' passing listid
-        creditMemoAdd.CustomerRef.ListID.SetValue(qta.Customer_GetListID(row.CustomerNumber))
-        creditMemoAdd.IsToBePrinted.SetValue(False)
-
-        Dim creditLine As IORCreditMemoLineAdd = creditMemoAdd.ORCreditMemoLineAddList.Append()
-        ' credit line info
-        creditLine.CreditMemoLineAdd.ItemRef.ListID.SetValue(qta.ServiceTypes_GetListIDByTypeID(row.ServiceTypeID))
-        creditLine.CreditMemoLineAdd.ORRatePriceLevel.Rate.SetValue(creditAmount)
-
-        ' description line
-        Dim descLine As IORCreditMemoLineAdd = creditMemoAdd.ORCreditMemoLineAddList.Append()
-        descLine.CreditMemoLineAdd.ItemRef.ListID.Unset()
-        descLine.CreditMemoLineAdd.ItemRef.FullName.Unset()
-        descLine.CreditMemoLineAdd.Desc.SetValue("This service has been Invoiced upto " & qta.RecurringService_LastInvDate(row.RecurringServiceID) & ". The new End Date overlaps this Invoiced period. | New End Date: " & newEndDate.Date)
-        descLine.CreditMemoLineAdd.Amount.Unset()
-        descLine.CreditMemoLineAdd.Quantity.Unset()
-
-        ' send request
-        Dim msgSetResp As IMsgSetResponse = SessionManager.DoRequests(MsgSetRequest)
-        Dim respList As IResponseList = msgSetResp.ResponseList
-
-        ' clear msgsetreq
-        MsgSetRequest.ClearRequests()
-
-        For i = 0 To respList.Count - 1
-            Dim resp As IResponse = respList.GetAt(i)
-            If (resp.StatusCode = 0) Then
-                ' update row
-                row.RecurringServiceEndDate = newEndDate.Date
-                row.Credited = True
-
-                ' commit
-                Try
-                    rsta.Update(row)
-                Catch ex As Exception
-                    MsgBox(ex.Message)
-                End Try
-            Else
-                ResponseErr_Misc(resp)
-            End If
-        Next i
-    End Sub
-
-    ' this is new sub
-    Public Sub Customer_CreditMemoForRecService2(ByRef row As ds_Program.RecurringServiceRow, ByVal creditAmount As Double,
+    
+    Public Sub RecurringService_Credit(ByRef row As ds_Program.RecurringServiceRow, ByVal creditAmount As Double,
                                 ByVal newEndDate As Date)
 
         Dim creditMemoAdd As ICreditMemoAdd = MsgSetRequest.AppendCreditMemoAddRq
@@ -681,7 +633,7 @@ retry:
             invQuery.ORInvoiceQuery.TxnIDList.Add(txnID)
 
             ' only need creation date back
-            invQuery.IncludeRetElementList.Add("TimeCreated")
+            invQuery.IncludeRetElementList.Add("TxnDate")
 
             Dim msgSetResp As IMsgSetResponse = SessionManager.DoRequests(MsgSetRequest)
             Dim respList As IResponseList = msgSetResp.ResponseList
@@ -706,9 +658,10 @@ retry:
         ' need to get current edit sequence first (which function updates row by ref) and list of applied txns
         Dim appliedList As List(Of String) = Payment_GetAppliedTxns(PaymentHistoryRow)
 
-        ' now pass this list and get earliest creation date this payment we are about to move paid for on this orig customer
-        ' this date will be used later to unapply any payments or credits created
+        ' startResetDate is the earliest txnDate this payment we are moving paid for. all invoices with a txn date after this one will have their payments unapplied as well
+        Dim startResetDate As Date = Invoices_EarliestCreationDate(appliedList)
 
+        ' move payment - after reset payments by inv txnDate on orig customer
         Dim recPayMod As IReceivePaymentMod = MsgSetRequest.AppendReceivePaymentModRq
 
         ' payment im talking about
@@ -723,7 +676,38 @@ retry:
         ' wiping applied txns
         Dim appliedTxnList As IAppliedToTxnModList = recPayMod.AppliedToTxnModList
 
+        Dim msgSetResp As IMsgSetResponse = SessionManager.DoRequests(MsgSetRequest)
+        Dim respList As IResponseList = msgSetResp.ResponseList
+
+        MsgSetRequest.ClearRequests()
+
+        For i = 0 To respList.Count - 1
+            Dim resp As IResponse = respList.GetAt(i)
+
+            If (resp.StatusCode = 0) Then
+                Try
+                    ' if response good, update and move payment
+                    Dim payRet As IReceivePaymentRet = resp.Detail
+
+                    Using qta As New ds_PaymentsTableAdapters.QueriesTableAdapter
+                        qta.PaymentHistory_MovePayToCust(PaymentHistoryRow.PaymentID, NewCustomerNumber, payRet.EditSequence.GetValue)
+                    End Using
+
+                    ' TODO: using startResetDate from above, query invoices with a txndate after this, getting linkedtxns.
+                    ' if linktxntype is recpayment, add txnid to list. after list compiled for all invoices, query for rec pay edit seq and amount
+                    ' mod all payments to unapply and update db edit seqs
+                    ' query for open invoices. go down unapplied list and compile large msgsetreq with multiple pay mods
+                Catch ex As Exception
+                    MessageBox.Show("Error: SQL Stored Proc: PaymentHistory_MovePayToCust", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                End Try
+            Else
+                ResponseErr_Misc(resp)
+            End If
+        Next
+
     End Sub
+
+    Private Function Invoicing_()
 
 
 
