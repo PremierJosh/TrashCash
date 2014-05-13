@@ -18,7 +18,7 @@
             lbl_InputBy.Text = "Input By: " & value.InsertedByUser
 
             ' checking if its cash - if not set controls and make visible
-            If (value.PaymentID <> 1) Then
+            If (value.PaymentTypeID <> 1) Then
                 tb_RefNum.Text = value.RefNumber
                 dtp_DateOnChk.Value = value.DateOnCheck
 
@@ -46,7 +46,7 @@
     End Property
 
 
-    Public Sub New(ByRef _HomeForm As TrashCash_Home, ByRef _PaymentID As Integer)
+    Public Sub New(ByRef _HomeForm As TrashCash_Home, ByVal _PaymentID As Integer)
 
         ' This call is required by the designer.
         InitializeComponent()
@@ -65,7 +65,7 @@
         If (cmb_MoveToCust.SelectedValue <> cmb_CurrCustomer.SelectedValue) Then
             ' prompting to confirm move
             Dim result As DialogResult = MessageBox.Show("Move payment for " & FormatCurrency(PaymentHistoryRow.Amount) & ", receieved on " & FormatDateTime(PaymentHistoryRow.DateReceived, DateFormat.GeneralDate) & " for " & _
-                                                         "Customer: " & cmb_CurrCustomer.SelectedItem.ToString & " to Customer: " & cmb_MoveToCust.SelectedItem.ToString & "?", "Confirm moving payment", MessageBoxButtons.YesNo, MessageBoxIcon.Question)
+                                                         "Customer: " & cmb_CurrCustomer.GetItemText(cmb_CurrCustomer.SelectedItem) & " to Customer: " & cmb_MoveToCust.GetItemText(cmb_MoveToCust.SelectedItem) & "?", "Confirm moving payment", MessageBoxButtons.YesNo, MessageBoxIcon.Question)
 
             If (result = Windows.Forms.DialogResult.Yes) Then
                 HomeForm.Procedures.Payment_MoveToCustomer(PaymentHistoryRow, cmb_MoveToCust.SelectedValue)

@@ -37,17 +37,19 @@ Partial Class MovePayment
         Me.tb_Amount = New System.Windows.Forms.TextBox()
         Me.lbl_Amount = New System.Windows.Forms.Label()
         Me.cmb_CurrCustomer = New System.Windows.Forms.ComboBox()
-        Me.CustomerListByActiveBindingSource = New System.Windows.Forms.BindingSource(Me.components)
+        Me.CurrentCustomerBindingSource = New System.Windows.Forms.BindingSource(Me.components)
         Me.Ds_Customer = New TrashCash.ds_Customer()
         Me.lbl_CurrCustomer = New System.Windows.Forms.Label()
         Me.Customer_ListByActiveTableAdapter = New TrashCash.ds_CustomerTableAdapters.Customer_ListByActiveTableAdapter()
         Me.lbl_NewCust = New System.Windows.Forms.Label()
         Me.cmb_MoveToCust = New System.Windows.Forms.ComboBox()
         Me.btn_MovePay = New System.Windows.Forms.Button()
+        Me.NewCustomerBindingSource = New System.Windows.Forms.BindingSource(Me.components)
         Me.pnl_top.SuspendLayout()
         Me.grp_CurPayInfo.SuspendLayout()
-        CType(Me.CustomerListByActiveBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.CurrentCustomerBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.Ds_Customer, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.NewCustomerBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'pnl_top
@@ -174,7 +176,7 @@ Partial Class MovePayment
         '
         'cmb_CurrCustomer
         '
-        Me.cmb_CurrCustomer.DataSource = Me.CustomerListByActiveBindingSource
+        Me.cmb_CurrCustomer.DataSource = Me.CurrentCustomerBindingSource
         Me.cmb_CurrCustomer.DisplayMember = "CustomerFullName"
         Me.cmb_CurrCustomer.Enabled = False
         Me.cmb_CurrCustomer.FormattingEnabled = True
@@ -182,11 +184,12 @@ Partial Class MovePayment
         Me.cmb_CurrCustomer.Name = "cmb_CurrCustomer"
         Me.cmb_CurrCustomer.Size = New System.Drawing.Size(351, 21)
         Me.cmb_CurrCustomer.TabIndex = 1
+        Me.cmb_CurrCustomer.ValueMember = "CustomerNumber"
         '
-        'CustomerListByActiveBindingSource
+        'CurrentCustomerBindingSource
         '
-        Me.CustomerListByActiveBindingSource.DataMember = "Customer_ListByActive"
-        Me.CustomerListByActiveBindingSource.DataSource = Me.Ds_Customer
+        Me.CurrentCustomerBindingSource.DataMember = "Customer_ListByActive"
+        Me.CurrentCustomerBindingSource.DataSource = Me.Ds_Customer
         '
         'Ds_Customer
         '
@@ -217,14 +220,14 @@ Partial Class MovePayment
         '
         'cmb_MoveToCust
         '
-        Me.cmb_MoveToCust.DataSource = Me.CustomerListByActiveBindingSource
+        Me.cmb_MoveToCust.DataSource = Me.NewCustomerBindingSource
         Me.cmb_MoveToCust.DisplayMember = "CustomerFullName"
-        Me.cmb_MoveToCust.Enabled = False
         Me.cmb_MoveToCust.FormattingEnabled = True
         Me.cmb_MoveToCust.Location = New System.Drawing.Point(116, 224)
         Me.cmb_MoveToCust.Name = "cmb_MoveToCust"
         Me.cmb_MoveToCust.Size = New System.Drawing.Size(361, 21)
         Me.cmb_MoveToCust.TabIndex = 3
+        Me.cmb_MoveToCust.ValueMember = "CustomerNumber"
         '
         'btn_MovePay
         '
@@ -236,6 +239,11 @@ Partial Class MovePayment
         Me.btn_MovePay.TabIndex = 5
         Me.btn_MovePay.Text = "Move Payment"
         Me.btn_MovePay.UseVisualStyleBackColor = True
+        '
+        'NewCustomerBindingSource
+        '
+        Me.NewCustomerBindingSource.DataMember = "Customer_ListByActive"
+        Me.NewCustomerBindingSource.DataSource = Me.Ds_Customer
         '
         'MovePayment
         '
@@ -254,8 +262,9 @@ Partial Class MovePayment
         Me.pnl_top.ResumeLayout(False)
         Me.grp_CurPayInfo.ResumeLayout(False)
         Me.grp_CurPayInfo.PerformLayout()
-        CType(Me.CustomerListByActiveBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.CurrentCustomerBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.Ds_Customer, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.NewCustomerBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -264,7 +273,7 @@ Partial Class MovePayment
     Friend WithEvents lbl_FormInfo As System.Windows.Forms.Label
     Friend WithEvents grp_CurPayInfo As System.Windows.Forms.GroupBox
     Friend WithEvents cmb_CurrCustomer As System.Windows.Forms.ComboBox
-    Friend WithEvents CustomerListByActiveBindingSource As System.Windows.Forms.BindingSource
+    Friend WithEvents CurrentCustomerBindingSource As System.Windows.Forms.BindingSource
     Friend WithEvents Ds_Customer As TrashCash.ds_Customer
     Friend WithEvents lbl_CurrCustomer As System.Windows.Forms.Label
     Friend WithEvents Customer_ListByActiveTableAdapter As TrashCash.ds_CustomerTableAdapters.Customer_ListByActiveTableAdapter
@@ -280,4 +289,5 @@ Partial Class MovePayment
     Friend WithEvents lbl_NewCust As System.Windows.Forms.Label
     Friend WithEvents cmb_MoveToCust As System.Windows.Forms.ComboBox
     Friend WithEvents btn_MovePay As System.Windows.Forms.Button
+    Friend WithEvents NewCustomerBindingSource As System.Windows.Forms.BindingSource
 End Class

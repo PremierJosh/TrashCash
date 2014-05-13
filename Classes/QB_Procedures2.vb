@@ -603,6 +603,9 @@ retry:
         recPayMod.TxnID.SetValue(PaymentHistoryRow.PaymentTxnID)
         recPayMod.EditSequence.SetValue(PaymentHistoryRow.PaymentEditSeq)
 
+        ' only need edit seq back
+        recPayMod.IncludeRetElementList.Add("EditSequence")
+
         ' who its going to now
         Using ta As New ds_CustomerTableAdapters.QueriesTableAdapter
             recPayMod.CustomerRef.ListID.SetValue(ta.Customer_GetListID(NewCustomerNumber))
@@ -620,22 +623,25 @@ retry:
             Dim resp As IResponse = respList.GetAt(i)
 
             If (resp.StatusCode = 0) Then
-                Try
-                    ' if response good, update and move payment
-                    Dim payRet As IReceivePaymentRet = resp.Detail
+                ' if response good, update and move payment
+                Dim payRet As IReceivePaymentRet = resp.Detail
 
+                Try
                     Using qta As New ds_PaymentsTableAdapters.QueriesTableAdapter
                         qta.PaymentHistory_MovePayToCust(PaymentHistoryRow.PaymentID, NewCustomerNumber, payRet.EditSequence.GetValue)
                     End Using
+                Catch ex As Exception
+                    MessageBox.Show("PaymentHistory_MovePayToCust: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                End Try
 
+                Try
                     ' need to reset all payments on new customer made after this payment txn date, and then reapply them all
                     Payments_ResetAfterDate(NewCustomerNumber, PaymentHistoryRow.DateReceived, "Payments")
 
                     ' reset payments on invoices from orig customer after this date
                     Payments_ResetAfterDate(PaymentHistoryRow.CustomerNumber, startResetDate, "Invoices")
-
                 Catch ex As Exception
-                    MessageBox.Show("Error: SQL Stored Proc: PaymentHistory_MovePayToCust", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                    MessageBox.Show("Error Moving Payments: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
                 End Try
             Else
                 ResponseErr_Misc(resp)
@@ -661,7 +667,7 @@ retry:
         MsgSetRequest.ClearRequests()
 
         ' loop through response
-        For i = 0 To respList.Count
+        For i = 0 To respList.Count - 1
             Dim resp As IResponse = respList.GetAt(i)
             If (resp.StatusCode = 0) Then
                 Dim payRetList As IReceivePaymentRetList = resp.Detail
@@ -916,6 +922,9 @@ retry:
             Dim blankAppliedList As IAppliedToTxnModList = recPayMod.AppliedToTxnModList
         Next row
 
+        ' fixing onError - rollback txns if errors
+        MsgSetRequest.Attributes.OnError = ENRqOnError.roeStop
+
         ' send request to wipe applied txns
         Dim msgSetResp As IMsgSetResponse = SessionManager.DoRequests(MsgSetRequest)
         Dim respList As IResponseList = msgSetResp.ResponseList
@@ -928,25 +937,20 @@ retry:
 
             ' status check
             If (resp.StatusCode = 0) Then
-                Dim payRetList As IReceivePaymentRetList = resp.Detail
+                Dim payRet As IReceivePaymentRet = resp.Detail
 
-                ' loop through each rec pay ret
-                For l = 0 To payRetList.Count - 1
-                    Dim payRet As IReceivePaymentRet = payRetList.GetAt(l)
+                ' update db
+                Using ta As New ds_PaymentsTableAdapters.QueriesTableAdapter
+                    ta.PaymentHistory_UpdateEditSeq(payRet.TxnID.GetValue, payRet.EditSequence.GetValue)
+                End Using
 
-                    ' update db
-                    Using ta As New ds_PaymentsTableAdapters.QueriesTableAdapter
-                        ta.PaymentHistory_UpdateEditSeq(payRet.TxnID.GetValue, payRet.EditSequence.GetValue)
-                    End Using
+                ' get row from select which returns array, 0 index
+                Dim row As ds_Payments.MovePayment_UnappliedPaymentsRow = UnappliedDT.Select("Pay_TxnID = " & payRet.TxnID.GetValue)(0)
+                row.Pay_EditSeq = payRet.EditSequence.GetValue
+                row.Remaining = payRet.UnusedPayment.GetValue
 
-                    ' get row from select which returns array, 0 index
-                    Dim row As ds_Payments.MovePayment_UnappliedPaymentsRow = UnappliedDT.Select("Pay_TxnID = " & payRet.TxnID.GetValue)(0)
-                    row.Pay_EditSeq = payRet.EditSequence.GetValue
-                    row.Remaining = payRet.UnusedPayment.GetValue
-
-                    ' commit changes
-                    row.AcceptChanges()
-                Next
+                ' commit changes
+                row.AcceptChanges()
             Else
                 ResponseErr_Misc(resp)
             End If
@@ -1049,20 +1053,17 @@ retry:
 
                     ' status check
                     If (resp.StatusCode = 0) Then
-                        Dim payRetList As IReceivePaymentRetList = resp.Detail
+                        Dim payRet As IReceivePaymentRet = resp.Detail
 
-                        For l = 0 To payRetList.Count - 1
-                            Dim payRet As IReceivePaymentRet = payRetList.GetAt(l)
+                        ' update edit seq in pay history
+                        Using ta As New ds_PaymentsTableAdapters.QueriesTableAdapter
+                            ta.PaymentHistory_UpdateEditSeq(payRet.TxnID.GetValue, payRet.EditSequence.GetValue)
+                        End Using
 
-                            ' update edit seq in pay history
-                            Using ta As New ds_PaymentsTableAdapters.QueriesTableAdapter
-                                ta.PaymentHistory_UpdateEditSeq(payRet.TxnID.GetValue, payRet.EditSequence.GetValue)
-                            End Using
+                        ' update editseq and remaining in dt
+                        payRow.Remaining = payRet.UnusedPayment.GetValue
+                        payRow.Pay_EditSeq = payRet.EditSequence.GetValue
 
-                            ' update editseq and remaining in dt
-                            payRow.Remaining = payRet.UnusedPayment.GetValue
-                            payRow.Pay_EditSeq = payRet.EditSequence.GetValue
-                        Next
                     Else
                         ResponseErr_Misc(resp)
                     End If

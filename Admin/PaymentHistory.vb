@@ -153,7 +153,7 @@
         If (dg_PaymentHistory.SelectedRows.Count = 1) Then
             ' easier refrence
             Dim dvRow As DataRowView = dg_PaymentHistory.SelectedRows(0).DataBoundItem
-            Dim row As DataSet.PaymentHistoryRow = dvRow.Row
+            Dim row As ds_Payments.PaymentHistory_DisplayRow = dvRow.Row
 
             ' result ref
             Dim result As DialogResult
@@ -176,6 +176,7 @@
             If (result = Windows.Forms.DialogResult.Yes) Then
                 ' create move payment form
                 f_movePayment = New MovePayment(_home, row.PaymentID)
+                f_movePayment.ShowDialog()
             End If
 
         End If
