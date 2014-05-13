@@ -587,7 +587,14 @@ retry:
         Dim appliedList As List(Of String) = Payment_GetAppliedTxns(PaymentHistoryRow)
 
         ' startResetDate is the earliest txnDate this payment we are moving paid for. all invoices with a txn date after this one will have their payments unapplied as well
-        Dim startResetDate As Date = Invoices_EarliestCreationDate(appliedList)
+        Dim startResetDate As Date
+
+        ' if applied list is nothing because this payment wasn't applied to anything, set startResetDate as date of payment
+        If (appliedList IsNot Nothing) Then
+            Invoices_EarliestCreationDate(appliedList)
+        Else
+            startResetDate = PaymentHistoryRow.DateReceived
+        End If
 
         ' move payment - after reset payments by inv txnDate on orig customer
         Dim recPayMod As IReceivePaymentMod = MsgSetRequest.AppendReceivePaymentModRq
@@ -668,14 +675,17 @@ retry:
                     ' grabbing edit seq for return
                     Row.PaymentEditSeq = payRet.EditSequence.GetValue
 
-                    ' looping through applied to txn list to get txn this is applied to, then have to query each to find oldest date
-                    Dim appliedTxnList As IAppliedToTxnRetList = payRet.AppliedToTxnRetList
-                    For j = 0 To appliedTxnList.Count - 1
-                        Dim appTxn As IAppliedToTxnRet = appliedTxnList.GetAt(j)
+                    If (payRet.AppliedToTxnRetList IsNot Nothing) Then
 
-                        ' add inv id to list of applied txns
-                        appTxnList.Add(appTxn.TxnID.GetValue)
-                    Next
+                        ' looping through applied to txn list to get txn this is applied to, then have to query each to find oldest date
+                        Dim appliedTxnList As IAppliedToTxnRetList = payRet.AppliedToTxnRetList
+                        For j = 0 To appliedTxnList.Count - 1
+                            Dim appTxn As IAppliedToTxnRet = appliedTxnList.GetAt(j)
+
+                            ' add inv id to list of applied txns
+                            appTxnList.Add(appTxn.TxnID.GetValue)
+                        Next
+                    End If
                 Next
             Else
                 ResponseErr_Misc(resp)
@@ -732,18 +742,17 @@ retry:
 
             ' get other column values for this table for upcoming mods
             Payments_GetEditSequences(unappliedPaymentDT)
-        Else
+        ElseIf (RouteMethod = "Payments") Then
             ' simple - can query for pays after date and get edit seq there too
-            Payments_PayTxnIDsAfterDate(custListID, AfterDate)
+            unappliedPaymentDT = Payments_PayTxnIDsAfterDate(custListID, AfterDate)
 
         End If
-
 
         ' unapply all payments in table currently
         Payments_UnapplyFromTable(unappliedPaymentDT)
 
         ' now need to get list of all open invoices
-
+        Dim openInvoiceDT As ds_Payments.MovePayment_OpenInvoicesDataTable = Invoicing_GetUnpaidTable(custListID)
 
         ' now need to mod all these payments with a blank attached txn list
         ' also need to get their new edit seq and update the db accordingly
@@ -789,6 +798,8 @@ retry:
                         If (linkedTxn.TxnType.GetValue = QBFC12Lib.ENTxnType.ttReceivePayment) Then
                             ' add to return table
                             unappliedDT.AddMovePayment_UnappliedPaymentsRow(linkedTxn.TxnID.GetValue, Nothing, Nothing, Nothing, Nothing)
+
+                            unappliedDT.AcceptChanges()
                         End If
                     Next
                 Next
@@ -796,34 +807,6 @@ retry:
                 ResponseErr_Misc(resp)
             End If
         Next
-
-        Return unappliedDT
-    End Function
-
-    Private Function Payments_PayTxnIDsAfterDate(ByVal CustomerListID As String, ByVal AfterDate As Date) As ds_Payments.MovePayment_UnappliedPaymentsDataTable
-        ' return list of pays need to unapply
-        Dim unappliedDT As New ds_Payments.MovePayment_UnappliedPaymentsDataTable
-
-        Dim payQuery As IReceivePaymentQuery = MsgSetRequest.AppendReceivePaymentQueryRq
-        ' setting customer and date
-        payQuery.ORTxnQuery.TxnFilter.EntityFilter.OREntityFilter.ListIDList.Add(CustomerListID)
-        payQuery.ORTxnQuery.TxnFilter.ORDateRangeFilter.TxnDateRangeFilter.ORTxnDateRangeFilter.TxnDateFilter.FromTxnDate.SetValue(AfterDate)
-
-        ' only need a couple things back
-        payQuery.IncludeRetElementList.Add("TxnID")
-        payQuery.IncludeRetElementList.Add("TxnDate")
-        payQuery.IncludeRetElementList.Add("TotalAmount")
-        payQuery.IncludeRetElementList.Add("EditSequence")
-
-        ' go
-        Dim msgSetResp As IMsgSetResponse = SessionManager.DoRequests(MsgSetRequest)
-        Dim respList As IResponseList = msgSetResp.ResponseList
-
-        MsgSetRequest.ClearRequests()
-
-        ' loop through getting info
-
-
 
         Return unappliedDT
     End Function
@@ -874,6 +857,52 @@ retry:
 
     End Sub
 
+    Private Function Payments_PayTxnIDsAfterDate(ByVal CustomerListID As String, ByVal AfterDate As Date) As ds_Payments.MovePayment_UnappliedPaymentsDataTable
+        ' return list of pays need to unapply
+        Dim unappliedDT As New ds_Payments.MovePayment_UnappliedPaymentsDataTable
+
+        Dim payQuery As IReceivePaymentQuery = MsgSetRequest.AppendReceivePaymentQueryRq
+        ' setting customer and date
+        payQuery.ORTxnQuery.TxnFilter.EntityFilter.OREntityFilter.ListIDList.Add(CustomerListID)
+        payQuery.ORTxnQuery.TxnFilter.ORDateRangeFilter.TxnDateRangeFilter.ORTxnDateRangeFilter.TxnDateFilter.FromTxnDate.SetValue(AfterDate)
+
+        ' only need a couple things back
+        payQuery.IncludeRetElementList.Add("TxnID")
+        payQuery.IncludeRetElementList.Add("TxnDate")
+        payQuery.IncludeRetElementList.Add("TotalAmount")
+        payQuery.IncludeRetElementList.Add("EditSequence")
+
+        ' go
+        Dim msgSetResp As IMsgSetResponse = SessionManager.DoRequests(MsgSetRequest)
+        Dim respList As IResponseList = msgSetResp.ResponseList
+
+        MsgSetRequest.ClearRequests()
+
+        ' loop through getting info
+        For i = 0 To respList.Count - 1
+            Dim resp As IResponse = respList.GetAt(i)
+
+            ' status check
+            If (resp.StatusCode = 0) Then
+                Dim payRetList As IReceivePaymentRetList = resp.Detail
+
+                ' looping through response details to get info i need for table
+                For l = 0 To payRetList.Count - 1
+                    Dim payRet As IReceivePaymentRet = payRetList.GetAt(l)
+
+                    ' adding to return table
+                    unappliedDT.AddMovePayment_UnappliedPaymentsRow(payRet.TxnID.GetValue, payRet.EditSequence.GetValue, payRet.TxnDate.GetValue, payRet.TotalAmount.GetValue, Nothing)
+                    unappliedDT.AcceptChanges()
+                Next
+            Else
+                ResponseErr_Misc(resp)
+            End If
+        Next
+
+
+        Return unappliedDT
+    End Function
+
     Private Sub Payments_UnapplyFromTable(ByRef UnappliedDT As ds_Payments.MovePayment_UnappliedPaymentsDataTable)
         ' going to update this table
         For Each row As ds_Payments.MovePayment_UnappliedPaymentsRow In UnappliedDT.Rows
@@ -909,6 +938,11 @@ retry:
                 For l = 0 To payRetList.Count - 1
                     Dim payRet As IReceivePaymentRet = payRetList.GetAt(l)
 
+                    ' update db
+                    Using ta As New ds_PaymentsTableAdapters.QueriesTableAdapter
+                        ta.PaymentHistory_UpdateEditSeq(payRet.TxnID.GetValue, payRet.EditSequence.GetValue)
+                    End Using
+
                     ' get row from select which returns array, 0 index
                     Dim row As ds_Payments.MovePayment_UnappliedPaymentsRow = UnappliedDT.Select("Pay_TxnID = " & payRet.TxnID.GetValue)(0)
                     row.Pay_EditSeq = payRet.EditSequence.GetValue
@@ -923,6 +957,47 @@ retry:
         Next
     End Sub
 
+    Private Function Invoicing_GetUnpaidTable(ByVal CustomerListID As String) As ds_Payments.MovePayment_OpenInvoicesDataTable
+        ' return table of open invoices and their info
+        Dim openInvDT As New ds_Payments.MovePayment_OpenInvoicesDataTable
+
+        Dim invQuery As IInvoiceQuery = MsgSetRequest.AppendInvoiceQueryRq
+        ' setting customer and paid status
+        invQuery.ORInvoiceQuery.InvoiceFilter.EntityFilter.OREntityFilter.ListIDList.Add(CustomerListID)
+        invQuery.ORInvoiceQuery.InvoiceFilter.PaidStatus.SetValue(ENPaidStatus.psNotPaidOnly)
+
+        ' only need a couple values back
+        invQuery.IncludeRetElementList.Add("TxnID")
+        invQuery.IncludeRetElementList.Add("TxnDate")
+        invQuery.IncludeRetElementList.Add("BalanceRemaining")
+
+        ' go
+        Dim msgSetResp As IMsgSetResponse = SessionManager.DoRequests(MsgSetRequest)
+        Dim respList As IResponseList = msgSetResp.ResponseList
+
+        MsgSetRequest.ClearRequests()
+
+        For i = 0 To respList.Count - 1
+            Dim resp As IResponse = respList.GetAt(i)
+
+            ' status check
+            If (resp.StatusCode = 0) Then
+                Dim invRetList As IInvoiceRetList = resp.Detail
+
+                For l = 0 To invRetList.Count - 1
+                    Dim invRet As IInvoiceRet = invRetList.GetAt(l)
+
+                    ' adding to table
+                    openInvDT.AddMovePayment_OpenInvoicesRow(invRet.TxnID.GetValue, invRet.TxnDate.GetValue, invRet.BalanceRemaining.GetValue, invRet.BalanceRemaining.GetValue)
+                    openInvDT.AcceptChanges()
+                Next
+            Else
+                ResponseErr_Misc(resp)
+            End If
+        Next
+
+        Return openInvDT
+    End Function
 
 
 
