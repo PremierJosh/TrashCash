@@ -155,13 +155,29 @@
             Dim dvRow As DataRowView = dg_PaymentHistory.SelectedRows(0).DataBoundItem
             Dim row As DataSet.PaymentHistoryRow = dvRow.Row
 
+            ' result ref
+            Dim result As DialogResult
+
             If (Not row.Bounced) Then
-                ' create move payment form
-                f_movePayment = New MovePayment(_home, row.PaymentID)
+                ' check if payment crosses year boundaries
+                If (row.DateReceived.Year = Date.Now.Year) Then
+                    If (DateDiff(DateInterval.Day, row.DateReceived, Date.Now) < 90) Then
+                        result = Windows.Forms.DialogResult.Yes
+                    Else
+                        result = MessageBox.Show("This Payment was receieved " & DateDiff(DateInterval.Day, row.DateReceived, Date.Now) & " days ago. Are you sure you want to move this payment?", "Targeted Pay > 90 Days ago", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation)
+                    End If
+                Else
+                    result = MessageBox.Show("This Payment was receieved in a different year than the current year. Are you sure you want to move this payment?", "Targeted Pay Outside Current Year", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation)
+                End If
             Else
                 MessageBox.Show("This payment has been marked as a bounced check.", "Unable to Move Payment", MessageBoxButtons.OK, MessageBoxIcon.Error)
             End If
-        End If
 
+            If (result = Windows.Forms.DialogResult.Yes) Then
+                ' create move payment form
+                f_movePayment = New MovePayment(_home, row.PaymentID)
+            End If
+
+        End If
     End Sub
 End Class

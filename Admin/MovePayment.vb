@@ -68,20 +68,11 @@
                                                          "Customer: " & cmb_CurrCustomer.SelectedItem.ToString & " to Customer: " & cmb_MoveToCust.SelectedItem.ToString & "?", "Confirm moving payment", MessageBoxButtons.YesNo, MessageBoxIcon.Question)
 
             If (result = Windows.Forms.DialogResult.Yes) Then
-
+                HomeForm.Procedures.Payment_MoveToCustomer(PaymentHistoryRow, cmb_MoveToCust.SelectedValue)
             End If
         Else
             ' same customer selected both times
             MessageBox.Show("Payment already on that Customer.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End If
-
-        ' order of process:
-        ' 1. check edit seq of payment
-        '   if off prompt and exit
-        ' 2. check if applied to txn
-        '   prompt and ask if want to remove - warn those invoices will go unpaid
-        '   if confirm, remove applied to txn and mod to new customer with auto apply
-        '   then on old customer, unapply any payments rec after this pay date
-        '   then query for open invoices and reapply payments
     End Sub
 End Class

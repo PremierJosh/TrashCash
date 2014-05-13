@@ -274,9 +274,7 @@
                                 SendKeys.Send("{F4}")
                                 Exit Sub
                             Else
-                                ' set credited to 1
-                                ' TEST: test this
-                                _HomeForm.Procedures.Customer_CreditMemoForRecService(row, creditAmount, dtp_EndDate.Value.Date)
+                                '_HomeForm.Procedures.RecurringService_Credit(row, creditAmount, dtp_EndDate.Value.Date)
                             End If
                         Else
                             ' set date
