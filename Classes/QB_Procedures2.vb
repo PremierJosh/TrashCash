@@ -591,7 +591,7 @@ retry:
 
         ' if applied list is nothing because this payment wasn't applied to anything, set startResetDate as date of payment
         If (appliedList IsNot Nothing) Then
-            Invoices_EarliestCreationDate(appliedList)
+            startResetDate = Invoices_EarliestCreationDate(appliedList)
         Else
             startResetDate = PaymentHistoryRow.DateReceived
         End If
@@ -629,15 +629,11 @@ retry:
                     End Using
 
                     ' need to reset all payments on new customer made after this payment txn date, and then reapply them all
+                    Payments_ResetAfterDate(NewCustomerNumber, PaymentHistoryRow.DateReceived, "Payments")
 
+                    ' reset payments on invoices from orig customer after this date
+                    Payments_ResetAfterDate(PaymentHistoryRow.CustomerNumber, startResetDate, "Invoices")
 
-                    ' reset payments on orig customer after this date
-                    Payments_ResetAfterDate(PaymentHistoryRow.CustomerNumber, startResetDate)
-
-                    ' TODO: using startResetDate from above, query invoices with a txndate after this, getting linkedtxns.
-                    ' if linktxntype is recpayment, add txnid to list. after list compiled for all invoices, query for rec pay edit seq and amount
-                    ' mod all payments to unapply and update db edit seqs
-                    ' query for open invoices. go down unapplied list and compile large msgsetreq with multiple pay mods
                 Catch ex As Exception
                     MessageBox.Show("Error: SQL Stored Proc: PaymentHistory_MovePayToCust", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
                 End Try
@@ -754,9 +750,9 @@ retry:
         ' now need to get list of all open invoices
         Dim openInvoiceDT As ds_Payments.MovePayment_OpenInvoicesDataTable = Invoicing_GetUnpaidTable(custListID)
 
-        ' now need to mod all these payments with a blank attached txn list
-        ' also need to get their new edit seq and update the db accordingly
-        ' finally, return a datatable of these txns
+        ' now use the unapplied table to pay invoices in the open inv table
+        Payments_ApplyFromTblToTbl(unappliedPaymentDT, openInvoiceDT)
+
     End Sub
 
     Private Function Invoicing_PayTxnIDsOnInvsAfterDate(ByVal CustomerListID As String, ByVal AfterDate As Date) As ds_Payments.MovePayment_UnappliedPaymentsDataTable
@@ -998,6 +994,83 @@ retry:
 
         Return openInvDT
     End Function
+
+    Private Sub Payments_ApplyFromTblToTbl(ByRef UnappliedPaymentDT As ds_Payments.MovePayment_UnappliedPaymentsDataTable, ByRef OpenInvoiceDT As ds_Payments.MovePayment_OpenInvoicesDataTable)
+        ' dataview for unapplied payments sorted by date
+        Dim dv_Pay As New DataView(UnappliedPaymentDT, "", "Pay_TxnDate ASC", DataViewRowState.CurrentRows)
+        Dim dv_Inv As New DataView(OpenInvoiceDT, "", "Inv_TxnDate ASC", DataViewRowState.CurrentRows)
+
+        For Each payRow As ds_Payments.MovePayment_UnappliedPaymentsRow In dv_Pay.Table.Rows
+            If (payRow.Remaining > 0) Then
+                ' going to mod this payment and append as many invoices as it can pay onto its apllied to txn list
+                Dim payMod As IReceivePaymentMod = MsgSetRequest.AppendReceivePaymentModRq
+                payMod.TxnID.SetValue(payRow.Pay_TxnID)
+                payMod.EditSequence.SetValue(payRow.Pay_EditSeq)
+
+                ' only need edit seq and amount remaining back
+                payMod.IncludeRetElementList.Add("TxnID")
+                payMod.IncludeRetElementList.Add("EditSequence")
+                payMod.IncludeRetElementList.Add("UnusedPayment")
+
+                ' applied txn list
+                Dim appliedList As IAppliedToTxnModList = payMod.AppliedToTxnModList
+
+                For Each invRow As ds_Payments.MovePayment_OpenInvoicesRow In dv_Inv.Table.Rows
+                    ' making sure inv still needs to be paid
+                    If (invRow.Remaining > 0) Then
+                        Dim appliedItem As IAppliedToTxnMod = appliedList.Append
+
+                        ' setting inv txn id
+                        appliedItem.TxnID.SetValue(invRow.Inv_TxnID)
+
+                        ' checking how much we can apply
+                        If (payRow.Remaining >= invRow.Remaining) Then
+                            ' payment is greater or the same as inv remaining so can use all remaining on inv
+                            appliedItem.PaymentAmount.SetValue(invRow.Remaining)
+                            ' update payment remaining
+                            payRow.Remaining = payRow.Remaining - invRow.Remaining
+                        Else
+                            ' pay row is not enough to pay remaining on invoice, so applied amount will be pay remaining
+                            appliedItem.PaymentAmount.SetValue(payRow.Remaining)
+                            ' update pay remaining
+                            payRow.Remaining = 0
+                        End If
+                    End If
+                Next
+
+                ' go
+                Dim msgSetResp As IMsgSetResponse = SessionManager.DoRequests(MsgSetRequest)
+                Dim respList As IResponseList = msgSetResp.ResponseList
+
+                MsgSetRequest.ClearRequests()
+
+                For i = 0 To respList.Count - 1
+                    Dim resp As IResponse = respList.GetAt(i)
+
+                    ' status check
+                    If (resp.StatusCode = 0) Then
+                        Dim payRetList As IReceivePaymentRetList = resp.Detail
+
+                        For l = 0 To payRetList.Count - 1
+                            Dim payRet As IReceivePaymentRet = payRetList.GetAt(l)
+
+                            ' update edit seq in pay history
+                            Using ta As New ds_PaymentsTableAdapters.QueriesTableAdapter
+                                ta.PaymentHistory_UpdateEditSeq(payRet.TxnID.GetValue, payRet.EditSequence.GetValue)
+                            End Using
+
+                            ' update editseq and remaining in dt
+                            payRow.Remaining = payRet.UnusedPayment.GetValue
+                            payRow.Pay_EditSeq = payRet.EditSequence.GetValue
+                        Next
+                    Else
+                        ResponseErr_Misc(resp)
+                    End If
+                Next
+
+            End If
+        Next payRow
+    End Sub
 
 
 
