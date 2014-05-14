@@ -739,16 +739,24 @@ retry:
 
         ' checking method going after payids
         If (RouteMethod = "Invoices") Then
-            ' need to get edit sequences after using this function
+            ' get invoices after this date and payments ids on them
             unappliedPaymentDT = Invoicing_PayTxnIDsOnInvsAfterDate(custListID, AfterDate)
 
-            ' get other column values for this table for upcoming mods
-            Payments_GetEditSequences(unappliedPaymentDT)
         ElseIf (RouteMethod = "Payments") Then
             ' simple - can query for pays after date and get edit seq there too
             unappliedPaymentDT = Payments_PayTxnIDsAfterDate(custListID, AfterDate)
-
         End If
+
+        ' if we have no payments that need to be unapplied, exit sub
+        If (unappliedPaymentDT.Rows.Count = 0) Then
+            Exit Sub
+        End If
+
+        ' if we went the inv method to get payments, we need edit sequences
+        If (RouteMethod = "Invoices") Then
+            Payments_GetEditSequences(unappliedPaymentDT)
+        End If
+
 
         ' unapply all payments in table currently
         Payments_UnapplyFromTable(unappliedPaymentDT)
@@ -763,7 +771,7 @@ retry:
                 Payments_ApplyFromTblToTbl(unappliedPaymentDT, openInvoiceDT)
             End If
         End If
-        
+
     End Sub
 
     Private Function Invoicing_PayTxnIDsOnInvsAfterDate(ByVal CustomerListID As String, ByVal AfterDate As Date) As ds_Payments.MovePayment_UnappliedPaymentsDataTable
@@ -797,18 +805,22 @@ retry:
                 For l = 0 To invRetList.Count - 1
                     Dim invRet As IInvoiceRet = invRetList.GetAt(l)
 
-                    ' loop to get link txns that are rec pays and get their txnids
-                    For j = 0 To invRet.LinkedTxnList.Count - 1
-                        Dim linkedTxn As ILinkedTxn = invRet.LinkedTxnList.GetAt(j)
+                    ' making sure we have linked txns
+                    If (invRet.LinkedTxnList.Count > 0) Then
 
-                        ' type check
-                        If (linkedTxn.TxnType.GetValue = QBFC12Lib.ENTxnType.ttReceivePayment) Then
-                            ' add to return table
-                            unappliedDT.AddMovePayment_UnappliedPaymentsRow(linkedTxn.TxnID.GetValue, Nothing, Nothing, Nothing, Nothing)
+                        ' loop to get link txns that are rec pays and get their txnids
+                        For j = 0 To invRet.LinkedTxnList.Count - 1
+                            Dim linkedTxn As ILinkedTxn = invRet.LinkedTxnList.GetAt(j)
 
-                            unappliedDT.AcceptChanges()
-                        End If
-                    Next
+                            ' type check
+                            If (linkedTxn.TxnType.GetValue = QBFC12Lib.ENTxnType.ttReceivePayment) Then
+                                ' add to return table
+                                unappliedDT.AddMovePayment_UnappliedPaymentsRow(linkedTxn.TxnID.GetValue, Nothing, Nothing, Nothing, Nothing)
+
+                                unappliedDT.AcceptChanges()
+                            End If
+                        Next
+                    End If
                 Next
             ElseIf (resp.StatusCode <> 1) Then
                 ResponseErr_Misc(resp)
