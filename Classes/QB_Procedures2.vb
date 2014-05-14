@@ -637,12 +637,17 @@ retry:
                 Try
                     ' need to reset all payments on new customer made after this payment txn date, and then reapply them all
                     Payments_ResetAfterDate(NewCustomerNumber, PaymentHistoryRow.DateReceived, "Payments")
+                Catch ex As Exception
+                    MessageBox.Show("Error Reset Payments New Customer: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                End Try
 
+                Try
                     ' reset payments on invoices from orig customer after this date
                     Payments_ResetAfterDate(PaymentHistoryRow.CustomerNumber, startResetDate, "Invoices")
                 Catch ex As Exception
-                    MessageBox.Show("Error Moving Payments: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                    MessageBox.Show("Error Reset Payments Old Customer: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
                 End Try
+
             Else
                 ResponseErr_Misc(resp)
             End If
@@ -806,20 +811,22 @@ retry:
                     Dim invRet As IInvoiceRet = invRetList.GetAt(l)
 
                     ' making sure we have linked txns
-                    If (invRet.LinkedTxnList.Count > 0) Then
+                    If (invRet.LinkedTxnList IsNot Nothing) Then
+                        If (invRet.LinkedTxnList.Count > 0) Then
 
-                        ' loop to get link txns that are rec pays and get their txnids
-                        For j = 0 To invRet.LinkedTxnList.Count - 1
-                            Dim linkedTxn As ILinkedTxn = invRet.LinkedTxnList.GetAt(j)
+                            ' loop to get link txns that are rec pays and get their txnids
+                            For j = 0 To invRet.LinkedTxnList.Count - 1
+                                Dim linkedTxn As ILinkedTxn = invRet.LinkedTxnList.GetAt(j)
 
-                            ' type check
-                            If (linkedTxn.TxnType.GetValue = QBFC12Lib.ENTxnType.ttReceivePayment) Then
-                                ' add to return table
-                                unappliedDT.AddMovePayment_UnappliedPaymentsRow(linkedTxn.TxnID.GetValue, Nothing, Nothing, Nothing, Nothing)
+                                ' type check
+                                If (linkedTxn.TxnType.GetValue = QBFC12Lib.ENTxnType.ttReceivePayment) Then
+                                    ' add to return table
+                                    unappliedDT.AddMovePayment_UnappliedPaymentsRow(linkedTxn.TxnID.GetValue, Nothing, Nothing, Nothing, Nothing)
 
-                                unappliedDT.AcceptChanges()
-                            End If
-                        Next
+                                    unappliedDT.AcceptChanges()
+                                End If
+                            Next
+                        End If
                     End If
                 Next
             ElseIf (resp.StatusCode <> 1) Then

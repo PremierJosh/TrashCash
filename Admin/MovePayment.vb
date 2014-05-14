@@ -2,6 +2,9 @@
     ' home form ref var
     Private HomeForm As TrashCash_Home
 
+    ' event to let pay history form refresh
+    Friend Event PaymentMoveComplete()
+
     ' var for actual pay history row
     Private _payHisRow As ds_Payments.PaymentHistory_DBRow
     Private Property PaymentHistoryRow As ds_Payments.PaymentHistory_DBRow
@@ -65,10 +68,17 @@
         If (cmb_MoveToCust.SelectedValue <> cmb_CurrCustomer.SelectedValue) Then
             ' prompting to confirm move
             Dim result As DialogResult = MessageBox.Show("Move payment for " & FormatCurrency(PaymentHistoryRow.Amount) & ", receieved on " & FormatDateTime(PaymentHistoryRow.DateReceived, DateFormat.GeneralDate) & " for " & _
-                                                         "Customer: " & cmb_CurrCustomer.GetItemText(cmb_CurrCustomer.SelectedItem) & " to Customer: " & cmb_MoveToCust.GetItemText(cmb_MoveToCust.SelectedItem) & "?", "Confirm moving payment", MessageBoxButtons.YesNo, MessageBoxIcon.Question)
+                                                         "Customer: " & cmb_CurrCustomer.GetItemText(cmb_CurrCustomer.SelectedItem) & vbCrLf & "To Customer: " & cmb_MoveToCust.GetItemText(cmb_MoveToCust.SelectedItem) & "?", "Confirm moving payment", MessageBoxButtons.YesNo, MessageBoxIcon.Question)
 
             If (result = Windows.Forms.DialogResult.Yes) Then
-                HomeForm.Procedures.Payment_MoveToCustomer(PaymentHistoryRow, cmb_MoveToCust.SelectedValue)
+                Try
+                    HomeForm.Procedures.Payment_MoveToCustomer(PaymentHistoryRow, cmb_MoveToCust.SelectedValue)
+                    MessageBox.Show("Payment Move Complete", "Payment Move Complete", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                    RaiseEvent PaymentMoveComplete()
+                    Me.Close()
+                Catch ex As Exception
+                    MessageBox.Show("Error Moving Payment. Contact Premier.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                End Try
             End If
         Else
             ' same customer selected both times

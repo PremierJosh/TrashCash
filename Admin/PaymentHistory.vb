@@ -181,4 +181,8 @@
 
         End If
     End Sub
+
+    Private Sub PaymentMoveCompleted() Handles f_movePayment.PaymentMoveComplete
+        Fetch_History()
+    End Sub
 End Class
