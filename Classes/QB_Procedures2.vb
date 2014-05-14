@@ -756,9 +756,14 @@ retry:
         ' now need to get list of all open invoices
         Dim openInvoiceDT As ds_Payments.MovePayment_OpenInvoicesDataTable = Invoicing_GetUnpaidTable(custListID)
 
-        ' now use the unapplied table to pay invoices in the open inv table
-        Payments_ApplyFromTblToTbl(unappliedPaymentDT, openInvoiceDT)
-
+        ' making sure we have rows in both tables, otherwise just end procedure
+        If (unappliedPaymentDT.Rows.Count > 0) Then
+            If (openInvoiceDT.Rows.Count > 0) Then
+                ' now use the unapplied table to pay invoices in the open inv table
+                Payments_ApplyFromTblToTbl(unappliedPaymentDT, openInvoiceDT)
+            End If
+        End If
+        
     End Sub
 
     Private Function Invoicing_PayTxnIDsOnInvsAfterDate(ByVal CustomerListID As String, ByVal AfterDate As Date) As ds_Payments.MovePayment_UnappliedPaymentsDataTable
@@ -805,7 +810,7 @@ retry:
                         End If
                     Next
                 Next
-            Else
+            ElseIf (resp.StatusCode <> 1) Then
                 ResponseErr_Misc(resp)
             End If
         Next
@@ -844,7 +849,7 @@ retry:
                     Dim payRet As IReceivePaymentRet = payRetList.GetAt(l)
 
                     ' get row from select which returns array, 0 index
-                    Dim row As ds_Payments.MovePayment_UnappliedPaymentsRow = UnappliedDT.Select("Pay_TxnID = " & payRet.TxnID.GetValue)(0)
+                    Dim row As ds_Payments.MovePayment_UnappliedPaymentsRow = UnappliedDT.Select("Pay_TxnID LIKE '" & payRet.TxnID.GetValue & "'")(0)
                     row.Pay_EditSeq = payRet.EditSequence.GetValue
                     row.Pay_TxnDate = payRet.TxnDate.GetValue
                     row.Pay_Amount = payRet.TotalAmount.GetValue
@@ -896,7 +901,7 @@ retry:
                     unappliedDT.AddMovePayment_UnappliedPaymentsRow(payRet.TxnID.GetValue, payRet.EditSequence.GetValue, payRet.TxnDate.GetValue, payRet.TotalAmount.GetValue, Nothing)
                     unappliedDT.AcceptChanges()
                 Next
-            Else
+            ElseIf (resp.StatusCode <> 1) Then
                 ResponseErr_Misc(resp)
             End If
         Next
@@ -945,7 +950,7 @@ retry:
                 End Using
 
                 ' get row from select which returns array, 0 index
-                Dim row As ds_Payments.MovePayment_UnappliedPaymentsRow = UnappliedDT.Select("Pay_TxnID = " & payRet.TxnID.GetValue)(0)
+                Dim row As ds_Payments.MovePayment_UnappliedPaymentsRow = UnappliedDT.Select("Pay_TxnID LIKE '" & payRet.TxnID.GetValue & "'")(0)
                 row.Pay_EditSeq = payRet.EditSequence.GetValue
                 row.Remaining = payRet.UnusedPayment.GetValue
 
@@ -991,7 +996,7 @@ retry:
                     openInvDT.AddMovePayment_OpenInvoicesRow(invRet.TxnID.GetValue, invRet.TxnDate.GetValue, invRet.BalanceRemaining.GetValue, invRet.BalanceRemaining.GetValue)
                     openInvDT.AcceptChanges()
                 Next
-            Else
+            ElseIf (resp.StatusCode <> 1) Then
                 ResponseErr_Misc(resp)
             End If
         Next
