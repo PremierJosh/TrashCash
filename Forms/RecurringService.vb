@@ -217,8 +217,24 @@
         End Set
     End Property
 
-    ' crediting bool so on commit we can generate a credit
-    Private crediting As Double = 0
+    ' crediting property so on commit we can generate a credit
+    Private _crediting As Double
+    Private Property Crediting As Double
+        Get
+            Return _crediting
+        End Get
+        Set(value As Double)
+            _crediting = value
+
+            If (value > 0) Then
+                lbl_CreditMsg.Visible = True
+                lbl_CreditMsg.Text = "Saving this Last Date of Service will cause a Credit to be issued for: " & FormatCurrency(value)
+            Else
+                lbl_CreditMsg.Visible = False
+            End If
+
+        End Set
+    End Property
     ' home form ref var
     Private HomeForm As TrashCash_Home
 
@@ -283,11 +299,11 @@
             End If
 
             ' warning if a credit is going to be made
-            If (crediting > 0) Then
-                Dim result As DialogResult = MessageBox.Show("Keeping this Last Date of Service will cause a credit to be issued for " & FormatCurrency(crediting) & "." & vbCrLf & _
+            If (_crediting > 0) Then
+                Dim result As DialogResult = MessageBox.Show("Keeping this Last Date of Service will cause a credit to be issued for " & FormatCurrency(_crediting) & "." & vbCrLf & _
                                                              "Do you want to issue this credit?", "Crediting Customer for End Date Overlap", MessageBoxButtons.YesNo, MessageBoxIcon.Warning)
                 If (result = Windows.Forms.DialogResult.Yes) Then
-                    HomeForm.Procedures.RecurringService_Credit(RecurringServiceRow, crediting, dtp_EndDate.Value.Date)
+                    HomeForm.Procedures.RecurringService_Credit(RecurringServiceRow, _crediting, dtp_EndDate.Value.Date)
                     ' setting balance change
                     _BalanceChanged = True
                 Else
@@ -477,22 +493,17 @@
         End If
     End Sub
 
- 
+
     Private Sub dtp_EndDate_ValueChanged(sender As System.Object, e As System.EventArgs) Handles dtp_EndDate.ValueChanged
         If (ck_EndDate.Checked = True) Then
             ' display estimated credit
             Dim creditAmount As Decimal = CDec(p_qta.RecurringService_Credit(RecurringServiceRow.RecurringServiceID, DateAdd(DateInterval.Day, 1, dtp_EndDate.Value.Date)))
 
             If (creditAmount > 0) Then
-                ' update crediting var
-                crediting = creditAmount
-
-                lbl_CreditMsg.Visible = True
-                lbl_CreditMsg.Text = "Saving this Last Date of Service will cause a Credit to be issued for: " & FormatCurrency(creditAmount)
+                ' update crediting property
+                Crediting = creditAmount
             Else
-                crediting = 0
-
-                lbl_CreditMsg.Visible = False
+                Crediting = 0
             End If
 
         End If
