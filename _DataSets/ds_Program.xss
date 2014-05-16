@@ -12,8 +12,8 @@
     <Shape ID="DesignTable:USERS_" ZOrder="5" X="555" Y="49" Height="134" Width="187" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="83" />
     <Shape ID="DesignTable:Initial_CustomInvoice" ZOrder="4" X="829" Y="356" Height="191" Width="195" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="140" />
     <Shape ID="DesignTable:RecurringService" ZOrder="3" X="1090" Y="-11" Height="305" Width="257" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="254" />
-    <Shape ID="DesignTable:Customer" ZOrder="1" X="279" Y="25" Height="552" Width="212" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="501" />
-    <Shape ID="DesignSources:QueriesTableAdapter" ZOrder="2" X="778" Y="37" Height="144" Width="300" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="140" />
+    <Shape ID="DesignTable:Customer" ZOrder="2" X="279" Y="25" Height="552" Width="212" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="501" />
+    <Shape ID="DesignSources:QueriesTableAdapter" ZOrder="1" X="778" Y="37" Height="144" Width="300" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="140" />
   </Shapes>
   <Connectors />
 </DiagramLayout>
