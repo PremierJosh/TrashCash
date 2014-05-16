@@ -19,15 +19,6 @@ Public Class QB_Procedures2
     'Protected qta As DataSetTableAdapters.QueriesTableAdapter
     Protected cta As ds_CustomerTableAdapters.CustomerTableAdapter
     Protected rsta As ds_RecurringServiceTableAdapters.RecurringServiceTableAdapter
-    Protected wta As DataSetTableAdapters.Batch_WorkingInvoiceTableAdapter
-    'Protected lidt As DataSet.BATCH_LineItemsDataTable
-    'Protected lita As DataSetTableAdapters.BATCH_LineItemsTableAdapter
-    'Protected stta As DataSetTableAdapters.ServiceTypesTableAdapter
-    'Protected strow As DataSet.ServiceTypesRow
-
-    ' new tas
-    'Protected p_rsta As ds_ProgramTableAdapters.RecurringServiceTableAdapter
-    'Protected p_qta As ds_ProgramTableAdapters.QueriesTableAdapter
 
     Public Sub New(ByRef SessionManager As QBSessionManager, ByRef MsgSetReq As IMsgSetRequest)
         ' setting sess mgr and msgsetreq
@@ -36,14 +27,6 @@ Public Class QB_Procedures2
 
         cta = New ds_CustomerTableAdapters.CustomerTableAdapter
         rsta = New ds_RecurringServiceTableAdapters.RecurringServiceTableAdapter
-        wta = New DataSetTableAdapters.Batch_WorkingInvoiceTableAdapter
-        'lidt = New DataSet.BATCH_LineItemsDataTable
-        'lita = New DataSetTableAdapters.BATCH_LineItemsTableAdapter
-        'stta = New DataSetTableAdapters.ServiceTypesTableAdapter
-
-        ' new tas
-        'p_rsta = New ds_ProgramTableAdapters.RecurringServiceTableAdapter
-        'p_qta = New ds_ProgramTableAdapters.QueriesTableAdapter
     End Sub
 
 
@@ -1664,5 +1647,43 @@ retry:
             End If
         Next row
 
+    End Sub
+
+    Public Sub RecurringService_Credit_Void(ByVal RecurringServiceCreditID As Integer, ByVal VoidReason As String)
+        Dim ta As New ds_RecurringServiceTableAdapters.RecurringService_CreditsTableAdapter
+        Dim row As ds_RecurringService.RecurringService_CreditsRow = ta.GetDataByCreditID(RecurringServiceCreditID).Rows(0)
+
+        If (Not row.Voided) Then
+            Dim txnVoid As ITxnVoid = MsgSetRequest.AppendTxnVoidRq
+
+            ' talking about credit
+            txnVoid.TxnVoidType.SetValue(ENTxnVoidType.tvtCreditMemo)
+            txnVoid.TxnID.SetValue(row.CreditMemoTxnID)
+
+            ' go
+            Dim msgSetResp As IMsgSetResponse = SessionManager.DoRequests(MsgSetRequest)
+            Dim respList As IResponseList = msgSetResp.ResponseList
+
+            MsgSetRequest.ClearRequests()
+
+            For i = 0 To respList.Count - 1
+                Dim resp As IResponse = respList.GetAt(i)
+
+                If (resp.StatusCode = 0) Then
+                    ' credit voided: update row
+                    row.Voided = True
+                    row.VoidReason = VoidReason
+                    row.VoidTime = Date.Now
+
+                    Try
+                        ta.Update(row)
+                    Catch ex As Exception
+                        MsgBox("Credit Row Update SQL Error: " & ex.Message)
+                    End Try
+                Else
+                    ResponseErr_Misc(resp)
+                End If
+            Next
+        End If
     End Sub
 End Class

@@ -170,6 +170,12 @@
                 lbl_RecStatus.Visible = False
                 ' hiding approved button for new services
                 btn_Approve.Visible = False
+
+                ' hiding credit and bill history tabs
+                tp_BillHist.Hide()
+                tp_Credits.Hide()
+                tp_Notes.Hide()
+
             End If
         End Set
     End Property
@@ -538,4 +544,31 @@
         End If
     End Sub
 
+    Private Sub cm_i_VoidCredit_Click(sender As System.Object, e As System.EventArgs) Handles cm_i_VoidCredit.Click
+        If (dg_CreditHistory.SelectedRows.Count = 1) Then
+            ' get row reference
+            Dim dvRow As DataRowView = dg_CreditHistory.SelectedRows(0).DataBoundItem
+            Dim row As ds_RecurringService.RecurringService_CreditsRow = dvRow.Row
+
+            ' checking if row voided
+            If (Not row.Voided) Then
+                Dim result As DialogResult = MessageBox.Show("Void credit for " & FormatCurrency(row.CreditAmount) & ", issued on " & row.TimeCreated & " for Service on Date: " & row.DateOfCredit & "?", "Confirm Credit Void", MessageBoxButtons.YesNo, MessageBoxIcon.Question)
+
+                ' upon confirm, grab reason through input box
+                If (result = Windows.Forms.DialogResult.Yes) Then
+                    Dim reason As String = InputBox("Reason for Voiding Credit Memo", "Reason for Voiding Credit Memo")
+                    If (Trim(reason).Length > 0) Then
+                        HomeForm.Procedures.RecurringService_Credit_Void(row.RecurringServiceCreditID, reason)
+                        MessageBox.Show("Credit Memo Voided", "Credit Memo Voided", MessageBoxButtons.OK, MessageBoxIcon.Information)
+
+                        ' customer balance has changed now
+                        _BalanceChanged = True
+                    End If
+                End If
+            Else
+                MessageBox.Show("This Credit has already been voided. It was voided by " & row.VoidUser & " on " & row.VoidTime & ". Reason: " & row.Reason & ".", "Credit already Voided", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            End If
+        End If
+
+    End Sub
 End Class
