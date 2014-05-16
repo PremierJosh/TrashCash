@@ -244,13 +244,11 @@
             grp_BasicInfo.Enabled = False
             dtp_StartDate.Enabled = False
             grp_PickupDay.Enabled = False
-            grp_BillLength.Enabled = False
             grp_SrvcAddr.Enabled = False
         Else
             grp_BasicInfo.Enabled = True
             dtp_StartDate.Enabled = True
             grp_PickupDay.Enabled = True
-            grp_BillLength.Enabled = True
             grp_SrvcAddr.Enabled = True
         End If
     End Sub
@@ -299,13 +297,14 @@
             End If
 
             ' warning if a credit is going to be made
-            If (_crediting > 0) Then
-                Dim result As DialogResult = MessageBox.Show("Keeping this Last Date of Service will cause a credit to be issued for " & FormatCurrency(_crediting) & "." & vbCrLf & _
+            If (Crediting > 0) Then
+                Dim result As DialogResult = MessageBox.Show("Keeping this Last Date of Service will cause a credit to be issued for " & FormatCurrency(Crediting) & "." & vbCrLf & _
                                                              "Do you want to issue this credit?", "Crediting Customer for End Date Overlap", MessageBoxButtons.YesNo, MessageBoxIcon.Warning)
                 If (result = Windows.Forms.DialogResult.Yes) Then
-                    HomeForm.Procedures.RecurringService_Credit(RecurringServiceRow, _crediting, dtp_EndDate.Value.Date)
+                    HomeForm.Procedures.RecurringService_Credit(RecurringServiceRow, Crediting, dtp_EndDate.Value.Date)
                     ' setting balance change
                     _BalanceChanged = True
+                    _ServiceUpdated = True
                 Else
                     RecurringServiceRow.SetRecurringServiceEndDateNull()
                 End If
@@ -533,4 +532,5 @@
             End Try
         End If
     End Sub
+
 End Class
