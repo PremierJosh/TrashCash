@@ -11,8 +11,8 @@
     <Shape ID="DesignTable:RecurringService_DisplayByCustomerID" ZOrder="5" X="1045" Y="125" Height="267" Width="290" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="216" />
     <Shape ID="DesignTable:ServiceNotes" ZOrder="4" X="369" Y="536" Height="153" Width="300" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="83" />
     <Shape ID="DesignTable:RecurringService_BillHistory" ZOrder="3" X="378" Y="25" Height="229" Width="300" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="178" />
+    <Shape ID="DesignTable:RecurringService_Credits" ZOrder="1" X="717" Y="195" Height="362" Width="300" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="254" />
     <Shape ID="DesignSources:QueriesTableAdapter" ZOrder="6" X="851" Y="7" Height="86" Width="300" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="82" />
-    <Shape ID="DesignTable:RecurringService_Credits" ZOrder="1" X="717" Y="195" Height="324" Width="300" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="254" />
   </Shapes>
   <Connectors />
 </DiagramLayout>
