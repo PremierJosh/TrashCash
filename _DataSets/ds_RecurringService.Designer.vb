@@ -37,6 +37,8 @@ Partial Public Class ds_RecurringService
     
     Private tableRecurringService_Credits As RecurringService_CreditsDataTable
     
+    Private tableRecurringService_EndDateCredits As RecurringService_EndDateCreditsDataTable
+    
     Private _schemaSerializationMode As Global.System.Data.SchemaSerializationMode = Global.System.Data.SchemaSerializationMode.IncludeSchema
     
     <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
@@ -83,6 +85,9 @@ Partial Public Class ds_RecurringService
             End If
             If (Not (ds.Tables("RecurringService_Credits")) Is Nothing) Then
                 MyBase.Tables.Add(New RecurringService_CreditsDataTable(ds.Tables("RecurringService_Credits")))
+            End If
+            If (Not (ds.Tables("RecurringService_EndDateCredits")) Is Nothing) Then
+                MyBase.Tables.Add(New RecurringService_EndDateCreditsDataTable(ds.Tables("RecurringService_EndDateCredits")))
             End If
             Me.DataSetName = ds.DataSetName
             Me.Prefix = ds.Prefix
@@ -158,6 +163,16 @@ Partial Public Class ds_RecurringService
     Public ReadOnly Property RecurringService_Credits() As RecurringService_CreditsDataTable
         Get
             Return Me.tableRecurringService_Credits
+        End Get
+    End Property
+    
+    <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+     Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0"),  _
+     Global.System.ComponentModel.Browsable(false),  _
+     Global.System.ComponentModel.DesignerSerializationVisibility(Global.System.ComponentModel.DesignerSerializationVisibility.Content)>  _
+    Public ReadOnly Property RecurringService_EndDateCredits() As RecurringService_EndDateCreditsDataTable
+        Get
+            Return Me.tableRecurringService_EndDateCredits
         End Get
     End Property
     
@@ -246,6 +261,9 @@ Partial Public Class ds_RecurringService
             If (Not (ds.Tables("RecurringService_Credits")) Is Nothing) Then
                 MyBase.Tables.Add(New RecurringService_CreditsDataTable(ds.Tables("RecurringService_Credits")))
             End If
+            If (Not (ds.Tables("RecurringService_EndDateCredits")) Is Nothing) Then
+                MyBase.Tables.Add(New RecurringService_EndDateCreditsDataTable(ds.Tables("RecurringService_EndDateCredits")))
+            End If
             Me.DataSetName = ds.DataSetName
             Me.Prefix = ds.Prefix
             Me.Namespace = ds.Namespace
@@ -314,6 +332,12 @@ Partial Public Class ds_RecurringService
                 Me.tableRecurringService_Credits.InitVars
             End If
         End If
+        Me.tableRecurringService_EndDateCredits = CType(MyBase.Tables("RecurringService_EndDateCredits"),RecurringService_EndDateCreditsDataTable)
+        If (initTable = true) Then
+            If (Not (Me.tableRecurringService_EndDateCredits) Is Nothing) Then
+                Me.tableRecurringService_EndDateCredits.InitVars
+            End If
+        End If
     End Sub
     
     <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
@@ -336,6 +360,8 @@ Partial Public Class ds_RecurringService
         MyBase.Tables.Add(Me.tableRecurringService_BillHistory)
         Me.tableRecurringService_Credits = New RecurringService_CreditsDataTable()
         MyBase.Tables.Add(Me.tableRecurringService_Credits)
+        Me.tableRecurringService_EndDateCredits = New RecurringService_EndDateCreditsDataTable()
+        MyBase.Tables.Add(Me.tableRecurringService_EndDateCredits)
     End Sub
     
     <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
@@ -371,6 +397,12 @@ Partial Public Class ds_RecurringService
     <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
      Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
     Private Function ShouldSerializeRecurringService_Credits() As Boolean
+        Return false
+    End Function
+    
+    <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+     Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+    Private Function ShouldSerializeRecurringService_EndDateCredits() As Boolean
         Return false
     End Function
     
@@ -449,6 +481,9 @@ Partial Public Class ds_RecurringService
     
     <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
     Public Delegate Sub RecurringService_CreditsRowChangeEventHandler(ByVal sender As Object, ByVal e As RecurringService_CreditsRowChangeEvent)
+    
+    <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+    Public Delegate Sub RecurringService_EndDateCreditsRowChangeEventHandler(ByVal sender As Object, ByVal e As RecurringService_EndDateCreditsRowChangeEvent)
     
     '''<summary>
     '''Represents the strongly named DataTable class.
@@ -2843,6 +2878,438 @@ Partial Public Class ds_RecurringService
     End Class
     
     '''<summary>
+    '''Represents the strongly named DataTable class.
+    '''</summary>
+    <Global.System.Serializable(),  _
+     Global.System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedTableSchema")>  _
+    Partial Public Class RecurringService_EndDateCreditsDataTable
+        Inherits Global.System.Data.TypedTableBase(Of RecurringService_EndDateCreditsRow)
+        
+        Private columnEndDateCreditID As Global.System.Data.DataColumn
+        
+        Private columnRecurringServiceID As Global.System.Data.DataColumn
+        
+        Private columnBilledThrough As Global.System.Data.DataColumn
+        
+        Private columnPrev_EndDate As Global.System.Data.DataColumn
+        
+        Private columnNew_EndDate As Global.System.Data.DataColumn
+        
+        Private columnCreditAmount As Global.System.Data.DataColumn
+        
+        Private columnTimeCreated As Global.System.Data.DataColumn
+        
+        Private columnUserCreated As Global.System.Data.DataColumn
+        
+        Private columnCreditMemoTxnID As Global.System.Data.DataColumn
+        
+        Private columnVoided As Global.System.Data.DataColumn
+        
+        Private columnVoidDateTime As Global.System.Data.DataColumn
+        
+        Private columnVoidReason As Global.System.Data.DataColumn
+        
+        Private columnVoidUser As Global.System.Data.DataColumn
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        Public Sub New()
+            MyBase.New
+            Me.TableName = "RecurringService_EndDateCredits"
+            Me.BeginInit
+            Me.InitClass
+            Me.EndInit
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        Friend Sub New(ByVal table As Global.System.Data.DataTable)
+            MyBase.New
+            Me.TableName = table.TableName
+            If (table.CaseSensitive <> table.DataSet.CaseSensitive) Then
+                Me.CaseSensitive = table.CaseSensitive
+            End If
+            If (table.Locale.ToString <> table.DataSet.Locale.ToString) Then
+                Me.Locale = table.Locale
+            End If
+            If (table.Namespace <> table.DataSet.Namespace) Then
+                Me.Namespace = table.Namespace
+            End If
+            Me.Prefix = table.Prefix
+            Me.MinimumCapacity = table.MinimumCapacity
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        Protected Sub New(ByVal info As Global.System.Runtime.Serialization.SerializationInfo, ByVal context As Global.System.Runtime.Serialization.StreamingContext)
+            MyBase.New(info, context)
+            Me.InitVars
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        Public ReadOnly Property EndDateCreditIDColumn() As Global.System.Data.DataColumn
+            Get
+                Return Me.columnEndDateCreditID
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        Public ReadOnly Property RecurringServiceIDColumn() As Global.System.Data.DataColumn
+            Get
+                Return Me.columnRecurringServiceID
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        Public ReadOnly Property BilledThroughColumn() As Global.System.Data.DataColumn
+            Get
+                Return Me.columnBilledThrough
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        Public ReadOnly Property Prev_EndDateColumn() As Global.System.Data.DataColumn
+            Get
+                Return Me.columnPrev_EndDate
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        Public ReadOnly Property New_EndDateColumn() As Global.System.Data.DataColumn
+            Get
+                Return Me.columnNew_EndDate
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        Public ReadOnly Property CreditAmountColumn() As Global.System.Data.DataColumn
+            Get
+                Return Me.columnCreditAmount
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        Public ReadOnly Property TimeCreatedColumn() As Global.System.Data.DataColumn
+            Get
+                Return Me.columnTimeCreated
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        Public ReadOnly Property UserCreatedColumn() As Global.System.Data.DataColumn
+            Get
+                Return Me.columnUserCreated
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        Public ReadOnly Property CreditMemoTxnIDColumn() As Global.System.Data.DataColumn
+            Get
+                Return Me.columnCreditMemoTxnID
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        Public ReadOnly Property VoidedColumn() As Global.System.Data.DataColumn
+            Get
+                Return Me.columnVoided
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        Public ReadOnly Property VoidDateTimeColumn() As Global.System.Data.DataColumn
+            Get
+                Return Me.columnVoidDateTime
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        Public ReadOnly Property VoidReasonColumn() As Global.System.Data.DataColumn
+            Get
+                Return Me.columnVoidReason
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        Public ReadOnly Property VoidUserColumn() As Global.System.Data.DataColumn
+            Get
+                Return Me.columnVoidUser
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0"),  _
+         Global.System.ComponentModel.Browsable(false)>  _
+        Public ReadOnly Property Count() As Integer
+            Get
+                Return Me.Rows.Count
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        Public Default ReadOnly Property Item(ByVal index As Integer) As RecurringService_EndDateCreditsRow
+            Get
+                Return CType(Me.Rows(index),RecurringService_EndDateCreditsRow)
+            End Get
+        End Property
+        
+        <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        Public Event RecurringService_EndDateCreditsRowChanging As RecurringService_EndDateCreditsRowChangeEventHandler
+        
+        <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        Public Event RecurringService_EndDateCreditsRowChanged As RecurringService_EndDateCreditsRowChangeEventHandler
+        
+        <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        Public Event RecurringService_EndDateCreditsRowDeleting As RecurringService_EndDateCreditsRowChangeEventHandler
+        
+        <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        Public Event RecurringService_EndDateCreditsRowDeleted As RecurringService_EndDateCreditsRowChangeEventHandler
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        Public Overloads Sub AddRecurringService_EndDateCreditsRow(ByVal row As RecurringService_EndDateCreditsRow)
+            Me.Rows.Add(row)
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        Public Overloads Function AddRecurringService_EndDateCreditsRow(ByVal RecurringServiceID As Decimal, ByVal BilledThrough As Date, ByVal Prev_EndDate As Date, ByVal New_EndDate As Date, ByVal CreditAmount As Decimal, ByVal TimeCreated As Date, ByVal UserCreated As String, ByVal CreditMemoTxnID As String, ByVal Voided As Boolean, ByVal VoidDateTime As Date, ByVal VoidReason As String, ByVal VoidUser As String) As RecurringService_EndDateCreditsRow
+            Dim rowRecurringService_EndDateCreditsRow As RecurringService_EndDateCreditsRow = CType(Me.NewRow,RecurringService_EndDateCreditsRow)
+            Dim columnValuesArray() As Object = New Object() {Nothing, RecurringServiceID, BilledThrough, Prev_EndDate, New_EndDate, CreditAmount, TimeCreated, UserCreated, CreditMemoTxnID, Voided, VoidDateTime, VoidReason, VoidUser}
+            rowRecurringService_EndDateCreditsRow.ItemArray = columnValuesArray
+            Me.Rows.Add(rowRecurringService_EndDateCreditsRow)
+            Return rowRecurringService_EndDateCreditsRow
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        Public Function FindByEndDateCreditID(ByVal EndDateCreditID As Integer) As RecurringService_EndDateCreditsRow
+            Return CType(Me.Rows.Find(New Object() {EndDateCreditID}),RecurringService_EndDateCreditsRow)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        Public Overrides Function Clone() As Global.System.Data.DataTable
+            Dim cln As RecurringService_EndDateCreditsDataTable = CType(MyBase.Clone,RecurringService_EndDateCreditsDataTable)
+            cln.InitVars
+            Return cln
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        Protected Overrides Function CreateInstance() As Global.System.Data.DataTable
+            Return New RecurringService_EndDateCreditsDataTable()
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        Friend Sub InitVars()
+            Me.columnEndDateCreditID = MyBase.Columns("EndDateCreditID")
+            Me.columnRecurringServiceID = MyBase.Columns("RecurringServiceID")
+            Me.columnBilledThrough = MyBase.Columns("BilledThrough")
+            Me.columnPrev_EndDate = MyBase.Columns("Prev_EndDate")
+            Me.columnNew_EndDate = MyBase.Columns("New_EndDate")
+            Me.columnCreditAmount = MyBase.Columns("CreditAmount")
+            Me.columnTimeCreated = MyBase.Columns("TimeCreated")
+            Me.columnUserCreated = MyBase.Columns("UserCreated")
+            Me.columnCreditMemoTxnID = MyBase.Columns("CreditMemoTxnID")
+            Me.columnVoided = MyBase.Columns("Voided")
+            Me.columnVoidDateTime = MyBase.Columns("VoidDateTime")
+            Me.columnVoidReason = MyBase.Columns("VoidReason")
+            Me.columnVoidUser = MyBase.Columns("VoidUser")
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        Private Sub InitClass()
+            Me.columnEndDateCreditID = New Global.System.Data.DataColumn("EndDateCreditID", GetType(Integer), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnEndDateCreditID)
+            Me.columnRecurringServiceID = New Global.System.Data.DataColumn("RecurringServiceID", GetType(Decimal), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnRecurringServiceID)
+            Me.columnBilledThrough = New Global.System.Data.DataColumn("BilledThrough", GetType(Date), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnBilledThrough)
+            Me.columnPrev_EndDate = New Global.System.Data.DataColumn("Prev_EndDate", GetType(Date), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnPrev_EndDate)
+            Me.columnNew_EndDate = New Global.System.Data.DataColumn("New_EndDate", GetType(Date), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnNew_EndDate)
+            Me.columnCreditAmount = New Global.System.Data.DataColumn("CreditAmount", GetType(Decimal), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnCreditAmount)
+            Me.columnTimeCreated = New Global.System.Data.DataColumn("TimeCreated", GetType(Date), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnTimeCreated)
+            Me.columnUserCreated = New Global.System.Data.DataColumn("UserCreated", GetType(String), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnUserCreated)
+            Me.columnCreditMemoTxnID = New Global.System.Data.DataColumn("CreditMemoTxnID", GetType(String), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnCreditMemoTxnID)
+            Me.columnVoided = New Global.System.Data.DataColumn("Voided", GetType(Boolean), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnVoided)
+            Me.columnVoidDateTime = New Global.System.Data.DataColumn("VoidDateTime", GetType(Date), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnVoidDateTime)
+            Me.columnVoidReason = New Global.System.Data.DataColumn("VoidReason", GetType(String), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnVoidReason)
+            Me.columnVoidUser = New Global.System.Data.DataColumn("VoidUser", GetType(String), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnVoidUser)
+            Me.Constraints.Add(New Global.System.Data.UniqueConstraint("Constraint1", New Global.System.Data.DataColumn() {Me.columnEndDateCreditID}, true))
+            Me.columnEndDateCreditID.AutoIncrement = true
+            Me.columnEndDateCreditID.AutoIncrementSeed = -1
+            Me.columnEndDateCreditID.AutoIncrementStep = -1
+            Me.columnEndDateCreditID.AllowDBNull = false
+            Me.columnEndDateCreditID.ReadOnly = true
+            Me.columnEndDateCreditID.Unique = true
+            Me.columnRecurringServiceID.AllowDBNull = false
+            Me.columnBilledThrough.AllowDBNull = false
+            Me.columnNew_EndDate.AllowDBNull = false
+            Me.columnCreditAmount.AllowDBNull = false
+            Me.columnTimeCreated.AllowDBNull = false
+            Me.columnUserCreated.AllowDBNull = false
+            Me.columnUserCreated.MaxLength = 50
+            Me.columnCreditMemoTxnID.AllowDBNull = false
+            Me.columnCreditMemoTxnID.MaxLength = 50
+            Me.columnVoidReason.MaxLength = 300
+            Me.columnVoidUser.MaxLength = 50
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        Public Function NewRecurringService_EndDateCreditsRow() As RecurringService_EndDateCreditsRow
+            Return CType(Me.NewRow,RecurringService_EndDateCreditsRow)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        Protected Overrides Function NewRowFromBuilder(ByVal builder As Global.System.Data.DataRowBuilder) As Global.System.Data.DataRow
+            Return New RecurringService_EndDateCreditsRow(builder)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        Protected Overrides Function GetRowType() As Global.System.Type
+            Return GetType(RecurringService_EndDateCreditsRow)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        Protected Overrides Sub OnRowChanged(ByVal e As Global.System.Data.DataRowChangeEventArgs)
+            MyBase.OnRowChanged(e)
+            If (Not (Me.RecurringService_EndDateCreditsRowChangedEvent) Is Nothing) Then
+                RaiseEvent RecurringService_EndDateCreditsRowChanged(Me, New RecurringService_EndDateCreditsRowChangeEvent(CType(e.Row,RecurringService_EndDateCreditsRow), e.Action))
+            End If
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        Protected Overrides Sub OnRowChanging(ByVal e As Global.System.Data.DataRowChangeEventArgs)
+            MyBase.OnRowChanging(e)
+            If (Not (Me.RecurringService_EndDateCreditsRowChangingEvent) Is Nothing) Then
+                RaiseEvent RecurringService_EndDateCreditsRowChanging(Me, New RecurringService_EndDateCreditsRowChangeEvent(CType(e.Row,RecurringService_EndDateCreditsRow), e.Action))
+            End If
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        Protected Overrides Sub OnRowDeleted(ByVal e As Global.System.Data.DataRowChangeEventArgs)
+            MyBase.OnRowDeleted(e)
+            If (Not (Me.RecurringService_EndDateCreditsRowDeletedEvent) Is Nothing) Then
+                RaiseEvent RecurringService_EndDateCreditsRowDeleted(Me, New RecurringService_EndDateCreditsRowChangeEvent(CType(e.Row,RecurringService_EndDateCreditsRow), e.Action))
+            End If
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        Protected Overrides Sub OnRowDeleting(ByVal e As Global.System.Data.DataRowChangeEventArgs)
+            MyBase.OnRowDeleting(e)
+            If (Not (Me.RecurringService_EndDateCreditsRowDeletingEvent) Is Nothing) Then
+                RaiseEvent RecurringService_EndDateCreditsRowDeleting(Me, New RecurringService_EndDateCreditsRowChangeEvent(CType(e.Row,RecurringService_EndDateCreditsRow), e.Action))
+            End If
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        Public Sub RemoveRecurringService_EndDateCreditsRow(ByVal row As RecurringService_EndDateCreditsRow)
+            Me.Rows.Remove(row)
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        Public Shared Function GetTypedTableSchema(ByVal xs As Global.System.Xml.Schema.XmlSchemaSet) As Global.System.Xml.Schema.XmlSchemaComplexType
+            Dim type As Global.System.Xml.Schema.XmlSchemaComplexType = New Global.System.Xml.Schema.XmlSchemaComplexType()
+            Dim sequence As Global.System.Xml.Schema.XmlSchemaSequence = New Global.System.Xml.Schema.XmlSchemaSequence()
+            Dim ds As ds_RecurringService = New ds_RecurringService()
+            Dim any1 As Global.System.Xml.Schema.XmlSchemaAny = New Global.System.Xml.Schema.XmlSchemaAny()
+            any1.Namespace = "http://www.w3.org/2001/XMLSchema"
+            any1.MinOccurs = New Decimal(0)
+            any1.MaxOccurs = Decimal.MaxValue
+            any1.ProcessContents = Global.System.Xml.Schema.XmlSchemaContentProcessing.Lax
+            sequence.Items.Add(any1)
+            Dim any2 As Global.System.Xml.Schema.XmlSchemaAny = New Global.System.Xml.Schema.XmlSchemaAny()
+            any2.Namespace = "urn:schemas-microsoft-com:xml-diffgram-v1"
+            any2.MinOccurs = New Decimal(1)
+            any2.ProcessContents = Global.System.Xml.Schema.XmlSchemaContentProcessing.Lax
+            sequence.Items.Add(any2)
+            Dim attribute1 As Global.System.Xml.Schema.XmlSchemaAttribute = New Global.System.Xml.Schema.XmlSchemaAttribute()
+            attribute1.Name = "namespace"
+            attribute1.FixedValue = ds.Namespace
+            type.Attributes.Add(attribute1)
+            Dim attribute2 As Global.System.Xml.Schema.XmlSchemaAttribute = New Global.System.Xml.Schema.XmlSchemaAttribute()
+            attribute2.Name = "tableTypeName"
+            attribute2.FixedValue = "RecurringService_EndDateCreditsDataTable"
+            type.Attributes.Add(attribute2)
+            type.Particle = sequence
+            Dim dsSchema As Global.System.Xml.Schema.XmlSchema = ds.GetSchemaSerializable
+            If xs.Contains(dsSchema.TargetNamespace) Then
+                Dim s1 As Global.System.IO.MemoryStream = New Global.System.IO.MemoryStream()
+                Dim s2 As Global.System.IO.MemoryStream = New Global.System.IO.MemoryStream()
+                Try 
+                    Dim schema As Global.System.Xml.Schema.XmlSchema = Nothing
+                    dsSchema.Write(s1)
+                    Dim schemas As Global.System.Collections.IEnumerator = xs.Schemas(dsSchema.TargetNamespace).GetEnumerator
+                    Do While schemas.MoveNext
+                        schema = CType(schemas.Current,Global.System.Xml.Schema.XmlSchema)
+                        s2.SetLength(0)
+                        schema.Write(s2)
+                        If (s1.Length = s2.Length) Then
+                            s1.Position = 0
+                            s2.Position = 0
+                            
+                            Do While ((s1.Position <> s1.Length)  _
+                                        AndAlso (s1.ReadByte = s2.ReadByte))
+                                
+                                
+                            Loop
+                            If (s1.Position = s1.Length) Then
+                                Return type
+                            End If
+                        End If
+                        
+                    Loop
+                Finally
+                    If (Not (s1) Is Nothing) Then
+                        s1.Close
+                    End If
+                    If (Not (s2) Is Nothing) Then
+                        s2.Close
+                    End If
+                End Try
+            End If
+            xs.Add(dsSchema)
+            Return type
+        End Function
+    End Class
+    
+    '''<summary>
     '''Represents strongly named DataRow class.
     '''</summary>
     Partial Public Class RecurringServiceRow
@@ -4076,6 +4543,250 @@ Partial Public Class ds_RecurringService
     End Class
     
     '''<summary>
+    '''Represents strongly named DataRow class.
+    '''</summary>
+    Partial Public Class RecurringService_EndDateCreditsRow
+        Inherits Global.System.Data.DataRow
+        
+        Private tableRecurringService_EndDateCredits As RecurringService_EndDateCreditsDataTable
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        Friend Sub New(ByVal rb As Global.System.Data.DataRowBuilder)
+            MyBase.New(rb)
+            Me.tableRecurringService_EndDateCredits = CType(Me.Table,RecurringService_EndDateCreditsDataTable)
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        Public Property EndDateCreditID() As Integer
+            Get
+                Return CType(Me(Me.tableRecurringService_EndDateCredits.EndDateCreditIDColumn),Integer)
+            End Get
+            Set
+                Me(Me.tableRecurringService_EndDateCredits.EndDateCreditIDColumn) = value
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        Public Property RecurringServiceID() As Decimal
+            Get
+                Return CType(Me(Me.tableRecurringService_EndDateCredits.RecurringServiceIDColumn),Decimal)
+            End Get
+            Set
+                Me(Me.tableRecurringService_EndDateCredits.RecurringServiceIDColumn) = value
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        Public Property BilledThrough() As Date
+            Get
+                Return CType(Me(Me.tableRecurringService_EndDateCredits.BilledThroughColumn),Date)
+            End Get
+            Set
+                Me(Me.tableRecurringService_EndDateCredits.BilledThroughColumn) = value
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        Public Property Prev_EndDate() As Date
+            Get
+                Try 
+                    Return CType(Me(Me.tableRecurringService_EndDateCredits.Prev_EndDateColumn),Date)
+                Catch e As Global.System.InvalidCastException
+                    Throw New Global.System.Data.StrongTypingException("The value for column 'Prev_EndDate' in table 'RecurringService_EndDateCredits' is"& _ 
+                            " DBNull.", e)
+                End Try
+            End Get
+            Set
+                Me(Me.tableRecurringService_EndDateCredits.Prev_EndDateColumn) = value
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        Public Property New_EndDate() As Date
+            Get
+                Return CType(Me(Me.tableRecurringService_EndDateCredits.New_EndDateColumn),Date)
+            End Get
+            Set
+                Me(Me.tableRecurringService_EndDateCredits.New_EndDateColumn) = value
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        Public Property CreditAmount() As Decimal
+            Get
+                Return CType(Me(Me.tableRecurringService_EndDateCredits.CreditAmountColumn),Decimal)
+            End Get
+            Set
+                Me(Me.tableRecurringService_EndDateCredits.CreditAmountColumn) = value
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        Public Property TimeCreated() As Date
+            Get
+                Return CType(Me(Me.tableRecurringService_EndDateCredits.TimeCreatedColumn),Date)
+            End Get
+            Set
+                Me(Me.tableRecurringService_EndDateCredits.TimeCreatedColumn) = value
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        Public Property UserCreated() As String
+            Get
+                Return CType(Me(Me.tableRecurringService_EndDateCredits.UserCreatedColumn),String)
+            End Get
+            Set
+                Me(Me.tableRecurringService_EndDateCredits.UserCreatedColumn) = value
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        Public Property CreditMemoTxnID() As String
+            Get
+                Return CType(Me(Me.tableRecurringService_EndDateCredits.CreditMemoTxnIDColumn),String)
+            End Get
+            Set
+                Me(Me.tableRecurringService_EndDateCredits.CreditMemoTxnIDColumn) = value
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        Public Property Voided() As Boolean
+            Get
+                Try 
+                    Return CType(Me(Me.tableRecurringService_EndDateCredits.VoidedColumn),Boolean)
+                Catch e As Global.System.InvalidCastException
+                    Throw New Global.System.Data.StrongTypingException("The value for column 'Voided' in table 'RecurringService_EndDateCredits' is DBNul"& _ 
+                            "l.", e)
+                End Try
+            End Get
+            Set
+                Me(Me.tableRecurringService_EndDateCredits.VoidedColumn) = value
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        Public Property VoidDateTime() As Date
+            Get
+                Try 
+                    Return CType(Me(Me.tableRecurringService_EndDateCredits.VoidDateTimeColumn),Date)
+                Catch e As Global.System.InvalidCastException
+                    Throw New Global.System.Data.StrongTypingException("The value for column 'VoidDateTime' in table 'RecurringService_EndDateCredits' is"& _ 
+                            " DBNull.", e)
+                End Try
+            End Get
+            Set
+                Me(Me.tableRecurringService_EndDateCredits.VoidDateTimeColumn) = value
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        Public Property VoidReason() As String
+            Get
+                Try 
+                    Return CType(Me(Me.tableRecurringService_EndDateCredits.VoidReasonColumn),String)
+                Catch e As Global.System.InvalidCastException
+                    Throw New Global.System.Data.StrongTypingException("The value for column 'VoidReason' in table 'RecurringService_EndDateCredits' is D"& _ 
+                            "BNull.", e)
+                End Try
+            End Get
+            Set
+                Me(Me.tableRecurringService_EndDateCredits.VoidReasonColumn) = value
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        Public Property VoidUser() As String
+            Get
+                Try 
+                    Return CType(Me(Me.tableRecurringService_EndDateCredits.VoidUserColumn),String)
+                Catch e As Global.System.InvalidCastException
+                    Throw New Global.System.Data.StrongTypingException("The value for column 'VoidUser' in table 'RecurringService_EndDateCredits' is DBN"& _ 
+                            "ull.", e)
+                End Try
+            End Get
+            Set
+                Me(Me.tableRecurringService_EndDateCredits.VoidUserColumn) = value
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        Public Function IsPrev_EndDateNull() As Boolean
+            Return Me.IsNull(Me.tableRecurringService_EndDateCredits.Prev_EndDateColumn)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        Public Sub SetPrev_EndDateNull()
+            Me(Me.tableRecurringService_EndDateCredits.Prev_EndDateColumn) = Global.System.Convert.DBNull
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        Public Function IsVoidedNull() As Boolean
+            Return Me.IsNull(Me.tableRecurringService_EndDateCredits.VoidedColumn)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        Public Sub SetVoidedNull()
+            Me(Me.tableRecurringService_EndDateCredits.VoidedColumn) = Global.System.Convert.DBNull
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        Public Function IsVoidDateTimeNull() As Boolean
+            Return Me.IsNull(Me.tableRecurringService_EndDateCredits.VoidDateTimeColumn)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        Public Sub SetVoidDateTimeNull()
+            Me(Me.tableRecurringService_EndDateCredits.VoidDateTimeColumn) = Global.System.Convert.DBNull
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        Public Function IsVoidReasonNull() As Boolean
+            Return Me.IsNull(Me.tableRecurringService_EndDateCredits.VoidReasonColumn)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        Public Sub SetVoidReasonNull()
+            Me(Me.tableRecurringService_EndDateCredits.VoidReasonColumn) = Global.System.Convert.DBNull
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        Public Function IsVoidUserNull() As Boolean
+            Return Me.IsNull(Me.tableRecurringService_EndDateCredits.VoidUserColumn)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        Public Sub SetVoidUserNull()
+            Me(Me.tableRecurringService_EndDateCredits.VoidUserColumn) = Global.System.Convert.DBNull
+        End Sub
+    End Class
+    
+    '''<summary>
     '''Row event argument class
     '''</summary>
     <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
@@ -4277,6 +4988,42 @@ Partial Public Class ds_RecurringService
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
         Public ReadOnly Property Row() As RecurringService_CreditsRow
+            Get
+                Return Me.eventRow
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        Public ReadOnly Property Action() As Global.System.Data.DataRowAction
+            Get
+                Return Me.eventAction
+            End Get
+        End Property
+    End Class
+    
+    '''<summary>
+    '''Row event argument class
+    '''</summary>
+    <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+    Public Class RecurringService_EndDateCreditsRowChangeEvent
+        Inherits Global.System.EventArgs
+        
+        Private eventRow As RecurringService_EndDateCreditsRow
+        
+        Private eventAction As Global.System.Data.DataRowAction
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        Public Sub New(ByVal row As RecurringService_EndDateCreditsRow, ByVal action As Global.System.Data.DataRowAction)
+            MyBase.New
+            Me.eventRow = row
+            Me.eventAction = action
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        Public ReadOnly Property Row() As RecurringService_EndDateCreditsRow
             Get
                 Return Me.eventRow
             End Get
@@ -6601,6 +7348,493 @@ Namespace ds_RecurringServiceTableAdapters
      Global.System.ComponentModel.DesignerAttribute("Microsoft.VSDesigner.DataSource.Design.TableAdapterDesigner, Microsoft.VSDesigner"& _ 
         ", Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a"),  _
      Global.System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")>  _
+    Partial Public Class RecurringService_EndDateCreditsTableAdapter
+        Inherits Global.System.ComponentModel.Component
+        
+        Private WithEvents _adapter As Global.System.Data.SqlClient.SqlDataAdapter
+        
+        Private _connection As Global.System.Data.SqlClient.SqlConnection
+        
+        Private _transaction As Global.System.Data.SqlClient.SqlTransaction
+        
+        Private _commandCollection() As Global.System.Data.SqlClient.SqlCommand
+        
+        Private _clearBeforeFill As Boolean
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        Public Sub New()
+            MyBase.New
+            Me.ClearBeforeFill = true
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        Protected Friend ReadOnly Property Adapter() As Global.System.Data.SqlClient.SqlDataAdapter
+            Get
+                If (Me._adapter Is Nothing) Then
+                    Me.InitAdapter
+                End If
+                Return Me._adapter
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        Friend Property Connection() As Global.System.Data.SqlClient.SqlConnection
+            Get
+                If (Me._connection Is Nothing) Then
+                    Me.InitConnection
+                End If
+                Return Me._connection
+            End Get
+            Set
+                Me._connection = value
+                If (Not (Me.Adapter.InsertCommand) Is Nothing) Then
+                    Me.Adapter.InsertCommand.Connection = value
+                End If
+                If (Not (Me.Adapter.DeleteCommand) Is Nothing) Then
+                    Me.Adapter.DeleteCommand.Connection = value
+                End If
+                If (Not (Me.Adapter.UpdateCommand) Is Nothing) Then
+                    Me.Adapter.UpdateCommand.Connection = value
+                End If
+                Dim i As Integer = 0
+                Do While (i < Me.CommandCollection.Length)
+                    If (Not (Me.CommandCollection(i)) Is Nothing) Then
+                        CType(Me.CommandCollection(i),Global.System.Data.SqlClient.SqlCommand).Connection = value
+                    End If
+                    i = (i + 1)
+                Loop
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        Friend Property Transaction() As Global.System.Data.SqlClient.SqlTransaction
+            Get
+                Return Me._transaction
+            End Get
+            Set
+                Me._transaction = value
+                Dim i As Integer = 0
+                Do While (i < Me.CommandCollection.Length)
+                    Me.CommandCollection(i).Transaction = Me._transaction
+                    i = (i + 1)
+                Loop
+                If ((Not (Me.Adapter) Is Nothing)  _
+                            AndAlso (Not (Me.Adapter.DeleteCommand) Is Nothing)) Then
+                    Me.Adapter.DeleteCommand.Transaction = Me._transaction
+                End If
+                If ((Not (Me.Adapter) Is Nothing)  _
+                            AndAlso (Not (Me.Adapter.InsertCommand) Is Nothing)) Then
+                    Me.Adapter.InsertCommand.Transaction = Me._transaction
+                End If
+                If ((Not (Me.Adapter) Is Nothing)  _
+                            AndAlso (Not (Me.Adapter.UpdateCommand) Is Nothing)) Then
+                    Me.Adapter.UpdateCommand.Transaction = Me._transaction
+                End If
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        Protected ReadOnly Property CommandCollection() As Global.System.Data.SqlClient.SqlCommand()
+            Get
+                If (Me._commandCollection Is Nothing) Then
+                    Me.InitCommandCollection
+                End If
+                Return Me._commandCollection
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        Public Property ClearBeforeFill() As Boolean
+            Get
+                Return Me._clearBeforeFill
+            End Get
+            Set
+                Me._clearBeforeFill = value
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        Private Sub InitAdapter()
+            Me._adapter = New Global.System.Data.SqlClient.SqlDataAdapter()
+            Dim tableMapping As Global.System.Data.Common.DataTableMapping = New Global.System.Data.Common.DataTableMapping()
+            tableMapping.SourceTable = "Table"
+            tableMapping.DataSetTable = "RecurringService_EndDateCredits"
+            tableMapping.ColumnMappings.Add("EndDateCreditID", "EndDateCreditID")
+            tableMapping.ColumnMappings.Add("RecurringServiceID", "RecurringServiceID")
+            tableMapping.ColumnMappings.Add("BilledThrough", "BilledThrough")
+            tableMapping.ColumnMappings.Add("Prev_EndDate", "Prev_EndDate")
+            tableMapping.ColumnMappings.Add("New_EndDate", "New_EndDate")
+            tableMapping.ColumnMappings.Add("CreditAmount", "CreditAmount")
+            tableMapping.ColumnMappings.Add("TimeCreated", "TimeCreated")
+            tableMapping.ColumnMappings.Add("UserCreated", "UserCreated")
+            tableMapping.ColumnMappings.Add("CreditMemoTxnID", "CreditMemoTxnID")
+            tableMapping.ColumnMappings.Add("Voided", "Voided")
+            tableMapping.ColumnMappings.Add("VoidDateTime", "VoidDateTime")
+            tableMapping.ColumnMappings.Add("VoidReason", "VoidReason")
+            tableMapping.ColumnMappings.Add("VoidUser", "VoidUser")
+            Me._adapter.TableMappings.Add(tableMapping)
+            Me._adapter.InsertCommand = New Global.System.Data.SqlClient.SqlCommand()
+            Me._adapter.InsertCommand.Connection = Me.Connection
+            Me._adapter.InsertCommand.CommandText = "dbo.RecurringService_EndDateCredits_Insert"
+            Me._adapter.InsertCommand.CommandType = Global.System.Data.CommandType.StoredProcedure
+            Me._adapter.InsertCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@RETURN_VALUE", Global.System.Data.SqlDbType.[Variant], 0, Global.System.Data.ParameterDirection.ReturnValue, 0, 0, Nothing, Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
+            Me._adapter.InsertCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@RecurringServiceID", Global.System.Data.SqlDbType.[Decimal], 0, Global.System.Data.ParameterDirection.Input, 18, 0, "RecurringServiceID", Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
+            Me._adapter.InsertCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@BilledThrough", Global.System.Data.SqlDbType.[Date], 0, Global.System.Data.ParameterDirection.Input, 0, 0, "BilledThrough", Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
+            Me._adapter.InsertCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@Prev_EndDate", Global.System.Data.SqlDbType.[Date], 0, Global.System.Data.ParameterDirection.Input, 0, 0, "Prev_EndDate", Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
+            Me._adapter.InsertCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@New_EndDate", Global.System.Data.SqlDbType.[Date], 0, Global.System.Data.ParameterDirection.Input, 0, 0, "New_EndDate", Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
+            Me._adapter.InsertCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@CreditAmount", Global.System.Data.SqlDbType.[Decimal], 0, Global.System.Data.ParameterDirection.Input, 18, 2, "CreditAmount", Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
+            Me._adapter.InsertCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@TimeCreated", Global.System.Data.SqlDbType.DateTime, 0, Global.System.Data.ParameterDirection.Input, 0, 0, "TimeCreated", Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
+            Me._adapter.InsertCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@UserCreated", Global.System.Data.SqlDbType.VarChar, 0, Global.System.Data.ParameterDirection.Input, 0, 0, "UserCreated", Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
+            Me._adapter.InsertCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@CreditMemoTxnID", Global.System.Data.SqlDbType.VarChar, 0, Global.System.Data.ParameterDirection.Input, 0, 0, "CreditMemoTxnID", Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
+            Me._adapter.InsertCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@Voided", Global.System.Data.SqlDbType.Bit, 0, Global.System.Data.ParameterDirection.Input, 0, 0, "Voided", Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
+            Me._adapter.InsertCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@VoidDateTime", Global.System.Data.SqlDbType.DateTime, 0, Global.System.Data.ParameterDirection.Input, 0, 0, "VoidDateTime", Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
+            Me._adapter.InsertCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@VoidReason", Global.System.Data.SqlDbType.VarChar, 0, Global.System.Data.ParameterDirection.Input, 0, 0, "VoidReason", Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
+            Me._adapter.InsertCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@VoidUser", Global.System.Data.SqlDbType.VarChar, 0, Global.System.Data.ParameterDirection.Input, 0, 0, "VoidUser", Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
+            Me._adapter.UpdateCommand = New Global.System.Data.SqlClient.SqlCommand()
+            Me._adapter.UpdateCommand.Connection = Me.Connection
+            Me._adapter.UpdateCommand.CommandText = "dbo.RecurringService_EndDateCredits_Update"
+            Me._adapter.UpdateCommand.CommandType = Global.System.Data.CommandType.StoredProcedure
+            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@RETURN_VALUE", Global.System.Data.SqlDbType.[Variant], 0, Global.System.Data.ParameterDirection.ReturnValue, 0, 0, Nothing, Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
+            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@RecurringServiceID", Global.System.Data.SqlDbType.[Decimal], 0, Global.System.Data.ParameterDirection.Input, 18, 0, "RecurringServiceID", Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
+            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@BilledThrough", Global.System.Data.SqlDbType.[Date], 0, Global.System.Data.ParameterDirection.Input, 0, 0, "BilledThrough", Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
+            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@Prev_EndDate", Global.System.Data.SqlDbType.[Date], 0, Global.System.Data.ParameterDirection.Input, 0, 0, "Prev_EndDate", Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
+            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@New_EndDate", Global.System.Data.SqlDbType.[Date], 0, Global.System.Data.ParameterDirection.Input, 0, 0, "New_EndDate", Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
+            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@CreditAmount", Global.System.Data.SqlDbType.[Decimal], 0, Global.System.Data.ParameterDirection.Input, 18, 2, "CreditAmount", Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
+            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@TimeCreated", Global.System.Data.SqlDbType.DateTime, 0, Global.System.Data.ParameterDirection.Input, 0, 0, "TimeCreated", Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
+            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@UserCreated", Global.System.Data.SqlDbType.VarChar, 0, Global.System.Data.ParameterDirection.Input, 0, 0, "UserCreated", Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
+            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@CreditMemoTxnID", Global.System.Data.SqlDbType.VarChar, 0, Global.System.Data.ParameterDirection.Input, 0, 0, "CreditMemoTxnID", Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
+            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@Voided", Global.System.Data.SqlDbType.Bit, 0, Global.System.Data.ParameterDirection.Input, 0, 0, "Voided", Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
+            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@VoidDateTime", Global.System.Data.SqlDbType.DateTime, 0, Global.System.Data.ParameterDirection.Input, 0, 0, "VoidDateTime", Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
+            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@VoidReason", Global.System.Data.SqlDbType.VarChar, 0, Global.System.Data.ParameterDirection.Input, 0, 0, "VoidReason", Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
+            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@VoidUser", Global.System.Data.SqlDbType.VarChar, 0, Global.System.Data.ParameterDirection.Input, 0, 0, "VoidUser", Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
+            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@Original_EndDateCreditID", Global.System.Data.SqlDbType.Int, 0, Global.System.Data.ParameterDirection.Input, 0, 0, "EndDateCreditID", Global.System.Data.DataRowVersion.Original, false, Nothing, "", "", ""))
+            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@Original_RecurringServiceID", Global.System.Data.SqlDbType.[Decimal], 0, Global.System.Data.ParameterDirection.Input, 18, 0, "RecurringServiceID", Global.System.Data.DataRowVersion.Original, false, Nothing, "", "", ""))
+            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@Original_BilledThrough", Global.System.Data.SqlDbType.[Date], 0, Global.System.Data.ParameterDirection.Input, 0, 0, "BilledThrough", Global.System.Data.DataRowVersion.Original, false, Nothing, "", "", ""))
+            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@IsNull_Prev_EndDate", Global.System.Data.SqlDbType.Int, 0, Global.System.Data.ParameterDirection.Input, 0, 0, "Prev_EndDate", Global.System.Data.DataRowVersion.Original, true, Nothing, "", "", ""))
+            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@Original_Prev_EndDate", Global.System.Data.SqlDbType.[Date], 0, Global.System.Data.ParameterDirection.Input, 0, 0, "Prev_EndDate", Global.System.Data.DataRowVersion.Original, false, Nothing, "", "", ""))
+            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@Original_New_EndDate", Global.System.Data.SqlDbType.[Date], 0, Global.System.Data.ParameterDirection.Input, 0, 0, "New_EndDate", Global.System.Data.DataRowVersion.Original, false, Nothing, "", "", ""))
+            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@Original_CreditAmount", Global.System.Data.SqlDbType.[Decimal], 0, Global.System.Data.ParameterDirection.Input, 18, 2, "CreditAmount", Global.System.Data.DataRowVersion.Original, false, Nothing, "", "", ""))
+            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@Original_TimeCreated", Global.System.Data.SqlDbType.DateTime, 0, Global.System.Data.ParameterDirection.Input, 0, 0, "TimeCreated", Global.System.Data.DataRowVersion.Original, false, Nothing, "", "", ""))
+            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@Original_UserCreated", Global.System.Data.SqlDbType.VarChar, 0, Global.System.Data.ParameterDirection.Input, 0, 0, "UserCreated", Global.System.Data.DataRowVersion.Original, false, Nothing, "", "", ""))
+            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@Original_CreditMemoTxnID", Global.System.Data.SqlDbType.VarChar, 0, Global.System.Data.ParameterDirection.Input, 0, 0, "CreditMemoTxnID", Global.System.Data.DataRowVersion.Original, false, Nothing, "", "", ""))
+            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@IsNull_Voided", Global.System.Data.SqlDbType.Int, 0, Global.System.Data.ParameterDirection.Input, 0, 0, "Voided", Global.System.Data.DataRowVersion.Original, true, Nothing, "", "", ""))
+            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@Original_Voided", Global.System.Data.SqlDbType.Bit, 0, Global.System.Data.ParameterDirection.Input, 0, 0, "Voided", Global.System.Data.DataRowVersion.Original, false, Nothing, "", "", ""))
+            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@IsNull_VoidDateTime", Global.System.Data.SqlDbType.Int, 0, Global.System.Data.ParameterDirection.Input, 0, 0, "VoidDateTime", Global.System.Data.DataRowVersion.Original, true, Nothing, "", "", ""))
+            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@Original_VoidDateTime", Global.System.Data.SqlDbType.DateTime, 0, Global.System.Data.ParameterDirection.Input, 0, 0, "VoidDateTime", Global.System.Data.DataRowVersion.Original, false, Nothing, "", "", ""))
+            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@IsNull_VoidReason", Global.System.Data.SqlDbType.Int, 0, Global.System.Data.ParameterDirection.Input, 0, 0, "VoidReason", Global.System.Data.DataRowVersion.Original, true, Nothing, "", "", ""))
+            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@Original_VoidReason", Global.System.Data.SqlDbType.VarChar, 0, Global.System.Data.ParameterDirection.Input, 0, 0, "VoidReason", Global.System.Data.DataRowVersion.Original, false, Nothing, "", "", ""))
+            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@IsNull_VoidUser", Global.System.Data.SqlDbType.Int, 0, Global.System.Data.ParameterDirection.Input, 0, 0, "VoidUser", Global.System.Data.DataRowVersion.Original, true, Nothing, "", "", ""))
+            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@Original_VoidUser", Global.System.Data.SqlDbType.VarChar, 0, Global.System.Data.ParameterDirection.Input, 0, 0, "VoidUser", Global.System.Data.DataRowVersion.Original, false, Nothing, "", "", ""))
+            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@EndDateCreditID", Global.System.Data.SqlDbType.Int, 4, Global.System.Data.ParameterDirection.Input, 0, 0, "EndDateCreditID", Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        Private Sub InitConnection()
+            Me._connection = New Global.System.Data.SqlClient.SqlConnection()
+            Me._connection.ConnectionString = Global.TrashCash.My.MySettings.Default.QBDBConnectionString
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        Private Sub InitCommandCollection()
+            Me._commandCollection = New Global.System.Data.SqlClient.SqlCommand(0) {}
+            Me._commandCollection(0) = New Global.System.Data.SqlClient.SqlCommand()
+            Me._commandCollection(0).Connection = Me.Connection
+            Me._commandCollection(0).CommandText = "dbo.RecurringService_EndDateCredits_SelectNewest"
+            Me._commandCollection(0).CommandType = Global.System.Data.CommandType.StoredProcedure
+            Me._commandCollection(0).Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@RETURN_VALUE", Global.System.Data.SqlDbType.[Variant], 0, Global.System.Data.ParameterDirection.ReturnValue, 0, 0, Nothing, Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
+            Me._commandCollection(0).Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@RecurringServiceID", Global.System.Data.SqlDbType.[Decimal], 9, Global.System.Data.ParameterDirection.Input, 18, 0, "RecurringServiceID", Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0"),  _
+         Global.System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter"),  _
+         Global.System.ComponentModel.DataObjectMethodAttribute(Global.System.ComponentModel.DataObjectMethodType.[Select], true)>  _
+        Public Overloads Overridable Function GetDataByRecID(ByVal RecurringServiceID As Decimal) As ds_RecurringService.RecurringService_EndDateCreditsDataTable
+            Me.Adapter.SelectCommand = Me.CommandCollection(0)
+            Me.Adapter.SelectCommand.Parameters(1).Value = CType(RecurringServiceID,Decimal)
+            Dim dataTable As ds_RecurringService.RecurringService_EndDateCreditsDataTable = New ds_RecurringService.RecurringService_EndDateCreditsDataTable()
+            Me.Adapter.Fill(dataTable)
+            Return dataTable
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0"),  _
+         Global.System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")>  _
+        Public Overloads Overridable Function Update(ByVal dataTable As ds_RecurringService.RecurringService_EndDateCreditsDataTable) As Integer
+            Return Me.Adapter.Update(dataTable)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0"),  _
+         Global.System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")>  _
+        Public Overloads Overridable Function Update(ByVal dataSet As ds_RecurringService) As Integer
+            Return Me.Adapter.Update(dataSet, "RecurringService_EndDateCredits")
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0"),  _
+         Global.System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")>  _
+        Public Overloads Overridable Function Update(ByVal dataRow As Global.System.Data.DataRow) As Integer
+            Return Me.Adapter.Update(New Global.System.Data.DataRow() {dataRow})
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0"),  _
+         Global.System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")>  _
+        Public Overloads Overridable Function Update(ByVal dataRows() As Global.System.Data.DataRow) As Integer
+            Return Me.Adapter.Update(dataRows)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0"),  _
+         Global.System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter"),  _
+         Global.System.ComponentModel.DataObjectMethodAttribute(Global.System.ComponentModel.DataObjectMethodType.Insert, true)>  _
+        Public Overloads Overridable Function Insert(ByVal RecurringServiceID As Decimal, ByVal BilledThrough As Date, ByVal Prev_EndDate As Global.System.Nullable(Of Date), ByVal New_EndDate As Date, ByVal CreditAmount As Decimal, ByVal TimeCreated As Date, ByVal UserCreated As String, ByVal CreditMemoTxnID As String, ByVal Voided As Global.System.Nullable(Of Boolean), ByVal VoidDateTime As Global.System.Nullable(Of Date), ByVal VoidReason As String, ByVal VoidUser As String) As Integer
+            Me.Adapter.InsertCommand.Parameters(1).Value = CType(RecurringServiceID,Decimal)
+            Me.Adapter.InsertCommand.Parameters(2).Value = CType(BilledThrough,Date)
+            If (Prev_EndDate.HasValue = true) Then
+                Me.Adapter.InsertCommand.Parameters(3).Value = CType(Prev_EndDate.Value,Date)
+            Else
+                Me.Adapter.InsertCommand.Parameters(3).Value = Global.System.DBNull.Value
+            End If
+            Me.Adapter.InsertCommand.Parameters(4).Value = CType(New_EndDate,Date)
+            Me.Adapter.InsertCommand.Parameters(5).Value = CType(CreditAmount,Decimal)
+            Me.Adapter.InsertCommand.Parameters(6).Value = CType(TimeCreated,Date)
+            If (UserCreated Is Nothing) Then
+                Throw New Global.System.ArgumentNullException("UserCreated")
+            Else
+                Me.Adapter.InsertCommand.Parameters(7).Value = CType(UserCreated,String)
+            End If
+            If (CreditMemoTxnID Is Nothing) Then
+                Throw New Global.System.ArgumentNullException("CreditMemoTxnID")
+            Else
+                Me.Adapter.InsertCommand.Parameters(8).Value = CType(CreditMemoTxnID,String)
+            End If
+            If (Voided.HasValue = true) Then
+                Me.Adapter.InsertCommand.Parameters(9).Value = CType(Voided.Value,Boolean)
+            Else
+                Me.Adapter.InsertCommand.Parameters(9).Value = Global.System.DBNull.Value
+            End If
+            If (VoidDateTime.HasValue = true) Then
+                Me.Adapter.InsertCommand.Parameters(10).Value = CType(VoidDateTime.Value,Date)
+            Else
+                Me.Adapter.InsertCommand.Parameters(10).Value = Global.System.DBNull.Value
+            End If
+            If (VoidReason Is Nothing) Then
+                Me.Adapter.InsertCommand.Parameters(11).Value = Global.System.DBNull.Value
+            Else
+                Me.Adapter.InsertCommand.Parameters(11).Value = CType(VoidReason,String)
+            End If
+            If (VoidUser Is Nothing) Then
+                Me.Adapter.InsertCommand.Parameters(12).Value = Global.System.DBNull.Value
+            Else
+                Me.Adapter.InsertCommand.Parameters(12).Value = CType(VoidUser,String)
+            End If
+            Dim previousConnectionState As Global.System.Data.ConnectionState = Me.Adapter.InsertCommand.Connection.State
+            If ((Me.Adapter.InsertCommand.Connection.State And Global.System.Data.ConnectionState.Open)  _
+                        <> Global.System.Data.ConnectionState.Open) Then
+                Me.Adapter.InsertCommand.Connection.Open
+            End If
+            Try 
+                Dim returnValue As Integer = Me.Adapter.InsertCommand.ExecuteNonQuery
+                Return returnValue
+            Finally
+                If (previousConnectionState = Global.System.Data.ConnectionState.Closed) Then
+                    Me.Adapter.InsertCommand.Connection.Close
+                End If
+            End Try
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0"),  _
+         Global.System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter"),  _
+         Global.System.ComponentModel.DataObjectMethodAttribute(Global.System.ComponentModel.DataObjectMethodType.Update, true)>  _
+        Public Overloads Overridable Function Update( _
+                    ByVal RecurringServiceID As Decimal,  _
+                    ByVal BilledThrough As Date,  _
+                    ByVal Prev_EndDate As Global.System.Nullable(Of Date),  _
+                    ByVal New_EndDate As Date,  _
+                    ByVal CreditAmount As Decimal,  _
+                    ByVal TimeCreated As Date,  _
+                    ByVal UserCreated As String,  _
+                    ByVal CreditMemoTxnID As String,  _
+                    ByVal Voided As Global.System.Nullable(Of Boolean),  _
+                    ByVal VoidDateTime As Global.System.Nullable(Of Date),  _
+                    ByVal VoidReason As String,  _
+                    ByVal VoidUser As String,  _
+                    ByVal Original_EndDateCreditID As Integer,  _
+                    ByVal Original_RecurringServiceID As Decimal,  _
+                    ByVal Original_BilledThrough As Date,  _
+                    ByVal Original_Prev_EndDate As Global.System.Nullable(Of Date),  _
+                    ByVal Original_New_EndDate As Date,  _
+                    ByVal Original_CreditAmount As Decimal,  _
+                    ByVal Original_TimeCreated As Date,  _
+                    ByVal Original_UserCreated As String,  _
+                    ByVal Original_CreditMemoTxnID As String,  _
+                    ByVal Original_Voided As Global.System.Nullable(Of Boolean),  _
+                    ByVal Original_VoidDateTime As Global.System.Nullable(Of Date),  _
+                    ByVal Original_VoidReason As String,  _
+                    ByVal Original_VoidUser As String,  _
+                    ByVal EndDateCreditID As Integer) As Integer
+            Me.Adapter.UpdateCommand.Parameters(1).Value = CType(RecurringServiceID,Decimal)
+            Me.Adapter.UpdateCommand.Parameters(2).Value = CType(BilledThrough,Date)
+            If (Prev_EndDate.HasValue = true) Then
+                Me.Adapter.UpdateCommand.Parameters(3).Value = CType(Prev_EndDate.Value,Date)
+            Else
+                Me.Adapter.UpdateCommand.Parameters(3).Value = Global.System.DBNull.Value
+            End If
+            Me.Adapter.UpdateCommand.Parameters(4).Value = CType(New_EndDate,Date)
+            Me.Adapter.UpdateCommand.Parameters(5).Value = CType(CreditAmount,Decimal)
+            Me.Adapter.UpdateCommand.Parameters(6).Value = CType(TimeCreated,Date)
+            If (UserCreated Is Nothing) Then
+                Throw New Global.System.ArgumentNullException("UserCreated")
+            Else
+                Me.Adapter.UpdateCommand.Parameters(7).Value = CType(UserCreated,String)
+            End If
+            If (CreditMemoTxnID Is Nothing) Then
+                Throw New Global.System.ArgumentNullException("CreditMemoTxnID")
+            Else
+                Me.Adapter.UpdateCommand.Parameters(8).Value = CType(CreditMemoTxnID,String)
+            End If
+            If (Voided.HasValue = true) Then
+                Me.Adapter.UpdateCommand.Parameters(9).Value = CType(Voided.Value,Boolean)
+            Else
+                Me.Adapter.UpdateCommand.Parameters(9).Value = Global.System.DBNull.Value
+            End If
+            If (VoidDateTime.HasValue = true) Then
+                Me.Adapter.UpdateCommand.Parameters(10).Value = CType(VoidDateTime.Value,Date)
+            Else
+                Me.Adapter.UpdateCommand.Parameters(10).Value = Global.System.DBNull.Value
+            End If
+            If (VoidReason Is Nothing) Then
+                Me.Adapter.UpdateCommand.Parameters(11).Value = Global.System.DBNull.Value
+            Else
+                Me.Adapter.UpdateCommand.Parameters(11).Value = CType(VoidReason,String)
+            End If
+            If (VoidUser Is Nothing) Then
+                Me.Adapter.UpdateCommand.Parameters(12).Value = Global.System.DBNull.Value
+            Else
+                Me.Adapter.UpdateCommand.Parameters(12).Value = CType(VoidUser,String)
+            End If
+            Me.Adapter.UpdateCommand.Parameters(13).Value = CType(Original_EndDateCreditID,Integer)
+            Me.Adapter.UpdateCommand.Parameters(14).Value = CType(Original_RecurringServiceID,Decimal)
+            Me.Adapter.UpdateCommand.Parameters(15).Value = CType(Original_BilledThrough,Date)
+            If (Original_Prev_EndDate.HasValue = true) Then
+                Me.Adapter.UpdateCommand.Parameters(16).Value = CType(0,Object)
+                Me.Adapter.UpdateCommand.Parameters(17).Value = CType(Original_Prev_EndDate.Value,Date)
+            Else
+                Me.Adapter.UpdateCommand.Parameters(16).Value = CType(1,Object)
+                Me.Adapter.UpdateCommand.Parameters(17).Value = Global.System.DBNull.Value
+            End If
+            Me.Adapter.UpdateCommand.Parameters(18).Value = CType(Original_New_EndDate,Date)
+            Me.Adapter.UpdateCommand.Parameters(19).Value = CType(Original_CreditAmount,Decimal)
+            Me.Adapter.UpdateCommand.Parameters(20).Value = CType(Original_TimeCreated,Date)
+            If (Original_UserCreated Is Nothing) Then
+                Throw New Global.System.ArgumentNullException("Original_UserCreated")
+            Else
+                Me.Adapter.UpdateCommand.Parameters(21).Value = CType(Original_UserCreated,String)
+            End If
+            If (Original_CreditMemoTxnID Is Nothing) Then
+                Throw New Global.System.ArgumentNullException("Original_CreditMemoTxnID")
+            Else
+                Me.Adapter.UpdateCommand.Parameters(22).Value = CType(Original_CreditMemoTxnID,String)
+            End If
+            If (Original_Voided.HasValue = true) Then
+                Me.Adapter.UpdateCommand.Parameters(23).Value = CType(0,Object)
+                Me.Adapter.UpdateCommand.Parameters(24).Value = CType(Original_Voided.Value,Boolean)
+            Else
+                Me.Adapter.UpdateCommand.Parameters(23).Value = CType(1,Object)
+                Me.Adapter.UpdateCommand.Parameters(24).Value = Global.System.DBNull.Value
+            End If
+            If (Original_VoidDateTime.HasValue = true) Then
+                Me.Adapter.UpdateCommand.Parameters(25).Value = CType(0,Object)
+                Me.Adapter.UpdateCommand.Parameters(26).Value = CType(Original_VoidDateTime.Value,Date)
+            Else
+                Me.Adapter.UpdateCommand.Parameters(25).Value = CType(1,Object)
+                Me.Adapter.UpdateCommand.Parameters(26).Value = Global.System.DBNull.Value
+            End If
+            If (Original_VoidReason Is Nothing) Then
+                Me.Adapter.UpdateCommand.Parameters(27).Value = CType(1,Object)
+                Me.Adapter.UpdateCommand.Parameters(28).Value = Global.System.DBNull.Value
+            Else
+                Me.Adapter.UpdateCommand.Parameters(27).Value = CType(0,Object)
+                Me.Adapter.UpdateCommand.Parameters(28).Value = CType(Original_VoidReason,String)
+            End If
+            If (Original_VoidUser Is Nothing) Then
+                Me.Adapter.UpdateCommand.Parameters(29).Value = CType(1,Object)
+                Me.Adapter.UpdateCommand.Parameters(30).Value = Global.System.DBNull.Value
+            Else
+                Me.Adapter.UpdateCommand.Parameters(29).Value = CType(0,Object)
+                Me.Adapter.UpdateCommand.Parameters(30).Value = CType(Original_VoidUser,String)
+            End If
+            Me.Adapter.UpdateCommand.Parameters(31).Value = CType(EndDateCreditID,Integer)
+            Dim previousConnectionState As Global.System.Data.ConnectionState = Me.Adapter.UpdateCommand.Connection.State
+            If ((Me.Adapter.UpdateCommand.Connection.State And Global.System.Data.ConnectionState.Open)  _
+                        <> Global.System.Data.ConnectionState.Open) Then
+                Me.Adapter.UpdateCommand.Connection.Open
+            End If
+            Try 
+                Dim returnValue As Integer = Me.Adapter.UpdateCommand.ExecuteNonQuery
+                Return returnValue
+            Finally
+                If (previousConnectionState = Global.System.Data.ConnectionState.Closed) Then
+                    Me.Adapter.UpdateCommand.Connection.Close
+                End If
+            End Try
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0"),  _
+         Global.System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter"),  _
+         Global.System.ComponentModel.DataObjectMethodAttribute(Global.System.ComponentModel.DataObjectMethodType.Update, true)>  _
+        Public Overloads Overridable Function Update( _
+                    ByVal RecurringServiceID As Decimal,  _
+                    ByVal BilledThrough As Date,  _
+                    ByVal Prev_EndDate As Global.System.Nullable(Of Date),  _
+                    ByVal New_EndDate As Date,  _
+                    ByVal CreditAmount As Decimal,  _
+                    ByVal TimeCreated As Date,  _
+                    ByVal UserCreated As String,  _
+                    ByVal CreditMemoTxnID As String,  _
+                    ByVal Voided As Global.System.Nullable(Of Boolean),  _
+                    ByVal VoidDateTime As Global.System.Nullable(Of Date),  _
+                    ByVal VoidReason As String,  _
+                    ByVal VoidUser As String,  _
+                    ByVal Original_EndDateCreditID As Integer,  _
+                    ByVal Original_RecurringServiceID As Decimal,  _
+                    ByVal Original_BilledThrough As Date,  _
+                    ByVal Original_Prev_EndDate As Global.System.Nullable(Of Date),  _
+                    ByVal Original_New_EndDate As Date,  _
+                    ByVal Original_CreditAmount As Decimal,  _
+                    ByVal Original_TimeCreated As Date,  _
+                    ByVal Original_UserCreated As String,  _
+                    ByVal Original_CreditMemoTxnID As String,  _
+                    ByVal Original_Voided As Global.System.Nullable(Of Boolean),  _
+                    ByVal Original_VoidDateTime As Global.System.Nullable(Of Date),  _
+                    ByVal Original_VoidReason As String,  _
+                    ByVal Original_VoidUser As String) As Integer
+            Return Me.Update(RecurringServiceID, BilledThrough, Prev_EndDate, New_EndDate, CreditAmount, TimeCreated, UserCreated, CreditMemoTxnID, Voided, VoidDateTime, VoidReason, VoidUser, Original_EndDateCreditID, Original_RecurringServiceID, Original_BilledThrough, Original_Prev_EndDate, Original_New_EndDate, Original_CreditAmount, Original_TimeCreated, Original_UserCreated, Original_CreditMemoTxnID, Original_Voided, Original_VoidDateTime, Original_VoidReason, Original_VoidUser, Original_EndDateCreditID)
+        End Function
+    End Class
+    
+    '''<summary>
+    '''Represents the connection and commands used to retrieve and save data.
+    '''</summary>
+    <Global.System.ComponentModel.DesignerCategoryAttribute("code"),  _
+     Global.System.ComponentModel.ToolboxItem(true),  _
+     Global.System.ComponentModel.DataObjectAttribute(true),  _
+     Global.System.ComponentModel.DesignerAttribute("Microsoft.VSDesigner.DataSource.Design.TableAdapterDesigner, Microsoft.VSDesigner"& _ 
+        ", Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a"),  _
+     Global.System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")>  _
     Partial Public Class QueriesTableAdapter
         Inherits Global.System.ComponentModel.Component
         
@@ -6782,6 +8016,8 @@ Namespace ds_RecurringServiceTableAdapters
         
         Private _recurringService_CreditsTableAdapter As RecurringService_CreditsTableAdapter
         
+        Private _recurringService_EndDateCreditsTableAdapter As RecurringService_EndDateCreditsTableAdapter
+        
         Private _backupDataSetBeforeUpdate As Boolean
         
         Private _connection As Global.System.Data.IDbConnection
@@ -6826,6 +8062,20 @@ Namespace ds_RecurringServiceTableAdapters
         End Property
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0"),  _
+         Global.System.ComponentModel.EditorAttribute("Microsoft.VSDesigner.DataSource.Design.TableAdapterManagerPropertyEditor, Microso"& _ 
+            "ft.VSDesigner, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3"& _ 
+            "a", "System.Drawing.Design.UITypeEditor")>  _
+        Public Property RecurringService_EndDateCreditsTableAdapter() As RecurringService_EndDateCreditsTableAdapter
+            Get
+                Return Me._recurringService_EndDateCreditsTableAdapter
+            End Get
+            Set
+                Me._recurringService_EndDateCreditsTableAdapter = value
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
         Public Property BackupDataSetBeforeUpdate() As Boolean
             Get
@@ -6852,6 +8102,10 @@ Namespace ds_RecurringServiceTableAdapters
                             AndAlso (Not (Me._recurringService_CreditsTableAdapter.Connection) Is Nothing)) Then
                     Return Me._recurringService_CreditsTableAdapter.Connection
                 End If
+                If ((Not (Me._recurringService_EndDateCreditsTableAdapter) Is Nothing)  _
+                            AndAlso (Not (Me._recurringService_EndDateCreditsTableAdapter.Connection) Is Nothing)) Then
+                    Return Me._recurringService_EndDateCreditsTableAdapter.Connection
+                End If
                 Return Nothing
             End Get
             Set
@@ -6871,6 +8125,9 @@ Namespace ds_RecurringServiceTableAdapters
                 If (Not (Me._recurringService_CreditsTableAdapter) Is Nothing) Then
                     count = (count + 1)
                 End If
+                If (Not (Me._recurringService_EndDateCreditsTableAdapter) Is Nothing) Then
+                    count = (count + 1)
+                End If
                 Return count
             End Get
         End Property
@@ -6888,6 +8145,15 @@ Namespace ds_RecurringServiceTableAdapters
                 If ((Not (updatedRows) Is Nothing)  _
                             AndAlso (0 < updatedRows.Length)) Then
                     result = (result + Me._recurringService_CreditsTableAdapter.Update(updatedRows))
+                    allChangedRows.AddRange(updatedRows)
+                End If
+            End If
+            If (Not (Me._recurringService_EndDateCreditsTableAdapter) Is Nothing) Then
+                Dim updatedRows() As Global.System.Data.DataRow = dataSet.RecurringService_EndDateCredits.Select(Nothing, Nothing, Global.System.Data.DataViewRowState.ModifiedCurrent)
+                updatedRows = Me.GetRealUpdatedRows(updatedRows, allAddedRows)
+                If ((Not (updatedRows) Is Nothing)  _
+                            AndAlso (0 < updatedRows.Length)) Then
+                    result = (result + Me._recurringService_EndDateCreditsTableAdapter.Update(updatedRows))
                     allChangedRows.AddRange(updatedRows)
                 End If
             End If
@@ -6918,6 +8184,14 @@ Namespace ds_RecurringServiceTableAdapters
                     allAddedRows.AddRange(addedRows)
                 End If
             End If
+            If (Not (Me._recurringService_EndDateCreditsTableAdapter) Is Nothing) Then
+                Dim addedRows() As Global.System.Data.DataRow = dataSet.RecurringService_EndDateCredits.Select(Nothing, Nothing, Global.System.Data.DataViewRowState.Added)
+                If ((Not (addedRows) Is Nothing)  _
+                            AndAlso (0 < addedRows.Length)) Then
+                    result = (result + Me._recurringService_EndDateCreditsTableAdapter.Update(addedRows))
+                    allAddedRows.AddRange(addedRows)
+                End If
+            End If
             If (Not (Me._recurringServiceTableAdapter) Is Nothing) Then
                 Dim addedRows() As Global.System.Data.DataRow = dataSet.RecurringService.Select(Nothing, Nothing, Global.System.Data.DataViewRowState.Added)
                 If ((Not (addedRows) Is Nothing)  _
@@ -6941,6 +8215,14 @@ Namespace ds_RecurringServiceTableAdapters
                 If ((Not (deletedRows) Is Nothing)  _
                             AndAlso (0 < deletedRows.Length)) Then
                     result = (result + Me._recurringServiceTableAdapter.Update(deletedRows))
+                    allChangedRows.AddRange(deletedRows)
+                End If
+            End If
+            If (Not (Me._recurringService_EndDateCreditsTableAdapter) Is Nothing) Then
+                Dim deletedRows() As Global.System.Data.DataRow = dataSet.RecurringService_EndDateCredits.Select(Nothing, Nothing, Global.System.Data.DataViewRowState.Deleted)
+                If ((Not (deletedRows) Is Nothing)  _
+                            AndAlso (0 < deletedRows.Length)) Then
+                    result = (result + Me._recurringService_EndDateCreditsTableAdapter.Update(deletedRows))
                     allChangedRows.AddRange(deletedRows)
                 End If
             End If
@@ -7003,6 +8285,11 @@ Namespace ds_RecurringServiceTableAdapters
                 Throw New Global.System.ArgumentException("All TableAdapters managed by a TableAdapterManager must use the same connection s"& _ 
                         "tring.")
             End If
+            If ((Not (Me._recurringService_EndDateCreditsTableAdapter) Is Nothing)  _
+                        AndAlso (Me.MatchTableAdapterConnection(Me._recurringService_EndDateCreditsTableAdapter.Connection) = false)) Then
+                Throw New Global.System.ArgumentException("All TableAdapters managed by a TableAdapterManager must use the same connection s"& _ 
+                        "tring.")
+            End If
             Dim workConnection As Global.System.Data.IDbConnection = Me.Connection
             If (workConnection Is Nothing) Then
                 Throw New Global.System.ApplicationException("TableAdapterManager contains no connection information. Set each TableAdapterMana"& _ 
@@ -7051,6 +8338,15 @@ Namespace ds_RecurringServiceTableAdapters
                     If Me._recurringService_CreditsTableAdapter.Adapter.AcceptChangesDuringUpdate Then
                         Me._recurringService_CreditsTableAdapter.Adapter.AcceptChangesDuringUpdate = false
                         adaptersWithAcceptChangesDuringUpdate.Add(Me._recurringService_CreditsTableAdapter.Adapter)
+                    End If
+                End If
+                If (Not (Me._recurringService_EndDateCreditsTableAdapter) Is Nothing) Then
+                    revertConnections.Add(Me._recurringService_EndDateCreditsTableAdapter, Me._recurringService_EndDateCreditsTableAdapter.Connection)
+                    Me._recurringService_EndDateCreditsTableAdapter.Connection = CType(workConnection,Global.System.Data.SqlClient.SqlConnection)
+                    Me._recurringService_EndDateCreditsTableAdapter.Transaction = CType(workTransaction,Global.System.Data.SqlClient.SqlTransaction)
+                    If Me._recurringService_EndDateCreditsTableAdapter.Adapter.AcceptChangesDuringUpdate Then
+                        Me._recurringService_EndDateCreditsTableAdapter.Adapter.AcceptChangesDuringUpdate = false
+                        adaptersWithAcceptChangesDuringUpdate.Add(Me._recurringService_EndDateCreditsTableAdapter.Adapter)
                     End If
                 End If
                 '
@@ -7120,6 +8416,10 @@ Namespace ds_RecurringServiceTableAdapters
                 If (Not (Me._recurringService_CreditsTableAdapter) Is Nothing) Then
                     Me._recurringService_CreditsTableAdapter.Connection = CType(revertConnections(Me._recurringService_CreditsTableAdapter),Global.System.Data.SqlClient.SqlConnection)
                     Me._recurringService_CreditsTableAdapter.Transaction = Nothing
+                End If
+                If (Not (Me._recurringService_EndDateCreditsTableAdapter) Is Nothing) Then
+                    Me._recurringService_EndDateCreditsTableAdapter.Connection = CType(revertConnections(Me._recurringService_EndDateCreditsTableAdapter),Global.System.Data.SqlClient.SqlConnection)
+                    Me._recurringService_EndDateCreditsTableAdapter.Transaction = Nothing
                 End If
                 If (0 < adaptersWithAcceptChangesDuringUpdate.Count) Then
                     Dim adapters((adaptersWithAcceptChangesDuringUpdate.Count) - 1) As Global.System.Data.Common.DataAdapter

@@ -26,11 +26,13 @@ Public Class QB_Procedures2
     Protected cta As ds_CustomerTableAdapters.CustomerTableAdapter
     Protected rsta As ds_RecurringServiceTableAdapters.RecurringServiceTableAdapter
 
-    Public Sub New(ByRef SessionManager As QBSessionManager, ByRef MsgSetReq As IMsgSetRequest, ByRef HomeForm As TrashCash_Home)
+    Public Sub New(ByRef SessionManager As QBSessionManager, ByRef MsgSetReq As IMsgSetRequest, Optional ByRef HomeForm As TrashCash_Home = Nothing)
         ' setting sess mgr and msgsetreq
         _sessMgr = SessionManager
         _msgSetReq = MsgSetReq
-        _homeForm = HomeForm
+        If (HomeForm IsNot Nothing) Then
+            _homeForm = HomeForm
+        End If
 
         cta = New ds_CustomerTableAdapters.CustomerTableAdapter
         rsta = New ds_RecurringServiceTableAdapters.RecurringServiceTableAdapter
@@ -483,6 +485,39 @@ retry:
                 ResponseErr_Misc(resp)
             End If
         Next i
+    End Sub
+
+    ' void recurring service end date credit
+    Public Sub RecurringService_EndDateCredit_Void(ByRef row As ds_RecurringService.RecurringService_EndDateCreditsRow, ByVal VoidReason As String)
+        Dim txnVoid As ITxnVoid = MsgSetRequest.AppendTxnVoidRq
+        ' setting credit memo type and id
+        txnVoid.TxnVoidType.SetValue(ENTxnVoidType.tvtCreditMemo)
+        txnVoid.TxnID.SetValue(row.CreditMemoTxnID)
+
+        ' go
+        Dim msgSetResp As IMsgSetResponse = SessionManager.DoRequests(MsgSetRequest)
+        Dim respList As IResponseList = msgSetResp.ResponseList
+
+        MsgSetRequest.ClearRequests()
+
+        For i = 0 To respList.Count - 1
+            Dim resp As IResponse = respList.GetAt(i)
+
+            If (resp.StatusCode = 0) Then
+                ' updating row
+                row.Voided = True
+                row.VoidDateTime = Date.Now
+                row.VoidReason = VoidReason
+                row.VoidUser = HomeForm.UserRow.USER_NAME
+
+                ' commit
+                Using ta As New ds_RecurringServiceTableAdapters.RecurringService_EndDateCreditsTableAdapter
+                    ta.Update(row)
+                End Using
+            Else
+                ResponseErr_Misc(resp)
+            End If
+        Next
     End Sub
 
     ' credit a recurring service on a specific day
