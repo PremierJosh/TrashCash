@@ -8,11 +8,11 @@ Public Class NewCustomer
     ' home form ref var
     Private _home As TrashCash_Home
 
-    Private custRow As DataSet.CustomerRow
+    Private custRow As ds_Customer.CustomerRow
     ' LOAD EVENTS
     Private Sub CustomerForm_Load(sender As System.Object, e As System.EventArgs) Handles MyBase.Load
-        custRow = Me.DataSet.Customer.NewCustomerRow
-        Me.DataSet.Customer.AddCustomerRow(custRow)
+        custRow = Me.Ds_Customer.Customer.NewCustomerRow
+        Me.Ds_Customer.Customer.AddCustomerRow(custRow)
     End Sub
 
     Public Sub New(ByRef HomeForm As TrashCash_Home)
@@ -51,14 +51,6 @@ Public Class NewCustomer
             Dim addOK As Boolean = _home.Procedures.Customer_New(custRow)
 
             If (addOK) Then
-                'Dim result As MsgBoxResult = MsgBox("Would you like to set up Recurring Services for this Customer now?" & vbCrLf & _
-                '                                    "Recurring Services can be added at any time.", vbYesNo)
-                'If (result = MsgBoxResult.Yes) Then
-                '    Dim newForm As New RecurringServicesForm
-                '    newForm.CurrentCustomer = custRow.CustomerNumber
-                '    newForm.RecurringServiceID = 0
-                '    newForm.ShowDialog()
-                'End If
                 RaiseEvent NewCustomerAdded(custRow.CustomerNumber)
                 Me.Close()
             End If
@@ -70,8 +62,8 @@ Public Class NewCustomer
     Private Sub ck_SingleInv_Click(sender As System.Object, e As System.EventArgs) Handles ck_SingleInv.Click
         If (ck_SingleInv.Checked = True) Then
             Dim result As MsgBoxResult = MsgBox("Marking this Customer as Single Invoice will cause all Recurring Services to bill within that Customers bill interval - no matter the service." & vbCrLf & _
-                                                "For example, Toters will bill every 1 month if this Customers bill interval is set to 1. It is good practice to make sure this interval matches their Recurring Service bill lengths." & vbCrLf & _
-                                                "Do you wish to change this Customer to Single Invoice?")
+                                               "For example, Toters will bill every 1 month if this Customers bill interval is set to 1. This change will also cause all Recurring Services to bill to the Customers start date day." & vbCrLf & _
+                                               "Do you wish to change this Customer to Single Invoice?")
             If (result = MsgBoxResult.No) Then
                 ck_SingleInv.Checked = False
             Else

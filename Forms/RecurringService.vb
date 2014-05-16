@@ -1,4 +1,7 @@
 ﻿Public Class RecurringService
+    ' need recurring service queries ta
+    Dim qta As ds_RecurringServiceTableAdapters.QueriesTableAdapter
+
     ' customer name propety to display at top
     Private _custName As String
     Friend Property CustomerName As String
@@ -24,8 +27,8 @@
             _custNum = value
 
             ' fetching customer row
-            Using ta As New ds_ProgramTableAdapters.CustomerTableAdapter
-                custRow = ta.GetDataByID(CustomerNumber).Rows(0)
+            Using ta As New ds_CustomerTableAdapters.CustomerTableAdapter
+                custRow = ta.GetData(CustomerNumber).Rows(0)
             End Using
         End Set
     End Property
@@ -55,10 +58,10 @@
                 _recID = value
 
                 ' fetch row
-                Me.RecurringServiceTableAdapter.FillByID(Me.Ds_Program.RecurringService, value)
+                Me.RecurringServiceTableAdapter.FillByID(Me.Ds_RecurringService.RecurringService, value)
                 ' update row reference
-                If (Me.Ds_Program.RecurringService.Rows.Count = 1) Then
-                    RecurringServiceRow = Me.Ds_Program.RecurringService.Rows(0)
+                If (Me.Ds_RecurringService.RecurringService.Rows.Count = 1) Then
+                    RecurringServiceRow = Me.Ds_RecurringService.RecurringService.Rows(0)
                     ' set isNew to false
                     IsNew = False
                 Else
@@ -72,18 +75,18 @@
     End Property
 
     ' row that controls are bound to
-    Private _recRow As ds_Program.RecurringServiceRow = Nothing
-    Private Property RecurringServiceRow As ds_Program.RecurringServiceRow
+    Private _recRow As ds_RecurringService.RecurringServiceRow = Nothing
+    Private Property RecurringServiceRow As ds_RecurringService.RecurringServiceRow
         Get
             Return _recRow
         End Get
-        Set(value As ds_Program.RecurringServiceRow)
+        Set(value As ds_RecurringService.RecurringServiceRow)
             _recRow = value
 
             ' fill billed services display
-            Me.BilledServicesTableAdapter.FillByRecurringID(Me.Ds_Display.BilledServices, value.RecurringServiceID)
+            Me.RecurringService_BillHistoryTableAdapter.FillByRecurringID(Me.Ds_RecurringService.RecurringService_BillHistory, value.RecurringServiceID)
             ' fill service notes display
-            Me.ServiceNotesTableAdapter.FillByID(Me.Ds_Display.ServiceNotes, value.RecurringServiceID)
+            Me.ServiceNotesTableAdapter.FillByID(Me.Ds_RecurringService.ServiceNotes, value.RecurringServiceID)
 
             ' checking if service is approved
             Approved = value.Approved
@@ -138,17 +141,17 @@
             _isNew = value
             If (value = False) Then
                 ' check if service has been invoiced
-                If (Me.Ds_Display.BilledServices.Rows.Count > 0) Then
+                If (Me.Ds_RecurringService.RecurringService_BillHistory.Rows.Count > 0) Then
                     Invoiced = True
                 End If
             Else
                 ' creating new row with dummy values
-                Dim row As ds_Program.RecurringServiceRow = Me.Ds_Program.RecurringService.NewRecurringServiceRow
+                Dim row As ds_RecurringService.RecurringServiceRow = Me.Ds_RecurringService.RecurringService.NewRecurringServiceRow
                 row.CustomerNumber = CustomerNumber
                 ' test: resumelayout of cmb service types
                 Me.Cmb_ServiceTypes.ResumeLayout()
                 row.ServiceTypeID = Cmb_ServiceTypes.SelectedValue
-                row.RecurringServiceRate = cmb_ServiceTypes.SelectedServiceRate
+                row.RecurringServiceRate = Cmb_ServiceTypes.SelectedServiceRate
                 row.RecurringServiceQuantity = 1
                 row.RecurringServiceStartDate = Date.Now
                 row.RecurringServiceBillLength = 1
@@ -160,7 +163,7 @@
                 row.Credited = False
 
                 ' add dummy row
-                Me.Ds_Program.RecurringService.AddRecurringServiceRow(row)
+                Me.Ds_RecurringService.RecurringService.AddRecurringServiceRow(row)
                 RecurringServiceRow = row
 
                 ' hide status text
@@ -194,6 +197,7 @@
 
     ' bool property for whether or not service has been invoiced
     Private _invoiced As Boolean = False
+    Private _billThruDate As Date = Nothing
     Private Property Invoiced As Boolean
         Get
             Return _invoiced
@@ -203,9 +207,13 @@
 
             ' if true, lock controls and display billed thru
             If (value = True) Then
+
+                ' getting last bill thru date
+                _billThruDate = qta.RecurringService_MaxEndBillingDate(RecurringServiceID)
+
                 ' display billed through
                 lbl_BillThru.Visible = True
-                lbl_BillThru.Text = "Billed Through:" & vbCrLf & FormatDateTime(d_qta.RecurringService_LastInvDate(RecurringServiceID), DateFormat.ShortDate)
+                lbl_BillThru.Text = "Billed Through:" & vbCrLf & FormatDateTime(_billThruDate, DateFormat.ShortDate)
                 LockDetails(True)
 
                 ' update statys text
@@ -253,11 +261,6 @@
         End If
     End Sub
 
-
-    ' form qtas
-    Dim d_qta As ds_DisplayTableAdapters.QueriesTableAdapter
-    Dim p_qta As ds_ProgramTableAdapters.QueriesTableAdapter
-
     ' form bool vars to track whats been updated so parent form can refresh where needed
     Private _BalanceChanged As Boolean = False
     Friend Event RefreshBalance(ByVal CustomerNumber As Integer)
@@ -271,9 +274,11 @@
         InitializeComponent()
 
         ' Add any initialization after the InitializeComponent() call.
-        d_qta = New ds_DisplayTableAdapters.QueriesTableAdapter
-        p_qta = New ds_ProgramTableAdapters.QueriesTableAdapter
 
+        ' tas
+        qta = New ds_RecurringServiceTableAdapters.QueriesTableAdapter
+
+        ' property refs
         HomeForm = _HomeForm
         CustomerNumber = _CustomerNumber
         RecurringServiceID = _RecurringServiceID
@@ -301,7 +306,7 @@
                 Dim result As DialogResult = MessageBox.Show("Keeping this Last Date of Service will cause a credit to be issued for " & FormatCurrency(Crediting) & "." & vbCrLf & _
                                                              "Do you want to issue this credit?", "Crediting Customer for End Date Overlap", MessageBoxButtons.YesNo, MessageBoxIcon.Warning)
                 If (result = Windows.Forms.DialogResult.Yes) Then
-                    HomeForm.Procedures.RecurringService_Credit(RecurringServiceRow, Crediting, dtp_EndDate.Value.Date)
+                    HomeForm.Procedures.RecurringService_Credit(RecurringServiceRow, Crediting, dtp_EndDate.Value.Date, _billThruDate)
                     ' setting balance change
                     _BalanceChanged = True
                     _ServiceUpdated = True
@@ -496,7 +501,7 @@
     Private Sub dtp_EndDate_ValueChanged(sender As System.Object, e As System.EventArgs) Handles dtp_EndDate.ValueChanged
         If (ck_EndDate.Checked = True) Then
             ' display estimated credit
-            Dim creditAmount As Decimal = CDec(p_qta.RecurringService_Credit(RecurringServiceRow.RecurringServiceID, DateAdd(DateInterval.Day, 1, dtp_EndDate.Value.Date)))
+            Dim creditAmount As Decimal = CDec(qta.RecurringService_EndDateCreditCalc(RecurringServiceRow.RecurringServiceID, DateAdd(DateInterval.Day, 1, dtp_EndDate.Value.Date)))
 
             If (creditAmount > 0) Then
                 ' update crediting property
@@ -524,7 +529,7 @@
             Try
                 Me.ServiceNotesTableAdapter.ServiceNotes_Insert(RecurringServiceID, noteText)
                 ' refill grid
-                Me.ServiceNotesTableAdapter.FillByID(Me.Ds_Display.ServiceNotes, RecurringServiceID)
+                Me.ServiceNotesTableAdapter.FillByID(Me.Ds_RecurringService.ServiceNotes, RecurringServiceID)
                 ' updating bool so home uc is refreshed to pickup new note
                 _ServiceUpdated = True
             Catch ex As Exception

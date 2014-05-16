@@ -16,35 +16,34 @@ Public Class QB_Procedures2
         End Get
     End Property
 
-    Protected qta As DataSetTableAdapters.QueriesTableAdapter
-    Protected cta As DataSetTableAdapters.CustomerTableAdapter
-    Protected rsta As DataSetTableAdapters.RecurringServiceTableAdapter
+    'Protected qta As DataSetTableAdapters.QueriesTableAdapter
+    Protected cta As ds_CustomerTableAdapters.CustomerTableAdapter
+    Protected rsta As ds_RecurringServiceTableAdapters.RecurringServiceTableAdapter
     Protected wta As DataSetTableAdapters.Batch_WorkingInvoiceTableAdapter
-    Protected lidt As DataSet.BATCH_LineItemsDataTable
-    Protected lita As DataSetTableAdapters.BATCH_LineItemsTableAdapter
-    Protected stta As DataSetTableAdapters.ServiceTypesTableAdapter
-    Protected strow As DataSet.ServiceTypesRow
+    'Protected lidt As DataSet.BATCH_LineItemsDataTable
+    'Protected lita As DataSetTableAdapters.BATCH_LineItemsTableAdapter
+    'Protected stta As DataSetTableAdapters.ServiceTypesTableAdapter
+    'Protected strow As DataSet.ServiceTypesRow
 
     ' new tas
-    Protected p_rsta As ds_ProgramTableAdapters.RecurringServiceTableAdapter
-    Protected p_qta As ds_ProgramTableAdapters.QueriesTableAdapter
+    'Protected p_rsta As ds_ProgramTableAdapters.RecurringServiceTableAdapter
+    'Protected p_qta As ds_ProgramTableAdapters.QueriesTableAdapter
 
     Public Sub New(ByRef SessionManager As QBSessionManager, ByRef MsgSetReq As IMsgSetRequest)
         ' setting sess mgr and msgsetreq
         _sessMgr = SessionManager
         _msgSetReq = MsgSetReq
 
-        qta = New DataSetTableAdapters.QueriesTableAdapter
-        cta = New DataSetTableAdapters.CustomerTableAdapter
-        rsta = New DataSetTableAdapters.RecurringServiceTableAdapter
+        cta = New ds_CustomerTableAdapters.CustomerTableAdapter
+        rsta = New ds_RecurringServiceTableAdapters.RecurringServiceTableAdapter
         wta = New DataSetTableAdapters.Batch_WorkingInvoiceTableAdapter
-        lidt = New DataSet.BATCH_LineItemsDataTable
-        lita = New DataSetTableAdapters.BATCH_LineItemsTableAdapter
-        stta = New DataSetTableAdapters.ServiceTypesTableAdapter
+        'lidt = New DataSet.BATCH_LineItemsDataTable
+        'lita = New DataSetTableAdapters.BATCH_LineItemsTableAdapter
+        'stta = New DataSetTableAdapters.ServiceTypesTableAdapter
 
         ' new tas
-        p_rsta = New ds_ProgramTableAdapters.RecurringServiceTableAdapter
-        p_qta = New ds_ProgramTableAdapters.QueriesTableAdapter
+        'p_rsta = New ds_ProgramTableAdapters.RecurringServiceTableAdapter
+        'p_qta = New ds_ProgramTableAdapters.QueriesTableAdapter
     End Sub
 
 
@@ -79,12 +78,15 @@ Public Class QB_Procedures2
 
 
     Public Sub Customer_AddMissingListID(ByRef form As ImportWork)
-        Dim missingCount As Integer = qta.Customer_MissingListIDCount
+        Dim missingCount As Integer
+        Dim qta As New ds_CustomerTableAdapters.QueriesTableAdapter
+
+        missingCount = qta.Customer_MissingListIDCount
+
 
         ' fill table
         If (missingCount > 0) Then
-            Dim dt As DataSet.CustomerDataTable
-            dt = cta.GetAllWithMissingListID
+            Dim dt As ds_Customer.CustomerDataTable = cta.GetDataByMissingListID
 
             ' pb init stuff
             Dim progCounter As Integer = 0
@@ -92,7 +94,7 @@ Public Class QB_Procedures2
             form.lbl_AllCustAddCount.Text = progCounter & "/" & dt.Rows.Count
 
             ' loop through table
-            For Each custRow As DataSet.CustomerRow In dt
+            For Each custRow As ds_Customer.CustomerRow In dt
 
                 ' pb update stuff
                 progCounter += 1
@@ -209,7 +211,7 @@ skipCustomer:
         MsgBox("All Customers Added. If this is the initially load, be sure to import services!")
     End Sub
 
-    Public Function Customer_New(ByRef custRow As DataSet.CustomerRow) As Boolean
+    Public Function Customer_New(ByRef custRow As ds_Customer.CustomerRow) As Boolean
         ' return bool for success
         Dim addOK As Boolean
 
@@ -307,7 +309,9 @@ retry:
                 ResponseErr_Misc(resp)
 
                 ' delete row
-                qta.Customer_DeleteByNum(custRow.CustomerNumber)
+                Using qta As New ds_CustomerTableAdapters.QueriesTableAdapter
+                    qta.Customer_DeleteByNum(custRow.CustomerNumber)
+                End Using
 
                 ' bail out
                 Return addOK
@@ -318,7 +322,8 @@ retry:
 
         Return addOK
     End Function
-    Public Sub Customer_Update(ByRef custRow As DataSet.CustomerRow)
+
+    Public Sub Customer_Update(ByRef custRow As ds_Customer.CustomerRow)
 retry:
         Dim customerMod As ICustomerMod = MsgSetRequest.AppendCustomerModRq
 
@@ -418,25 +423,36 @@ retry:
         Next i
     End Sub
 
-    Public Sub RecurringService_Credit(ByRef row As ds_Program.RecurringServiceRow, ByVal creditAmount As Double,
-                                ByVal newEndDate As Date)
+    Public Sub RecurringService_Credit(ByRef row As ds_RecurringService.RecurringServiceRow, ByVal creditAmount As Double,
+                                ByVal newEndDate As Date, ByVal BillThruDate As Date)
+        ' getting customer listid
+        Dim customerListID As String
+        Using qta As New ds_CustomerTableAdapters.QueriesTableAdapter
+            customerListID = qta.Customer_GetListID(row.CustomerNumber)
+        End Using
+
+        ' getting service listid
+        Dim serviceRow As ds_Types.ServiceTypesRow
+        Dim ta As New ds_TypesTableAdapters.ServiceTypesTableAdapter
+        serviceRow = ta.GetDataByID(row.ServiceTypeID).Rows(0)
+        
 
         Dim creditMemoAdd As ICreditMemoAdd = MsgSetRequest.AppendCreditMemoAddRq
 
         ' passing listid
-        creditMemoAdd.CustomerRef.ListID.SetValue(qta.Customer_GetListID(row.CustomerNumber))
+        creditMemoAdd.CustomerRef.ListID.SetValue(customerListID)
         creditMemoAdd.IsToBePrinted.SetValue(False)
 
         Dim creditLine As IORCreditMemoLineAdd = creditMemoAdd.ORCreditMemoLineAddList.Append()
         ' credit line info
-        creditLine.CreditMemoLineAdd.ItemRef.ListID.SetValue(qta.ServiceTypes_GetListIDByTypeID(row.ServiceTypeID))
+        creditLine.CreditMemoLineAdd.ItemRef.ListID.SetValue(serviceRow.ServiceListID)
         creditLine.CreditMemoLineAdd.ORRatePriceLevel.Rate.SetValue(creditAmount)
 
         ' description line
         Dim descLine As IORCreditMemoLineAdd = creditMemoAdd.ORCreditMemoLineAddList.Append()
         descLine.CreditMemoLineAdd.ItemRef.ListID.Unset()
         descLine.CreditMemoLineAdd.ItemRef.FullName.Unset()
-        descLine.CreditMemoLineAdd.Desc.SetValue("This service has been Invoiced upto " & qta.RecurringService_LastInvDate(row.RecurringServiceID) & ". The new End Date overlaps this Invoiced period. | New End Date: " & newEndDate.Date)
+        descLine.CreditMemoLineAdd.Desc.SetValue("This service has been Invoiced upto " & BillThruDate & ". The new End Date overlaps this Invoiced period. | New End Date: " & newEndDate.Date)
         descLine.CreditMemoLineAdd.Amount.Unset()
         descLine.CreditMemoLineAdd.Quantity.Unset()
 
@@ -450,21 +466,23 @@ retry:
         For i = 0 To respList.Count - 1
             Dim resp As IResponse = respList.GetAt(i)
             If (resp.StatusCode = 0) Then
-                ' update row
-                row.RecurringServiceEndDate = newEndDate.Date
-                row.Credited = True
 
                 ' insert record
                 Dim creditMemoRet As ICreditMemoRet = resp.Detail
                 Try
-                    p_qta.RecurringService_Credit_Insert(row.RecurringServiceID, newEndDate, creditAmount, creditMemoRet.TxnID.GetValue)
+                    Using qta As New ds_RecurringServiceTableAdapters.QueriesTableAdapter
+                        qta.RecurringService_EndDateCredit_Insert(row.RecurringServiceID, row.RecurringServiceEndDate, newEndDate, creditAmount, creditMemoRet.TxnID.GetValue)
+                    End Using
                 Catch ex As Exception
                     MessageBox.Show("Error inserting Credit History: " & ex.Message, "Error Credit Record Insert", MessageBoxButtons.OK, MessageBoxIcon.Error)
                 End Try
 
+                ' update row
+                row.RecurringServiceEndDate = newEndDate.Date
+                row.Credited = True
                 ' commit
                 Try
-                    p_rsta.Update(row)
+                    rsta.Update(row)
                 Catch ex As Exception
                     MsgBox(ex.Message)
                 End Try
@@ -476,6 +494,12 @@ retry:
     Public Function Customer_BounceCheck(ByVal CheckRow As DataSet.PaymentHistoryRow, ByVal BankRow As ds_Program.BAD_CHECK_BANKS_Row, ByVal Fee As Double) As Boolean
         ' return bool
         Dim bounced As Boolean
+
+        ' getting customer listid
+        Dim custListID As String
+        Using qta As New ds_CustomerTableAdapters.QueriesTableAdapter
+            custListID = qta.Customer_GetListID(CheckRow.CustomerNumber)
+        End Using
 
         ' need to do 2 things:
         ' 1. invoice customer for bounced check amount and our fee
@@ -491,7 +515,7 @@ retry:
         ' discarding ta
         app_ta = Nothing
 
-        invoiceAdd.CustomerRef.ListID.SetValue(qta.Customer_GetListID(CheckRow.CustomerNumber))
+        invoiceAdd.CustomerRef.ListID.SetValue(custListID)
         invoiceAdd.IsToBePrinted.SetValue(True)
 
         ' var to hold line items
@@ -567,7 +591,9 @@ retry:
 
         ' inserting note for customer that check bounced
         Try
-            qta.CustomerNotes_Insert(CheckRow.CustomerNumber, "Bounced Check Ref #: " & CheckRow.RefNumber & ". Bank Fee of " & FormatCurrency(BankRow.BANK_FEE_DEFAULT) & ". Customer charged " & FormatCurrency(Fee) & ".")
+            Using ta As New ds_CustomerTableAdapters.CustomerNotesTableAdapter
+                ta.CustomerNotes_Insert(CheckRow.CustomerNumber, "Bounced Check Ref #: " & CheckRow.RefNumber & ". Bank Fee of " & FormatCurrency(BankRow.BANK_FEE_DEFAULT) & ". Customer charged " & FormatCurrency(Fee) & ".")
+            End Using
         Catch ex As Exception
             MsgBox("NoteInsert Err: " & ex.Message)
         End Try
@@ -1106,7 +1132,13 @@ retry:
 
         ' checking balance of customer
         Dim c_Queries As New QB_Queries2(SessionManager, MsgSetRequest)
-        Dim custListID As String = qta.Customer_GetListID(CustomerNumber)
+        Dim custListID As String
+        Dim qta As New DataSetTableAdapters.QueriesTableAdapter
+
+        Using qta2 As New ds_CustomerTableAdapters.QueriesTableAdapter
+            custListID = qta2.Customer_GetListID(CustomerNumber)
+        End Using
+
         Dim custBalance As Double = c_Queries.Customer_Balance(custListID)
         c_Queries = Nothing
 
@@ -1130,7 +1162,8 @@ retry:
         ' line item to reuse
         Dim lineItem As IORInvoiceLineAdd
         ' this is default item for custom invoices
-        Dim itemListID As String = qta.APP_GetCustomInvItem()
+        'Dim itemListID As String = qta.APP_GetCustomInvItem()
+        Dim itemListID As String = "this"
 
 
         ' loop through line items
@@ -1446,19 +1479,21 @@ retry:
     End Function
 
     Public Sub Items_NewServiceItem(ByVal serviceTypeID As Integer, ByVal QBAccountListID As String)
-        strow = stta.GetDataByID(serviceTypeID).Rows(0)
+        ' getting row
+        Dim ta As New ds_TypesTableAdapters.ServiceTypesTableAdapter
+        Dim serviceRow As ds_Types.ServiceTypesRow = ta.GetDataByID(serviceTypeID).Rows(0)
 
         Dim itemAdd As IItemServiceAdd = MsgSetRequest.AppendItemServiceAddRq
 
         ' setting item stuff
-        itemAdd.Name.SetValue(strow.ServiceName)
-        itemAdd.ORSalesPurchase.SalesOrPurchase.Desc.SetValue(strow.ServiceDescription)
-        itemAdd.ORSalesPurchase.SalesOrPurchase.ORPrice.Price.SetValue(strow.ServiceRate)
+        itemAdd.Name.SetValue(serviceRow.ServiceName)
+        itemAdd.ORSalesPurchase.SalesOrPurchase.Desc.SetValue(serviceRow.ServiceDescription)
+        itemAdd.ORSalesPurchase.SalesOrPurchase.ORPrice.Price.SetValue(serviceRow.ServiceRate)
         ' passing attached account
         itemAdd.ORSalesPurchase.SalesOrPurchase.AccountRef.ListID.SetValue(QBAccountListID)
 
         ' checking active state
-        If (strow.ServiceActive = False) Then
+        If (serviceRow.ServiceActive = False) Then
             itemAdd.IsActive.SetValue(False)
         Else
             itemAdd.IsActive.SetValue(True)
@@ -1476,37 +1511,39 @@ retry:
                 Dim itemRet As IItemServiceRet = resp.Detail
 
                 ' update db information with edit sequence and list id
-                strow.ServiceListID = itemRet.ListID.GetValue
-                strow.ServiceEditSequence = itemRet.EditSequence.GetValue
+                serviceRow.ServiceListID = itemRet.ListID.GetValue
+                serviceRow.ServiceEditSequence = itemRet.EditSequence.GetValue
 
                 ' commit to db
                 Try
-                    stta.Update(strow)
+                    ta.Update(serviceRow)
                 Catch ex As Exception
                     MsgBox(ex.Message)
                 End Try
             Else
                 ResponseErr_Misc(resp)
-                stta.DeleteByID(serviceTypeID)
+                ta.DeleteByID(serviceTypeID)
             End If
         Next i
     End Sub
 
     Public Sub Items_UpdateServiceItem(ByVal ServiceTypeID As Decimal)
-        strow = stta.GetDataByID(ServiceTypeID).Rows(0)
+        ' getting row
+        Dim ta As New ds_TypesTableAdapters.ServiceTypesTableAdapter
+        Dim serviceRow As ds_Types.ServiceTypesRow = ta.GetDataByID(ServiceTypeID).Rows(0)
 
         Dim itemMod As IItemServiceMod = MsgSetRequest.AppendItemServiceModRq
 
         ' setting item we are talking about
-        itemMod.ListID.SetValue(strow.ServiceListID)
-        itemMod.EditSequence.SetValue(strow.ServiceEditSequence)
+        itemMod.ListID.SetValue(serviceRow.ServiceListID)
+        itemMod.EditSequence.SetValue(serviceRow.ServiceEditSequence)
 
         ' update rate
-        itemMod.ORSalesPurchaseMod.SalesOrPurchaseMod.ORPrice.Price.SetValue(strow.ServiceRate)
+        itemMod.ORSalesPurchaseMod.SalesOrPurchaseMod.ORPrice.Price.SetValue(serviceRow.ServiceRate)
         ' update description
-        itemMod.ORSalesPurchaseMod.SalesOrPurchaseMod.Desc.SetValue(strow.ServiceDescription)
+        itemMod.ORSalesPurchaseMod.SalesOrPurchaseMod.Desc.SetValue(serviceRow.ServiceDescription)
         ' update active state
-        If (strow.ServiceActive = False) Then
+        If (serviceRow.ServiceActive = False) Then
             itemMod.IsActive.SetValue(False)
         Else
             itemMod.IsActive.SetValue(True)
@@ -1524,9 +1561,9 @@ retry:
                 Dim itemRet As IItemServiceRet = resp.Detail
 
                 ' update srvc row edit sequence
-                strow.ServiceEditSequence = itemRet.EditSequence.GetValue
+                serviceRow.ServiceEditSequence = itemRet.EditSequence.GetValue
                 Try
-                    stta.Update(strow)
+                    ta.Update(serviceRow)
                 Catch ex As Exception
                     MsgBox(ex.Message)
                 End Try
@@ -1542,8 +1579,13 @@ retry:
     Private Sub Items_UpdateEditSeq(ByVal serviceTypeID As Integer)
         Dim itemQuery As IItemQuery = MsgSetRequest.AppendItemQueryRq
 
+        ' getting service row
+        Dim ta As New ds_TypesTableAdapters.ServiceTypesTableAdapter
+        Dim serviceRow As ds_Types.ServiceTypesRow = ta.GetDataByID(serviceTypeID).Rows(0)
+
+
         ' setting listid
-        itemQuery.ORListQuery.ListIDList.Add(qta.ServiceTypes_GetListIDByTypeID(serviceTypeID))
+        itemQuery.ORListQuery.ListIDList.Add(serviceRow.ServiceListID)
 
         Dim msgSetResp As IMsgSetResponse = SessionManager.DoRequests(MsgSetRequest)
         Dim respList As IResponseList = msgSetResp.ResponseList
@@ -1560,7 +1602,9 @@ retry:
 
                 If (itemRet.ItemServiceRet IsNot Nothing) Then
                     ' update edit sequence
-                    qta.ServiceTypes_UpdateEditSeq(serviceTypeID, itemRet.ItemServiceRet.EditSequence.GetValue)
+                    serviceRow.ServiceEditSequence = itemRet.ItemServiceRet.EditSequence.GetValue
+                    ta.Update(serviceRow)
+
                     ' redo update
                     Items_UpdateServiceItem(serviceTypeID)
                     Exit Sub
@@ -1570,12 +1614,10 @@ retry:
     End Sub
 
     Public Sub Items_ImportAllMissingListID(ByVal QBAccount As String)
-        Dim dt As New DataSet.ServiceTypesDataTable
+        Dim ta As New ds_TypesTableAdapters.ServiceTypesTableAdapter
+        Dim dt As ds_Types.ServiceTypesDataTable = ta.GetData
 
-        ' fill dt
-        stta.FillWithAll(dt)
-
-        For Each row As DataSet.ServiceTypesRow In dt.Rows
+        For Each row As ds_Types.ServiceTypesRow In dt.Rows
             If (row.IsServiceListIDNull = True) Then
                 Dim itemAdd As IItemServiceAdd = MsgSetRequest.AppendItemServiceAddRq
 
@@ -1610,13 +1652,13 @@ retry:
 
                         ' commit to db
                         Try
-                            stta.Update(row)
+                            ta.Update(row)
                         Catch ex As Exception
                             MsgBox(ex.Message)
                         End Try
                     Else
                         ResponseErr_Misc(resp)
-                        stta.DeleteByID(row.ServiceTypeID)
+                        ta.DeleteByID(row.ServiceTypeID)
                     End If
                 Next i
             End If

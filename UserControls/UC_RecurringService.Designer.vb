@@ -37,23 +37,22 @@ Partial Class UC_RecurringService
         Me.rdo_CurrentSrvc = New System.Windows.Forms.RadioButton()
         Me.rdo_EndedSrvc = New System.Windows.Forms.RadioButton()
         Me.dg_Notes = New System.Windows.Forms.DataGridView()
-        Me.RecurringServiceIDDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.ServiceNameDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.RecurringServiceRateDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.RecurringServiceQuantityDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.RecurringServiceBillLengthDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.RecurringServiceStartDateDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.RecurringServiceEndDateDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.MaxEndBillingDateDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.ApprovedDataGridViewCheckBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.RecurringServiceDisplayBindingSource = New System.Windows.Forms.BindingSource(Me.components)
-        Me.Ds_Display = New TrashCash.ds_Display()
-        Me.ServiceNotesBindingSource = New System.Windows.Forms.BindingSource(Me.components)
-        Me.ServiceNotesTableAdapter = New TrashCash.ds_DisplayTableAdapters.ServiceNotesTableAdapter()
-        Me.RecurringService_DisplayTableAdapter = New TrashCash.ds_DisplayTableAdapters.RecurringService_DisplayTableAdapter()
-        Me.ServiceNoteTextDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.InsertedByUser = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.ServiceNoteDateDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Ds_RecurringService = New TrashCash.ds_RecurringService()
+        Me.RecurringService_DisplayByCustomerIDTableAdapter = New TrashCash.ds_RecurringServiceTableAdapters.RecurringService_DisplayByCustomerIDTableAdapter()
+        Me.ServiceNotesTableAdapter = New TrashCash.ds_RecurringServiceTableAdapters.ServiceNotesTableAdapter()
+        Me.RecurringServiceDisplayByCustomerIDBindingSource = New System.Windows.Forms.BindingSource(Me.components)
+        Me.DataGridViewTextBoxColumn1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.DataGridViewTextBoxColumn2 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.DataGridViewTextBoxColumn6 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.DataGridViewTextBoxColumn7 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.DataGridViewTextBoxColumn3 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.DataGridViewTextBoxColumn4 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.DataGridViewTextBoxColumn5 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.DataGridViewCheckBoxColumn1 = New System.Windows.Forms.DataGridViewCheckBoxColumn()
+        Me.BindingSource1 = New System.Windows.Forms.BindingSource(Me.components)
+        Me.DataGridViewTextBoxColumn8 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.DataGridViewTextBoxColumn9 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.DataGridViewTextBoxColumn10 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         CType(Me.sc_Master, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.sc_Master.Panel1.SuspendLayout()
         Me.sc_Master.Panel2.SuspendLayout()
@@ -62,9 +61,9 @@ Partial Class UC_RecurringService
         Me.Panel1.SuspendLayout()
         Me.grp_SrvcState.SuspendLayout()
         CType(Me.dg_Notes, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.RecurringServiceDisplayBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.Ds_Display, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.ServiceNotesBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.Ds_RecurringService, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.RecurringServiceDisplayByCustomerIDBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.BindingSource1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'sc_Master
@@ -93,8 +92,8 @@ Partial Class UC_RecurringService
         Me.dg_RecSrvc.AllowUserToResizeRows = False
         Me.dg_RecSrvc.AutoGenerateColumns = False
         Me.dg_RecSrvc.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.dg_RecSrvc.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.RecurringServiceIDDataGridViewTextBoxColumn, Me.ServiceNameDataGridViewTextBoxColumn, Me.RecurringServiceRateDataGridViewTextBoxColumn, Me.RecurringServiceQuantityDataGridViewTextBoxColumn, Me.RecurringServiceBillLengthDataGridViewTextBoxColumn, Me.RecurringServiceStartDateDataGridViewTextBoxColumn, Me.RecurringServiceEndDateDataGridViewTextBoxColumn, Me.MaxEndBillingDateDataGridViewTextBoxColumn, Me.ApprovedDataGridViewCheckBoxColumn})
-        Me.dg_RecSrvc.DataSource = Me.RecurringServiceDisplayBindingSource
+        Me.dg_RecSrvc.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.DataGridViewTextBoxColumn1, Me.DataGridViewTextBoxColumn2, Me.DataGridViewTextBoxColumn6, Me.DataGridViewTextBoxColumn7, Me.DataGridViewTextBoxColumn3, Me.DataGridViewTextBoxColumn4, Me.DataGridViewTextBoxColumn5, Me.DataGridViewCheckBoxColumn1})
+        Me.dg_RecSrvc.DataSource = Me.RecurringServiceDisplayByCustomerIDBindingSource
         Me.dg_RecSrvc.Dock = System.Windows.Forms.DockStyle.Fill
         Me.dg_RecSrvc.Location = New System.Drawing.Point(0, 0)
         Me.dg_RecSrvc.MultiSelect = False
@@ -178,8 +177,8 @@ Partial Class UC_RecurringService
         Me.dg_Notes.AllowUserToResizeRows = False
         Me.dg_Notes.AutoGenerateColumns = False
         Me.dg_Notes.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.dg_Notes.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.ServiceNoteTextDataGridViewTextBoxColumn, Me.InsertedByUser, Me.ServiceNoteDateDataGridViewTextBoxColumn})
-        Me.dg_Notes.DataSource = Me.ServiceNotesBindingSource
+        Me.dg_Notes.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.DataGridViewTextBoxColumn8, Me.DataGridViewTextBoxColumn9, Me.DataGridViewTextBoxColumn10})
+        Me.dg_Notes.DataSource = Me.BindingSource1
         Me.dg_Notes.Dock = System.Windows.Forms.DockStyle.Fill
         Me.dg_Notes.Location = New System.Drawing.Point(0, 0)
         Me.dg_Notes.Name = "dg_Notes"
@@ -189,142 +188,132 @@ Partial Class UC_RecurringService
         Me.dg_Notes.Size = New System.Drawing.Size(900, 122)
         Me.dg_Notes.TabIndex = 93
         '
-        'RecurringServiceIDDataGridViewTextBoxColumn
+        'Ds_RecurringService
         '
-        Me.RecurringServiceIDDataGridViewTextBoxColumn.DataPropertyName = "RecurringServiceID"
-        Me.RecurringServiceIDDataGridViewTextBoxColumn.HeaderText = "RecurringServiceID"
-        Me.RecurringServiceIDDataGridViewTextBoxColumn.Name = "RecurringServiceIDDataGridViewTextBoxColumn"
-        Me.RecurringServiceIDDataGridViewTextBoxColumn.ReadOnly = True
-        Me.RecurringServiceIDDataGridViewTextBoxColumn.Visible = False
+        Me.Ds_RecurringService.DataSetName = "ds_RecurringService"
+        Me.Ds_RecurringService.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema
         '
-        'ServiceNameDataGridViewTextBoxColumn
+        'RecurringService_DisplayByCustomerIDTableAdapter
         '
-        Me.ServiceNameDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill
-        Me.ServiceNameDataGridViewTextBoxColumn.DataPropertyName = "ServiceName"
-        Me.ServiceNameDataGridViewTextBoxColumn.HeaderText = "Service"
-        Me.ServiceNameDataGridViewTextBoxColumn.Name = "ServiceNameDataGridViewTextBoxColumn"
-        Me.ServiceNameDataGridViewTextBoxColumn.ReadOnly = True
-        '
-        'RecurringServiceRateDataGridViewTextBoxColumn
-        '
-        Me.RecurringServiceRateDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
-        Me.RecurringServiceRateDataGridViewTextBoxColumn.DataPropertyName = "RecurringServiceRate"
-        DataGridViewCellStyle1.Format = "C2"
-        Me.RecurringServiceRateDataGridViewTextBoxColumn.DefaultCellStyle = DataGridViewCellStyle1
-        Me.RecurringServiceRateDataGridViewTextBoxColumn.HeaderText = "Rate"
-        Me.RecurringServiceRateDataGridViewTextBoxColumn.Name = "RecurringServiceRateDataGridViewTextBoxColumn"
-        Me.RecurringServiceRateDataGridViewTextBoxColumn.ReadOnly = True
-        Me.RecurringServiceRateDataGridViewTextBoxColumn.Width = 55
-        '
-        'RecurringServiceQuantityDataGridViewTextBoxColumn
-        '
-        Me.RecurringServiceQuantityDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
-        Me.RecurringServiceQuantityDataGridViewTextBoxColumn.DataPropertyName = "RecurringServiceQuantity"
-        Me.RecurringServiceQuantityDataGridViewTextBoxColumn.HeaderText = "Quantity"
-        Me.RecurringServiceQuantityDataGridViewTextBoxColumn.Name = "RecurringServiceQuantityDataGridViewTextBoxColumn"
-        Me.RecurringServiceQuantityDataGridViewTextBoxColumn.ReadOnly = True
-        Me.RecurringServiceQuantityDataGridViewTextBoxColumn.Width = 71
-        '
-        'RecurringServiceBillLengthDataGridViewTextBoxColumn
-        '
-        Me.RecurringServiceBillLengthDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
-        Me.RecurringServiceBillLengthDataGridViewTextBoxColumn.DataPropertyName = "RecurringServiceBillLength"
-        Me.RecurringServiceBillLengthDataGridViewTextBoxColumn.HeaderText = "Bill Length"
-        Me.RecurringServiceBillLengthDataGridViewTextBoxColumn.Name = "RecurringServiceBillLengthDataGridViewTextBoxColumn"
-        Me.RecurringServiceBillLengthDataGridViewTextBoxColumn.ReadOnly = True
-        Me.RecurringServiceBillLengthDataGridViewTextBoxColumn.Width = 81
-        '
-        'RecurringServiceStartDateDataGridViewTextBoxColumn
-        '
-        Me.RecurringServiceStartDateDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
-        Me.RecurringServiceStartDateDataGridViewTextBoxColumn.DataPropertyName = "RecurringServiceStartDate"
-        DataGridViewCellStyle2.Format = "d"
-        Me.RecurringServiceStartDateDataGridViewTextBoxColumn.DefaultCellStyle = DataGridViewCellStyle2
-        Me.RecurringServiceStartDateDataGridViewTextBoxColumn.HeaderText = "Start Date"
-        Me.RecurringServiceStartDateDataGridViewTextBoxColumn.Name = "RecurringServiceStartDateDataGridViewTextBoxColumn"
-        Me.RecurringServiceStartDateDataGridViewTextBoxColumn.ReadOnly = True
-        Me.RecurringServiceStartDateDataGridViewTextBoxColumn.Width = 80
-        '
-        'RecurringServiceEndDateDataGridViewTextBoxColumn
-        '
-        Me.RecurringServiceEndDateDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
-        Me.RecurringServiceEndDateDataGridViewTextBoxColumn.DataPropertyName = "RecurringServiceEndDate"
-        DataGridViewCellStyle3.Format = "d"
-        Me.RecurringServiceEndDateDataGridViewTextBoxColumn.DefaultCellStyle = DataGridViewCellStyle3
-        Me.RecurringServiceEndDateDataGridViewTextBoxColumn.HeaderText = "End Date"
-        Me.RecurringServiceEndDateDataGridViewTextBoxColumn.Name = "RecurringServiceEndDateDataGridViewTextBoxColumn"
-        Me.RecurringServiceEndDateDataGridViewTextBoxColumn.ReadOnly = True
-        Me.RecurringServiceEndDateDataGridViewTextBoxColumn.Width = 77
-        '
-        'MaxEndBillingDateDataGridViewTextBoxColumn
-        '
-        Me.MaxEndBillingDateDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
-        Me.MaxEndBillingDateDataGridViewTextBoxColumn.DataPropertyName = "MaxEndBillingDate"
-        DataGridViewCellStyle4.Format = "d"
-        Me.MaxEndBillingDateDataGridViewTextBoxColumn.DefaultCellStyle = DataGridViewCellStyle4
-        Me.MaxEndBillingDateDataGridViewTextBoxColumn.HeaderText = "Billed Through"
-        Me.MaxEndBillingDateDataGridViewTextBoxColumn.Name = "MaxEndBillingDateDataGridViewTextBoxColumn"
-        Me.MaxEndBillingDateDataGridViewTextBoxColumn.ReadOnly = True
-        '
-        'ApprovedDataGridViewCheckBoxColumn
-        '
-        Me.ApprovedDataGridViewCheckBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
-        Me.ApprovedDataGridViewCheckBoxColumn.DataPropertyName = "Approved"
-        Me.ApprovedDataGridViewCheckBoxColumn.HeaderText = "Approved"
-        Me.ApprovedDataGridViewCheckBoxColumn.Name = "ApprovedDataGridViewCheckBoxColumn"
-        Me.ApprovedDataGridViewCheckBoxColumn.ReadOnly = True
-        Me.ApprovedDataGridViewCheckBoxColumn.Resizable = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.ApprovedDataGridViewCheckBoxColumn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
-        Me.ApprovedDataGridViewCheckBoxColumn.Width = 59
-        '
-        'RecurringServiceDisplayBindingSource
-        '
-        Me.RecurringServiceDisplayBindingSource.DataMember = "RecurringService_Display"
-        Me.RecurringServiceDisplayBindingSource.DataSource = Me.Ds_Display
-        '
-        'Ds_Display
-        '
-        Me.Ds_Display.DataSetName = "ds_Display"
-        Me.Ds_Display.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema
-        '
-        'ServiceNotesBindingSource
-        '
-        Me.ServiceNotesBindingSource.DataMember = "ServiceNotes"
-        Me.ServiceNotesBindingSource.DataSource = Me.Ds_Display
+        Me.RecurringService_DisplayByCustomerIDTableAdapter.ClearBeforeFill = True
         '
         'ServiceNotesTableAdapter
         '
         Me.ServiceNotesTableAdapter.ClearBeforeFill = True
         '
-        'RecurringService_DisplayTableAdapter
+        'RecurringServiceDisplayByCustomerIDBindingSource
         '
-        Me.RecurringService_DisplayTableAdapter.ClearBeforeFill = True
+        Me.RecurringServiceDisplayByCustomerIDBindingSource.DataMember = "RecurringService_DisplayByCustomerID"
+        Me.RecurringServiceDisplayByCustomerIDBindingSource.DataSource = Me.Ds_RecurringService
         '
-        'ServiceNoteTextDataGridViewTextBoxColumn
+        'DataGridViewTextBoxColumn1
         '
-        Me.ServiceNoteTextDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill
-        Me.ServiceNoteTextDataGridViewTextBoxColumn.DataPropertyName = "ServiceNoteText"
-        Me.ServiceNoteTextDataGridViewTextBoxColumn.HeaderText = "Service Note"
-        Me.ServiceNoteTextDataGridViewTextBoxColumn.Name = "ServiceNoteTextDataGridViewTextBoxColumn"
-        Me.ServiceNoteTextDataGridViewTextBoxColumn.ReadOnly = True
+        Me.DataGridViewTextBoxColumn1.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill
+        Me.DataGridViewTextBoxColumn1.DataPropertyName = "ServiceName"
+        Me.DataGridViewTextBoxColumn1.HeaderText = "Service"
+        Me.DataGridViewTextBoxColumn1.Name = "DataGridViewTextBoxColumn1"
+        Me.DataGridViewTextBoxColumn1.ReadOnly = True
         '
-        'InsertedByUser
+        'DataGridViewTextBoxColumn2
         '
-        Me.InsertedByUser.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
-        Me.InsertedByUser.DataPropertyName = "InsertedByUser"
-        Me.InsertedByUser.HeaderText = "User"
-        Me.InsertedByUser.Name = "InsertedByUser"
-        Me.InsertedByUser.ReadOnly = True
-        Me.InsertedByUser.Width = 54
+        Me.DataGridViewTextBoxColumn2.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
+        Me.DataGridViewTextBoxColumn2.DataPropertyName = "RecurringServiceRate"
+        DataGridViewCellStyle1.Format = "C2"
+        Me.DataGridViewTextBoxColumn2.DefaultCellStyle = DataGridViewCellStyle1
+        Me.DataGridViewTextBoxColumn2.HeaderText = "Rate"
+        Me.DataGridViewTextBoxColumn2.Name = "DataGridViewTextBoxColumn2"
+        Me.DataGridViewTextBoxColumn2.ReadOnly = True
+        Me.DataGridViewTextBoxColumn2.Width = 55
         '
-        'ServiceNoteDateDataGridViewTextBoxColumn
+        'DataGridViewTextBoxColumn6
         '
-        Me.ServiceNoteDateDataGridViewTextBoxColumn.DataPropertyName = "ServiceNoteDate"
+        Me.DataGridViewTextBoxColumn6.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
+        Me.DataGridViewTextBoxColumn6.DataPropertyName = "RecurringServiceQuantity"
+        Me.DataGridViewTextBoxColumn6.HeaderText = "Quantity"
+        Me.DataGridViewTextBoxColumn6.Name = "DataGridViewTextBoxColumn6"
+        Me.DataGridViewTextBoxColumn6.ReadOnly = True
+        Me.DataGridViewTextBoxColumn6.Width = 71
+        '
+        'DataGridViewTextBoxColumn7
+        '
+        Me.DataGridViewTextBoxColumn7.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
+        Me.DataGridViewTextBoxColumn7.DataPropertyName = "RecurringServiceBillLength"
+        Me.DataGridViewTextBoxColumn7.HeaderText = "Bill Length"
+        Me.DataGridViewTextBoxColumn7.Name = "DataGridViewTextBoxColumn7"
+        Me.DataGridViewTextBoxColumn7.ReadOnly = True
+        Me.DataGridViewTextBoxColumn7.Width = 81
+        '
+        'DataGridViewTextBoxColumn3
+        '
+        Me.DataGridViewTextBoxColumn3.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
+        Me.DataGridViewTextBoxColumn3.DataPropertyName = "RecurringServiceStartDate"
+        DataGridViewCellStyle2.Format = "d"
+        Me.DataGridViewTextBoxColumn3.DefaultCellStyle = DataGridViewCellStyle2
+        Me.DataGridViewTextBoxColumn3.HeaderText = "Start Date"
+        Me.DataGridViewTextBoxColumn3.Name = "DataGridViewTextBoxColumn3"
+        Me.DataGridViewTextBoxColumn3.ReadOnly = True
+        Me.DataGridViewTextBoxColumn3.Width = 80
+        '
+        'DataGridViewTextBoxColumn4
+        '
+        Me.DataGridViewTextBoxColumn4.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
+        Me.DataGridViewTextBoxColumn4.DataPropertyName = "RecurringServiceEndDate"
+        DataGridViewCellStyle3.Format = "d"
+        Me.DataGridViewTextBoxColumn4.DefaultCellStyle = DataGridViewCellStyle3
+        Me.DataGridViewTextBoxColumn4.HeaderText = "End Date"
+        Me.DataGridViewTextBoxColumn4.Name = "DataGridViewTextBoxColumn4"
+        Me.DataGridViewTextBoxColumn4.ReadOnly = True
+        Me.DataGridViewTextBoxColumn4.Width = 77
+        '
+        'DataGridViewTextBoxColumn5
+        '
+        Me.DataGridViewTextBoxColumn5.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
+        Me.DataGridViewTextBoxColumn5.DataPropertyName = "MaxEndBillingDate"
+        DataGridViewCellStyle4.Format = "d"
+        Me.DataGridViewTextBoxColumn5.DefaultCellStyle = DataGridViewCellStyle4
+        Me.DataGridViewTextBoxColumn5.HeaderText = "Billed Through"
+        Me.DataGridViewTextBoxColumn5.Name = "DataGridViewTextBoxColumn5"
+        Me.DataGridViewTextBoxColumn5.ReadOnly = True
+        '
+        'DataGridViewCheckBoxColumn1
+        '
+        Me.DataGridViewCheckBoxColumn1.DataPropertyName = "Approved"
+        Me.DataGridViewCheckBoxColumn1.HeaderText = "Approved"
+        Me.DataGridViewCheckBoxColumn1.Name = "DataGridViewCheckBoxColumn1"
+        Me.DataGridViewCheckBoxColumn1.ReadOnly = True
+        '
+        'BindingSource1
+        '
+        Me.BindingSource1.DataMember = "ServiceNotes"
+        Me.BindingSource1.DataSource = Me.Ds_RecurringService
+        '
+        'DataGridViewTextBoxColumn8
+        '
+        Me.DataGridViewTextBoxColumn8.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill
+        Me.DataGridViewTextBoxColumn8.DataPropertyName = "ServiceNoteText"
+        Me.DataGridViewTextBoxColumn8.HeaderText = "Service Note Text"
+        Me.DataGridViewTextBoxColumn8.Name = "DataGridViewTextBoxColumn8"
+        Me.DataGridViewTextBoxColumn8.ReadOnly = True
+        '
+        'DataGridViewTextBoxColumn9
+        '
+        Me.DataGridViewTextBoxColumn9.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
+        Me.DataGridViewTextBoxColumn9.DataPropertyName = "ServiceNoteDate"
         DataGridViewCellStyle5.Format = "d"
-        Me.ServiceNoteDateDataGridViewTextBoxColumn.DefaultCellStyle = DataGridViewCellStyle5
-        Me.ServiceNoteDateDataGridViewTextBoxColumn.HeaderText = "Date"
-        Me.ServiceNoteDateDataGridViewTextBoxColumn.Name = "ServiceNoteDateDataGridViewTextBoxColumn"
-        Me.ServiceNoteDateDataGridViewTextBoxColumn.ReadOnly = True
+        Me.DataGridViewTextBoxColumn9.DefaultCellStyle = DataGridViewCellStyle5
+        Me.DataGridViewTextBoxColumn9.HeaderText = "Note Date"
+        Me.DataGridViewTextBoxColumn9.Name = "DataGridViewTextBoxColumn9"
+        Me.DataGridViewTextBoxColumn9.ReadOnly = True
+        Me.DataGridViewTextBoxColumn9.Width = 81
+        '
+        'DataGridViewTextBoxColumn10
+        '
+        Me.DataGridViewTextBoxColumn10.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
+        Me.DataGridViewTextBoxColumn10.DataPropertyName = "InsertedByUser"
+        Me.DataGridViewTextBoxColumn10.HeaderText = "User"
+        Me.DataGridViewTextBoxColumn10.Name = "DataGridViewTextBoxColumn10"
+        Me.DataGridViewTextBoxColumn10.ReadOnly = True
+        Me.DataGridViewTextBoxColumn10.Width = 54
         '
         'UC_RecurringService
         '
@@ -343,9 +332,9 @@ Partial Class UC_RecurringService
         Me.grp_SrvcState.ResumeLayout(False)
         Me.grp_SrvcState.PerformLayout()
         CType(Me.dg_Notes, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.RecurringServiceDisplayBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.Ds_Display, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.ServiceNotesBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.Ds_RecurringService, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.RecurringServiceDisplayByCustomerIDBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.BindingSource1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub
@@ -358,11 +347,7 @@ Partial Class UC_RecurringService
     Friend WithEvents dg_Notes As System.Windows.Forms.DataGridView
     Public WithEvents dg_RecSrvc As System.Windows.Forms.DataGridView
     Friend WithEvents RecurringServicePickupDayDataGridViewTextBoxColumn As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents Ds_Display As TrashCash.ds_Display
-    Friend WithEvents ServiceNotesBindingSource As System.Windows.Forms.BindingSource
-    Friend WithEvents ServiceNotesTableAdapter As TrashCash.ds_DisplayTableAdapters.ServiceNotesTableAdapter
     Friend WithEvents btn_NewSrvc As System.Windows.Forms.Button
-    Friend WithEvents RecurringServiceIDDataGridViewTextBoxColumn As System.Windows.Forms.DataGridViewTextBoxColumn
     Friend WithEvents ServiceNameDataGridViewTextBoxColumn As System.Windows.Forms.DataGridViewTextBoxColumn
     Friend WithEvents RecurringServiceRateDataGridViewTextBoxColumn As System.Windows.Forms.DataGridViewTextBoxColumn
     Friend WithEvents RecurringServiceQuantityDataGridViewTextBoxColumn As System.Windows.Forms.DataGridViewTextBoxColumn
@@ -372,9 +357,25 @@ Partial Class UC_RecurringService
     Friend WithEvents MaxEndBillingDateDataGridViewTextBoxColumn As System.Windows.Forms.DataGridViewTextBoxColumn
     Friend WithEvents ApprovedDataGridViewCheckBoxColumn As System.Windows.Forms.DataGridViewTextBoxColumn
     Friend WithEvents RecurringServiceDisplayBindingSource As System.Windows.Forms.BindingSource
-    Friend WithEvents RecurringService_DisplayTableAdapter As TrashCash.ds_DisplayTableAdapters.RecurringService_DisplayTableAdapter
+    Friend WithEvents Ds_RecurringService As TrashCash.ds_RecurringService
     Friend WithEvents ServiceNoteTextDataGridViewTextBoxColumn As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents InsertedByUser As System.Windows.Forms.DataGridViewTextBoxColumn
     Friend WithEvents ServiceNoteDateDataGridViewTextBoxColumn As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents InsertedByUserDataGridViewTextBoxColumn As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents ServiceNotesBindingSource As System.Windows.Forms.BindingSource
+    Friend WithEvents RecurringService_DisplayByCustomerIDTableAdapter As TrashCash.ds_RecurringServiceTableAdapters.RecurringService_DisplayByCustomerIDTableAdapter
+    Friend WithEvents ServiceNotesTableAdapter As TrashCash.ds_RecurringServiceTableAdapters.ServiceNotesTableAdapter
+    Friend WithEvents DataGridViewTextBoxColumn1 As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents DataGridViewTextBoxColumn2 As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents DataGridViewTextBoxColumn6 As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents DataGridViewTextBoxColumn7 As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents DataGridViewTextBoxColumn3 As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents DataGridViewTextBoxColumn4 As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents DataGridViewTextBoxColumn5 As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents DataGridViewCheckBoxColumn1 As System.Windows.Forms.DataGridViewCheckBoxColumn
+    Friend WithEvents RecurringServiceDisplayByCustomerIDBindingSource As System.Windows.Forms.BindingSource
+    Friend WithEvents DataGridViewTextBoxColumn8 As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents DataGridViewTextBoxColumn9 As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents DataGridViewTextBoxColumn10 As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents BindingSource1 As System.Windows.Forms.BindingSource
 
 End Class

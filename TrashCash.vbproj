@@ -423,6 +423,11 @@
     <Compile Include="Forms\CustomerNote.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="_DataSets\ds_Batching.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ds_Batching.xsd</DependentUpon>
+    </Compile>
     <Compile Include="_DataSets\ds_Customer.Designer.vb">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -448,6 +453,16 @@
     </Compile>
     <Compile Include="_DataSets\ds_Program.vb">
       <DependentUpon>ds_Program.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="_DataSets\ds_RecurringService.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ds_RecurringService.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="_DataSets\ds_Types.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ds_Types.xsd</DependentUpon>
     </Compile>
     <Compile Include="_DataSets\Report_DataSet.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -611,7 +626,6 @@
     <None Include="App.config">
       <SubType>Designer</SubType>
     </None>
-    <None Include="ClassDiagram1.cd" />
     <None Include="My Project\Settings.settings">
       <CustomToolNamespace>My</CustomToolNamespace>
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -632,6 +646,17 @@
     <None Include="My Project\Application.myapp">
       <Generator>MyApplicationCodeGenerator</Generator>
       <LastGenOutput>Application.Designer.vb</LastGenOutput>
+    </None>
+    <None Include="_DataSets\ds_Batching.xsc">
+      <DependentUpon>ds_Batching.xsd</DependentUpon>
+    </None>
+    <None Include="_DataSets\ds_Batching.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>ds_Batching.Designer.vb</LastGenOutput>
+    </None>
+    <None Include="_DataSets\ds_Batching.xss">
+      <DependentUpon>ds_Batching.xsd</DependentUpon>
     </None>
     <None Include="_DataSets\ds_Customer.xsc">
       <DependentUpon>ds_Customer.xsd</DependentUpon>
@@ -676,6 +701,28 @@
     </None>
     <None Include="_DataSets\ds_Program.xss">
       <DependentUpon>ds_Program.xsd</DependentUpon>
+    </None>
+    <None Include="_DataSets\ds_RecurringService.xsc">
+      <DependentUpon>ds_RecurringService.xsd</DependentUpon>
+    </None>
+    <None Include="_DataSets\ds_RecurringService.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>ds_RecurringService.Designer.vb</LastGenOutput>
+    </None>
+    <None Include="_DataSets\ds_RecurringService.xss">
+      <DependentUpon>ds_RecurringService.xsd</DependentUpon>
+    </None>
+    <None Include="_DataSets\ds_Types.xsc">
+      <DependentUpon>ds_Types.xsd</DependentUpon>
+    </None>
+    <None Include="_DataSets\ds_Types.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>ds_Types.Designer.vb</LastGenOutput>
+    </None>
+    <None Include="_DataSets\ds_Types.xss">
+      <DependentUpon>ds_Types.xsd</DependentUpon>
     </None>
     <None Include="_DataSets\Report_DataSet.xsc">
       <DependentUpon>Report_DataSet.xsd</DependentUpon>

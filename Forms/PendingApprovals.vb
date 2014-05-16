@@ -59,9 +59,9 @@
 
     Private Sub PendingApprovals_Load(sender As System.Object, e As System.EventArgs) Handles MyBase.Load
         ' fill initial grid
-        Me.RecurringService_PendingApprovalsTableAdapter.Fill(Me.Ds_Display.RecurringService_PendingApprovals)
+        Me.RecurringService_PendingApprovalsTableAdapter.Fill(Me.Ds_RecurringService.RecurringService_PendingApprovals)
         ' set unapproved count lbl
-        UnapprovedCount = Me.Ds_Display.RecurringService_PendingApprovals.Rows.Count
+        UnapprovedCount = Me.Ds_RecurringService.RecurringService_PendingApprovals.Rows.Count
     End Sub
 
     Private Sub btn_SaveApprovals_Click(sender As System.Object, e As System.EventArgs) Handles btn_SaveApprovals.Click
@@ -98,7 +98,7 @@
         Me.Cursor = Cursors.WaitCursor
 
         Try
-            For Each row As ds_Display.RecurringService_PendingApprovalsRow In Me.Ds_Display.RecurringService_PendingApprovals.Rows
+            For Each row As ds_RecurringService.RecurringService_PendingApprovalsRow In Me.Ds_RecurringService.RecurringService_PendingApprovals.Rows
                 If (row.Approved = True) Then
                     Me.RecurringService_PendingApprovalsTableAdapter.RecurringService_Approve(row.RecurringServiceID)
                 End If
@@ -125,7 +125,7 @@
     Private Sub dg_PendingApprovals_DoubleClick(sender As System.Object, e As System.EventArgs) Handles dg_PendingApprovals.DoubleClick
         If (dg_PendingApprovals.SelectedRows.Count = 1) Then
             Dim dvRow As DataRowView = dg_PendingApprovals.SelectedRows(0).DataBoundItem
-            Dim row As ds_Display.RecurringService_PendingApprovalsRow = dvRow.Row
+            Dim row As ds_RecurringService.RecurringService_PendingApprovalsRow = dvRow.Row
 
             ' set and open rec form for selected service
             _RecurringServiceForm = New RecurringService(_HomeForm, row.CustomerFullName, row.CustomerNumber, row.RecurringServiceID)
@@ -135,9 +135,9 @@
 
     ' handling approval
     Private Sub ServiceApproved() Handles _RecurringServiceForm.e_Approved
-        Me.RecurringService_PendingApprovalsTableAdapter.Fill(Me.Ds_Display.RecurringService_PendingApprovals)
+        Me.RecurringService_PendingApprovalsTableAdapter.Fill(Me.Ds_RecurringService.RecurringService_PendingApprovals)
         ' reset counts lbl
-        UnapprovedCount = Me.Ds_Display.RecurringService_PendingApprovals.Rows.Count
+        UnapprovedCount = Me.Ds_RecurringService.RecurringService_PendingApprovals.Rows.Count
         ApprovedCount = 0
     End Sub
 End Class

@@ -18,7 +18,7 @@
             custNum = value
 
             If (value > 0) Then
-                Me.RecurringService_DisplayTableAdapter.FillByID(Me.Ds_Display.RecurringService_Display, value)
+                Me.RecurringService_DisplayByCustomerIDTableAdapter.FillByID(Me.Ds_RecurringService.RecurringService_DisplayByCustomerID, value)
                 ColorRows()
             End If
         End Set
@@ -66,7 +66,7 @@
 
     Private Sub UC_RecurringService_Load(sender As Object, e As System.EventArgs) Handles Me.Load
         _dv = New DataView
-        _dv.Table = Me.Ds_Display.RecurringService_Display
+        _dv.Table = Me.Ds_RecurringService.RecurringService_DisplayByCustomerID
         dg_RecSrvc.DataSource = _dv
         dg_RecSrvc.Columns(0).Visible = False
     End Sub
@@ -75,7 +75,7 @@
         If (e.Button = Windows.Forms.MouseButtons.Left) Then
             If (dg_RecSrvc.SelectedRows.Count = 1) Then
                 Dim dvRow As DataRowView = dg_RecSrvc.SelectedRows(0).DataBoundItem
-                Me.ServiceNotesTableAdapter.FillByID(Me.Ds_Display.ServiceNotes, CType(dvRow.Row, ds_Display.RecurringService_DisplayRow).RecurringServiceID)
+                Me.ServiceNotesTableAdapter.FillByID(Me.Ds_RecurringService.ServiceNotes, CType(dvRow.Row, ds_RecurringService.RecurringService_DisplayByCustomerIDRow).RecurringServiceID)
             End If
         End If
     End Sub
@@ -86,7 +86,7 @@
         Dim grid = dg_RecSrvc
         For i As Integer = 0 To grid.RowCount - 1
             Dim dvRow As DataRowView = grid.Rows(i).DataBoundItem
-            Dim row As ds_Display.RecurringService_DisplayRow = dvRow.Row
+            Dim row As ds_RecurringService.RecurringService_DisplayByCustomerIDRow = dvRow.Row
             ' checking end date for colorization
             If (row.IsRecurringServiceEndDateNull = False) Then
                 ' end date is NOT NULL
@@ -132,13 +132,13 @@
 
     ' event handle to refresh service and notes
     Private Sub _RefreshService(ByVal CustomerNumber As Integer, ByVal RecurringServiceID As Integer) Handles _RecurringServiceForm.RefreshService
-        Me.RecurringService_DisplayTableAdapter.FillByID(Me.Ds_Display.RecurringService_Display, CustomerNumber)
+        Me.RecurringService_DisplayByCustomerIDTableAdapter.FillByID(Me.Ds_RecurringService.RecurringService_DisplayByCustomerID, CustomerNumber)
 
         ' checking if selected service matches service that threw event so we can refresh notes
         If (dg_RecSrvc.SelectedRows.Count = 1) Then
             Dim dvRow As DataRowView = dg_RecSrvc.SelectedRows(0).DataBoundItem
-            If (RecurringServiceID = CType(dvRow.Row, ds_Display.RecurringService_DisplayRow).RecurringServiceID) Then
-                Me.ServiceNotesTableAdapter.FillByID(Me.Ds_Display.ServiceNotes, RecurringServiceID)
+            If (RecurringServiceID = CType(dvRow.Row, ds_RecurringService.RecurringService_DisplayByCustomerIDRow).RecurringServiceID) Then
+                Me.ServiceNotesTableAdapter.FillByID(Me.Ds_RecurringService.ServiceNotes, RecurringServiceID)
             End If
         End If
 
@@ -147,7 +147,7 @@
     Private Sub dg_RecSrvc_DoubleClick(sender As System.Object, e As System.EventArgs) Handles dg_RecSrvc.DoubleClick
         If (dg_RecSrvc.SelectedRows.Count = 1) Then
             Dim dvRow As DataRowView = dg_RecSrvc.SelectedRows(0).DataBoundItem
-            _RecurringServiceForm = New RecurringService(HomeForm, _custName, CurrentCustomer, CType(dvRow.Row, ds_Display.RecurringService_DisplayRow).RecurringServiceID)
+            _RecurringServiceForm = New RecurringService(HomeForm, _custName, CurrentCustomer, CType(dvRow.Row, ds_RecurringService.RecurringService_DisplayByCustomerIDRow).RecurringServiceID)
             _RecurringServiceForm.ShowDialog()
         End If
     End Sub
@@ -157,9 +157,9 @@
         If (Trim(noteText) <> "") Then
             Dim dvRow As DataRowView = dg_RecSrvc.SelectedRows(0).DataBoundItem
             Try
-                Me.ServiceNotesTableAdapter.ServiceNotes_Insert(CType(dvRow.Row, ds_Display.RecurringService_DisplayRow).RecurringServiceID, noteText)
+                Me.ServiceNotesTableAdapter.ServiceNotes_Insert(CType(dvRow.Row, ds_RecurringService.RecurringService_DisplayByCustomerIDRow).RecurringServiceID, noteText)
                 ' refill grid
-                Me.ServiceNotesTableAdapter.FillByID(Me.Ds_Display.ServiceNotes, CType(dvRow.Row, ds_Display.RecurringService_DisplayRow).RecurringServiceID)
+                Me.ServiceNotesTableAdapter.FillByID(Me.Ds_RecurringService.ServiceNotes, CType(dvRow.Row, ds_RecurringService.RecurringService_DisplayByCustomerIDRow).RecurringServiceID)
             Catch ex As Exception
                 MsgBox(ex.Message)
             End Try

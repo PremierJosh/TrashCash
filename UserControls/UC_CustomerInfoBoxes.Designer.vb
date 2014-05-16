@@ -25,8 +25,6 @@ Partial Class UC_CustomerInfoBoxes
         Me.components = New System.ComponentModel.Container()
         Me.grp_SrvcInvInfo = New System.Windows.Forms.GroupBox()
         Me.nud_BillInterval = New System.Windows.Forms.NumericUpDown()
-        Me.CustomerBindingSource = New System.Windows.Forms.BindingSource(Me.components)
-        Me.DataSet = New TrashCash.DataSet()
         Me.Label9 = New System.Windows.Forms.Label()
         Me.ck_SingleInv = New System.Windows.Forms.CheckBox()
         Me.Label10 = New System.Windows.Forms.Label()
@@ -69,14 +67,16 @@ Partial Class UC_CustomerInfoBoxes
         Me.Label5 = New System.Windows.Forms.Label()
         Me.Label4 = New System.Windows.Forms.Label()
         Me.tt_CustBillInterval = New System.Windows.Forms.ToolTip(Me.components)
-        Me.CustomerTableAdapter = New TrashCash.DataSetTableAdapters.CustomerTableAdapter()
+        Me.Ds_Customer = New TrashCash.ds_Customer()
+        Me.CustomerBindingSource = New System.Windows.Forms.BindingSource(Me.components)
+        Me.CustomerTableAdapter = New TrashCash.ds_CustomerTableAdapters.CustomerTableAdapter()
         Me.grp_SrvcInvInfo.SuspendLayout()
         CType(Me.nud_BillInterval, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.CustomerBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.DataSet, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.grp_GenInfo.SuspendLayout()
         Me.cm_Update.SuspendLayout()
         Me.grp_BillAddr.SuspendLayout()
+        CType(Me.Ds_Customer, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.CustomerBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'grp_SrvcInvInfo
@@ -103,16 +103,6 @@ Partial Class UC_CustomerInfoBoxes
         Me.nud_BillInterval.Size = New System.Drawing.Size(31, 20)
         Me.nud_BillInterval.TabIndex = 10
         Me.nud_BillInterval.Value = New Decimal(New Integer() {1, 0, 0, 0})
-        '
-        'CustomerBindingSource
-        '
-        Me.CustomerBindingSource.DataMember = "Customer"
-        Me.CustomerBindingSource.DataSource = Me.DataSet
-        '
-        'DataSet
-        '
-        Me.DataSet.DataSetName = "DataSet"
-        Me.DataSet.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema
         '
         'Label9
         '
@@ -336,6 +326,7 @@ Partial Class UC_CustomerInfoBoxes
         'chk_CustDeactive
         '
         Me.chk_CustDeactive.AutoSize = True
+        Me.chk_CustDeactive.DataBindings.Add(New System.Windows.Forms.Binding("Checked", Me.CustomerBindingSource, "CustomerIsDeactive", True))
         Me.chk_CustDeactive.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.chk_CustDeactive.ForeColor = System.Drawing.Color.Red
         Me.chk_CustDeactive.Location = New System.Drawing.Point(161, 51)
@@ -524,6 +515,16 @@ Partial Class UC_CustomerInfoBoxes
         Me.Label4.TabIndex = 65
         Me.Label4.Text = "Address 1:"
         '
+        'Ds_Customer
+        '
+        Me.Ds_Customer.DataSetName = "ds_Customer"
+        Me.Ds_Customer.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema
+        '
+        'CustomerBindingSource
+        '
+        Me.CustomerBindingSource.DataMember = "Customer"
+        Me.CustomerBindingSource.DataSource = Me.Ds_Customer
+        '
         'CustomerTableAdapter
         '
         Me.CustomerTableAdapter.ClearBeforeFill = True
@@ -541,13 +542,13 @@ Partial Class UC_CustomerInfoBoxes
         Me.grp_SrvcInvInfo.ResumeLayout(False)
         Me.grp_SrvcInvInfo.PerformLayout()
         CType(Me.nud_BillInterval, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.CustomerBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.DataSet, System.ComponentModel.ISupportInitialize).EndInit()
         Me.grp_GenInfo.ResumeLayout(False)
         Me.grp_GenInfo.PerformLayout()
         Me.cm_Update.ResumeLayout(False)
         Me.grp_BillAddr.ResumeLayout(False)
         Me.grp_BillAddr.PerformLayout()
+        CType(Me.Ds_Customer, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.CustomerBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub
@@ -565,7 +566,6 @@ Partial Class UC_CustomerInfoBoxes
     Friend WithEvents Label7 As System.Windows.Forms.Label
     Friend WithEvents Label8 As System.Windows.Forms.Label
     Friend WithEvents box_CustContact As System.Windows.Forms.TextBox
-    Friend WithEvents DataSet As TrashCash.DataSet
     Friend WithEvents Label10 As System.Windows.Forms.Label
     Friend WithEvents dtp_StartDate As System.Windows.Forms.DateTimePicker
     Friend WithEvents cm_Update As System.Windows.Forms.ContextMenuStrip
@@ -595,8 +595,9 @@ Partial Class UC_CustomerInfoBoxes
     Friend WithEvents tb_BillAddr4 As System.Windows.Forms.TextBox
     Friend WithEvents Label12 As System.Windows.Forms.Label
     Friend WithEvents Label11 As System.Windows.Forms.Label
-    Friend WithEvents CustomerBindingSource As System.Windows.Forms.BindingSource
-    Friend WithEvents CustomerTableAdapter As TrashCash.DataSetTableAdapters.CustomerTableAdapter
     Friend WithEvents nud_BillInterval As System.Windows.Forms.NumericUpDown
+    Friend WithEvents CustomerBindingSource As System.Windows.Forms.BindingSource
+    Friend WithEvents Ds_Customer As TrashCash.ds_Customer
+    Friend WithEvents CustomerTableAdapter As TrashCash.ds_CustomerTableAdapters.CustomerTableAdapter
 
 End Class

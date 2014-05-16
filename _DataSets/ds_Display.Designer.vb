@@ -31,7 +31,7 @@ Partial Public Class ds_Display
     
     Private tableServiceNotes As ServiceNotesDataTable
     
-    Private tableBilledServices As BilledServicesDataTable
+    Private tableRecurringService_BillHistory As RecurringService_BillHistoryDataTable
     
     Private tableCustomerNotes As CustomerNotesDataTable
     
@@ -39,16 +39,16 @@ Partial Public Class ds_Display
     
     Private _schemaSerializationMode As Global.System.Data.SchemaSerializationMode = Global.System.Data.SchemaSerializationMode.IncludeSchema
     
-    <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-     Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+    <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+     Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
     Public Sub New()
-        MyBase.New
-        Me.BeginInit
-        Me.InitClass
+        MyBase.New()
+        Me.BeginInit()
+        Me.InitClass()
         Dim schemaChangedHandler As Global.System.ComponentModel.CollectionChangeEventHandler = AddressOf Me.SchemaChanged
         AddHandler MyBase.Tables.CollectionChanged, schemaChangedHandler
         AddHandler MyBase.Relations.CollectionChanged, schemaChangedHandler
-        Me.EndInit
+        Me.EndInit()
     End Sub
     
     <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
@@ -75,8 +75,8 @@ Partial Public Class ds_Display
             If (Not (ds.Tables("ServiceNotes")) Is Nothing) Then
                 MyBase.Tables.Add(New ServiceNotesDataTable(ds.Tables("ServiceNotes")))
             End If
-            If (Not (ds.Tables("BilledServices")) Is Nothing) Then
-                MyBase.Tables.Add(New BilledServicesDataTable(ds.Tables("BilledServices")))
+            If (Not (ds.Tables("RecurringService_BillHistory")) Is Nothing) Then
+                MyBase.Tables.Add(New RecurringService_BillHistoryDataTable(ds.Tables("RecurringService_BillHistory")))
             End If
             If (Not (ds.Tables("CustomerNotes")) Is Nothing) Then
                 MyBase.Tables.Add(New CustomerNotesDataTable(ds.Tables("CustomerNotes")))
@@ -135,9 +135,9 @@ Partial Public Class ds_Display
      Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0"),  _
      Global.System.ComponentModel.Browsable(false),  _
      Global.System.ComponentModel.DesignerSerializationVisibility(Global.System.ComponentModel.DesignerSerializationVisibility.Content)>  _
-    Public ReadOnly Property BilledServices() As BilledServicesDataTable
+    Public ReadOnly Property RecurringService_BillHistory() As RecurringService_BillHistoryDataTable
         Get
-            Return Me.tableBilledServices
+            Return Me.tableRecurringService_BillHistory
         End Get
     End Property
     
@@ -237,8 +237,8 @@ Partial Public Class ds_Display
             If (Not (ds.Tables("ServiceNotes")) Is Nothing) Then
                 MyBase.Tables.Add(New ServiceNotesDataTable(ds.Tables("ServiceNotes")))
             End If
-            If (Not (ds.Tables("BilledServices")) Is Nothing) Then
-                MyBase.Tables.Add(New BilledServicesDataTable(ds.Tables("BilledServices")))
+            If (Not (ds.Tables("RecurringService_BillHistory")) Is Nothing) Then
+                MyBase.Tables.Add(New RecurringService_BillHistoryDataTable(ds.Tables("RecurringService_BillHistory")))
             End If
             If (Not (ds.Tables("CustomerNotes")) Is Nothing) Then
                 MyBase.Tables.Add(New CustomerNotesDataTable(ds.Tables("CustomerNotes")))
@@ -296,10 +296,10 @@ Partial Public Class ds_Display
                 Me.tableServiceNotes.InitVars
             End If
         End If
-        Me.tableBilledServices = CType(MyBase.Tables("BilledServices"),BilledServicesDataTable)
+        Me.tableRecurringService_BillHistory = CType(MyBase.Tables("RecurringService_BillHistory"),RecurringService_BillHistoryDataTable)
         If (initTable = true) Then
-            If (Not (Me.tableBilledServices) Is Nothing) Then
-                Me.tableBilledServices.InitVars
+            If (Not (Me.tableRecurringService_BillHistory) Is Nothing) Then
+                Me.tableRecurringService_BillHistory.InitVars
             End If
         End If
         Me.tableCustomerNotes = CType(MyBase.Tables("CustomerNotes"),CustomerNotesDataTable)
@@ -330,8 +330,8 @@ Partial Public Class ds_Display
         MyBase.Tables.Add(Me.tableRecurringService_Display)
         Me.tableServiceNotes = New ServiceNotesDataTable()
         MyBase.Tables.Add(Me.tableServiceNotes)
-        Me.tableBilledServices = New BilledServicesDataTable()
-        MyBase.Tables.Add(Me.tableBilledServices)
+        Me.tableRecurringService_BillHistory = New RecurringService_BillHistoryDataTable()
+        MyBase.Tables.Add(Me.tableRecurringService_BillHistory)
         Me.tableCustomerNotes = New CustomerNotesDataTable()
         MyBase.Tables.Add(Me.tableCustomerNotes)
         Me.tableRecurringService_PendingApprovals = New RecurringService_PendingApprovalsDataTable()
@@ -358,7 +358,7 @@ Partial Public Class ds_Display
     
     <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
      Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-    Private Function ShouldSerializeBilledServices() As Boolean
+    Private Function ShouldSerializeRecurringService_BillHistory() As Boolean
         Return false
     End Function
     
@@ -442,7 +442,7 @@ Partial Public Class ds_Display
     Public Delegate Sub ServiceNotesRowChangeEventHandler(ByVal sender As Object, ByVal e As ServiceNotesRowChangeEvent)
     
     <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-    Public Delegate Sub BilledServicesRowChangeEventHandler(ByVal sender As Object, ByVal e As BilledServicesRowChangeEvent)
+    Public Delegate Sub RecurringService_BillHistoryRowChangeEventHandler(ByVal sender As Object, ByVal e As RecurringService_BillHistoryRowChangeEvent)
     
     <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
     Public Delegate Sub CustomerNotesRowChangeEventHandler(ByVal sender As Object, ByVal e As CustomerNotesRowChangeEvent)
@@ -1462,8 +1462,8 @@ Partial Public Class ds_Display
     '''</summary>
     <Global.System.Serializable(),  _
      Global.System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedTableSchema")>  _
-    Partial Public Class BilledServicesDataTable
-        Inherits Global.System.Data.TypedTableBase(Of BilledServicesRow)
+    Partial Public Class RecurringService_BillHistoryDataTable
+        Inherits Global.System.Data.TypedTableBase(Of RecurringService_BillHistoryRow)
         
         Private columnBilledServiceID As Global.System.Data.DataColumn
         
@@ -1485,7 +1485,7 @@ Partial Public Class ds_Display
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
         Public Sub New()
             MyBase.New
-            Me.TableName = "BilledServices"
+            Me.TableName = "RecurringService_BillHistory"
             Me.BeginInit
             Me.InitClass
             Me.EndInit
@@ -1591,50 +1591,50 @@ Partial Public Class ds_Display
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Default ReadOnly Property Item(ByVal index As Integer) As BilledServicesRow
+        Public Default ReadOnly Property Item(ByVal index As Integer) As RecurringService_BillHistoryRow
             Get
-                Return CType(Me.Rows(index),BilledServicesRow)
+                Return CType(Me.Rows(index),RecurringService_BillHistoryRow)
             End Get
         End Property
         
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Event BilledServicesRowChanging As BilledServicesRowChangeEventHandler
+        Public Event RecurringService_BillHistoryRowChanging As RecurringService_BillHistoryRowChangeEventHandler
         
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Event BilledServicesRowChanged As BilledServicesRowChangeEventHandler
+        Public Event RecurringService_BillHistoryRowChanged As RecurringService_BillHistoryRowChangeEventHandler
         
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Event BilledServicesRowDeleting As BilledServicesRowChangeEventHandler
+        Public Event RecurringService_BillHistoryRowDeleting As RecurringService_BillHistoryRowChangeEventHandler
         
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Event BilledServicesRowDeleted As BilledServicesRowChangeEventHandler
+        Public Event RecurringService_BillHistoryRowDeleted As RecurringService_BillHistoryRowChangeEventHandler
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Overloads Sub AddBilledServicesRow(ByVal row As BilledServicesRow)
+        Public Overloads Sub AddRecurringService_BillHistoryRow(ByVal row As RecurringService_BillHistoryRow)
             Me.Rows.Add(row)
         End Sub
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Overloads Function AddBilledServicesRow(ByVal StartBillingDate As Date, ByVal EndBillingDate As Date, ByVal InvTxnID As String, ByVal InvRefNumber As String, ByVal LineTxnID As String, ByVal LineItemID As Integer, ByVal LineTotal As Decimal) As BilledServicesRow
-            Dim rowBilledServicesRow As BilledServicesRow = CType(Me.NewRow,BilledServicesRow)
+        Public Overloads Function AddRecurringService_BillHistoryRow(ByVal StartBillingDate As Date, ByVal EndBillingDate As Date, ByVal InvTxnID As String, ByVal InvRefNumber As String, ByVal LineTxnID As String, ByVal LineItemID As Integer, ByVal LineTotal As Decimal) As RecurringService_BillHistoryRow
+            Dim rowRecurringService_BillHistoryRow As RecurringService_BillHistoryRow = CType(Me.NewRow,RecurringService_BillHistoryRow)
             Dim columnValuesArray() As Object = New Object() {Nothing, StartBillingDate, EndBillingDate, InvTxnID, InvRefNumber, LineTxnID, LineItemID, LineTotal}
-            rowBilledServicesRow.ItemArray = columnValuesArray
-            Me.Rows.Add(rowBilledServicesRow)
-            Return rowBilledServicesRow
+            rowRecurringService_BillHistoryRow.ItemArray = columnValuesArray
+            Me.Rows.Add(rowRecurringService_BillHistoryRow)
+            Return rowRecurringService_BillHistoryRow
         End Function
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Function FindByBilledServiceID(ByVal BilledServiceID As Decimal) As BilledServicesRow
-            Return CType(Me.Rows.Find(New Object() {BilledServiceID}),BilledServicesRow)
+        Public Function FindByBilledServiceID(ByVal BilledServiceID As Decimal) As RecurringService_BillHistoryRow
+            Return CType(Me.Rows.Find(New Object() {BilledServiceID}),RecurringService_BillHistoryRow)
         End Function
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
         Public Overrides Function Clone() As Global.System.Data.DataTable
-            Dim cln As BilledServicesDataTable = CType(MyBase.Clone,BilledServicesDataTable)
+            Dim cln As RecurringService_BillHistoryDataTable = CType(MyBase.Clone,RecurringService_BillHistoryDataTable)
             cln.InitVars
             Return cln
         End Function
@@ -1642,7 +1642,7 @@ Partial Public Class ds_Display
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
         Protected Overrides Function CreateInstance() As Global.System.Data.DataTable
-            Return New BilledServicesDataTable()
+            Return New RecurringService_BillHistoryDataTable()
         End Function
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
@@ -1694,28 +1694,28 @@ Partial Public Class ds_Display
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Function NewBilledServicesRow() As BilledServicesRow
-            Return CType(Me.NewRow,BilledServicesRow)
+        Public Function NewRecurringService_BillHistoryRow() As RecurringService_BillHistoryRow
+            Return CType(Me.NewRow,RecurringService_BillHistoryRow)
         End Function
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
         Protected Overrides Function NewRowFromBuilder(ByVal builder As Global.System.Data.DataRowBuilder) As Global.System.Data.DataRow
-            Return New BilledServicesRow(builder)
+            Return New RecurringService_BillHistoryRow(builder)
         End Function
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
         Protected Overrides Function GetRowType() As Global.System.Type
-            Return GetType(BilledServicesRow)
+            Return GetType(RecurringService_BillHistoryRow)
         End Function
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
         Protected Overrides Sub OnRowChanged(ByVal e As Global.System.Data.DataRowChangeEventArgs)
             MyBase.OnRowChanged(e)
-            If (Not (Me.BilledServicesRowChangedEvent) Is Nothing) Then
-                RaiseEvent BilledServicesRowChanged(Me, New BilledServicesRowChangeEvent(CType(e.Row,BilledServicesRow), e.Action))
+            If (Not (Me.RecurringService_BillHistoryRowChangedEvent) Is Nothing) Then
+                RaiseEvent RecurringService_BillHistoryRowChanged(Me, New RecurringService_BillHistoryRowChangeEvent(CType(e.Row,RecurringService_BillHistoryRow), e.Action))
             End If
         End Sub
         
@@ -1723,8 +1723,8 @@ Partial Public Class ds_Display
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
         Protected Overrides Sub OnRowChanging(ByVal e As Global.System.Data.DataRowChangeEventArgs)
             MyBase.OnRowChanging(e)
-            If (Not (Me.BilledServicesRowChangingEvent) Is Nothing) Then
-                RaiseEvent BilledServicesRowChanging(Me, New BilledServicesRowChangeEvent(CType(e.Row,BilledServicesRow), e.Action))
+            If (Not (Me.RecurringService_BillHistoryRowChangingEvent) Is Nothing) Then
+                RaiseEvent RecurringService_BillHistoryRowChanging(Me, New RecurringService_BillHistoryRowChangeEvent(CType(e.Row,RecurringService_BillHistoryRow), e.Action))
             End If
         End Sub
         
@@ -1732,8 +1732,8 @@ Partial Public Class ds_Display
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
         Protected Overrides Sub OnRowDeleted(ByVal e As Global.System.Data.DataRowChangeEventArgs)
             MyBase.OnRowDeleted(e)
-            If (Not (Me.BilledServicesRowDeletedEvent) Is Nothing) Then
-                RaiseEvent BilledServicesRowDeleted(Me, New BilledServicesRowChangeEvent(CType(e.Row,BilledServicesRow), e.Action))
+            If (Not (Me.RecurringService_BillHistoryRowDeletedEvent) Is Nothing) Then
+                RaiseEvent RecurringService_BillHistoryRowDeleted(Me, New RecurringService_BillHistoryRowChangeEvent(CType(e.Row,RecurringService_BillHistoryRow), e.Action))
             End If
         End Sub
         
@@ -1741,14 +1741,14 @@ Partial Public Class ds_Display
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
         Protected Overrides Sub OnRowDeleting(ByVal e As Global.System.Data.DataRowChangeEventArgs)
             MyBase.OnRowDeleting(e)
-            If (Not (Me.BilledServicesRowDeletingEvent) Is Nothing) Then
-                RaiseEvent BilledServicesRowDeleting(Me, New BilledServicesRowChangeEvent(CType(e.Row,BilledServicesRow), e.Action))
+            If (Not (Me.RecurringService_BillHistoryRowDeletingEvent) Is Nothing) Then
+                RaiseEvent RecurringService_BillHistoryRowDeleting(Me, New RecurringService_BillHistoryRowChangeEvent(CType(e.Row,RecurringService_BillHistoryRow), e.Action))
             End If
         End Sub
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Sub RemoveBilledServicesRow(ByVal row As BilledServicesRow)
+        Public Sub RemoveRecurringService_BillHistoryRow(ByVal row As RecurringService_BillHistoryRow)
             Me.Rows.Remove(row)
         End Sub
         
@@ -1775,7 +1775,7 @@ Partial Public Class ds_Display
             type.Attributes.Add(attribute1)
             Dim attribute2 As Global.System.Xml.Schema.XmlSchemaAttribute = New Global.System.Xml.Schema.XmlSchemaAttribute()
             attribute2.Name = "tableTypeName"
-            attribute2.FixedValue = "BilledServicesDataTable"
+            attribute2.FixedValue = "RecurringService_BillHistoryDataTable"
             type.Attributes.Add(attribute2)
             type.Particle = sequence
             Dim dsSchema As Global.System.Xml.Schema.XmlSchema = ds.GetSchemaSerializable
@@ -2796,26 +2796,26 @@ Partial Public Class ds_Display
     '''<summary>
     '''Represents strongly named DataRow class.
     '''</summary>
-    Partial Public Class BilledServicesRow
+    Partial Public Class RecurringService_BillHistoryRow
         Inherits Global.System.Data.DataRow
         
-        Private tableBilledServices As BilledServicesDataTable
+        Private tableRecurringService_BillHistory As RecurringService_BillHistoryDataTable
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
         Friend Sub New(ByVal rb As Global.System.Data.DataRowBuilder)
             MyBase.New(rb)
-            Me.tableBilledServices = CType(Me.Table,BilledServicesDataTable)
+            Me.tableRecurringService_BillHistory = CType(Me.Table,RecurringService_BillHistoryDataTable)
         End Sub
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
         Public Property BilledServiceID() As Decimal
             Get
-                Return CType(Me(Me.tableBilledServices.BilledServiceIDColumn),Decimal)
+                Return CType(Me(Me.tableRecurringService_BillHistory.BilledServiceIDColumn),Decimal)
             End Get
             Set
-                Me(Me.tableBilledServices.BilledServiceIDColumn) = value
+                Me(Me.tableRecurringService_BillHistory.BilledServiceIDColumn) = value
             End Set
         End Property
         
@@ -2823,10 +2823,10 @@ Partial Public Class ds_Display
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
         Public Property StartBillingDate() As Date
             Get
-                Return CType(Me(Me.tableBilledServices.StartBillingDateColumn),Date)
+                Return CType(Me(Me.tableRecurringService_BillHistory.StartBillingDateColumn),Date)
             End Get
             Set
-                Me(Me.tableBilledServices.StartBillingDateColumn) = value
+                Me(Me.tableRecurringService_BillHistory.StartBillingDateColumn) = value
             End Set
         End Property
         
@@ -2834,10 +2834,10 @@ Partial Public Class ds_Display
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
         Public Property EndBillingDate() As Date
             Get
-                Return CType(Me(Me.tableBilledServices.EndBillingDateColumn),Date)
+                Return CType(Me(Me.tableRecurringService_BillHistory.EndBillingDateColumn),Date)
             End Get
             Set
-                Me(Me.tableBilledServices.EndBillingDateColumn) = value
+                Me(Me.tableRecurringService_BillHistory.EndBillingDateColumn) = value
             End Set
         End Property
         
@@ -2846,13 +2846,14 @@ Partial Public Class ds_Display
         Public Property InvTxnID() As String
             Get
                 Try 
-                    Return CType(Me(Me.tableBilledServices.InvTxnIDColumn),String)
+                    Return CType(Me(Me.tableRecurringService_BillHistory.InvTxnIDColumn),String)
                 Catch e As Global.System.InvalidCastException
-                    Throw New Global.System.Data.StrongTypingException("The value for column 'InvTxnID' in table 'BilledServices' is DBNull.", e)
+                    Throw New Global.System.Data.StrongTypingException("The value for column 'InvTxnID' in table 'RecurringService_BillHistory' is DBNull"& _ 
+                            ".", e)
                 End Try
             End Get
             Set
-                Me(Me.tableBilledServices.InvTxnIDColumn) = value
+                Me(Me.tableRecurringService_BillHistory.InvTxnIDColumn) = value
             End Set
         End Property
         
@@ -2861,13 +2862,14 @@ Partial Public Class ds_Display
         Public Property InvRefNumber() As String
             Get
                 Try 
-                    Return CType(Me(Me.tableBilledServices.InvRefNumberColumn),String)
+                    Return CType(Me(Me.tableRecurringService_BillHistory.InvRefNumberColumn),String)
                 Catch e As Global.System.InvalidCastException
-                    Throw New Global.System.Data.StrongTypingException("The value for column 'InvRefNumber' in table 'BilledServices' is DBNull.", e)
+                    Throw New Global.System.Data.StrongTypingException("The value for column 'InvRefNumber' in table 'RecurringService_BillHistory' is DB"& _ 
+                            "Null.", e)
                 End Try
             End Get
             Set
-                Me(Me.tableBilledServices.InvRefNumberColumn) = value
+                Me(Me.tableRecurringService_BillHistory.InvRefNumberColumn) = value
             End Set
         End Property
         
@@ -2875,10 +2877,10 @@ Partial Public Class ds_Display
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
         Public Property LineTxnID() As String
             Get
-                Return CType(Me(Me.tableBilledServices.LineTxnIDColumn),String)
+                Return CType(Me(Me.tableRecurringService_BillHistory.LineTxnIDColumn),String)
             End Get
             Set
-                Me(Me.tableBilledServices.LineTxnIDColumn) = value
+                Me(Me.tableRecurringService_BillHistory.LineTxnIDColumn) = value
             End Set
         End Property
         
@@ -2887,13 +2889,14 @@ Partial Public Class ds_Display
         Public Property LineItemID() As Integer
             Get
                 Try 
-                    Return CType(Me(Me.tableBilledServices.LineItemIDColumn),Integer)
+                    Return CType(Me(Me.tableRecurringService_BillHistory.LineItemIDColumn),Integer)
                 Catch e As Global.System.InvalidCastException
-                    Throw New Global.System.Data.StrongTypingException("The value for column 'LineItemID' in table 'BilledServices' is DBNull.", e)
+                    Throw New Global.System.Data.StrongTypingException("The value for column 'LineItemID' in table 'RecurringService_BillHistory' is DBNu"& _ 
+                            "ll.", e)
                 End Try
             End Get
             Set
-                Me(Me.tableBilledServices.LineItemIDColumn) = value
+                Me(Me.tableRecurringService_BillHistory.LineItemIDColumn) = value
             End Set
         End Property
         
@@ -2902,62 +2905,63 @@ Partial Public Class ds_Display
         Public Property LineTotal() As Decimal
             Get
                 Try 
-                    Return CType(Me(Me.tableBilledServices.LineTotalColumn),Decimal)
+                    Return CType(Me(Me.tableRecurringService_BillHistory.LineTotalColumn),Decimal)
                 Catch e As Global.System.InvalidCastException
-                    Throw New Global.System.Data.StrongTypingException("The value for column 'LineTotal' in table 'BilledServices' is DBNull.", e)
+                    Throw New Global.System.Data.StrongTypingException("The value for column 'LineTotal' in table 'RecurringService_BillHistory' is DBNul"& _ 
+                            "l.", e)
                 End Try
             End Get
             Set
-                Me(Me.tableBilledServices.LineTotalColumn) = value
+                Me(Me.tableRecurringService_BillHistory.LineTotalColumn) = value
             End Set
         End Property
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
         Public Function IsInvTxnIDNull() As Boolean
-            Return Me.IsNull(Me.tableBilledServices.InvTxnIDColumn)
+            Return Me.IsNull(Me.tableRecurringService_BillHistory.InvTxnIDColumn)
         End Function
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
         Public Sub SetInvTxnIDNull()
-            Me(Me.tableBilledServices.InvTxnIDColumn) = Global.System.Convert.DBNull
+            Me(Me.tableRecurringService_BillHistory.InvTxnIDColumn) = Global.System.Convert.DBNull
         End Sub
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
         Public Function IsInvRefNumberNull() As Boolean
-            Return Me.IsNull(Me.tableBilledServices.InvRefNumberColumn)
+            Return Me.IsNull(Me.tableRecurringService_BillHistory.InvRefNumberColumn)
         End Function
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
         Public Sub SetInvRefNumberNull()
-            Me(Me.tableBilledServices.InvRefNumberColumn) = Global.System.Convert.DBNull
+            Me(Me.tableRecurringService_BillHistory.InvRefNumberColumn) = Global.System.Convert.DBNull
         End Sub
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
         Public Function IsLineItemIDNull() As Boolean
-            Return Me.IsNull(Me.tableBilledServices.LineItemIDColumn)
+            Return Me.IsNull(Me.tableRecurringService_BillHistory.LineItemIDColumn)
         End Function
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
         Public Sub SetLineItemIDNull()
-            Me(Me.tableBilledServices.LineItemIDColumn) = Global.System.Convert.DBNull
+            Me(Me.tableRecurringService_BillHistory.LineItemIDColumn) = Global.System.Convert.DBNull
         End Sub
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
         Public Function IsLineTotalNull() As Boolean
-            Return Me.IsNull(Me.tableBilledServices.LineTotalColumn)
+            Return Me.IsNull(Me.tableRecurringService_BillHistory.LineTotalColumn)
         End Function
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
         Public Sub SetLineTotalNull()
-            Me(Me.tableBilledServices.LineTotalColumn) = Global.System.Convert.DBNull
+            Me(Me.tableRecurringService_BillHistory.LineTotalColumn) = Global.System.Convert.DBNull
         End Sub
     End Class
     
@@ -3254,16 +3258,16 @@ Partial Public Class ds_Display
     '''Row event argument class
     '''</summary>
     <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-    Public Class BilledServicesRowChangeEvent
+    Public Class RecurringService_BillHistoryRowChangeEvent
         Inherits Global.System.EventArgs
         
-        Private eventRow As BilledServicesRow
+        Private eventRow As RecurringService_BillHistoryRow
         
         Private eventAction As Global.System.Data.DataRowAction
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Sub New(ByVal row As BilledServicesRow, ByVal action As Global.System.Data.DataRowAction)
+        Public Sub New(ByVal row As RecurringService_BillHistoryRow, ByVal action As Global.System.Data.DataRowAction)
             MyBase.New
             Me.eventRow = row
             Me.eventAction = action
@@ -3271,7 +3275,7 @@ Partial Public Class ds_Display
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public ReadOnly Property Row() As BilledServicesRow
+        Public ReadOnly Property Row() As RecurringService_BillHistoryRow
             Get
                 Return Me.eventRow
             End Get
@@ -3956,7 +3960,7 @@ Namespace ds_DisplayTableAdapters
      Global.System.ComponentModel.DesignerAttribute("Microsoft.VSDesigner.DataSource.Design.TableAdapterDesigner, Microsoft.VSDesigner"& _ 
         ", Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a"),  _
      Global.System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")>  _
-    Partial Public Class BilledServicesTableAdapter
+    Partial Public Class RecurringService_BillHistoryTableAdapter
         Inherits Global.System.ComponentModel.Component
         
         Private WithEvents _adapter As Global.System.Data.SqlClient.SqlDataAdapter
@@ -4073,7 +4077,7 @@ Namespace ds_DisplayTableAdapters
             Me._adapter = New Global.System.Data.SqlClient.SqlDataAdapter()
             Dim tableMapping As Global.System.Data.Common.DataTableMapping = New Global.System.Data.Common.DataTableMapping()
             tableMapping.SourceTable = "Table"
-            tableMapping.DataSetTable = "BilledServices"
+            tableMapping.DataSetTable = "RecurringService_BillHistory"
             tableMapping.ColumnMappings.Add("BilledServiceID", "BilledServiceID")
             tableMapping.ColumnMappings.Add("StartBillingDate", "StartBillingDate")
             tableMapping.ColumnMappings.Add("EndBillingDate", "EndBillingDate")
@@ -4098,7 +4102,7 @@ Namespace ds_DisplayTableAdapters
             Me._commandCollection = New Global.System.Data.SqlClient.SqlCommand(0) {}
             Me._commandCollection(0) = New Global.System.Data.SqlClient.SqlCommand()
             Me._commandCollection(0).Connection = Me.Connection
-            Me._commandCollection(0).CommandText = "dbo.Display_BilledServices"
+            Me._commandCollection(0).CommandText = "dbo.RecurringService_BillHistory"
             Me._commandCollection(0).CommandType = Global.System.Data.CommandType.StoredProcedure
             Me._commandCollection(0).Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@RETURN_VALUE", Global.System.Data.SqlDbType.Int, 4, Global.System.Data.ParameterDirection.ReturnValue, 10, 0, Nothing, Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
             Me._commandCollection(0).Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@RecurringServiceID", Global.System.Data.SqlDbType.[Decimal], 9, Global.System.Data.ParameterDirection.Input, 18, 0, Nothing, Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
@@ -4108,7 +4112,7 @@ Namespace ds_DisplayTableAdapters
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0"),  _
          Global.System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter"),  _
          Global.System.ComponentModel.DataObjectMethodAttribute(Global.System.ComponentModel.DataObjectMethodType.Fill, true)>  _
-        Public Overloads Overridable Function FillByRecurringID(ByVal dataTable As ds_Display.BilledServicesDataTable, ByVal RecurringServiceID As Global.System.Nullable(Of Decimal)) As Integer
+        Public Overloads Overridable Function FillByRecurringID(ByVal dataTable As ds_Display.RecurringService_BillHistoryDataTable, ByVal RecurringServiceID As Global.System.Nullable(Of Decimal)) As Integer
             Me.Adapter.SelectCommand = Me.CommandCollection(0)
             If (RecurringServiceID.HasValue = true) Then
                 Me.Adapter.SelectCommand.Parameters(1).Value = CType(RecurringServiceID.Value,Decimal)

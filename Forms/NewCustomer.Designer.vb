@@ -25,7 +25,7 @@ Partial Class NewCustomer
         Me.components = New System.ComponentModel.Container()
         Me.startDatePicker = New System.Windows.Forms.DateTimePicker()
         Me.CustomerBindingSource = New System.Windows.Forms.BindingSource(Me.components)
-        Me.DataSet = New TrashCash.DataSet()
+        Me.Ds_Customer = New TrashCash.ds_Customer()
         Me.Label9 = New System.Windows.Forms.Label()
         Me.createCustBtn = New System.Windows.Forms.Button()
         Me.GroupBox2 = New System.Windows.Forms.GroupBox()
@@ -35,7 +35,6 @@ Partial Class NewCustomer
         Me.printInvoicesChkBox = New System.Windows.Forms.CheckBox()
         Me.billedAdvanceChkBox = New System.Windows.Forms.CheckBox()
         Me.billedAdvanceTooltip = New System.Windows.Forms.ToolTip(Me.components)
-        Me.CustomerTableAdapter = New TrashCash.DataSetTableAdapters.CustomerTableAdapter()
         Me.tt_CustBillInterval = New System.Windows.Forms.ToolTip(Me.components)
         Me.grp_GenInfo = New System.Windows.Forms.GroupBox()
         Me.tb_CompanyName = New System.Windows.Forms.TextBox()
@@ -64,8 +63,9 @@ Partial Class NewCustomer
         Me.Label6 = New System.Windows.Forms.Label()
         Me.Label5 = New System.Windows.Forms.Label()
         Me.Label4 = New System.Windows.Forms.Label()
+        Me.CustomerTableAdapter = New TrashCash.ds_CustomerTableAdapters.CustomerTableAdapter()
         CType(Me.CustomerBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.DataSet, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.Ds_Customer, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupBox2.SuspendLayout()
         CType(Me.nud_BillInterval, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.grp_GenInfo.SuspendLayout()
@@ -84,13 +84,13 @@ Partial Class NewCustomer
         'CustomerBindingSource
         '
         Me.CustomerBindingSource.DataMember = "Customer"
-        Me.CustomerBindingSource.DataSource = Me.DataSet
+        Me.CustomerBindingSource.DataSource = Me.Ds_Customer
         '
-        'DataSet
+        'Ds_Customer
         '
-        Me.DataSet.DataSetName = "DataSet"
-        Me.DataSet.EnforceConstraints = False
-        Me.DataSet.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema
+        Me.Ds_Customer.DataSetName = "ds_Customer"
+        Me.Ds_Customer.EnforceConstraints = False
+        Me.Ds_Customer.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema
         '
         'Label9
         '
@@ -134,6 +134,7 @@ Partial Class NewCustomer
         Me.nud_BillInterval.Name = "nud_BillInterval"
         Me.nud_BillInterval.Size = New System.Drawing.Size(31, 20)
         Me.nud_BillInterval.TabIndex = 5
+        Me.tt_CustBillInterval.SetToolTip(Me.nud_BillInterval, "How many months between this customer recieving an invoice.")
         Me.nud_BillInterval.Value = New Decimal(New Integer() {1, 0, 0, 0})
         '
         'Label1
@@ -194,10 +195,6 @@ Partial Class NewCustomer
         Me.billedAdvanceTooltip.AutoPopDelay = 10000
         Me.billedAdvanceTooltip.InitialDelay = 100
         Me.billedAdvanceTooltip.ReshowDelay = 20
-        '
-        'CustomerTableAdapter
-        '
-        Me.CustomerTableAdapter.ClearBeforeFill = True
         '
         'grp_GenInfo
         '
@@ -458,6 +455,10 @@ Partial Class NewCustomer
         Me.Label4.TabIndex = 65
         Me.Label4.Text = "Address 1:"
         '
+        'CustomerTableAdapter
+        '
+        Me.CustomerTableAdapter.ClearBeforeFill = True
+        '
         'NewCustomer
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -474,7 +475,7 @@ Partial Class NewCustomer
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent
         Me.Text = "TrashCash | New Customer"
         CType(Me.CustomerBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.DataSet, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.Ds_Customer, System.ComponentModel.ISupportInitialize).EndInit()
         Me.GroupBox2.ResumeLayout(False)
         Me.GroupBox2.PerformLayout()
         CType(Me.nud_BillInterval, System.ComponentModel.ISupportInitialize).EndInit()
@@ -493,8 +494,6 @@ Partial Class NewCustomer
     Friend WithEvents billedAdvanceChkBox As System.Windows.Forms.CheckBox
     Friend WithEvents billedAdvanceTooltip As System.Windows.Forms.ToolTip
     Friend WithEvents printInvoicesChkBox As System.Windows.Forms.CheckBox
-    Friend WithEvents CustomerTableAdapter As TrashCash.DataSetTableAdapters.CustomerTableAdapter
-    Friend WithEvents DataSet As TrashCash.DataSet
     Friend WithEvents ck_SingleInv As System.Windows.Forms.CheckBox
     Friend WithEvents Label1 As System.Windows.Forms.Label
     Friend WithEvents tt_CustBillInterval As System.Windows.Forms.ToolTip
@@ -527,4 +526,6 @@ Partial Class NewCustomer
     Friend WithEvents Label5 As System.Windows.Forms.Label
     Friend WithEvents Label4 As System.Windows.Forms.Label
     Friend WithEvents CustomerBindingSource As System.Windows.Forms.BindingSource
+    Friend WithEvents Ds_Customer As TrashCash.ds_Customer
+    Friend WithEvents CustomerTableAdapter As TrashCash.ds_CustomerTableAdapters.CustomerTableAdapter
 End Class

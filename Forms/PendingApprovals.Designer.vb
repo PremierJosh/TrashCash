@@ -24,28 +24,27 @@ Partial Class PendingApprovals
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(PendingApprovals))
-        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.pnl_Top = New System.Windows.Forms.Panel()
         Me.lbl_Header = New System.Windows.Forms.Label()
         Me.dg_PendingApprovals = New System.Windows.Forms.DataGridView()
-        Me.CustomerFullNameDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.ServiceNameDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.RecurringServiceStartDateDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Approved = New System.Windows.Forms.DataGridViewCheckBoxColumn()
-        Me.RecurringServiceIDDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.RecurringServicePendingApprovalsBindingSource = New System.Windows.Forms.BindingSource(Me.components)
-        Me.Ds_Display = New TrashCash.ds_Display()
         Me.pnl_SaveChanges = New System.Windows.Forms.Panel()
         Me.lbl_UnApproved = New System.Windows.Forms.Label()
         Me.lbl_Approved = New System.Windows.Forms.Label()
         Me.btn_SaveApprovals = New System.Windows.Forms.Button()
         Me.lbl_Save = New System.Windows.Forms.Label()
-        Me.RecurringService_PendingApprovalsTableAdapter = New TrashCash.ds_DisplayTableAdapters.RecurringService_PendingApprovalsTableAdapter()
+        Me.Ds_RecurringService = New TrashCash.ds_RecurringService()
+        Me.RecurringServicePendingApprovalsBindingSource = New System.Windows.Forms.BindingSource(Me.components)
+        Me.RecurringService_PendingApprovalsTableAdapter = New TrashCash.ds_RecurringServiceTableAdapters.RecurringService_PendingApprovalsTableAdapter()
+        Me.CustomerFullNameDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.ServiceNameDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.RecurringServiceStartDateDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.ApprovedDataGridViewCheckBoxColumn = New System.Windows.Forms.DataGridViewCheckBoxColumn()
         Me.pnl_Top.SuspendLayout()
         CType(Me.dg_PendingApprovals, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.RecurringServicePendingApprovalsBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.Ds_Display, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.pnl_SaveChanges.SuspendLayout()
+        CType(Me.Ds_RecurringService, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.RecurringServicePendingApprovalsBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'pnl_Top
@@ -74,7 +73,7 @@ Partial Class PendingApprovals
         Me.dg_PendingApprovals.AllowUserToDeleteRows = False
         Me.dg_PendingApprovals.AutoGenerateColumns = False
         Me.dg_PendingApprovals.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.dg_PendingApprovals.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.CustomerFullNameDataGridViewTextBoxColumn, Me.ServiceNameDataGridViewTextBoxColumn, Me.RecurringServiceStartDateDataGridViewTextBoxColumn, Me.Approved, Me.RecurringServiceIDDataGridViewTextBoxColumn})
+        Me.dg_PendingApprovals.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.CustomerFullNameDataGridViewTextBoxColumn, Me.ServiceNameDataGridViewTextBoxColumn, Me.RecurringServiceStartDateDataGridViewTextBoxColumn, Me.ApprovedDataGridViewCheckBoxColumn})
         Me.dg_PendingApprovals.DataSource = Me.RecurringServicePendingApprovalsBindingSource
         Me.dg_PendingApprovals.Location = New System.Drawing.Point(12, 72)
         Me.dg_PendingApprovals.MultiSelect = False
@@ -83,60 +82,6 @@ Partial Class PendingApprovals
         Me.dg_PendingApprovals.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
         Me.dg_PendingApprovals.Size = New System.Drawing.Size(568, 369)
         Me.dg_PendingApprovals.TabIndex = 1
-        '
-        'CustomerFullNameDataGridViewTextBoxColumn
-        '
-        Me.CustomerFullNameDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill
-        Me.CustomerFullNameDataGridViewTextBoxColumn.DataPropertyName = "CustomerFullName"
-        Me.CustomerFullNameDataGridViewTextBoxColumn.HeaderText = "Customer"
-        Me.CustomerFullNameDataGridViewTextBoxColumn.Name = "CustomerFullNameDataGridViewTextBoxColumn"
-        Me.CustomerFullNameDataGridViewTextBoxColumn.ReadOnly = True
-        '
-        'ServiceNameDataGridViewTextBoxColumn
-        '
-        Me.ServiceNameDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
-        Me.ServiceNameDataGridViewTextBoxColumn.DataPropertyName = "ServiceName"
-        Me.ServiceNameDataGridViewTextBoxColumn.HeaderText = "Service"
-        Me.ServiceNameDataGridViewTextBoxColumn.Name = "ServiceNameDataGridViewTextBoxColumn"
-        Me.ServiceNameDataGridViewTextBoxColumn.ReadOnly = True
-        Me.ServiceNameDataGridViewTextBoxColumn.Width = 68
-        '
-        'RecurringServiceStartDateDataGridViewTextBoxColumn
-        '
-        Me.RecurringServiceStartDateDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
-        Me.RecurringServiceStartDateDataGridViewTextBoxColumn.DataPropertyName = "RecurringServiceStartDate"
-        DataGridViewCellStyle3.Format = "d"
-        Me.RecurringServiceStartDateDataGridViewTextBoxColumn.DefaultCellStyle = DataGridViewCellStyle3
-        Me.RecurringServiceStartDateDataGridViewTextBoxColumn.HeaderText = "Start Date"
-        Me.RecurringServiceStartDateDataGridViewTextBoxColumn.Name = "RecurringServiceStartDateDataGridViewTextBoxColumn"
-        Me.RecurringServiceStartDateDataGridViewTextBoxColumn.ReadOnly = True
-        Me.RecurringServiceStartDateDataGridViewTextBoxColumn.Width = 80
-        '
-        'Approved
-        '
-        Me.Approved.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
-        Me.Approved.DataPropertyName = "Approved"
-        Me.Approved.HeaderText = "Approved"
-        Me.Approved.Name = "Approved"
-        Me.Approved.Width = 59
-        '
-        'RecurringServiceIDDataGridViewTextBoxColumn
-        '
-        Me.RecurringServiceIDDataGridViewTextBoxColumn.DataPropertyName = "RecurringServiceID"
-        Me.RecurringServiceIDDataGridViewTextBoxColumn.HeaderText = "RecurringServiceID"
-        Me.RecurringServiceIDDataGridViewTextBoxColumn.Name = "RecurringServiceIDDataGridViewTextBoxColumn"
-        Me.RecurringServiceIDDataGridViewTextBoxColumn.ReadOnly = True
-        Me.RecurringServiceIDDataGridViewTextBoxColumn.Visible = False
-        '
-        'RecurringServicePendingApprovalsBindingSource
-        '
-        Me.RecurringServicePendingApprovalsBindingSource.DataMember = "RecurringService_PendingApprovals"
-        Me.RecurringServicePendingApprovalsBindingSource.DataSource = Me.Ds_Display
-        '
-        'Ds_Display
-        '
-        Me.Ds_Display.DataSetName = "ds_Display"
-        Me.Ds_Display.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema
         '
         'pnl_SaveChanges
         '
@@ -195,9 +140,52 @@ Partial Class PendingApprovals
     "button below"
         Me.lbl_Save.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
+        'Ds_RecurringService
+        '
+        Me.Ds_RecurringService.DataSetName = "ds_RecurringService"
+        Me.Ds_RecurringService.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema
+        '
+        'RecurringServicePendingApprovalsBindingSource
+        '
+        Me.RecurringServicePendingApprovalsBindingSource.DataMember = "RecurringService_PendingApprovals"
+        Me.RecurringServicePendingApprovalsBindingSource.DataSource = Me.Ds_RecurringService
+        '
         'RecurringService_PendingApprovalsTableAdapter
         '
         Me.RecurringService_PendingApprovalsTableAdapter.ClearBeforeFill = True
+        '
+        'CustomerFullNameDataGridViewTextBoxColumn
+        '
+        Me.CustomerFullNameDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill
+        Me.CustomerFullNameDataGridViewTextBoxColumn.DataPropertyName = "CustomerFullName"
+        Me.CustomerFullNameDataGridViewTextBoxColumn.HeaderText = "Customer Name"
+        Me.CustomerFullNameDataGridViewTextBoxColumn.Name = "CustomerFullNameDataGridViewTextBoxColumn"
+        '
+        'ServiceNameDataGridViewTextBoxColumn
+        '
+        Me.ServiceNameDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
+        Me.ServiceNameDataGridViewTextBoxColumn.DataPropertyName = "ServiceName"
+        Me.ServiceNameDataGridViewTextBoxColumn.HeaderText = "Service"
+        Me.ServiceNameDataGridViewTextBoxColumn.Name = "ServiceNameDataGridViewTextBoxColumn"
+        Me.ServiceNameDataGridViewTextBoxColumn.Width = 68
+        '
+        'RecurringServiceStartDateDataGridViewTextBoxColumn
+        '
+        Me.RecurringServiceStartDateDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
+        Me.RecurringServiceStartDateDataGridViewTextBoxColumn.DataPropertyName = "RecurringServiceStartDate"
+        DataGridViewCellStyle1.Format = "d"
+        Me.RecurringServiceStartDateDataGridViewTextBoxColumn.DefaultCellStyle = DataGridViewCellStyle1
+        Me.RecurringServiceStartDateDataGridViewTextBoxColumn.HeaderText = "Start Date"
+        Me.RecurringServiceStartDateDataGridViewTextBoxColumn.Name = "RecurringServiceStartDateDataGridViewTextBoxColumn"
+        Me.RecurringServiceStartDateDataGridViewTextBoxColumn.Width = 80
+        '
+        'ApprovedDataGridViewCheckBoxColumn
+        '
+        Me.ApprovedDataGridViewCheckBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
+        Me.ApprovedDataGridViewCheckBoxColumn.DataPropertyName = "Approved"
+        Me.ApprovedDataGridViewCheckBoxColumn.HeaderText = "Approved"
+        Me.ApprovedDataGridViewCheckBoxColumn.Name = "ApprovedDataGridViewCheckBoxColumn"
+        Me.ApprovedDataGridViewCheckBoxColumn.Width = 59
         '
         'PendingApprovals
         '
@@ -213,26 +201,25 @@ Partial Class PendingApprovals
         Me.Text = "Pending Approvals"
         Me.pnl_Top.ResumeLayout(False)
         CType(Me.dg_PendingApprovals, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.RecurringServicePendingApprovalsBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.Ds_Display, System.ComponentModel.ISupportInitialize).EndInit()
         Me.pnl_SaveChanges.ResumeLayout(False)
+        CType(Me.Ds_RecurringService, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.RecurringServicePendingApprovalsBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub
     Friend WithEvents pnl_Top As System.Windows.Forms.Panel
     Friend WithEvents lbl_Header As System.Windows.Forms.Label
     Friend WithEvents dg_PendingApprovals As System.Windows.Forms.DataGridView
-    Friend WithEvents Ds_Display As TrashCash.ds_Display
-    Friend WithEvents RecurringServicePendingApprovalsBindingSource As System.Windows.Forms.BindingSource
-    Friend WithEvents RecurringService_PendingApprovalsTableAdapter As TrashCash.ds_DisplayTableAdapters.RecurringService_PendingApprovalsTableAdapter
     Friend WithEvents pnl_SaveChanges As System.Windows.Forms.Panel
     Friend WithEvents btn_SaveApprovals As System.Windows.Forms.Button
     Friend WithEvents lbl_Save As System.Windows.Forms.Label
     Friend WithEvents lbl_UnApproved As System.Windows.Forms.Label
     Friend WithEvents lbl_Approved As System.Windows.Forms.Label
+    Friend WithEvents Ds_RecurringService As TrashCash.ds_RecurringService
+    Friend WithEvents RecurringServicePendingApprovalsBindingSource As System.Windows.Forms.BindingSource
+    Friend WithEvents RecurringService_PendingApprovalsTableAdapter As TrashCash.ds_RecurringServiceTableAdapters.RecurringService_PendingApprovalsTableAdapter
     Friend WithEvents CustomerFullNameDataGridViewTextBoxColumn As System.Windows.Forms.DataGridViewTextBoxColumn
     Friend WithEvents ServiceNameDataGridViewTextBoxColumn As System.Windows.Forms.DataGridViewTextBoxColumn
     Friend WithEvents RecurringServiceStartDateDataGridViewTextBoxColumn As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents Approved As System.Windows.Forms.DataGridViewCheckBoxColumn
-    Friend WithEvents RecurringServiceIDDataGridViewTextBoxColumn As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents ApprovedDataGridViewCheckBoxColumn As System.Windows.Forms.DataGridViewCheckBoxColumn
 End Class

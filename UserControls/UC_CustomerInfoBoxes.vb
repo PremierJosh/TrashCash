@@ -1,6 +1,6 @@
 ﻿Public Class UC_CustomerInfoBoxes
-    Protected custRow As DataSet.CustomerRow
-    Protected ta As DataSetTableAdapters.CustomerTableAdapter
+    Protected custRow As ds_Customer.CustomerRow
+    Protected ta As ds_CustomerTableAdapters.CustomerTableAdapter
 
     ' writeonly property for batching status
     Private _batchInProgress As Boolean
@@ -61,8 +61,8 @@
                     _currentCustomer = value
 
                     ' filling customer table
-                    ta.FillByCustomerNumber(Me.DataSet.Customer, value)
-                    custRow = Me.DataSet.Customer.Rows(0)
+                    ta.Fill(Me.Ds_Customer.Customer, value)
+                    custRow = Me.Ds_Customer.Customer.Rows(0)
                 Else
                     UpdateCheck()
                 End If
@@ -86,7 +86,7 @@
         ' Add any initialization after the InitializeComponent() call.
 
         ' instantiate
-        ta = New DataSetTableAdapters.CustomerTableAdapter
+        ta = New ds_CustomerTableAdapters.CustomerTableAdapter
         isUpdating = False
         ' bind single inv check box to bill interval
         nud_BillInterval.DataBindings.Add("Visible", Me.ck_SingleInv, "Checked")
@@ -192,7 +192,7 @@
 
                     ElseIf (result = MsgBoxResult.No) Then
                         ' if no then reject changes
-                        Me.DataSet.Customer.Rows(0).RejectChanges()
+                        Me.Ds_Customer.Customer.Rows(0).RejectChanges()
                         ' reset all boxes
                         Me.CustomerBindingSource.ResetCurrentItem()
                         ' pass event and change property
@@ -242,8 +242,10 @@
 
     Private Sub chk_CustDeactive_Click(sender As System.Object, e As System.EventArgs) Handles chk_CustDeactive.Click
         ' checking for active services
-        Dim qta As New DataSetTableAdapters.QueriesTableAdapter
-        Dim count As Integer = qta.Customer_RecSrvcActive(CurrentCustomer)
+        Dim count As Integer
+        Using qta As New ds_CustomerTableAdapters.QueriesTableAdapter
+            count = qta.Customer_RecSrvcActive(CurrentCustomer)
+        End Using
 
         If (count > 0) Then
             chk_CustDeactive.Checked = False
@@ -266,23 +268,10 @@
         Return strFormatedNumber
     End Function
 
-    Private Sub UC_CustomerInfoBoxes_Load(sender As Object, e As System.EventArgs) Handles Me.Load
-
-
-    End Sub
-
-    Private Sub grp_GenInfo_Enter(sender As System.Object, e As System.EventArgs) Handles grp_GenInfo.Enter
-
-    End Sub
-
-    Private Sub box_KeyDown(sender As System.Object, e As System.Windows.Forms.KeyEventArgs) Handles box_CustPhone.KeyDown, box_CustFullName.KeyDown, box_CustContact.KeyDown, box_CustBillZip.KeyDown, box_CustBillState.KeyDown, box_CustBillCity.KeyDown, box_CustBillAddr3.KeyDown, box_CustBillAddr2.KeyDown, box_CustBillAddr1.KeyDown, box_CustAltPhone.KeyDown
-
-    End Sub
-
     Private Sub ck_SingleInv_Click(sender As System.Object, e As System.EventArgs) Handles ck_SingleInv.Click
         If (ck_SingleInv.Checked = True) Then
             Dim result As MsgBoxResult = MsgBox("Marking this Customer as Single Invoice will cause all Recurring Services to bill within that Customers bill interval - no matter the service." & vbCrLf & _
-                                                "For example, Toters will bill every 1 month if this Customers bill interval is set to 1." & vbCrLf & _
+                                                "For example, Toters will bill every 1 month if this Customers bill interval is set to 1. This change will also cause all Recurring Services to bill to the Customers start date day." & vbCrLf & _
                                                 "Do you wish to change this Customer to Single Invoice?")
             If (result = MsgBoxResult.No) Then
                 ck_SingleInv.Checked = False
