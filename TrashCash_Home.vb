@@ -201,8 +201,13 @@ Public Class TrashCash_Home
         CreateAllClasses()
         _splash.Close()
 
+        ' maximize window
+        Me.WindowState = FormWindowState.Maximized
+
         ' getting approvals pending on load
         RefreshApprovCount(True)
+
+        '
     End Sub
 
     Private Sub ApprovalsWorked(ByVal countRemain As Integer) Handles _pendingApprovals.RemainingApprovals
