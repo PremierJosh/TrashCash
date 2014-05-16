@@ -2668,14 +2668,14 @@ Namespace ds_CustomerTableAdapters
             Return returnValue
         End Function
         
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0"),  _
-         Global.System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter"),  _
-         Global.System.ComponentModel.DataObjectMethodAttribute(Global.System.ComponentModel.DataObjectMethodType.[Select], true)>  _
-        Public Overloads Overridable Function GetData(ByVal CustomerNumber As Global.System.Nullable(Of Decimal)) As ds_Customer.CustomerDataTable
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0"), _
+         Global.System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter"), _
+         Global.System.ComponentModel.DataObjectMethodAttribute(Global.System.ComponentModel.DataObjectMethodType.[Select], True)> _
+        Public Overridable Overloads Function GetData(ByVal CustomerNumber As Global.System.Nullable(Of Decimal)) As ds_Customer.CustomerDataTable
             Me.Adapter.SelectCommand = Me.CommandCollection(0)
-            If (CustomerNumber.HasValue = true) Then
-                Me.Adapter.SelectCommand.Parameters(1).Value = CType(CustomerNumber.Value,Decimal)
+            If (CustomerNumber.HasValue = True) Then
+                Me.Adapter.SelectCommand.Parameters(1).Value = CType(CustomerNumber.Value, Decimal)
             Else
                 Me.Adapter.SelectCommand.Parameters(1).Value = Global.System.DBNull.Value
             End If
