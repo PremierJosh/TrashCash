@@ -1,6 +1,5 @@
 ﻿Public Class UC_RecurringService
     ' details form ref so can handle vents
-    Friend WithEvents _serviceDetails As RecurringServicesForm
     Friend WithEvents _RecurringServiceForm As RecurringService
 
     ' friend events

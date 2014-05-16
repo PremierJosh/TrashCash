@@ -289,12 +289,6 @@
     <Compile Include="Forms\RecSrvcNote.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\RecurringServicesForm.Designer.vb">
-      <DependentUpon>RecurringServicesForm.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Forms\RecurringServicesForm.vb">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Include="Reporting\f_DaysEvents.Designer.vb">
       <DependentUpon>f_DaysEvents.vb</DependentUpon>
     </Compile>
@@ -390,12 +384,6 @@
       <DependentUpon>UC_PreparedItems.vb</DependentUpon>
     </Compile>
     <Compile Include="UserControls\UC_PreparedItems.vb">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="UserControls\UC_RecSrvcDetails.Designer.vb">
-      <DependentUpon>UC_RecSrvcDetails.vb</DependentUpon>
-    </Compile>
-    <Compile Include="UserControls\UC_RecSrvcDetails.vb">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="UserControls\UC_RecurringService.Designer.vb">
@@ -557,10 +545,6 @@
       <DependentUpon>CustomerNote.vb</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\RecurringServicesForm.resx">
-      <DependentUpon>RecurringServicesForm.vb</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
     <EmbeddedResource Include="Reporting\f_AllCustBalances.resx">
       <DependentUpon>f_AllCustBalances.vb</DependentUpon>
     </EmbeddedResource>
@@ -615,10 +599,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="UserControls\UC_PreparedItems.resx">
       <DependentUpon>UC_PreparedItems.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="UserControls\UC_RecSrvcDetails.resx">
-      <DependentUpon>UC_RecSrvcDetails.vb</DependentUpon>
-      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="UserControls\UC_RecurringService.resx">
       <DependentUpon>UC_RecurringService.vb</DependentUpon>
@@ -811,7 +791,7 @@
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties BuildVersion_AssemblyInfoFilename="My Project\AssemblyInfo.vb" BuildVersion_UpdateAssemblyVersion="True" BuildVersion_UpdateFileVersion="True" BuildVersion_BuildVersioningStyle="None.None.None.Increment" BuildVersion_StartDate="2014/3/2" />
+      <UserProperties BuildVersion_StartDate="2014/3/2" BuildVersion_BuildVersioningStyle="None.None.None.Increment" BuildVersion_UpdateFileVersion="True" BuildVersion_UpdateAssemblyVersion="True" BuildVersion_AssemblyInfoFilename="My Project\AssemblyInfo.vb" />
     </VisualStudio>
   </ProjectExtensions>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
