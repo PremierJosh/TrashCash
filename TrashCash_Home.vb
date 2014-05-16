@@ -7,8 +7,22 @@ Imports System.Data.Sql
 Imports System.Data.SqlClient
 
 Public Class TrashCash_Home
-    ' var for current user id and auth level
-    Private CurrentUserID As Integer
+    ' var for current user id row
+    Dim _userRow As ds_Program.USERSRow
+    Public Property UserRow As ds_Program.USERSRow
+        Get
+            Return _userRow
+        End Get
+        Set(value As ds_Program.USERSRow)
+            _userRow = value
+
+            ' update name on status bars
+            ToolStripStatusLabel.Text = "Current User: " & value.USER_NAME
+            Me.Text = "TrashCash       | Current User: " & value.USER_NAME
+        End Set
+    End Property
+
+
     ' ds_program qta
     Private qta As ds_ProgramTableAdapters.QueriesTableAdapter
 
@@ -187,12 +201,6 @@ Public Class TrashCash_Home
         CreateAllClasses()
         _splash.Close()
 
-        ' rename home form to have current user
-        Dim userName As String = qta.USERS_GetName(CurrentUserID)
-
-        ToolStripStatusLabel.Text = "Current User: " & userName
-        Me.Text = "TrashCash       | Current User: " & userName
-
         ' getting approvals pending on load
         RefreshApprovCount(True)
     End Sub
@@ -282,7 +290,7 @@ Public Class TrashCash_Home
 
     Private Sub CreateAllClasses()
         c_QB_Queries = New QB_Queries2(SessionManager, MsgSetRequest)
-        c_QB_Procedures = New QB_Procedures2(SessionManager, MsgSetRequest)
+        c_QB_Procedures = New QB_Procedures2(SessionManager, MsgSetRequest, Me)
         c_Reporting = New Reporting2(SessionManager, MsgSetRequest)
     End Sub
 
@@ -339,7 +347,12 @@ Public Class TrashCash_Home
 
         ' Add any initialization after the InitializeComponent() call.
         _splash = Splash
-        CurrentUserID = UserID
+
+        ' setting userid row
+        Using ta As New ds_ProgramTableAdapters.USERSTableAdapter
+            userRow = ta.GetDataByID(UserID).Rows(0)
+        End Using
+
         qta = New ds_ProgramTableAdapters.QueriesTableAdapter
     End Sub
 

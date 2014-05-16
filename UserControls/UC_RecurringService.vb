@@ -93,20 +93,20 @@
                 If (row.RecurringServiceEndDate < Date.Now.Date) Then
                     ' service has ended
                     grid.Rows(i).DefaultCellStyle.BackColor = Color.Red
-                    grid.Rows(i).DefaultCellStyle.SelectionBackColor = Color.Gray
+                    grid.Rows(i).DefaultCellStyle.SelectionBackColor = Color.IndianRed
                 ElseIf (row.RecurringServiceEndDate >= Date.Now.Date) Then
                     ' service has end date but it hasnt passed yet
                     grid.Rows(i).DefaultCellStyle.BackColor = Color.Yellow
-                    grid.Rows(i).DefaultCellStyle.SelectionBackColor = Color.Gray
+                    grid.Rows(i).DefaultCellStyle.SelectionBackColor = Color.Khaki
                 End If
             ElseIf (row.Approved = False) Then
                 ' approval pending rows will be yellow
                 grid.Rows(i).DefaultCellStyle.BackColor = Color.Yellow
-                grid.Rows(i).DefaultCellStyle.SelectionBackColor = Color.Gray
+                grid.Rows(i).DefaultCellStyle.SelectionBackColor = Color.Khaki
             Else
                 ' end date is NULL
                 grid.Rows(i).DefaultCellStyle.BackColor = Color.SpringGreen
-                grid.Rows(i).DefaultCellStyle.SelectionBackColor = Color.Gray
+                grid.Rows(i).DefaultCellStyle.SelectionBackColor = Color.MediumSeaGreen
                 'grid.Rows(i).DefaultCellStyle.SelectionForeColor = Color.Black
             End If
         Next i

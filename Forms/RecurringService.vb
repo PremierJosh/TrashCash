@@ -87,6 +87,8 @@
             Me.RecurringService_BillHistoryTableAdapter.FillByRecurringID(Me.Ds_RecurringService.RecurringService_BillHistory, value.RecurringServiceID)
             ' fill service notes display
             Me.ServiceNotesTableAdapter.FillByID(Me.Ds_RecurringService.ServiceNotes, value.RecurringServiceID)
+            ' fill credit history
+            Me.RecurringService_BillHistoryTableAdapter.FillByRecurringID(Me.Ds_RecurringService.RecurringService_BillHistory, value.RecurringServiceID)
 
             ' checking if service is approved
             Approved = value.Approved
@@ -231,6 +233,8 @@
         End Set
     End Property
 
+    ' property for last end date credit row
+
     ' crediting property so on commit we can generate a credit
     Private _crediting As Double
     Private Property Crediting As Double
@@ -312,7 +316,7 @@
                 Dim result As DialogResult = MessageBox.Show("Keeping this Last Date of Service will cause a credit to be issued for " & FormatCurrency(Crediting) & "." & vbCrLf & _
                                                              "Do you want to issue this credit?", "Crediting Customer for End Date Overlap", MessageBoxButtons.YesNo, MessageBoxIcon.Warning)
                 If (result = Windows.Forms.DialogResult.Yes) Then
-                    HomeForm.Procedures.RecurringService_Credit(RecurringServiceRow, Crediting, dtp_EndDate.Value.Date, _billThruDate)
+                    HomeForm.Procedures.RecurringService_EndDateCredit(RecurringServiceRow, Crediting, dtp_EndDate.Value.Date, _billThruDate)
                     ' setting balance change
                     _BalanceChanged = True
                     _ServiceUpdated = True
@@ -563,6 +567,9 @@
 
                         ' customer balance has changed now
                         _BalanceChanged = True
+
+                        ' refresh credit history grid
+                        Me.RecurringService_BillHistoryTableAdapter.FillByRecurringID(Me.Ds_RecurringService.RecurringService_BillHistory, RecurringServiceRow.RecurringServiceID)
                     End If
                 End If
             Else
@@ -570,5 +577,72 @@
             End If
         End If
 
+    End Sub
+
+    Private Sub btn_CreateCredit_Click(sender As System.Object, e As System.EventArgs) Handles btn_CreateCredit.Click
+        ' refs
+        Dim creditForDate As Date = dtp_CreditForDate.Value.Date
+        Dim creditAlreadyOnDate As Boolean = Me.RecurringService_CreditsTableAdapter.Credit_OnDate(RecurringServiceID, creditForDate)
+        Dim okToCredit As Boolean = False
+
+        If (Not creditAlreadyOnDate) Then
+            ' making sure date is not before start of service
+            If (creditForDate > RecurringServiceRow.RecurringServiceStartDate) Then
+
+                ' checking for end date..
+                If (RecurringServiceRow.IsRecurringServiceEndDateNull = False) Then
+                    ' end date set
+                    If (creditForDate < RecurringServiceRow.RecurringServiceEndDate) Then
+                        okToCredit = True
+                    Else
+                        MessageBox.Show("Credit cannot be after the Recurring Service end date.")
+                    End If
+
+                Else
+                    ' no end date set
+                    okToCredit = True
+                End If
+            Else
+                MessageBox.Show("Credit Date cannot be before Recurring Service start date.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            End If
+        Else
+            MessageBox.Show("There is a Credit issued for this Date already.", "Error - Credit Already on Date", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        End If
+
+        ' creating credit if good
+        If (okToCredit) Then
+            HomeForm.Procedures.RecurringService_Credit(RecurringServiceRow.RecurringServiceID, tb_CreditAmount.Text, creditForDate, tb_CreditReason.Text)
+            ' balance has changed now
+            _BalanceChanged = True
+        End If
+    End Sub
+
+    Private Sub ColorCreditHistoryRows()
+        If (dg_CreditHistory.Rows.Count > 0) Then
+            ' color voided rows red
+            For i = 0 To dg_CreditHistory.Rows.Count - 1
+
+                ' row reference
+                Dim dvRow As DataRowView = dg_CreditHistory.Rows(i).DataBoundItem
+                Dim row As ds_RecurringService.RecurringService_CreditsRow = dvRow.Row
+
+                If (row.Voided) Then
+                    ' credit is voided
+                    dg_CreditHistory.Rows(i).DefaultCellStyle.BackColor = Color.Red
+                    dg_CreditHistory.Rows(i).DefaultCellStyle.SelectionBackColor = Color.IndianRed
+                Else
+                    dg_CreditHistory.Rows(i).DefaultCellStyle.BackColor = Color.SpringGreen
+                    dg_CreditHistory.Rows(i).DefaultCellStyle.BackColor = Color.MediumSeaGreen
+                End If
+            Next
+        End If
+    End Sub
+
+    Private Sub dg_CreditHistory_RowsAdded(sender As System.Object, e As System.Windows.Forms.DataGridViewRowsAddedEventArgs) Handles dg_CreditHistory.RowsAdded
+        ColorCreditHistoryRows()
+    End Sub
+
+    Private Sub dg_CreditHistory_RowsRemoved(sender As System.Object, e As System.Windows.Forms.DataGridViewRowsRemovedEventArgs) Handles dg_CreditHistory.RowsRemoved
+        ColorCreditHistoryRows()
     End Sub
 End Class
