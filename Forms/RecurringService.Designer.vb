@@ -24,10 +24,10 @@ Partial Class RecurringService
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(RecurringService))
-        Dim DataGridViewCellStyle5 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle6 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle7 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle8 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.dtp_EndDate = New System.Windows.Forms.DateTimePicker()
         Me.ck_EndDate = New System.Windows.Forms.CheckBox()
         Me.grp_PickupDay = New System.Windows.Forms.GroupBox()
@@ -47,18 +47,18 @@ Partial Class RecurringService
         Me.lbl_BillThru = New System.Windows.Forms.Label()
         Me.lbl_CustName = New System.Windows.Forms.Label()
         Me.grp_BasicInfo = New System.Windows.Forms.GroupBox()
+        Me.nud_BillLength = New System.Windows.Forms.NumericUpDown()
         Me.Cmb_ServiceTypes = New TrashCash.Database_ComboBoxes.cmb_ServiceTypes()
+        Me.lbl_DefPriceValue = New System.Windows.Forms.Label()
         Me.Label3 = New System.Windows.Forms.Label()
+        Me.lbl_DefPriceHeader = New System.Windows.Forms.Label()
         Me.nud_Quantity = New System.Windows.Forms.NumericUpDown()
         Me.lbl_Quantity = New System.Windows.Forms.Label()
         Me.tb_Rate = New TrashCash.Currency_TextBox()
         Me.lbl_Rate = New System.Windows.Forms.Label()
-        Me.lbl_DefPriceValue = New System.Windows.Forms.Label()
-        Me.lbl_DefPriceHeader = New System.Windows.Forms.Label()
-        Me.nud_BillLength = New System.Windows.Forms.NumericUpDown()
         Me.grp_Dates = New System.Windows.Forms.GroupBox()
         Me.btn_Save = New System.Windows.Forms.Button()
-        Me.TabControl1 = New System.Windows.Forms.TabControl()
+        Me.tc_Master = New System.Windows.Forms.TabControl()
         Me.tp_SrvcInfo = New System.Windows.Forms.TabPage()
         Me.lbl_CreditMsg = New System.Windows.Forms.Label()
         Me.lbl_RecStatus = New System.Windows.Forms.Label()
@@ -92,15 +92,21 @@ Partial Class RecurringService
         Me.BilledServicesTableAdapter = New TrashCash.ds_DisplayTableAdapters.BilledServicesTableAdapter()
         Me.ServiceNotesTableAdapter = New TrashCash.ds_DisplayTableAdapters.ServiceNotesTableAdapter()
         Me.tt_BillLength = New System.Windows.Forms.ToolTip(Me.components)
+        Me.tp_Credits = New System.Windows.Forms.TabPage()
+        Me.lbl_Credits = New System.Windows.Forms.Label()
+        Me.DateTimePicker1 = New System.Windows.Forms.DateTimePicker()
+        Me.pnl_CreditDG = New System.Windows.Forms.Panel()
+        Me.lbl_CreditDG = New System.Windows.Forms.Label()
+        Me.dg_CreditHistory = New System.Windows.Forms.DataGridView()
         Me.grp_PickupDay.SuspendLayout()
         CType(Me.RecurringServiceBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.Ds_Program, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.pnl_Top.SuspendLayout()
         Me.grp_BasicInfo.SuspendLayout()
-        CType(Me.nud_Quantity, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.nud_BillLength, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.nud_Quantity, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.grp_Dates.SuspendLayout()
-        Me.TabControl1.SuspendLayout()
+        Me.tc_Master.SuspendLayout()
         Me.tp_SrvcInfo.SuspendLayout()
         Me.grp_SrvcAddr.SuspendLayout()
         Me.tp_BillHist.SuspendLayout()
@@ -110,6 +116,9 @@ Partial Class RecurringService
         Me.tp_Notes.SuspendLayout()
         CType(Me.dg_ServiceNotes, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.ServiceNotesBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.tp_Credits.SuspendLayout()
+        Me.pnl_CreditDG.SuspendLayout()
+        CType(Me.dg_CreditHistory, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'dtp_EndDate
@@ -268,7 +277,7 @@ Partial Class RecurringService
         Me.btn_Approve.BackColor = System.Drawing.Color.DarkGreen
         Me.btn_Approve.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.btn_Approve.ForeColor = System.Drawing.Color.Lime
-        Me.btn_Approve.Location = New System.Drawing.Point(403, 27)
+        Me.btn_Approve.Location = New System.Drawing.Point(376, 26)
         Me.btn_Approve.Name = "btn_Approve"
         Me.btn_Approve.Size = New System.Drawing.Size(100, 25)
         Me.btn_Approve.TabIndex = 21
@@ -317,6 +326,16 @@ Partial Class RecurringService
         Me.grp_BasicInfo.TabStop = False
         Me.grp_BasicInfo.Text = "Basic Service Information"
         '
+        'nud_BillLength
+        '
+        Me.nud_BillLength.DataBindings.Add(New System.Windows.Forms.Binding("Value", Me.RecurringServiceBindingSource, "RecurringServiceBillLength", True))
+        Me.nud_BillLength.Location = New System.Drawing.Point(293, 50)
+        Me.nud_BillLength.Name = "nud_BillLength"
+        Me.nud_BillLength.Size = New System.Drawing.Size(36, 20)
+        Me.nud_BillLength.TabIndex = 3
+        Me.nud_BillLength.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
+        Me.tt_BillLength.SetToolTip(Me.nud_BillLength, "Bill Length is the number of months this Recurring Service will bill for.")
+        '
         'Cmb_ServiceTypes
         '
         Me.Cmb_ServiceTypes.DisplayMember = "ServiceName"
@@ -327,6 +346,16 @@ Partial Class RecurringService
         Me.Cmb_ServiceTypes.TabIndex = 0
         Me.Cmb_ServiceTypes.ValueMember = "ServiceTypeID"
         '
+        'lbl_DefPriceValue
+        '
+        Me.lbl_DefPriceValue.AutoSize = True
+        Me.lbl_DefPriceValue.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.lbl_DefPriceValue.Location = New System.Drawing.Point(323, 20)
+        Me.lbl_DefPriceValue.Name = "lbl_DefPriceValue"
+        Me.lbl_DefPriceValue.Size = New System.Drawing.Size(15, 15)
+        Me.lbl_DefPriceValue.TabIndex = 78
+        Me.lbl_DefPriceValue.Text = "3"
+        '
         'Label3
         '
         Me.Label3.AutoSize = True
@@ -336,6 +365,15 @@ Partial Class RecurringService
         Me.Label3.TabIndex = 76
         Me.Label3.Text = "Bill Length:"
         Me.tt_BillLength.SetToolTip(Me.Label3, "Bill Length is the number of months this Recurring Service will bill for.")
+        '
+        'lbl_DefPriceHeader
+        '
+        Me.lbl_DefPriceHeader.AutoSize = True
+        Me.lbl_DefPriceHeader.Location = New System.Drawing.Point(255, 21)
+        Me.lbl_DefPriceHeader.Name = "lbl_DefPriceHeader"
+        Me.lbl_DefPriceHeader.Size = New System.Drawing.Size(70, 13)
+        Me.lbl_DefPriceHeader.TabIndex = 77
+        Me.lbl_DefPriceHeader.Text = "Default Rate:"
         '
         'nud_Quantity
         '
@@ -373,35 +411,6 @@ Partial Class RecurringService
         Me.lbl_Rate.TabIndex = 75
         Me.lbl_Rate.Text = "Rate:"
         '
-        'lbl_DefPriceValue
-        '
-        Me.lbl_DefPriceValue.AutoSize = True
-        Me.lbl_DefPriceValue.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.lbl_DefPriceValue.Location = New System.Drawing.Point(323, 20)
-        Me.lbl_DefPriceValue.Name = "lbl_DefPriceValue"
-        Me.lbl_DefPriceValue.Size = New System.Drawing.Size(15, 15)
-        Me.lbl_DefPriceValue.TabIndex = 78
-        Me.lbl_DefPriceValue.Text = "3"
-        '
-        'lbl_DefPriceHeader
-        '
-        Me.lbl_DefPriceHeader.AutoSize = True
-        Me.lbl_DefPriceHeader.Location = New System.Drawing.Point(255, 21)
-        Me.lbl_DefPriceHeader.Name = "lbl_DefPriceHeader"
-        Me.lbl_DefPriceHeader.Size = New System.Drawing.Size(70, 13)
-        Me.lbl_DefPriceHeader.TabIndex = 77
-        Me.lbl_DefPriceHeader.Text = "Default Rate:"
-        '
-        'nud_BillLength
-        '
-        Me.nud_BillLength.DataBindings.Add(New System.Windows.Forms.Binding("Value", Me.RecurringServiceBindingSource, "RecurringServiceBillLength", True))
-        Me.nud_BillLength.Location = New System.Drawing.Point(293, 50)
-        Me.nud_BillLength.Name = "nud_BillLength"
-        Me.nud_BillLength.Size = New System.Drawing.Size(36, 20)
-        Me.nud_BillLength.TabIndex = 3
-        Me.nud_BillLength.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
-        Me.tt_BillLength.SetToolTip(Me.nud_BillLength, "Bill Length is the number of months this Recurring Service will bill for.")
-        '
         'grp_Dates
         '
         Me.grp_Dates.Controls.Add(Me.dtp_StartDate)
@@ -426,17 +435,18 @@ Partial Class RecurringService
         Me.btn_Save.Text = "Save Recurring Service"
         Me.btn_Save.UseVisualStyleBackColor = True
         '
-        'TabControl1
+        'tc_Master
         '
-        Me.TabControl1.Controls.Add(Me.tp_SrvcInfo)
-        Me.TabControl1.Controls.Add(Me.tp_BillHist)
-        Me.TabControl1.Controls.Add(Me.tp_Notes)
-        Me.TabControl1.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.TabControl1.Location = New System.Drawing.Point(0, 87)
-        Me.TabControl1.Name = "TabControl1"
-        Me.TabControl1.SelectedIndex = 0
-        Me.TabControl1.Size = New System.Drawing.Size(861, 328)
-        Me.TabControl1.TabIndex = 83
+        Me.tc_Master.Controls.Add(Me.tp_SrvcInfo)
+        Me.tc_Master.Controls.Add(Me.tp_BillHist)
+        Me.tc_Master.Controls.Add(Me.tp_Notes)
+        Me.tc_Master.Controls.Add(Me.tp_Credits)
+        Me.tc_Master.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.tc_Master.Location = New System.Drawing.Point(0, 87)
+        Me.tc_Master.Name = "tc_Master"
+        Me.tc_Master.SelectedIndex = 0
+        Me.tc_Master.Size = New System.Drawing.Size(861, 328)
+        Me.tc_Master.TabIndex = 83
         '
         'tp_SrvcInfo
         '
@@ -627,9 +637,9 @@ Partial Class RecurringService
         '
         Me.StartBillingDateDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill
         Me.StartBillingDateDataGridViewTextBoxColumn.DataPropertyName = "StartBillingDate"
-        DataGridViewCellStyle5.Format = "d"
-        DataGridViewCellStyle5.NullValue = Nothing
-        Me.StartBillingDateDataGridViewTextBoxColumn.DefaultCellStyle = DataGridViewCellStyle5
+        DataGridViewCellStyle1.Format = "d"
+        DataGridViewCellStyle1.NullValue = Nothing
+        Me.StartBillingDateDataGridViewTextBoxColumn.DefaultCellStyle = DataGridViewCellStyle1
         Me.StartBillingDateDataGridViewTextBoxColumn.HeaderText = "Start Billing Date"
         Me.StartBillingDateDataGridViewTextBoxColumn.Name = "StartBillingDateDataGridViewTextBoxColumn"
         Me.StartBillingDateDataGridViewTextBoxColumn.ReadOnly = True
@@ -638,8 +648,8 @@ Partial Class RecurringService
         '
         Me.EndBillingDateDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill
         Me.EndBillingDateDataGridViewTextBoxColumn.DataPropertyName = "EndBillingDate"
-        DataGridViewCellStyle6.Format = "d"
-        Me.EndBillingDateDataGridViewTextBoxColumn.DefaultCellStyle = DataGridViewCellStyle6
+        DataGridViewCellStyle2.Format = "d"
+        Me.EndBillingDateDataGridViewTextBoxColumn.DefaultCellStyle = DataGridViewCellStyle2
         Me.EndBillingDateDataGridViewTextBoxColumn.HeaderText = "End Billing Date"
         Me.EndBillingDateDataGridViewTextBoxColumn.Name = "EndBillingDateDataGridViewTextBoxColumn"
         Me.EndBillingDateDataGridViewTextBoxColumn.ReadOnly = True
@@ -648,8 +658,8 @@ Partial Class RecurringService
         '
         Me.LineTotalDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill
         Me.LineTotalDataGridViewTextBoxColumn.DataPropertyName = "LineTotal"
-        DataGridViewCellStyle7.Format = "C2"
-        Me.LineTotalDataGridViewTextBoxColumn.DefaultCellStyle = DataGridViewCellStyle7
+        DataGridViewCellStyle3.Format = "C2"
+        Me.LineTotalDataGridViewTextBoxColumn.DefaultCellStyle = DataGridViewCellStyle3
         Me.LineTotalDataGridViewTextBoxColumn.HeaderText = "Line Total"
         Me.LineTotalDataGridViewTextBoxColumn.Name = "LineTotalDataGridViewTextBoxColumn"
         Me.LineTotalDataGridViewTextBoxColumn.ReadOnly = True
@@ -711,9 +721,9 @@ Partial Class RecurringService
         '
         Me.ServiceNoteDateDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
         Me.ServiceNoteDateDataGridViewTextBoxColumn.DataPropertyName = "ServiceNoteDate"
-        DataGridViewCellStyle8.Format = "g"
-        DataGridViewCellStyle8.NullValue = Nothing
-        Me.ServiceNoteDateDataGridViewTextBoxColumn.DefaultCellStyle = DataGridViewCellStyle8
+        DataGridViewCellStyle4.Format = "g"
+        DataGridViewCellStyle4.NullValue = Nothing
+        Me.ServiceNoteDateDataGridViewTextBoxColumn.DefaultCellStyle = DataGridViewCellStyle4
         Me.ServiceNoteDateDataGridViewTextBoxColumn.HeaderText = "Date"
         Me.ServiceNoteDateDataGridViewTextBoxColumn.Name = "ServiceNoteDateDataGridViewTextBoxColumn"
         Me.ServiceNoteDateDataGridViewTextBoxColumn.ReadOnly = True
@@ -736,13 +746,76 @@ Partial Class RecurringService
         '
         Me.ServiceNotesTableAdapter.ClearBeforeFill = True
         '
+        'tp_Credits
+        '
+        Me.tp_Credits.BackColor = System.Drawing.SystemColors.Control
+        Me.tp_Credits.Controls.Add(Me.DateTimePicker1)
+        Me.tp_Credits.Controls.Add(Me.lbl_Credits)
+        Me.tp_Credits.Controls.Add(Me.pnl_CreditDG)
+        Me.tp_Credits.Location = New System.Drawing.Point(4, 22)
+        Me.tp_Credits.Name = "tp_Credits"
+        Me.tp_Credits.Padding = New System.Windows.Forms.Padding(3)
+        Me.tp_Credits.Size = New System.Drawing.Size(853, 302)
+        Me.tp_Credits.TabIndex = 3
+        Me.tp_Credits.Text = "Credits"
+        '
+        'lbl_Credits
+        '
+        Me.lbl_Credits.Dock = System.Windows.Forms.DockStyle.Top
+        Me.lbl_Credits.Location = New System.Drawing.Point(434, 3)
+        Me.lbl_Credits.Name = "lbl_Credits"
+        Me.lbl_Credits.Size = New System.Drawing.Size(416, 31)
+        Me.lbl_Credits.TabIndex = 0
+        Me.lbl_Credits.Text = "You can issue this Customer a credit linked to this Recurring Service." & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "For examp" & _
+    "le, a missed pickup that was billed for."
+        Me.lbl_Credits.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        '
+        'DateTimePicker1
+        '
+        Me.DateTimePicker1.Location = New System.Drawing.Point(596, 115)
+        Me.DateTimePicker1.Name = "DateTimePicker1"
+        Me.DateTimePicker1.Size = New System.Drawing.Size(200, 20)
+        Me.DateTimePicker1.TabIndex = 1
+        '
+        'pnl_CreditDG
+        '
+        Me.pnl_CreditDG.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.pnl_CreditDG.Controls.Add(Me.dg_CreditHistory)
+        Me.pnl_CreditDG.Controls.Add(Me.lbl_CreditDG)
+        Me.pnl_CreditDG.Dock = System.Windows.Forms.DockStyle.Left
+        Me.pnl_CreditDG.Location = New System.Drawing.Point(3, 3)
+        Me.pnl_CreditDG.Name = "pnl_CreditDG"
+        Me.pnl_CreditDG.Size = New System.Drawing.Size(431, 296)
+        Me.pnl_CreditDG.TabIndex = 2
+        '
+        'lbl_CreditDG
+        '
+        Me.lbl_CreditDG.Dock = System.Windows.Forms.DockStyle.Top
+        Me.lbl_CreditDG.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lbl_CreditDG.Location = New System.Drawing.Point(0, 0)
+        Me.lbl_CreditDG.Name = "lbl_CreditDG"
+        Me.lbl_CreditDG.Size = New System.Drawing.Size(429, 25)
+        Me.lbl_CreditDG.TabIndex = 1
+        Me.lbl_CreditDG.Text = "Credit History"
+        '
+        'dg_CreditHistory
+        '
+        Me.dg_CreditHistory.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.dg_CreditHistory.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.dg_CreditHistory.Location = New System.Drawing.Point(0, 25)
+        Me.dg_CreditHistory.Name = "dg_CreditHistory"
+        Me.dg_CreditHistory.Size = New System.Drawing.Size(429, 269)
+        Me.dg_CreditHistory.TabIndex = 2
+        '
         'RecurringService
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(861, 415)
-        Me.Controls.Add(Me.TabControl1)
+        Me.Controls.Add(Me.tc_Master)
         Me.Controls.Add(Me.pnl_Top)
+        Me.MaximizeBox = False
+        Me.MinimizeBox = False
         Me.Name = "RecurringService"
         Me.Text = "RecurringService"
         Me.grp_PickupDay.ResumeLayout(False)
@@ -753,11 +826,11 @@ Partial Class RecurringService
         Me.pnl_Top.PerformLayout()
         Me.grp_BasicInfo.ResumeLayout(False)
         Me.grp_BasicInfo.PerformLayout()
-        CType(Me.nud_Quantity, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.nud_BillLength, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.nud_Quantity, System.ComponentModel.ISupportInitialize).EndInit()
         Me.grp_Dates.ResumeLayout(False)
         Me.grp_Dates.PerformLayout()
-        Me.TabControl1.ResumeLayout(False)
+        Me.tc_Master.ResumeLayout(False)
         Me.tp_SrvcInfo.ResumeLayout(False)
         Me.tp_SrvcInfo.PerformLayout()
         Me.grp_SrvcAddr.ResumeLayout(False)
@@ -769,6 +842,9 @@ Partial Class RecurringService
         Me.tp_Notes.ResumeLayout(False)
         CType(Me.dg_ServiceNotes, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.ServiceNotesBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.tp_Credits.ResumeLayout(False)
+        Me.pnl_CreditDG.ResumeLayout(False)
+        CType(Me.dg_CreditHistory, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub
@@ -799,7 +875,7 @@ Partial Class RecurringService
     Friend WithEvents grp_Dates As System.Windows.Forms.GroupBox
     Friend WithEvents btn_Approve As System.Windows.Forms.Button
     Friend WithEvents btn_Save As System.Windows.Forms.Button
-    Friend WithEvents TabControl1 As System.Windows.Forms.TabControl
+    Friend WithEvents tc_Master As System.Windows.Forms.TabControl
     Friend WithEvents tp_SrvcInfo As System.Windows.Forms.TabPage
     Friend WithEvents tp_BillHist As System.Windows.Forms.TabPage
     Friend WithEvents grp_SrvcAddr As System.Windows.Forms.GroupBox
@@ -836,4 +912,10 @@ Partial Class RecurringService
     Friend WithEvents InsertedByUser As System.Windows.Forms.DataGridViewTextBoxColumn
     Friend WithEvents ServiceNoteDateDataGridViewTextBoxColumn As System.Windows.Forms.DataGridViewTextBoxColumn
     Friend WithEvents tt_BillLength As System.Windows.Forms.ToolTip
+    Friend WithEvents tp_Credits As System.Windows.Forms.TabPage
+    Friend WithEvents DateTimePicker1 As System.Windows.Forms.DateTimePicker
+    Friend WithEvents lbl_Credits As System.Windows.Forms.Label
+    Friend WithEvents pnl_CreditDG As System.Windows.Forms.Panel
+    Friend WithEvents dg_CreditHistory As System.Windows.Forms.DataGridView
+    Friend WithEvents lbl_CreditDG As System.Windows.Forms.Label
 End Class
