@@ -39,7 +39,6 @@ Partial Class TrashCash_Home
         Me.btn_Rpt_PayReceived = New System.Windows.Forms.ToolStripMenuItem()
         Me.btn_Rpt_DaysEvents = New System.Windows.Forms.ToolStripMenuItem()
         Me.UnderOverEvenCustomerToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.menu_Admin = New System.Windows.Forms.ToolStripDropDownButton()
         Me.btn_PendApprovs = New System.Windows.Forms.ToolStripButton()
         Me.RecurringService_PendingApprovalsTableAdapter = New TrashCash.ds_RecurringServiceTableAdapters.RecurringService_PendingApprovalsTableAdapter()
         Me.Batch_RefreshBalance = New System.Windows.Forms.Timer(Me.components)
@@ -47,6 +46,7 @@ Partial Class TrashCash_Home
         Me.pb_Batching = New System.Windows.Forms.ToolStripProgressBar()
         Me.lbl_Spacer = New System.Windows.Forms.ToolStripStatusLabel()
         Me.lbl_BatchProg = New System.Windows.Forms.ToolStripStatusLabel()
+        Me.menu_Admin = New System.Windows.Forms.ToolStripButton()
         Me.StatusStrip.SuspendLayout()
         Me.ts_AppBtns.SuspendLayout()
         Me.SuspendLayout()
@@ -160,17 +160,6 @@ Partial Class TrashCash_Home
         Me.UnderOverEvenCustomerToolStripMenuItem.Size = New System.Drawing.Size(255, 24)
         Me.UnderOverEvenCustomerToolStripMenuItem.Text = "Under/Over/Even Customers"
         '
-        'menu_Admin
-        '
-        Me.menu_Admin.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right
-        Me.menu_Admin.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text
-        Me.menu_Admin.Font = New System.Drawing.Font("Segoe UI", 10.0!)
-        Me.menu_Admin.Image = CType(resources.GetObject("menu_Admin.Image"), System.Drawing.Image)
-        Me.menu_Admin.ImageTransparentColor = System.Drawing.Color.Magenta
-        Me.menu_Admin.Name = "menu_Admin"
-        Me.menu_Admin.Size = New System.Drawing.Size(112, 23)
-        Me.menu_Admin.Text = "Administration"
-        '
         'btn_PendApprovs
         '
         Me.btn_PendApprovs.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text
@@ -201,7 +190,7 @@ Partial Class TrashCash_Home
         'lbl_Spacer
         '
         Me.lbl_Spacer.Name = "lbl_Spacer"
-        Me.lbl_Spacer.Size = New System.Drawing.Size(559, 17)
+        Me.lbl_Spacer.Size = New System.Drawing.Size(827, 17)
         Me.lbl_Spacer.Spring = True
         Me.lbl_Spacer.Text = " "
         '
@@ -211,6 +200,17 @@ Partial Class TrashCash_Home
         Me.lbl_BatchProg.Size = New System.Drawing.Size(35, 17)
         Me.lbl_BatchProg.Text = "100%"
         Me.lbl_BatchProg.Visible = False
+        '
+        'menu_Admin
+        '
+        Me.menu_Admin.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right
+        Me.menu_Admin.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text
+        Me.menu_Admin.Font = New System.Drawing.Font("Segoe UI", 10.0!)
+        Me.menu_Admin.Image = CType(resources.GetObject("menu_Admin.Image"), System.Drawing.Image)
+        Me.menu_Admin.ImageTransparentColor = System.Drawing.Color.Magenta
+        Me.menu_Admin.Name = "menu_Admin"
+        Me.menu_Admin.Size = New System.Drawing.Size(103, 23)
+        Me.menu_Admin.Text = "Administration"
         '
         'TrashCash_Home
         '
@@ -245,7 +245,6 @@ Partial Class TrashCash_Home
     Friend WithEvents btn_PendApprovs As System.Windows.Forms.ToolStripButton
     Friend WithEvents RecurringService_PendingApprovalsTableAdapter As TrashCash.ds_RecurringServiceTableAdapters.RecurringService_PendingApprovalsTableAdapter
     Friend WithEvents Batch_RefreshBalance As System.Windows.Forms.Timer
-    Friend WithEvents menu_Admin As System.Windows.Forms.ToolStripDropDownButton
     Friend WithEvents tt_AdminItem As System.Windows.Forms.ToolTip
     Friend WithEvents btn_CurrentUser As System.Windows.Forms.ToolStripDropDownButton
     Friend WithEvents btn_SwitchUser As System.Windows.Forms.ToolStripMenuItem
@@ -253,5 +252,6 @@ Partial Class TrashCash_Home
     Friend WithEvents lbl_Spacer As System.Windows.Forms.ToolStripStatusLabel
     Friend WithEvents lbl_BatchProg As System.Windows.Forms.ToolStripStatusLabel
     Friend WithEvents pb_Batching As System.Windows.Forms.ToolStripProgressBar
+    Friend WithEvents menu_Admin As System.Windows.Forms.ToolStripButton
 
 End Class

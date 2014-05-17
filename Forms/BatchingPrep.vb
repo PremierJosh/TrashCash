@@ -144,17 +144,20 @@ Public Class BatchingPrep
             Me.BATCH_WorkingPaymentsTableAdapter.Fill(Me.Ds_Batching.BATCH_WorkingPayments)
         Else
             'btn_PayBatch.Visible = False
-            MsgBox("There are Payments with errors. You will be unable to batch payments till the errors are cleared.")
+            MessageBox.Show("There are Payments with errors. You will be unable to batch payments till the errors are cleared.", "Payments with errors", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End If
 
         ' invoices
         errCount = qta.WorkingInvoice_ErrCount
         If (errCount = 0) Then
-            Me.BATCH_WorkingInvoiceTableAdapter.Fill(Me.Ds_Batching.BATCH_WorkingInvoice)
+            Dim recCount As Integer = qta.WorkingInvoice_ErrCount
+            If (recCount = 0) Then
+                Me.BATCH_WorkingInvoiceTableAdapter.Fill(Me.Ds_Batching.BATCH_WorkingInvoice)
+            End If
         Else
             'btn_GenerateInv.Visible = False
             'btn_InvBatch.Visible = False
-            MsgBox("There are Invoices with errors. You will be unable to batch or generate invoices till the errors are cleared.")
+            MessageBox.Show("There are Invoices with errors. You will be unable to batch or generate invoices till the errors are cleared.", "Invoices with errors", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End If
     End Sub
 
