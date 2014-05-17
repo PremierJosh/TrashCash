@@ -41,17 +41,19 @@ Partial Class TrashCash_Home
         Me.UnderOverEvenCustomerToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.menu_Admin = New System.Windows.Forms.ToolStripDropDownButton()
         Me.btn_PendApprovs = New System.Windows.Forms.ToolStripButton()
-        Me.ToolStripButton1 = New System.Windows.Forms.ToolStripButton()
         Me.RecurringService_PendingApprovalsTableAdapter = New TrashCash.ds_RecurringServiceTableAdapters.RecurringService_PendingApprovalsTableAdapter()
         Me.Batch_RefreshBalance = New System.Windows.Forms.Timer(Me.components)
         Me.tt_AdminItem = New System.Windows.Forms.ToolTip(Me.components)
+        Me.pb_Batching = New System.Windows.Forms.ToolStripProgressBar()
+        Me.lbl_Spacer = New System.Windows.Forms.ToolStripStatusLabel()
+        Me.lbl_BatchProg = New System.Windows.Forms.ToolStripStatusLabel()
         Me.StatusStrip.SuspendLayout()
         Me.ts_AppBtns.SuspendLayout()
         Me.SuspendLayout()
         '
         'StatusStrip
         '
-        Me.StatusStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.btn_CurrentUser})
+        Me.StatusStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.btn_CurrentUser, Me.lbl_Spacer, Me.lbl_BatchProg, Me.pb_Batching})
         Me.StatusStrip.Location = New System.Drawing.Point(0, 544)
         Me.StatusStrip.Name = "StatusStrip"
         Me.StatusStrip.Size = New System.Drawing.Size(931, 22)
@@ -80,7 +82,7 @@ Partial Class TrashCash_Home
         'ts_AppBtns
         '
         Me.ts_AppBtns.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden
-        Me.ts_AppBtns.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.btn_CustTab, Me.btn_Invoicing, Me.btn_Payments, Me.btn_BatchWork, Me.btn_Reports, Me.menu_Admin, Me.btn_PendApprovs, Me.ToolStripButton1})
+        Me.ts_AppBtns.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.btn_CustTab, Me.btn_Invoicing, Me.btn_Payments, Me.btn_BatchWork, Me.btn_Reports, Me.menu_Admin, Me.btn_PendApprovs})
         Me.ts_AppBtns.Location = New System.Drawing.Point(0, 0)
         Me.ts_AppBtns.Name = "ts_AppBtns"
         Me.ts_AppBtns.Size = New System.Drawing.Size(931, 26)
@@ -168,7 +170,6 @@ Partial Class TrashCash_Home
         Me.menu_Admin.Name = "menu_Admin"
         Me.menu_Admin.Size = New System.Drawing.Size(112, 23)
         Me.menu_Admin.Text = "Administration"
-        Me.menu_Admin.Visible = False
         '
         'btn_PendApprovs
         '
@@ -182,15 +183,6 @@ Partial Class TrashCash_Home
         Me.btn_PendApprovs.Text = "Pending Approvals: 100"
         Me.btn_PendApprovs.Visible = False
         '
-        'ToolStripButton1
-        '
-        Me.ToolStripButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
-        Me.ToolStripButton1.Image = CType(resources.GetObject("ToolStripButton1.Image"), System.Drawing.Image)
-        Me.ToolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta
-        Me.ToolStripButton1.Name = "ToolStripButton1"
-        Me.ToolStripButton1.Size = New System.Drawing.Size(23, 23)
-        Me.ToolStripButton1.Text = "ToolStripButton1"
-        '
         'RecurringService_PendingApprovalsTableAdapter
         '
         Me.RecurringService_PendingApprovalsTableAdapter.ClearBeforeFill = True
@@ -198,6 +190,27 @@ Partial Class TrashCash_Home
         'Batch_RefreshBalance
         '
         Me.Batch_RefreshBalance.Interval = 10000
+        '
+        'pb_Batching
+        '
+        Me.pb_Batching.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right
+        Me.pb_Batching.Name = "pb_Batching"
+        Me.pb_Batching.Size = New System.Drawing.Size(200, 16)
+        Me.pb_Batching.Visible = False
+        '
+        'lbl_Spacer
+        '
+        Me.lbl_Spacer.Name = "lbl_Spacer"
+        Me.lbl_Spacer.Size = New System.Drawing.Size(559, 17)
+        Me.lbl_Spacer.Spring = True
+        Me.lbl_Spacer.Text = " "
+        '
+        'lbl_BatchProg
+        '
+        Me.lbl_BatchProg.Name = "lbl_BatchProg"
+        Me.lbl_BatchProg.Size = New System.Drawing.Size(35, 17)
+        Me.lbl_BatchProg.Text = "100%"
+        Me.lbl_BatchProg.Visible = False
         '
         'TrashCash_Home
         '
@@ -229,7 +242,6 @@ Partial Class TrashCash_Home
     Friend WithEvents btn_Rpt_PayReceived As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents btn_Rpt_DaysEvents As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents UnderOverEvenCustomerToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
-    Friend WithEvents ToolStripButton1 As System.Windows.Forms.ToolStripButton
     Friend WithEvents btn_PendApprovs As System.Windows.Forms.ToolStripButton
     Friend WithEvents RecurringService_PendingApprovalsTableAdapter As TrashCash.ds_RecurringServiceTableAdapters.RecurringService_PendingApprovalsTableAdapter
     Friend WithEvents Batch_RefreshBalance As System.Windows.Forms.Timer
@@ -238,5 +250,8 @@ Partial Class TrashCash_Home
     Friend WithEvents btn_CurrentUser As System.Windows.Forms.ToolStripDropDownButton
     Friend WithEvents btn_SwitchUser As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents btn_ChangePass As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents lbl_Spacer As System.Windows.Forms.ToolStripStatusLabel
+    Friend WithEvents lbl_BatchProg As System.Windows.Forms.ToolStripStatusLabel
+    Friend WithEvents pb_Batching As System.Windows.Forms.ToolStripProgressBar
 
 End Class

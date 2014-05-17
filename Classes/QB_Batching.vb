@@ -62,11 +62,13 @@ Public MustInherit Class QB_Batching
         Protected wita As ds_BatchingTableAdapters.BATCH_WorkingInvoiceTableAdapter
         Protected lita As ds_BatchingTableAdapters.BATCH_LineItemsTableAdapter
 
-        Public Sub New()
+        Public Sub New(ByVal InvoiceDT As ds_Batching.BATCH_WorkingInvoiceDataTable)
             MyBase.new()
             ' instantiating tas
             wita = New ds_BatchingTableAdapters.BATCH_WorkingInvoiceTableAdapter
             lita = New ds_BatchingTableAdapters.BATCH_LineItemsTableAdapter
+
+            widt = InvoiceDT
         End Sub
 
         Public Sub Batch(ByVal worker As System.ComponentModel.BackgroundWorker,
@@ -83,7 +85,6 @@ Public MustInherit Class QB_Batching
                 ' this is how many milliseconds between progress reporting
                 Dim elapsedTime As Double = 100
 
-                widt = wita.GetData()
 
                 If (widt.Rows.Count > 0) Then
                     ' setting maximum on progress class
@@ -315,11 +316,12 @@ Public MustInherit Class QB_Batching
         ' ta
         Protected ta As ds_BatchingTableAdapters.BATCH_WorkingPaymentsTableAdapter
 
-        Public Sub New()
+        Public Sub New(ByVal BatchPayDT As ds_Batching.BATCH_WorkingPaymentsDataTable)
             MyBase.New()
             ' instantiating ta
 
             ta = New ds_BatchingTableAdapters.BATCH_WorkingPaymentsTableAdapter
+            dt = BatchPayDT
         End Sub
 
         Public Sub Batch(ByVal worker As System.ComponentModel.BackgroundWorker,
@@ -336,9 +338,6 @@ Public MustInherit Class QB_Batching
                 Dim lastReportTime As DateTime = Now
                 ' this is how many milliseconds between progress reporting
                 Dim elapsedTime As Double = 100
-
-                ' fill dt
-                dt = ta.GetData()
 
                 If (dt.Rows.Count > 0) Then
                     ' setting maximum on progress class

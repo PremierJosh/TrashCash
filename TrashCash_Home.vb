@@ -145,6 +145,12 @@ Public Class TrashCash_Home
         _BatchRunning = running
         ' start timer to refresh balance every 10 seconds
         Batch_RefreshBalance.Enabled = running
+        ' make progress bar visible
+        pb_Batching.Visible = running
+        lbl_BatchProg.Visible = running
+    End Sub
+    Private Sub BatchProgPercUpdate(ByVal batchProg As Integer) Handles _batchForm.e_BatchProgPerc
+        lbl_BatchProg.Text = batchProg & "%"
     End Sub
 
     Private Sub btn_Invoicing_Click(sender As System.Object, e As System.EventArgs) Handles btn_Invoicing.Click

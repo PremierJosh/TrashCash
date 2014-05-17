@@ -7,6 +7,9 @@ Public Class BatchingPrep
     ' private vart for tracking batching
     Private _batching As Boolean
 
+    ' event to update progress % on home mdi parent
+    Friend Event e_BatchProgPerc(ByVal batchPercent As Integer)
+
     Friend Event BatchRunning(ByVal running As Boolean)
     Public Property Batching As Boolean
         Get
@@ -89,6 +92,10 @@ Public Class BatchingPrep
     Private WriteOnly Property PB_Percent
         Set(value)
             If (value > lastPercent) Then
+
+                ' raise event for home status bar update
+                RaiseEvent e_BatchProgPerc(value)
+
                 If (pnl_LeftBot.Visible) Then
                     ' invoices
                     pb_Invoices.Value = value
@@ -101,7 +108,7 @@ Public Class BatchingPrep
     End Property
 
     Public Property MasterForm As TrashCash.Customer
-    Protected qta As DataSetTableAdapters.QueriesTableAdapter
+    Protected qta As ds_BatchingTableAdapters.QueriesTableAdapter
 
     Private Sub BatchingPrep_FormClosed(sender As Object, e As System.Windows.Forms.FormClosingEventArgs) Handles Me.FormClosing
         If (e.CloseReason <> CloseReason.ApplicationExitCall) Then
@@ -134,7 +141,7 @@ Public Class BatchingPrep
         ' payments
         errCount = qta.WorkingPayments_ErrCount
         If (errCount = 0) Then
-            Me.WorkingPaymentsTableAdapter.Fill(Me.DataSet.WorkingPayments)
+            Me.BATCH_WorkingPaymentsTableAdapter.Fill(Me.Ds_Batching.BATCH_WorkingPayments)
         Else
             'btn_PayBatch.Visible = False
             MsgBox("There are Payments with errors. You will be unable to batch payments till the errors are cleared.")
@@ -143,7 +150,7 @@ Public Class BatchingPrep
         ' invoices
         errCount = qta.WorkingInvoice_ErrCount
         If (errCount = 0) Then
-            Me.WorkingInvoiceTableAdapter.FillByID(Me.DataSet.WorkingInvoice, "Status", "5")
+            Me.BATCH_WorkingInvoiceTableAdapter.Fill(Me.Ds_Batching.BATCH_WorkingInvoice)
         Else
             'btn_GenerateInv.Visible = False
             'btn_InvBatch.Visible = False
@@ -169,7 +176,7 @@ Public Class BatchingPrep
                 btn_CancelPayBatch.Visible = True
                 btn_CancelPayBatch.Enabled = True
                 ' init the object that the worker calls
-                Dim Payment As New QB_Batching.Payments
+                Dim Payment As New QB_Batching.Payments(Me.Ds_Batching.BATCH_WorkingPayments)
                 ' start the worker
                 BatchWorker.RunWorkerAsync(Payment)
             End If
@@ -187,7 +194,7 @@ Public Class BatchingPrep
                 btn_CancelInvBatch.Visible = True
                 btn_CancelInvBatch.Enabled = True
                 ' init the object that the worker calls
-                Dim Invoice As New QB_Batching.Invoicing
+                Dim Invoice As New QB_Batching.Invoicing(Me.Ds_Batching.BATCH_WorkingInvoice)
                 ' start the work
                 BatchWorker.RunWorkerAsync(Invoice)
             End If
@@ -198,7 +205,7 @@ Public Class BatchingPrep
     Private Sub btn_GenerateInv_Click(sender As System.Object, e As System.EventArgs) Handles btn_GenerateInv.Click
         ' if there are invoices already, we cannot generate
         'Dim qta As New DataSetTableAdapters.QueriesTableAdapter
-        Dim count As Integer = qta.WorkingInvoice_Count
+        Dim count As Integer = qta.WorkingInvoice_RecurringCount
 
         If (count = 0) Then
             ' checking if dtp is more than 30 days our
@@ -208,7 +215,7 @@ Public Class BatchingPrep
             Else
                 Me.Cursor = Cursors.WaitCursor
                 qta.GenerateRecurringInvoices(dtp_GenInvTo.Value.Date)
-                Me.WorkingInvoiceTableAdapter.FillByID(Me.DataSet.WorkingInvoice, "Status", "5")
+                Me.BATCH_WorkingInvoiceTableAdapter.Fill(Me.Ds_Batching.BATCH_WorkingInvoice)
                 Me.Cursor = Cursors.Default
             End If
         Else
@@ -223,9 +230,9 @@ Public Class BatchingPrep
                 Dim actualRow As DataSet.WorkingInvoiceRow = row.Row
 
                 If (dg_PrepInv.Rows(e.RowIndex).Cells(e.ColumnIndex).EditedFormattedValue = True) Then
-                    Me.WorkingInvoiceTableAdapter.UpdatePrint(actualRow.WorkingInvoiceID, "True")
+                    qta.WorkingInvoice_UpdatePrint(actualRow.WorkingInvoiceID, "True")
                 Else
-                    Me.WorkingInvoiceTableAdapter.UpdatePrint(actualRow.WorkingInvoiceID, "False")
+                    qta.WorkingInvoice_UpdatePrint(actualRow.WorkingInvoiceID, "False")
                 End If
             Catch ex As Exception
                 MsgBox(ex.Message)
@@ -293,7 +300,7 @@ Public Class BatchingPrep
         InitializeComponent()
 
         ' Add any initialization after the InitializeComponent() call.
-        qta = New DataSetTableAdapters.QueriesTableAdapter
+        qta = New ds_BatchingTableAdapters.QueriesTableAdapter
     End Sub
 
 
@@ -336,7 +343,7 @@ Public Class BatchingPrep
         Dim result As MsgBoxResult = MsgBox("Are you sure you want to delete all Prepared Invoices?", MsgBoxStyle.YesNo)
         If (result = MsgBoxResult.Yes) Then
             Try
-                Me.WorkingInvoiceTableAdapter.DeleteAll()
+                Me.BATCH_WorkingInvoiceTableAdapter.DeleteAll()
                 RefreshBatchQueue()
             Catch ex As Exception
                 MsgBox(ex.Message)
@@ -350,7 +357,7 @@ Public Class BatchingPrep
             Dim row As DataSet.WorkingPaymentsRow = drv.Row
             Dim result As MsgBoxResult = MsgBox("Delete this Prepared Payment?", MsgBoxStyle.YesNo)
             If (result = MsgBoxResult.Yes) Then
-                Me.WorkingPaymentsTableAdapter.DeleteByID(row.WorkingPaymentsID)
+                Me.BATCH_WorkingPaymentsTableAdapter.DeleteByID(row.WorkingPaymentsID)
                 dg_PrepPay.Rows.RemoveAt(dg_PrepPay.SelectedRows.Item(0).Index)
             End If
         Else
