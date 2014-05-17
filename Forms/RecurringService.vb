@@ -18,7 +18,7 @@
 
     ' customer number property
     Private _custNum As Integer
-    Private custRow As ds_Program.CustomerRow
+    Private custRow As ds_Customer.CustomerRow
     Friend Property CustomerNumber As Integer
         Get
             Return _custNum
