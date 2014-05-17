@@ -1,6 +1,6 @@
 ﻿Imports System.IO
 
-Public Class ServiceTypes
+Public Class AdminServiceTypes
     Private _home As TrashCash_Home
 
     Public Sub New(ByRef HomeForm As TrashCash_Home)

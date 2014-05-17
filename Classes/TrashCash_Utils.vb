@@ -216,11 +216,11 @@ Namespace Database_ComboBoxes
     Public Class cmb_Users
         Inherits ComboBox
 
-        Private dt As ds_Program.USERS_DataTable
-        Private ta As ds_ProgramTableAdapters.USERS_TableAdapter
+        Private dt As ds_Program.USERSDataTable
+        Private ta As ds_ProgramTableAdapters.USERSTableAdapter
 
         Public Sub New()
-            ta = New ds_ProgramTableAdapters.USERS_TableAdapter
+            ta = New ds_ProgramTableAdapters.USERSTableAdapter
             dt = ta.GetUsersList
 
             Me.DisplayMember = "USER_NAME"
@@ -239,7 +239,7 @@ Namespace Database_ComboBoxes
         Private Sub GetAuthLevel()
             If (Me.SelectedValue IsNot Nothing) Then
                 Dim row As DataRowView = DirectCast(Me.SelectedItem, DataRowView)
-                _authLevel = CType(row.Row, ds_Program.USERS_Row).USER_AUTHLVL
+                _authLevel = CType(row.Row, ds_Program.USERSRow).USER_AUTHLVL
             End If
         End Sub
     End Class

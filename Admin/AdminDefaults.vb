@@ -1,4 +1,4 @@
-﻿Public Class App_Defaults
+﻿Public Class AdminDefaults
     Private _Home As TrashCash_Home
 
     ' tas

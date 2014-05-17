@@ -26,7 +26,9 @@ Partial Class TrashCash_Home
         Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(TrashCash_Home))
         Me.StatusStrip = New System.Windows.Forms.StatusStrip()
-        Me.ToolStripStatusLabel = New System.Windows.Forms.ToolStripStatusLabel()
+        Me.btn_CurrentUser = New System.Windows.Forms.ToolStripDropDownButton()
+        Me.btn_SwitchUser = New System.Windows.Forms.ToolStripMenuItem()
+        Me.btn_ChangePass = New System.Windows.Forms.ToolStripMenuItem()
         Me.ts_AppBtns = New System.Windows.Forms.ToolStrip()
         Me.btn_CustTab = New System.Windows.Forms.ToolStripButton()
         Me.btn_Invoicing = New System.Windows.Forms.ToolStripButton()
@@ -37,34 +39,48 @@ Partial Class TrashCash_Home
         Me.btn_Rpt_PayReceived = New System.Windows.Forms.ToolStripMenuItem()
         Me.btn_Rpt_DaysEvents = New System.Windows.Forms.ToolStripMenuItem()
         Me.UnderOverEvenCustomerToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.btn_Admin = New System.Windows.Forms.ToolStripButton()
+        Me.menu_Admin = New System.Windows.Forms.ToolStripDropDownButton()
         Me.btn_PendApprovs = New System.Windows.Forms.ToolStripButton()
         Me.ToolStripButton1 = New System.Windows.Forms.ToolStripButton()
         Me.RecurringService_PendingApprovalsTableAdapter = New TrashCash.ds_DisplayTableAdapters.RecurringService_PendingApprovalsTableAdapter()
         Me.Batch_RefreshBalance = New System.Windows.Forms.Timer(Me.components)
+        Me.tt_AdminItem = New System.Windows.Forms.ToolTip(Me.components)
         Me.StatusStrip.SuspendLayout()
         Me.ts_AppBtns.SuspendLayout()
         Me.SuspendLayout()
         '
         'StatusStrip
         '
-        Me.StatusStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripStatusLabel})
+        Me.StatusStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.btn_CurrentUser})
         Me.StatusStrip.Location = New System.Drawing.Point(0, 544)
         Me.StatusStrip.Name = "StatusStrip"
         Me.StatusStrip.Size = New System.Drawing.Size(931, 22)
         Me.StatusStrip.TabIndex = 7
         Me.StatusStrip.Text = "StatusStrip"
         '
-        'ToolStripStatusLabel
+        'btn_CurrentUser
         '
-        Me.ToolStripStatusLabel.Name = "ToolStripStatusLabel"
-        Me.ToolStripStatusLabel.Size = New System.Drawing.Size(39, 17)
-        Me.ToolStripStatusLabel.Text = "Status"
+        Me.btn_CurrentUser.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.btn_SwitchUser, Me.btn_ChangePass})
+        Me.btn_CurrentUser.Name = "btn_CurrentUser"
+        Me.btn_CurrentUser.Size = New System.Drawing.Size(89, 20)
+        Me.btn_CurrentUser.Text = "Current User:"
+        '
+        'btn_SwitchUser
+        '
+        Me.btn_SwitchUser.Name = "btn_SwitchUser"
+        Me.btn_SwitchUser.Size = New System.Drawing.Size(168, 22)
+        Me.btn_SwitchUser.Text = "Switch User"
+        '
+        'btn_ChangePass
+        '
+        Me.btn_ChangePass.Name = "btn_ChangePass"
+        Me.btn_ChangePass.Size = New System.Drawing.Size(168, 22)
+        Me.btn_ChangePass.Text = "Change Password"
         '
         'ts_AppBtns
         '
         Me.ts_AppBtns.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden
-        Me.ts_AppBtns.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.btn_CustTab, Me.btn_Invoicing, Me.btn_Payments, Me.btn_BatchWork, Me.btn_Reports, Me.btn_Admin, Me.btn_PendApprovs, Me.ToolStripButton1})
+        Me.ts_AppBtns.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.btn_CustTab, Me.btn_Invoicing, Me.btn_Payments, Me.btn_BatchWork, Me.btn_Reports, Me.menu_Admin, Me.btn_PendApprovs, Me.ToolStripButton1})
         Me.ts_AppBtns.Location = New System.Drawing.Point(0, 0)
         Me.ts_AppBtns.Name = "ts_AppBtns"
         Me.ts_AppBtns.Size = New System.Drawing.Size(931, 26)
@@ -142,16 +158,17 @@ Partial Class TrashCash_Home
         Me.UnderOverEvenCustomerToolStripMenuItem.Size = New System.Drawing.Size(255, 24)
         Me.UnderOverEvenCustomerToolStripMenuItem.Text = "Under/Over/Even Customers"
         '
-        'btn_Admin
+        'menu_Admin
         '
-        Me.btn_Admin.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right
-        Me.btn_Admin.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text
-        Me.btn_Admin.Font = New System.Drawing.Font("Segoe UI", 10.0!)
-        Me.btn_Admin.Image = CType(resources.GetObject("btn_Admin.Image"), System.Drawing.Image)
-        Me.btn_Admin.ImageTransparentColor = System.Drawing.Color.Magenta
-        Me.btn_Admin.Name = "btn_Admin"
-        Me.btn_Admin.Size = New System.Drawing.Size(103, 23)
-        Me.btn_Admin.Text = "Administration"
+        Me.menu_Admin.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right
+        Me.menu_Admin.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text
+        Me.menu_Admin.Font = New System.Drawing.Font("Segoe UI", 10.0!)
+        Me.menu_Admin.Image = CType(resources.GetObject("menu_Admin.Image"), System.Drawing.Image)
+        Me.menu_Admin.ImageTransparentColor = System.Drawing.Color.Magenta
+        Me.menu_Admin.Name = "menu_Admin"
+        Me.menu_Admin.Size = New System.Drawing.Size(112, 23)
+        Me.menu_Admin.Text = "Administration"
+        Me.menu_Admin.Visible = False
         '
         'btn_PendApprovs
         '
@@ -201,14 +218,12 @@ Partial Class TrashCash_Home
         Me.PerformLayout()
 
     End Sub
-    Friend WithEvents ToolStripStatusLabel As System.Windows.Forms.ToolStripStatusLabel
     Friend WithEvents StatusStrip As System.Windows.Forms.StatusStrip
     Friend WithEvents ts_AppBtns As System.Windows.Forms.ToolStrip
     Friend WithEvents btn_Invoicing As System.Windows.Forms.ToolStripButton
     Friend WithEvents btn_Payments As System.Windows.Forms.ToolStripButton
     Friend WithEvents btn_BatchWork As System.Windows.Forms.ToolStripButton
     Friend WithEvents btn_CustTab As System.Windows.Forms.ToolStripButton
-    Friend WithEvents btn_Admin As System.Windows.Forms.ToolStripButton
     Friend WithEvents btn_Reports As System.Windows.Forms.ToolStripDropDownButton
     Friend WithEvents btn_Rpt_AllCustomerBalances As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents btn_Rpt_PayReceived As System.Windows.Forms.ToolStripMenuItem
@@ -218,5 +233,10 @@ Partial Class TrashCash_Home
     Friend WithEvents btn_PendApprovs As System.Windows.Forms.ToolStripButton
     Friend WithEvents RecurringService_PendingApprovalsTableAdapter As TrashCash.ds_DisplayTableAdapters.RecurringService_PendingApprovalsTableAdapter
     Friend WithEvents Batch_RefreshBalance As System.Windows.Forms.Timer
+    Friend WithEvents menu_Admin As System.Windows.Forms.ToolStripDropDownButton
+    Friend WithEvents tt_AdminItem As System.Windows.Forms.ToolTip
+    Friend WithEvents btn_CurrentUser As System.Windows.Forms.ToolStripDropDownButton
+    Friend WithEvents btn_SwitchUser As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents btn_ChangePass As System.Windows.Forms.ToolStripMenuItem
 
 End Class

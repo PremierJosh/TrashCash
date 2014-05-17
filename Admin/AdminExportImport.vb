@@ -1,7 +1,7 @@
 ﻿Imports QBFC12Lib
 Imports TrashCash.TrashCash_Utils.Err_Handling
 
-Public Class ImportWork
+Public Class AdminExportImport
     Private _missingCount As Integer
     Private Property MissingCustomerCount As Integer
         Get
@@ -171,5 +171,5 @@ Public Class ImportWork
 
         MsgBox("Invoices added. Be sure to delete rows before next import.")
     End Sub
-    
+
 End Class

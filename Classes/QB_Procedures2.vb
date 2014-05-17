@@ -69,7 +69,7 @@ Public Class QB_Procedures2
     End Function
 
 
-    Public Sub Customer_AddMissingListID(ByRef form As ImportWork)
+    Public Sub Customer_AddMissingListID(ByRef form As AdminExportImport)
         Dim missingCount As Integer
         Dim qta As New ds_CustomerTableAdapters.QueriesTableAdapter
 
@@ -508,7 +508,7 @@ retry:
                 row.Voided = True
                 row.VoidDateTime = Date.Now
                 row.VoidReason = VoidReason
-                row.VoidUser = HomeForm.UserRow.USER_NAME
+                row.VoidUser = HomeForm.CurrentUserRow.USER_NAME
 
                 ' commit
                 Using ta As New ds_RecurringServiceTableAdapters.RecurringService_EndDateCreditsTableAdapter
@@ -569,7 +569,7 @@ retry:
                                   creditRet.TotalAmount.GetValue,
                                   creditRet.TimeCreated.GetValue,
                                   Reason,
-                                  HomeForm.UserRow.USER_NAME,
+                                  HomeForm.CurrentUserRow.USER_NAME,
                                   False,
                                   Nothing,
                                   Nothing,
@@ -670,7 +670,7 @@ retry:
                     row.Voided = True
                     row.VoidReason = VoidReason
                     row.VoidTime = Date.Now
-                    row.VoidUser = HomeForm.UserRow.USER_NAME
+                    row.VoidUser = HomeForm.CurrentUserRow.USER_NAME
 
                     Try
                         ta.Update(row)

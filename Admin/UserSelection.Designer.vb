@@ -87,7 +87,7 @@ Partial Class UserSelection
         Me.Controls.Add(Me.Cmb_Users)
         Me.Name = "UserSelection"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent
-        Me.Text = "Administration Login"
+        Me.Text = "User Selection"
         Me.ResumeLayout(False)
         Me.PerformLayout()
 

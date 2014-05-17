@@ -8,17 +8,65 @@ Imports System.Data.SqlClient
 
 Public Class TrashCash_Home
     ' var for current user id row
-    Dim _userRow As ds_Program.USERSRow
-    Public Property UserRow As ds_Program.USERSRow
+    Private _currentUserRow As ds_Program.USERSRow
+    Public Property CurrentUserRow As ds_Program.USERSRow
         Get
-            Return _userRow
+            Return _currentUserRow
         End Get
         Set(value As ds_Program.USERSRow)
-            _userRow = value
+            If (_currentUserRow.USER_ID <> value.USER_ID) Then
+                _currentUserRow = value
 
-            ' update name on status bars
-            ToolStripStatusLabel.Text = "Current User: " & value.USER_NAME
-            Me.Text = "TrashCash       | Current User: " & value.USER_NAME
+                ' update name on status bars
+                btn_CurrentUser.Text = "Current User: " & value.USER_NAME
+                Me.Text = "TrashCash       | Current User: " & value.USER_NAME
+                ' update auth level
+                AuthLevel = value.USER_AUTHLVL
+
+                ' close all child windows
+                For Each f As Form In Me.MdiChildren
+                    f.Close()
+                    f = Nothing
+                Next
+
+                ' close admin form if open
+                If (f_TrashCash_Admin IsNot Nothing) Then
+                    f_TrashCash_Admin.Close()
+                    f_TrashCash_Admin = Nothing
+                End If
+
+                ' CHANGE CONNECTION STRING
+                Dim conPW As String = "Yealink01"
+                My.Settings.Item("QBDBConnectionString") = "Data Source=" & My.Settings.SQLSERVER & ";Initial Catalog=" & My.Settings.DATABASENAME & ";Integrated Security=False;USER ID=" & value.USER_NAME & ";Password=" & conPW
+
+            End If
+        End Set
+    End Property
+
+    ' public auth level property for easier access and event raising
+    Private _authLevel As Integer
+    ' vars for quick menu checking
+    Private _bypassLogin As Boolean = False
+    Public Property AuthLevel As Integer
+        Get
+            Return _authLevel
+        End Get
+        Set(value As Integer)
+            _authLevel = value
+
+            ' current as of 5/16/14
+            ' ID---NAME---AUTHLVL
+            ' 1	  Premier	1
+            ' 2	  Phyllis	1
+            ' 3	  Pam		2
+            ' 4	  Nicole	3
+
+            ' auth level 1 is super admin, no login prompts
+            If (value = 1) Then
+                _bypassLogin = True
+            Else
+                MessageBox.Show("AUTH LEVEL UNKNOWKN")
+            End If
         End Set
     End Property
 
@@ -53,10 +101,12 @@ Public Class TrashCash_Home
     Friend WithEvents _payForm As Payments
     Friend WithEvents _invForm As Invoicing
     Friend WithEvents _batchForm As BatchingPrep
-    Friend WithEvents _adminUser As UserSelection
-    Friend WithEvents _adminHome As AdminHome
     Friend WithEvents _customer As Customer
     Friend WithEvents _pendingApprovals As PendingApprovals
+
+    ' vars for admin forms'
+    Friend WithEvents f_UserSelection As UserSelection
+    Friend WithEvents f_TrashCash_Admin As TrashCash_Admin
 
     ' qb session and msg set req
     Friend app_SessMgr As QBSessionManager
@@ -127,34 +177,6 @@ Public Class TrashCash_Home
         _customer.BringToFront()
     End Sub
 
-    Private Sub btn_Admin_Click(sender As System.Object, e As System.EventArgs) Handles btn_Admin.Click
-        If (_adminHome IsNot Nothing) Then
-            _adminHome.Show()
-            _adminHome.BringToFront()
-        Else
-            If (_adminUser Is Nothing) Then
-                _adminUser = New UserSelection
-                '_adminUser.MdiParent = Me
-            End If
-
-            _adminUser.ShowDialog()
-        End If
-    End Sub
-    ' catch event to show admin
-    Private Sub AdminShow(ByVal UserAuthLvl As Integer) Handles _adminUser.AdminShow
-        If (_adminHome IsNot Nothing) Then
-            _adminHome = Nothing
-        End If
-
-        _adminHome = New AdminHome(Me, UserAuthLvl)
-        _adminHome.MdiParent = Me
-        _adminHome.Show()
-    End Sub
-    ' catch event for admin closing
-    Private Sub AdminClosed() Handles _adminHome.AdminClosed
-        _adminHome = Nothing
-    End Sub
-
     Private Sub btn_BatchWork_Click(sender As System.Object, e As System.EventArgs) Handles btn_BatchWork.Click
         If (_batchForm Is Nothing) Then
             _batchForm = New BatchingPrep
@@ -182,7 +204,7 @@ Public Class TrashCash_Home
                 Application.Exit()
             End Try
         End If
-        
+
     End Sub
 
     Private Sub TrashCash_Home_Load(sender As Object, e As System.EventArgs) Handles Me.Load
@@ -355,7 +377,7 @@ Public Class TrashCash_Home
 
         ' setting userid row
         Using ta As New ds_ProgramTableAdapters.USERSTableAdapter
-            userRow = ta.GetDataByID(UserID).Rows(0)
+            CurrentUserRow = ta.GetDataByID(UserID).Rows(0)
         End Using
 
         qta = New ds_ProgramTableAdapters.QueriesTableAdapter
@@ -386,6 +408,79 @@ Public Class TrashCash_Home
         ' if customer form already open, refresh the balance
         If (_customer IsNot Nothing) Then
             _customer.RefreshCustBalance()
+        End If
+    End Sub
+
+    Private Sub menu_Admin_Click(sender As System.Object, e As System.EventArgs) Handles menu_Admin.Click
+        If (f_TrashCash_Admin IsNot Nothing) Then
+            f_TrashCash_Admin.BringToFront()
+            f_TrashCash_Admin.Show()
+        Else
+            Dim open As Boolean = False
+            Dim userRow As ds_Program.USERSRow = _currentUserRow
+
+            If (_bypassLogin) Then
+                open = True
+            Else
+                f_UserSelection = New UserSelection("Administration Login")
+                f_UserSelection.ShowDialog()
+                If (f_UserSelection.AuthUserRow IsNot Nothing) Then
+                    open = True
+                    userRow = f_UserSelection.AuthUserRow
+                End If
+                f_UserSelection = Nothing
+            End If
+
+            If (open) Then
+                ' making sure userrow is less than 3
+                If (userRow.USER_AUTHLVL < 3) Then
+                    f_TrashCash_Admin = New TrashCash_Admin(Me, userRow)
+                    f_TrashCash_Admin.Show()
+                Else
+                    MessageBox.Show("No administrator privledges.", "No privledges", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                End If
+            End If
+        End If
+    End Sub
+
+    Private Sub btn_SwitchUser_Click(sender As System.Object, e As System.EventArgs) Handles btn_SwitchUser.Click
+        If (Not _BatchRunning) Then
+            Dim f_userSwitch As New UserSelection("User Switch")
+            f_userSwitch.ShowDialog()
+            If (f_userSwitch.AuthUserRow IsNot Nothing) Then
+                ' get new row 
+                CurrentUserRow = f_userSwitch.AuthUserRow
+            End If
+
+            f_userSwitch = Nothing
+        Else
+            MessageBox.Show("Cannot switch user during a batch.", "Batch Running", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        End If
+    End Sub
+
+    Private Sub btn_ChangePass_Click(sender As System.Object, e As System.EventArgs) Handles btn_ChangePass.Click
+        ' check password
+        f_UserSelection = New UserSelection("Select User for Password Change")
+        f_UserSelection.ShowDialog()
+
+        If (f_UserSelection.AuthUserRow IsNot Nothing) Then
+            ' grab id and current pw of confirmed user
+            Dim changeUserID As Integer = f_UserSelection.AuthUserRow.USER_ID
+            Dim currentPW As String = f_UserSelection.AuthPWText
+
+            'get new password
+            f_UserSelection = New UserSelection("New Password", ChangePW:=True)
+            f_UserSelection.Cmb_Users.SelectedValue = changeUserID
+            f_UserSelection.Cmb_Users.Enabled = False
+            f_UserSelection.ShowDialog()
+
+            ' change password
+            If (f_UserSelection.AuthPWText IsNot Nothing) Then
+                Using ta As New ds_ProgramTableAdapters.USERSTableAdapter
+                    ta.ChangePassword(changeUserID, f_UserSelection.AuthPWText, currentPW)
+                End Using
+            End If
+
         End If
     End Sub
 End Class

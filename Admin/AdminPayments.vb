@@ -1,4 +1,4 @@
-﻿Public Class PaymentHistory
+﻿Public Class AdminPayments
     ' home form ref var
     Private _home As TrashCash_Home
 

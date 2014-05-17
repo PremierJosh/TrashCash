@@ -7,9 +7,9 @@
         Dim userID As Integer
         userID = qta.USERS_Authenticate(tb_Username.Text, mtb_Password.Text)
         If (userID <> Nothing) Then
-            ' CHANGE CONNECTION STRING
-            Dim conPW As String = "Yealink01"
-            My.Settings.Item("QBDBConnectionString") = "Data Source=" & My.Settings.SQLSERVER & ";Initial Catalog=" & My.Settings.DATABASENAME & ";Integrated Security=False;USER ID=" & qta.USERS_GetName(userID).ToString & ";Password=" & conPW
+            '' CHANGE CONNECTION STRING - doing on home form
+            'Dim conPW As String = "Yealink01"
+            'My.Settings.Item("QBDBConnectionString") = "Data Source=" & My.Settings.SQLSERVER & ";Initial Catalog=" & My.Settings.DATABASENAME & ";Integrated Security=False;USER ID=" & qta.USERS_GetName(userID).ToString & ";Password=" & conPW
 
             Dim splash As New SplashScreen
             splash.Show()

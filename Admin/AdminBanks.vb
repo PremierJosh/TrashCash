@@ -1,4 +1,4 @@
-﻿Public Class BankMaint
+﻿Public Class AdminBanks
     Private _Home As TrashCash_Home
 
     Private Sub BankMaint_Load(sender As Object, e As System.EventArgs) Handles Me.Load

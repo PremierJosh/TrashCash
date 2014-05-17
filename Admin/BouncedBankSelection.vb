@@ -56,8 +56,8 @@ Public Class BouncedBankSelection
     Dim banks As ds_Program.BAD_CHECK_BANKS_DataTable
     Dim bta As ds_ProgramTableAdapters.BAD_CHECK_BANKS_TableAdapter
 
-    Private _payHisForm As PaymentHistory
-    Public Sub New(ByRef HomeForm As TrashCash_Home, ByRef PayHistoryForm As PaymentHistory)
+    Private _payHisForm As AdminPayments
+    Public Sub New(ByRef HomeForm As TrashCash_Home, ByRef PayHistoryForm As AdminPayments)
         ' This call is required by the designer.
         InitializeComponent()
 
