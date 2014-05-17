@@ -42,7 +42,7 @@ Partial Class TrashCash_Home
         Me.menu_Admin = New System.Windows.Forms.ToolStripDropDownButton()
         Me.btn_PendApprovs = New System.Windows.Forms.ToolStripButton()
         Me.ToolStripButton1 = New System.Windows.Forms.ToolStripButton()
-        Me.RecurringService_PendingApprovalsTableAdapter = New TrashCash.ds_DisplayTableAdapters.RecurringService_PendingApprovalsTableAdapter()
+        Me.RecurringService_PendingApprovalsTableAdapter = New TrashCash.ds_RecurringServiceTableAdapters.RecurringService_PendingApprovalsTableAdapter()
         Me.Batch_RefreshBalance = New System.Windows.Forms.Timer(Me.components)
         Me.tt_AdminItem = New System.Windows.Forms.ToolTip(Me.components)
         Me.StatusStrip.SuspendLayout()
@@ -231,7 +231,7 @@ Partial Class TrashCash_Home
     Friend WithEvents UnderOverEvenCustomerToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents ToolStripButton1 As System.Windows.Forms.ToolStripButton
     Friend WithEvents btn_PendApprovs As System.Windows.Forms.ToolStripButton
-    Friend WithEvents RecurringService_PendingApprovalsTableAdapter As TrashCash.ds_DisplayTableAdapters.RecurringService_PendingApprovalsTableAdapter
+    Friend WithEvents RecurringService_PendingApprovalsTableAdapter As TrashCash.ds_RecurringServiceTableAdapters.RecurringService_PendingApprovalsTableAdapter
     Friend WithEvents Batch_RefreshBalance As System.Windows.Forms.Timer
     Friend WithEvents menu_Admin As System.Windows.Forms.ToolStripDropDownButton
     Friend WithEvents tt_AdminItem As System.Windows.Forms.ToolTip

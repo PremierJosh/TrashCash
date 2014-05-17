@@ -14,7 +14,7 @@
                 custNum = value
 
                 ' fill Note grid
-                Me.CustomerNotesTableAdapter.Fill(Me.Ds_Display.CustomerNotes, value)
+                Me.CustomerNotesTableAdapter.Fill(Me.Ds_Customer.CustomerNotes, value)
             End If
         End Set
     End Property
@@ -25,7 +25,7 @@
             Try
                 Me.CustomerNotesTableAdapter.CustomerNotes_Insert(CurrentCustomer, noteText)
                 ' refill grid
-                Me.CustomerNotesTableAdapter.Fill(Me.Ds_Display.CustomerNotes, CurrentCustomer)
+                Me.CustomerNotesTableAdapter.Fill(Me.Ds_Customer.CustomerNotes, CurrentCustomer)
             Catch ex As Exception
                 MessageBox.Show("Error inserting New Customer Note", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
             End Try
