@@ -22,11 +22,11 @@ Public MustInherit Class QB_Batching
     Protected connected As Boolean
     ' session status bool
     Protected inSession As Boolean
-    ' queries ta
-    Protected qta As DataSetTableAdapters.QueriesTableAdapter
     ' class vars
     Private c_Queries As QB_Queries
     Private c_Procedures As QB_Procedures
+    ' qta
+    Private qta As ds_BatchingTableAdapters.QueriesTableAdapter
 
     Public Sub New()
         _sessMgr = New QBSessionManager
@@ -42,31 +42,31 @@ Public MustInherit Class QB_Batching
 
         _msgSetReq = SessionManager.CreateMsgSetRequest("US", 11, 0)
 
-        ' instantiate qta
-        qta = New DataSetTableAdapters.QueriesTableAdapter
+        ' instantiate 
         c_Queries = New QB_Queries(SessionManager, MsgSetRequest)
         c_Procedures = New QB_Procedures(SessionManager, MsgSetRequest)
+        qta = New ds_BatchingTableAdapters.QueriesTableAdapter
     End Sub
 
     Public Class Invoicing
         Inherits QB_Batching
 
         ' dt for line items
-        Protected linedt As DataSet.BATCH_LineItemsDataTable
+        Protected linedt As ds_Batching.BATCH_LineItemsDataTable
         ' dt for invoices
-        Protected widt As DataSet.Batch_WorkingInvoiceDataTable
+        Protected widt As ds_Batching.BATCH_WorkingInvoiceDataTable
         ' current batch id
         Protected BatchID As Integer
 
         ' tas
-        Protected wita As DataSetTableAdapters.Batch_WorkingInvoiceTableAdapter
-        Protected lita As DataSetTableAdapters.BATCH_LineItemsTableAdapter
+        Protected wita As ds_BatchingTableAdapters.BATCH_WorkingInvoiceTableAdapter
+        Protected lita As ds_BatchingTableAdapters.BATCH_LineItemsTableAdapter
 
         Public Sub New()
             MyBase.new()
             ' instantiating tas
-            wita = New DataSetTableAdapters.Batch_WorkingInvoiceTableAdapter
-            lita = New DataSetTableAdapters.BATCH_LineItemsTableAdapter
+            wita = New ds_BatchingTableAdapters.BATCH_WorkingInvoiceTableAdapter
+            lita = New ds_BatchingTableAdapters.BATCH_LineItemsTableAdapter
         End Sub
 
         Public Sub Batch(ByVal worker As System.ComponentModel.BackgroundWorker,
@@ -100,7 +100,7 @@ Public MustInherit Class QB_Batching
                     End Try
 
                     ' start looping through rows
-                    For Each row As DataSet.Batch_WorkingInvoiceRow In widt.Rows
+                    For Each row As ds_Batching.BATCH_WorkingInvoiceRow In widt.Rows
                         ' updating progress counter and customer
                         progress.CurrentValue += 1
                         progress.CurrentCustomer = row.CustomerFullName
@@ -133,7 +133,7 @@ Public MustInherit Class QB_Batching
                         ElseIf (row.InvoiceStatus = 7) Then
                             ' update billed services table if inv is recurring
                             If (row.IsRecurring) Then
-                                For Each lineRow As DataSet.BATCH_LineItemsRow In linedt.Rows
+                                For Each lineRow As ds_Batching.BATCH_LineItemsRow In linedt.Rows
                                     ' get total of line row
                                     Dim lineTotal As Double = (lineRow.LineItemRate * lineRow.LineItemQuantity)
 
@@ -192,7 +192,7 @@ Public MustInherit Class QB_Batching
             Me.Finalize()
         End Sub
 
-        Private Sub Invoice(ByRef invRow As DataSet.Batch_WorkingInvoiceRow)
+        Private Sub Invoice(ByRef invRow As ds_Batching.BATCH_WorkingInvoiceRow)
 
             If (inSession) Then
                 ' fill line table
@@ -223,7 +223,7 @@ Public MustInherit Class QB_Batching
                 Dim lineItem As IORInvoiceLineAdd
 
                 ' loop through line items
-                For Each lineRow As DataSet.BATCH_LineItemsRow In linedt.Rows
+                For Each lineRow As ds_Batching.BATCH_LineItemsRow In linedt.Rows
                     lineItem = lineList.Append
 
                     lineItem.InvoiceLineAdd.ItemRef.ListID.SetValue(lineRow.ServiceListID)
@@ -266,7 +266,7 @@ Public MustInherit Class QB_Batching
 
                         Dim lineID As String
                         Dim _ID As Integer
-                        Dim row As DataSet.BATCH_LineItemsRow
+                        Dim row As ds_Batching.BATCH_LineItemsRow
                         ' looping through line rows to update their fields for billed history writing
                         For l = 0 To invLineRetList.Count - 1
                             invLineRet = invLineRetList.GetAt(l)
@@ -308,17 +308,18 @@ Public MustInherit Class QB_Batching
     Public Class Payments
         Inherits QB_Batching
 
-        Protected dt As DataSet.BATCH_WorkingPaymentsDataTable
+        Protected dt As ds_Batching.BATCH_WorkingPaymentsDataTable
 
         ' current batch id
         Protected BatchID As Integer
         ' ta
-        Protected ta As DataSetTableAdapters.BATCH_WorkingPaymentsTableAdapter
+        Protected ta As ds_BatchingTableAdapters.BATCH_WorkingPaymentsTableAdapter
 
         Public Sub New()
             MyBase.New()
             ' instantiating ta
-            ta = New DataSetTableAdapters.BATCH_WorkingPaymentsTableAdapter
+
+            ta = New ds_BatchingTableAdapters.BATCH_WorkingPaymentsTableAdapter
         End Sub
 
         Public Sub Batch(ByVal worker As System.ComponentModel.BackgroundWorker,
@@ -354,7 +355,7 @@ Public MustInherit Class QB_Batching
                         e.Cancel = True
                     End Try
 
-                    For Each row As DataSet.BATCH_WorkingPaymentsRow In dt.Rows
+                    For Each row As ds_Batching.BATCH_WorkingPaymentsRow In dt.Rows
                         ' updating progress counter and customer
                         progress.CurrentValue += 1
                         progress.CurrentCustomer = row.CustomerFullName
@@ -449,7 +450,7 @@ Public MustInherit Class QB_Batching
             Me.Finalize()
         End Sub
 
-        Private Sub ReceivePayment(ByRef row As DataSet.BATCH_WorkingPaymentsRow)
+        Private Sub ReceivePayment(ByRef row As ds_Batching.BATCH_WorkingPaymentsRow)
 
             ' building request
             Dim recPayment As IReceivePaymentAdd = MsgSetRequest.AppendReceivePaymentAddRq

@@ -30,17 +30,6 @@ Partial Class UC_RecurringService
         Dim DataGridViewCellStyle5 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.sc_Master = New System.Windows.Forms.SplitContainer()
         Me.dg_RecSrvc = New System.Windows.Forms.DataGridView()
-        Me.Panel1 = New System.Windows.Forms.Panel()
-        Me.btn_NewSrvc = New System.Windows.Forms.Button()
-        Me.grp_SrvcState = New System.Windows.Forms.GroupBox()
-        Me.rdo_AllSrvc = New System.Windows.Forms.RadioButton()
-        Me.rdo_CurrentSrvc = New System.Windows.Forms.RadioButton()
-        Me.rdo_EndedSrvc = New System.Windows.Forms.RadioButton()
-        Me.dg_Notes = New System.Windows.Forms.DataGridView()
-        Me.Ds_RecurringService = New TrashCash.ds_RecurringService()
-        Me.RecurringService_DisplayByCustomerIDTableAdapter = New TrashCash.ds_RecurringServiceTableAdapters.RecurringService_DisplayByCustomerIDTableAdapter()
-        Me.ServiceNotesTableAdapter = New TrashCash.ds_RecurringServiceTableAdapters.ServiceNotesTableAdapter()
-        Me.RecurringServiceDisplayByCustomerIDBindingSource = New System.Windows.Forms.BindingSource(Me.components)
         Me.DataGridViewTextBoxColumn1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.DataGridViewTextBoxColumn2 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.DataGridViewTextBoxColumn6 = New System.Windows.Forms.DataGridViewTextBoxColumn()
@@ -49,21 +38,32 @@ Partial Class UC_RecurringService
         Me.DataGridViewTextBoxColumn4 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.DataGridViewTextBoxColumn5 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.DataGridViewCheckBoxColumn1 = New System.Windows.Forms.DataGridViewCheckBoxColumn()
-        Me.BindingSource1 = New System.Windows.Forms.BindingSource(Me.components)
+        Me.RecurringServiceDisplayByCustomerIDBindingSource = New System.Windows.Forms.BindingSource(Me.components)
+        Me.Ds_RecurringService = New TrashCash.ds_RecurringService()
+        Me.Panel1 = New System.Windows.Forms.Panel()
+        Me.btn_NewSrvc = New System.Windows.Forms.Button()
+        Me.grp_SrvcState = New System.Windows.Forms.GroupBox()
+        Me.rdo_AllSrvc = New System.Windows.Forms.RadioButton()
+        Me.rdo_CurrentSrvc = New System.Windows.Forms.RadioButton()
+        Me.rdo_EndedSrvc = New System.Windows.Forms.RadioButton()
+        Me.dg_Notes = New System.Windows.Forms.DataGridView()
         Me.DataGridViewTextBoxColumn8 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.DataGridViewTextBoxColumn9 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.DataGridViewTextBoxColumn10 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.ServiceNotesBindingSource = New System.Windows.Forms.BindingSource(Me.components)
+        Me.RecurringService_DisplayByCustomerIDTableAdapter = New TrashCash.ds_RecurringServiceTableAdapters.RecurringService_DisplayByCustomerIDTableAdapter()
+        Me.ServiceNotesTableAdapter = New TrashCash.ds_RecurringServiceTableAdapters.ServiceNotesTableAdapter()
         CType(Me.sc_Master, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.sc_Master.Panel1.SuspendLayout()
         Me.sc_Master.Panel2.SuspendLayout()
         Me.sc_Master.SuspendLayout()
         CType(Me.dg_RecSrvc, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.RecurringServiceDisplayByCustomerIDBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.Ds_RecurringService, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.Panel1.SuspendLayout()
         Me.grp_SrvcState.SuspendLayout()
         CType(Me.dg_Notes, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.Ds_RecurringService, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.RecurringServiceDisplayByCustomerIDBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.BindingSource1, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.ServiceNotesBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'sc_Master
@@ -104,107 +104,6 @@ Partial Class UC_RecurringService
         Me.dg_RecSrvc.Size = New System.Drawing.Size(804, 170)
         Me.dg_RecSrvc.TabIndex = 55
         Me.dg_RecSrvc.TabStop = False
-        '
-        'Panel1
-        '
-        Me.Panel1.Controls.Add(Me.btn_NewSrvc)
-        Me.Panel1.Controls.Add(Me.grp_SrvcState)
-        Me.Panel1.Dock = System.Windows.Forms.DockStyle.Right
-        Me.Panel1.Location = New System.Drawing.Point(804, 0)
-        Me.Panel1.Name = "Panel1"
-        Me.Panel1.Size = New System.Drawing.Size(96, 170)
-        Me.Panel1.TabIndex = 0
-        '
-        'btn_NewSrvc
-        '
-        Me.btn_NewSrvc.AutoSize = True
-        Me.btn_NewSrvc.Location = New System.Drawing.Point(9, 97)
-        Me.btn_NewSrvc.Name = "btn_NewSrvc"
-        Me.btn_NewSrvc.Size = New System.Drawing.Size(78, 23)
-        Me.btn_NewSrvc.TabIndex = 58
-        Me.btn_NewSrvc.Text = "New Service"
-        Me.btn_NewSrvc.UseVisualStyleBackColor = True
-        '
-        'grp_SrvcState
-        '
-        Me.grp_SrvcState.Controls.Add(Me.rdo_AllSrvc)
-        Me.grp_SrvcState.Controls.Add(Me.rdo_CurrentSrvc)
-        Me.grp_SrvcState.Controls.Add(Me.rdo_EndedSrvc)
-        Me.grp_SrvcState.Location = New System.Drawing.Point(3, 3)
-        Me.grp_SrvcState.Name = "grp_SrvcState"
-        Me.grp_SrvcState.Size = New System.Drawing.Size(88, 88)
-        Me.grp_SrvcState.TabIndex = 57
-        Me.grp_SrvcState.TabStop = False
-        Me.grp_SrvcState.Text = "Service State"
-        '
-        'rdo_AllSrvc
-        '
-        Me.rdo_AllSrvc.AutoSize = True
-        Me.rdo_AllSrvc.Location = New System.Drawing.Point(6, 62)
-        Me.rdo_AllSrvc.Name = "rdo_AllSrvc"
-        Me.rdo_AllSrvc.Size = New System.Drawing.Size(36, 17)
-        Me.rdo_AllSrvc.TabIndex = 2
-        Me.rdo_AllSrvc.TabStop = True
-        Me.rdo_AllSrvc.Text = "All"
-        Me.rdo_AllSrvc.UseVisualStyleBackColor = True
-        '
-        'rdo_CurrentSrvc
-        '
-        Me.rdo_CurrentSrvc.AutoSize = True
-        Me.rdo_CurrentSrvc.Checked = True
-        Me.rdo_CurrentSrvc.Location = New System.Drawing.Point(6, 16)
-        Me.rdo_CurrentSrvc.Name = "rdo_CurrentSrvc"
-        Me.rdo_CurrentSrvc.Size = New System.Drawing.Size(59, 17)
-        Me.rdo_CurrentSrvc.TabIndex = 1
-        Me.rdo_CurrentSrvc.TabStop = True
-        Me.rdo_CurrentSrvc.Text = "Current"
-        Me.rdo_CurrentSrvc.UseVisualStyleBackColor = True
-        '
-        'rdo_EndedSrvc
-        '
-        Me.rdo_EndedSrvc.AutoSize = True
-        Me.rdo_EndedSrvc.Location = New System.Drawing.Point(6, 39)
-        Me.rdo_EndedSrvc.Name = "rdo_EndedSrvc"
-        Me.rdo_EndedSrvc.Size = New System.Drawing.Size(56, 17)
-        Me.rdo_EndedSrvc.TabIndex = 0
-        Me.rdo_EndedSrvc.Text = "Ended"
-        Me.rdo_EndedSrvc.UseVisualStyleBackColor = True
-        '
-        'dg_Notes
-        '
-        Me.dg_Notes.AllowUserToAddRows = False
-        Me.dg_Notes.AllowUserToDeleteRows = False
-        Me.dg_Notes.AllowUserToResizeRows = False
-        Me.dg_Notes.AutoGenerateColumns = False
-        Me.dg_Notes.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.dg_Notes.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.DataGridViewTextBoxColumn8, Me.DataGridViewTextBoxColumn9, Me.DataGridViewTextBoxColumn10})
-        Me.dg_Notes.DataSource = Me.BindingSource1
-        Me.dg_Notes.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.dg_Notes.Location = New System.Drawing.Point(0, 0)
-        Me.dg_Notes.Name = "dg_Notes"
-        Me.dg_Notes.ReadOnly = True
-        Me.dg_Notes.RowHeadersVisible = False
-        Me.dg_Notes.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.dg_Notes.Size = New System.Drawing.Size(900, 122)
-        Me.dg_Notes.TabIndex = 93
-        '
-        'Ds_RecurringService
-        '
-        Me.Ds_RecurringService.DataSetName = "ds_RecurringService"
-        Me.Ds_RecurringService.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema
-        '
-        'RecurringService_DisplayByCustomerIDTableAdapter
-        '
-        Me.RecurringService_DisplayByCustomerIDTableAdapter.ClearBeforeFill = True
-        '
-        'ServiceNotesTableAdapter
-        '
-        Me.ServiceNotesTableAdapter.ClearBeforeFill = True
-        '
-        'RecurringServiceDisplayByCustomerIDBindingSource
-        '
-        Me.RecurringServiceDisplayByCustomerIDBindingSource.DataMember = "RecurringService_DisplayByCustomerID"
-        Me.RecurringServiceDisplayByCustomerIDBindingSource.DataSource = Me.Ds_RecurringService
         '
         'DataGridViewTextBoxColumn1
         '
@@ -282,10 +181,97 @@ Partial Class UC_RecurringService
         Me.DataGridViewCheckBoxColumn1.Name = "DataGridViewCheckBoxColumn1"
         Me.DataGridViewCheckBoxColumn1.ReadOnly = True
         '
-        'BindingSource1
+        'RecurringServiceDisplayByCustomerIDBindingSource
         '
-        Me.BindingSource1.DataMember = "ServiceNotes"
-        Me.BindingSource1.DataSource = Me.Ds_RecurringService
+        Me.RecurringServiceDisplayByCustomerIDBindingSource.DataMember = "RecurringService_DisplayByCustomerID"
+        Me.RecurringServiceDisplayByCustomerIDBindingSource.DataSource = Me.Ds_RecurringService
+        '
+        'Ds_RecurringService
+        '
+        Me.Ds_RecurringService.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema
+        '
+        'Panel1
+        '
+        Me.Panel1.Controls.Add(Me.btn_NewSrvc)
+        Me.Panel1.Controls.Add(Me.grp_SrvcState)
+        Me.Panel1.Dock = System.Windows.Forms.DockStyle.Right
+        Me.Panel1.Location = New System.Drawing.Point(804, 0)
+        Me.Panel1.Name = "Panel1"
+        Me.Panel1.Size = New System.Drawing.Size(96, 170)
+        Me.Panel1.TabIndex = 0
+        '
+        'btn_NewSrvc
+        '
+        Me.btn_NewSrvc.AutoSize = True
+        Me.btn_NewSrvc.Location = New System.Drawing.Point(9, 97)
+        Me.btn_NewSrvc.Name = "btn_NewSrvc"
+        Me.btn_NewSrvc.Size = New System.Drawing.Size(78, 23)
+        Me.btn_NewSrvc.TabIndex = 58
+        Me.btn_NewSrvc.Text = "New Service"
+        Me.btn_NewSrvc.UseVisualStyleBackColor = True
+        '
+        'grp_SrvcState
+        '
+        Me.grp_SrvcState.Controls.Add(Me.rdo_AllSrvc)
+        Me.grp_SrvcState.Controls.Add(Me.rdo_CurrentSrvc)
+        Me.grp_SrvcState.Controls.Add(Me.rdo_EndedSrvc)
+        Me.grp_SrvcState.Location = New System.Drawing.Point(3, 3)
+        Me.grp_SrvcState.Name = "grp_SrvcState"
+        Me.grp_SrvcState.Size = New System.Drawing.Size(88, 88)
+        Me.grp_SrvcState.TabIndex = 57
+        Me.grp_SrvcState.TabStop = False
+        Me.grp_SrvcState.Text = "Service State"
+        '
+        'rdo_AllSrvc
+        '
+        Me.rdo_AllSrvc.AutoSize = True
+        Me.rdo_AllSrvc.Location = New System.Drawing.Point(6, 62)
+        Me.rdo_AllSrvc.Name = "rdo_AllSrvc"
+        Me.rdo_AllSrvc.Size = New System.Drawing.Size(36, 17)
+        Me.rdo_AllSrvc.TabIndex = 2
+        Me.rdo_AllSrvc.TabStop = True
+        Me.rdo_AllSrvc.Text = "All"
+        Me.rdo_AllSrvc.UseVisualStyleBackColor = True
+        '
+        'rdo_CurrentSrvc
+        '
+        Me.rdo_CurrentSrvc.AutoSize = True
+        Me.rdo_CurrentSrvc.Checked = True
+        Me.rdo_CurrentSrvc.Location = New System.Drawing.Point(6, 16)
+        Me.rdo_CurrentSrvc.Name = "rdo_CurrentSrvc"
+        Me.rdo_CurrentSrvc.Size = New System.Drawing.Size(59, 17)
+        Me.rdo_CurrentSrvc.TabIndex = 1
+        Me.rdo_CurrentSrvc.TabStop = True
+        Me.rdo_CurrentSrvc.Text = "Current"
+        Me.rdo_CurrentSrvc.UseVisualStyleBackColor = True
+        '
+        'rdo_EndedSrvc
+        '
+        Me.rdo_EndedSrvc.AutoSize = True
+        Me.rdo_EndedSrvc.Location = New System.Drawing.Point(6, 39)
+        Me.rdo_EndedSrvc.Name = "rdo_EndedSrvc"
+        Me.rdo_EndedSrvc.Size = New System.Drawing.Size(56, 17)
+        Me.rdo_EndedSrvc.TabIndex = 0
+        Me.rdo_EndedSrvc.Text = "Ended"
+        Me.rdo_EndedSrvc.UseVisualStyleBackColor = True
+        '
+        'dg_Notes
+        '
+        Me.dg_Notes.AllowUserToAddRows = False
+        Me.dg_Notes.AllowUserToDeleteRows = False
+        Me.dg_Notes.AllowUserToResizeRows = False
+        Me.dg_Notes.AutoGenerateColumns = False
+        Me.dg_Notes.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.dg_Notes.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.DataGridViewTextBoxColumn8, Me.DataGridViewTextBoxColumn9, Me.DataGridViewTextBoxColumn10})
+        Me.dg_Notes.DataSource = Me.ServiceNotesBindingSource
+        Me.dg_Notes.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.dg_Notes.Location = New System.Drawing.Point(0, 0)
+        Me.dg_Notes.Name = "dg_Notes"
+        Me.dg_Notes.ReadOnly = True
+        Me.dg_Notes.RowHeadersVisible = False
+        Me.dg_Notes.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
+        Me.dg_Notes.Size = New System.Drawing.Size(900, 122)
+        Me.dg_Notes.TabIndex = 93
         '
         'DataGridViewTextBoxColumn8
         '
@@ -304,7 +290,7 @@ Partial Class UC_RecurringService
         Me.DataGridViewTextBoxColumn9.HeaderText = "Note Date"
         Me.DataGridViewTextBoxColumn9.Name = "DataGridViewTextBoxColumn9"
         Me.DataGridViewTextBoxColumn9.ReadOnly = True
-        Me.DataGridViewTextBoxColumn9.Width = 81
+        Me.DataGridViewTextBoxColumn9.Width = 75
         '
         'DataGridViewTextBoxColumn10
         '
@@ -314,6 +300,19 @@ Partial Class UC_RecurringService
         Me.DataGridViewTextBoxColumn10.Name = "DataGridViewTextBoxColumn10"
         Me.DataGridViewTextBoxColumn10.ReadOnly = True
         Me.DataGridViewTextBoxColumn10.Width = 54
+        '
+        'ServiceNotesBindingSource
+        '
+        Me.ServiceNotesBindingSource.DataMember = "ServiceNotes"
+        Me.ServiceNotesBindingSource.DataSource = Me.Ds_RecurringService
+        '
+        'RecurringService_DisplayByCustomerIDTableAdapter
+        '
+        Me.RecurringService_DisplayByCustomerIDTableAdapter.ClearBeforeFill = True
+        '
+        'ServiceNotesTableAdapter
+        '
+        Me.ServiceNotesTableAdapter.ClearBeforeFill = True
         '
         'UC_RecurringService
         '
@@ -327,14 +326,14 @@ Partial Class UC_RecurringService
         CType(Me.sc_Master, System.ComponentModel.ISupportInitialize).EndInit()
         Me.sc_Master.ResumeLayout(False)
         CType(Me.dg_RecSrvc, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.RecurringServiceDisplayByCustomerIDBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.Ds_RecurringService, System.ComponentModel.ISupportInitialize).EndInit()
         Me.Panel1.ResumeLayout(False)
         Me.Panel1.PerformLayout()
         Me.grp_SrvcState.ResumeLayout(False)
         Me.grp_SrvcState.PerformLayout()
         CType(Me.dg_Notes, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.Ds_RecurringService, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.RecurringServiceDisplayByCustomerIDBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.BindingSource1, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.ServiceNotesBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub
@@ -376,6 +375,6 @@ Partial Class UC_RecurringService
     Friend WithEvents DataGridViewTextBoxColumn8 As System.Windows.Forms.DataGridViewTextBoxColumn
     Friend WithEvents DataGridViewTextBoxColumn9 As System.Windows.Forms.DataGridViewTextBoxColumn
     Friend WithEvents DataGridViewTextBoxColumn10 As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents BindingSource1 As System.Windows.Forms.BindingSource
+    Friend WithEvents ServiceNotesBindingSource As System.Windows.Forms.BindingSource
 
 End Class

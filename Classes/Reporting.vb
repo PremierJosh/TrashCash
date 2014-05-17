@@ -1,12 +1,12 @@
 ﻿Imports QBFC12Lib
 Imports TrashCash.TrashCash_Utils.Err_Handling
 
-Public Class Reporting2
+Public Class Reporting
     ' ds is refrenced easier here
     Protected ds As Report_DataSet
     Protected qta As Report_DataSetTableAdapters.QueriesTableAdapter
 
-   Protected _msgSetReq As IMsgSetRequest
+    Protected _msgSetReq As IMsgSetRequest
     Private ReadOnly Property MsgSetRequest As IMsgSetRequest
         Get
             Return _msgSetReq
@@ -19,7 +19,7 @@ Public Class Reporting2
         End Get
     End Property
 
-   Public Sub New(ByRef SessionManager As QBSessionManager, ByRef MsgSetReq As IMsgSetRequest)
+    Public Sub New(ByRef SessionManager As QBSessionManager, ByRef MsgSetReq As IMsgSetRequest)
         ' setting sess mgr and msgsetreq
         _sessMgr = SessionManager
         _msgSetReq = MsgSetReq
