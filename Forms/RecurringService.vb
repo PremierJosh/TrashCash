@@ -2,6 +2,17 @@
     ' need recurring service queries ta
     Dim qta As ds_RecurringServiceTableAdapters.QueriesTableAdapter
 
+    ' dataview for checking if new end date will overlap with existing credits
+    Dim dv_EndDateOverlap As DataView
+    Private WriteOnly Property dv_RowFilter As String
+        Set(value As String)
+            If (dv_EndDateOverlap IsNot Nothing) Then
+                dv_EndDateOverlap.RowFilter = "Voided = 0 AND DateOfCredit BETWEEN " & _billThruDate & " AND " & value & ""
+            End If
+        End Set
+    End Property
+
+
     ' customer name propety to display at top
     Private _custName As String
     Friend Property CustomerName As String
@@ -249,6 +260,9 @@
             If (value > 0) Then
                 lbl_CreditMsg.Visible = True
                 lbl_CreditMsg.Text = "Saving this Last Date of Service will cause a Credit to be issued for: " & FormatCurrency(value)
+
+                ' checking if this will overlap with a credit
+                CreditOverlapCheck()
             Else
                 lbl_CreditMsg.Visible = False
             End If
@@ -257,6 +271,33 @@
     End Property
     ' home form ref var
     Private HomeForm As TrashCash_Home
+
+    Private Sub CreditOverlapCheck()
+        Dim s As String = Nothing
+
+        ' making sure we have rows first
+        If (dv_EndDateOverlap.Count > 0) Then
+            ' keeping track of total and count
+            Dim voidTotal As Double = 0.0
+            Dim c As Integer = 0
+
+            For Each row As ds_RecurringService.RecurringService_CreditsRow In dv_EndDateOverlap.Table.Rows
+                voidTotal = voidTotal + row.CreditAmount
+                c = c + 1
+            Next
+
+            ' compiling string
+            s = "Keeping this End Date will also Void " & c & " Recurring Service Credit(s) for a total of " & FormatCurrency(voidTotal) & "."
+        End If
+
+        If (s IsNot Nothing) Then
+            lbl_OverlapVoid.Visible = True
+            lbl_OverlapVoid.Text = s
+        Else
+            lbl_OverlapVoid.Visible = False
+        End If
+
+    End Sub
 
 
     Private Sub LockDetails(ByVal bool As Boolean)
@@ -295,6 +336,9 @@
         CustomerNumber = _CustomerNumber
         RecurringServiceID = _RecurringServiceID
         CustomerName = _CustomerName
+
+        ' creating dv for credit overlap checking
+        dv_EndDateOverlap = New DataView(Me.Ds_RecurringService.RecurringService_Credits, "Voided = 0", "", DataViewRowState.CurrentRows)
     End Sub
 
     Private Sub ck_EndDate_Click(sender As System.Object, e As System.EventArgs) Handles ck_EndDate.Click
