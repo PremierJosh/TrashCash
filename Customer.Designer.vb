@@ -36,10 +36,11 @@ Partial Class Customer
         Me.pnl_TopContent = New System.Windows.Forms.Panel()
         Me.Ts_M_Customer = New TrashCash.ts_M_Customer()
         Me.ts_Top = New System.Windows.Forms.ToolStrip()
+        Me.UC_CustomerInfoBoxes = New TrashCash.UC_CustomerInfoBoxes()
         Me.btn_Inv = New System.Windows.Forms.ToolStripButton()
         Me.btn_Payments = New System.Windows.Forms.ToolStripButton()
         Me.btn_NewCust = New System.Windows.Forms.ToolStripButton()
-        Me.UC_CustomerInfoBoxes = New TrashCash.UC_CustomerInfoBoxes()
+        Me.btn_Credit = New System.Windows.Forms.ToolStripButton()
         Me.tc_Master.SuspendLayout()
         Me.tc_p_Notes.SuspendLayout()
         Me.tc_p_RecSrvcs.SuspendLayout()
@@ -179,12 +180,23 @@ Partial Class Customer
         'ts_Top
         '
         Me.ts_Top.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden
-        Me.ts_Top.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.btn_Inv, Me.btn_Payments, Me.btn_NewCust})
+        Me.ts_Top.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.btn_Inv, Me.btn_Payments, Me.btn_NewCust, Me.btn_Credit})
         Me.ts_Top.Location = New System.Drawing.Point(0, 0)
         Me.ts_Top.Name = "ts_Top"
         Me.ts_Top.Size = New System.Drawing.Size(902, 25)
         Me.ts_Top.TabIndex = 15
         Me.ts_Top.Text = "ToolStrip1"
+        '
+        'UC_CustomerInfoBoxes
+        '
+        Me.UC_CustomerInfoBoxes.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.UC_CustomerInfoBoxes.CurrentCustomer = 0
+        Me.UC_CustomerInfoBoxes.Dock = System.Windows.Forms.DockStyle.Top
+        Me.UC_CustomerInfoBoxes.isUpdating = False
+        Me.UC_CustomerInfoBoxes.Location = New System.Drawing.Point(0, 78)
+        Me.UC_CustomerInfoBoxes.Name = "UC_CustomerInfoBoxes"
+        Me.UC_CustomerInfoBoxes.Size = New System.Drawing.Size(902, 172)
+        Me.UC_CustomerInfoBoxes.TabIndex = 9
         '
         'btn_Inv
         '
@@ -212,16 +224,13 @@ Partial Class Customer
         Me.btn_NewCust.Size = New System.Drawing.Size(110, 22)
         Me.btn_NewCust.Text = "New Customer"
         '
-        'UC_CustomerInfoBoxes
+        'btn_Credit
         '
-        Me.UC_CustomerInfoBoxes.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.UC_CustomerInfoBoxes.CurrentCustomer = 0
-        Me.UC_CustomerInfoBoxes.Dock = System.Windows.Forms.DockStyle.Top
-        Me.UC_CustomerInfoBoxes.isUpdating = False
-        Me.UC_CustomerInfoBoxes.Location = New System.Drawing.Point(0, 78)
-        Me.UC_CustomerInfoBoxes.Name = "UC_CustomerInfoBoxes"
-        Me.UC_CustomerInfoBoxes.Size = New System.Drawing.Size(902, 172)
-        Me.UC_CustomerInfoBoxes.TabIndex = 9
+        Me.btn_Credit.Image = Global.TrashCash.My.Resources.Resources.credits
+        Me.btn_Credit.ImageTransparentColor = System.Drawing.Color.Magenta
+        Me.btn_Credit.Name = "btn_Credit"
+        Me.btn_Credit.Size = New System.Drawing.Size(59, 22)
+        Me.btn_Credit.Text = "Credit"
         '
         'Customer
         '
@@ -268,4 +277,5 @@ Partial Class Customer
     Friend WithEvents btn_NewCust As System.Windows.Forms.ToolStripButton
     Friend WithEvents tc_p_QBItems As System.Windows.Forms.TabPage
     Friend WithEvents UC_Quickbooks As TrashCash.UC_Quickbooks
+    Friend WithEvents btn_Credit As System.Windows.Forms.ToolStripButton
 End Class
