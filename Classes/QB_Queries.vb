@@ -65,7 +65,7 @@ Public Class QB_Queries
 
         Return invObj
     End Function
-    Public Sub Invoice_ForDisplay(ByRef paidStatus As QBFC12Lib.ENPaidStatus, ByRef dg_dt As DataSet.QB_InvoiceDisplayDataTable,
+    Public Sub Invoice_ForDisplay(ByRef paidStatus As QBFC12Lib.ENPaidStatus, ByRef dg_dt As ds_Display.QB_InvoiceDisplayDataTable,
                                 Optional ByRef custListID As String = Nothing,
                                 Optional ByRef fromDate As Date = Nothing, Optional ByRef toDate As Date = Nothing)
 
@@ -120,7 +120,7 @@ Public Class QB_Queries
                 For j = 0 To invRetList.Count - 1
                     Dim invRet As IInvoiceRet = invRetList.GetAt(j)
                     ' building new row
-                    Dim newRow As DataSet.QB_InvoiceDisplayRow = dg_dt.NewQB_InvoiceDisplayRow
+                    Dim newRow As ds_Display.QB_InvoiceDisplayRow = dg_dt.NewQB_InvoiceDisplayRow
                     newRow.InvoiceNumber = invRet.RefNumber.GetValue
                     newRow.InvoicePostDate = invRet.TxnDate.GetValue.Date
                     newRow.InvoiceCreationDate = invRet.TimeCreated.GetValue.Date
@@ -145,7 +145,7 @@ Public Class QB_Queries
     End Sub
 
 
-    Public Sub Payments_ForDisplay(ByRef dg_dt As DataSet.QB_PaymentsDisplayDataTable, ByRef custListID As String, _
+    Public Sub Payments_ForDisplay(ByRef dg_dt As ds_Display.QB_PaymentsDisplayDataTable, ByRef custListID As String, _
                                   Optional ByRef fromDate As Date = Nothing, Optional ByRef toDate As Date = Nothing)
 
         Dim payQuery As IReceivePaymentQuery = MsgSetRequest.AppendReceivePaymentQueryRq
@@ -191,7 +191,7 @@ Public Class QB_Queries
                 For l = 0 To paymentRetList.Count - 1
                     Dim paymentRet As IReceivePaymentRet = paymentRetList.GetAt(l)
                     ' building new paymentList row
-                    Dim newRow As DataSet.QB_PaymentsDisplayRow = dg_dt.NewQB_PaymentsDisplayRow
+                    Dim newRow As ds_Display.QB_PaymentsDisplayRow = dg_dt.NewQB_PaymentsDisplayRow
                     newRow.PaymentTxnNumber = paymentRet.TxnNumber.GetValue
                     newRow.PaymentDate = paymentRet.TxnDate.GetValue
                     newRow.PaymentAmount = paymentRet.TotalAmount.GetValue

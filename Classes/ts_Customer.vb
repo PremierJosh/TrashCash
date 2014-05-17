@@ -115,8 +115,8 @@ Friend Class ts_cmb_Customer
 
     Protected _dv As DataView
 
-    Protected dt As DataSet.CustomerListDataTable
-    Protected ta As DataSetTableAdapters.CustomerListTableAdapter
+    Protected dt As ds_Customer.Customer_ListByActiveDataTable
+    Protected ta As ds_CustomerTableAdapters.Customer_ListByActiveTableAdapter
 
     Friend Sub Search_CustName(ByVal sStr As String)
         Dim cString As String
@@ -144,15 +144,15 @@ Friend Class ts_cmb_Customer
         'Me.Width = 200
 
         ' instantiate dt and ta
-        dt = New DataSet.CustomerListDataTable
-        ta = New DataSetTableAdapters.CustomerListTableAdapter
+        dt = New ds_Customer.Customer_ListByActiveDataTable
+        ta = New ds_CustomerTableAdapters.Customer_ListByActiveTableAdapter
 
         ' set dataview
         _dv = New DataView
         _dv.Table = dt
 
         ' fill dt
-        ta.FillWithAll(dt)
+        ta.Fill(dt, False)
 
         ' bind
         'Me.ComboBox.DataBindings.Add("DisplayMember", _dv, "CustomerFullName")
@@ -165,15 +165,15 @@ Friend Class ts_cmb_Customer
     Friend Sub RefreshCustomerList(Optional ByVal Rebind As Boolean = False)
         If (Rebind = True) Then
             ' instantiate dt and ta
-            dt = New DataSet.CustomerListDataTable
-            ta = New DataSetTableAdapters.CustomerListTableAdapter
+            dt = New ds_Customer.Customer_ListByActiveDataTable
+            ta = New ds_CustomerTableAdapters.Customer_ListByActiveTableAdapter
 
             ' set dataview
             _dv = New DataView
             _dv.Table = dt
 
             ' fill dt
-            ta.FillWithAll(dt)
+            ta.Fill(dt, False)
 
             ' bind
             'Me.ComboBox.DataBindings.Add("DisplayMember", _dv, "CustomerFullName")
@@ -182,7 +182,8 @@ Friend Class ts_cmb_Customer
             Me.ComboBox.DisplayMember = "CustomerFullName"
             Me.ComboBox.ValueMember = "CustomerNumber"
         Else
-            ta.FillWithAll(dt)
+            ' fill dt
+            ta.Fill(dt, False)
         End If
     End Sub
 End Class

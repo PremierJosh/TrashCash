@@ -54,8 +54,8 @@ Public Class UC_Quickbooks
                 custListID = value
 
                 ' fill with open invoices and all payments
-                _HomeForm.Queries.Invoice_ForDisplay(ENPaidStatus.psNotPaidOnly, Me.DataSet.QB_InvoiceDisplay, custListID:=value)
-                _HomeForm.Queries.Payments_ForDisplay(Me.DataSet.QB_PaymentsDisplay, custListID:=value)
+                _HomeForm.Queries.Invoice_ForDisplay(ENPaidStatus.psNotPaidOnly, Me.Ds_Display.QB_InvoiceDisplay, custListID:=value)
+                _HomeForm.Queries.Payments_ForDisplay(Me.Ds_Display.QB_PaymentsDisplay, custListID:=value)
 
                 ' color invoice rows based on due date
                 ColorRows_QBInvoices(dg_QBInvoices)
@@ -76,7 +76,7 @@ Public Class UC_Quickbooks
                 custNum = value
 
                 'clear dts
-                Me.DataSet.Clear()
+                Me.Ds_Display.Clear()
             End If
         End Set
     End Property
@@ -89,13 +89,13 @@ Public Class UC_Quickbooks
 
     Private Sub FetchInvoices()
         If (chk_ItemTo.Checked = True And chk_ItemFrom.Checked = False) Then
-            _HomeForm.Queries.Invoice_ForDisplay(paidStatus, Me.DataSet.QB_InvoiceDisplay, custListID:=custListID, toDate:=dtp_ItemTo.Value.Date)
+            _HomeForm.Queries.Invoice_ForDisplay(paidStatus, Me.Ds_Display.QB_InvoiceDisplay, custListID:=custListID, toDate:=dtp_ItemTo.Value.Date)
         ElseIf (chk_ItemTo.Checked = False And chk_ItemFrom.Checked = True) Then
-            _HomeForm.Queries.Invoice_ForDisplay(paidStatus, Me.DataSet.QB_InvoiceDisplay, custListID:=custListID, fromDate:=dtp_ItemFrom.Value.Date)
+            _HomeForm.Queries.Invoice_ForDisplay(paidStatus, Me.Ds_Display.QB_InvoiceDisplay, custListID:=custListID, fromDate:=dtp_ItemFrom.Value.Date)
         ElseIf (chk_ItemTo.Checked = True And chk_ItemFrom.Checked = True) Then
-            _HomeForm.Queries.Invoice_ForDisplay(paidStatus, Me.DataSet.QB_InvoiceDisplay, custListID:=custListID, toDate:=dtp_ItemTo.Value.Date, fromDate:=dtp_ItemFrom.Value.Date)
+            _HomeForm.Queries.Invoice_ForDisplay(paidStatus, Me.Ds_Display.QB_InvoiceDisplay, custListID:=custListID, toDate:=dtp_ItemTo.Value.Date, fromDate:=dtp_ItemFrom.Value.Date)
         Else
-            _HomeForm.Queries.Invoice_ForDisplay(paidStatus, Me.DataSet.QB_InvoiceDisplay, custListID:=custListID)
+            _HomeForm.Queries.Invoice_ForDisplay(paidStatus, Me.Ds_Display.QB_InvoiceDisplay, custListID:=custListID)
         End If
 
         ' color rows based on due date
@@ -104,13 +104,13 @@ Public Class UC_Quickbooks
 
     Private Sub FetchPayments()
         If (chk_ItemTo.Checked = True And chk_ItemFrom.Checked = False) Then
-            _HomeForm.Queries.Payments_ForDisplay(Me.DataSet.QB_PaymentsDisplay, custListID:=custListID, toDate:=dtp_ItemTo.Value.Date)
+            _HomeForm.Queries.Payments_ForDisplay(Me.Ds_Display.QB_PaymentsDisplay, custListID:=custListID, toDate:=dtp_ItemTo.Value.Date)
         ElseIf (chk_ItemTo.Checked = False And chk_ItemFrom.Checked = True) Then
-            _HomeForm.Queries.Payments_ForDisplay(Me.DataSet.QB_PaymentsDisplay, custListID:=custListID, fromDate:=dtp_ItemFrom.Value.Date)
+            _HomeForm.Queries.Payments_ForDisplay(Me.Ds_Display.QB_PaymentsDisplay, custListID:=custListID, fromDate:=dtp_ItemFrom.Value.Date)
         ElseIf (chk_ItemTo.Checked = True And chk_ItemFrom.Checked = True) Then
-            _HomeForm.Queries.Payments_ForDisplay(Me.DataSet.QB_PaymentsDisplay, custListID:=custListID, fromDate:=dtp_ItemFrom.Value.Date, toDate:=dtp_ItemTo.Value.Date)
+            _HomeForm.Queries.Payments_ForDisplay(Me.Ds_Display.QB_PaymentsDisplay, custListID:=custListID, fromDate:=dtp_ItemFrom.Value.Date, toDate:=dtp_ItemTo.Value.Date)
         Else
-            _HomeForm.Queries.Payments_ForDisplay(Me.DataSet.QB_PaymentsDisplay, custListID:=custListID)
+            _HomeForm.Queries.Payments_ForDisplay(Me.Ds_Display.QB_PaymentsDisplay, custListID:=custListID)
         End If
     End Sub
 
@@ -186,7 +186,7 @@ Public Class UC_Quickbooks
             Dim row As DataRowView = grid.Rows(i).DataBoundItem
             If (row IsNot Nothing) Then
                 ' easier to refrence here
-                Dim dbRow As DataSet.QB_InvoiceDisplayRow = row.Row
+                Dim dbRow As ds_Display.QB_InvoiceDisplayRow = row.Row
 
                 ' checking for balance
                 If (dbRow.InvoiceBalance > 0) Then
@@ -218,7 +218,8 @@ Public Class UC_Quickbooks
     Private Sub btn_ViewAllOpenInv_Click(sender As System.Object, e As System.EventArgs) Handles btn_ViewAllOpenInv.Click
         Dim result As MsgBoxResult = MsgBox("Are you sure you want to view all currently Unpaid invoices in Quickbooks? This could might take a few minutes if there are a lot of invoices.", MsgBoxStyle.YesNo)
         If (result = MsgBoxResult.Yes) Then
-            _HomeForm.Queries.Invoice_ForDisplay(ENPaidStatus.psNotPaidOnly, Me.DataSet.QB_InvoiceDisplay)
+            _HomeForm.Queries.Invoice_ForDisplay(ENPaidStatus.psNotPaidOnly, Me.Ds_Display.QB_InvoiceDisplay)
+            FetchPossible = False
         End If
     End Sub
 End Class
