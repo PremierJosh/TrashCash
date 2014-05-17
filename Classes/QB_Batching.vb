@@ -1,5 +1,5 @@
 ﻿Imports QBFC12Lib
-Imports TrashCash.QB_Procedures2
+Imports TrashCash.QB_Procedures
 Imports TrashCash.TrashCash_Utils
 Imports TrashCash.TrashCash_Utils.Err_Handling
 
@@ -25,8 +25,8 @@ Public MustInherit Class QB_Batching
     ' queries ta
     Protected qta As DataSetTableAdapters.QueriesTableAdapter
     ' class vars
-    Private c_Queries As QB_Queries2
-    Private c_Procedures As QB_Procedures2
+    Private c_Queries As QB_Queries
+    Private c_Procedures As QB_Procedures
 
     Public Sub New()
         _sessMgr = New QBSessionManager
@@ -44,8 +44,8 @@ Public MustInherit Class QB_Batching
 
         ' instantiate qta
         qta = New DataSetTableAdapters.QueriesTableAdapter
-        c_Queries = New QB_Queries2(SessionManager, MsgSetRequest)
-        c_Procedures = New QB_Procedures2(SessionManager, MsgSetRequest)
+        c_Queries = New QB_Queries(SessionManager, MsgSetRequest)
+        c_Procedures = New QB_Procedures(SessionManager, MsgSetRequest)
     End Sub
 
     Public Class Invoicing

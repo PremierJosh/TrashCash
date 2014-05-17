@@ -1,5 +1,5 @@
 ﻿Imports QBFC12Lib
-Imports TrashCash.QB_Queries2
+Imports TrashCash.QB_Queries
 Imports TrashCash.TrashCash_Utils.Err_Handling
 
 Public Class InvoiceVoid

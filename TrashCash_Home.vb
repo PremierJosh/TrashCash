@@ -78,14 +78,14 @@ Public Class TrashCash_Home
     Private _BatchRunning As Boolean
 
     ' var for class files
-    Protected c_QB_Queries As QB_Queries2
-    Public ReadOnly Property Queries As QB_Queries2
+    Protected c_QB_Queries As QB_Queries
+    Public ReadOnly Property Queries As QB_Queries
         Get
             Return c_QB_Queries
         End Get
     End Property
-    Protected c_QB_Procedures As QB_Procedures2
-    Public ReadOnly Property Procedures As QB_Procedures2
+    Protected c_QB_Procedures As QB_Procedures
+    Public ReadOnly Property Procedures As QB_Procedures
         Get
             Return c_QB_Procedures
         End Get
@@ -316,8 +316,8 @@ Public Class TrashCash_Home
     End Sub
 
     Private Sub CreateAllClasses()
-        c_QB_Queries = New QB_Queries2(SessionManager, MsgSetRequest)
-        c_QB_Procedures = New QB_Procedures2(SessionManager, MsgSetRequest, Me)
+        c_QB_Queries = New QB_Queries(SessionManager, MsgSetRequest)
+        c_QB_Procedures = New QB_Procedures(SessionManager, MsgSetRequest, Me)
         c_Reporting = New Reporting2(SessionManager, MsgSetRequest)
     End Sub
 

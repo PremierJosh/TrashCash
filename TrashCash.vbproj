@@ -192,8 +192,8 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Classes\Reporting2.vb" />
-    <Compile Include="Classes\QB_Procedures2.vb" />
-    <Compile Include="Classes\QB_Queries2.vb" />
+    <Compile Include="Classes\QB_Procedures.vb" />
+    <Compile Include="Classes\QB_Queries.vb" />
     <Compile Include="Classes\ts_Customer.vb">
       <SubType>Component</SubType>
     </Compile>
