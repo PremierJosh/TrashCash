@@ -5,10 +5,12 @@ Public Class RecurringService
 
     ' dataview for checking if new end date will overlap with existing credits
     Dim dv_EndDateOverlap As DataView
-    Private WriteOnly Property dv_RowFilter As String
-        Set(value As String)
+    Private WriteOnly Property dv_RowFilter As Date
+        Set(value As Date)
             If (dv_EndDateOverlap IsNot Nothing) Then
-                dv_EndDateOverlap.RowFilter = "Voided = 0 AND DateOfCredit BETWEEN " & _billThruDate & " AND " & value & ""
+                dv_EndDateOverlap.RowFilter = "Voided = 0 AND DateOfCredit > " & value.Date & ""
+                ' update status text if rows filter
+                CreditOverlapCheck(value)
             End If
         End Set
     End Property
@@ -261,9 +263,6 @@ Public Class RecurringService
             If (value > 0) Then
                 lbl_CreditMsg.Visible = True
                 lbl_CreditMsg.Text = "Saving this Last Date of Service will cause a Credit to be issued for: " & FormatCurrency(value)
-
-                ' checking if this will overlap with a credit
-                CreditOverlapCheck()
             Else
                 lbl_CreditMsg.Visible = False
             End If
@@ -273,7 +272,7 @@ Public Class RecurringService
     ' home form ref var
     Private HomeForm As TrashCash_Home
 
-    Private Sub CreditOverlapCheck()
+    Private Sub CreditOverlapCheck(ByVal newDate As Date)
         Dim s As String = Nothing
 
         ' making sure we have rows first
@@ -633,6 +632,8 @@ Public Class RecurringService
 
     Private Sub dtp_EndDate_ValueChanged(sender As System.Object, e As System.EventArgs) Handles dtp_EndDate.ValueChanged
         If (ck_EndDate.Checked = True) Then
+            ' checking if this will overlap with a credit
+            dv_RowFilter = dtp_EndDate.Value.Date
 
             ' checking if service bill thru date is greater than the new end date
             If (_billThruDate > dtp_EndDate.Value.Date) Then
