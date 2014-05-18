@@ -5,6 +5,10 @@
     Private c_dt As ds_Customer.Customer_RecurringServiceTypesDataTable
     Private s_dt As ds_Types.ServiceTypesDataTable
 
+    ' event if balance changing but only if bool is true to prevent excessive error throwing
+    Dim balanceChanged As Boolean = False
+    Friend Event e_BalanceChanged(ByVal CustomerNumber As Integer)
+
     Private _currentCustomer As Integer
     Private Property CurrentCustomer As Integer
         Get
@@ -79,6 +83,7 @@
                     Dim reason As String = InputBox("Void Reason", "Void Reason")
                     If (Trim(reason).Length > 0) Then
                         _homeForm.Procedures.Customer_Credit_Void(row, reason)
+                        balanceChanged = True
                     End If
                 End If
 
@@ -106,8 +111,15 @@
                     End If
 
                     _homeForm.Procedures.Customer_Credit(CurrentCustomer, tb_Amount.Text, tb_Reason.Text, cmb_Types.SelectedValue, ck_Print.Checked, ck_AutoApply.Checked, s)
+                    balanceChanged = True
                 End If
             End If
+        End If
+    End Sub
+
+    Private Sub CustomerCredit_FormClosed(sender As Object, e As System.Windows.Forms.FormClosedEventArgs) Handles Me.FormClosed
+        If (balanceChanged) Then
+            RaiseEvent e_BalanceChanged(CurrentCustomer)
         End If
     End Sub
 End Class
