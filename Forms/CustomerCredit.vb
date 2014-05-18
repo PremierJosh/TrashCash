@@ -126,4 +126,28 @@
             RaiseEvent e_BalanceChanged(CurrentCustomer)
         End If
     End Sub
+
+    Private Sub ColorHistoryForVoids()
+        If (dg_Credits.RowCount > 0) Then
+            For i = 0 To dg_Credits.RowCount - 1
+                Dim row As ds_Customer.Customer_CreditsRow = CType(dg_Credits.Rows(i).DataBoundItem, DataRowView).Row
+                If (row.Voided) Then
+                    ' credit is voided
+                    dg_Credits.Rows(i).DefaultCellStyle.BackColor = Color.Red
+                    dg_Credits.Rows(i).DefaultCellStyle.SelectionBackColor = Color.IndianRed
+                Else
+                    dg_Credits.Rows(i).DefaultCellStyle.BackColor = Color.SpringGreen
+                    dg_Credits.Rows(i).DefaultCellStyle.BackColor = Color.MediumSeaGreen
+                End If
+            Next
+        End If
+    End Sub
+
+    Private Sub dg_Credits_RowsAdded(sender As System.Object, e As System.Windows.Forms.DataGridViewRowsAddedEventArgs) Handles dg_Credits.RowsAdded
+        ColorHistoryForVoids()
+    End Sub
+
+    Private Sub dg_Credits_RowsRemoved(sender As System.Object, e As System.Windows.Forms.DataGridViewRowsRemovedEventArgs) Handles dg_Credits.RowsRemoved
+        ColorHistoryForVoids()
+    End Sub
 End Class
