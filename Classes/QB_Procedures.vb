@@ -442,6 +442,42 @@ retry:
 
     End Sub
 
+    ' customer credit void
+    Public Sub Customer_Credit_Void(ByRef row As ds_Customer.Customer_CreditsRow, ByVal VoidReason As String)
+        Dim voidTxn As ITxnVoid = MsgSetRequest.AppendTxnVoidRq
+        voidTxn.TxnVoidType.SetValue(ENTxnVoidType.tvtCreditMemo)
+        voidTxn.TxnID.SetValue(row.CreditTxnID)
+
+        ' go
+        Dim msgSetResp As IMsgSetResponse = SessionManager.DoRequests(MsgSetRequest)
+        Dim respList As IResponseList = msgSetResp.ResponseList
+
+        MsgSetRequest.ClearRequests()
+
+        For i = 0 To respList.Count - 1
+            Dim resp As IResponse = respList.GetAt(i)
+
+            If (resp.StatusCode = 0) Then
+                ' update row
+                row.Voided = True
+                row.VoidReason = VoidReason
+                row.VoidTime = Date.Now
+                row.VoidUser = HomeForm.CurrentUserRow.USER_NAME
+
+                Using ta As New ds_CustomerTableAdapters.Customer_CreditsTableAdapter
+                    Try
+                        ta.Update(row)
+                    Catch ex As Exception
+                        MessageBox.Show("Error Credit Void Update: " & ex.Message, "Sql Update Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                    End Try
+                End Using
+            Else
+                ResponseErr_Misc(resp)
+            End If
+        Next
+
+    End Sub
+
     Public Sub RecurringService_EndDateCredit(ByRef row As ds_RecurringService.RecurringServiceRow, ByVal creditAmount As Double,
                                 ByVal newEndDate As Date, ByVal BillThruDate As Date)
         ' getting customer listid
