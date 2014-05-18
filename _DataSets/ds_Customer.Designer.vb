@@ -4736,48 +4736,48 @@ Namespace ds_CustomerTableAdapters
             Me._adapter.InsertCommand.Connection = Me.Connection
             Me._adapter.InsertCommand.CommandText = "dbo.Customer_Credits_Insert"
             Me._adapter.InsertCommand.CommandType = Global.System.Data.CommandType.StoredProcedure
-            Me._adapter.InsertCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@RETURN_VALUE", Global.System.Data.SqlDbType.[Variant], 0, Global.System.Data.ParameterDirection.ReturnValue, 0, 0, Nothing, Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
-            Me._adapter.InsertCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@CustomerNumber", Global.System.Data.SqlDbType.[Decimal], 0, Global.System.Data.ParameterDirection.Input, 18, 0, "CustomerNumber", Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
-            Me._adapter.InsertCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@CreditTxnID", Global.System.Data.SqlDbType.VarChar, 0, Global.System.Data.ParameterDirection.Input, 0, 0, "CreditTxnID", Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
-            Me._adapter.InsertCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@CreditAmount", Global.System.Data.SqlDbType.[Decimal], 0, Global.System.Data.ParameterDirection.Input, 18, 2, "CreditAmount", Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
-            Me._adapter.InsertCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@TimeCreated", Global.System.Data.SqlDbType.DateTime, 0, Global.System.Data.ParameterDirection.Input, 0, 0, "TimeCreated", Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
-            Me._adapter.InsertCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@Reason", Global.System.Data.SqlDbType.VarChar, 0, Global.System.Data.ParameterDirection.Input, 0, 0, "Reason", Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
-            Me._adapter.InsertCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@CreatedUser", Global.System.Data.SqlDbType.VarChar, 0, Global.System.Data.ParameterDirection.Input, 0, 0, "CreatedUser", Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
-            Me._adapter.InsertCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@Voided", Global.System.Data.SqlDbType.Bit, 0, Global.System.Data.ParameterDirection.Input, 0, 0, "Voided", Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
-            Me._adapter.InsertCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@VoidTime", Global.System.Data.SqlDbType.DateTime, 0, Global.System.Data.ParameterDirection.Input, 0, 0, "VoidTime", Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
-            Me._adapter.InsertCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@VoidReason", Global.System.Data.SqlDbType.VarChar, 0, Global.System.Data.ParameterDirection.Input, 0, 0, "VoidReason", Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
-            Me._adapter.InsertCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@VoidUser", Global.System.Data.SqlDbType.VarChar, 0, Global.System.Data.ParameterDirection.Input, 0, 0, "VoidUser", Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
+            Me._adapter.InsertCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@RETURN_VALUE", Global.System.Data.SqlDbType.Int, 4, Global.System.Data.ParameterDirection.ReturnValue, 10, 0, Nothing, Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
+            Me._adapter.InsertCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@CustomerNumber", Global.System.Data.SqlDbType.[Decimal], 9, Global.System.Data.ParameterDirection.Input, 18, 0, "CustomerNumber", Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
+            Me._adapter.InsertCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@CreditTxnID", Global.System.Data.SqlDbType.VarChar, 50, Global.System.Data.ParameterDirection.Input, 0, 0, "CreditTxnID", Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
+            Me._adapter.InsertCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@CreditAmount", Global.System.Data.SqlDbType.[Decimal], 9, Global.System.Data.ParameterDirection.Input, 18, 2, "CreditAmount", Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
+            Me._adapter.InsertCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@TimeCreated", Global.System.Data.SqlDbType.DateTime, 8, Global.System.Data.ParameterDirection.Input, 23, 3, "TimeCreated", Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
+            Me._adapter.InsertCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@Reason", Global.System.Data.SqlDbType.VarChar, 300, Global.System.Data.ParameterDirection.Input, 0, 0, "Reason", Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
+            Me._adapter.InsertCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@CreatedUser", Global.System.Data.SqlDbType.VarChar, 50, Global.System.Data.ParameterDirection.Input, 0, 0, "CreatedUser", Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
+            Me._adapter.InsertCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@Voided", Global.System.Data.SqlDbType.Bit, 1, Global.System.Data.ParameterDirection.Input, 1, 0, "Voided", Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
+            Me._adapter.InsertCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@VoidTime", Global.System.Data.SqlDbType.DateTime, 8, Global.System.Data.ParameterDirection.Input, 23, 3, "VoidTime", Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
+            Me._adapter.InsertCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@VoidReason", Global.System.Data.SqlDbType.VarChar, 300, Global.System.Data.ParameterDirection.Input, 0, 0, "VoidReason", Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
+            Me._adapter.InsertCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@VoidUser", Global.System.Data.SqlDbType.VarChar, 50, Global.System.Data.ParameterDirection.Input, 0, 0, "VoidUser", Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
             Me._adapter.UpdateCommand = New Global.System.Data.SqlClient.SqlCommand()
             Me._adapter.UpdateCommand.Connection = Me.Connection
             Me._adapter.UpdateCommand.CommandText = "dbo.Customer_Credits_Update"
             Me._adapter.UpdateCommand.CommandType = Global.System.Data.CommandType.StoredProcedure
-            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@RETURN_VALUE", Global.System.Data.SqlDbType.[Variant], 0, Global.System.Data.ParameterDirection.ReturnValue, 0, 0, Nothing, Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
-            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@CustomerNumber", Global.System.Data.SqlDbType.[Decimal], 0, Global.System.Data.ParameterDirection.Input, 18, 0, "CustomerNumber", Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
-            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@CreditTxnID", Global.System.Data.SqlDbType.VarChar, 0, Global.System.Data.ParameterDirection.Input, 0, 0, "CreditTxnID", Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
-            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@CreditAmount", Global.System.Data.SqlDbType.[Decimal], 0, Global.System.Data.ParameterDirection.Input, 18, 2, "CreditAmount", Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
-            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@TimeCreated", Global.System.Data.SqlDbType.DateTime, 0, Global.System.Data.ParameterDirection.Input, 0, 0, "TimeCreated", Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
-            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@Reason", Global.System.Data.SqlDbType.VarChar, 0, Global.System.Data.ParameterDirection.Input, 0, 0, "Reason", Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
-            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@CreatedUser", Global.System.Data.SqlDbType.VarChar, 0, Global.System.Data.ParameterDirection.Input, 0, 0, "CreatedUser", Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
-            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@Voided", Global.System.Data.SqlDbType.Bit, 0, Global.System.Data.ParameterDirection.Input, 0, 0, "Voided", Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
-            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@VoidTime", Global.System.Data.SqlDbType.DateTime, 0, Global.System.Data.ParameterDirection.Input, 0, 0, "VoidTime", Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
-            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@VoidReason", Global.System.Data.SqlDbType.VarChar, 0, Global.System.Data.ParameterDirection.Input, 0, 0, "VoidReason", Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
-            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@VoidUser", Global.System.Data.SqlDbType.VarChar, 0, Global.System.Data.ParameterDirection.Input, 0, 0, "VoidUser", Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
-            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@Original_CustomerCreditID", Global.System.Data.SqlDbType.Int, 0, Global.System.Data.ParameterDirection.Input, 0, 0, "CustomerCreditID", Global.System.Data.DataRowVersion.Original, false, Nothing, "", "", ""))
-            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@Original_CustomerNumber", Global.System.Data.SqlDbType.[Decimal], 0, Global.System.Data.ParameterDirection.Input, 18, 0, "CustomerNumber", Global.System.Data.DataRowVersion.Original, false, Nothing, "", "", ""))
-            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@Original_CreditTxnID", Global.System.Data.SqlDbType.VarChar, 0, Global.System.Data.ParameterDirection.Input, 0, 0, "CreditTxnID", Global.System.Data.DataRowVersion.Original, false, Nothing, "", "", ""))
-            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@Original_CreditAmount", Global.System.Data.SqlDbType.[Decimal], 0, Global.System.Data.ParameterDirection.Input, 18, 2, "CreditAmount", Global.System.Data.DataRowVersion.Original, false, Nothing, "", "", ""))
-            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@Original_TimeCreated", Global.System.Data.SqlDbType.DateTime, 0, Global.System.Data.ParameterDirection.Input, 0, 0, "TimeCreated", Global.System.Data.DataRowVersion.Original, false, Nothing, "", "", ""))
-            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@Original_Reason", Global.System.Data.SqlDbType.VarChar, 0, Global.System.Data.ParameterDirection.Input, 0, 0, "Reason", Global.System.Data.DataRowVersion.Original, false, Nothing, "", "", ""))
-            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@Original_CreatedUser", Global.System.Data.SqlDbType.VarChar, 0, Global.System.Data.ParameterDirection.Input, 0, 0, "CreatedUser", Global.System.Data.DataRowVersion.Original, false, Nothing, "", "", ""))
-            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@IsNull_Voided", Global.System.Data.SqlDbType.Int, 0, Global.System.Data.ParameterDirection.Input, 0, 0, "Voided", Global.System.Data.DataRowVersion.Original, true, Nothing, "", "", ""))
-            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@Original_Voided", Global.System.Data.SqlDbType.Bit, 0, Global.System.Data.ParameterDirection.Input, 0, 0, "Voided", Global.System.Data.DataRowVersion.Original, false, Nothing, "", "", ""))
-            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@IsNull_VoidTime", Global.System.Data.SqlDbType.Int, 0, Global.System.Data.ParameterDirection.Input, 0, 0, "VoidTime", Global.System.Data.DataRowVersion.Original, true, Nothing, "", "", ""))
-            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@Original_VoidTime", Global.System.Data.SqlDbType.DateTime, 0, Global.System.Data.ParameterDirection.Input, 0, 0, "VoidTime", Global.System.Data.DataRowVersion.Original, false, Nothing, "", "", ""))
-            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@IsNull_VoidReason", Global.System.Data.SqlDbType.Int, 0, Global.System.Data.ParameterDirection.Input, 0, 0, "VoidReason", Global.System.Data.DataRowVersion.Original, true, Nothing, "", "", ""))
-            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@Original_VoidReason", Global.System.Data.SqlDbType.VarChar, 0, Global.System.Data.ParameterDirection.Input, 0, 0, "VoidReason", Global.System.Data.DataRowVersion.Original, false, Nothing, "", "", ""))
-            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@IsNull_VoidUser", Global.System.Data.SqlDbType.Int, 0, Global.System.Data.ParameterDirection.Input, 0, 0, "VoidUser", Global.System.Data.DataRowVersion.Original, true, Nothing, "", "", ""))
-            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@Original_VoidUser", Global.System.Data.SqlDbType.VarChar, 0, Global.System.Data.ParameterDirection.Input, 0, 0, "VoidUser", Global.System.Data.DataRowVersion.Original, false, Nothing, "", "", ""))
-            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@CustomerCreditID", Global.System.Data.SqlDbType.Int, 4, Global.System.Data.ParameterDirection.Input, 0, 0, "CustomerCreditID", Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
+            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@RETURN_VALUE", Global.System.Data.SqlDbType.Int, 4, Global.System.Data.ParameterDirection.ReturnValue, 10, 0, Nothing, Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
+            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@CustomerNumber", Global.System.Data.SqlDbType.[Decimal], 9, Global.System.Data.ParameterDirection.Input, 18, 0, "CustomerNumber", Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
+            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@CreditTxnID", Global.System.Data.SqlDbType.VarChar, 50, Global.System.Data.ParameterDirection.Input, 0, 0, "CreditTxnID", Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
+            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@CreditAmount", Global.System.Data.SqlDbType.[Decimal], 9, Global.System.Data.ParameterDirection.Input, 18, 2, "CreditAmount", Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
+            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@TimeCreated", Global.System.Data.SqlDbType.DateTime, 8, Global.System.Data.ParameterDirection.Input, 23, 3, "TimeCreated", Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
+            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@Reason", Global.System.Data.SqlDbType.VarChar, 300, Global.System.Data.ParameterDirection.Input, 0, 0, "Reason", Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
+            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@CreatedUser", Global.System.Data.SqlDbType.VarChar, 50, Global.System.Data.ParameterDirection.Input, 0, 0, "CreatedUser", Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
+            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@Voided", Global.System.Data.SqlDbType.Bit, 1, Global.System.Data.ParameterDirection.Input, 1, 0, "Voided", Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
+            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@VoidTime", Global.System.Data.SqlDbType.DateTime, 8, Global.System.Data.ParameterDirection.Input, 23, 3, "VoidTime", Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
+            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@VoidReason", Global.System.Data.SqlDbType.VarChar, 300, Global.System.Data.ParameterDirection.Input, 0, 0, "VoidReason", Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
+            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@VoidUser", Global.System.Data.SqlDbType.VarChar, 50, Global.System.Data.ParameterDirection.Input, 0, 0, "VoidUser", Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
+            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@Original_CustomerCreditID", Global.System.Data.SqlDbType.Int, 4, Global.System.Data.ParameterDirection.Input, 10, 0, "CustomerCreditID", Global.System.Data.DataRowVersion.Original, false, Nothing, "", "", ""))
+            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@Original_CustomerNumber", Global.System.Data.SqlDbType.[Decimal], 9, Global.System.Data.ParameterDirection.Input, 18, 0, "CustomerNumber", Global.System.Data.DataRowVersion.Original, false, Nothing, "", "", ""))
+            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@Original_CreditTxnID", Global.System.Data.SqlDbType.VarChar, 50, Global.System.Data.ParameterDirection.Input, 0, 0, "CreditTxnID", Global.System.Data.DataRowVersion.Original, false, Nothing, "", "", ""))
+            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@Original_CreditAmount", Global.System.Data.SqlDbType.[Decimal], 9, Global.System.Data.ParameterDirection.Input, 18, 2, "CreditAmount", Global.System.Data.DataRowVersion.Original, false, Nothing, "", "", ""))
+            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@Original_TimeCreated", Global.System.Data.SqlDbType.DateTime, 8, Global.System.Data.ParameterDirection.Input, 23, 3, "TimeCreated", Global.System.Data.DataRowVersion.Original, false, Nothing, "", "", ""))
+            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@Original_Reason", Global.System.Data.SqlDbType.VarChar, 300, Global.System.Data.ParameterDirection.Input, 0, 0, "Reason", Global.System.Data.DataRowVersion.Original, false, Nothing, "", "", ""))
+            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@Original_CreatedUser", Global.System.Data.SqlDbType.VarChar, 50, Global.System.Data.ParameterDirection.Input, 0, 0, "CreatedUser", Global.System.Data.DataRowVersion.Original, false, Nothing, "", "", ""))
+            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@IsNull_Voided", Global.System.Data.SqlDbType.Int, 4, Global.System.Data.ParameterDirection.Input, 10, 0, "Voided", Global.System.Data.DataRowVersion.Original, true, Nothing, "", "", ""))
+            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@Original_Voided", Global.System.Data.SqlDbType.Bit, 1, Global.System.Data.ParameterDirection.Input, 1, 0, "Voided", Global.System.Data.DataRowVersion.Original, false, Nothing, "", "", ""))
+            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@IsNull_VoidTime", Global.System.Data.SqlDbType.Int, 4, Global.System.Data.ParameterDirection.Input, 10, 0, "VoidTime", Global.System.Data.DataRowVersion.Original, true, Nothing, "", "", ""))
+            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@Original_VoidTime", Global.System.Data.SqlDbType.DateTime, 8, Global.System.Data.ParameterDirection.Input, 23, 3, "VoidTime", Global.System.Data.DataRowVersion.Original, false, Nothing, "", "", ""))
+            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@IsNull_VoidReason", Global.System.Data.SqlDbType.Int, 4, Global.System.Data.ParameterDirection.Input, 10, 0, "VoidReason", Global.System.Data.DataRowVersion.Original, true, Nothing, "", "", ""))
+            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@Original_VoidReason", Global.System.Data.SqlDbType.VarChar, 300, Global.System.Data.ParameterDirection.Input, 0, 0, "VoidReason", Global.System.Data.DataRowVersion.Original, false, Nothing, "", "", ""))
+            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@IsNull_VoidUser", Global.System.Data.SqlDbType.Int, 4, Global.System.Data.ParameterDirection.Input, 10, 0, "VoidUser", Global.System.Data.DataRowVersion.Original, true, Nothing, "", "", ""))
+            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@Original_VoidUser", Global.System.Data.SqlDbType.VarChar, 50, Global.System.Data.ParameterDirection.Input, 0, 0, "VoidUser", Global.System.Data.DataRowVersion.Original, false, Nothing, "", "", ""))
+            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@CustomerCreditID", Global.System.Data.SqlDbType.Int, 4, Global.System.Data.ParameterDirection.Input, 10, 0, "CustomerCreditID", Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
         End Sub
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
@@ -4795,17 +4795,21 @@ Namespace ds_CustomerTableAdapters
             Me._commandCollection(0).Connection = Me.Connection
             Me._commandCollection(0).CommandText = "dbo.Customer_Credits_Select"
             Me._commandCollection(0).CommandType = Global.System.Data.CommandType.StoredProcedure
-            Me._commandCollection(0).Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@RETURN_VALUE", Global.System.Data.SqlDbType.[Variant], 0, Global.System.Data.ParameterDirection.ReturnValue, 0, 0, Nothing, Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
-            Me._commandCollection(0).Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@CustomerNumber", Global.System.Data.SqlDbType.[Decimal], 9, Global.System.Data.ParameterDirection.Input, 18, 0, "CustomerNumber", Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
+            Me._commandCollection(0).Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@RETURN_VALUE", Global.System.Data.SqlDbType.Int, 4, Global.System.Data.ParameterDirection.ReturnValue, 10, 0, Nothing, Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
+            Me._commandCollection(0).Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@CustomerNumber", Global.System.Data.SqlDbType.[Decimal], 9, Global.System.Data.ParameterDirection.Input, 18, 0, Nothing, Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
         End Sub
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0"),  _
          Global.System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter"),  _
          Global.System.ComponentModel.DataObjectMethodAttribute(Global.System.ComponentModel.DataObjectMethodType.Fill, true)>  _
-        Public Overloads Overridable Function FillByCustomerID(ByVal dataTable As ds_Customer.Customer_CreditsDataTable, ByVal CustomerNumber As Decimal) As Integer
+        Public Overloads Overridable Function FillByCustomerID(ByVal dataTable As ds_Customer.Customer_CreditsDataTable, ByVal CustomerNumber As Global.System.Nullable(Of Decimal)) As Integer
             Me.Adapter.SelectCommand = Me.CommandCollection(0)
-            Me.Adapter.SelectCommand.Parameters(1).Value = CType(CustomerNumber,Decimal)
+            If (CustomerNumber.HasValue = true) Then
+                Me.Adapter.SelectCommand.Parameters(1).Value = CType(CustomerNumber.Value,Decimal)
+            Else
+                Me.Adapter.SelectCommand.Parameters(1).Value = Global.System.DBNull.Value
+            End If
             If (Me.ClearBeforeFill = true) Then
                 dataTable.Clear
             End If
@@ -4817,9 +4821,13 @@ Namespace ds_CustomerTableAdapters
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0"),  _
          Global.System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter"),  _
          Global.System.ComponentModel.DataObjectMethodAttribute(Global.System.ComponentModel.DataObjectMethodType.[Select], true)>  _
-        Public Overloads Overridable Function GetDataByCustomerID(ByVal CustomerNumber As Decimal) As ds_Customer.Customer_CreditsDataTable
+        Public Overloads Overridable Function GetDataByCustomerID(ByVal CustomerNumber As Global.System.Nullable(Of Decimal)) As ds_Customer.Customer_CreditsDataTable
             Me.Adapter.SelectCommand = Me.CommandCollection(0)
-            Me.Adapter.SelectCommand.Parameters(1).Value = CType(CustomerNumber,Decimal)
+            If (CustomerNumber.HasValue = true) Then
+                Me.Adapter.SelectCommand.Parameters(1).Value = CType(CustomerNumber.Value,Decimal)
+            Else
+                Me.Adapter.SelectCommand.Parameters(1).Value = Global.System.DBNull.Value
+            End If
             Dim dataTable As ds_Customer.Customer_CreditsDataTable = New ds_Customer.Customer_CreditsDataTable()
             Me.Adapter.Fill(dataTable)
             Return dataTable
@@ -4857,22 +4865,34 @@ Namespace ds_CustomerTableAdapters
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0"),  _
          Global.System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter"),  _
          Global.System.ComponentModel.DataObjectMethodAttribute(Global.System.ComponentModel.DataObjectMethodType.Insert, true)>  _
-        Public Overloads Overridable Function Insert(ByVal CustomerNumber As Decimal, ByVal CreditTxnID As String, ByVal CreditAmount As Decimal, ByVal TimeCreated As Date, ByVal Reason As String, ByVal CreatedUser As String, ByVal Voided As Global.System.Nullable(Of Boolean), ByVal VoidTime As Global.System.Nullable(Of Date), ByVal VoidReason As String, ByVal VoidUser As String) As Integer
-            Me.Adapter.InsertCommand.Parameters(1).Value = CType(CustomerNumber,Decimal)
+        Public Overloads Overridable Function Insert(ByVal CustomerNumber As Global.System.Nullable(Of Decimal), ByVal CreditTxnID As String, ByVal CreditAmount As Global.System.Nullable(Of Decimal), ByVal TimeCreated As Global.System.Nullable(Of Date), ByVal Reason As String, ByVal CreatedUser As String, ByVal Voided As Global.System.Nullable(Of Boolean), ByVal VoidTime As Global.System.Nullable(Of Date), ByVal VoidReason As String, ByVal VoidUser As String) As Integer
+            If (CustomerNumber.HasValue = true) Then
+                Me.Adapter.InsertCommand.Parameters(1).Value = CType(CustomerNumber.Value,Decimal)
+            Else
+                Me.Adapter.InsertCommand.Parameters(1).Value = Global.System.DBNull.Value
+            End If
             If (CreditTxnID Is Nothing) Then
-                Throw New Global.System.ArgumentNullException("CreditTxnID")
+                Me.Adapter.InsertCommand.Parameters(2).Value = Global.System.DBNull.Value
             Else
                 Me.Adapter.InsertCommand.Parameters(2).Value = CType(CreditTxnID,String)
             End If
-            Me.Adapter.InsertCommand.Parameters(3).Value = CType(CreditAmount,Decimal)
-            Me.Adapter.InsertCommand.Parameters(4).Value = CType(TimeCreated,Date)
+            If (CreditAmount.HasValue = true) Then
+                Me.Adapter.InsertCommand.Parameters(3).Value = CType(CreditAmount.Value,Decimal)
+            Else
+                Me.Adapter.InsertCommand.Parameters(3).Value = Global.System.DBNull.Value
+            End If
+            If (TimeCreated.HasValue = true) Then
+                Me.Adapter.InsertCommand.Parameters(4).Value = CType(TimeCreated.Value,Date)
+            Else
+                Me.Adapter.InsertCommand.Parameters(4).Value = Global.System.DBNull.Value
+            End If
             If (Reason Is Nothing) Then
-                Throw New Global.System.ArgumentNullException("Reason")
+                Me.Adapter.InsertCommand.Parameters(5).Value = Global.System.DBNull.Value
             Else
                 Me.Adapter.InsertCommand.Parameters(5).Value = CType(Reason,String)
             End If
             If (CreatedUser Is Nothing) Then
-                Throw New Global.System.ArgumentNullException("CreatedUser")
+                Me.Adapter.InsertCommand.Parameters(6).Value = Global.System.DBNull.Value
             Else
                 Me.Adapter.InsertCommand.Parameters(6).Value = CType(CreatedUser,String)
             End If
@@ -4916,43 +4936,55 @@ Namespace ds_CustomerTableAdapters
          Global.System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter"),  _
          Global.System.ComponentModel.DataObjectMethodAttribute(Global.System.ComponentModel.DataObjectMethodType.Update, true)>  _
         Public Overloads Overridable Function Update( _
-                    ByVal CustomerNumber As Decimal,  _
+                    ByVal CustomerNumber As Global.System.Nullable(Of Decimal),  _
                     ByVal CreditTxnID As String,  _
-                    ByVal CreditAmount As Decimal,  _
-                    ByVal TimeCreated As Date,  _
+                    ByVal CreditAmount As Global.System.Nullable(Of Decimal),  _
+                    ByVal TimeCreated As Global.System.Nullable(Of Date),  _
                     ByVal Reason As String,  _
                     ByVal CreatedUser As String,  _
                     ByVal Voided As Global.System.Nullable(Of Boolean),  _
                     ByVal VoidTime As Global.System.Nullable(Of Date),  _
                     ByVal VoidReason As String,  _
                     ByVal VoidUser As String,  _
-                    ByVal Original_CustomerCreditID As Integer,  _
-                    ByVal Original_CustomerNumber As Decimal,  _
+                    ByVal Original_CustomerCreditID As Global.System.Nullable(Of Integer),  _
+                    ByVal Original_CustomerNumber As Global.System.Nullable(Of Decimal),  _
                     ByVal Original_CreditTxnID As String,  _
-                    ByVal Original_CreditAmount As Decimal,  _
-                    ByVal Original_TimeCreated As Date,  _
+                    ByVal Original_CreditAmount As Global.System.Nullable(Of Decimal),  _
+                    ByVal Original_TimeCreated As Global.System.Nullable(Of Date),  _
                     ByVal Original_Reason As String,  _
                     ByVal Original_CreatedUser As String,  _
                     ByVal Original_Voided As Global.System.Nullable(Of Boolean),  _
                     ByVal Original_VoidTime As Global.System.Nullable(Of Date),  _
                     ByVal Original_VoidReason As String,  _
                     ByVal Original_VoidUser As String,  _
-                    ByVal CustomerCreditID As Integer) As Integer
-            Me.Adapter.UpdateCommand.Parameters(1).Value = CType(CustomerNumber,Decimal)
+                    ByVal CustomerCreditID As Global.System.Nullable(Of Integer)) As Integer
+            If (CustomerNumber.HasValue = true) Then
+                Me.Adapter.UpdateCommand.Parameters(1).Value = CType(CustomerNumber.Value,Decimal)
+            Else
+                Me.Adapter.UpdateCommand.Parameters(1).Value = Global.System.DBNull.Value
+            End If
             If (CreditTxnID Is Nothing) Then
-                Throw New Global.System.ArgumentNullException("CreditTxnID")
+                Me.Adapter.UpdateCommand.Parameters(2).Value = Global.System.DBNull.Value
             Else
                 Me.Adapter.UpdateCommand.Parameters(2).Value = CType(CreditTxnID,String)
             End If
-            Me.Adapter.UpdateCommand.Parameters(3).Value = CType(CreditAmount,Decimal)
-            Me.Adapter.UpdateCommand.Parameters(4).Value = CType(TimeCreated,Date)
+            If (CreditAmount.HasValue = true) Then
+                Me.Adapter.UpdateCommand.Parameters(3).Value = CType(CreditAmount.Value,Decimal)
+            Else
+                Me.Adapter.UpdateCommand.Parameters(3).Value = Global.System.DBNull.Value
+            End If
+            If (TimeCreated.HasValue = true) Then
+                Me.Adapter.UpdateCommand.Parameters(4).Value = CType(TimeCreated.Value,Date)
+            Else
+                Me.Adapter.UpdateCommand.Parameters(4).Value = Global.System.DBNull.Value
+            End If
             If (Reason Is Nothing) Then
-                Throw New Global.System.ArgumentNullException("Reason")
+                Me.Adapter.UpdateCommand.Parameters(5).Value = Global.System.DBNull.Value
             Else
                 Me.Adapter.UpdateCommand.Parameters(5).Value = CType(Reason,String)
             End If
             If (CreatedUser Is Nothing) Then
-                Throw New Global.System.ArgumentNullException("CreatedUser")
+                Me.Adapter.UpdateCommand.Parameters(6).Value = Global.System.DBNull.Value
             Else
                 Me.Adapter.UpdateCommand.Parameters(6).Value = CType(CreatedUser,String)
             End If
@@ -4976,22 +5008,38 @@ Namespace ds_CustomerTableAdapters
             Else
                 Me.Adapter.UpdateCommand.Parameters(10).Value = CType(VoidUser,String)
             End If
-            Me.Adapter.UpdateCommand.Parameters(11).Value = CType(Original_CustomerCreditID,Integer)
-            Me.Adapter.UpdateCommand.Parameters(12).Value = CType(Original_CustomerNumber,Decimal)
+            If (Original_CustomerCreditID.HasValue = true) Then
+                Me.Adapter.UpdateCommand.Parameters(11).Value = CType(Original_CustomerCreditID.Value,Integer)
+            Else
+                Me.Adapter.UpdateCommand.Parameters(11).Value = Global.System.DBNull.Value
+            End If
+            If (Original_CustomerNumber.HasValue = true) Then
+                Me.Adapter.UpdateCommand.Parameters(12).Value = CType(Original_CustomerNumber.Value,Decimal)
+            Else
+                Me.Adapter.UpdateCommand.Parameters(12).Value = Global.System.DBNull.Value
+            End If
             If (Original_CreditTxnID Is Nothing) Then
-                Throw New Global.System.ArgumentNullException("Original_CreditTxnID")
+                Me.Adapter.UpdateCommand.Parameters(13).Value = Global.System.DBNull.Value
             Else
                 Me.Adapter.UpdateCommand.Parameters(13).Value = CType(Original_CreditTxnID,String)
             End If
-            Me.Adapter.UpdateCommand.Parameters(14).Value = CType(Original_CreditAmount,Decimal)
-            Me.Adapter.UpdateCommand.Parameters(15).Value = CType(Original_TimeCreated,Date)
+            If (Original_CreditAmount.HasValue = true) Then
+                Me.Adapter.UpdateCommand.Parameters(14).Value = CType(Original_CreditAmount.Value,Decimal)
+            Else
+                Me.Adapter.UpdateCommand.Parameters(14).Value = Global.System.DBNull.Value
+            End If
+            If (Original_TimeCreated.HasValue = true) Then
+                Me.Adapter.UpdateCommand.Parameters(15).Value = CType(Original_TimeCreated.Value,Date)
+            Else
+                Me.Adapter.UpdateCommand.Parameters(15).Value = Global.System.DBNull.Value
+            End If
             If (Original_Reason Is Nothing) Then
-                Throw New Global.System.ArgumentNullException("Original_Reason")
+                Me.Adapter.UpdateCommand.Parameters(16).Value = Global.System.DBNull.Value
             Else
                 Me.Adapter.UpdateCommand.Parameters(16).Value = CType(Original_Reason,String)
             End If
             If (Original_CreatedUser Is Nothing) Then
-                Throw New Global.System.ArgumentNullException("Original_CreatedUser")
+                Me.Adapter.UpdateCommand.Parameters(17).Value = Global.System.DBNull.Value
             Else
                 Me.Adapter.UpdateCommand.Parameters(17).Value = CType(Original_CreatedUser,String)
             End If
@@ -5023,7 +5071,11 @@ Namespace ds_CustomerTableAdapters
                 Me.Adapter.UpdateCommand.Parameters(24).Value = CType(0,Object)
                 Me.Adapter.UpdateCommand.Parameters(25).Value = CType(Original_VoidUser,String)
             End If
-            Me.Adapter.UpdateCommand.Parameters(26).Value = CType(CustomerCreditID,Integer)
+            If (CustomerCreditID.HasValue = true) Then
+                Me.Adapter.UpdateCommand.Parameters(26).Value = CType(CustomerCreditID.Value,Integer)
+            Else
+                Me.Adapter.UpdateCommand.Parameters(26).Value = Global.System.DBNull.Value
+            End If
             Dim previousConnectionState As Global.System.Data.ConnectionState = Me.Adapter.UpdateCommand.Connection.State
             If ((Me.Adapter.UpdateCommand.Connection.State And Global.System.Data.ConnectionState.Open)  _
                         <> Global.System.Data.ConnectionState.Open) Then
@@ -5044,21 +5096,21 @@ Namespace ds_CustomerTableAdapters
          Global.System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter"),  _
          Global.System.ComponentModel.DataObjectMethodAttribute(Global.System.ComponentModel.DataObjectMethodType.Update, true)>  _
         Public Overloads Overridable Function Update( _
-                    ByVal CustomerNumber As Decimal,  _
+                    ByVal CustomerNumber As Global.System.Nullable(Of Decimal),  _
                     ByVal CreditTxnID As String,  _
-                    ByVal CreditAmount As Decimal,  _
-                    ByVal TimeCreated As Date,  _
+                    ByVal CreditAmount As Global.System.Nullable(Of Decimal),  _
+                    ByVal TimeCreated As Global.System.Nullable(Of Date),  _
                     ByVal Reason As String,  _
                     ByVal CreatedUser As String,  _
                     ByVal Voided As Global.System.Nullable(Of Boolean),  _
                     ByVal VoidTime As Global.System.Nullable(Of Date),  _
                     ByVal VoidReason As String,  _
                     ByVal VoidUser As String,  _
-                    ByVal Original_CustomerCreditID As Integer,  _
-                    ByVal Original_CustomerNumber As Decimal,  _
+                    ByVal Original_CustomerCreditID As Global.System.Nullable(Of Integer),  _
+                    ByVal Original_CustomerNumber As Global.System.Nullable(Of Decimal),  _
                     ByVal Original_CreditTxnID As String,  _
-                    ByVal Original_CreditAmount As Decimal,  _
-                    ByVal Original_TimeCreated As Date,  _
+                    ByVal Original_CreditAmount As Global.System.Nullable(Of Decimal),  _
+                    ByVal Original_TimeCreated As Global.System.Nullable(Of Date),  _
                     ByVal Original_Reason As String,  _
                     ByVal Original_CreatedUser As String,  _
                     ByVal Original_Voided As Global.System.Nullable(Of Boolean),  _

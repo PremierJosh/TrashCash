@@ -38,37 +38,6 @@ Public Class QB_Procedures
         rsta = New ds_RecurringServiceTableAdapters.RecurringServiceTableAdapter
     End Sub
 
-
-    Protected Function VoidTransactionByTxnID(ByVal TxnID As String, ByVal VoidType As ENTxnVoidType) As Boolean
-        ' return bool
-        Dim voided As Boolean
-
-        Dim txnVoid As ITxnVoid = MsgSetRequest.AppendTxnVoidRq
-
-        ' setting txn we are talking about
-        txnVoid.TxnVoidType.SetValue(VoidType)
-        txnVoid.TxnID.SetValue(TxnID)
-
-
-        Dim msgSetResp As IMsgSetResponse = SessionManager.DoRequests(MsgSetRequest)
-        Dim respList As IResponseList = msgSetResp.ResponseList
-
-        ' clear msgsetreq
-        MsgSetRequest.ClearRequests()
-
-        For i = 0 To respList.Count - 1
-            Dim resp As IResponse = respList.GetAt(i)
-            If (resp.StatusCode <> 0) Then
-                ResponseErr_Misc(resp)
-            Else
-                voided = True
-            End If
-        Next i
-
-        Return voided
-    End Function
-
-
     Public Sub Customer_AddMissingListID(ByRef form As AdminExportImport)
         Dim missingCount As Integer
         Dim qta As New ds_CustomerTableAdapters.QueriesTableAdapter
@@ -416,13 +385,96 @@ retry:
     End Sub
 
     ' customer credit create - optional auto apply and sort mode
-    Public Sub Customer_Credit(ByVal CustomerNumber As Integer, ByVal CreditAmount As Double, ByVal Reason As String, ByVal AutoApply As Boolean,
-                               Optional ByVal ApplyOrder As String = "Desc")
+    Public Sub Customer_Credit(ByVal CustomerNumber As Integer, ByVal CreditAmount As Double, ByVal Reason As String, ByVal ItemListID As String, ByVal Print As Boolean,
+                               ByVal AutoApply As Boolean, Optional ByVal ApplyOrder As String = "Desc")
 
         ' getting cuystomer listid
         Dim custListID As String = cta.GetListID(CustomerNumber)
 
         Dim creditAdd As ICreditMemoAdd = MsgSetRequest.AppendCreditMemoAddRq
+        creditAdd.CustomerRef.ListID.SetValue(custListID)
+        creditAdd.IsToBePrinted.SetValue(Print)
+
+        ' creating credit line
+        Dim creditLine As ICreditMemoLineAdd = creditAdd.ORCreditMemoLineAddList.Append
+        creditLine.ItemRef.ListID.SetValue(ItemListID)
+        creditLine.ORRatePriceLevel.Rate.SetValue(CreditAmount)
+
+        ' desc line
+        Dim descLine As IORCreditMemoLineAdd = creditAdd.ORCreditMemoLineAddList.Append()
+        descLine.CreditMemoLineAdd.ItemRef.ListID.Unset()
+        descLine.CreditMemoLineAdd.ItemRef.FullName.Unset()
+        descLine.CreditMemoLineAdd.Desc.SetValue(Reason)
+        descLine.CreditMemoLineAdd.Amount.Unset()
+        descLine.CreditMemoLineAdd.Quantity.Unset()
+
+        ' go
+        Dim msgSetResp As IMsgSetResponse = SessionManager.DoRequests(MsgSetRequest)
+        Dim respList As IResponseList = msgSetResp.ResponseList
+
+        MsgSetRequest.ClearRequests()
+
+        For i = 0 To respList.Count - 1
+            Dim resp As IResponse = respList.GetAt(i)
+
+            If (resp.StatusCode = 0) Then
+                Dim creditRet As ICreditMemoRet = resp.Detail
+
+                ' insert record
+                Using ta As New ds_CustomerTableAdapters.Customer_CreditsTableAdapter
+                    ta.Insert(CustomerNumber, creditRet.TxnID.GetValue, creditRet.TotalAmount.GetValue, creditRet.TimeCreated.GetValue,
+                              Reason, HomeForm.CurrentUserRow.USER_NAME, False, Nothing, Nothing, Nothing)
+                End Using
+
+                ' check if were going to use
+                If (AutoApply) Then
+                    ' get table of unpaid invoices
+                    Dim dt As ds_Payments.MovePayment_OpenInvoicesDataTable = Invoicing_GetUnpaidTable(custListID)
+                    If (dt.Rows.Count > 0) Then
+                        ' apply credit
+                        Credits_PayOpenInvoices(custListID, creditRet.TxnID.GetValue, creditRet.CreditRemaining.GetValue, dt, ApplyOrder)
+                    End If
+                End If
+            Else
+                ResponseErr_Misc(resp)
+            End If
+        Next
+
+    End Sub
+
+    ' customer credit void
+    Public Sub Customer_Credit_Void(ByRef row As ds_Customer.Customer_CreditsRow, ByVal VoidReason As String)
+        Dim voidTxn As ITxnVoid = MsgSetRequest.AppendTxnVoidRq
+        voidTxn.TxnVoidType.SetValue(ENTxnVoidType.tvtCreditMemo)
+        voidTxn.TxnID.SetValue(row.CreditTxnID)
+
+        ' go
+        Dim msgSetResp As IMsgSetResponse = SessionManager.DoRequests(MsgSetRequest)
+        Dim respList As IResponseList = msgSetResp.ResponseList
+
+        MsgSetRequest.ClearRequests()
+
+        For i = 0 To respList.Count - 1
+            Dim resp As IResponse = respList.GetAt(i)
+
+            If (resp.StatusCode = 0) Then
+                ' update row
+                row.Voided = True
+                row.VoidReason = VoidReason
+                row.VoidTime = Date.Now
+                row.VoidUser = HomeForm.CurrentUserRow.USER_NAME
+
+                Using ta As New ds_CustomerTableAdapters.Customer_CreditsTableAdapter
+                    Try
+                        ta.Update(row)
+                    Catch ex As Exception
+                        MessageBox.Show("Error Credit Void Update: " & ex.Message, "Sql Update Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                    End Try
+                End Using
+            Else
+                ResponseErr_Misc(resp)
+            End If
+        Next
 
     End Sub
 
@@ -603,9 +655,9 @@ retry:
     End Sub
 
     ' sub to use newly created credit to pay invoices using the move payment open inv table
-    Private Sub Credits_PayOpenInvoices(ByVal CustomerListID As String, ByVal CreditTxnID As String, ByVal AvailAmount As Double, ByRef openInvoiceDT As ds_Payments.MovePayment_OpenInvoicesDataTable, ByVal SortDir As String)
+    Private Sub Credits_PayOpenInvoices(ByVal CustomerListID As String, ByVal CreditTxnID As String, ByVal AvailAmount As Double, ByRef openInvoiceDT As ds_Payments.MovePayment_OpenInvoicesDataTable, ByVal ApplyOrder As String)
         ' create data view that is sorted depending on the direction paramater Asc or Desc
-        Dim dv_Invoices As New DataView(openInvoiceDT, "", "Inv_TxnDate " & SortDir, DataViewRowState.CurrentRows)
+        Dim dv_Invoices As New DataView(openInvoiceDT, "", "Inv_TxnDate " & ApplyOrder, DataViewRowState.CurrentRows)
 
         ' var going to keep track of remaining credit
         Dim creditRemain As Double = AvailAmount
