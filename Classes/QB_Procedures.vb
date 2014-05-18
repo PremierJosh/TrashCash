@@ -68,40 +68,6 @@ Public Class QB_Procedures
         Return voided
     End Function
 
-    ' void credits from data view
-    Public Function RecurringService_Credits_VoidDataView(ByRef dv As DataView) As Boolean
-        ' return weather all voids succeede or not
-        Dim pass As Boolean = True
-
-        ' table for ref for reference
-        Dim dt As ds_RecurringService.RecurringService_CreditsDataTable = dv.Table
-        For Each row As ds_RecurringService.RecurringService_CreditsRow In dt
-            Dim voidRq As ITxnVoid = MsgSetRequest.AppendTxnVoidRq
-            ' setting credit info
-            voidRq.TxnVoidType.SetValue(ENTxnVoidType.tvtCreditMemo)
-            voidRq.TxnID.SetValue(row.CreditMemoTxnID)
-        Next
-
-        ' go
-        Dim msgSetResp As IMsgSetResponse = SessionManager.DoRequests(MsgSetRequest)
-        Dim respList As IResponseList = msgSetResp.ResponseList
-
-        MsgSetRequest.ClearRequests()
-
-        For i = 0 To respList.Count - 1
-            Dim resp As IResponse = respList.GetAt(i)
-
-            If (resp.StatusCode <> 0) Then
-                ResponseErr_Misc(resp)
-                pass = False
-            End If
-        Next
-
-        Return pass
-    End Function
-
-
-
     Public Sub Customer_AddMissingListID(ByRef form As AdminExportImport)
         Dim missingCount As Integer
         Dim qta As New ds_CustomerTableAdapters.QueriesTableAdapter
