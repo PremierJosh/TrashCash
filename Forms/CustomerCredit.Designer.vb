@@ -23,8 +23,8 @@ Partial Class CustomerCredit
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
-        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.Panel1 = New System.Windows.Forms.Panel()
         Me.pnl_TopContent = New System.Windows.Forms.Panel()
         Me.Ts_M_Customer = New TrashCash.ts_M_Customer()
@@ -46,12 +46,15 @@ Partial Class CustomerCredit
         Me.ck_AutoApply = New System.Windows.Forms.CheckBox()
         Me.rb_Oldest = New System.Windows.Forms.RadioButton()
         Me.rb_Newest = New System.Windows.Forms.RadioButton()
+        Me.cm_Void = New System.Windows.Forms.ContextMenuStrip(Me.components)
+        Me.btn_VoidCredit = New System.Windows.Forms.ToolStripMenuItem()
         Me.Panel1.SuspendLayout()
         Me.pnl_TopContent.SuspendLayout()
         Me.pnl_Left.SuspendLayout()
         CType(Me.dg_Credits, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.Ds_Customer, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.CustomerCreditsBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.cm_Void.SuspendLayout()
         Me.SuspendLayout()
         '
         'Panel1
@@ -113,6 +116,7 @@ Partial Class CustomerCredit
         Me.dg_Credits.AutoGenerateColumns = False
         Me.dg_Credits.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.dg_Credits.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.CreditAmountDataGridViewTextBoxColumn, Me.TimeCreatedDataGridViewTextBoxColumn, Me.ReasonDataGridViewTextBoxColumn, Me.CreatedUserDataGridViewTextBoxColumn})
+        Me.dg_Credits.ContextMenuStrip = Me.cm_Void
         Me.dg_Credits.DataSource = Me.CustomerCreditsBindingSource
         Me.dg_Credits.Dock = System.Windows.Forms.DockStyle.Fill
         Me.dg_Credits.Location = New System.Drawing.Point(0, 23)
@@ -142,9 +146,9 @@ Partial Class CustomerCredit
         '
         Me.CreditAmountDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
         Me.CreditAmountDataGridViewTextBoxColumn.DataPropertyName = "CreditAmount"
-        DataGridViewCellStyle1.Format = "C2"
-        DataGridViewCellStyle1.NullValue = Nothing
-        Me.CreditAmountDataGridViewTextBoxColumn.DefaultCellStyle = DataGridViewCellStyle1
+        DataGridViewCellStyle3.Format = "C2"
+        DataGridViewCellStyle3.NullValue = Nothing
+        Me.CreditAmountDataGridViewTextBoxColumn.DefaultCellStyle = DataGridViewCellStyle3
         Me.CreditAmountDataGridViewTextBoxColumn.HeaderText = "Amount"
         Me.CreditAmountDataGridViewTextBoxColumn.Name = "CreditAmountDataGridViewTextBoxColumn"
         Me.CreditAmountDataGridViewTextBoxColumn.ReadOnly = True
@@ -154,9 +158,9 @@ Partial Class CustomerCredit
         '
         Me.TimeCreatedDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
         Me.TimeCreatedDataGridViewTextBoxColumn.DataPropertyName = "TimeCreated"
-        DataGridViewCellStyle2.Format = "g"
-        DataGridViewCellStyle2.NullValue = Nothing
-        Me.TimeCreatedDataGridViewTextBoxColumn.DefaultCellStyle = DataGridViewCellStyle2
+        DataGridViewCellStyle4.Format = "g"
+        DataGridViewCellStyle4.NullValue = Nothing
+        Me.TimeCreatedDataGridViewTextBoxColumn.DefaultCellStyle = DataGridViewCellStyle4
         Me.TimeCreatedDataGridViewTextBoxColumn.HeaderText = "Time Created"
         Me.TimeCreatedDataGridViewTextBoxColumn.Name = "TimeCreatedDataGridViewTextBoxColumn"
         Me.TimeCreatedDataGridViewTextBoxColumn.ReadOnly = True
@@ -257,6 +261,18 @@ Partial Class CustomerCredit
         Me.rb_Newest.Text = "Newest First"
         Me.rb_Newest.UseVisualStyleBackColor = True
         '
+        'cm_Void
+        '
+        Me.cm_Void.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.btn_VoidCredit})
+        Me.cm_Void.Name = "cm_Void"
+        Me.cm_Void.Size = New System.Drawing.Size(153, 48)
+        '
+        'btn_VoidCredit
+        '
+        Me.btn_VoidCredit.Name = "btn_VoidCredit"
+        Me.btn_VoidCredit.Size = New System.Drawing.Size(152, 22)
+        Me.btn_VoidCredit.Text = "Void Credit"
+        '
         'CustomerCredit
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -283,6 +299,7 @@ Partial Class CustomerCredit
         CType(Me.dg_Credits, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.Ds_Customer, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.CustomerCreditsBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.cm_Void.ResumeLayout(False)
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -308,4 +325,6 @@ Partial Class CustomerCredit
     Friend WithEvents ck_AutoApply As System.Windows.Forms.CheckBox
     Friend WithEvents rb_Oldest As System.Windows.Forms.RadioButton
     Friend WithEvents rb_Newest As System.Windows.Forms.RadioButton
+    Friend WithEvents cm_Void As System.Windows.Forms.ContextMenuStrip
+    Friend WithEvents btn_VoidCredit As System.Windows.Forms.ToolStripMenuItem
 End Class
