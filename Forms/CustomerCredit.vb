@@ -72,6 +72,15 @@
         If (sender.tag IsNot Nothing) Then
             Dim row As ds_Customer.Customer_CreditsRow = CType(dg_Credits.Rows(sender.tag).DataBoundItem, DataRowView).Row
             If (Not row.Voided) Then
+                ' prompt for reason
+                Dim prompt As DialogResult = MessageBox.Show("Void this Credit for " & FormatCurrency(row.CreditAmount) & ", created on " & row.TimeCreated, "Void Credit Confirm", MessageBoxButtons.YesNo, MessageBoxIcon.Question)
+                If (prompt = Windows.Forms.DialogResult.Yes) Then
+                    ' get reason
+                    Dim reason As String = InputBox("Void Reason", "Void Reason")
+                    If (Trim(reason).Length > 0) Then
+                        _homeForm.Procedures.Customer_Credit_Void(row, reason)
+                    End If
+                End If
 
             Else
                 MessageBox.Show("This Credit was voided on " & row.VoidTime.Date & " by user " & row.VoidUser & ".", "Already voided", MessageBoxButtons.OK, MessageBoxIcon.Error)
