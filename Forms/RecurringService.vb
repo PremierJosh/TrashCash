@@ -387,7 +387,7 @@ Public Class RecurringService
 
                         If (overlapPrompt = Windows.Forms.DialogResult.Yes) Then
                             ' void all credits in table
-
+                            HomeForm.Procedures.RecurringService_Credits_Void()
                         End If
 
                     End If
