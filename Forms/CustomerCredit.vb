@@ -84,6 +84,8 @@
                     If (Trim(reason).Length > 0) Then
                         _homeForm.Procedures.Customer_Credit_Void(row, reason)
                         balanceChanged = True
+                        ' reload history table
+                        Me.Customer_CreditsTableAdapter.FillByCustomerID(Me.Ds_Customer.Customer_Credits, CurrentCustomer)
                     End If
                 End If
 
@@ -112,6 +114,8 @@
 
                     _homeForm.Procedures.Customer_Credit(CurrentCustomer, tb_Amount.Text, tb_Reason.Text, cmb_Types.SelectedValue, ck_Print.Checked, ck_AutoApply.Checked, s)
                     balanceChanged = True
+                    ' reload history table
+                    Me.Customer_CreditsTableAdapter.FillByCustomerID(Me.Ds_Customer.Customer_Credits, CurrentCustomer)
                 End If
             End If
         End If
