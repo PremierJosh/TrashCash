@@ -416,7 +416,7 @@ retry:
     End Sub
 
     ' customer credit create - optional auto apply and sort mode
-    Public Sub Customer_Credit(ByVal CustomerNumber As Integer, ByVal CreditAmount As Double, ByVal Reason As String, ByVal AutoApply As Boolean,
+    Public Sub Customer_Credit(ByVal CustomerNumber As Integer, ByVal CreditAmount As Double, ByVal Reason As String, ByVal ItemListID As String, ByVal AutoApply As Boolean,
                                Optional ByVal ApplyOrder As String = "Desc")
 
         ' getting cuystomer listid
