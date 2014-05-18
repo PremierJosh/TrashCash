@@ -1,5 +1,9 @@
 ﻿Public Class CustomerCredit
+    ' home form ref
     Private _homeForm As TrashCash_Home
+    ' dt vars for service type binding
+    Private c_dt As ds_Customer.Customer_RecurringServiceTypesDataTable
+    Private s_dt As ds_Types.ServiceTypesDataTable
 
     Private _currentCustomer As Integer
     Private Property CurrentCustomer As Integer
@@ -8,6 +12,30 @@
         End Get
         Set(value As Integer)
             _currentCustomer = value
+
+            ' getting service table
+            If (value > 0) Then
+                Using ta As New ds_CustomerTableAdapters.Customer_RecurringServiceTypesTableAdapter
+                    c_dt = ta.GetData(value)
+                End Using
+
+                ' checking if rows came back
+                If (c_dt.Rows.Count > 0) Then
+                    cmb_Types.DataSource = c_dt
+                    cmb_Types.DisplayMember = c_dt.ServiceNameColumn.ColumnName
+                    cmb_Types.ValueMember = c_dt.ServiceListIDColumn.ColumnName
+                Else
+                    ' no services for customer
+                    Using ta As New ds_TypesTableAdapters.ServiceTypesTableAdapter
+                        s_dt = ta.GetData()
+                    End Using
+
+                    ' binding combo box
+                    cmb_Types.DataSource = s_dt
+                    cmb_Types.DisplayMember = s_dt.ServiceNameColumn.ColumnName
+                    cmb_Types.ValueMember = s_dt.ServiceListIDColumn.ColumnName
+                End If
+            End If
 
         End Set
     End Property

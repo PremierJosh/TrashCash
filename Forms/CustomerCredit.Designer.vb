@@ -23,22 +23,24 @@ Partial Class CustomerCredit
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
-        Dim DataGridViewCellStyle5 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle6 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.Panel1 = New System.Windows.Forms.Panel()
         Me.pnl_TopContent = New System.Windows.Forms.Panel()
         Me.Ts_M_Customer = New TrashCash.ts_M_Customer()
         Me.pnl_Left = New System.Windows.Forms.Panel()
-        Me.lbl_CreditHis = New System.Windows.Forms.Label()
         Me.dg_Credits = New System.Windows.Forms.DataGridView()
-        Me.Ds_Customer = New TrashCash.ds_Customer()
-        Me.CustomerCreditsBindingSource = New System.Windows.Forms.BindingSource(Me.components)
-        Me.Customer_CreditsTableAdapter = New TrashCash.ds_CustomerTableAdapters.Customer_CreditsTableAdapter()
         Me.CreditAmountDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.TimeCreatedDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.ReasonDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.CreatedUserDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Currency_TextBox1 = New TrashCash.Currency_TextBox()
+        Me.cm_Void = New System.Windows.Forms.ContextMenuStrip(Me.components)
+        Me.btn_VoidCredit = New System.Windows.Forms.ToolStripMenuItem()
+        Me.CustomerCreditsBindingSource = New System.Windows.Forms.BindingSource(Me.components)
+        Me.Ds_Customer = New TrashCash.ds_Customer()
+        Me.lbl_CreditHis = New System.Windows.Forms.Label()
+        Me.Customer_CreditsTableAdapter = New TrashCash.ds_CustomerTableAdapters.Customer_CreditsTableAdapter()
+        Me.tb_Amount = New TrashCash.Currency_TextBox()
         Me.lbl_Amount = New System.Windows.Forms.Label()
         Me.tb_Reason = New System.Windows.Forms.TextBox()
         Me.lbl_Reason = New System.Windows.Forms.Label()
@@ -46,17 +48,15 @@ Partial Class CustomerCredit
         Me.ck_AutoApply = New System.Windows.Forms.CheckBox()
         Me.rb_Oldest = New System.Windows.Forms.RadioButton()
         Me.rb_Newest = New System.Windows.Forms.RadioButton()
-        Me.cm_Void = New System.Windows.Forms.ContextMenuStrip(Me.components)
-        Me.btn_VoidCredit = New System.Windows.Forms.ToolStripMenuItem()
-        Me.Label1 = New System.Windows.Forms.Label()
-        Me.ComboBox1 = New System.Windows.Forms.ComboBox()
+        Me.lbl_Type = New System.Windows.Forms.Label()
+        Me.cmb_Types = New System.Windows.Forms.ComboBox()
         Me.Panel1.SuspendLayout()
         Me.pnl_TopContent.SuspendLayout()
         Me.pnl_Left.SuspendLayout()
         CType(Me.dg_Credits, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.Ds_Customer, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.CustomerCreditsBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.cm_Void.SuspendLayout()
+        CType(Me.CustomerCreditsBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.Ds_Customer, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'Panel1
@@ -100,17 +100,6 @@ Partial Class CustomerCredit
         Me.pnl_Left.Size = New System.Drawing.Size(430, 300)
         Me.pnl_Left.TabIndex = 98
         '
-        'lbl_CreditHis
-        '
-        Me.lbl_CreditHis.Dock = System.Windows.Forms.DockStyle.Top
-        Me.lbl_CreditHis.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lbl_CreditHis.Location = New System.Drawing.Point(0, 0)
-        Me.lbl_CreditHis.Name = "lbl_CreditHis"
-        Me.lbl_CreditHis.Size = New System.Drawing.Size(430, 23)
-        Me.lbl_CreditHis.TabIndex = 0
-        Me.lbl_CreditHis.Text = "Credit History"
-        Me.lbl_CreditHis.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
-        '
         'dg_Credits
         '
         Me.dg_Credits.AllowUserToAddRows = False
@@ -130,27 +119,13 @@ Partial Class CustomerCredit
         Me.dg_Credits.Size = New System.Drawing.Size(430, 277)
         Me.dg_Credits.TabIndex = 1
         '
-        'Ds_Customer
-        '
-        Me.Ds_Customer.DataSetName = "ds_Customer"
-        Me.Ds_Customer.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema
-        '
-        'CustomerCreditsBindingSource
-        '
-        Me.CustomerCreditsBindingSource.DataMember = "Customer_Credits"
-        Me.CustomerCreditsBindingSource.DataSource = Me.Ds_Customer
-        '
-        'Customer_CreditsTableAdapter
-        '
-        Me.Customer_CreditsTableAdapter.ClearBeforeFill = True
-        '
         'CreditAmountDataGridViewTextBoxColumn
         '
         Me.CreditAmountDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
         Me.CreditAmountDataGridViewTextBoxColumn.DataPropertyName = "CreditAmount"
-        DataGridViewCellStyle5.Format = "C2"
-        DataGridViewCellStyle5.NullValue = Nothing
-        Me.CreditAmountDataGridViewTextBoxColumn.DefaultCellStyle = DataGridViewCellStyle5
+        DataGridViewCellStyle3.Format = "C2"
+        DataGridViewCellStyle3.NullValue = Nothing
+        Me.CreditAmountDataGridViewTextBoxColumn.DefaultCellStyle = DataGridViewCellStyle3
         Me.CreditAmountDataGridViewTextBoxColumn.HeaderText = "Amount"
         Me.CreditAmountDataGridViewTextBoxColumn.Name = "CreditAmountDataGridViewTextBoxColumn"
         Me.CreditAmountDataGridViewTextBoxColumn.ReadOnly = True
@@ -160,9 +135,9 @@ Partial Class CustomerCredit
         '
         Me.TimeCreatedDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
         Me.TimeCreatedDataGridViewTextBoxColumn.DataPropertyName = "TimeCreated"
-        DataGridViewCellStyle6.Format = "g"
-        DataGridViewCellStyle6.NullValue = Nothing
-        Me.TimeCreatedDataGridViewTextBoxColumn.DefaultCellStyle = DataGridViewCellStyle6
+        DataGridViewCellStyle4.Format = "g"
+        DataGridViewCellStyle4.NullValue = Nothing
+        Me.TimeCreatedDataGridViewTextBoxColumn.DefaultCellStyle = DataGridViewCellStyle4
         Me.TimeCreatedDataGridViewTextBoxColumn.HeaderText = "Time Created"
         Me.TimeCreatedDataGridViewTextBoxColumn.Name = "TimeCreatedDataGridViewTextBoxColumn"
         Me.TimeCreatedDataGridViewTextBoxColumn.ReadOnly = True
@@ -185,12 +160,49 @@ Partial Class CustomerCredit
         Me.CreatedUserDataGridViewTextBoxColumn.ReadOnly = True
         Me.CreatedUserDataGridViewTextBoxColumn.Width = 54
         '
-        'Currency_TextBox1
+        'cm_Void
         '
-        Me.Currency_TextBox1.Location = New System.Drawing.Point(559, 147)
-        Me.Currency_TextBox1.Name = "Currency_TextBox1"
-        Me.Currency_TextBox1.Size = New System.Drawing.Size(75, 20)
-        Me.Currency_TextBox1.TabIndex = 99
+        Me.cm_Void.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.btn_VoidCredit})
+        Me.cm_Void.Name = "cm_Void"
+        Me.cm_Void.Size = New System.Drawing.Size(134, 26)
+        '
+        'btn_VoidCredit
+        '
+        Me.btn_VoidCredit.Name = "btn_VoidCredit"
+        Me.btn_VoidCredit.Size = New System.Drawing.Size(133, 22)
+        Me.btn_VoidCredit.Text = "Void Credit"
+        '
+        'CustomerCreditsBindingSource
+        '
+        Me.CustomerCreditsBindingSource.DataMember = "Customer_Credits"
+        Me.CustomerCreditsBindingSource.DataSource = Me.Ds_Customer
+        '
+        'Ds_Customer
+        '
+        Me.Ds_Customer.DataSetName = "ds_Customer"
+        Me.Ds_Customer.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema
+        '
+        'lbl_CreditHis
+        '
+        Me.lbl_CreditHis.Dock = System.Windows.Forms.DockStyle.Top
+        Me.lbl_CreditHis.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lbl_CreditHis.Location = New System.Drawing.Point(0, 0)
+        Me.lbl_CreditHis.Name = "lbl_CreditHis"
+        Me.lbl_CreditHis.Size = New System.Drawing.Size(430, 23)
+        Me.lbl_CreditHis.TabIndex = 0
+        Me.lbl_CreditHis.Text = "Credit History"
+        Me.lbl_CreditHis.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        '
+        'Customer_CreditsTableAdapter
+        '
+        Me.Customer_CreditsTableAdapter.ClearBeforeFill = True
+        '
+        'tb_Amount
+        '
+        Me.tb_Amount.Location = New System.Drawing.Point(559, 147)
+        Me.tb_Amount.Name = "tb_Amount"
+        Me.tb_Amount.Size = New System.Drawing.Size(75, 20)
+        Me.tb_Amount.TabIndex = 99
         '
         'lbl_Amount
         '
@@ -263,42 +275,30 @@ Partial Class CustomerCredit
         Me.rb_Newest.Text = "Newest First"
         Me.rb_Newest.UseVisualStyleBackColor = True
         '
-        'cm_Void
+        'lbl_Type
         '
-        Me.cm_Void.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.btn_VoidCredit})
-        Me.cm_Void.Name = "cm_Void"
-        Me.cm_Void.Size = New System.Drawing.Size(134, 26)
-        '
-        'btn_VoidCredit
-        '
-        Me.btn_VoidCredit.Name = "btn_VoidCredit"
-        Me.btn_VoidCredit.Size = New System.Drawing.Size(152, 22)
-        Me.btn_VoidCredit.Text = "Void Credit"
-        '
-        'Label1
-        '
-        Me.Label1.Location = New System.Drawing.Point(453, 76)
-        Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(242, 29)
-        Me.Label1.TabIndex = 108
-        Me.Label1.Text = "Select a type of Recurring Service this Customer has had that you are crediting f" & _
+        Me.lbl_Type.Location = New System.Drawing.Point(453, 76)
+        Me.lbl_Type.Name = "lbl_Type"
+        Me.lbl_Type.Size = New System.Drawing.Size(242, 29)
+        Me.lbl_Type.TabIndex = 108
+        Me.lbl_Type.Text = "Select a type of Recurring Service this Customer has had that you are crediting f" & _
     "or."
         '
-        'ComboBox1
+        'cmb_Types
         '
-        Me.ComboBox1.FormattingEnabled = True
-        Me.ComboBox1.Location = New System.Drawing.Point(456, 108)
-        Me.ComboBox1.Name = "ComboBox1"
-        Me.ComboBox1.Size = New System.Drawing.Size(227, 21)
-        Me.ComboBox1.TabIndex = 109
+        Me.cmb_Types.FormattingEnabled = True
+        Me.cmb_Types.Location = New System.Drawing.Point(456, 108)
+        Me.cmb_Types.Name = "cmb_Types"
+        Me.cmb_Types.Size = New System.Drawing.Size(227, 21)
+        Me.cmb_Types.TabIndex = 109
         '
         'CustomerCredit
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(716, 353)
-        Me.Controls.Add(Me.ComboBox1)
-        Me.Controls.Add(Me.Label1)
+        Me.Controls.Add(Me.cmb_Types)
+        Me.Controls.Add(Me.lbl_Type)
         Me.Controls.Add(Me.rb_Newest)
         Me.Controls.Add(Me.rb_Oldest)
         Me.Controls.Add(Me.ck_AutoApply)
@@ -306,7 +306,7 @@ Partial Class CustomerCredit
         Me.Controls.Add(Me.lbl_Reason)
         Me.Controls.Add(Me.tb_Reason)
         Me.Controls.Add(Me.lbl_Amount)
-        Me.Controls.Add(Me.Currency_TextBox1)
+        Me.Controls.Add(Me.tb_Amount)
         Me.Controls.Add(Me.pnl_Left)
         Me.Controls.Add(Me.Panel1)
         Me.MaximizeBox = False
@@ -318,9 +318,9 @@ Partial Class CustomerCredit
         Me.pnl_TopContent.PerformLayout()
         Me.pnl_Left.ResumeLayout(False)
         CType(Me.dg_Credits, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.Ds_Customer, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.CustomerCreditsBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
         Me.cm_Void.ResumeLayout(False)
+        CType(Me.CustomerCreditsBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.Ds_Customer, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -338,7 +338,7 @@ Partial Class CustomerCredit
     Friend WithEvents Ds_Customer As TrashCash.ds_Customer
     Friend WithEvents lbl_CreditHis As System.Windows.Forms.Label
     Friend WithEvents Customer_CreditsTableAdapter As TrashCash.ds_CustomerTableAdapters.Customer_CreditsTableAdapter
-    Friend WithEvents Currency_TextBox1 As TrashCash.Currency_TextBox
+    Friend WithEvents tb_Amount As TrashCash.Currency_TextBox
     Friend WithEvents lbl_Amount As System.Windows.Forms.Label
     Friend WithEvents tb_Reason As System.Windows.Forms.TextBox
     Friend WithEvents lbl_Reason As System.Windows.Forms.Label
@@ -348,6 +348,6 @@ Partial Class CustomerCredit
     Friend WithEvents rb_Newest As System.Windows.Forms.RadioButton
     Friend WithEvents cm_Void As System.Windows.Forms.ContextMenuStrip
     Friend WithEvents btn_VoidCredit As System.Windows.Forms.ToolStripMenuItem
-    Friend WithEvents Label1 As System.Windows.Forms.Label
-    Friend WithEvents ComboBox1 As System.Windows.Forms.ComboBox
+    Friend WithEvents lbl_Type As System.Windows.Forms.Label
+    Friend WithEvents cmb_Types As System.Windows.Forms.ComboBox
 End Class
