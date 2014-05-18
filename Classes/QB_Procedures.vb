@@ -415,6 +415,17 @@ retry:
         Next i
     End Sub
 
+    ' customer credit create - optional auto apply and sort mode
+    Public Sub Customer_Credit(ByVal CustomerNumber As Integer, ByVal CreditAmount As Double, ByVal Reason As String, ByVal AutoApply As Boolean,
+                               Optional ByVal ApplyOrder As String = "Desc")
+
+        ' getting cuystomer listid
+        Dim custListID As String = cta.GetListID(CustomerNumber)
+
+        Dim creditAdd As ICreditMemoAdd = MsgSetRequest.AppendCreditMemoAddRq
+
+    End Sub
+
     Public Sub RecurringService_EndDateCredit(ByRef row As ds_RecurringService.RecurringServiceRow, ByVal creditAmount As Double,
                                 ByVal newEndDate As Date, ByVal BillThruDate As Date)
         ' getting customer listid
