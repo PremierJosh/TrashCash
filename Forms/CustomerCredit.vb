@@ -84,7 +84,20 @@
         If (Trim(tb_Amount.Text).Length > 0) Then
             ' making sure we have a reason
             If (Trim(tb_Reason.Text).Length > 0) Then
-                Dim confirmPRompt As DialogResult = MessageBox.Show("Create Credit for " & Ts_M_Customer.cmb_Customer.ComboBox.GetItemText(Ts_M_Customer.cmb_Customer.ComboBox.SelectedItem)
+                Dim confirmPrompt As DialogResult = MessageBox.Show("Create Credit for " & Ts_M_Customer.CurrentCustomerName & " - " & FormatCurrency(tb_Amount.Text) & vbCrLf & "Reason:" & vbCrLf & tb_Reason.Text,
+                                                                    "Confirm Credit for Customer", MessageBoxButtons.YesNo, MessageBoxIcon.Question)
+
+                If (confirmPrompt = Windows.Forms.DialogResult.Yes) Then
+                    ' get apply order
+                    Dim s As String
+                    If (rb_Newest.Checked = True) Then
+                        s = "Desc"
+                    Else
+                        s = "Asc"
+                    End If
+
+                    _homeForm.Procedures.Customer_Credit(CurrentCustomer, tb_Amount.Text, tb_Reason.Text, cmb_Types.SelectedValue, ck_Print.Checked, ck_AutoApply.Checked, s)
+                End If
             End If
         End If
     End Sub
