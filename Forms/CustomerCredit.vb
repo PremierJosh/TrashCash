@@ -1,11 +1,31 @@
 ﻿Public Class CustomerCredit
+    Private _homeForm As TrashCash_Home
 
-    Public Sub New()
+    Private _currentCustomer As Integer
+    Private Property CurrentCustomer As Integer
+        Get
+            Return _currentCustomer
+        End Get
+        Set(value As Integer)
+            _currentCustomer = value
+
+        End Set
+    End Property
+
+    Public Sub New(ByRef HomeForm As TrashCash_Home, ByVal CustomerNumber As Integer)
 
         ' This call is required by the designer.
         InitializeComponent()
 
         ' Add any initialization after the InitializeComponent() call.
+        ' set customer
+        Ts_M_Customer.CurrentCustomer = CustomerNumber
+        CurrentCustomer = CustomerNumber
+        ' get balance
+        _homeForm = HomeForm
+        Ts_M_Customer.lbl_CustBalance.SetBalance(_homeForm.Queries.Customer_Balance(CustomerNumber))
+
+        ' hide toolstrip stuff and lock to customer
         Ts_M_Customer.Enabled = False
         Ts_M_Customer.HideQuickSearch()
     End Sub

@@ -446,6 +446,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ds_Payments.xsd</DependentUpon>
     </Compile>
+    <Compile Include="_DataSets\ds_Payments.vb">
+      <DependentUpon>ds_Payments.xsd</DependentUpon>
+    </Compile>
     <Compile Include="_DataSets\ds_Program.Designer.vb">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
