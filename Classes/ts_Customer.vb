@@ -26,6 +26,16 @@ Public Class ts_M_Customer
         End Set
     End Property
 
+    Public ReadOnly Property CurrentCustomerName As String
+        Get
+            If (cmb_Customer.SelectedItem IsNot Nothing) Then
+                Return cmb_Customer.ComboBox.GetItemText(cmb_Customer.SelectedItem)
+            Else
+                Return ""
+            End If
+        End Get
+    End Property
+
     'event
     Public Event CustomerChanging(ByVal CustomerNumber As Integer)
 

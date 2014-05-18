@@ -78,4 +78,14 @@
             End If
         End If
     End Sub
+
+    Private Sub btn_Create_Click(sender As System.Object, e As System.EventArgs) Handles btn_Create.Click
+        ' making sure we have an amouint
+        If (Trim(tb_Amount.Text).Length > 0) Then
+            ' making sure we have a reason
+            If (Trim(tb_Reason.Text).Length > 0) Then
+                Dim confirmPRompt As DialogResult = MessageBox.Show("Create Credit for " & Ts_M_Customer.cmb_Customer.ComboBox.GetItemText(Ts_M_Customer.cmb_Customer.ComboBox.SelectedItem)
+            End If
+        End If
+    End Sub
 End Class
