@@ -1,4 +1,5 @@
-﻿Public Class RecurringService
+﻿
+Public Class RecurringService
     ' need recurring service queries ta
     Dim qta As ds_RecurringServiceTableAdapters.QueriesTableAdapter
 
@@ -99,7 +100,7 @@
             ' fill service notes display
             Me.ServiceNotesTableAdapter.FillByID(Me.Ds_RecurringService.ServiceNotes, value.RecurringServiceID)
             ' fill credit history
-            Me.RecurringService_BillHistoryTableAdapter.FillByRecurringID(Me.Ds_RecurringService.RecurringService_BillHistory, value.RecurringServiceID)
+            Me.RecurringService_CreditsTableAdapter.FillByRecID(Me.Ds_RecurringService.RecurringService_Credits, value.RecurringServiceID)
 
             ' checking if service is approved
             Approved = value.Approved
@@ -377,6 +378,19 @@
 
                 ' warning if a credit is going to be made
                 If (Crediting > 0) Then
+                    ' first checking if something needs to be voided
+                    If (dv_EndDateOverlap.Count > 0) Then
+                        Dim overlapPrompt As DialogResult = MessageBox.Show("Keeping this End Date will Void " & dv_EndDateOverlap.Count & " Credit(s) for a total of " &
+                                                                            FormatCurrency(dv_EndDateOverlap.Table.Compute("SUM(CreditAmount)", "")) &
+                                                                            ". Do you wish to keep this End Date?", "Void " & dv_EndDateOverlap.Count & " Credit(s)",
+                                                                            MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation)
+
+                        If (overlapPrompt = Windows.Forms.DialogResult.Yes) Then
+                            ' void all credits in table
+
+                        End If
+
+                    End If
 
                     ' checking if old credit needs voided for new one
                     If (EndDateCreditRow.Voided = False) Then
