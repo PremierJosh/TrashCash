@@ -50,6 +50,7 @@ Partial Class CustomerCredit
         Me.rb_Newest = New System.Windows.Forms.RadioButton()
         Me.lbl_Type = New System.Windows.Forms.Label()
         Me.cmb_Types = New System.Windows.Forms.ComboBox()
+        Me.ck_Print = New System.Windows.Forms.CheckBox()
         Me.Panel1.SuspendLayout()
         Me.pnl_TopContent.SuspendLayout()
         Me.pnl_Left.SuspendLayout()
@@ -179,7 +180,6 @@ Partial Class CustomerCredit
         '
         'Ds_Customer
         '
-        Me.Ds_Customer.DataSetName = "ds_Customer"
         Me.Ds_Customer.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema
         '
         'lbl_CreditHis
@@ -292,11 +292,24 @@ Partial Class CustomerCredit
         Me.cmb_Types.Size = New System.Drawing.Size(227, 21)
         Me.cmb_Types.TabIndex = 109
         '
+        'ck_Print
+        '
+        Me.ck_Print.AutoSize = True
+        Me.ck_Print.Checked = True
+        Me.ck_Print.CheckState = System.Windows.Forms.CheckState.Checked
+        Me.ck_Print.Location = New System.Drawing.Point(479, 275)
+        Me.ck_Print.Name = "ck_Print"
+        Me.ck_Print.Size = New System.Drawing.Size(47, 17)
+        Me.ck_Print.TabIndex = 110
+        Me.ck_Print.Text = "Print"
+        Me.ck_Print.UseVisualStyleBackColor = True
+        '
         'CustomerCredit
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(716, 353)
+        Me.Controls.Add(Me.ck_Print)
         Me.Controls.Add(Me.cmb_Types)
         Me.Controls.Add(Me.lbl_Type)
         Me.Controls.Add(Me.rb_Newest)
@@ -350,4 +363,5 @@ Partial Class CustomerCredit
     Friend WithEvents btn_VoidCredit As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents lbl_Type As System.Windows.Forms.Label
     Friend WithEvents cmb_Types As System.Windows.Forms.ComboBox
+    Friend WithEvents ck_Print As System.Windows.Forms.CheckBox
 End Class
