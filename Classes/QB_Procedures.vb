@@ -38,37 +38,6 @@ Public Class QB_Procedures
         rsta = New ds_RecurringServiceTableAdapters.RecurringServiceTableAdapter
     End Sub
 
-
-    Protected Function VoidTransactionByTxnID(ByVal TxnID As String, ByVal VoidType As ENTxnVoidType) As Boolean
-        ' return bool
-        Dim voided As Boolean
-
-        Dim txnVoid As ITxnVoid = MsgSetRequest.AppendTxnVoidRq
-
-        ' setting txn we are talking about
-        txnVoid.TxnVoidType.SetValue(VoidType)
-        txnVoid.TxnID.SetValue(TxnID)
-
-
-        Dim msgSetResp As IMsgSetResponse = SessionManager.DoRequests(MsgSetRequest)
-        Dim respList As IResponseList = msgSetResp.ResponseList
-
-        ' clear msgsetreq
-        MsgSetRequest.ClearRequests()
-
-        For i = 0 To respList.Count - 1
-            Dim resp As IResponse = respList.GetAt(i)
-            If (resp.StatusCode <> 0) Then
-                ResponseErr_Misc(resp)
-            Else
-                voided = True
-            End If
-        Next i
-
-        Return voided
-    End Function
-
-
     Public Sub Customer_AddMissingListID(ByRef form As AdminExportImport)
         Dim missingCount As Integer
         Dim qta As New ds_CustomerTableAdapters.QueriesTableAdapter
