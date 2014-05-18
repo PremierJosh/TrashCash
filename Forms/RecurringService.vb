@@ -1,13 +1,16 @@
-﻿Public Class RecurringService
+﻿
+Public Class RecurringService
     ' need recurring service queries ta
     Dim qta As ds_RecurringServiceTableAdapters.QueriesTableAdapter
 
     ' dataview for checking if new end date will overlap with existing credits
     Dim dv_EndDateOverlap As DataView
-    Private WriteOnly Property dv_RowFilter As String
-        Set(value As String)
+    Private WriteOnly Property dv_RowFilter As Date
+        Set(value As Date)
             If (dv_EndDateOverlap IsNot Nothing) Then
-                dv_EndDateOverlap.RowFilter = "Voided = 0 AND DateOfCredit BETWEEN " & _billThruDate & " AND " & value & ""
+                dv_EndDateOverlap.RowFilter = "Voided = 0 AND DateOfCredit > " & value.Date & ""
+                ' update status text if rows filter
+                CreditOverlapCheck(value)
             End If
         End Set
     End Property
@@ -99,7 +102,7 @@
             ' fill service notes display
             Me.ServiceNotesTableAdapter.FillByID(Me.Ds_RecurringService.ServiceNotes, value.RecurringServiceID)
             ' fill credit history
-            Me.RecurringService_BillHistoryTableAdapter.FillByRecurringID(Me.Ds_RecurringService.RecurringService_BillHistory, value.RecurringServiceID)
+            Me.RecurringService_CreditsTableAdapter.FillByRecID(Me.Ds_RecurringService.RecurringService_Credits, value.RecurringServiceID)
 
             ' checking if service is approved
             Approved = value.Approved
@@ -260,9 +263,6 @@
             If (value > 0) Then
                 lbl_CreditMsg.Visible = True
                 lbl_CreditMsg.Text = "Saving this Last Date of Service will cause a Credit to be issued for: " & FormatCurrency(value)
-
-                ' checking if this will overlap with a credit
-                CreditOverlapCheck()
             Else
                 lbl_CreditMsg.Visible = False
             End If
@@ -272,7 +272,7 @@
     ' home form ref var
     Private HomeForm As TrashCash_Home
 
-    Private Sub CreditOverlapCheck()
+    Private Sub CreditOverlapCheck(ByVal newDate As Date)
         Dim s As String = Nothing
 
         ' making sure we have rows first
@@ -371,12 +371,30 @@
             ' result var from 3 different credit outcomes
             Dim creditResult As DialogResult
 
-
             ' bring over end date
             If (ck_EndDate.Checked = True) Then
 
+                ' first checking if something needs to be voided
+                If (dv_EndDateOverlap.Count > 0) Then
+                    Dim overlapPrompt As DialogResult = MessageBox.Show("Keeping this End Date will Void " & dv_EndDateOverlap.Count & " Credit(s) for a total of " &
+                                                                        FormatCurrency(dv_EndDateOverlap.Table.Compute("SUM(CreditAmount)", "")) &
+                                                                        ". Do you wish to keep this End Date?", "Void " & dv_EndDateOverlap.Count & " Credit(s)",
+                                                                        MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation)
+
+                    If (overlapPrompt = Windows.Forms.DialogResult.Yes) Then
+                        ' void all credits in table
+                        For Each row As ds_RecurringService.RecurringService_CreditsRow In dv_EndDateOverlap.Table.Rows
+                            HomeForm.Procedures.RecurringService_Credit_Void(row.RecurringServiceCreditID, "Credit for Date overlaped with End Date. New End Date: " & dtp_EndDate.Value.Date & " | Billed Through: " & _billThruDate.Date)
+                        Next
+                    Else
+                        Exit Sub
+                    End If
+
+                End If
+
                 ' warning if a credit is going to be made
                 If (Crediting > 0) Then
+                    
 
                     ' checking if old credit needs voided for new one
                     If (EndDateCreditRow.Voided = False) Then
@@ -614,6 +632,8 @@
 
     Private Sub dtp_EndDate_ValueChanged(sender As System.Object, e As System.EventArgs) Handles dtp_EndDate.ValueChanged
         If (ck_EndDate.Checked = True) Then
+            ' checking if this will overlap with a credit
+            dv_RowFilter = dtp_EndDate.Value.Date
 
             ' checking if service bill thru date is greater than the new end date
             If (_billThruDate > dtp_EndDate.Value.Date) Then
