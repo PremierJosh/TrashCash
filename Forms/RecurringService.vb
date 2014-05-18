@@ -372,25 +372,30 @@ Public Class RecurringService
             ' result var from 3 different credit outcomes
             Dim creditResult As DialogResult
 
-
             ' bring over end date
             If (ck_EndDate.Checked = True) Then
 
+                ' first checking if something needs to be voided
+                If (dv_EndDateOverlap.Count > 0) Then
+                    Dim overlapPrompt As DialogResult = MessageBox.Show("Keeping this End Date will Void " & dv_EndDateOverlap.Count & " Credit(s) for a total of " &
+                                                                        FormatCurrency(dv_EndDateOverlap.Table.Compute("SUM(CreditAmount)", "")) &
+                                                                        ". Do you wish to keep this End Date?", "Void " & dv_EndDateOverlap.Count & " Credit(s)",
+                                                                        MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation)
+
+                    If (overlapPrompt = Windows.Forms.DialogResult.Yes) Then
+                        ' void all credits in table
+                        For Each row As ds_RecurringService.RecurringService_CreditsRow In dv_EndDateOverlap.Table.Rows
+                            HomeForm.Procedures.RecurringService_Credit_Void(row.RecurringServiceCreditID, "Credit for Date overlaped with End Date. New End Date: " & dtp_EndDate.Value.Date & " | Billed Through: " & _billThruDate.Date)
+                        Next
+                    Else
+                        Exit Sub
+                    End If
+
+                End If
+
                 ' warning if a credit is going to be made
                 If (Crediting > 0) Then
-                    ' first checking if something needs to be voided
-                    If (dv_EndDateOverlap.Count > 0) Then
-                        Dim overlapPrompt As DialogResult = MessageBox.Show("Keeping this End Date will Void " & dv_EndDateOverlap.Count & " Credit(s) for a total of " &
-                                                                            FormatCurrency(dv_EndDateOverlap.Table.Compute("SUM(CreditAmount)", "")) &
-                                                                            ". Do you wish to keep this End Date?", "Void " & dv_EndDateOverlap.Count & " Credit(s)",
-                                                                            MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation)
-
-                        If (overlapPrompt = Windows.Forms.DialogResult.Yes) Then
-                            ' void all credits in table
-                            HomeForm.Procedures.RecurringService_Credits_Void()
-                        End If
-
-                    End If
+                    
 
                     ' checking if old credit needs voided for new one
                     If (EndDateCreditRow.Voided = False) Then
