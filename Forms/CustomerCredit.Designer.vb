@@ -23,8 +23,8 @@ Partial Class CustomerCredit
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
-        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle5 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle6 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.Panel1 = New System.Windows.Forms.Panel()
         Me.pnl_TopContent = New System.Windows.Forms.Panel()
         Me.Ts_M_Customer = New TrashCash.ts_M_Customer()
@@ -48,6 +48,8 @@ Partial Class CustomerCredit
         Me.rb_Newest = New System.Windows.Forms.RadioButton()
         Me.cm_Void = New System.Windows.Forms.ContextMenuStrip(Me.components)
         Me.btn_VoidCredit = New System.Windows.Forms.ToolStripMenuItem()
+        Me.Label1 = New System.Windows.Forms.Label()
+        Me.ComboBox1 = New System.Windows.Forms.ComboBox()
         Me.Panel1.SuspendLayout()
         Me.pnl_TopContent.SuspendLayout()
         Me.pnl_Left.SuspendLayout()
@@ -146,9 +148,9 @@ Partial Class CustomerCredit
         '
         Me.CreditAmountDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
         Me.CreditAmountDataGridViewTextBoxColumn.DataPropertyName = "CreditAmount"
-        DataGridViewCellStyle3.Format = "C2"
-        DataGridViewCellStyle3.NullValue = Nothing
-        Me.CreditAmountDataGridViewTextBoxColumn.DefaultCellStyle = DataGridViewCellStyle3
+        DataGridViewCellStyle5.Format = "C2"
+        DataGridViewCellStyle5.NullValue = Nothing
+        Me.CreditAmountDataGridViewTextBoxColumn.DefaultCellStyle = DataGridViewCellStyle5
         Me.CreditAmountDataGridViewTextBoxColumn.HeaderText = "Amount"
         Me.CreditAmountDataGridViewTextBoxColumn.Name = "CreditAmountDataGridViewTextBoxColumn"
         Me.CreditAmountDataGridViewTextBoxColumn.ReadOnly = True
@@ -158,9 +160,9 @@ Partial Class CustomerCredit
         '
         Me.TimeCreatedDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
         Me.TimeCreatedDataGridViewTextBoxColumn.DataPropertyName = "TimeCreated"
-        DataGridViewCellStyle4.Format = "g"
-        DataGridViewCellStyle4.NullValue = Nothing
-        Me.TimeCreatedDataGridViewTextBoxColumn.DefaultCellStyle = DataGridViewCellStyle4
+        DataGridViewCellStyle6.Format = "g"
+        DataGridViewCellStyle6.NullValue = Nothing
+        Me.TimeCreatedDataGridViewTextBoxColumn.DefaultCellStyle = DataGridViewCellStyle6
         Me.TimeCreatedDataGridViewTextBoxColumn.HeaderText = "Time Created"
         Me.TimeCreatedDataGridViewTextBoxColumn.Name = "TimeCreatedDataGridViewTextBoxColumn"
         Me.TimeCreatedDataGridViewTextBoxColumn.ReadOnly = True
@@ -185,7 +187,7 @@ Partial Class CustomerCredit
         '
         'Currency_TextBox1
         '
-        Me.Currency_TextBox1.Location = New System.Drawing.Point(559, 115)
+        Me.Currency_TextBox1.Location = New System.Drawing.Point(559, 147)
         Me.Currency_TextBox1.Name = "Currency_TextBox1"
         Me.Currency_TextBox1.Size = New System.Drawing.Size(75, 20)
         Me.Currency_TextBox1.TabIndex = 99
@@ -193,7 +195,7 @@ Partial Class CustomerCredit
         'lbl_Amount
         '
         Me.lbl_Amount.AutoSize = True
-        Me.lbl_Amount.Location = New System.Drawing.Point(477, 118)
+        Me.lbl_Amount.Location = New System.Drawing.Point(477, 150)
         Me.lbl_Amount.Name = "lbl_Amount"
         Me.lbl_Amount.Size = New System.Drawing.Size(76, 13)
         Me.lbl_Amount.TabIndex = 100
@@ -201,17 +203,17 @@ Partial Class CustomerCredit
         '
         'tb_Reason
         '
-        Me.tb_Reason.Location = New System.Drawing.Point(469, 169)
+        Me.tb_Reason.Location = New System.Drawing.Point(469, 193)
         Me.tb_Reason.MaxLength = 300
         Me.tb_Reason.Multiline = True
         Me.tb_Reason.Name = "tb_Reason"
-        Me.tb_Reason.Size = New System.Drawing.Size(174, 66)
+        Me.tb_Reason.Size = New System.Drawing.Size(174, 50)
         Me.tb_Reason.TabIndex = 101
         '
         'lbl_Reason
         '
         Me.lbl_Reason.AutoSize = True
-        Me.lbl_Reason.Location = New System.Drawing.Point(466, 153)
+        Me.lbl_Reason.Location = New System.Drawing.Point(466, 177)
         Me.lbl_Reason.Name = "lbl_Reason"
         Me.lbl_Reason.Size = New System.Drawing.Size(47, 13)
         Me.lbl_Reason.TabIndex = 102
@@ -232,7 +234,7 @@ Partial Class CustomerCredit
         Me.ck_AutoApply.AutoSize = True
         Me.ck_AutoApply.Checked = True
         Me.ck_AutoApply.CheckState = System.Windows.Forms.CheckState.Checked
-        Me.ck_AutoApply.Location = New System.Drawing.Point(479, 241)
+        Me.ck_AutoApply.Location = New System.Drawing.Point(479, 252)
         Me.ck_AutoApply.Name = "ck_AutoApply"
         Me.ck_AutoApply.Size = New System.Drawing.Size(77, 17)
         Me.ck_AutoApply.TabIndex = 104
@@ -243,7 +245,7 @@ Partial Class CustomerCredit
         '
         Me.rb_Oldest.AutoSize = True
         Me.rb_Oldest.Checked = True
-        Me.rb_Oldest.Location = New System.Drawing.Point(566, 241)
+        Me.rb_Oldest.Location = New System.Drawing.Point(566, 252)
         Me.rb_Oldest.Name = "rb_Oldest"
         Me.rb_Oldest.Size = New System.Drawing.Size(77, 17)
         Me.rb_Oldest.TabIndex = 105
@@ -254,7 +256,7 @@ Partial Class CustomerCredit
         'rb_Newest
         '
         Me.rb_Newest.AutoSize = True
-        Me.rb_Newest.Location = New System.Drawing.Point(566, 264)
+        Me.rb_Newest.Location = New System.Drawing.Point(566, 275)
         Me.rb_Newest.Name = "rb_Newest"
         Me.rb_Newest.Size = New System.Drawing.Size(83, 17)
         Me.rb_Newest.TabIndex = 106
@@ -265,7 +267,7 @@ Partial Class CustomerCredit
         '
         Me.cm_Void.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.btn_VoidCredit})
         Me.cm_Void.Name = "cm_Void"
-        Me.cm_Void.Size = New System.Drawing.Size(153, 48)
+        Me.cm_Void.Size = New System.Drawing.Size(134, 26)
         '
         'btn_VoidCredit
         '
@@ -273,11 +275,30 @@ Partial Class CustomerCredit
         Me.btn_VoidCredit.Size = New System.Drawing.Size(152, 22)
         Me.btn_VoidCredit.Text = "Void Credit"
         '
+        'Label1
+        '
+        Me.Label1.Location = New System.Drawing.Point(453, 76)
+        Me.Label1.Name = "Label1"
+        Me.Label1.Size = New System.Drawing.Size(242, 29)
+        Me.Label1.TabIndex = 108
+        Me.Label1.Text = "Select a type of Recurring Service this Customer has had that you are crediting f" & _
+    "or."
+        '
+        'ComboBox1
+        '
+        Me.ComboBox1.FormattingEnabled = True
+        Me.ComboBox1.Location = New System.Drawing.Point(456, 108)
+        Me.ComboBox1.Name = "ComboBox1"
+        Me.ComboBox1.Size = New System.Drawing.Size(227, 21)
+        Me.ComboBox1.TabIndex = 109
+        '
         'CustomerCredit
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(716, 353)
+        Me.Controls.Add(Me.ComboBox1)
+        Me.Controls.Add(Me.Label1)
         Me.Controls.Add(Me.rb_Newest)
         Me.Controls.Add(Me.rb_Oldest)
         Me.Controls.Add(Me.ck_AutoApply)
@@ -327,4 +348,6 @@ Partial Class CustomerCredit
     Friend WithEvents rb_Newest As System.Windows.Forms.RadioButton
     Friend WithEvents cm_Void As System.Windows.Forms.ContextMenuStrip
     Friend WithEvents btn_VoidCredit As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents Label1 As System.Windows.Forms.Label
+    Friend WithEvents ComboBox1 As System.Windows.Forms.ComboBox
 End Class
