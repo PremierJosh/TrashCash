@@ -38,6 +38,14 @@ Partial Class CustomerCredit
         Me.TimeCreatedDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.ReasonDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.CreatedUserDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Currency_TextBox1 = New TrashCash.Currency_TextBox()
+        Me.lbl_Amount = New System.Windows.Forms.Label()
+        Me.tb_Reason = New System.Windows.Forms.TextBox()
+        Me.lbl_Reason = New System.Windows.Forms.Label()
+        Me.btn_Create = New System.Windows.Forms.Button()
+        Me.ck_AutoApply = New System.Windows.Forms.CheckBox()
+        Me.rb_Oldest = New System.Windows.Forms.RadioButton()
+        Me.rb_Newest = New System.Windows.Forms.RadioButton()
         Me.Panel1.SuspendLayout()
         Me.pnl_TopContent.SuspendLayout()
         Me.pnl_Left.SuspendLayout()
@@ -171,11 +179,97 @@ Partial Class CustomerCredit
         Me.CreatedUserDataGridViewTextBoxColumn.ReadOnly = True
         Me.CreatedUserDataGridViewTextBoxColumn.Width = 54
         '
+        'Currency_TextBox1
+        '
+        Me.Currency_TextBox1.Location = New System.Drawing.Point(559, 115)
+        Me.Currency_TextBox1.Name = "Currency_TextBox1"
+        Me.Currency_TextBox1.Size = New System.Drawing.Size(75, 20)
+        Me.Currency_TextBox1.TabIndex = 99
+        '
+        'lbl_Amount
+        '
+        Me.lbl_Amount.AutoSize = True
+        Me.lbl_Amount.Location = New System.Drawing.Point(477, 118)
+        Me.lbl_Amount.Name = "lbl_Amount"
+        Me.lbl_Amount.Size = New System.Drawing.Size(76, 13)
+        Me.lbl_Amount.TabIndex = 100
+        Me.lbl_Amount.Text = "Credit Amount:"
+        '
+        'tb_Reason
+        '
+        Me.tb_Reason.Location = New System.Drawing.Point(469, 169)
+        Me.tb_Reason.MaxLength = 300
+        Me.tb_Reason.Multiline = True
+        Me.tb_Reason.Name = "tb_Reason"
+        Me.tb_Reason.Size = New System.Drawing.Size(174, 66)
+        Me.tb_Reason.TabIndex = 101
+        '
+        'lbl_Reason
+        '
+        Me.lbl_Reason.AutoSize = True
+        Me.lbl_Reason.Location = New System.Drawing.Point(466, 153)
+        Me.lbl_Reason.Name = "lbl_Reason"
+        Me.lbl_Reason.Size = New System.Drawing.Size(47, 13)
+        Me.lbl_Reason.TabIndex = 102
+        Me.lbl_Reason.Text = "Reason:"
+        '
+        'btn_Create
+        '
+        Me.btn_Create.AutoSize = True
+        Me.btn_Create.Location = New System.Drawing.Point(529, 304)
+        Me.btn_Create.Name = "btn_Create"
+        Me.btn_Create.Size = New System.Drawing.Size(78, 23)
+        Me.btn_Create.TabIndex = 103
+        Me.btn_Create.Text = "Create Credit"
+        Me.btn_Create.UseVisualStyleBackColor = True
+        '
+        'ck_AutoApply
+        '
+        Me.ck_AutoApply.AutoSize = True
+        Me.ck_AutoApply.Checked = True
+        Me.ck_AutoApply.CheckState = System.Windows.Forms.CheckState.Checked
+        Me.ck_AutoApply.Location = New System.Drawing.Point(479, 241)
+        Me.ck_AutoApply.Name = "ck_AutoApply"
+        Me.ck_AutoApply.Size = New System.Drawing.Size(77, 17)
+        Me.ck_AutoApply.TabIndex = 104
+        Me.ck_AutoApply.Text = "Auto Apply"
+        Me.ck_AutoApply.UseVisualStyleBackColor = True
+        '
+        'rb_Oldest
+        '
+        Me.rb_Oldest.AutoSize = True
+        Me.rb_Oldest.Checked = True
+        Me.rb_Oldest.Location = New System.Drawing.Point(566, 241)
+        Me.rb_Oldest.Name = "rb_Oldest"
+        Me.rb_Oldest.Size = New System.Drawing.Size(77, 17)
+        Me.rb_Oldest.TabIndex = 105
+        Me.rb_Oldest.TabStop = True
+        Me.rb_Oldest.Text = "Oldest First"
+        Me.rb_Oldest.UseVisualStyleBackColor = True
+        '
+        'rb_Newest
+        '
+        Me.rb_Newest.AutoSize = True
+        Me.rb_Newest.Location = New System.Drawing.Point(566, 264)
+        Me.rb_Newest.Name = "rb_Newest"
+        Me.rb_Newest.Size = New System.Drawing.Size(83, 17)
+        Me.rb_Newest.TabIndex = 106
+        Me.rb_Newest.Text = "Newest First"
+        Me.rb_Newest.UseVisualStyleBackColor = True
+        '
         'CustomerCredit
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(716, 353)
+        Me.Controls.Add(Me.rb_Newest)
+        Me.Controls.Add(Me.rb_Oldest)
+        Me.Controls.Add(Me.ck_AutoApply)
+        Me.Controls.Add(Me.btn_Create)
+        Me.Controls.Add(Me.lbl_Reason)
+        Me.Controls.Add(Me.tb_Reason)
+        Me.Controls.Add(Me.lbl_Amount)
+        Me.Controls.Add(Me.Currency_TextBox1)
         Me.Controls.Add(Me.pnl_Left)
         Me.Controls.Add(Me.Panel1)
         Me.MaximizeBox = False
@@ -190,6 +284,7 @@ Partial Class CustomerCredit
         CType(Me.Ds_Customer, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.CustomerCreditsBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
+        Me.PerformLayout()
 
     End Sub
     Friend WithEvents Panel1 As System.Windows.Forms.Panel
@@ -205,4 +300,12 @@ Partial Class CustomerCredit
     Friend WithEvents Ds_Customer As TrashCash.ds_Customer
     Friend WithEvents lbl_CreditHis As System.Windows.Forms.Label
     Friend WithEvents Customer_CreditsTableAdapter As TrashCash.ds_CustomerTableAdapters.Customer_CreditsTableAdapter
+    Friend WithEvents Currency_TextBox1 As TrashCash.Currency_TextBox
+    Friend WithEvents lbl_Amount As System.Windows.Forms.Label
+    Friend WithEvents tb_Reason As System.Windows.Forms.TextBox
+    Friend WithEvents lbl_Reason As System.Windows.Forms.Label
+    Friend WithEvents btn_Create As System.Windows.Forms.Button
+    Friend WithEvents ck_AutoApply As System.Windows.Forms.CheckBox
+    Friend WithEvents rb_Oldest As System.Windows.Forms.RadioButton
+    Friend WithEvents rb_Newest As System.Windows.Forms.RadioButton
 End Class
