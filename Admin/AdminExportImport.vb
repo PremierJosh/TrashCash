@@ -33,7 +33,7 @@ Public Class AdminExportImport
     End Property
 
     ' form global tas
-    Dim cta As DataSetTableAdapters.CustomerTableAdapter
+    Dim cta As ds_CustomerTableAdapters.CustomerTableAdapter
     Dim qta As DataSetTableAdapters.QueriesTableAdapter
     Dim ata As ds_ProgramTableAdapters.APP_SETTINGS_TableAdapter
     Dim cita As ds_ProgramTableAdapters.Initial_CustomInvoiceTableAdapter
@@ -41,7 +41,7 @@ Public Class AdminExportImport
 
 
     Private Sub ImportWork_Load(sender As Object, e As System.EventArgs) Handles Me.Load
-        cta = New DataSetTableAdapters.CustomerTableAdapter
+        cta = New ds_CustomerTableAdapters.CustomerTableAdapter
         qta = New DataSetTableAdapters.QueriesTableAdapter
         ata = New ds_ProgramTableAdapters.APP_SETTINGS_TableAdapter
         cita = New ds_ProgramTableAdapters.Initial_CustomInvoiceTableAdapter

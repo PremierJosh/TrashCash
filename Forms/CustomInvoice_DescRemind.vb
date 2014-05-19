@@ -48,12 +48,7 @@ Public Class CustomInvoice_DescRemind
             End If
         End Set
     End Property
-    Protected _dt As DataSet.CustomInvoice_LineItemsDataTable
-    Public WriteOnly Property LineItems As DataSet.CustomInvoice_LineItemsDataTable
-        Set(value As DataSet.CustomInvoice_LineItemsDataTable)
-            _dt = value
-        End Set
-    End Property
+'
     Protected _toPrint As Boolean
     Public WriteOnly Property ToPrint As Boolean
         Set(value As Boolean)
@@ -129,12 +124,12 @@ Public Class CustomInvoice_DescRemind
     Private Sub btn_Submit_Click(sender As System.Object, e As System.EventArgs) Handles btn_Submit.Click
         If (ValidateFields() = True) Then
             Try
-                Dim cihID As Integer = _home.Procedures.Invoicing_Custom(_custNum, _postDate, _dueDate, _toPrint, tb_InvDesc.Text, _dt)
+                'Dim cihID As Integer = _home.Procedures.Invoicing_Custom(_custNum, _postDate, _dueDate, _toPrint, tb_InvDesc.Text, _dt)
 
                 If (Reminder = True) Then
                     ' create reminder
                     Dim rqta As New Report_DataSetTableAdapters.QueriesTableAdapter
-                    rqta.Calendar_CustomInvoices_Insert(cihID, dtp_RemindDate.Value.Date, tb_RemindText.Text)
+                    'rqta.Calendar_CustomInvoices_Insert(cihID, dtp_RemindDate.Value.Date, tb_RemindText.Text)
                 End If
 
                 RaiseEvent SubmitInvoice(tb_RemindText.Text)

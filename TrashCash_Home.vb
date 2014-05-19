@@ -99,7 +99,6 @@ Public Class TrashCash_Home
 
     ' var for all child forms
     Friend WithEvents _payForm As Payments
-    Friend WithEvents _invForm As Invoicing
     Friend WithEvents _batchForm As BatchingPrep
     Friend WithEvents _customer As Customer
     Friend WithEvents _pendingApprovals As PendingApprovals
@@ -151,16 +150,6 @@ Public Class TrashCash_Home
     End Sub
     Private Sub BatchProgPercUpdate(ByVal batchProg As Integer) Handles _batchForm.e_BatchProgPerc
         lbl_BatchProg.Text = batchProg & "%"
-    End Sub
-
-    Private Sub btn_Invoicing_Click(sender As System.Object, e As System.EventArgs) Handles btn_Invoicing.Click
-        If (_invForm Is Nothing) Then
-            _invForm = New Invoicing(Me)
-            _invForm.MdiParent = Me
-        End If
-
-        _invForm.Show()
-        _invForm.BringToFront()
     End Sub
 
     Private Sub btn_Payments_Click(sender As System.Object, e As System.EventArgs) Handles btn_Payments.Click

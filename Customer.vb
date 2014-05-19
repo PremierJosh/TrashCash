@@ -6,7 +6,7 @@ Imports System.Data.Sql
 Public Class Customer
     ' new cust var so can switch form when new cust added
     Friend WithEvents _newCust As NewCustomer
-    Friend WithEvents _invForm As Invoicing
+
     Friend WithEvents _payForm As Payments
 
     ' home form ref var
@@ -111,11 +111,6 @@ Public Class Customer
         UC_RecurringService.HomeForm = HomeForm
     End Sub
 
-    Private Sub btn_Inv_Click(sender As System.Object, e As System.EventArgs) Handles btn_Inv.Click
-        _invForm = New Invoicing(_home, _customerNumber:=CurrentCustomer)
-        ' when opened from customer screen, showdialog
-        _invForm.ShowDialog()
-    End Sub
 
     Private Sub btn_Payments_Click(sender As System.Object, e As System.EventArgs) Handles btn_Payments.Click
         _payForm = New Payments(_home, _customerNumber:=CurrentCustomer)

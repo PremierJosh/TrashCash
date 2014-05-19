@@ -231,12 +231,6 @@
     <Compile Include="Forms\CustomInvoice_DescRemind.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\Invoicing.Designer.vb">
-      <DependentUpon>Invoicing.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Forms\Invoicing.vb">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Include="Admin\AdminServiceTypes.Designer.vb">
       <DependentUpon>AdminServiceTypes.vb</DependentUpon>
     </Compile>
@@ -282,12 +276,6 @@
       <AutoGen>True</AutoGen>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
-    </Compile>
-    <Compile Include="Forms\RecSrvcNote.Designer.vb">
-      <DependentUpon>RecSrvcNote.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Forms\RecSrvcNote.vb">
-      <SubType>Form</SubType>
     </Compile>
     <Compile Include="Reporting\f_DaysEvents.Designer.vb">
       <DependentUpon>f_DaysEvents.vb</DependentUpon>
@@ -356,12 +344,6 @@
     <Compile Include="UserControls\UC_CustomerInfoBoxes.vb">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="UserControls\UC_InvoiceDetails.Designer.vb">
-      <DependentUpon>UC_InvoiceDetails.vb</DependentUpon>
-    </Compile>
-    <Compile Include="UserControls\UC_InvoiceDetails.vb">
-      <SubType>UserControl</SubType>
-    </Compile>
     <Compile Include="UserControls\UC_PaymentDetails.Designer.vb">
       <DependentUpon>UC_PaymentDetails.vb</DependentUpon>
     </Compile>
@@ -416,12 +398,6 @@
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
       <DependentUpon>Application.myapp</DependentUpon>
-    </Compile>
-    <Compile Include="Forms\CustomerNote.Designer.vb">
-      <DependentUpon>CustomerNote.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Forms\CustomerNote.vb">
-      <SubType>Form</SubType>
     </Compile>
     <Compile Include="_DataSets\ds_Batching.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -528,9 +504,6 @@
       <DependentUpon>CustomInvoice_DescRemind.vb</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Invoicing.resx">
-      <DependentUpon>Invoicing.vb</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Admin\AdminServiceTypes.resx">
       <DependentUpon>AdminServiceTypes.vb</DependentUpon>
     </EmbeddedResource>
@@ -543,9 +516,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\PendingApprovals.resx">
       <DependentUpon>PendingApprovals.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\RecSrvcNote.resx">
-      <DependentUpon>RecSrvcNote.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\NewCustomer.resx">
       <DependentUpon>NewCustomer.vb</DependentUpon>
@@ -562,10 +532,6 @@
       <CustomToolNamespace>My.Resources</CustomToolNamespace>
       <SubType>Designer</SubType>
       <LastGenOutput>Resources.Designer.vb</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\CustomerNote.resx">
-      <DependentUpon>CustomerNote.vb</DependentUpon>
-      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Reporting\f_AllCustBalances.resx">
       <DependentUpon>f_AllCustBalances.vb</DependentUpon>
@@ -604,10 +570,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="UserControls\UC_CustomerInfoBoxes.resx">
       <DependentUpon>UC_CustomerInfoBoxes.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="UserControls\UC_InvoiceDetails.resx">
-      <DependentUpon>UC_InvoiceDetails.vb</DependentUpon>
-      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="UserControls\UC_PaymentDetails.resx">
       <DependentUpon>UC_PaymentDetails.vb</DependentUpon>

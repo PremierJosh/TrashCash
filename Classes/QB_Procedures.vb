@@ -747,7 +747,7 @@ retry:
         End If
     End Sub
 
-    Public Function Customer_BounceCheck(ByVal CheckRow As DataSet.PaymentHistoryRow, ByVal BankRow As ds_Program.BAD_CHECK_BANKS_Row, ByVal Fee As Double) As Boolean
+    Public Function Customer_BounceCheck(ByVal CheckRow As ds_Payments.PaymentHistory_DBRow, ByVal BankRow As ds_Program.BAD_CHECK_BANKS_Row, ByVal Fee As Double) As Boolean
         ' return bool
         Dim bounced As Boolean
 
@@ -799,8 +799,10 @@ retry:
             If (resp.StatusCode = 0) Then
                 ' update pay history table and set assoc row to bounced
                 Try
-                    Dim ta As New DataSetTableAdapters.PaymentHistoryTableAdapter
-                    ta.SetBounced(CheckRow.PaymentID)
+                    Using qta As New ds_PaymentsTableAdapters.QueriesTableAdapter
+                        qta.PaymentHistory_SetBounced(CheckRow.PaymentID, HomeForm.CurrentUserRow.USER_NAME)
+                    End Using
+
                 Catch ex As Exception
                     MsgBox(ex.Message)
                 End Try
@@ -1374,120 +1376,114 @@ retry:
 
 
 
-    Public Function Invoicing_Custom(ByRef CustomerNumber As Integer, ByRef PostDate As Date, ByRef DueDate As Date, ByRef Print As Boolean,
-                                  ByVal InvDesc As String, ByRef lineItems As DataSet.CustomInvoice_LineItemsDataTable) As Integer
-        Dim historyID As Integer
+    'Public Function Invoicing_Custom(ByRef CustomerNumber As Integer, ByRef PostDate As Date, ByRef DueDate As Date, ByRef Print As Boolean,
+    '                              ByVal InvDesc As String, ByRef lineItems As DataSet.CustomInvoice_LineItemsDataTable) As Integer
+    '    Dim historyID As Integer
 
-        ' checking balance of customer
-        Dim c_Queries As New QB_Queries(SessionManager, MsgSetRequest)
-        Dim custListID As String = cta.GetListID(CustomerNumber)
+    '    ' checking balance of customer
+    '    Dim c_Queries As New QB_Queries(SessionManager, MsgSetRequest)
+    '    Dim custListID As String = cta.GetListID(CustomerNumber)
 
-        Dim custBalance As Double = c_Queries.Customer_Balance(custListID)
-        c_Queries = Nothing
+    '    Dim custBalance As Double = c_Queries.Customer_Balance(custListID)
+    '    c_Queries = Nothing
 
-        ' interfaces needed for invoicing and line items
-        Dim invoiceAdd As IInvoiceAdd = MsgSetRequest.AppendInvoiceAddRq
-        ' limiting response
-        invoiceAdd.IncludeRetElementList.Add("TxnID")
-        invoiceAdd.IncludeRetElementList.Add("RefNumber")
-        invoiceAdd.IncludeRetElementList.Add("BalanceRemaining")
-        invoiceAdd.IncludeRetElementList.Add("TimeCreated")
-        invoiceAdd.IncludeRetElementList.Add("Subtotal")
+    '    ' interfaces needed for invoicing and line items
+    '    Dim invoiceAdd As IInvoiceAdd = MsgSetRequest.AppendInvoiceAddRq
+    '    ' limiting response
+    '    invoiceAdd.IncludeRetElementList.Add("TxnID")
+    '    invoiceAdd.IncludeRetElementList.Add("RefNumber")
+    '    invoiceAdd.IncludeRetElementList.Add("BalanceRemaining")
+    '    invoiceAdd.IncludeRetElementList.Add("TimeCreated")
+    '    invoiceAdd.IncludeRetElementList.Add("Subtotal")
 
-        ' build request
-        invoiceAdd.CustomerRef.ListID.SetValue(custListID)
-        invoiceAdd.TxnDate.SetValue(PostDate)
-        invoiceAdd.DueDate.SetValue(DueDate)
-        invoiceAdd.IsToBePrinted.SetValue(Print)
+    '    ' build request
+    '    invoiceAdd.CustomerRef.ListID.SetValue(custListID)
+    '    invoiceAdd.TxnDate.SetValue(PostDate)
+    '    invoiceAdd.DueDate.SetValue(DueDate)
+    '    invoiceAdd.IsToBePrinted.SetValue(Print)
 
-        ' line list
-        Dim lineList As IORInvoiceLineAddList = invoiceAdd.ORInvoiceLineAddList
-        ' line item to reuse
-        Dim lineItem As IORInvoiceLineAdd
-        ' this is default item for custom invoices
-        'Dim itemListID As String = qta.APP_GetCustomInvItem()
-        Dim itemListID As String = "this"
+    '    ' line list
+    '    Dim lineList As IORInvoiceLineAddList = invoiceAdd.ORInvoiceLineAddList
+    '    ' line item to reuse
+    '    Dim lineItem As IORInvoiceLineAdd
+    '    ' this is default item for custom invoices
+    '    'Dim itemListID As String = qta.APP_GetCustomInvItem()
+    '    Dim itemListID As String = "this"
 
 
-        ' loop through line items
-        For Each lineRow As DataSet.CustomInvoice_LineItemsRow In lineItems.Rows
-            lineItem = lineList.Append
+    '    ' loop through line items
+    '    For Each lineRow As DataSet.CustomInvoice_LineItemsRow In lineItems.Rows
+    '        lineItem = lineList.Append
 
-            lineItem.InvoiceLineAdd.ItemRef.ListID.SetValue(itemListID)
-            lineItem.InvoiceLineAdd.ORRatePriceLevel.Rate.SetValue(lineRow.Rate)
-            lineItem.InvoiceLineAdd.Quantity.SetValue(1)
-            lineItem.InvoiceLineAdd.Desc.SetValue(lineRow.Description)
-        Next
+    '        lineItem.InvoiceLineAdd.ItemRef.ListID.SetValue(itemListID)
+    '        lineItem.InvoiceLineAdd.ORRatePriceLevel.Rate.SetValue(lineRow.Rate)
+    '        lineItem.InvoiceLineAdd.Quantity.SetValue(1)
+    '        lineItem.InvoiceLineAdd.Desc.SetValue(lineRow.Description)
+    '    Next
 
-        ' description line
-        Dim descLine As IORInvoiceLineAdd = lineList.Append
-        descLine.InvoiceLineAdd.ItemRef.ListID.Unset()
-        descLine.InvoiceLineAdd.ItemRef.FullName.Unset()
-        descLine.InvoiceLineAdd.Desc.SetValue(InvDesc)
-        descLine.InvoiceLineAdd.Amount.Unset()
-        descLine.InvoiceLineAdd.Quantity.Unset()
+    '    ' description line
+    '    Dim descLine As IORInvoiceLineAdd = lineList.Append
+    '    descLine.InvoiceLineAdd.ItemRef.ListID.Unset()
+    '    descLine.InvoiceLineAdd.ItemRef.FullName.Unset()
+    '    descLine.InvoiceLineAdd.Desc.SetValue(InvDesc)
+    '    descLine.InvoiceLineAdd.Amount.Unset()
+    '    descLine.InvoiceLineAdd.Quantity.Unset()
 
-        Dim msgSetResp As IMsgSetResponse = SessionManager.DoRequests(MsgSetRequest)
-        Dim respList As IResponseList = msgSetResp.ResponseList
+    '    Dim msgSetResp As IMsgSetResponse = SessionManager.DoRequests(MsgSetRequest)
+    '    Dim respList As IResponseList = msgSetResp.ResponseList
 
-        MsgSetRequest.ClearRequests()
+    '    MsgSetRequest.ClearRequests()
 
-        For i = 0 To respList.Count - 1
-            Dim resp As IResponse = respList.GetAt(i)
-            If (resp.StatusCode <> 0) Then
+    '    For i = 0 To respList.Count - 1
+    '        Dim resp As IResponse = respList.GetAt(i)
+    '        If (resp.StatusCode <> 0) Then
 
-                Try
-                    ResponseErr_Misc(resp)
-                Catch ex As Exception
-                    MsgBox("Err_Invoice_Insert: " & ex.Message)
-                End Try
+    '            Try
+    '                ResponseErr_Misc(resp)
+    '            Catch ex As Exception
+    '                MsgBox("Err_Invoice_Insert: " & ex.Message)
+    '            End Try
 
-            Else
-                Dim invRet As IInvoiceRet = resp.Detail
+    '        Else
+    '            Dim invRet As IInvoiceRet = resp.Detail
 
-                ' custom invoice history insert
-                Try
+    '            ' custom invoice history insert
+    '            Try
 
-                    Dim hta As New Report_DataSetTableAdapters.CustomInvoiceHistoryTableAdapter
-                    'historyID = qta.CustomInvoiceHistory_Insert(CustomerNumber,
-                    '            invRet.TxnID.GetValue,
-                    '            invRet.RefNumber.GetValue,
-                    '            invRet.TimeCreated.GetValue,
-                    '            DueDate,
-                    '            invRet.Subtotal.GetValue)
-                Catch ex As Exception
-                    MsgBox(ex.Message)
-                End Try
+    '                Dim hta As New Report_DataSetTableAdapters.CustomInvoiceHistoryTableAdapter
+    '                'historyID = qta.CustomInvoiceHistory_Insert(CustomerNumber,
+    '                '            invRet.TxnID.GetValue,
+    '                '            invRet.RefNumber.GetValue,
+    '                '            invRet.TimeCreated.GetValue,
+    '                '            DueDate,
+    '                '            invRet.Subtotal.GetValue)
+    '            Catch ex As Exception
+    '                MsgBox(ex.Message)
+    '            End Try
 
-                ' checking for overpayment usage
-                If (invRet.BalanceRemaining.GetValue > 0) Then
-                    ' class to keep track of this
-                    Dim invObj As New NewInvObj
-                    invObj.CustomerListID = custListID
-                    invObj.TxnID = invRet.TxnID.GetValue
-                    invObj.BalanceRemaining = invRet.BalanceRemaining.GetValue
+    '            ' checking for overpayment usage
+    '            If (invRet.BalanceRemaining.GetValue > 0) Then
+    '                ' class to keep track of this
+    '                Dim invObj As New NewInvObj
+    '                invObj.CustomerListID = custListID
+    '                invObj.TxnID = invRet.TxnID.GetValue
+    '                invObj.BalanceRemaining = invRet.BalanceRemaining.GetValue
 
-                    If (custBalance < 0) Then
-                        ' check for credits
-                        Customer_CheckCredits(invObj)
-                        If (invObj.BalanceRemaining > 0) Then
-                            ' if balance remain after credits, check for overpayments
-                            Customer_CheckOverpayments(invObj)
-                        End If
-                    End If
-                End If
-            End If
+    '                If (custBalance < 0) Then
+    '                    ' check for credits
+    '                    Customer_CheckCredits(invObj)
+    '                    If (invObj.BalanceRemaining > 0) Then
+    '                        ' if balance remain after credits, check for overpayments
+    '                        Customer_CheckOverpayments(invObj)
+    '                    End If
+    '                End If
+    '            End If
+    '        End If
 
-        Next i
+    '    Next i
 
-        Return historyID
-    End Function
-    Public Function Invoicing_Void(ByVal TxnID As String) As Boolean
-        ' return bool
-        Dim voided As Boolean
-        voided = VoidTransactionByTxnID(TxnID, ENTxnVoidType.tvtInvoice)
-        Return voided
-    End Function
+    '    Return historyID
+    'End Function
 
     Public Sub Customer_CheckOverpayments(ByRef newInv As NewInvObj)
         Dim recievePayQuery As IReceivePaymentQuery = MsgSetRequest.AppendReceivePaymentQueryRq

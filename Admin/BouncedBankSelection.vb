@@ -15,19 +15,19 @@ Public Class BouncedBankSelection
             If (value > 0) Then
                 _PayHistoryID = value
                 ' query for row and set refrence
-                Dim ta As New DataSetTableAdapters.PaymentHistoryTableAdapter
-                CheckRow = ta.GetByID(value).Rows(0)
+                Dim ta As New ds_PaymentsTableAdapters.PaymentHistory_DBTableAdapter
+                CheckRow = ta.GetData(value).Rows(0)
                 ta = Nothing
             End If
         End Set
     End Property
 
-    Private _checkRow As DataSet.PaymentHistoryRow
-    Private Property CheckRow As DataSet.PaymentHistoryRow
+    Private _checkRow As ds_Payments.PaymentHistory_DBRow
+    Private Property CheckRow As ds_Payments.PaymentHistory_DBRow
         Get
             Return _checkRow
         End Get
-        Set(value As DataSet.PaymentHistoryRow)
+        Set(value As ds_Payments.PaymentHistory_DBRow)
             _checkRow = value
 
             ' set check amount and check ref number

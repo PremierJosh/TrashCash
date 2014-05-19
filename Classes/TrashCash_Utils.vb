@@ -101,12 +101,12 @@ Namespace Database_ComboBoxes
     Public Class cmb_PaymentTypes
         Inherits ComboBox
 
-        Private dt As DataSet.PaymentTypesDataTable
-        Private ta As DataSetTableAdapters.PaymentTypesTableAdapter
+        Private dt As ds_Types.PaymentTypesDataTable
+        Private ta As ds_TypesTableAdapters.PaymentTypesTableAdapter
 
         Public Sub New()
-            ta = New DataSetTableAdapters.PaymentTypesTableAdapter
-            dt = New DataSet.PaymentTypesDataTable
+            ta = New ds_TypesTableAdapters.PaymentTypesTableAdapter
+            dt = New ds_Types.PaymentTypesDataTable
             ta.Fill(dt)
 
             Me.DataSource = dt

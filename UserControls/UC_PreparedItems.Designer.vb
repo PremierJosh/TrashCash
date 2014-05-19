@@ -45,7 +45,6 @@ Partial Class UC_PreparedItems
         Me.pnl_TopLeft = New System.Windows.Forms.Panel()
         Me.pnl_Right = New System.Windows.Forms.Panel()
         Me.pnl_TopRight = New System.Windows.Forms.Panel()
-        Me.WorkingInvoiceTableAdapter = New TrashCash.DataSetTableAdapters.WorkingInvoiceTableAdapter()
         Me.WorkingPaymentsTableAdapter = New TrashCash.DataSetTableAdapters.WorkingPaymentsTableAdapter()
         CType(Me.dg_PrepInvoices, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.WorkingInvoiceBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -230,9 +229,6 @@ Partial Class UC_PreparedItems
         Me.pnl_TopRight.Size = New System.Drawing.Size(390, 20)
         Me.pnl_TopRight.TabIndex = 64
         '
-        'WorkingInvoiceTableAdapter
-        '
-        Me.WorkingInvoiceTableAdapter.ClearBeforeFill = True
         '
         'WorkingPaymentsTableAdapter
         '
@@ -263,7 +259,6 @@ Partial Class UC_PreparedItems
     Friend WithEvents WorkingPaymentsBindingSource As System.Windows.Forms.BindingSource
     Friend WithEvents DataSet As TrashCash.DataSet
     Friend WithEvents WorkingInvoiceBindingSource As System.Windows.Forms.BindingSource
-    Friend WithEvents WorkingInvoiceTableAdapter As TrashCash.DataSetTableAdapters.WorkingInvoiceTableAdapter
     Friend WithEvents WorkingPaymentsTableAdapter As TrashCash.DataSetTableAdapters.WorkingPaymentsTableAdapter
     Friend WithEvents lbl_PrepInvoices As System.Windows.Forms.Label
     Friend WithEvents dg_PrepInvoices As System.Windows.Forms.DataGridView
