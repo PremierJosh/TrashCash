@@ -165,12 +165,12 @@ Partial Class CustomerCredit
         '
         Me.cm_Void.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.btn_VoidCredit})
         Me.cm_Void.Name = "cm_Void"
-        Me.cm_Void.Size = New System.Drawing.Size(153, 48)
+        Me.cm_Void.Size = New System.Drawing.Size(134, 26)
         '
         'btn_VoidCredit
         '
         Me.btn_VoidCredit.Name = "btn_VoidCredit"
-        Me.btn_VoidCredit.Size = New System.Drawing.Size(152, 22)
+        Me.btn_VoidCredit.Size = New System.Drawing.Size(133, 22)
         Me.btn_VoidCredit.Text = "Void Credit"
         '
         'CustomerCreditsBindingSource
