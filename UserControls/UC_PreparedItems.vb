@@ -12,7 +12,7 @@
                 ' refrence
                 custNum = value
                 ' fill Working tables
-                Me.WorkingPaymentsTableAdapter.FillByID(Me.DataSet.WorkingPayments, "Number", custNum)
+                ' Me.WorkingPaymentsTableAdapter.FillByID(Me.DataSet.WorkingPayments, "Number", custNum)
             End If
         End Set
     End Property

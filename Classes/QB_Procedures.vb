@@ -385,7 +385,7 @@ retry:
     End Sub
 
     ' customer credit create - optional auto apply and sort mode
-    Public Sub Customer_Credit(ByVal CustomerNumber As Integer, ByVal CreditAmount As Double, ByVal Reason As String, ByVal ItemListID As String, ByVal Print As Boolean,
+    Public Sub Customer_Credit(ByVal CustomerNumber As Integer, ByVal CreditAmount As Double, ByVal Reason As String, ByVal itemListID As String, ByVal Print As Boolean,
                                ByVal AutoApply As Boolean, Optional ByVal ApplyOrder As String = "Desc")
 
         ' getting cuystomer listid
@@ -396,9 +396,9 @@ retry:
         creditAdd.IsToBePrinted.SetValue(Print)
 
         ' creating credit line
-        Dim creditLine As ICreditMemoLineAdd = creditAdd.ORCreditMemoLineAddList.Append
-        creditLine.ItemRef.ListID.SetValue(ItemListID)
-        creditLine.ORRatePriceLevel.Rate.SetValue(CreditAmount)
+        Dim creditLine As IORCreditMemoLineAdd = creditAdd.ORCreditMemoLineAddList.Append
+        creditLine.CreditMemoLineAdd.ItemRef.ListID.SetValue(itemListID)
+        creditLine.CreditMemoLineAdd.ORRatePriceLevel.Rate.SetValue(CreditAmount)
 
         ' desc line
         Dim descLine As IORCreditMemoLineAdd = creditAdd.ORCreditMemoLineAddList.Append()

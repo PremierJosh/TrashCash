@@ -116,6 +116,11 @@
                     balanceChanged = True
                     ' reload history table
                     Me.Customer_CreditsTableAdapter.FillByCustomerID(Me.Ds_Customer.Customer_Credits, CurrentCustomer)
+
+                    ' reset form controls to default
+                    cmb_Types.SelectedIndex = 0
+                    tb_Amount.Text = ""
+                    tb_Reason.Text = ""
                 End If
             End If
         End If

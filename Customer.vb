@@ -6,8 +6,8 @@ Imports System.Data.Sql
 Public Class Customer
     ' new cust var so can switch form when new cust added
     Friend WithEvents _newCust As NewCustomer
-
     Friend WithEvents _payForm As Payments
+    Friend WithEvents _creditForm As CustomerCredit
 
     ' home form ref var
     Private _home As TrashCash_Home
@@ -118,4 +118,8 @@ Public Class Customer
         _payForm.ShowDialog()
     End Sub
 
+    Private Sub btn_Credit_Click(sender As System.Object, e As System.EventArgs) Handles btn_Credit.Click
+        _creditForm = New CustomerCredit(_home, CurrentCustomer)
+        _creditForm.ShowDialog()
+    End Sub
 End Class
