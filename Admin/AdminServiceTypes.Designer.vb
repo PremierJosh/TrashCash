@@ -32,8 +32,8 @@ Partial Class AdminServiceTypes
         Me.EditItemToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.NewItemToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ServiceTypesBindingSource = New System.Windows.Forms.BindingSource(Me.components)
-        Me.DataSet = New TrashCash.DataSet()
-        Me.ServiceTypesTableAdapter = New TrashCash.DataSetTableAdapters.ServiceTypesTableAdapter()
+        Me.ds_Types = New TrashCash.ds_Types()
+        Me.ServiceTypesTableAdapter = New TrashCash.ds_TypesTableAdapters.ServiceTypesTableAdapter()
         Me.lbl_FormInfo = New System.Windows.Forms.Label()
         Me.grp_ServiceEdit = New System.Windows.Forms.GroupBox()
         Me.UC_ServiceTypesDetails1 = New TrashCash.UC_ServiceTypesDetails()
@@ -51,7 +51,7 @@ Partial Class AdminServiceTypes
         CType(Me.dg_Item, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.cm_ServiceEdit.SuspendLayout()
         CType(Me.ServiceTypesBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.DataSet, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.ds_Types, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.grp_ServiceEdit.SuspendLayout()
         Me.SuspendLayout()
         '
@@ -119,12 +119,12 @@ Partial Class AdminServiceTypes
         'ServiceTypesBindingSource
         '
         Me.ServiceTypesBindingSource.DataMember = "ServiceTypes"
-        Me.ServiceTypesBindingSource.DataSource = Me.DataSet
+        Me.ServiceTypesBindingSource.DataSource = Me.ds_Types
         '
         'DataSet
         '
-        Me.DataSet.DataSetName = "DataSet"
-        Me.DataSet.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema
+        Me.ds_Types.DataSetName = "ds_Types"
+        Me.ds_Types.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema
         '
         'ServiceTypesTableAdapter
         '
@@ -243,15 +243,15 @@ Partial Class AdminServiceTypes
         CType(Me.dg_Item, System.ComponentModel.ISupportInitialize).EndInit()
         Me.cm_ServiceEdit.ResumeLayout(False)
         CType(Me.ServiceTypesBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.DataSet, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.ds_Types, System.ComponentModel.ISupportInitialize).EndInit()
         Me.grp_ServiceEdit.ResumeLayout(False)
         Me.ResumeLayout(False)
 
     End Sub
     Friend WithEvents dg_Item As System.Windows.Forms.DataGridView
-    Friend WithEvents DataSet As TrashCash.DataSet
+    Friend WithEvents ds_Types As TrashCash.ds_Types
     Friend WithEvents ServiceTypesBindingSource As System.Windows.Forms.BindingSource
-    Friend WithEvents ServiceTypesTableAdapter As TrashCash.DataSetTableAdapters.ServiceTypesTableAdapter
+    Friend WithEvents ServiceTypesTableAdapter As TrashCash.ds_TypesTableAdapters.ServiceTypesTableAdapter
     Friend WithEvents ServiceNameDataGridViewTextBoxColumn As System.Windows.Forms.DataGridViewTextBoxColumn
     Friend WithEvents ServiceRateDataGridViewTextBoxColumn As System.Windows.Forms.DataGridViewTextBoxColumn
     Friend WithEvents ServiceDescriptionDataGridViewTextBoxColumn As System.Windows.Forms.DataGridViewTextBoxColumn

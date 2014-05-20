@@ -29,7 +29,7 @@ Partial Class UC_ServiceTypesDetails
         Dim ServiceBillLengthLabel As System.Windows.Forms.Label
         Me.DataSet = New TrashCash.DataSet()
         Me.ServiceTypesBindingSource = New System.Windows.Forms.BindingSource(Me.components)
-        Me.ServiceTypesTableAdapter = New TrashCash.DataSetTableAdapters.ServiceTypesTableAdapter()
+        Me.ServiceTypesTableAdapter = New TrashCash.ds_TypesTableAdapters.ServiceTypesTableAdapter()
         Me.tb_ServiceName = New System.Windows.Forms.TextBox()
         Me.tb_ServiceDescription = New System.Windows.Forms.TextBox()
         Me.tb_ServiceBillLength = New System.Windows.Forms.TextBox()
@@ -207,7 +207,7 @@ Partial Class UC_ServiceTypesDetails
     End Sub
     Friend WithEvents DataSet As TrashCash.DataSet
     Friend WithEvents ServiceTypesBindingSource As System.Windows.Forms.BindingSource
-    Friend WithEvents ServiceTypesTableAdapter As TrashCash.DataSetTableAdapters.ServiceTypesTableAdapter
+    Friend WithEvents ServiceTypesTableAdapter As TrashCash.ds_TypesTableAdapters.ServiceTypesTableAdapter
     Friend WithEvents tb_ServiceName As System.Windows.Forms.TextBox
     Friend WithEvents tb_ServiceDescription As System.Windows.Forms.TextBox
     Friend WithEvents tb_ServiceBillLength As System.Windows.Forms.TextBox

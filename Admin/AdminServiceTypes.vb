@@ -13,7 +13,7 @@ Public Class AdminServiceTypes
         UC_ServiceTypesDetails1._HomeForm = HomeForm
     End Sub
     Private Sub ServiceTypes_Load(sender As System.Object, e As System.EventArgs) Handles MyBase.Load
-        Me.ServiceTypesTableAdapter.FillWithAll(Me.DataSet.ServiceTypes)
+        Me.ServiceTypesTableAdapter.Fill(Me.ds_Types.ServiceTypes)
         If (dg_Item.RowCount > 0) Then
             ColorRows(dg_Item)
         End If
@@ -44,7 +44,7 @@ Public Class AdminServiceTypes
     Private Sub CatchUpdate(ByVal Message As String) Handles UC_ServiceTypesDetails1.UpdateComplete
         MsgBox(Message)
         grp_ServiceEdit.Visible = False
-        Me.ServiceTypesTableAdapter.FillWithAll(Me.DataSet.ServiceTypes)
+        Me.ServiceTypesTableAdapter.Fill(Me.ds_Types.ServiceTypes)
         If (dg_Item.RowCount > 0) Then
             ColorRows(dg_Item)
         End If
