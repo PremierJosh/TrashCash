@@ -652,6 +652,8 @@ Public Class RecurringService
     End Sub
 
     Private Sub RecurringService_Load(sender As Object, e As System.EventArgs) Handles Me.Load
+        'TODO: This line of code loads data into the 'Ds_Types.ServiceTypesList' table. You can move, or remove it, as needed.
+        Me.ServiceTypesListTableAdapter.Fill(Me.Ds_Types.ServiceTypesList)
         'going to reset service id based on cmb selected value since trying to get selected value on new returns -1
         RecurringServiceRow.ServiceTypeID = Cmb_ServiceTypes.SelectedValue
         ' throwing message if customer is single inv
@@ -744,6 +746,10 @@ Public Class RecurringService
             _BalanceChanged = True
             ' refresh grid
             Me.RecurringService_CreditsTableAdapter.FillByRecID(Me.Ds_RecurringService.RecurringService_Credits, RecurringServiceID)
+            ' reset controls
+            dtp_CreditForDate.Value = Date.Now
+            tb_CreditAmount.Text = ""
+            tb_CreditReason.Text = ""
         End If
     End Sub
 
@@ -780,5 +786,14 @@ Public Class RecurringService
         ' when validated, check if credit has been issued for an end date
         ' if it has, prompt that this will void that credit and create a new one
 
+    End Sub
+
+    Private Sub dg_CreditHistory_CellMouseDown(sender As System.Object, e As System.Windows.Forms.DataGridViewCellMouseEventArgs)
+        If (e.Button = Windows.Forms.MouseButtons.Right) Then
+            For Each row As DataGridViewRow In dg_CreditHistory.SelectedRows
+                row.Selected = False
+            Next
+            dg_CreditHistory.Rows(e.RowIndex).Selected = True
+        End If
     End Sub
 End Class

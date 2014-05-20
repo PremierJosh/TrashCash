@@ -142,20 +142,20 @@ Namespace Database_ComboBoxes
         End Property
 
         ' custList dt and ta
-        'Private dt As DataSet.ServiceTypesListDataTable
-        'Private ta As DataSetTableAdapters.ServiceTypesListTableAdapter
+        Private dt As ds_Types.ServiceTypesListDataTable
+        Private ta As ds_TypesTableAdapters.ServiceTypesListTableAdapter
 
         Public Sub New()
             MyBase.New()
-            'dt = New DataSet.ServiceTypesListDataTable
-            'ta = New DataSetTableAdapters.ServiceTypesListTableAdapter
+            dt = New ds_Types.ServiceTypesListDataTable
+            ta = New ds_TypesTableAdapters.ServiceTypesListTableAdapter
             ' fill table
-            'ta.Fill(dt)
+            ta.Fill(dt)
 
             ' bind
             Me.DisplayMember = "ServiceName"
             Me.ValueMember = "ServiceTypeID"
-            'Me.DataSource = dt
+            Me.DataSource = dt
         End Sub
 
         Private Sub GetRate()
@@ -173,10 +173,10 @@ Namespace Database_ComboBoxes
         End Sub
 
         Public Sub RefreshList(Optional ByVal Rebind As Boolean = False)
-            'dt = New DataSet.ServiceTypesListDataTable
-            'ta = New DataSetTableAdapters.ServiceTypesListTableAdapter
+            dt = New ds_Types.ServiceTypesListDataTable
+            ta = New ds_TypesTableAdapters.ServiceTypesListTableAdapter
             ' fill table
-            'ta.Fill(dt)
+            ta.Fill(dt)
 
             If (Rebind = True) Then
                 ' bind
