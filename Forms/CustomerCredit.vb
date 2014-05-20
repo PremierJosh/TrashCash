@@ -155,4 +155,9 @@
     Private Sub dg_Credits_RowsRemoved(sender As System.Object, e As System.Windows.Forms.DataGridViewRowsRemovedEventArgs) Handles dg_Credits.RowsRemoved
         ColorHistoryForVoids()
     End Sub
+
+    Private Sub CustomerCredit_Load(sender As Object, e As System.EventArgs) Handles Me.Load
+        ' fill history grid on load
+        Me.Customer_CreditsTableAdapter.FillByCustomerID(Me.Ds_Customer.Customer_Credits, CurrentCustomer)
+    End Sub
 End Class
