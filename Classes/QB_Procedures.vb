@@ -134,7 +134,7 @@ Public Class QB_Procedures
 
                     ElseIf (response.StatusCode = 3100) Then
                         ' customer name already exists
-                        Dim input As String = InputBox("A Customer already exists with the Name " & custRow.CustomerFullName & ". Please chose a different name.")
+                        Dim input As String = InputBox("A Customer already exists with the Name " & custRow.CustomerFullName & ". Please choose a different name.")
                         If (input.Length > 0) Then
                             custRow.CustomerFullName = input
 
@@ -1897,7 +1897,7 @@ retry:
                         End Try
                     Else
                         ResponseErr_Misc(resp)
-                        ta.DeleteByID(row.ServiceTypeID)
+                        'ta.DeleteByID(row.ServiceTypeID)
                     End If
                 Next i
             End If
