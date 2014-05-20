@@ -68,7 +68,6 @@
         _dv = New DataView
         _dv.Table = Me.Ds_RecurringService.RecurringService_DisplayByCustomerID
         dg_RecSrvc.DataSource = _dv
-        dg_RecSrvc.Columns(0).Visible = False
     End Sub
 
     Private Sub dg_RecSrvc_Click(sender As System.Object, e As System.Windows.Forms.MouseEventArgs) Handles dg_RecSrvc.Click

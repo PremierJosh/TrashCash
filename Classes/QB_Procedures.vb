@@ -656,55 +656,58 @@ retry:
 
     ' sub to use newly created credit to pay invoices using the move payment open inv table
     Private Sub Credits_PayOpenInvoices(ByVal CustomerListID As String, ByVal CreditTxnID As String, ByVal AvailAmount As Double, ByRef openInvoiceDT As ds_Payments.MovePayment_OpenInvoicesDataTable, ByVal ApplyOrder As String)
-        ' create data view that is sorted depending on the direction paramater Asc or Desc
-        Dim dv_Invoices As New DataView(openInvoiceDT, "", "Inv_TxnDate " & ApplyOrder, DataViewRowState.CurrentRows)
+        ' making sure we have rows
+        If (openInvoiceDT.Rows.Count > 0) Then
+            ' create data view that is sorted depending on the direction paramater Asc or Desc
+            Dim dv_Invoices As New DataView(openInvoiceDT, "", "Inv_TxnDate " & ApplyOrder, DataViewRowState.CurrentRows)
 
-        ' var going to keep track of remaining credit
-        Dim creditRemain As Double = AvailAmount
+            ' var going to keep track of remaining credit
+            Dim creditRemain As Double = AvailAmount
 
-        ' payAdd to use credit
-        Dim payAdd As IReceivePaymentAdd = MsgSetRequest.AppendReceivePaymentAddRq
-        payAdd.CustomerRef.ListID.SetValue(CustomerListID)
+            ' payAdd to use credit
+            Dim payAdd As IReceivePaymentAdd = MsgSetRequest.AppendReceivePaymentAddRq
+            payAdd.CustomerRef.ListID.SetValue(CustomerListID)
 
-        For Each row As ds_Payments.MovePayment_OpenInvoicesRow In dv_Invoices.Table.Rows
-            ' making sure we have credit still
-            If (creditRemain > 0) Then
-                Dim newAttached As IAppliedToTxnAdd = payAdd.ORApplyPayment.AppliedToTxnAddList.Append()
-                newAttached.TxnID.SetValue(row.Inv_TxnID)
+            For Each row As ds_Payments.MovePayment_OpenInvoicesRow In dv_Invoices.Table.Rows
+                ' making sure we have credit still
+                If (creditRemain > 0) Then
+                    Dim newAttached As IAppliedToTxnAdd = payAdd.ORApplyPayment.AppliedToTxnAddList.Append()
+                    newAttached.TxnID.SetValue(row.Inv_TxnID)
 
-                'attaching credit
-                Dim setCredit As ISetCredit = newAttached.SetCreditList.Append()
-                setCredit.CreditTxnID.SetValue(CreditTxnID)
+                    'attaching credit
+                    Dim setCredit As ISetCredit = newAttached.SetCreditList.Append()
+                    setCredit.CreditTxnID.SetValue(CreditTxnID)
 
-                ' checking how much i can apply
-                If (row.Remaining >= creditRemain) Then
-                    setCredit.AppliedAmount.SetValue(creditRemain)
-                    ' update remaining amount
-                    creditRemain = 0
-                    row.Remaining = row.Remaining - creditRemain
-                Else
-                    setCredit.AppliedAmount.SetValue(row.Remaining)
-                    ' update remaining amount
-                    creditRemain = creditRemain - row.Remaining
-                    row.Remaining = 0
+                    ' checking how much i can apply
+                    If (row.Remaining >= creditRemain) Then
+                        setCredit.AppliedAmount.SetValue(creditRemain)
+                        ' update remaining amount
+                        creditRemain = 0
+                        row.Remaining = row.Remaining - creditRemain
+                    Else
+                        setCredit.AppliedAmount.SetValue(row.Remaining)
+                        ' update remaining amount
+                        creditRemain = creditRemain - row.Remaining
+                        row.Remaining = 0
+                    End If
                 End If
-            End If
-        Next
+            Next
 
-        ' go
-        Dim msgSetResp As IMsgSetResponse = SessionManager.DoRequests(MsgSetRequest)
-        Dim respList As IResponseList = msgSetResp.ResponseList
+            ' go
+            Dim msgSetResp As IMsgSetResponse = SessionManager.DoRequests(MsgSetRequest)
+            Dim respList As IResponseList = msgSetResp.ResponseList
 
-        MsgSetRequest.ClearRequests()
+            MsgSetRequest.ClearRequests()
 
-        For i = 0 To respList.Count - 1
-            Dim resp As IResponse = respList.GetAt(i)
+            For i = 0 To respList.Count - 1
+                Dim resp As IResponse = respList.GetAt(i)
 
-            ' resp wont = 1 since not a query
-            If (resp.StatusCode <> 0) Then
-                ResponseErr_Misc(resp)
-            End If
-        Next
+                ' resp wont = 1 since not a query
+                If (resp.StatusCode <> 0) Then
+                    ResponseErr_Misc(resp)
+                End If
+            Next
+        End If
     End Sub
 
     ' void a recurring service credit

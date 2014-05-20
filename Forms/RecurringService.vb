@@ -638,7 +638,8 @@ Public Class RecurringService
             ' checking if service bill thru date is greater than the new end date
             If (_billThruDate > dtp_EndDate.Value.Date) Then
                 ' display estimated credit
-                Dim creditAmount As Decimal = CDec(qta.RecurringService_EndDateCreditCalc(RecurringServiceRow.RecurringServiceID, DateAdd(DateInterval.Day, 1, dtp_EndDate.Value.Date)))
+                'Dim creditAmount As Decimal = CDec(qta.RecurringService_EndDateCreditCalc(RecurringServiceRow.RecurringServiceID, DateAdd(DateInterval.Day, 1, dtp_EndDate.Value.Date)))
+                Dim creditAmount As Decimal = CDec(qta.RecurringService_EndDateCreditCalc(RecurringServiceRow.RecurringServiceID, dtp_EndDate.Value.Date))
 
                 If (creditAmount > 0) Then
                     ' update crediting property
@@ -741,6 +742,8 @@ Public Class RecurringService
             HomeForm.Procedures.RecurringService_Credit(RecurringServiceRow.RecurringServiceID, tb_CreditAmount.Text, creditForDate, tb_CreditReason.Text)
             ' balance has changed now
             _BalanceChanged = True
+            ' refresh grid
+            Me.RecurringService_CreditsTableAdapter.FillByRecID(Me.Ds_RecurringService.RecurringService_Credits, RecurringServiceID)
         End If
     End Sub
 
@@ -759,7 +762,7 @@ Public Class RecurringService
                     dg_CreditHistory.Rows(i).DefaultCellStyle.SelectionBackColor = Color.IndianRed
                 Else
                     dg_CreditHistory.Rows(i).DefaultCellStyle.BackColor = Color.SpringGreen
-                    dg_CreditHistory.Rows(i).DefaultCellStyle.BackColor = Color.MediumSeaGreen
+                    dg_CreditHistory.Rows(i).DefaultCellStyle.SelectionBackColor = Color.MediumSeaGreen
                 End If
             Next
         End If
