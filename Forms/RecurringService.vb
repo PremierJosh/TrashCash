@@ -669,6 +669,12 @@ Public Class RecurringService
                 If (creditAmount > 0) Then
                     ' update crediting property
                     Crediting = creditAmount
+                    ' checking if previous credit exists and if it was voided
+                    If (EndDateCreditRow IsNot Nothing) Then
+                        If (Not EndDateCreditRow.Voided) Then
+                            lbl_CreditMsg.Text += vbCrLf & "This will also void the previous credit of " & FormatCurrency(EndDateCreditRow.CreditAmount) & "."
+                        End If
+                    End If
                 Else
                     Crediting = 0
                 End If
