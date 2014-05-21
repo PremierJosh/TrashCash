@@ -60,11 +60,12 @@ Public Class TrashCash_Home
             ' 4	  Nicole	3
 
             ' auth level 1 is super admin, no login prompts
-            If (value = 1) Then
-                _bypassLogin = True
-            Else
-                MessageBox.Show("AUTH LEVEL UNKNOWKN")
-            End If
+            Select Case value
+                Case value = 1
+                    _bypassLogin = True
+                Case value > 3
+                    MessageBox.Show("AUTH LEVEL UNKNOWKN")
+            End Select
         End Set
     End Property
 
