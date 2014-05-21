@@ -55,7 +55,7 @@
         CurrentCustomer = CustomerNumber
         ' get balance
         _homeForm = HomeForm
-        Ts_M_Customer.lbl_CustBalance.SetQBBalance(_homeForm.Queries.Customer_Balance(CustomerNumber))
+        Ts_M_Customer.HomeForm = HomeForm
 
         ' hide toolstrip stuff and lock to customer
         Ts_M_Customer.Enabled = False

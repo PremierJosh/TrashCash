@@ -43,8 +43,6 @@ Public Class CustomInvoice_DescRemind
                 Ts_M_Customer1.CurrentCustomer = value
                 Ts_M_Customer1.Enabled = False
                 Ts_M_Customer1.HideQuickSearch()
-                ' init balance set
-                Ts_M_Customer1.lbl_CustBalance.SetQBBalance(_home.Queries.Customer_Balance(value))
             End If
         End Set
     End Property

@@ -36,7 +36,6 @@
 
     Private Sub Ts_M_Customer_CustomerChanging(CustomerNumber As Integer) Handles Ts_M_Customer.CustomerChanging
         Me.CurrentCustomer = CustomerNumber
-        Ts_M_Customer.lbl_CustBalance.SetQBBalance(_home.Queries.Customer_Balance(CustomerNumber))
     End Sub
 
     Private Sub PaymentAdded(ByVal rowID As Integer) Handles UC_PaymentDetails.PaymentAdded
@@ -53,6 +52,7 @@
         ' Add any initialization after the InitializeComponent() call.
         ta = Me.WorkingPaymentsTableAdapter
         _home = HomeForm
+        Ts_M_Customer.HomeForm = HomeForm
 
         ' if number is passed, lock ts
         If (_customerNumber <> 0) Then
@@ -98,7 +98,5 @@
         End If
 
         Ts_M_Customer.CurrentCustomer = Me.CurrentCustomer
-        ' init balance set
-        Ts_M_Customer.lbl_CustBalance.SetQBBalance(_home.Queries.Customer_Balance(Me.CurrentCustomer))
     End Sub
 End Class

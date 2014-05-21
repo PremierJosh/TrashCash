@@ -77,14 +77,11 @@
         If (Ts_M_Customer.cmb_Customer.ComboBox.SelectedValue IsNot Nothing) Then
             Me.CurrentCustomer = Ts_M_Customer.cmb_Customer.ComboBox.SelectedValue
             Ts_M_Customer.CurrentCustomer = Me.CurrentCustomer
-            ' init balance set
-            Ts_M_Customer.lbl_CustBalance.SetQBBalance(_home.Queries.Customer_Balance(Me.CurrentCustomer))
         End If
     End Sub
 
     Private Sub CustomerCatch(ByVal CustNum As Integer) Handles Ts_M_Customer.CustomerChanging
         CurrentCustomer = CustNum
-        Ts_M_Customer.lbl_CustBalance.SetQBBalance(_home.Queries.Customer_Balance(CustNum))
     End Sub
 
     Public Sub Fetch_History() Handles dtp_EndDate.ValueChanged, dtp_StartDate.ValueChanged
@@ -147,6 +144,7 @@
 
         ' Add any initialization after the InitializeComponent() call.
         _home = HomeForm
+        Ts_M_Customer.HomeForm = HomeForm
     End Sub
 
     Private Sub cm_i_MovePayment_Click(sender As System.Object, e As System.EventArgs) Handles cm_i_MovePayment.Click

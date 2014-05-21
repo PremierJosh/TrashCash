@@ -22,6 +22,8 @@ Public Class ts_M_Customer
                     cmb_Customer.ComboBox.SelectedValue = value
                 End If
                 _currentCustomer = value
+                ' get balance
+                GetCustomerBalance()
             End If
         End Set
     End Property
@@ -34,6 +36,16 @@ Public Class ts_M_Customer
                 Return ""
             End If
         End Get
+    End Property
+
+    Private _homeForm As TrashCash_Home
+    Public Property HomeForm As TrashCash_Home
+        Get
+            Return _homeForm
+        End Get
+        Set(value As TrashCash_Home)
+            _homeForm = value
+        End Set
     End Property
 
     'event
@@ -55,7 +67,16 @@ Public Class ts_M_Customer
     End Sub
 
     ' balance setting
-    Public Sub SetCustomerBalance(ByVal QBBalance As Double, ByVal QueueAmount As Double)
+    Friend Sub GetCustomerBalance()
+        ' getting queue amount
+        Dim QueueAmount As Double = 0
+        Using ta As New ds_CustomerTableAdapters.QueriesTableAdapter
+            QueueAmount = ta.Customer_PaymentTotalInQueue(CurrentCustomer)
+        End Using
+
+        ' getting quickbooks balance
+        Dim QBBalance As Double = HomeForm.Queries.Customer_Balance(CurrentCustomer)
+
         ' set balance labels
         lbl_CustBalance.Text = FormatCurrency(QBBalance)
         lbl_QueueAmount.Text = FormatCurrency(QueueAmount)
@@ -271,50 +292,3 @@ Friend Class ts_tb_QuickSearch
     End Sub
 End Class
 
-'Friend Class ts_lbl_CustBalance
-'    Inherits ToolStripLabel
-
-'    Friend Sub New()
-'        Me.Font = New Font("Microsoft Sans Serif", 10)
-'    End Sub
-
-'    Private _qbBalance As Double
-'    Public Property QBBalance As Double
-'        Get
-'            Return _qbBalance
-'        End Get
-'        Set(value As Double)
-'            _qbBalance = value
-
-'            Me.Text = FormatCurrency(QBBalance)
-
-'            ' coloring
-'            If (value <= 0) Then
-'                Me.ForeColor = Color.Green
-'            Else
-'                Me.ForeColor = Color.Red
-'            End If
-
-'        End Set
-'    End Property
-'End Class
-
-'Friend Class ts_lbl_QueueAmount
-'    Inherits ToolStripLabel
-
-'    Friend Sub New()
-'        Me.Font = New Font("Microsoft Sans Serif", 10)
-'    End Sub
-
-'    Private _queueAmount As Double
-'    Public Property QueueAmount As Double
-'        Get
-'            Return _queueAmount
-'        End Get
-'        Set(value As Double)
-'            _queueAmount = value
-
-'            If (
-'        End Set
-'    End Property
-'End Class

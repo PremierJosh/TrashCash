@@ -38,7 +38,7 @@ Public Class Customer
 
     ' refresh balance event handleing
     Friend Sub RefreshCustBalance(Optional ByVal CustomerNumber As Integer = 0) Handles UC_RecurringService.RefreshBalance
-        Ts_M_Customer.lbl_CustBalance.SetQBBalance(_home.Queries.Customer_Balance(Me.CurrentCustomer))
+        Ts_M_Customer.GetCustomerBalance()
     End Sub
 
     Private Sub Customer_FormClosing(sender As Object, e As System.Windows.Forms.FormClosingEventArgs) Handles Me.FormClosing
@@ -52,8 +52,6 @@ Public Class Customer
         If (Ts_M_Customer.cmb_Customer.ComboBox.SelectedValue IsNot Nothing) Then
             Me.CurrentCustomer = Ts_M_Customer.cmb_Customer.ComboBox.SelectedValue
             Ts_M_Customer.CurrentCustomer = Me.CurrentCustomer
-            ' init balance set
-            Ts_M_Customer.lbl_CustBalance.SetQBBalance(_home.Queries.Customer_Balance(Me.CurrentCustomer))
         End If
         UC_Quickbooks._HomeForm = _home
 
@@ -63,7 +61,6 @@ Public Class Customer
 
     Private Sub CustomerChanged(ByVal CustomerNumber As Integer) Handles Ts_M_Customer.CustomerChanging
         Me.CurrentCustomer = CustomerNumber
-        Ts_M_Customer.lbl_CustBalance.SetQBBalance(_home.Queries.Customer_Balance(CustomerNumber))
     End Sub
 
     ' event handle for begining to update customer info
@@ -112,6 +109,7 @@ Public Class Customer
         UC_Quickbooks._HomeForm = HomeForm
         UC_CustomerInfoBoxes.HomeForm = HomeForm
         UC_RecurringService.HomeForm = HomeForm
+        Ts_M_Customer.HomeForm = HomeForm
     End Sub
 
 
