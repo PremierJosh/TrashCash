@@ -154,7 +154,7 @@ Partial Class Customer
         Me.pnl_Top.Name = "pnl_Top"
         Me.pnl_Top.Padding = New System.Windows.Forms.Padding(20, 10, 20, 10)
         Me.pnl_Top.Size = New System.Drawing.Size(902, 53)
-        Me.pnl_Top.TabIndex = 14
+        Me.pnl_Top.TabIndex = 0
         '
         'pnl_TopContent
         '
@@ -184,7 +184,7 @@ Partial Class Customer
         Me.ts_Top.Location = New System.Drawing.Point(0, 0)
         Me.ts_Top.Name = "ts_Top"
         Me.ts_Top.Size = New System.Drawing.Size(902, 25)
-        Me.ts_Top.TabIndex = 15
+        Me.ts_Top.TabIndex = 0
         Me.ts_Top.Text = "ToolStrip1"
         '
         'btn_Inv

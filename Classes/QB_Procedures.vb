@@ -523,7 +523,11 @@ retry:
                 Dim creditMemoRet As ICreditMemoRet = resp.Detail
                 Try
                     Using qta As New ds_RecurringServiceTableAdapters.QueriesTableAdapter
-                        qta.RecurringService_EndDateCredit_Insert(row.RecurringServiceID, row.RecurringServiceEndDate, newEndDate, creditAmount, creditMemoRet.TxnID.GetValue)
+                        If (row.IsRecurringServiceEndDateNull) Then
+                            qta.RecurringService_EndDateCredit_Insert(row.RecurringServiceID, Nothing, newEndDate, creditAmount, creditMemoRet.TxnID.GetValue)
+                        Else
+                            qta.RecurringService_EndDateCredit_Insert(row.RecurringServiceID, row.RecurringServiceEndDate, newEndDate, creditAmount, creditMemoRet.TxnID.GetValue)
+                        End If
                     End Using
                 Catch ex As Exception
                     MessageBox.Show("Error inserting Credit History: " & ex.Message, "Error Credit Record Insert", MessageBoxButtons.OK, MessageBoxIcon.Error)

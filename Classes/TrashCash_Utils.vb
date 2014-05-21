@@ -143,28 +143,28 @@ Namespace Database_ComboBoxes
 
         ' custList dt and ta
         Private dt As ds_Types.ServiceTypesListDataTable
-        Public Property DataTable As DataSet.ServiceTypesListDataTable
+        Public Property DataTable As ds_Types.ServiceTypesListDataTable
             Get
                 Return dt
             End Get
-            Set(value As DataSet.ServiceTypesListDataTable)
+            Set(value As ds_Types.ServiceTypesListDataTable)
                 dt = value
             End Set
         End Property
-        Private ta As DataSetTableAdapters.ServiceTypesListTableAdapter
-        Public Property TableAdapater As DataSetTableAdapters.ServiceTypesListTableAdapter
+        Private ta As ds_TypesTableAdapters.ServiceTypesListTableAdapter
+        Public Property TableAdapater As ds_TypesTableAdapters.ServiceTypesListTableAdapter
             Get
                 Return ta
             End Get
-            Set(value As DataSetTableAdapters.ServiceTypesListTableAdapter)
+            Set(value As ds_TypesTableAdapters.ServiceTypesListTableAdapter)
                 ta = value
             End Set
         End Property
 
         Public Sub New()
             MyBase.New()
-            DataTable = New DataSet.ServiceTypesListDataTable
-            TableAdapater = New DataSetTableAdapters.ServiceTypesListTableAdapter
+            DataTable = New ds_Types.ServiceTypesListDataTable
+            TableAdapater = New ds_TypesTableAdapters.ServiceTypesListTableAdapter
             ' fill table
             TableAdapater.Fill(DataTable)
 
@@ -189,8 +189,8 @@ Namespace Database_ComboBoxes
         End Sub
 
         Public Sub RefreshList(Optional ByVal Rebind As Boolean = False)
-            DataTable = New DataSet.ServiceTypesListDataTable
-            TableAdapater = New DataSetTableAdapters.ServiceTypesListTableAdapter
+            DataTable = New ds_Types.ServiceTypesListDataTable
+            TableAdapater = New ds_TypesTableAdapters.ServiceTypesListTableAdapter
             ' fill table
             TableAdapater.Fill(DataTable)
 

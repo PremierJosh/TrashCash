@@ -223,7 +223,6 @@ Public Class TrashCash_Home
         ' getting approvals pending on load
         RefreshApprovCount(True)
 
-        '
     End Sub
 
     Private Sub ApprovalsWorked(ByVal countRemain As Integer) Handles _pendingApprovals.RemainingApprovals

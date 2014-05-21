@@ -7,10 +7,13 @@ Public Class RecurringService
     Dim dv_EndDateOverlap As DataView
     Private WriteOnly Property dv_RowFilter As Date
         Set(value As Date)
-            If (dv_EndDateOverlap IsNot Nothing) Then
-                dv_EndDateOverlap.RowFilter = "Voided = 0 AND DateOfCredit > " & value.Date & ""
-                ' update status text if rows filter
-                CreditOverlapCheck(value)
+            ' making sure this is a time value not double
+            If (IsDate(value)) Then
+                If (dv_EndDateOverlap IsNot Nothing) Then
+                    dv_EndDateOverlap.RowFilter = "Voided = 0 AND DateOfCredit >= '" & value & "'"
+                    ' update status text if rows filter
+                    CreditOverlapCheck(value)
+                End If
             End If
         End Set
     End Property
@@ -95,43 +98,41 @@ Public Class RecurringService
             Return _recRow
         End Get
         Set(value As ds_RecurringService.RecurringServiceRow)
-            _recRow = value
+            If (_recRow IsNot Nothing) Then
+                If (_recRow.RecurringServiceID <> value.RecurringServiceID) Then
+                    _recRow = value
 
-            ' fill billed services display
-            Me.RecurringService_BillHistoryTableAdapter.FillByRecurringID(Me.Ds_RecurringService.RecurringService_BillHistory, value.RecurringServiceID)
-            ' fill service notes display
-            Me.ServiceNotesTableAdapter.FillByID(Me.Ds_RecurringService.ServiceNotes, value.RecurringServiceID)
-            ' fill credit history
-            Me.RecurringService_CreditsTableAdapter.FillByRecID(Me.Ds_RecurringService.RecurringService_Credits, value.RecurringServiceID)
+                    ' fill billed services display
+                    Me.RecurringService_BillHistoryTableAdapter.FillByRecurringID(Me.Ds_RecurringService.RecurringService_BillHistory, value.RecurringServiceID)
+                    ' fill service notes display
+                    Me.ServiceNotesTableAdapter.FillByID(Me.Ds_RecurringService.ServiceNotes, value.RecurringServiceID)
+                    ' fill credit history
+                    Me.RecurringService_CreditsTableAdapter.FillByRecID(Me.Ds_RecurringService.RecurringService_Credits, value.RecurringServiceID)
 
-            ' checking if service is approved
-            Approved = value.Approved
+                    ' checking if service is approved
+                    Approved = value.Approved
 
-            ' checking if an end date is set
-            If (value.IsRecurringServiceEndDateNull = False) Then
-                dtp_EndDate.Visible = True
-                dtp_EndDate.Value = value.RecurringServiceEndDate
-                ck_EndDate.Checked = True
+                    ' checking if an end date is set
+                    If (value.IsRecurringServiceEndDateNull = False) Then
+                        dtp_EndDate.Visible = True
+                        dtp_EndDate.Value = value.RecurringServiceEndDate
+                        ck_EndDate.Checked = True
 
-                ' checking if credited due to this end date
-                If (value.Credited = True) Then
-                    ' set property
-                    Using ta As New ds_RecurringServiceTableAdapters.RecurringService_EndDateCreditsTableAdapter
-                        EndDateCreditRow = ta.GetDataByRecID(value.RecurringServiceID).Rows(0)
-                    End Using
+                        ' checking if credited due to this end date
+                        If (value.Credited = True) Then
+                            ' set property
+                            Using ta As New ds_RecurringServiceTableAdapters.RecurringService_EndDateCreditsTableAdapter
+                                EndDateCreditRow = ta.GetDataByRecID(value.RecurringServiceID).Rows(0)
+                            End Using
+                        End If
+
+                    Else
+                        ck_EndDate.Checked = False
+                        dtp_EndDate.Visible = False
+                    End If
                 End If
-
-            Else
-                ck_EndDate.Checked = False
-                dtp_EndDate.Visible = False
             End If
-
-            ' checking if service is credited
-            'If (value.Credited = True) Then
-            '    StatusText = "This Recurring Service has already issued a credit due to Last Day of Service overlapping with an invoiced period. You will not be able to change anything."
-            '    ck_EndDate.Enabled = False
-            '    dtp_EndDate.Enabled = False
-            'End If
+            
         End Set
     End Property
 
@@ -490,6 +491,8 @@ Public Class RecurringService
     End Sub
 
     ' validation sub
+
+
     Private Function TBsValidated() As Boolean
         ' return var
         Dim validated As Boolean = True
@@ -634,7 +637,7 @@ Public Class RecurringService
 
                 ' raise approval event so approval form can refresh
                 RaiseEvent e_Approved()
-                RaiseEvent RefreshService(CustomerNumber, RecurringServiceID)
+                _ServiceUpdated = True
 
                 Me.Close()
             Catch ex As Exception
@@ -758,7 +761,12 @@ Public Class RecurringService
             ' balance has changed now
             _BalanceChanged = True
             ' refresh grid
-            Me.RecurringService_CreditsTableAdapter.FillByRecID(Me.Ds_RecurringService.RecurringService_Credits, RecurringServiceID)
+            Try
+                Me.RecurringService_CreditsTableAdapter.FillByRecID(Me.Ds_RecurringService.RecurringService_Credits, RecurringServiceID)
+            Catch ex As Exception
+                MsgBox(ex.Message & " - " & ex.InnerException.ToString)
+            End Try
+
             ' reset controls
             dtp_CreditForDate.Value = Date.Now
             tb_CreditAmount.Text = ""

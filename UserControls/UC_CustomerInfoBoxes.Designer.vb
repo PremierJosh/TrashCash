@@ -25,6 +25,8 @@ Partial Class UC_CustomerInfoBoxes
         Me.components = New System.ComponentModel.Container()
         Me.grp_SrvcInvInfo = New System.Windows.Forms.GroupBox()
         Me.nud_BillInterval = New System.Windows.Forms.NumericUpDown()
+        Me.CustomerBindingSource = New System.Windows.Forms.BindingSource(Me.components)
+        Me.Ds_Customer = New TrashCash.ds_Customer()
         Me.Label9 = New System.Windows.Forms.Label()
         Me.ck_SingleInv = New System.Windows.Forms.CheckBox()
         Me.Label10 = New System.Windows.Forms.Label()
@@ -67,16 +69,14 @@ Partial Class UC_CustomerInfoBoxes
         Me.Label5 = New System.Windows.Forms.Label()
         Me.Label4 = New System.Windows.Forms.Label()
         Me.tt_CustBillInterval = New System.Windows.Forms.ToolTip(Me.components)
-        Me.Ds_Customer = New TrashCash.ds_Customer()
-        Me.CustomerBindingSource = New System.Windows.Forms.BindingSource(Me.components)
         Me.CustomerTableAdapter = New TrashCash.ds_CustomerTableAdapters.CustomerTableAdapter()
         Me.grp_SrvcInvInfo.SuspendLayout()
         CType(Me.nud_BillInterval, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.CustomerBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.Ds_Customer, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.grp_GenInfo.SuspendLayout()
         Me.cm_Update.SuspendLayout()
         Me.grp_BillAddr.SuspendLayout()
-        CType(Me.Ds_Customer, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.CustomerBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'grp_SrvcInvInfo
@@ -91,7 +91,7 @@ Partial Class UC_CustomerInfoBoxes
         Me.grp_SrvcInvInfo.Location = New System.Drawing.Point(484, 3)
         Me.grp_SrvcInvInfo.Name = "grp_SrvcInvInfo"
         Me.grp_SrvcInvInfo.Size = New System.Drawing.Size(172, 169)
-        Me.grp_SrvcInvInfo.TabIndex = 81
+        Me.grp_SrvcInvInfo.TabIndex = 2
         Me.grp_SrvcInvInfo.TabStop = False
         Me.grp_SrvcInvInfo.Text = "Service and Invoice Information"
         '
@@ -103,6 +103,15 @@ Partial Class UC_CustomerInfoBoxes
         Me.nud_BillInterval.Size = New System.Drawing.Size(31, 20)
         Me.nud_BillInterval.TabIndex = 10
         Me.nud_BillInterval.Value = New Decimal(New Integer() {1, 0, 0, 0})
+        '
+        'CustomerBindingSource
+        '
+        Me.CustomerBindingSource.DataMember = "Customer"
+        Me.CustomerBindingSource.DataSource = Me.Ds_Customer
+        '
+        'Ds_Customer
+        '
+        Me.Ds_Customer.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema
         '
         'Label9
         '
@@ -196,7 +205,7 @@ Partial Class UC_CustomerInfoBoxes
         Me.grp_GenInfo.Location = New System.Drawing.Point(3, 3)
         Me.grp_GenInfo.Name = "grp_GenInfo"
         Me.grp_GenInfo.Size = New System.Drawing.Size(465, 169)
-        Me.grp_GenInfo.TabIndex = 80
+        Me.grp_GenInfo.TabIndex = 1
         Me.grp_GenInfo.TabStop = False
         Me.grp_GenInfo.Text = "General Information"
         '
@@ -401,7 +410,7 @@ Partial Class UC_CustomerInfoBoxes
         Me.grp_BillAddr.Location = New System.Drawing.Point(674, 3)
         Me.grp_BillAddr.Name = "grp_BillAddr"
         Me.grp_BillAddr.Size = New System.Drawing.Size(223, 169)
-        Me.grp_BillAddr.TabIndex = 75
+        Me.grp_BillAddr.TabIndex = 3
         Me.grp_BillAddr.TabStop = False
         Me.grp_BillAddr.Text = "Billing Address"
         '
@@ -515,16 +524,6 @@ Partial Class UC_CustomerInfoBoxes
         Me.Label4.TabIndex = 65
         Me.Label4.Text = "Address 1:"
         '
-        'Ds_Customer
-        '
-        Me.Ds_Customer.DataSetName = "ds_Customer"
-        Me.Ds_Customer.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema
-        '
-        'CustomerBindingSource
-        '
-        Me.CustomerBindingSource.DataMember = "Customer"
-        Me.CustomerBindingSource.DataSource = Me.Ds_Customer
-        '
         'CustomerTableAdapter
         '
         Me.CustomerTableAdapter.ClearBeforeFill = True
@@ -542,13 +541,13 @@ Partial Class UC_CustomerInfoBoxes
         Me.grp_SrvcInvInfo.ResumeLayout(False)
         Me.grp_SrvcInvInfo.PerformLayout()
         CType(Me.nud_BillInterval, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.CustomerBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.Ds_Customer, System.ComponentModel.ISupportInitialize).EndInit()
         Me.grp_GenInfo.ResumeLayout(False)
         Me.grp_GenInfo.PerformLayout()
         Me.cm_Update.ResumeLayout(False)
         Me.grp_BillAddr.ResumeLayout(False)
         Me.grp_BillAddr.PerformLayout()
-        CType(Me.Ds_Customer, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.CustomerBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub

@@ -94,7 +94,6 @@ Public Class ts_M_Customer
         lbl_Quicksearch = New ToolStripLabel
         sep = New ToolStripSeparator
 
-
         lbl_Quicksearch.Text = "QuickSearch:"
         ' balance label needs to align right
         Dim balanceHeader As New ToolStripLabel

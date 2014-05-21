@@ -56,6 +56,9 @@ Public Class Customer
             Ts_M_Customer.lbl_CustBalance.SetBalance(_home.Queries.Customer_Balance(Me.CurrentCustomer))
         End If
         UC_Quickbooks._HomeForm = _home
+
+        ' set quick type box as focus
+        Ts_M_Customer.tb_QuickSearch.Focus()
     End Sub
 
     Private Sub CustomerChanged(ByVal CustomerNumber As Integer) Handles Ts_M_Customer.CustomerChanging
