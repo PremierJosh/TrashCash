@@ -36,7 +36,7 @@
 
     Private Sub Ts_M_Customer_CustomerChanging(CustomerNumber As Integer) Handles Ts_M_Customer.CustomerChanging
         Me.CurrentCustomer = CustomerNumber
-        Ts_M_Customer.lbl_CustBalance.SetBalance(_home.Queries.Customer_Balance(CustomerNumber))
+        Ts_M_Customer.lbl_CustBalance.SetQBBalance(_home.Queries.Customer_Balance(CustomerNumber))
     End Sub
 
     Private Sub PaymentAdded(ByVal rowID As Integer) Handles UC_PaymentDetails.PaymentAdded
@@ -99,6 +99,6 @@
 
         Ts_M_Customer.CurrentCustomer = Me.CurrentCustomer
         ' init balance set
-        Ts_M_Customer.lbl_CustBalance.SetBalance(_home.Queries.Customer_Balance(Me.CurrentCustomer))
+        Ts_M_Customer.lbl_CustBalance.SetQBBalance(_home.Queries.Customer_Balance(Me.CurrentCustomer))
     End Sub
 End Class

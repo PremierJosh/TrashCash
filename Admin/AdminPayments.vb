@@ -78,13 +78,13 @@
             Me.CurrentCustomer = Ts_M_Customer.cmb_Customer.ComboBox.SelectedValue
             Ts_M_Customer.CurrentCustomer = Me.CurrentCustomer
             ' init balance set
-            Ts_M_Customer.lbl_CustBalance.SetBalance(_home.Queries.Customer_Balance(Me.CurrentCustomer))
+            Ts_M_Customer.lbl_CustBalance.SetQBBalance(_home.Queries.Customer_Balance(Me.CurrentCustomer))
         End If
     End Sub
 
     Private Sub CustomerCatch(ByVal CustNum As Integer) Handles Ts_M_Customer.CustomerChanging
         CurrentCustomer = CustNum
-        Ts_M_Customer.lbl_CustBalance.SetBalance(_home.Queries.Customer_Balance(CustNum))
+        Ts_M_Customer.lbl_CustBalance.SetQBBalance(_home.Queries.Customer_Balance(CustNum))
     End Sub
 
     Public Sub Fetch_History() Handles dtp_EndDate.ValueChanged, dtp_StartDate.ValueChanged

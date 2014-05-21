@@ -54,14 +54,41 @@ Public Class ts_M_Customer
         End If
     End Sub
 
-    Public Overrides Function ToString() As String
-        Return cmb_Customer.ComboBox.GetItemText(cmb_Customer.SelectedItem)
-    End Function
+    ' balance setting
+    Public Sub SetCustomerBalance(ByVal QBBalance As Double, ByVal QueueAmount As Double)
+        ' set balance labels
+        lbl_CustBalance.Text = FormatCurrency(QBBalance)
+        lbl_QueueAmount.Text = FormatCurrency(QueueAmount)
+        lbl_QueueAmount.ForeColor = Color.Green
+
+        ' coloring balance label
+        If (QBBalance <= 0) Then
+            lbl_CustBalance.ForeColor = Color.Green
+        Else
+            lbl_CustBalance.ForeColor = Color.Red
+        End If
+
+        ' coloring and showing queue label
+        If (QueueAmount > 0) Then
+            ' show controls
+            queueAmountSep.Visible = True
+            lbl_QueueHeader.Visible = True
+            lbl_QueueAmount.Visible = True
+
+            ' set queue amount
+            lbl_QueueAmount.Text = FormatCurrency(QueueAmount)
+        Else
+            ' hide controls
+            queueAmountSep.Visible = False
+            lbl_QueueHeader.Visible = False
+            lbl_QueueAmount.Visible = False
+        End If
+    End Sub
 
     Public Sub HideQuickSearch()
         ' hiding quick search tb, its label, and the left seperator
         lbl_Quicksearch.Visible = False
-        sep.Visible = False
+        quicksearchSep.Visible = False
         tb_QuickSearch.Visible = False
     End Sub
 
@@ -76,13 +103,17 @@ Public Class ts_M_Customer
     ' ts controls that sit on this ts
     Friend WithEvents cmb_Customer As ts_cmb_Customer
     Friend WithEvents tb_QuickSearch As ts_tb_QuickSearch
-    Friend WithEvents lbl_CustBalance As ts_lbl_CustBalance
+    Friend WithEvents lbl_CustBalance As ToolStripLabel
+    Friend WithEvents lbl_QueueAmount As ToolStripLabel
 
     ' controls i may want to hide
     ' label for quicksearch
-    Dim lbl_Quicksearch As ToolStripLabel
+    Friend WithEvents lbl_Quicksearch As ToolStripLabel
+    Friend WithEvents lbl_QueueHeader As ToolStripLabel
+
     ' seperateor after quicksearch tb
-    Dim sep As ToolStripSeparator
+    Private quicksearchSep As ToolStripSeparator
+    Private queueAmountSep As ToolStripSeparator
 
     Public Sub New()
         MyBase.New()
@@ -90,10 +121,16 @@ Public Class ts_M_Customer
         ' instantiate friend classes - these will be added to the toolstrip
         cmb_Customer = New ts_cmb_Customer
         tb_QuickSearch = New ts_tb_QuickSearch
-        lbl_CustBalance = New ts_lbl_CustBalance
-        lbl_Quicksearch = New ToolStripLabel
-        sep = New ToolStripSeparator
+        lbl_CustBalance = New ToolStripLabel
+        quicksearchSep = New ToolStripSeparator
 
+        ' in queue items
+        lbl_QueueAmount = New ToolStripLabel
+        lbl_QueueHeader = New ToolStripLabel
+        lbl_QueueHeader.Text = "In Queue:"
+        queueAmountSep = New ToolStripSeparator
+
+        lbl_Quicksearch = New ToolStripLabel
         lbl_Quicksearch.Text = "QuickSearch:"
         ' balance label needs to align right
         Dim balanceHeader As New ToolStripLabel
@@ -104,7 +141,7 @@ Public Class ts_M_Customer
         'set visuals
         Me.GripStyle = ToolStripGripStyle.Hidden
         'Me.Dock = DockStyle.Fill
-        Me.Items.AddRange(New ToolStripItem() {cmb_Customer, New ToolStripSeparator, lbl_Quicksearch, tb_QuickSearch, sep, balanceHeader, lbl_CustBalance})
+        Me.Items.AddRange(New ToolStripItem() {cmb_Customer, New ToolStripSeparator, lbl_Quicksearch, tb_QuickSearch, quicksearchSep, balanceHeader, lbl_CustBalance, queueAmountSep, lbl_QueueHeader, lbl_QueueAmount})
 
         ' resize cmb_Customer
         cmb_Customer.Size = New Size(350, 25)
@@ -234,22 +271,50 @@ Friend Class ts_tb_QuickSearch
     End Sub
 End Class
 
-Friend Class ts_lbl_CustBalance
-    Inherits ToolStripLabel
+'Friend Class ts_lbl_CustBalance
+'    Inherits ToolStripLabel
 
-    Friend Sub New()
-        Me.Font = New Font("Microsoft Sans Serif", 10)
-    End Sub
+'    Friend Sub New()
+'        Me.Font = New Font("Microsoft Sans Serif", 10)
+'    End Sub
 
-    Public Sub SetBalance(ByVal Balance As Double)
-        Me.Text = FormatCurrency(Balance)
+'    Private _qbBalance As Double
+'    Public Property QBBalance As Double
+'        Get
+'            Return _qbBalance
+'        End Get
+'        Set(value As Double)
+'            _qbBalance = value
 
-        ' coloring
-        If (Balance <= 0) Then
-            Me.ForeColor = Color.Green
-        Else
-            Me.ForeColor = Color.Red
-        End If
-    End Sub
+'            Me.Text = FormatCurrency(QBBalance)
 
-End Class
+'            ' coloring
+'            If (value <= 0) Then
+'                Me.ForeColor = Color.Green
+'            Else
+'                Me.ForeColor = Color.Red
+'            End If
+
+'        End Set
+'    End Property
+'End Class
+
+'Friend Class ts_lbl_QueueAmount
+'    Inherits ToolStripLabel
+
+'    Friend Sub New()
+'        Me.Font = New Font("Microsoft Sans Serif", 10)
+'    End Sub
+
+'    Private _queueAmount As Double
+'    Public Property QueueAmount As Double
+'        Get
+'            Return _queueAmount
+'        End Get
+'        Set(value As Double)
+'            _queueAmount = value
+
+'            If (
+'        End Set
+'    End Property
+'End Class
