@@ -142,7 +142,7 @@ Namespace Database_ComboBoxes
         End Property
 
         ' custList dt and ta
-        Private dt As ds_Types.ServiceTypesListDataTable
+        Public dt As ds_Types.ServiceTypesListDataTable
         Public Property DataTable As ds_Types.ServiceTypesListDataTable
             Get
                 Return dt
@@ -151,7 +151,7 @@ Namespace Database_ComboBoxes
                 dt = value
             End Set
         End Property
-        Private ta As ds_TypesTableAdapters.ServiceTypesListTableAdapter
+        Public ta As ds_TypesTableAdapters.ServiceTypesListTableAdapter
         Public Property TableAdapater As ds_TypesTableAdapters.ServiceTypesListTableAdapter
             Get
                 Return ta

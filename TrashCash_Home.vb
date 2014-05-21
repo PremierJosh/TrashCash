@@ -152,23 +152,43 @@ Public Class TrashCash_Home
     End Sub
 
     Private Sub btn_Payments_Click(sender As System.Object, e As System.EventArgs) Handles btn_Payments.Click
-        If (_payForm Is Nothing) Then
-            _payForm = New Payments(Me)
-            _payForm.MdiParent = Me
+        Dim needNew As Boolean = False
+
+        If (_payForm IsNot Nothing) Then
+            If (_payForm.IsDisposed = True) Then
+                needNew = True
+            End If
+        Else
+            needNew = True
         End If
 
-        _payForm.Show()
-        _payForm.BringToFront()
+        If (needNew) Then
+            _payForm = New Payments(Me)
+            _payForm.MdiParent = Me
+        Else
+            _payForm.Show()
+            _payForm.BringToFront()
+        End If
     End Sub
 
     Private Sub btn_NewCustTab_Click(sender As System.Object, e As System.EventArgs) Handles btn_CustTab.Click
-        If (_customer Is Nothing) Then
-            _customer = New Customer(Me)
-            _customer.MdiParent = Me
+        Dim needNew As Boolean = False
+
+        If (_customer IsNot Nothing) Then
+            If (_customer.IsDisposed = True) Then
+                needNew = True
+            End If
+        Else
+            needNew = True
         End If
 
-        _customer.Show()
-        _customer.BringToFront()
+        If (needNew) Then
+            _customer = New Customer(Me)
+            _customer.MdiParent = Me
+        Else
+            _customer.Show()
+            _customer.BringToFront()
+        End If
     End Sub
 
     Private Sub btn_BatchWork_Click(sender As System.Object, e As System.EventArgs) Handles btn_BatchWork.Click
@@ -390,15 +410,23 @@ Public Class TrashCash_Home
     End Sub
 
     Private Sub btn_PendApprovs_Click(sender As System.Object, e As System.EventArgs) Handles btn_PendApprovs.Click
-        If (_pendingApprovals Is Nothing) Then
-            If (_pendingApprovals.IsDisposed = False) Then
-                _pendingApprovals = New PendingApprovals(Me)
-                _pendingApprovals.MdiParent = Me
+        Dim needNew As Boolean = False
+
+        If (_pendingApprovals IsNot Nothing) Then
+            If (_pendingApprovals.IsDisposed = True) Then
+                needNew = True
             End If
+        Else
+            needNew = True
         End If
 
-        _pendingApprovals.Show()
-        _pendingApprovals.BringToFront()
+        If (needNew) Then
+            _pendingApprovals = New PendingApprovals(Me)
+            _pendingApprovals.MdiParent = Me
+        Else
+            _pendingApprovals.Show()
+            _pendingApprovals.BringToFront()
+        End If
     End Sub
 
     Private Sub Batch_RefreshBalance_Tick(sender As System.Object, e As System.EventArgs) Handles Batch_RefreshBalance.Tick
@@ -481,5 +509,9 @@ Public Class TrashCash_Home
             End If
 
         End If
+    End Sub
+
+    Private Sub btn_Invoicing_Click(sender As System.Object, e As System.EventArgs) Handles btn_Invoicing.Click
+
     End Sub
 End Class
