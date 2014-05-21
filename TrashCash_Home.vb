@@ -15,32 +15,29 @@ Public Class TrashCash_Home
             Return _currentUserRow
         End Get
         Set(value As ds_Program.USERSRow)
-            If (_currentUserRow.USER_ID <> value.USER_ID) Then
-                _currentUserRow = value
+            _currentUserRow = value
 
-                ' update name on status bars
-                btn_CurrentUser.Text = "Current User: " & value.USER_NAME
-                Me.Text = "TrashCash       | Current User: " & value.USER_NAME
-                ' update auth level
-                AuthLevel = value.USER_AUTHLVL
+            ' update name on status bars
+            btn_CurrentUser.Text = "Current User: " & value.USER_NAME
+            Me.Text = "TrashCash       | Current User: " & value.USER_NAME
+            ' update auth level
+            AuthLevel = value.USER_AUTHLVL
 
-                ' close all child windows
-                For Each f As Form In Me.MdiChildren
-                    f.Close()
-                    f = Nothing
-                Next
+            ' close all child windows
+            For Each f As Form In Me.MdiChildren
+                f.Close()
+                f = Nothing
+            Next
 
-                ' close admin form if open
-                If (f_TrashCash_Admin IsNot Nothing) Then
-                    f_TrashCash_Admin.Close()
-                    f_TrashCash_Admin = Nothing
-                End If
-
-                ' CHANGE CONNECTION STRING
-                Dim conPW As String = "Yealink01"
-                My.Settings.Item("QBDBConnectionString") = "Data Source=" & My.Settings.SQLSERVER & ";Initial Catalog=" & My.Settings.DATABASENAME & ";Integrated Security=False;USER ID=" & value.USER_NAME & ";Password=" & conPW
-
+            ' close admin form if open
+            If (f_TrashCash_Admin IsNot Nothing) Then
+                f_TrashCash_Admin.Close()
+                f_TrashCash_Admin = Nothing
             End If
+
+            ' CHANGE CONNECTION STRING
+            Dim conPW As String = "Yealink01"
+            My.Settings.Item("QBDBConnectionString") = "Data Source=" & My.Settings.SQLSERVER & ";Initial Catalog=" & My.Settings.DATABASENAME & ";Integrated Security=False;USER ID=" & value.USER_NAME & ";Password=" & conPW
         End Set
     End Property
 

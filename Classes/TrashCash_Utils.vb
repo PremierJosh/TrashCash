@@ -143,19 +143,35 @@ Namespace Database_ComboBoxes
 
         ' custList dt and ta
         Private dt As DataSet.ServiceTypesListDataTable
+        Public Property DataTable As DataSet.ServiceTypesListDataTable
+            Get
+                Return dt
+            End Get
+            Set(value As DataSet.ServiceTypesListDataTable)
+                dt = value
+            End Set
+        End Property
         Private ta As DataSetTableAdapters.ServiceTypesListTableAdapter
+        Public Property TableAdapater As DataSetTableAdapters.ServiceTypesListTableAdapter
+            Get
+                Return ta
+            End Get
+            Set(value As DataSetTableAdapters.ServiceTypesListTableAdapter)
+                ta = value
+            End Set
+        End Property
 
         Public Sub New()
             MyBase.New()
-            dt = New DataSet.ServiceTypesListDataTable
-            ta = New DataSetTableAdapters.ServiceTypesListTableAdapter
+            DataTable = New DataSet.ServiceTypesListDataTable
+            TableAdapater = New DataSetTableAdapters.ServiceTypesListTableAdapter
             ' fill table
-            ta.Fill(dt)
+            TableAdapater.Fill(DataTable)
 
             ' bind
             Me.DisplayMember = "ServiceName"
             Me.ValueMember = "ServiceTypeID"
-            Me.DataSource = dt
+            Me.DataSource = DataTable
         End Sub
 
         Private Sub GetRate()
@@ -173,14 +189,14 @@ Namespace Database_ComboBoxes
         End Sub
 
         Public Sub RefreshList(Optional ByVal Rebind As Boolean = False)
-            dt = New DataSet.ServiceTypesListDataTable
-            ta = New DataSetTableAdapters.ServiceTypesListTableAdapter
+            DataTable = New DataSet.ServiceTypesListDataTable
+            TableAdapater = New DataSetTableAdapters.ServiceTypesListTableAdapter
             ' fill table
-            ta.Fill(dt)
+            TableAdapater.Fill(DataTable)
 
             If (Rebind = True) Then
                 ' bind
-                Me.DataSource = dt
+                Me.DataSource = DataTable
                 Me.DisplayMember = "ServiceName"
                 Me.ValueMember = "ServiceTypeID"
             End If
