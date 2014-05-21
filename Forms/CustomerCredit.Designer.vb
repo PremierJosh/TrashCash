@@ -23,8 +23,8 @@ Partial Class CustomerCredit
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
-        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.Panel1 = New System.Windows.Forms.Panel()
         Me.pnl_TopContent = New System.Windows.Forms.Panel()
         Me.Ts_M_Customer = New TrashCash.ts_M_Customer()
@@ -64,10 +64,10 @@ Partial Class CustomerCredit
         '
         Me.Panel1.Controls.Add(Me.pnl_TopContent)
         Me.Panel1.Dock = System.Windows.Forms.DockStyle.Top
-        Me.Panel1.Location = New System.Drawing.Point(0, 0)
+        Me.Panel1.Location = New System.Drawing.Point(5, 5)
         Me.Panel1.Name = "Panel1"
         Me.Panel1.Padding = New System.Windows.Forms.Padding(20, 10, 20, 10)
-        Me.Panel1.Size = New System.Drawing.Size(716, 53)
+        Me.Panel1.Size = New System.Drawing.Size(706, 53)
         Me.Panel1.TabIndex = 97
         '
         'pnl_TopContent
@@ -77,7 +77,7 @@ Partial Class CustomerCredit
         Me.pnl_TopContent.Dock = System.Windows.Forms.DockStyle.Fill
         Me.pnl_TopContent.Location = New System.Drawing.Point(20, 10)
         Me.pnl_TopContent.Name = "pnl_TopContent"
-        Me.pnl_TopContent.Size = New System.Drawing.Size(676, 33)
+        Me.pnl_TopContent.Size = New System.Drawing.Size(666, 33)
         Me.pnl_TopContent.TabIndex = 2
         '
         'Ts_M_Customer
@@ -87,7 +87,7 @@ Partial Class CustomerCredit
         Me.Ts_M_Customer.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden
         Me.Ts_M_Customer.Location = New System.Drawing.Point(0, 0)
         Me.Ts_M_Customer.Name = "Ts_M_Customer"
-        Me.Ts_M_Customer.Size = New System.Drawing.Size(674, 31)
+        Me.Ts_M_Customer.Size = New System.Drawing.Size(664, 31)
         Me.Ts_M_Customer.TabIndex = 2
         Me.Ts_M_Customer.Text = "Ts_M_Customer1"
         '
@@ -96,9 +96,9 @@ Partial Class CustomerCredit
         Me.pnl_Left.Controls.Add(Me.dg_Credits)
         Me.pnl_Left.Controls.Add(Me.lbl_CreditHis)
         Me.pnl_Left.Dock = System.Windows.Forms.DockStyle.Left
-        Me.pnl_Left.Location = New System.Drawing.Point(0, 53)
+        Me.pnl_Left.Location = New System.Drawing.Point(5, 58)
         Me.pnl_Left.Name = "pnl_Left"
-        Me.pnl_Left.Size = New System.Drawing.Size(430, 300)
+        Me.pnl_Left.Size = New System.Drawing.Size(430, 290)
         Me.pnl_Left.TabIndex = 98
         '
         'dg_Credits
@@ -117,16 +117,16 @@ Partial Class CustomerCredit
         Me.dg_Credits.ReadOnly = True
         Me.dg_Credits.RowHeadersVisible = False
         Me.dg_Credits.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.dg_Credits.Size = New System.Drawing.Size(430, 277)
+        Me.dg_Credits.Size = New System.Drawing.Size(430, 267)
         Me.dg_Credits.TabIndex = 1
         '
         'CreditAmountDataGridViewTextBoxColumn
         '
         Me.CreditAmountDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
         Me.CreditAmountDataGridViewTextBoxColumn.DataPropertyName = "CreditAmount"
-        DataGridViewCellStyle1.Format = "C2"
-        DataGridViewCellStyle1.NullValue = Nothing
-        Me.CreditAmountDataGridViewTextBoxColumn.DefaultCellStyle = DataGridViewCellStyle1
+        DataGridViewCellStyle3.Format = "C2"
+        DataGridViewCellStyle3.NullValue = Nothing
+        Me.CreditAmountDataGridViewTextBoxColumn.DefaultCellStyle = DataGridViewCellStyle3
         Me.CreditAmountDataGridViewTextBoxColumn.HeaderText = "Amount"
         Me.CreditAmountDataGridViewTextBoxColumn.Name = "CreditAmountDataGridViewTextBoxColumn"
         Me.CreditAmountDataGridViewTextBoxColumn.ReadOnly = True
@@ -136,9 +136,9 @@ Partial Class CustomerCredit
         '
         Me.TimeCreatedDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
         Me.TimeCreatedDataGridViewTextBoxColumn.DataPropertyName = "TimeCreated"
-        DataGridViewCellStyle2.Format = "g"
-        DataGridViewCellStyle2.NullValue = Nothing
-        Me.TimeCreatedDataGridViewTextBoxColumn.DefaultCellStyle = DataGridViewCellStyle2
+        DataGridViewCellStyle4.Format = "g"
+        DataGridViewCellStyle4.NullValue = Nothing
+        Me.TimeCreatedDataGridViewTextBoxColumn.DefaultCellStyle = DataGridViewCellStyle4
         Me.TimeCreatedDataGridViewTextBoxColumn.HeaderText = "Time Created"
         Me.TimeCreatedDataGridViewTextBoxColumn.Name = "TimeCreatedDataGridViewTextBoxColumn"
         Me.TimeCreatedDataGridViewTextBoxColumn.ReadOnly = True
@@ -180,7 +180,6 @@ Partial Class CustomerCredit
         '
         'Ds_Customer
         '
-        Me.Ds_Customer.DataSetName = "ds_Customer"
         Me.Ds_Customer.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema
         '
         'lbl_CreditHis
@@ -208,7 +207,7 @@ Partial Class CustomerCredit
         'lbl_Amount
         '
         Me.lbl_Amount.AutoSize = True
-        Me.lbl_Amount.Location = New System.Drawing.Point(477, 150)
+        Me.lbl_Amount.Location = New System.Drawing.Point(482, 155)
         Me.lbl_Amount.Name = "lbl_Amount"
         Me.lbl_Amount.Size = New System.Drawing.Size(76, 13)
         Me.lbl_Amount.TabIndex = 100
@@ -226,7 +225,7 @@ Partial Class CustomerCredit
         'lbl_Reason
         '
         Me.lbl_Reason.AutoSize = True
-        Me.lbl_Reason.Location = New System.Drawing.Point(466, 177)
+        Me.lbl_Reason.Location = New System.Drawing.Point(471, 182)
         Me.lbl_Reason.Name = "lbl_Reason"
         Me.lbl_Reason.Size = New System.Drawing.Size(47, 13)
         Me.lbl_Reason.TabIndex = 102
@@ -235,7 +234,7 @@ Partial Class CustomerCredit
         'btn_Create
         '
         Me.btn_Create.AutoSize = True
-        Me.btn_Create.Location = New System.Drawing.Point(529, 304)
+        Me.btn_Create.Location = New System.Drawing.Point(534, 309)
         Me.btn_Create.Name = "btn_Create"
         Me.btn_Create.Size = New System.Drawing.Size(78, 23)
         Me.btn_Create.TabIndex = 103
@@ -247,7 +246,7 @@ Partial Class CustomerCredit
         Me.ck_AutoApply.AutoSize = True
         Me.ck_AutoApply.Checked = True
         Me.ck_AutoApply.CheckState = System.Windows.Forms.CheckState.Checked
-        Me.ck_AutoApply.Location = New System.Drawing.Point(479, 252)
+        Me.ck_AutoApply.Location = New System.Drawing.Point(484, 257)
         Me.ck_AutoApply.Name = "ck_AutoApply"
         Me.ck_AutoApply.Size = New System.Drawing.Size(77, 17)
         Me.ck_AutoApply.TabIndex = 104
@@ -258,7 +257,7 @@ Partial Class CustomerCredit
         '
         Me.rb_Oldest.AutoSize = True
         Me.rb_Oldest.Checked = True
-        Me.rb_Oldest.Location = New System.Drawing.Point(566, 252)
+        Me.rb_Oldest.Location = New System.Drawing.Point(571, 257)
         Me.rb_Oldest.Name = "rb_Oldest"
         Me.rb_Oldest.Size = New System.Drawing.Size(77, 17)
         Me.rb_Oldest.TabIndex = 105
@@ -269,7 +268,7 @@ Partial Class CustomerCredit
         'rb_Newest
         '
         Me.rb_Newest.AutoSize = True
-        Me.rb_Newest.Location = New System.Drawing.Point(566, 275)
+        Me.rb_Newest.Location = New System.Drawing.Point(571, 280)
         Me.rb_Newest.Name = "rb_Newest"
         Me.rb_Newest.Size = New System.Drawing.Size(83, 17)
         Me.rb_Newest.TabIndex = 106
@@ -298,7 +297,7 @@ Partial Class CustomerCredit
         Me.ck_Print.AutoSize = True
         Me.ck_Print.Checked = True
         Me.ck_Print.CheckState = System.Windows.Forms.CheckState.Checked
-        Me.ck_Print.Location = New System.Drawing.Point(479, 275)
+        Me.ck_Print.Location = New System.Drawing.Point(484, 280)
         Me.ck_Print.Name = "ck_Print"
         Me.ck_Print.Size = New System.Drawing.Size(47, 17)
         Me.ck_Print.TabIndex = 110
@@ -326,6 +325,7 @@ Partial Class CustomerCredit
         Me.MaximizeBox = False
         Me.MinimizeBox = False
         Me.Name = "CustomerCredit"
+        Me.Padding = New System.Windows.Forms.Padding(5)
         Me.Text = "Customer Credit"
         Me.Panel1.ResumeLayout(False)
         Me.pnl_TopContent.ResumeLayout(False)
