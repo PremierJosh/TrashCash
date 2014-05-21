@@ -1482,12 +1482,6 @@ retry:
 
         Return historyID
     End Function
-    Public Function Invoicing_Void(ByVal TxnID As String) As Boolean
-        ' return bool
-        Dim voided As Boolean
-        voided = VoidTransactionByTxnID(TxnID, ENTxnVoidType.tvtInvoice)
-        Return voided
-    End Function
 
     Public Sub Customer_CheckOverpayments(ByRef newInv As NewInvObj)
         Dim recievePayQuery As IReceivePaymentQuery = MsgSetRequest.AppendReceivePaymentQueryRq

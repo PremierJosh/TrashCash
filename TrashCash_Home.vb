@@ -3,8 +3,9 @@ Imports TrashCash.TrashCash_Utils
 Imports TrashCash.TrashCash_Utils._Functions
 Imports TrashCash.TrashCash_Utils.Err_Handling
 Imports QBFC12Lib
-Imports System.Data.Sql
-Imports System.Data.SqlClient
+'Imports System.Data.Sql
+'Imports System.Data.SqlClient
+
 
 Public Class TrashCash_Home
     ' var for current user id row
@@ -223,7 +224,7 @@ Public Class TrashCash_Home
         End Try
 
 
-        QBInitConnection(False)
+        QBInitConnection()
 
         ' dim all classes
         CreateAllClasses()
@@ -252,12 +253,7 @@ Public Class TrashCash_Home
         End If
 
     End Sub
-    Private Sub QBInitConnection(ByVal retry As Boolean)
-        'If (retry) Then
-        '    app_SessMgr.CloseConnection()
-        '    'app_SessMgr = New QBSessionManager
-        'End If
-
+    Private Sub QBInitConnection(Optional ByVal retry As Boolean = False)
         Try
             app_SessMgr.CloseConnection()
             app_SessMgr.OpenConnection2("V1", "TrashCash", ENConnectionType.ctLocalQBD)
@@ -266,27 +262,34 @@ Public Class TrashCash_Home
             ' new msg set
             app_MsgSetReq = app_SessMgr.CreateMsgSetRequest("US", 11, 0)
         Catch ex As Exception
+            ' going to check if services are running and if not, start them
             If (Not retry) Then
-                Dim result As MsgBoxResult = MsgBox(ex.Message & vbCrLf & "Retry?", MsgBoxStyle.YesNo)
-                If (result = MsgBoxResult.Yes) Then
-                    QBInitConnection(True)
-                Else
-                    Application.Exit()
-                End If
+                StartQBFCServices()
             Else
-                Dim killprompt As MsgBoxResult = MsgBox("Retry unsuccessful, would you like to try stopping the Quickbooks process? This could cause data loss if Quickbooks is being used." & vbCrLf & _
-                                                        "This process could take up to 30 seconds to complete.", MsgBoxStyle.YesNo)
-                If (killprompt = MsgBoxResult.Yes) Then
-                    KillQBProcess()
-                Else
-                    Application.Exit()
-                End If
+                MsgBox(ex.Message)
+                Application.Exit()
             End If
         End Try
+    End Sub
 
-        If (retry) Then
-            MsgBox("Successfully connected to Quickbooks.")
-        End If
+    Private Sub StartQBFCServices()
+        Dim s As New List(Of String)
+        s.Add("QBCFMonitorService")
+        s.Add("QBIDPService")
+        s.Add("QuickbooksDB23")
+
+        For Each service As String In s
+            Dim sc As New ServiceProcess.ServiceController(service)
+            If (sc.Status = ServiceProcess.ServiceControllerStatus.Stopped) Then
+                Try
+                    sc.Start()
+                Catch ex As Exception
+                    MsgBox("Failed to start Service: " & service & ". EX: " & ex.Message)
+                End Try
+            End If
+        Next
+
+        QBInitConnection(True)
     End Sub
     Private Sub KillQBProcess()
         ' QBW32.exe killing
