@@ -18,7 +18,7 @@ Public Class UC_ServiceTypesDetails
 
     Public Sub Prep(ByVal ServiceTypeID As Decimal)
         Me.DataSet.Clear()
-        Me.ServiceTypesTableAdapter.FillByID(Me.DataSet.ServiceTypes, ServiceTypeID)
+        'Me.ServiceTypesTableAdapter.FillByID(Me.DataSet.ServiceTypes, ServiceTypeID)
 
         ' hide account selection
         lbl_Account.Visible = False
@@ -29,15 +29,15 @@ Public Class UC_ServiceTypesDetails
     Public Sub PrepNew()
         Me.DataSet.Clear()
 
-        Dim row As DataSet.ServiceTypesRow = Me.DataSet.ServiceTypes.NewServiceTypesRow
+        'Dim row As DataSet.ServiceTypesRow = Me.DataSet.ServiceTypes.NewServiceTypesRow
 
-        row.ServiceName = "ItemName"
-        row.ServiceRate = "0.00"
-        row.ServiceDescription = "Description required"
-        row.ServiceBillLength = "1"
-        row.ServiceActive = True
+        'row.ServiceName = "ItemName"
+        'row.ServiceRate = "0.00"
+        'row.ServiceDescription = "Description required"
+        'row.ServiceBillLength = "1"
+        'row.ServiceActive = True
 
-        Me.DataSet.ServiceTypes.AddServiceTypesRow(row)
+        'Me.DataSet.ServiceTypes.AddServiceTypesRow(row)
 
         ' show account selection
         lbl_Account.Visible = True
@@ -45,38 +45,38 @@ Public Class UC_ServiceTypesDetails
         _IsNew = True
     End Sub
 
-    Private Sub btn_SaveChanges_Click(sender As System.Object, e As System.EventArgs) Handles btn_SaveChanges.Click
-        If (ValidateTBs() = True) Then
-            Me.DataSet.ServiceTypes.Rows(0).EndEdit()
-            If (Me.DataSet.ServiceTypes.Rows(0).RowState <> DataRowState.Unchanged) Then
-                ' check for marking inactive
-                If (ServiceActiveCheckBox.Checked = False) Then
-                    Dim prompt As MsgBoxResult = MsgBox("This Item is marked as inactive. You will be unable to use this item on future invoices with this set. Do you want to keep this Item Inactive?", MsgBoxStyle.YesNo)
-                    If (prompt = MsgBoxResult.No) Then
-                        Exit Sub
-                    End If
-                End If
+    'Private Sub btn_SaveChanges_Click(sender As System.Object, e As System.EventArgs) Handles btn_SaveChanges.Click
+    '    If (ValidateTBs() = True) Then
+    '        Me.DataSet.ServiceTypes.Rows(0).EndEdit()
+    '        If (Me.DataSet.ServiceTypes.Rows(0).RowState <> DataRowState.Unchanged) Then
+    '            ' check for marking inactive
+    '            If (ServiceActiveCheckBox.Checked = False) Then
+    '                Dim prompt As MsgBoxResult = MsgBox("This Item is marked as inactive. You will be unable to use this item on future invoices with this set. Do you want to keep this Item Inactive?", MsgBoxStyle.YesNo)
+    '                If (prompt = MsgBoxResult.No) Then
+    '                    Exit Sub
+    '                End If
+    '            End If
 
-                Try
-                    Me.ServiceTypesTableAdapter.Update(Me.DataSet.ServiceTypes)
-                Catch ex As Exception
-                    MsgBox(ex.Message)
-                    Exit Sub
-                End Try
+    '            Try
+    '                Me.ServiceTypesTableAdapter.Update(Me.DataSet.ServiceTypes)
+    '            Catch ex As Exception
+    '                MsgBox(ex.Message)
+    '                Exit Sub
+    '            End Try
 
-                If (_IsNew = True) Then
-                    _HomeForm.Procedures.Items_NewServiceItem(Me.DataSet.ServiceTypes.Rows(0).Item("ServiceTypeID"), cmb_IncomeAcc.SelectedValue)
-                    RaiseEvent UpdateComplete("Service Item Added")
-                Else
-                    _HomeForm.Procedures.Items_UpdateServiceItem(Me.DataSet.ServiceTypes.Rows(0).Item("ServiceTypeID"))
-                    RaiseEvent UpdateComplete("Service Item Updated")
-                End If
+    '            If (_IsNew = True) Then
+    '                _HomeForm.Procedures.Items_NewServiceItem(Me.DataSet.ServiceTypes.Rows(0).Item("ServiceTypeID"), cmb_IncomeAcc.SelectedValue)
+    '                RaiseEvent UpdateComplete("Service Item Added")
+    '            Else
+    '                _HomeForm.Procedures.Items_UpdateServiceItem(Me.DataSet.ServiceTypes.Rows(0).Item("ServiceTypeID"))
+    '                RaiseEvent UpdateComplete("Service Item Updated")
+    '            End If
 
-            End If
-        Else
-            MsgBox("Please correct the highlighted fields.")
-        End If
-    End Sub
+    '        End If
+    '    Else
+    '        MsgBox("Please correct the highlighted fields.")
+    '    End If
+    'End Sub
 
     Private Function ValidateTBs()
         Dim err As Integer = 0

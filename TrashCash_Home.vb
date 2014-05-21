@@ -98,7 +98,6 @@ Public Class TrashCash_Home
 
     ' var for all child forms
     Friend WithEvents _payForm As Payments
-    Friend WithEvents _invForm As Invoicing
     Friend WithEvents _batchForm As BatchingPrep
     Friend WithEvents _customer As Customer
     Friend WithEvents _pendingApprovals As PendingApprovals
@@ -150,16 +149,6 @@ Public Class TrashCash_Home
     End Sub
     Private Sub BatchProgPercUpdate(ByVal batchProg As Integer) Handles _batchForm.e_BatchProgPerc
         lbl_BatchProg.Text = batchProg & "%"
-    End Sub
-
-    Private Sub btn_Invoicing_Click(sender As System.Object, e As System.EventArgs) Handles btn_Invoicing.Click
-        If (_invForm Is Nothing) Then
-            _invForm = New Invoicing(Me)
-            _invForm.MdiParent = Me
-        End If
-
-        _invForm.Show()
-        _invForm.BringToFront()
     End Sub
 
     Private Sub btn_Payments_Click(sender As System.Object, e As System.EventArgs) Handles btn_Payments.Click
@@ -403,8 +392,10 @@ Public Class TrashCash_Home
 
     Private Sub btn_PendApprovs_Click(sender As System.Object, e As System.EventArgs) Handles btn_PendApprovs.Click
         If (_pendingApprovals Is Nothing) Then
-            _pendingApprovals = New PendingApprovals(Me)
-            _pendingApprovals.MdiParent = Me
+            If (_pendingApprovals.IsDisposed = False) Then
+                _pendingApprovals = New PendingApprovals(Me)
+                _pendingApprovals.MdiParent = Me
+            End If
         End If
 
         _pendingApprovals.Show()
@@ -420,8 +411,10 @@ Public Class TrashCash_Home
 
     Private Sub menu_Admin_Click(sender As System.Object, e As System.EventArgs) Handles menu_Admin.Click
         If (f_TrashCash_Admin IsNot Nothing) Then
-            f_TrashCash_Admin.BringToFront()
-            f_TrashCash_Admin.Show()
+            If (f_TrashCash_Admin.IsDisposed = False) Then
+                f_TrashCash_Admin.BringToFront()
+                f_TrashCash_Admin.Show()
+            End If
         Else
             Dim open As Boolean = False
             Dim userRow As ds_Program.USERSRow = _currentUserRow

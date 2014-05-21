@@ -63,18 +63,10 @@
     End Sub
 
     Private _rightClickRowIndex As Integer
-    Private Sub dg_Credits_MouseClick(sender As System.Object, e As System.Windows.Forms.MouseEventArgs) Handles dg_Credits.MouseClick
-        ' catching right clicking
-        If (e.Button = Windows.Forms.MouseButtons.Right) Then
-            _rightClickRowIndex = dg_Credits.HitTest(e.Location.X, e.Location.Y).RowIndex
-            ' testing setting tag on context menu item
-            btn_VoidCredit.Tag = _rightClickRowIndex
-        End If
-    End Sub
 
     Private Sub btn_VoidCredit_Click(sender As System.Object, e As System.EventArgs) Handles btn_VoidCredit.Click
-        If (sender.tag IsNot Nothing) Then
-            Dim row As ds_Customer.Customer_CreditsRow = CType(dg_Credits.Rows(sender.tag).DataBoundItem, DataRowView).Row
+        If (dg_Credits.SelectedRows.Count = 1) Then
+            Dim row As ds_Customer.Customer_CreditsRow = CType(dg_Credits.SelectedRows(0).DataBoundItem, DataRowView).Row
             If (Not row.Voided) Then
                 ' prompt for reason
                 Dim prompt As DialogResult = MessageBox.Show("Void this Credit for " & FormatCurrency(row.CreditAmount) & ", created on " & row.TimeCreated, "Void Credit Confirm", MessageBoxButtons.YesNo, MessageBoxIcon.Question)
@@ -116,6 +108,11 @@
                     balanceChanged = True
                     ' reload history table
                     Me.Customer_CreditsTableAdapter.FillByCustomerID(Me.Ds_Customer.Customer_Credits, CurrentCustomer)
+
+                    ' reset form controls to default
+                    cmb_Types.SelectedIndex = 0
+                    tb_Amount.Text = ""
+                    tb_Reason.Text = ""
                 End If
             End If
         End If
@@ -137,7 +134,7 @@
                     dg_Credits.Rows(i).DefaultCellStyle.SelectionBackColor = Color.IndianRed
                 Else
                     dg_Credits.Rows(i).DefaultCellStyle.BackColor = Color.SpringGreen
-                    dg_Credits.Rows(i).DefaultCellStyle.BackColor = Color.MediumSeaGreen
+                    dg_Credits.Rows(i).DefaultCellStyle.SelectionBackColor = Color.MediumSeaGreen
                 End If
             Next
         End If
@@ -149,5 +146,19 @@
 
     Private Sub dg_Credits_RowsRemoved(sender As System.Object, e As System.Windows.Forms.DataGridViewRowsRemovedEventArgs) Handles dg_Credits.RowsRemoved
         ColorHistoryForVoids()
+    End Sub
+
+    Private Sub CustomerCredit_Load(sender As Object, e As System.EventArgs) Handles Me.Load
+        ' fill history grid on load
+        Me.Customer_CreditsTableAdapter.FillByCustomerID(Me.Ds_Customer.Customer_Credits, CurrentCustomer)
+    End Sub
+
+    Private Sub dg_Credits_MouseDown(sender As System.Object, e As System.Windows.Forms.DataGridViewCellMouseEventArgs) Handles dg_Credits.CellMouseDown
+        If (e.Button = Windows.Forms.MouseButtons.Right) Then
+            For Each row As DataGridViewRow In dg_Credits.SelectedRows
+                row.Selected = False
+            Next
+            dg_Credits.Rows(e.RowIndex).Selected = True
+        End If
     End Sub
 End Class

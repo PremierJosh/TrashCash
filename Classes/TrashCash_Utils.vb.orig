@@ -142,7 +142,8 @@ Namespace Database_ComboBoxes
         End Property
 
         ' custList dt and ta
-        Private dt As ds_Types.ServiceTypesListDataTable
+<<<<<<< HEAD
+        Private dt As DataSet.ServiceTypesListDataTable
         Public Property DataTable As DataSet.ServiceTypesListDataTable
             Get
                 Return dt
@@ -165,6 +166,15 @@ Namespace Database_ComboBoxes
             MyBase.New()
             DataTable = New DataSet.ServiceTypesListDataTable
             TableAdapater = New DataSetTableAdapters.ServiceTypesListTableAdapter
+=======
+        Private dt As ds_Types.ServiceTypesListDataTable
+        Private ta As ds_TypesTableAdapters.ServiceTypesListTableAdapter
+
+        Public Sub New()
+            MyBase.New()
+            dt = New ds_Types.ServiceTypesListDataTable
+            ta = New ds_TypesTableAdapters.ServiceTypesListTableAdapter
+>>>>>>> del_invoicing
             ' fill table
             TableAdapater.Fill(DataTable)
 
@@ -189,14 +199,23 @@ Namespace Database_ComboBoxes
         End Sub
 
         Public Sub RefreshList(Optional ByVal Rebind As Boolean = False)
+<<<<<<< HEAD
             DataTable = New DataSet.ServiceTypesListDataTable
             TableAdapater = New DataSetTableAdapters.ServiceTypesListTableAdapter
+=======
+            dt = New ds_Types.ServiceTypesListDataTable
+            ta = New ds_TypesTableAdapters.ServiceTypesListTableAdapter
+>>>>>>> del_invoicing
             ' fill table
             TableAdapater.Fill(DataTable)
 
             If (Rebind = True) Then
                 ' bind
+<<<<<<< HEAD
                 Me.DataSource = DataTable
+=======
+                'Me.DataSource = dt
+>>>>>>> del_invoicing
                 Me.DisplayMember = "ServiceName"
                 Me.ValueMember = "ServiceTypeID"
             End If

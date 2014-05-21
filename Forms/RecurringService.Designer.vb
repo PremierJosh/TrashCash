@@ -23,17 +23,18 @@ Partial Class RecurringService
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
-        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(RecurringService))
-        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle5 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle6 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle19 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle20 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle21 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle22 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle23 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle24 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.dtp_EndDate = New System.Windows.Forms.DateTimePicker()
         Me.ck_EndDate = New System.Windows.Forms.CheckBox()
         Me.grp_PickupDay = New System.Windows.Forms.GroupBox()
         Me.ck_Sat = New System.Windows.Forms.CheckBox()
+        Me.RecurringServiceBindingSource = New System.Windows.Forms.BindingSource(Me.components)
+        Me.Ds_RecurringService = New TrashCash.ds_RecurringService()
         Me.ck_Fri = New System.Windows.Forms.CheckBox()
         Me.ck_Thurs = New System.Windows.Forms.CheckBox()
         Me.ck_Weds = New System.Windows.Forms.CheckBox()
@@ -48,18 +49,17 @@ Partial Class RecurringService
         Me.lbl_CustName = New System.Windows.Forms.Label()
         Me.grp_BasicInfo = New System.Windows.Forms.GroupBox()
         Me.nud_BillLength = New System.Windows.Forms.NumericUpDown()
-        Me.Cmb_ServiceTypes = New TrashCash.Database_ComboBoxes.cmb_ServiceTypes()
         Me.lbl_DefPriceValue = New System.Windows.Forms.Label()
         Me.Label3 = New System.Windows.Forms.Label()
         Me.lbl_DefPriceHeader = New System.Windows.Forms.Label()
         Me.nud_Quantity = New System.Windows.Forms.NumericUpDown()
         Me.lbl_Quantity = New System.Windows.Forms.Label()
-        Me.tb_Rate = New TrashCash.Currency_TextBox()
         Me.lbl_Rate = New System.Windows.Forms.Label()
         Me.grp_Dates = New System.Windows.Forms.GroupBox()
         Me.btn_Save = New System.Windows.Forms.Button()
         Me.tc_Master = New System.Windows.Forms.TabControl()
         Me.tp_SrvcInfo = New System.Windows.Forms.TabPage()
+        Me.lbl_OverlapVoid = New System.Windows.Forms.Label()
         Me.lbl_CreditMsg = New System.Windows.Forms.Label()
         Me.lbl_RecStatus = New System.Windows.Forms.Label()
         Me.grp_SrvcAddr = New System.Windows.Forms.GroupBox()
@@ -75,8 +75,17 @@ Partial Class RecurringService
         Me.tb_SrvcCity = New System.Windows.Forms.TextBox()
         Me.tp_Notes = New System.Windows.Forms.TabPage()
         Me.dg_ServiceNotes = New System.Windows.Forms.DataGridView()
+        Me.ServiceNoteTextDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.ServiceNoteDateDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.InsertedByUserDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.ServiceNotesBindingSource = New System.Windows.Forms.BindingSource(Me.components)
         Me.tp_BillHist = New System.Windows.Forms.TabPage()
         Me.dg_SrvcBillHistory = New System.Windows.Forms.DataGridView()
+        Me.InvRefNumberDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.StartBillingDateDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.EndBillingDateDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.LineTotalDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.RecurringServiceBillHistoryBindingSource = New System.Windows.Forms.BindingSource(Me.components)
         Me.tp_Credits = New System.Windows.Forms.TabPage()
         Me.btn_CreateCredit = New System.Windows.Forms.Button()
         Me.lbl_CreditAmount = New System.Windows.Forms.Label()
@@ -87,34 +96,26 @@ Partial Class RecurringService
         Me.lbl_Credits = New System.Windows.Forms.Label()
         Me.pnl_CreditDG = New System.Windows.Forms.Panel()
         Me.dg_CreditHistory = New System.Windows.Forms.DataGridView()
-        Me.cm_CreditVoid = New System.Windows.Forms.ContextMenuStrip(Me.components)
-        Me.cm_i_VoidCredit = New System.Windows.Forms.ToolStripMenuItem()
-        Me.lbl_CreditDG = New System.Windows.Forms.Label()
-        Me.tb_CreditAmount = New TrashCash.Currency_TextBox()
-        Me.tt_BillLength = New System.Windows.Forms.ToolTip(Me.components)
-        Me.TextBox1 = New System.Windows.Forms.TextBox()
-        Me.RecurringServiceBindingSource = New System.Windows.Forms.BindingSource(Me.components)
-        Me.Ds_RecurringService = New TrashCash.ds_RecurringService()
-        Me.ServiceNoteTextDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.ServiceNoteDateDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.InsertedByUserDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.ServiceNotesBindingSource = New System.Windows.Forms.BindingSource(Me.components)
-        Me.InvRefNumberDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.StartBillingDateDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.EndBillingDateDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.LineTotalDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.RecurringServiceBillHistoryBindingSource = New System.Windows.Forms.BindingSource(Me.components)
         Me.DateOfCreditDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.CreditAmountDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.ReasonDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.CreatedByUserDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.cm_CreditVoid = New System.Windows.Forms.ContextMenuStrip(Me.components)
+        Me.cm_i_VoidCredit = New System.Windows.Forms.ToolStripMenuItem()
         Me.RecurringServiceCreditsBindingSource = New System.Windows.Forms.BindingSource(Me.components)
+        Me.lbl_CreditDG = New System.Windows.Forms.Label()
+        Me.tt_BillLength = New System.Windows.Forms.ToolTip(Me.components)
+        Me.TextBox1 = New System.Windows.Forms.TextBox()
         Me.RecurringService_BillHistoryTableAdapter = New TrashCash.ds_RecurringServiceTableAdapters.RecurringService_BillHistoryTableAdapter()
         Me.ServiceNotesTableAdapter = New TrashCash.ds_RecurringServiceTableAdapters.ServiceNotesTableAdapter()
         Me.RecurringServiceTableAdapter = New TrashCash.ds_RecurringServiceTableAdapters.RecurringServiceTableAdapter()
         Me.RecurringService_CreditsTableAdapter = New TrashCash.ds_RecurringServiceTableAdapters.RecurringService_CreditsTableAdapter()
-        Me.lbl_OverlapVoid = New System.Windows.Forms.Label()
+        Me.Cmb_ServiceTypes = New TrashCash.Database_ComboBoxes.cmb_ServiceTypes()
+        Me.tb_Rate = New TrashCash.Currency_TextBox()
+        Me.tb_CreditAmount = New TrashCash.Currency_TextBox()
         Me.grp_PickupDay.SuspendLayout()
+        CType(Me.RecurringServiceBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.Ds_RecurringService, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.pnl_Top.SuspendLayout()
         Me.grp_BasicInfo.SuspendLayout()
         CType(Me.nud_BillLength, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -125,16 +126,14 @@ Partial Class RecurringService
         Me.grp_SrvcAddr.SuspendLayout()
         Me.tp_Notes.SuspendLayout()
         CType(Me.dg_ServiceNotes, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.ServiceNotesBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.tp_BillHist.SuspendLayout()
         CType(Me.dg_SrvcBillHistory, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.RecurringServiceBillHistoryBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.tp_Credits.SuspendLayout()
         Me.pnl_CreditDG.SuspendLayout()
         CType(Me.dg_CreditHistory, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.cm_CreditVoid.SuspendLayout()
-        CType(Me.RecurringServiceBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.Ds_RecurringService, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.ServiceNotesBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.RecurringServiceBillHistoryBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RecurringServiceCreditsBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -182,6 +181,16 @@ Partial Class RecurringService
         Me.ck_Sat.TabIndex = 13
         Me.ck_Sat.Text = "Sat"
         Me.ck_Sat.UseVisualStyleBackColor = True
+        '
+        'RecurringServiceBindingSource
+        '
+        Me.RecurringServiceBindingSource.DataMember = "RecurringService"
+        Me.RecurringServiceBindingSource.DataSource = Me.Ds_RecurringService
+        '
+        'Ds_RecurringService
+        '
+        Me.Ds_RecurringService.DataSetName = "ds_RecurringService"
+        Me.Ds_RecurringService.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema
         '
         'ck_Fri
         '
@@ -343,17 +352,6 @@ Partial Class RecurringService
         Me.nud_BillLength.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         Me.tt_BillLength.SetToolTip(Me.nud_BillLength, "Bill Length is the number of months this Recurring Service will bill for.")
         '
-        'Cmb_ServiceTypes
-        '
-        Me.Cmb_ServiceTypes.DataBindings.Add(New System.Windows.Forms.Binding("SelectedValue", Me.RecurringServiceBindingSource, "ServiceTypeID", True))
-        Me.Cmb_ServiceTypes.DisplayMember = "ServiceName"
-        Me.Cmb_ServiceTypes.FormattingEnabled = True
-        Me.Cmb_ServiceTypes.Location = New System.Drawing.Point(9, 18)
-        Me.Cmb_ServiceTypes.Name = "Cmb_ServiceTypes"
-        Me.Cmb_ServiceTypes.Size = New System.Drawing.Size(240, 21)
-        Me.Cmb_ServiceTypes.TabIndex = 0
-        Me.Cmb_ServiceTypes.ValueMember = "ServiceTypeID"
-        '
         'lbl_DefPriceValue
         '
         Me.lbl_DefPriceValue.AutoSize = True
@@ -401,14 +399,6 @@ Partial Class RecurringService
         Me.lbl_Quantity.Size = New System.Drawing.Size(49, 13)
         Me.lbl_Quantity.TabIndex = 82
         Me.lbl_Quantity.Text = "Quantity:"
-        '
-        'tb_Rate
-        '
-        Me.tb_Rate.DataBindings.Add(New System.Windows.Forms.Binding("Text", Me.RecurringServiceBindingSource, "RecurringServiceRate", True))
-        Me.tb_Rate.Location = New System.Drawing.Point(41, 50)
-        Me.tb_Rate.Name = "tb_Rate"
-        Me.tb_Rate.Size = New System.Drawing.Size(66, 20)
-        Me.tb_Rate.TabIndex = 1
         '
         'lbl_Rate
         '
@@ -473,6 +463,17 @@ Partial Class RecurringService
         Me.tp_SrvcInfo.Size = New System.Drawing.Size(801, 302)
         Me.tp_SrvcInfo.TabIndex = 0
         Me.tp_SrvcInfo.Text = "Service Information"
+        '
+        'lbl_OverlapVoid
+        '
+        Me.lbl_OverlapVoid.ForeColor = System.Drawing.Color.Red
+        Me.lbl_OverlapVoid.Location = New System.Drawing.Point(3, 241)
+        Me.lbl_OverlapVoid.Name = "lbl_OverlapVoid"
+        Me.lbl_OverlapVoid.Size = New System.Drawing.Size(795, 16)
+        Me.lbl_OverlapVoid.TabIndex = 86
+        Me.lbl_OverlapVoid.Text = "Credit void message here"
+        Me.lbl_OverlapVoid.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        Me.lbl_OverlapVoid.Visible = False
         '
         'lbl_CreditMsg
         '
@@ -625,6 +626,39 @@ Partial Class RecurringService
         Me.dg_ServiceNotes.Size = New System.Drawing.Size(795, 296)
         Me.dg_ServiceNotes.TabIndex = 0
         '
+        'ServiceNoteTextDataGridViewTextBoxColumn
+        '
+        Me.ServiceNoteTextDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill
+        Me.ServiceNoteTextDataGridViewTextBoxColumn.DataPropertyName = "ServiceNoteText"
+        Me.ServiceNoteTextDataGridViewTextBoxColumn.HeaderText = "Service Note Text"
+        Me.ServiceNoteTextDataGridViewTextBoxColumn.Name = "ServiceNoteTextDataGridViewTextBoxColumn"
+        Me.ServiceNoteTextDataGridViewTextBoxColumn.ReadOnly = True
+        '
+        'ServiceNoteDateDataGridViewTextBoxColumn
+        '
+        Me.ServiceNoteDateDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
+        Me.ServiceNoteDateDataGridViewTextBoxColumn.DataPropertyName = "ServiceNoteDate"
+        DataGridViewCellStyle19.Format = "d"
+        Me.ServiceNoteDateDataGridViewTextBoxColumn.DefaultCellStyle = DataGridViewCellStyle19
+        Me.ServiceNoteDateDataGridViewTextBoxColumn.HeaderText = "Date"
+        Me.ServiceNoteDateDataGridViewTextBoxColumn.Name = "ServiceNoteDateDataGridViewTextBoxColumn"
+        Me.ServiceNoteDateDataGridViewTextBoxColumn.ReadOnly = True
+        Me.ServiceNoteDateDataGridViewTextBoxColumn.Width = 55
+        '
+        'InsertedByUserDataGridViewTextBoxColumn
+        '
+        Me.InsertedByUserDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
+        Me.InsertedByUserDataGridViewTextBoxColumn.DataPropertyName = "InsertedByUser"
+        Me.InsertedByUserDataGridViewTextBoxColumn.HeaderText = "User"
+        Me.InsertedByUserDataGridViewTextBoxColumn.Name = "InsertedByUserDataGridViewTextBoxColumn"
+        Me.InsertedByUserDataGridViewTextBoxColumn.ReadOnly = True
+        Me.InsertedByUserDataGridViewTextBoxColumn.Width = 54
+        '
+        'ServiceNotesBindingSource
+        '
+        Me.ServiceNotesBindingSource.DataMember = "ServiceNotes"
+        Me.ServiceNotesBindingSource.DataSource = Me.Ds_RecurringService
+        '
         'tp_BillHist
         '
         Me.tp_BillHist.BackColor = System.Drawing.SystemColors.Control
@@ -651,6 +685,49 @@ Partial Class RecurringService
         Me.dg_SrvcBillHistory.RowHeadersVisible = False
         Me.dg_SrvcBillHistory.Size = New System.Drawing.Size(795, 296)
         Me.dg_SrvcBillHistory.TabIndex = 0
+        '
+        'InvRefNumberDataGridViewTextBoxColumn
+        '
+        Me.InvRefNumberDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill
+        Me.InvRefNumberDataGridViewTextBoxColumn.DataPropertyName = "InvRefNumber"
+        Me.InvRefNumberDataGridViewTextBoxColumn.HeaderText = "Invoice #"
+        Me.InvRefNumberDataGridViewTextBoxColumn.Name = "InvRefNumberDataGridViewTextBoxColumn"
+        Me.InvRefNumberDataGridViewTextBoxColumn.ReadOnly = True
+        '
+        'StartBillingDateDataGridViewTextBoxColumn
+        '
+        Me.StartBillingDateDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill
+        Me.StartBillingDateDataGridViewTextBoxColumn.DataPropertyName = "StartBillingDate"
+        DataGridViewCellStyle20.Format = "d"
+        Me.StartBillingDateDataGridViewTextBoxColumn.DefaultCellStyle = DataGridViewCellStyle20
+        Me.StartBillingDateDataGridViewTextBoxColumn.HeaderText = "Start Billing Date"
+        Me.StartBillingDateDataGridViewTextBoxColumn.Name = "StartBillingDateDataGridViewTextBoxColumn"
+        Me.StartBillingDateDataGridViewTextBoxColumn.ReadOnly = True
+        '
+        'EndBillingDateDataGridViewTextBoxColumn
+        '
+        Me.EndBillingDateDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill
+        Me.EndBillingDateDataGridViewTextBoxColumn.DataPropertyName = "EndBillingDate"
+        DataGridViewCellStyle21.Format = "d"
+        Me.EndBillingDateDataGridViewTextBoxColumn.DefaultCellStyle = DataGridViewCellStyle21
+        Me.EndBillingDateDataGridViewTextBoxColumn.HeaderText = "End Billing Date"
+        Me.EndBillingDateDataGridViewTextBoxColumn.Name = "EndBillingDateDataGridViewTextBoxColumn"
+        Me.EndBillingDateDataGridViewTextBoxColumn.ReadOnly = True
+        '
+        'LineTotalDataGridViewTextBoxColumn
+        '
+        Me.LineTotalDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill
+        Me.LineTotalDataGridViewTextBoxColumn.DataPropertyName = "LineTotal"
+        DataGridViewCellStyle22.Format = "C2"
+        Me.LineTotalDataGridViewTextBoxColumn.DefaultCellStyle = DataGridViewCellStyle22
+        Me.LineTotalDataGridViewTextBoxColumn.HeaderText = "Invoice Line Total"
+        Me.LineTotalDataGridViewTextBoxColumn.Name = "LineTotalDataGridViewTextBoxColumn"
+        Me.LineTotalDataGridViewTextBoxColumn.ReadOnly = True
+        '
+        'RecurringServiceBillHistoryBindingSource
+        '
+        Me.RecurringServiceBillHistoryBindingSource.DataMember = "RecurringService_BillHistory"
+        Me.RecurringServiceBillHistoryBindingSource.DataSource = Me.Ds_RecurringService
         '
         'tp_Credits
         '
@@ -764,136 +841,12 @@ Partial Class RecurringService
         Me.dg_CreditHistory.Size = New System.Drawing.Size(429, 269)
         Me.dg_CreditHistory.TabIndex = 2
         '
-        'cm_CreditVoid
-        '
-        Me.cm_CreditVoid.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.cm_i_VoidCredit})
-        Me.cm_CreditVoid.Name = "cm_CreditVoid"
-        Me.cm_CreditVoid.Size = New System.Drawing.Size(134, 26)
-        '
-        'cm_i_VoidCredit
-        '
-        Me.cm_i_VoidCredit.Name = "cm_i_VoidCredit"
-        Me.cm_i_VoidCredit.Size = New System.Drawing.Size(133, 22)
-        Me.cm_i_VoidCredit.Text = "Void Credit"
-        '
-        'lbl_CreditDG
-        '
-        Me.lbl_CreditDG.Dock = System.Windows.Forms.DockStyle.Top
-        Me.lbl_CreditDG.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lbl_CreditDG.Location = New System.Drawing.Point(0, 0)
-        Me.lbl_CreditDG.Name = "lbl_CreditDG"
-        Me.lbl_CreditDG.Size = New System.Drawing.Size(429, 25)
-        Me.lbl_CreditDG.TabIndex = 1
-        Me.lbl_CreditDG.Text = "Credit History"
-        '
-        'tb_CreditAmount
-        '
-        Me.tb_CreditAmount.Location = New System.Drawing.Point(594, 182)
-        Me.tb_CreditAmount.Name = "tb_CreditAmount"
-        Me.tb_CreditAmount.Size = New System.Drawing.Size(58, 20)
-        Me.tb_CreditAmount.TabIndex = 7
-        '
-        'TextBox1
-        '
-        Me.TextBox1.Location = New System.Drawing.Point(463, 122)
-        Me.TextBox1.MaxLength = 100
-        Me.TextBox1.Multiline = True
-        Me.TextBox1.Name = "TextBox1"
-        Me.TextBox1.Size = New System.Drawing.Size(278, 45)
-        Me.TextBox1.TabIndex = 5
-        '
-        'RecurringServiceBindingSource
-        '
-        Me.RecurringServiceBindingSource.DataMember = "RecurringService"
-        Me.RecurringServiceBindingSource.DataSource = Me.Ds_RecurringService
-        '
-        'Ds_RecurringService
-        '
-        Me.Ds_RecurringService.DataSetName = "ds_RecurringService"
-        Me.Ds_RecurringService.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema
-        '
-        'ServiceNoteTextDataGridViewTextBoxColumn
-        '
-        Me.ServiceNoteTextDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill
-        Me.ServiceNoteTextDataGridViewTextBoxColumn.DataPropertyName = "ServiceNoteText"
-        Me.ServiceNoteTextDataGridViewTextBoxColumn.HeaderText = "Service Note Text"
-        Me.ServiceNoteTextDataGridViewTextBoxColumn.Name = "ServiceNoteTextDataGridViewTextBoxColumn"
-        Me.ServiceNoteTextDataGridViewTextBoxColumn.ReadOnly = True
-        '
-        'ServiceNoteDateDataGridViewTextBoxColumn
-        '
-        Me.ServiceNoteDateDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
-        Me.ServiceNoteDateDataGridViewTextBoxColumn.DataPropertyName = "ServiceNoteDate"
-        DataGridViewCellStyle1.Format = "d"
-        Me.ServiceNoteDateDataGridViewTextBoxColumn.DefaultCellStyle = DataGridViewCellStyle1
-        Me.ServiceNoteDateDataGridViewTextBoxColumn.HeaderText = "Date"
-        Me.ServiceNoteDateDataGridViewTextBoxColumn.Name = "ServiceNoteDateDataGridViewTextBoxColumn"
-        Me.ServiceNoteDateDataGridViewTextBoxColumn.ReadOnly = True
-        Me.ServiceNoteDateDataGridViewTextBoxColumn.Width = 55
-        '
-        'InsertedByUserDataGridViewTextBoxColumn
-        '
-        Me.InsertedByUserDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
-        Me.InsertedByUserDataGridViewTextBoxColumn.DataPropertyName = "InsertedByUser"
-        Me.InsertedByUserDataGridViewTextBoxColumn.HeaderText = "User"
-        Me.InsertedByUserDataGridViewTextBoxColumn.Name = "InsertedByUserDataGridViewTextBoxColumn"
-        Me.InsertedByUserDataGridViewTextBoxColumn.ReadOnly = True
-        Me.InsertedByUserDataGridViewTextBoxColumn.Width = 54
-        '
-        'ServiceNotesBindingSource
-        '
-        Me.ServiceNotesBindingSource.DataMember = "ServiceNotes"
-        Me.ServiceNotesBindingSource.DataSource = Me.Ds_RecurringService
-        '
-        'InvRefNumberDataGridViewTextBoxColumn
-        '
-        Me.InvRefNumberDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill
-        Me.InvRefNumberDataGridViewTextBoxColumn.DataPropertyName = "InvRefNumber"
-        Me.InvRefNumberDataGridViewTextBoxColumn.HeaderText = "Invoice #"
-        Me.InvRefNumberDataGridViewTextBoxColumn.Name = "InvRefNumberDataGridViewTextBoxColumn"
-        Me.InvRefNumberDataGridViewTextBoxColumn.ReadOnly = True
-        '
-        'StartBillingDateDataGridViewTextBoxColumn
-        '
-        Me.StartBillingDateDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill
-        Me.StartBillingDateDataGridViewTextBoxColumn.DataPropertyName = "StartBillingDate"
-        DataGridViewCellStyle2.Format = "d"
-        Me.StartBillingDateDataGridViewTextBoxColumn.DefaultCellStyle = DataGridViewCellStyle2
-        Me.StartBillingDateDataGridViewTextBoxColumn.HeaderText = "Start Billing Date"
-        Me.StartBillingDateDataGridViewTextBoxColumn.Name = "StartBillingDateDataGridViewTextBoxColumn"
-        Me.StartBillingDateDataGridViewTextBoxColumn.ReadOnly = True
-        '
-        'EndBillingDateDataGridViewTextBoxColumn
-        '
-        Me.EndBillingDateDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill
-        Me.EndBillingDateDataGridViewTextBoxColumn.DataPropertyName = "EndBillingDate"
-        DataGridViewCellStyle3.Format = "d"
-        Me.EndBillingDateDataGridViewTextBoxColumn.DefaultCellStyle = DataGridViewCellStyle3
-        Me.EndBillingDateDataGridViewTextBoxColumn.HeaderText = "End Billing Date"
-        Me.EndBillingDateDataGridViewTextBoxColumn.Name = "EndBillingDateDataGridViewTextBoxColumn"
-        Me.EndBillingDateDataGridViewTextBoxColumn.ReadOnly = True
-        '
-        'LineTotalDataGridViewTextBoxColumn
-        '
-        Me.LineTotalDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill
-        Me.LineTotalDataGridViewTextBoxColumn.DataPropertyName = "LineTotal"
-        DataGridViewCellStyle4.Format = "C2"
-        Me.LineTotalDataGridViewTextBoxColumn.DefaultCellStyle = DataGridViewCellStyle4
-        Me.LineTotalDataGridViewTextBoxColumn.HeaderText = "Invoice Line Total"
-        Me.LineTotalDataGridViewTextBoxColumn.Name = "LineTotalDataGridViewTextBoxColumn"
-        Me.LineTotalDataGridViewTextBoxColumn.ReadOnly = True
-        '
-        'RecurringServiceBillHistoryBindingSource
-        '
-        Me.RecurringServiceBillHistoryBindingSource.DataMember = "RecurringService_BillHistory"
-        Me.RecurringServiceBillHistoryBindingSource.DataSource = Me.Ds_RecurringService
-        '
         'DateOfCreditDataGridViewTextBoxColumn
         '
         Me.DateOfCreditDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
         Me.DateOfCreditDataGridViewTextBoxColumn.DataPropertyName = "DateOfCredit"
-        DataGridViewCellStyle5.Format = "d"
-        Me.DateOfCreditDataGridViewTextBoxColumn.DefaultCellStyle = DataGridViewCellStyle5
+        DataGridViewCellStyle23.Format = "d"
+        Me.DateOfCreditDataGridViewTextBoxColumn.DefaultCellStyle = DataGridViewCellStyle23
         Me.DateOfCreditDataGridViewTextBoxColumn.HeaderText = "Date Of Credit"
         Me.DateOfCreditDataGridViewTextBoxColumn.Name = "DateOfCreditDataGridViewTextBoxColumn"
         Me.DateOfCreditDataGridViewTextBoxColumn.ReadOnly = True
@@ -903,8 +856,8 @@ Partial Class RecurringService
         '
         Me.CreditAmountDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
         Me.CreditAmountDataGridViewTextBoxColumn.DataPropertyName = "CreditAmount"
-        DataGridViewCellStyle6.Format = "C2"
-        Me.CreditAmountDataGridViewTextBoxColumn.DefaultCellStyle = DataGridViewCellStyle6
+        DataGridViewCellStyle24.Format = "C2"
+        Me.CreditAmountDataGridViewTextBoxColumn.DefaultCellStyle = DataGridViewCellStyle24
         Me.CreditAmountDataGridViewTextBoxColumn.HeaderText = "Amount"
         Me.CreditAmountDataGridViewTextBoxColumn.Name = "CreditAmountDataGridViewTextBoxColumn"
         Me.CreditAmountDataGridViewTextBoxColumn.ReadOnly = True
@@ -927,10 +880,41 @@ Partial Class RecurringService
         Me.CreatedByUserDataGridViewTextBoxColumn.ReadOnly = True
         Me.CreatedByUserDataGridViewTextBoxColumn.Width = 54
         '
+        'cm_CreditVoid
+        '
+        Me.cm_CreditVoid.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.cm_i_VoidCredit})
+        Me.cm_CreditVoid.Name = "cm_CreditVoid"
+        Me.cm_CreditVoid.Size = New System.Drawing.Size(134, 26)
+        '
+        'cm_i_VoidCredit
+        '
+        Me.cm_i_VoidCredit.Name = "cm_i_VoidCredit"
+        Me.cm_i_VoidCredit.Size = New System.Drawing.Size(133, 22)
+        Me.cm_i_VoidCredit.Text = "Void Credit"
+        '
         'RecurringServiceCreditsBindingSource
         '
         Me.RecurringServiceCreditsBindingSource.DataMember = "RecurringService_Credits"
         Me.RecurringServiceCreditsBindingSource.DataSource = Me.Ds_RecurringService
+        '
+        'lbl_CreditDG
+        '
+        Me.lbl_CreditDG.Dock = System.Windows.Forms.DockStyle.Top
+        Me.lbl_CreditDG.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lbl_CreditDG.Location = New System.Drawing.Point(0, 0)
+        Me.lbl_CreditDG.Name = "lbl_CreditDG"
+        Me.lbl_CreditDG.Size = New System.Drawing.Size(429, 25)
+        Me.lbl_CreditDG.TabIndex = 1
+        Me.lbl_CreditDG.Text = "Credit History"
+        '
+        'TextBox1
+        '
+        Me.TextBox1.Location = New System.Drawing.Point(463, 122)
+        Me.TextBox1.MaxLength = 100
+        Me.TextBox1.Multiline = True
+        Me.TextBox1.Name = "TextBox1"
+        Me.TextBox1.Size = New System.Drawing.Size(278, 45)
+        Me.TextBox1.TabIndex = 5
         '
         'RecurringService_BillHistoryTableAdapter
         '
@@ -948,16 +932,30 @@ Partial Class RecurringService
         '
         Me.RecurringService_CreditsTableAdapter.ClearBeforeFill = True
         '
-        'lbl_OverlapVoid
+        'Cmb_ServiceTypes
         '
-        Me.lbl_OverlapVoid.ForeColor = System.Drawing.Color.Red
-        Me.lbl_OverlapVoid.Location = New System.Drawing.Point(3, 241)
-        Me.lbl_OverlapVoid.Name = "lbl_OverlapVoid"
-        Me.lbl_OverlapVoid.Size = New System.Drawing.Size(795, 16)
-        Me.lbl_OverlapVoid.TabIndex = 86
-        Me.lbl_OverlapVoid.Text = "Credit void message here"
-        Me.lbl_OverlapVoid.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
-        Me.lbl_OverlapVoid.Visible = False
+        Me.Cmb_ServiceTypes.DataBindings.Add(New System.Windows.Forms.Binding("SelectedValue", Me.RecurringServiceBindingSource, "ServiceTypeID", True))
+        Me.Cmb_ServiceTypes.FormattingEnabled = True
+        Me.Cmb_ServiceTypes.Location = New System.Drawing.Point(9, 18)
+        Me.Cmb_ServiceTypes.Name = "Cmb_ServiceTypes"
+        Me.Cmb_ServiceTypes.Size = New System.Drawing.Size(240, 21)
+        Me.Cmb_ServiceTypes.TabIndex = 0
+        Me.Cmb_ServiceTypes.ValueMember = "ServiceTypeID"
+        '
+        'tb_Rate
+        '
+        Me.tb_Rate.DataBindings.Add(New System.Windows.Forms.Binding("Text", Me.RecurringServiceBindingSource, "RecurringServiceRate", True))
+        Me.tb_Rate.Location = New System.Drawing.Point(41, 50)
+        Me.tb_Rate.Name = "tb_Rate"
+        Me.tb_Rate.Size = New System.Drawing.Size(66, 20)
+        Me.tb_Rate.TabIndex = 1
+        '
+        'tb_CreditAmount
+        '
+        Me.tb_CreditAmount.Location = New System.Drawing.Point(594, 182)
+        Me.tb_CreditAmount.Name = "tb_CreditAmount"
+        Me.tb_CreditAmount.Size = New System.Drawing.Size(58, 20)
+        Me.tb_CreditAmount.TabIndex = 7
         '
         'RecurringService
         '
@@ -972,6 +970,8 @@ Partial Class RecurringService
         Me.Text = "RecurringService"
         Me.grp_PickupDay.ResumeLayout(False)
         Me.grp_PickupDay.PerformLayout()
+        CType(Me.RecurringServiceBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.Ds_RecurringService, System.ComponentModel.ISupportInitialize).EndInit()
         Me.pnl_Top.ResumeLayout(False)
         Me.pnl_Top.PerformLayout()
         Me.grp_BasicInfo.ResumeLayout(False)
@@ -987,17 +987,15 @@ Partial Class RecurringService
         Me.grp_SrvcAddr.PerformLayout()
         Me.tp_Notes.ResumeLayout(False)
         CType(Me.dg_ServiceNotes, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.ServiceNotesBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
         Me.tp_BillHist.ResumeLayout(False)
         CType(Me.dg_SrvcBillHistory, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.RecurringServiceBillHistoryBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
         Me.tp_Credits.ResumeLayout(False)
         Me.tp_Credits.PerformLayout()
         Me.pnl_CreditDG.ResumeLayout(False)
         CType(Me.dg_CreditHistory, System.ComponentModel.ISupportInitialize).EndInit()
         Me.cm_CreditVoid.ResumeLayout(False)
-        CType(Me.RecurringServiceBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.Ds_RecurringService, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.ServiceNotesBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.RecurringServiceBillHistoryBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RecurringServiceCreditsBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 

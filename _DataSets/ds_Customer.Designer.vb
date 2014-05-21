@@ -3698,30 +3698,30 @@ Namespace ds_CustomerTableAdapters
             Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@CustomerReceiveOneInvoice", Global.System.Data.SqlDbType.Bit, 1, Global.System.Data.ParameterDirection.Input, 1, 0, "CustomerReceiveOneInvoice", Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
             Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@CustomerBillInterval", Global.System.Data.SqlDbType.TinyInt, 1, Global.System.Data.ParameterDirection.Input, 3, 0, "CustomerBillInterval", Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
             Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@Original_CustomerNumber", Global.System.Data.SqlDbType.[Decimal], 9, Global.System.Data.ParameterDirection.Input, 18, 0, "CustomerNumber", Global.System.Data.DataRowVersion.Original, false, Nothing, "", "", ""))
-            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@IsNull_CustomerListID", Global.System.Data.SqlDbType.Int, 4, Global.System.Data.ParameterDirection.Input, 10, 0, "CustomerListID", Global.System.Data.DataRowVersion.Current, true, Nothing, "", "", ""))
+            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@IsNull_CustomerListID", Global.System.Data.SqlDbType.Int, 4, Global.System.Data.ParameterDirection.Input, 10, 0, "CustomerListID", Global.System.Data.DataRowVersion.Original, true, Nothing, "", "", ""))
             Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@Original_CustomerListID", Global.System.Data.SqlDbType.VarChar, 50, Global.System.Data.ParameterDirection.Input, 0, 0, "CustomerListID", Global.System.Data.DataRowVersion.Original, false, Nothing, "", "", ""))
-            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@IsNull_CustomerEditSeq", Global.System.Data.SqlDbType.Int, 4, Global.System.Data.ParameterDirection.Input, 10, 0, "CustomerEditSeq", Global.System.Data.DataRowVersion.Current, true, Nothing, "", "", ""))
+            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@IsNull_CustomerEditSeq", Global.System.Data.SqlDbType.Int, 4, Global.System.Data.ParameterDirection.Input, 10, 0, "CustomerEditSeq", Global.System.Data.DataRowVersion.Original, true, Nothing, "", "", ""))
             Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@Original_CustomerEditSeq", Global.System.Data.SqlDbType.VarChar, 50, Global.System.Data.ParameterDirection.Input, 0, 0, "CustomerEditSeq", Global.System.Data.DataRowVersion.Original, false, Nothing, "", "", ""))
-            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@IsNull_CustomerFullName", Global.System.Data.SqlDbType.Int, 4, Global.System.Data.ParameterDirection.Input, 10, 0, "CustomerFullName", Global.System.Data.DataRowVersion.Current, true, Nothing, "", "", ""))
+            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@IsNull_CustomerFullName", Global.System.Data.SqlDbType.Int, 4, Global.System.Data.ParameterDirection.Input, 10, 0, "CustomerFullName", Global.System.Data.DataRowVersion.Original, true, Nothing, "", "", ""))
             Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@Original_CustomerFullName", Global.System.Data.SqlDbType.VarChar, 41, Global.System.Data.ParameterDirection.Input, 0, 0, "CustomerFullName", Global.System.Data.DataRowVersion.Original, false, Nothing, "", "", ""))
-            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@IsNull_CustomerFirstName", Global.System.Data.SqlDbType.Int, 4, Global.System.Data.ParameterDirection.Input, 10, 0, "CustomerFirstName", Global.System.Data.DataRowVersion.Current, true, Nothing, "", "", ""))
+            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@IsNull_CustomerFirstName", Global.System.Data.SqlDbType.Int, 4, Global.System.Data.ParameterDirection.Input, 10, 0, "CustomerFirstName", Global.System.Data.DataRowVersion.Original, true, Nothing, "", "", ""))
             Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@Original_CustomerFirstName", Global.System.Data.SqlDbType.VarChar, 25, Global.System.Data.ParameterDirection.Input, 0, 0, "CustomerFirstName", Global.System.Data.DataRowVersion.Original, false, Nothing, "", "", ""))
-            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@IsNull_CustomerLastName", Global.System.Data.SqlDbType.Int, 4, Global.System.Data.ParameterDirection.Input, 10, 0, "CustomerLastName", Global.System.Data.DataRowVersion.Current, true, Nothing, "", "", ""))
+            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@IsNull_CustomerLastName", Global.System.Data.SqlDbType.Int, 4, Global.System.Data.ParameterDirection.Input, 10, 0, "CustomerLastName", Global.System.Data.DataRowVersion.Original, true, Nothing, "", "", ""))
             Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@Original_CustomerLastName", Global.System.Data.SqlDbType.VarChar, 25, Global.System.Data.ParameterDirection.Input, 0, 0, "CustomerLastName", Global.System.Data.DataRowVersion.Original, false, Nothing, "", "", ""))
-            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@IsNull_CustomerCompanyName", Global.System.Data.SqlDbType.Int, 4, Global.System.Data.ParameterDirection.Input, 10, 0, "CustomerCompanyName", Global.System.Data.DataRowVersion.Current, true, Nothing, "", "", ""))
+            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@IsNull_CustomerCompanyName", Global.System.Data.SqlDbType.Int, 4, Global.System.Data.ParameterDirection.Input, 10, 0, "CustomerCompanyName", Global.System.Data.DataRowVersion.Original, true, Nothing, "", "", ""))
             Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@Original_CustomerCompanyName", Global.System.Data.SqlDbType.VarChar, 41, Global.System.Data.ParameterDirection.Input, 0, 0, "CustomerCompanyName", Global.System.Data.DataRowVersion.Original, false, Nothing, "", "", ""))
             Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@Original_CustomerPhone", Global.System.Data.SqlDbType.VarChar, 20, Global.System.Data.ParameterDirection.Input, 0, 0, "CustomerPhone", Global.System.Data.DataRowVersion.Original, false, Nothing, "", "", ""))
-            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@IsNull_CustomerAltPhone", Global.System.Data.SqlDbType.Int, 4, Global.System.Data.ParameterDirection.Input, 10, 0, "CustomerAltPhone", Global.System.Data.DataRowVersion.Current, true, Nothing, "", "", ""))
+            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@IsNull_CustomerAltPhone", Global.System.Data.SqlDbType.Int, 4, Global.System.Data.ParameterDirection.Input, 10, 0, "CustomerAltPhone", Global.System.Data.DataRowVersion.Original, true, Nothing, "", "", ""))
             Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@Original_CustomerAltPhone", Global.System.Data.SqlDbType.VarChar, 20, Global.System.Data.ParameterDirection.Input, 0, 0, "CustomerAltPhone", Global.System.Data.DataRowVersion.Original, false, Nothing, "", "", ""))
-            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@IsNull_CustomerContact", Global.System.Data.SqlDbType.Int, 4, Global.System.Data.ParameterDirection.Input, 10, 0, "CustomerContact", Global.System.Data.DataRowVersion.Current, true, Nothing, "", "", ""))
+            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@IsNull_CustomerContact", Global.System.Data.SqlDbType.Int, 4, Global.System.Data.ParameterDirection.Input, 10, 0, "CustomerContact", Global.System.Data.DataRowVersion.Original, true, Nothing, "", "", ""))
             Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@Original_CustomerContact", Global.System.Data.SqlDbType.VarChar, 50, Global.System.Data.ParameterDirection.Input, 0, 0, "CustomerContact", Global.System.Data.DataRowVersion.Original, false, Nothing, "", "", ""))
-            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@IsNull_CustomerBillingAddr1", Global.System.Data.SqlDbType.Int, 4, Global.System.Data.ParameterDirection.Input, 10, 0, "CustomerBillingAddr1", Global.System.Data.DataRowVersion.Current, true, Nothing, "", "", ""))
+            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@IsNull_CustomerBillingAddr1", Global.System.Data.SqlDbType.Int, 4, Global.System.Data.ParameterDirection.Input, 10, 0, "CustomerBillingAddr1", Global.System.Data.DataRowVersion.Original, true, Nothing, "", "", ""))
             Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@Original_CustomerBillingAddr1", Global.System.Data.SqlDbType.VarChar, 41, Global.System.Data.ParameterDirection.Input, 0, 0, "CustomerBillingAddr1", Global.System.Data.DataRowVersion.Original, false, Nothing, "", "", ""))
-            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@IsNull_CustomerBillingAddr2", Global.System.Data.SqlDbType.Int, 4, Global.System.Data.ParameterDirection.Input, 10, 0, "CustomerBillingAddr2", Global.System.Data.DataRowVersion.Current, true, Nothing, "", "", ""))
+            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@IsNull_CustomerBillingAddr2", Global.System.Data.SqlDbType.Int, 4, Global.System.Data.ParameterDirection.Input, 10, 0, "CustomerBillingAddr2", Global.System.Data.DataRowVersion.Original, true, Nothing, "", "", ""))
             Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@Original_CustomerBillingAddr2", Global.System.Data.SqlDbType.VarChar, 41, Global.System.Data.ParameterDirection.Input, 0, 0, "CustomerBillingAddr2", Global.System.Data.DataRowVersion.Original, false, Nothing, "", "", ""))
-            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@IsNull_CustomerBillingAddr3", Global.System.Data.SqlDbType.Int, 4, Global.System.Data.ParameterDirection.Input, 10, 0, "CustomerBillingAddr3", Global.System.Data.DataRowVersion.Current, true, Nothing, "", "", ""))
+            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@IsNull_CustomerBillingAddr3", Global.System.Data.SqlDbType.Int, 4, Global.System.Data.ParameterDirection.Input, 10, 0, "CustomerBillingAddr3", Global.System.Data.DataRowVersion.Original, true, Nothing, "", "", ""))
             Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@Original_CustomerBillingAddr3", Global.System.Data.SqlDbType.VarChar, 41, Global.System.Data.ParameterDirection.Input, 0, 0, "CustomerBillingAddr3", Global.System.Data.DataRowVersion.Original, false, Nothing, "", "", ""))
-            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@IsNull_CustomerBillingAddr4", Global.System.Data.SqlDbType.Int, 4, Global.System.Data.ParameterDirection.Input, 10, 0, "CustomerBillingAddr4", Global.System.Data.DataRowVersion.Current, true, Nothing, "", "", ""))
+            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@IsNull_CustomerBillingAddr4", Global.System.Data.SqlDbType.Int, 4, Global.System.Data.ParameterDirection.Input, 10, 0, "CustomerBillingAddr4", Global.System.Data.DataRowVersion.Original, true, Nothing, "", "", ""))
             Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@Original_CustomerBillingAddr4", Global.System.Data.SqlDbType.VarChar, 41, Global.System.Data.ParameterDirection.Input, 0, 0, "CustomerBillingAddr4", Global.System.Data.DataRowVersion.Original, false, Nothing, "", "", ""))
             Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@Original_CustomerBillingCity", Global.System.Data.SqlDbType.VarChar, 20, Global.System.Data.ParameterDirection.Input, 0, 0, "CustomerBillingCity", Global.System.Data.DataRowVersion.Original, false, Nothing, "", "", ""))
             Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@Original_CustomerBillingState", Global.System.Data.SqlDbType.VarChar, 20, Global.System.Data.ParameterDirection.Input, 0, 0, "CustomerBillingState", Global.System.Data.DataRowVersion.Original, false, Nothing, "", "", ""))
@@ -3761,7 +3761,7 @@ Namespace ds_CustomerTableAdapters
             Me._commandCollection(2).Connection = Me.Connection
             Me._commandCollection(2).CommandText = "dbo.Customer_GetListID"
             Me._commandCollection(2).CommandType = Global.System.Data.CommandType.StoredProcedure
-            Me._commandCollection(2).Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@RETURN_VALUE", Global.System.Data.SqlDbType.VarChar, 1, Global.System.Data.ParameterDirection.ReturnValue, 0, 0, Nothing, Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
+            Me._commandCollection(2).Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@RETURN_VALUE", Global.System.Data.SqlDbType.Int, 4, Global.System.Data.ParameterDirection.ReturnValue, 10, 0, Nothing, Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
             Me._commandCollection(2).Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@CustomerNumber", Global.System.Data.SqlDbType.[Decimal], 9, Global.System.Data.ParameterDirection.Input, 18, 0, Nothing, Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
         End Sub
         
@@ -4170,33 +4170,45 @@ Namespace ds_CustomerTableAdapters
                 Me.Adapter.UpdateCommand.Parameters(23).Value = Global.System.DBNull.Value
             End If
             If (Original_CustomerListID Is Nothing) Then
+                Me.Adapter.UpdateCommand.Parameters(24).Value = CType(1,Object)
                 Me.Adapter.UpdateCommand.Parameters(25).Value = Global.System.DBNull.Value
             Else
+                Me.Adapter.UpdateCommand.Parameters(24).Value = CType(0,Object)
                 Me.Adapter.UpdateCommand.Parameters(25).Value = CType(Original_CustomerListID,String)
             End If
             If (Original_CustomerEditSeq Is Nothing) Then
+                Me.Adapter.UpdateCommand.Parameters(26).Value = CType(1,Object)
                 Me.Adapter.UpdateCommand.Parameters(27).Value = Global.System.DBNull.Value
             Else
+                Me.Adapter.UpdateCommand.Parameters(26).Value = CType(0,Object)
                 Me.Adapter.UpdateCommand.Parameters(27).Value = CType(Original_CustomerEditSeq,String)
             End If
             If (Original_CustomerFullName Is Nothing) Then
+                Me.Adapter.UpdateCommand.Parameters(28).Value = CType(1,Object)
                 Me.Adapter.UpdateCommand.Parameters(29).Value = Global.System.DBNull.Value
             Else
+                Me.Adapter.UpdateCommand.Parameters(28).Value = CType(0,Object)
                 Me.Adapter.UpdateCommand.Parameters(29).Value = CType(Original_CustomerFullName,String)
             End If
             If (Original_CustomerFirstName Is Nothing) Then
+                Me.Adapter.UpdateCommand.Parameters(30).Value = CType(1,Object)
                 Me.Adapter.UpdateCommand.Parameters(31).Value = Global.System.DBNull.Value
             Else
+                Me.Adapter.UpdateCommand.Parameters(30).Value = CType(0,Object)
                 Me.Adapter.UpdateCommand.Parameters(31).Value = CType(Original_CustomerFirstName,String)
             End If
             If (Original_CustomerLastName Is Nothing) Then
+                Me.Adapter.UpdateCommand.Parameters(32).Value = CType(1,Object)
                 Me.Adapter.UpdateCommand.Parameters(33).Value = Global.System.DBNull.Value
             Else
+                Me.Adapter.UpdateCommand.Parameters(32).Value = CType(0,Object)
                 Me.Adapter.UpdateCommand.Parameters(33).Value = CType(Original_CustomerLastName,String)
             End If
             If (Original_CustomerCompanyName Is Nothing) Then
+                Me.Adapter.UpdateCommand.Parameters(34).Value = CType(1,Object)
                 Me.Adapter.UpdateCommand.Parameters(35).Value = Global.System.DBNull.Value
             Else
+                Me.Adapter.UpdateCommand.Parameters(34).Value = CType(0,Object)
                 Me.Adapter.UpdateCommand.Parameters(35).Value = CType(Original_CustomerCompanyName,String)
             End If
             If (Original_CustomerPhone Is Nothing) Then
@@ -4205,33 +4217,45 @@ Namespace ds_CustomerTableAdapters
                 Me.Adapter.UpdateCommand.Parameters(36).Value = CType(Original_CustomerPhone,String)
             End If
             If (Original_CustomerAltPhone Is Nothing) Then
+                Me.Adapter.UpdateCommand.Parameters(37).Value = CType(1,Object)
                 Me.Adapter.UpdateCommand.Parameters(38).Value = Global.System.DBNull.Value
             Else
+                Me.Adapter.UpdateCommand.Parameters(37).Value = CType(0,Object)
                 Me.Adapter.UpdateCommand.Parameters(38).Value = CType(Original_CustomerAltPhone,String)
             End If
             If (Original_CustomerContact Is Nothing) Then
+                Me.Adapter.UpdateCommand.Parameters(39).Value = CType(1,Object)
                 Me.Adapter.UpdateCommand.Parameters(40).Value = Global.System.DBNull.Value
             Else
+                Me.Adapter.UpdateCommand.Parameters(39).Value = CType(0,Object)
                 Me.Adapter.UpdateCommand.Parameters(40).Value = CType(Original_CustomerContact,String)
             End If
             If (Original_CustomerBillingAddr1 Is Nothing) Then
+                Me.Adapter.UpdateCommand.Parameters(41).Value = CType(1,Object)
                 Me.Adapter.UpdateCommand.Parameters(42).Value = Global.System.DBNull.Value
             Else
+                Me.Adapter.UpdateCommand.Parameters(41).Value = CType(0,Object)
                 Me.Adapter.UpdateCommand.Parameters(42).Value = CType(Original_CustomerBillingAddr1,String)
             End If
             If (Original_CustomerBillingAddr2 Is Nothing) Then
+                Me.Adapter.UpdateCommand.Parameters(43).Value = CType(1,Object)
                 Me.Adapter.UpdateCommand.Parameters(44).Value = Global.System.DBNull.Value
             Else
+                Me.Adapter.UpdateCommand.Parameters(43).Value = CType(0,Object)
                 Me.Adapter.UpdateCommand.Parameters(44).Value = CType(Original_CustomerBillingAddr2,String)
             End If
             If (Original_CustomerBillingAddr3 Is Nothing) Then
+                Me.Adapter.UpdateCommand.Parameters(45).Value = CType(1,Object)
                 Me.Adapter.UpdateCommand.Parameters(46).Value = Global.System.DBNull.Value
             Else
+                Me.Adapter.UpdateCommand.Parameters(45).Value = CType(0,Object)
                 Me.Adapter.UpdateCommand.Parameters(46).Value = CType(Original_CustomerBillingAddr3,String)
             End If
             If (Original_CustomerBillingAddr4 Is Nothing) Then
+                Me.Adapter.UpdateCommand.Parameters(47).Value = CType(1,Object)
                 Me.Adapter.UpdateCommand.Parameters(48).Value = Global.System.DBNull.Value
             Else
+                Me.Adapter.UpdateCommand.Parameters(47).Value = CType(0,Object)
                 Me.Adapter.UpdateCommand.Parameters(48).Value = CType(Original_CustomerBillingAddr4,String)
             End If
             If (Original_CustomerBillingCity Is Nothing) Then

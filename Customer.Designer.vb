@@ -36,11 +36,11 @@ Partial Class Customer
         Me.pnl_TopContent = New System.Windows.Forms.Panel()
         Me.Ts_M_Customer = New TrashCash.ts_M_Customer()
         Me.ts_Top = New System.Windows.Forms.ToolStrip()
-        Me.UC_CustomerInfoBoxes = New TrashCash.UC_CustomerInfoBoxes()
         Me.btn_Inv = New System.Windows.Forms.ToolStripButton()
         Me.btn_Payments = New System.Windows.Forms.ToolStripButton()
         Me.btn_NewCust = New System.Windows.Forms.ToolStripButton()
         Me.btn_Credit = New System.Windows.Forms.ToolStripButton()
+        Me.UC_CustomerInfoBoxes = New TrashCash.UC_CustomerInfoBoxes()
         Me.tc_Master.SuspendLayout()
         Me.tc_p_Notes.SuspendLayout()
         Me.tc_p_RecSrvcs.SuspendLayout()
@@ -187,17 +187,6 @@ Partial Class Customer
         Me.ts_Top.TabIndex = 15
         Me.ts_Top.Text = "ToolStrip1"
         '
-        'UC_CustomerInfoBoxes
-        '
-        Me.UC_CustomerInfoBoxes.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.UC_CustomerInfoBoxes.CurrentCustomer = 0
-        Me.UC_CustomerInfoBoxes.Dock = System.Windows.Forms.DockStyle.Top
-        Me.UC_CustomerInfoBoxes.isUpdating = False
-        Me.UC_CustomerInfoBoxes.Location = New System.Drawing.Point(0, 78)
-        Me.UC_CustomerInfoBoxes.Name = "UC_CustomerInfoBoxes"
-        Me.UC_CustomerInfoBoxes.Size = New System.Drawing.Size(902, 172)
-        Me.UC_CustomerInfoBoxes.TabIndex = 9
-        '
         'btn_Inv
         '
         Me.btn_Inv.Image = Global.TrashCash.My.Resources.Resources.invoicingIcon
@@ -231,6 +220,17 @@ Partial Class Customer
         Me.btn_Credit.Name = "btn_Credit"
         Me.btn_Credit.Size = New System.Drawing.Size(59, 22)
         Me.btn_Credit.Text = "Credit"
+        '
+        'UC_CustomerInfoBoxes
+        '
+        Me.UC_CustomerInfoBoxes.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.UC_CustomerInfoBoxes.CurrentCustomer = 0
+        Me.UC_CustomerInfoBoxes.Dock = System.Windows.Forms.DockStyle.Top
+        Me.UC_CustomerInfoBoxes.isUpdating = False
+        Me.UC_CustomerInfoBoxes.Location = New System.Drawing.Point(0, 78)
+        Me.UC_CustomerInfoBoxes.Name = "UC_CustomerInfoBoxes"
+        Me.UC_CustomerInfoBoxes.Size = New System.Drawing.Size(902, 172)
+        Me.UC_CustomerInfoBoxes.TabIndex = 9
         '
         'Customer
         '

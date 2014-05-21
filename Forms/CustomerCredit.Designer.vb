@@ -23,8 +23,8 @@ Partial Class CustomerCredit
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
-        Dim DataGridViewCellStyle5 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle6 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.Panel1 = New System.Windows.Forms.Panel()
         Me.pnl_TopContent = New System.Windows.Forms.Panel()
         Me.Ts_M_Customer = New TrashCash.ts_M_Customer()
@@ -124,9 +124,9 @@ Partial Class CustomerCredit
         '
         Me.CreditAmountDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
         Me.CreditAmountDataGridViewTextBoxColumn.DataPropertyName = "CreditAmount"
-        DataGridViewCellStyle5.Format = "C2"
-        DataGridViewCellStyle5.NullValue = Nothing
-        Me.CreditAmountDataGridViewTextBoxColumn.DefaultCellStyle = DataGridViewCellStyle5
+        DataGridViewCellStyle1.Format = "C2"
+        DataGridViewCellStyle1.NullValue = Nothing
+        Me.CreditAmountDataGridViewTextBoxColumn.DefaultCellStyle = DataGridViewCellStyle1
         Me.CreditAmountDataGridViewTextBoxColumn.HeaderText = "Amount"
         Me.CreditAmountDataGridViewTextBoxColumn.Name = "CreditAmountDataGridViewTextBoxColumn"
         Me.CreditAmountDataGridViewTextBoxColumn.ReadOnly = True
@@ -136,9 +136,9 @@ Partial Class CustomerCredit
         '
         Me.TimeCreatedDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
         Me.TimeCreatedDataGridViewTextBoxColumn.DataPropertyName = "TimeCreated"
-        DataGridViewCellStyle6.Format = "g"
-        DataGridViewCellStyle6.NullValue = Nothing
-        Me.TimeCreatedDataGridViewTextBoxColumn.DefaultCellStyle = DataGridViewCellStyle6
+        DataGridViewCellStyle2.Format = "g"
+        DataGridViewCellStyle2.NullValue = Nothing
+        Me.TimeCreatedDataGridViewTextBoxColumn.DefaultCellStyle = DataGridViewCellStyle2
         Me.TimeCreatedDataGridViewTextBoxColumn.HeaderText = "Time Created"
         Me.TimeCreatedDataGridViewTextBoxColumn.Name = "TimeCreatedDataGridViewTextBoxColumn"
         Me.TimeCreatedDataGridViewTextBoxColumn.ReadOnly = True
@@ -180,6 +180,7 @@ Partial Class CustomerCredit
         '
         'Ds_Customer
         '
+        Me.Ds_Customer.DataSetName = "ds_Customer"
         Me.Ds_Customer.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema
         '
         'lbl_CreditHis

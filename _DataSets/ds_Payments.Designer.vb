@@ -859,6 +859,10 @@ Partial Public Class ds_Payments
         
         Private columnInsertedByUser As Global.System.Data.DataColumn
         
+        Private columnBouncedByUser As Global.System.Data.DataColumn
+        
+        Private columnBounced_Time As Global.System.Data.DataColumn
+        
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
         Public Sub New()
@@ -991,6 +995,22 @@ Partial Public Class ds_Payments
         End Property
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        Public ReadOnly Property BouncedByUserColumn() As Global.System.Data.DataColumn
+            Get
+                Return Me.columnBouncedByUser
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        Public ReadOnly Property Bounced_TimeColumn() As Global.System.Data.DataColumn
+            Get
+                Return Me.columnBounced_Time
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0"),  _
          Global.System.ComponentModel.Browsable(false)>  _
         Public ReadOnly Property Count() As Integer
@@ -1027,9 +1047,9 @@ Partial Public Class ds_Payments
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Overloads Function AddPaymentHistory_DBRow(ByVal CustomerNumber As Decimal, ByVal PaymentTypeID As Decimal, ByVal RefNumber As String, ByVal PaymentTxnID As String, ByVal PaymentEditSeq As String, ByVal Amount As Decimal, ByVal DateReceived As Date, ByVal DateOnCheck As Date, ByVal Bounced As Boolean, ByVal BATCH_PAY_ID As Integer, ByVal InsertedByUser As String) As PaymentHistory_DBRow
+        Public Overloads Function AddPaymentHistory_DBRow(ByVal CustomerNumber As Decimal, ByVal PaymentTypeID As Decimal, ByVal RefNumber As String, ByVal PaymentTxnID As String, ByVal PaymentEditSeq As String, ByVal Amount As Decimal, ByVal DateReceived As Date, ByVal DateOnCheck As Date, ByVal Bounced As Boolean, ByVal BATCH_PAY_ID As Integer, ByVal InsertedByUser As String, ByVal BouncedByUser As String, ByVal Bounced_Time As Date) As PaymentHistory_DBRow
             Dim rowPaymentHistory_DBRow As PaymentHistory_DBRow = CType(Me.NewRow,PaymentHistory_DBRow)
-            Dim columnValuesArray() As Object = New Object() {Nothing, CustomerNumber, PaymentTypeID, RefNumber, PaymentTxnID, PaymentEditSeq, Amount, DateReceived, DateOnCheck, Bounced, BATCH_PAY_ID, InsertedByUser}
+            Dim columnValuesArray() As Object = New Object() {Nothing, CustomerNumber, PaymentTypeID, RefNumber, PaymentTxnID, PaymentEditSeq, Amount, DateReceived, DateOnCheck, Bounced, BATCH_PAY_ID, InsertedByUser, BouncedByUser, Bounced_Time}
             rowPaymentHistory_DBRow.ItemArray = columnValuesArray
             Me.Rows.Add(rowPaymentHistory_DBRow)
             Return rowPaymentHistory_DBRow
@@ -1070,6 +1090,8 @@ Partial Public Class ds_Payments
             Me.columnBounced = MyBase.Columns("Bounced")
             Me.columnBATCH_PAY_ID = MyBase.Columns("BATCH_PAY_ID")
             Me.columnInsertedByUser = MyBase.Columns("InsertedByUser")
+            Me.columnBouncedByUser = MyBase.Columns("BouncedByUser")
+            Me.columnBounced_Time = MyBase.Columns("Bounced_Time")
         End Sub
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
@@ -1099,6 +1121,10 @@ Partial Public Class ds_Payments
             MyBase.Columns.Add(Me.columnBATCH_PAY_ID)
             Me.columnInsertedByUser = New Global.System.Data.DataColumn("InsertedByUser", GetType(String), Nothing, Global.System.Data.MappingType.Element)
             MyBase.Columns.Add(Me.columnInsertedByUser)
+            Me.columnBouncedByUser = New Global.System.Data.DataColumn("BouncedByUser", GetType(String), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnBouncedByUser)
+            Me.columnBounced_Time = New Global.System.Data.DataColumn("Bounced_Time", GetType(Date), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnBounced_Time)
             Me.Constraints.Add(New Global.System.Data.UniqueConstraint("Constraint1", New Global.System.Data.DataColumn() {Me.columnPaymentID}, true))
             Me.columnPaymentID.AutoIncrement = true
             Me.columnPaymentID.AutoIncrementSeed = -1
@@ -1116,6 +1142,7 @@ Partial Public Class ds_Payments
             Me.columnDateReceived.AllowDBNull = false
             Me.columnBATCH_PAY_ID.AllowDBNull = false
             Me.columnInsertedByUser.MaxLength = 50
+            Me.columnBouncedByUser.MaxLength = 50
         End Sub
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
@@ -2786,6 +2813,36 @@ Partial Public Class ds_Payments
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        Public Property BouncedByUser() As String
+            Get
+                Try 
+                    Return CType(Me(Me.tablePaymentHistory_DB.BouncedByUserColumn),String)
+                Catch e As Global.System.InvalidCastException
+                    Throw New Global.System.Data.StrongTypingException("The value for column 'BouncedByUser' in table 'PaymentHistory_DB' is DBNull.", e)
+                End Try
+            End Get
+            Set
+                Me(Me.tablePaymentHistory_DB.BouncedByUserColumn) = value
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        Public Property Bounced_Time() As Date
+            Get
+                Try 
+                    Return CType(Me(Me.tablePaymentHistory_DB.Bounced_TimeColumn),Date)
+                Catch e As Global.System.InvalidCastException
+                    Throw New Global.System.Data.StrongTypingException("The value for column 'Bounced_Time' in table 'PaymentHistory_DB' is DBNull.", e)
+                End Try
+            End Get
+            Set
+                Me(Me.tablePaymentHistory_DB.Bounced_TimeColumn) = value
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
         Public Function IsRefNumberNull() As Boolean
             Return Me.IsNull(Me.tablePaymentHistory_DB.RefNumberColumn)
         End Function
@@ -2842,6 +2899,30 @@ Partial Public Class ds_Payments
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
         Public Sub SetInsertedByUserNull()
             Me(Me.tablePaymentHistory_DB.InsertedByUserColumn) = Global.System.Convert.DBNull
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        Public Function IsBouncedByUserNull() As Boolean
+            Return Me.IsNull(Me.tablePaymentHistory_DB.BouncedByUserColumn)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        Public Sub SetBouncedByUserNull()
+            Me(Me.tablePaymentHistory_DB.BouncedByUserColumn) = Global.System.Convert.DBNull
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        Public Function IsBounced_TimeNull() As Boolean
+            Return Me.IsNull(Me.tablePaymentHistory_DB.Bounced_TimeColumn)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        Public Sub SetBounced_TimeNull()
+            Me(Me.tablePaymentHistory_DB.Bounced_TimeColumn) = Global.System.Convert.DBNull
         End Sub
     End Class
     
@@ -3794,6 +3875,8 @@ Namespace ds_PaymentsTableAdapters
             tableMapping.ColumnMappings.Add("Bounced", "Bounced")
             tableMapping.ColumnMappings.Add("BATCH_PAY_ID", "BATCH_PAY_ID")
             tableMapping.ColumnMappings.Add("InsertedByUser", "InsertedByUser")
+            tableMapping.ColumnMappings.Add("BouncedByUser", "BouncedByUser")
+            tableMapping.ColumnMappings.Add("Bounced_Time", "Bounced_Time")
             Me._adapter.TableMappings.Add(tableMapping)
         End Sub
         
@@ -4424,7 +4507,7 @@ Namespace ds_PaymentsTableAdapters
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
         Private Sub InitCommandCollection()
-            Me._commandCollection = New Global.System.Data.IDbCommand(2) {}
+            Me._commandCollection = New Global.System.Data.IDbCommand(3) {}
             Me._commandCollection(0) = New Global.System.Data.SqlClient.SqlCommand()
             CType(Me._commandCollection(0),Global.System.Data.SqlClient.SqlCommand).Connection = New Global.System.Data.SqlClient.SqlConnection(Global.TrashCash.My.MySettings.Default.QBDBConnectionString)
             CType(Me._commandCollection(0),Global.System.Data.SqlClient.SqlCommand).CommandText = "dbo.PaymentHistory_Insert"
@@ -4455,6 +4538,13 @@ Namespace ds_PaymentsTableAdapters
             CType(Me._commandCollection(2),Global.System.Data.SqlClient.SqlCommand).Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@RETURN_VALUE", Global.System.Data.SqlDbType.Int, 4, Global.System.Data.ParameterDirection.ReturnValue, 10, 0, Nothing, Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
             CType(Me._commandCollection(2),Global.System.Data.SqlClient.SqlCommand).Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@TxnID", Global.System.Data.SqlDbType.VarChar, 50, Global.System.Data.ParameterDirection.Input, 0, 0, Nothing, Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
             CType(Me._commandCollection(2),Global.System.Data.SqlClient.SqlCommand).Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@EditSeq", Global.System.Data.SqlDbType.VarChar, 50, Global.System.Data.ParameterDirection.Input, 0, 0, Nothing, Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
+            Me._commandCollection(3) = New Global.System.Data.SqlClient.SqlCommand()
+            CType(Me._commandCollection(3),Global.System.Data.SqlClient.SqlCommand).Connection = New Global.System.Data.SqlClient.SqlConnection(Global.TrashCash.My.MySettings.Default.QBDBConnectionString)
+            CType(Me._commandCollection(3),Global.System.Data.SqlClient.SqlCommand).CommandText = "dbo.PaymentHistory_SetBounced"
+            CType(Me._commandCollection(3),Global.System.Data.SqlClient.SqlCommand).CommandType = Global.System.Data.CommandType.StoredProcedure
+            CType(Me._commandCollection(3),Global.System.Data.SqlClient.SqlCommand).Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@RETURN_VALUE", Global.System.Data.SqlDbType.Int, 4, Global.System.Data.ParameterDirection.ReturnValue, 10, 0, Nothing, Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
+            CType(Me._commandCollection(3),Global.System.Data.SqlClient.SqlCommand).Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@PaymentID", Global.System.Data.SqlDbType.[Decimal], 9, Global.System.Data.ParameterDirection.Input, 18, 0, Nothing, Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
+            CType(Me._commandCollection(3),Global.System.Data.SqlClient.SqlCommand).Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@CurrentUser", Global.System.Data.SqlDbType.VarChar, 50, Global.System.Data.ParameterDirection.Input, 0, 0, Nothing, Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
         End Sub
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
@@ -4578,6 +4668,37 @@ Namespace ds_PaymentsTableAdapters
                 command.Parameters(2).Value = Global.System.DBNull.Value
             Else
                 command.Parameters(2).Value = CType(EditSeq,String)
+            End If
+            Dim previousConnectionState As Global.System.Data.ConnectionState = command.Connection.State
+            If ((command.Connection.State And Global.System.Data.ConnectionState.Open)  _
+                        <> Global.System.Data.ConnectionState.Open) Then
+                command.Connection.Open
+            End If
+            Dim returnValue As Integer
+            Try 
+                returnValue = command.ExecuteNonQuery
+            Finally
+                If (previousConnectionState = Global.System.Data.ConnectionState.Closed) Then
+                    command.Connection.Close
+                End If
+            End Try
+            Return returnValue
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0"),  _
+         Global.System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")>  _
+        Public Overloads Overridable Function PaymentHistory_SetBounced(ByVal PaymentID As Global.System.Nullable(Of Decimal), ByVal CurrentUser As String) As Integer
+            Dim command As Global.System.Data.SqlClient.SqlCommand = CType(Me.CommandCollection(3),Global.System.Data.SqlClient.SqlCommand)
+            If (PaymentID.HasValue = true) Then
+                command.Parameters(1).Value = CType(PaymentID.Value,Decimal)
+            Else
+                command.Parameters(1).Value = Global.System.DBNull.Value
+            End If
+            If (CurrentUser Is Nothing) Then
+                command.Parameters(2).Value = Global.System.DBNull.Value
+            Else
+                command.Parameters(2).Value = CType(CurrentUser,String)
             End If
             Dim previousConnectionState As Global.System.Data.ConnectionState = command.Connection.State
             If ((command.Connection.State And Global.System.Data.ConnectionState.Open)  _

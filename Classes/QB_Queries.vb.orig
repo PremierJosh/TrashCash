@@ -126,7 +126,10 @@ Public Class QB_Queries
                     newRow.InvoiceCreationDate = invRet.TimeCreated.GetValue.Date
                     newRow.CustomerName = invRet.CustomerRef.FullName.GetValue
 
+<<<<<<< HEAD
+=======
 
+>>>>>>> del_invoicing
                     newRow.InvoiceTotal = invRet.Subtotal.GetValue
                     newRow.InvoiceBalance = invRet.BalanceRemaining.GetValue
                     newRow.InvoiceDueDate = invRet.DueDate.GetValue.Date

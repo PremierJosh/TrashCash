@@ -1,8 +1,6 @@
 ﻿Public Class UC_CustomerNotes
     ' property refrence
     Private custNum As Decimal
-    ' note form ref
-    Friend WithEvents _Note As CustomerNote
     ' properties
     Public Property CurrentCustomer As Decimal
         Get

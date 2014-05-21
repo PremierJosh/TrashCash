@@ -230,7 +230,7 @@ Public Class BatchingPrep
         If (e.ColumnIndex = 5) Then
             Try
                 Dim row As DataRowView = dg_PrepInv.Rows(dg_PrepInv.SelectedRows(0).Index).DataBoundItem
-                Dim actualRow As DataSet.WorkingInvoiceRow = row.Row
+                Dim actualRow As ds_Batching.BATCH_WorkingInvoiceRow = row.Row
 
                 If (dg_PrepInv.Rows(e.RowIndex).Cells(e.ColumnIndex).EditedFormattedValue = True) Then
                     qta.WorkingInvoice_UpdatePrint(actualRow.WorkingInvoiceID, "True")

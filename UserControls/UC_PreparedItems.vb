@@ -12,8 +12,7 @@
                 ' refrence
                 custNum = value
                 ' fill Working tables
-                Me.WorkingInvoiceTableAdapter.FillByID(Me.DataSet.WorkingInvoice, "Number", custNum)
-                Me.WorkingPaymentsTableAdapter.FillByID(Me.DataSet.WorkingPayments, "Number", custNum)
+                ' Me.WorkingPaymentsTableAdapter.FillByID(Me.DataSet.WorkingPayments, "Number", custNum)
             End If
         End Set
     End Property
@@ -22,12 +21,12 @@
         If (e.ColumnIndex = 3) Then
             Try
                 Dim row As DataRowView = dg_PrepInvoices.Rows(dg_PrepInvoices.SelectedRows(0).Index).DataBoundItem
-                Dim actualRow As DataSet.WorkingInvoiceRow = row.Row
+                'Dim actualRow As DataSet.WorkingInvoiceRow = row.Row
 
                 If (dg_PrepInvoices.Rows(e.RowIndex).Cells(e.ColumnIndex).EditedFormattedValue = True) Then
-                    Me.WorkingInvoiceTableAdapter.UpdatePrint(actualRow.WorkingInvoiceID, "True")
+                    ' Me.WorkingInvoiceTableAdapter.UpdatePrint(actualRow.WorkingInvoiceID, "True")
                 Else
-                    Me.WorkingInvoiceTableAdapter.UpdatePrint(actualRow.WorkingInvoiceID, "False")
+                    'Me.WorkingInvoiceTableAdapter.UpdatePrint(actualRow.WorkingInvoiceID, "False")
                 End If
             Catch ex As Exception
                 MsgBox(ex.Message)
