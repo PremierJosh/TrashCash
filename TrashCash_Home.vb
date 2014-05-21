@@ -165,10 +165,10 @@ Public Class TrashCash_Home
         If (needNew) Then
             _payForm = New Payments(Me)
             _payForm.MdiParent = Me
-        Else
-            _payForm.Show()
-            _payForm.BringToFront()
         End If
+
+        _payForm.Show()
+        _payForm.BringToFront()
     End Sub
 
     Private Sub btn_NewCustTab_Click(sender As System.Object, e As System.EventArgs) Handles btn_CustTab.Click
@@ -185,10 +185,9 @@ Public Class TrashCash_Home
         If (needNew) Then
             _customer = New Customer(Me)
             _customer.MdiParent = Me
-        Else
-            _customer.Show()
-            _customer.BringToFront()
         End If
+        _customer.Show()
+        _customer.BringToFront()
     End Sub
 
     Private Sub btn_BatchWork_Click(sender As System.Object, e As System.EventArgs) Handles btn_BatchWork.Click
@@ -258,6 +257,12 @@ Public Class TrashCash_Home
             btn_PendApprovs.PerformClick()
         End If
 
+        ' tell approval form if its open to refresh
+        If (_pendingApprovals IsNot Nothing) Then
+            If (_pendingApprovals.IsDisposed = False) Then
+                _pendingApprovals.RefreshApprovalList()
+            End If
+        End If
     End Sub
     Private Sub QBInitConnection(Optional ByVal retry As Boolean = False)
         Try
@@ -423,10 +428,11 @@ Public Class TrashCash_Home
         If (needNew) Then
             _pendingApprovals = New PendingApprovals(Me)
             _pendingApprovals.MdiParent = Me
-        Else
-            _pendingApprovals.Show()
-            _pendingApprovals.BringToFront()
         End If
+
+        _pendingApprovals.Show()
+        _pendingApprovals.BringToFront()
+
     End Sub
 
     Private Sub Batch_RefreshBalance_Tick(sender As System.Object, e As System.EventArgs) Handles Batch_RefreshBalance.Tick
