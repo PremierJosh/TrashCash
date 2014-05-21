@@ -123,4 +123,8 @@ Public Class Customer
         _creditForm = New CustomerCredit(_home, CurrentCustomer)
         _creditForm.ShowDialog()
     End Sub
+
+    Private Sub btn_Inv_Click(sender As System.Object, e As System.EventArgs) Handles btn_Inv.Click
+
+    End Sub
 End Class

@@ -171,6 +171,7 @@ Partial Class Customer
         Me.Ts_M_Customer.CurrentCustomer = 0
         Me.Ts_M_Customer.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Ts_M_Customer.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden
+        Me.Ts_M_Customer.HomeForm = Nothing
         Me.Ts_M_Customer.Location = New System.Drawing.Point(0, 0)
         Me.Ts_M_Customer.Name = "Ts_M_Customer"
         Me.Ts_M_Customer.Size = New System.Drawing.Size(860, 31)

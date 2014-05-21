@@ -17,6 +17,9 @@
         Set(value As Integer)
             _currentCustomer = value
 
+            ' set combo box
+            Ts_M_Customer.CurrentCustomer = value
+
             ' getting service table
             If (value > 0) Then
                 Using ta As New ds_CustomerTableAdapters.Customer_RecurringServiceTypesTableAdapter
@@ -50,12 +53,11 @@
         InitializeComponent()
 
         ' Add any initialization after the InitializeComponent() call.
-        ' set customer
-        Ts_M_Customer.CurrentCustomer = CustomerNumber
-        CurrentCustomer = CustomerNumber
-        ' get balance
         _homeForm = HomeForm
         Ts_M_Customer.HomeForm = HomeForm
+
+        ' set customer
+        CurrentCustomer = CustomerNumber
 
         ' hide toolstrip stuff and lock to customer
         Ts_M_Customer.Enabled = False

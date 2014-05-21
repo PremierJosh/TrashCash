@@ -51,6 +51,9 @@ Public Class ts_M_Customer
     'event
     Public Event CustomerChanging(ByVal CustomerNumber As Integer)
 
+    ' vars
+    Private c_qta As New ds_CustomerTableAdapters.QueriesTableAdapter
+
     ' handles when cmb box selection changes
     Private Sub CustomerChanged(ByVal CustomerNumber As Integer, ByVal e As System.EventArgs) Handles cmb_Customer._SelectionChangeCommitted
         CurrentCustomer = CustomerNumber
@@ -69,10 +72,7 @@ Public Class ts_M_Customer
     ' balance setting
     Friend Sub GetCustomerBalance()
         ' getting queue amount
-        Dim QueueAmount As Double = 0
-        Using ta As New ds_CustomerTableAdapters.QueriesTableAdapter
-            QueueAmount = ta.Customer_PaymentTotalInQueue(CurrentCustomer)
-        End Using
+        Dim QueueAmount As Double = c_qta.Customer_PaymentTotalInQueue(CurrentCustomer)
 
         ' getting quickbooks balance
         Dim QBBalance As Double = HomeForm.Queries.Customer_Balance(CurrentCustomer)
@@ -102,7 +102,17 @@ Public Class ts_M_Customer
 
             ' set queue amount
             lbl_QueueAmount.Text = FormatCurrency(QueueAmount)
-            lbl_AdjustedBalAmount.Text = FormatCurrency(QBBalance + QueueAmount)
+
+            ' get adjusted amount
+            Dim adjustedBalance As Double = QBBalance - QueueAmount
+            lbl_AdjustedBalAmount.Text = FormatCurrency(adjustedBalance)
+
+            ' coloring
+            If (adjustedBalance <= 0) Then
+                lbl_AdjustedBalAmount.ForeColor = Color.Green
+            Else
+                lbl_AdjustedBalAmount.ForeColor = Color.Red
+            End If
         Else
             ' hide queue controls
             sep_QueueAmount.Visible = False
@@ -153,7 +163,6 @@ Public Class ts_M_Customer
     Public Sub New()
         MyBase.New()
 
-        ' instantiate friend classes - these will be added to the toolstrip
         cmb_Customer = New ts_cmb_Customer
         tb_QuickSearch = New ts_tb_QuickSearch
         lbl_CustBalance = New ToolStripLabel
@@ -161,7 +170,6 @@ Public Class ts_M_Customer
 
         ' adjusted balance items
         lbl_AdjustedBalHeader = New ToolStripLabel
-        lbl_AdjustedBalHeader.Font = New Font("Microsoft Sans Serif", 10)
         lbl_AdjustedBalHeader.Text = "Adjusted:"
         lbl_AdjustedBalAmount = New ToolStripLabel
         sep_AdjustedBal = New ToolStripSeparator
@@ -170,7 +178,6 @@ Public Class ts_M_Customer
         lbl_QueueAmount = New ToolStripLabel
         lbl_QueueHeader = New ToolStripLabel
         lbl_QueueHeader.Text = "In Queue:"
-        lbl_QueueHeader.Font = New Font("Microsoft Sans Serif", 10)
         sep_QueueAmount = New ToolStripSeparator
 
         lbl_Quicksearch = New ToolStripLabel
@@ -178,8 +185,6 @@ Public Class ts_M_Customer
         ' balance label needs to align right
         Dim balanceHeader As New ToolStripLabel
         balanceHeader.Text = "Balance:"
-        'balanceHeader.Alignment = ToolStripItemAlignment.Right
-        balanceHeader.Font = New Font("Microsoft Sans Serif", 10)
 
         'set visuals
         Me.GripStyle = ToolStripGripStyle.Hidden
@@ -187,7 +192,7 @@ Public Class ts_M_Customer
         Me.Items.AddRange(New ToolStripItem() {cmb_Customer, New ToolStripSeparator, lbl_Quicksearch, tb_QuickSearch, sep_QuickSearch, balanceHeader, lbl_CustBalance, sep_QueueAmount, lbl_QueueHeader, lbl_QueueAmount, sep_AdjustedBal, lbl_AdjustedBalHeader, lbl_AdjustedBalAmount})
 
         ' resize cmb_Customer
-        cmb_Customer.Size = New Size(350, 25)
+        cmb_Customer.Size = New Size(275, 25)
     End Sub
 
     ' these subs catch search events from the tb

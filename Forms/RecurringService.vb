@@ -366,7 +366,8 @@ Public Class RecurringService
                     End If
                 End If
             End If
-
+            ' not going to credit if we dont have an end date
+            Crediting = 0
             dtp_EndDate.Visible = False
         End If
     End Sub
