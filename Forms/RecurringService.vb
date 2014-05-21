@@ -98,41 +98,48 @@ Public Class RecurringService
             Return _recRow
         End Get
         Set(value As ds_RecurringService.RecurringServiceRow)
+            ' bool to see if we can set the new row
+            Dim okToSet As Boolean = False
             If (_recRow IsNot Nothing) Then
                 If (_recRow.RecurringServiceID <> value.RecurringServiceID) Then
-                    _recRow = value
+                    okToSet = True
+                End If
+            Else
+                okToSet = True
+            End If
 
-                    ' fill billed services display
-                    Me.RecurringService_BillHistoryTableAdapter.FillByRecurringID(Me.Ds_RecurringService.RecurringService_BillHistory, value.RecurringServiceID)
-                    ' fill service notes display
-                    Me.ServiceNotesTableAdapter.FillByID(Me.Ds_RecurringService.ServiceNotes, value.RecurringServiceID)
-                    ' fill credit history
-                    Me.RecurringService_CreditsTableAdapter.FillByRecID(Me.Ds_RecurringService.RecurringService_Credits, value.RecurringServiceID)
+            If (okToSet) Then
+                _recRow = value
 
-                    ' checking if service is approved
-                    Approved = value.Approved
+                ' fill billed services display
+                Me.RecurringService_BillHistoryTableAdapter.FillByRecurringID(Me.Ds_RecurringService.RecurringService_BillHistory, value.RecurringServiceID)
+                ' fill service notes display
+                Me.ServiceNotesTableAdapter.FillByID(Me.Ds_RecurringService.ServiceNotes, value.RecurringServiceID)
+                ' fill credit history
+                Me.RecurringService_CreditsTableAdapter.FillByRecID(Me.Ds_RecurringService.RecurringService_Credits, value.RecurringServiceID)
 
-                    ' checking if an end date is set
-                    If (value.IsRecurringServiceEndDateNull = False) Then
-                        dtp_EndDate.Visible = True
-                        dtp_EndDate.Value = value.RecurringServiceEndDate
-                        ck_EndDate.Checked = True
+                ' checking if service is approved
+                Approved = value.Approved
 
-                        ' checking if credited due to this end date
-                        If (value.Credited = True) Then
-                            ' set property
-                            Using ta As New ds_RecurringServiceTableAdapters.RecurringService_EndDateCreditsTableAdapter
-                                EndDateCreditRow = ta.GetDataByRecID(value.RecurringServiceID).Rows(0)
-                            End Using
-                        End If
+                ' checking if an end date is set
+                If (value.IsRecurringServiceEndDateNull = False) Then
+                    dtp_EndDate.Visible = True
+                    dtp_EndDate.Value = value.RecurringServiceEndDate
+                    ck_EndDate.Checked = True
 
-                    Else
-                        ck_EndDate.Checked = False
-                        dtp_EndDate.Visible = False
+                    ' checking if credited due to this end date
+                    If (value.Credited = True) Then
+                        ' set property
+                        Using ta As New ds_RecurringServiceTableAdapters.RecurringService_EndDateCreditsTableAdapter
+                            EndDateCreditRow = ta.GetDataByRecID(value.RecurringServiceID).Rows(0)
+                        End Using
                     End If
+
+                Else
+                    ck_EndDate.Checked = False
+                    dtp_EndDate.Visible = False
                 End If
             End If
-            
         End Set
     End Property
 
