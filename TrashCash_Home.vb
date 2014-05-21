@@ -59,11 +59,12 @@ Public Class TrashCash_Home
             ' 4	  Nicole	3
 
             ' auth level 1 is super admin, no login prompts
-            If (value = 1) Then
-                _bypassLogin = True
-            Else
-                MessageBox.Show("AUTH LEVEL UNKNOWKN")
-            End If
+            Select Case value
+                Case value = 1
+                    _bypassLogin = True
+                Case value > 3
+                    MessageBox.Show("AUTH LEVEL UNKNOWKN")
+            End Select
         End Set
     End Property
 
@@ -388,8 +389,10 @@ Public Class TrashCash_Home
 
     Private Sub btn_PendApprovs_Click(sender As System.Object, e As System.EventArgs) Handles btn_PendApprovs.Click
         If (_pendingApprovals Is Nothing) Then
-            _pendingApprovals = New PendingApprovals(Me)
-            _pendingApprovals.MdiParent = Me
+            If (_pendingApprovals.IsDisposed = False) Then
+                _pendingApprovals = New PendingApprovals(Me)
+                _pendingApprovals.MdiParent = Me
+            End If
         End If
 
         _pendingApprovals.Show()
@@ -405,8 +408,10 @@ Public Class TrashCash_Home
 
     Private Sub menu_Admin_Click(sender As System.Object, e As System.EventArgs) Handles menu_Admin.Click
         If (f_TrashCash_Admin IsNot Nothing) Then
-            f_TrashCash_Admin.BringToFront()
-            f_TrashCash_Admin.Show()
+            If (f_TrashCash_Admin.IsDisposed = False) Then
+                f_TrashCash_Admin.BringToFront()
+                f_TrashCash_Admin.Show()
+            End If
         Else
             Dim open As Boolean = False
             Dim userRow As ds_Program.USERSRow = _currentUserRow
