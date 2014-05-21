@@ -91,25 +91,34 @@ Public Class ts_M_Customer
 
         ' coloring and showing queue label
         If (QueueAmount > 0) Then
-            ' show controls
-            queueAmountSep.Visible = True
+            ' show queue controls
+            sep_QueueAmount.Visible = True
             lbl_QueueHeader.Visible = True
             lbl_QueueAmount.Visible = True
+            ' show adjusted controls
+            sep_AdjustedBal.Visible = True
+            lbl_AdjustedBalHeader.Visible = True
+            lbl_AdjustedBalAmount.Visible = True
 
             ' set queue amount
             lbl_QueueAmount.Text = FormatCurrency(QueueAmount)
+            lbl_AdjustedBalAmount.Text = FormatCurrency(QBBalance + QueueAmount)
         Else
-            ' hide controls
-            queueAmountSep.Visible = False
+            ' hide queue controls
+            sep_QueueAmount.Visible = False
             lbl_QueueHeader.Visible = False
             lbl_QueueAmount.Visible = False
+            ' hide adjusted controls
+            sep_AdjustedBal.Visible = False
+            lbl_AdjustedBalHeader.Visible = False
+            lbl_AdjustedBalAmount.Visible = False
         End If
     End Sub
 
     Public Sub HideQuickSearch()
         ' hiding quick search tb, its label, and the left seperator
         lbl_Quicksearch.Visible = False
-        quicksearchSep.Visible = False
+        sep_QuickSearch.Visible = False
         tb_QuickSearch.Visible = False
     End Sub
 
@@ -127,14 +136,19 @@ Public Class ts_M_Customer
     Friend WithEvents lbl_CustBalance As ToolStripLabel
     Friend WithEvents lbl_QueueAmount As ToolStripLabel
 
+    ' adjusted amount label, header, and seperator
+    Friend WithEvents lbl_AdjustedBalHeader As ToolStripLabel
+    Friend WithEvents lbl_AdjustedBalAmount As ToolStripLabel
+    Friend WithEvents sep_AdjustedBal As ToolStripSeparator
+
     ' controls i may want to hide
     ' label for quicksearch
     Friend WithEvents lbl_Quicksearch As ToolStripLabel
     Friend WithEvents lbl_QueueHeader As ToolStripLabel
 
     ' seperateor after quicksearch tb
-    Private quicksearchSep As ToolStripSeparator
-    Private queueAmountSep As ToolStripSeparator
+    Private sep_QuickSearch As ToolStripSeparator
+    Private sep_QueueAmount As ToolStripSeparator
 
     Public Sub New()
         MyBase.New()
@@ -143,13 +157,21 @@ Public Class ts_M_Customer
         cmb_Customer = New ts_cmb_Customer
         tb_QuickSearch = New ts_tb_QuickSearch
         lbl_CustBalance = New ToolStripLabel
-        quicksearchSep = New ToolStripSeparator
+        sep_QuickSearch = New ToolStripSeparator
+
+        ' adjusted balance items
+        lbl_AdjustedBalHeader = New ToolStripLabel
+        lbl_AdjustedBalHeader.Font = New Font("Microsoft Sans Serif", 10)
+        lbl_AdjustedBalHeader.Text = "Adjusted:"
+        lbl_AdjustedBalAmount = New ToolStripLabel
+        sep_AdjustedBal = New ToolStripSeparator
 
         ' in queue items
         lbl_QueueAmount = New ToolStripLabel
         lbl_QueueHeader = New ToolStripLabel
         lbl_QueueHeader.Text = "In Queue:"
-        queueAmountSep = New ToolStripSeparator
+        lbl_QueueHeader.Font = New Font("Microsoft Sans Serif", 10)
+        sep_QueueAmount = New ToolStripSeparator
 
         lbl_Quicksearch = New ToolStripLabel
         lbl_Quicksearch.Text = "QuickSearch:"
@@ -162,7 +184,7 @@ Public Class ts_M_Customer
         'set visuals
         Me.GripStyle = ToolStripGripStyle.Hidden
         'Me.Dock = DockStyle.Fill
-        Me.Items.AddRange(New ToolStripItem() {cmb_Customer, New ToolStripSeparator, lbl_Quicksearch, tb_QuickSearch, quicksearchSep, balanceHeader, lbl_CustBalance, queueAmountSep, lbl_QueueHeader, lbl_QueueAmount})
+        Me.Items.AddRange(New ToolStripItem() {cmb_Customer, New ToolStripSeparator, lbl_Quicksearch, tb_QuickSearch, sep_QuickSearch, balanceHeader, lbl_CustBalance, sep_QueueAmount, lbl_QueueHeader, lbl_QueueAmount, sep_AdjustedBal, lbl_AdjustedBalHeader, lbl_AdjustedBalAmount})
 
         ' resize cmb_Customer
         cmb_Customer.Size = New Size(350, 25)
