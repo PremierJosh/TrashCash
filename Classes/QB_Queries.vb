@@ -126,9 +126,6 @@ Public Class QB_Queries
                     newRow.InvoiceCreationDate = invRet.TimeCreated.GetValue.Date
                     newRow.CustomerName = invRet.CustomerRef.FullName.GetValue
 
-                    '2.0 - dimming qta to drop in cust num here
-                    Dim qta As New DataSetTableAdapters.QueriesTableAdapter
-                    newRow.CustomerNumber = qta.Customer_GetNumberFromListID(invRet.CustomerRef.ListID.GetValue)
 
                     newRow.InvoiceTotal = invRet.Subtotal.GetValue
                     newRow.InvoiceBalance = invRet.BalanceRemaining.GetValue

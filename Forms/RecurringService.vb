@@ -373,42 +373,56 @@ Public Class RecurringService
 
             ' bring over end date
             If (ck_EndDate.Checked = True) Then
+                ' checking if end date before start date
+                If (dtp_EndDate.Value.Date > RecurringServiceRow.RecurringServiceStartDate) Then
 
-                ' first checking if something needs to be voided
-                If (dv_EndDateOverlap.Count > 0) Then
-                    Dim overlapPrompt As DialogResult = MessageBox.Show("Keeping this End Date will Void " & dv_EndDateOverlap.Count & " Credit(s) for a total of " &
-                                                                        FormatCurrency(dv_EndDateOverlap.Table.Compute("SUM(CreditAmount)", "")) &
-                                                                        ". Do you wish to keep this End Date?", "Void " & dv_EndDateOverlap.Count & " Credit(s)",
-                                                                        MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation)
+                    ' first checking if something needs to be voided
+                    If (dv_EndDateOverlap.Count > 0) Then
+                        Dim overlapPrompt As DialogResult = MessageBox.Show("Keeping this End Date will Void " & dv_EndDateOverlap.Count & " Credit(s) for a total of " &
+                                                                            FormatCurrency(dv_EndDateOverlap.Table.Compute("SUM(CreditAmount)", "")) &
+                                                                            ". Do you wish to keep this End Date?", "Void " & dv_EndDateOverlap.Count & " Credit(s)",
+                                                                            MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation)
 
-                    If (overlapPrompt = Windows.Forms.DialogResult.Yes) Then
-                        ' void all credits in table
-                        For Each row As ds_RecurringService.RecurringService_CreditsRow In dv_EndDateOverlap.Table.Rows
-                            HomeForm.Procedures.RecurringService_Credit_Void(row.RecurringServiceCreditID, "Credit for Date overlaped with End Date. New End Date: " & dtp_EndDate.Value.Date & " | Billed Through: " & _billThruDate.Date)
-                        Next
-                    Else
-                        Exit Sub
+                        If (overlapPrompt = Windows.Forms.DialogResult.Yes) Then
+                            ' void all credits in table
+                            For Each row As ds_RecurringService.RecurringService_CreditsRow In dv_EndDateOverlap.Table.Rows
+                                HomeForm.Procedures.RecurringService_Credit_Void(row.RecurringServiceCreditID, "Credit for Date overlaped with End Date. New End Date: " & dtp_EndDate.Value.Date & " | Billed Through: " & _billThruDate.Date)
+                            Next
+                        Else
+                            Exit Sub
+                        End If
+
                     End If
 
-                End If
+                    ' warning if a credit is going to be made
+                    If (Crediting > 0) Then
 
-                ' warning if a credit is going to be made
-                If (Crediting > 0) Then
-                    
 
-                    ' checking if old credit needs voided for new one
-                    If (EndDateCreditRow.Voided = False) Then
-                        creditResult = MessageBox.Show("Changing the Last Date of Service will cause the previous credit of " & FormatCurrency(EndDateCreditRow.CreditAmount) & " to be voided, and a new one of " & FormatCurrency(Crediting) & " to be issued." & vbCrLf & _
-                                                       "Do you want to save these changes?", "Void old Credit and create new.", MessageBoxButtons.YesNo, MessageBoxIcon.Warning)
-                        ' updating void vars to be used to update the row
-                        voidOldCreditReason = "Last Date of Service changed from " & RecurringServiceRow.RecurringServiceEndDate.Date & " to " & dtp_EndDate.Value.Date & "."
+                        ' checking if old credit needs voided for new one
+                        If (EndDateCreditRow IsNot Nothing) Then
+                            If (EndDateCreditRow.Voided = False) Then
+                                creditResult = MessageBox.Show("Changing the Last Date of Service will cause the previous credit of " & FormatCurrency(EndDateCreditRow.CreditAmount) & " to be voided, and a new one of " & FormatCurrency(Crediting) & " to be issued." & vbCrLf & _
+                                                                "Do you want to save these changes?", "Void old Credit and create new.", MessageBoxButtons.YesNo, MessageBoxIcon.Warning)
+                                ' updating void vars to be used to update the row
+                                voidOldCreditReason = "Last Date of Service changed from " & RecurringServiceRow.RecurringServiceEndDate.Date & " to " & dtp_EndDate.Value.Date & "."
+                            Else
+                                creditResult = MessageBox.Show("Keeping this Last Date of Service will cause a credit to be issued for " & FormatCurrency(Crediting) & "." & vbCrLf & _
+                                                                        "Do you want to issue this credit?", "Crediting Customer for End Date Overlap", MessageBoxButtons.YesNo, MessageBoxIcon.Warning)
+                            End If
+                        Else
+                            creditResult = MessageBox.Show("Keeping this Last Date of Service will cause a credit to be issued for " & FormatCurrency(Crediting) & "." & vbCrLf & _
+                                                                        "Do you want to issue this credit?", "Crediting Customer for End Date Overlap", MessageBoxButtons.YesNo, MessageBoxIcon.Warning)
+                        End If
                     Else
-                        creditResult = MessageBox.Show("Keeping this Last Date of Service will cause a credit to be issued for " & FormatCurrency(Crediting) & "." & vbCrLf & _
-                                                                 "Do you want to issue this credit?", "Crediting Customer for End Date Overlap", MessageBoxButtons.YesNo, MessageBoxIcon.Warning)
+                        ' set end date on row
+                        RecurringServiceRow.RecurringServiceEndDate = dtp_EndDate.Value.Date
                     End If
                 Else
-                    ' set end date on row
-                    RecurringServiceRow.RecurringServiceEndDate = dtp_EndDate.Value.Date
+                    ' warn that end date cannot be before start date and open the dtp
+                    MessageBox.Show("Service End Date cannot be before its Start Date", "Invalid End Date", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                    dtp_EndDate.Select()
+                    SendKeys.Send("%{DOWN}")
+                    Exit Sub
                 End If
             Else
                 ' wipe end date
@@ -428,6 +442,7 @@ Public Class RecurringService
                     End If
                 End If
             End If
+
 
             ' check if voiding old end date credit
             If (voidOldCreditReason IsNot Nothing) Then
@@ -470,8 +485,8 @@ Public Class RecurringService
 
             Me.Cursor = Cursors.Default
             Me.Close()
-
         End If
+
     End Sub
 
     ' validation sub
@@ -652,8 +667,6 @@ Public Class RecurringService
     End Sub
 
     Private Sub RecurringService_Load(sender As Object, e As System.EventArgs) Handles Me.Load
-        'TODO: This line of code loads data into the 'Ds_Types.ServiceTypesList' table. You can move, or remove it, as needed.
-        Me.ServiceTypesListTableAdapter.Fill(Me.Ds_Types.ServiceTypesList)
         'going to reset service id based on cmb selected value since trying to get selected value on new returns -1
         RecurringServiceRow.ServiceTypeID = Cmb_ServiceTypes.SelectedValue
         ' throwing message if customer is single inv
