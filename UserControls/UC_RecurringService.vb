@@ -93,20 +93,27 @@
                     ' service has ended
                     grid.Rows(i).DefaultCellStyle.BackColor = Color.Red
                     grid.Rows(i).DefaultCellStyle.SelectionBackColor = Color.IndianRed
+                    ' need a default font
+                    grid.Rows(i).DefaultCellStyle.SelectionForeColor = SystemColors.HighlightText
                 ElseIf (row.RecurringServiceEndDate >= Date.Now.Date) Then
                     ' service has end date but it hasnt passed yet
                     grid.Rows(i).DefaultCellStyle.BackColor = Color.Yellow
                     grid.Rows(i).DefaultCellStyle.SelectionBackColor = Color.Khaki
+                    ' need a darker font
+                    grid.Rows(i).DefaultCellStyle.SelectionForeColor = Color.Black
                 End If
             ElseIf (row.Approved = False) Then
                 ' approval pending rows will be yellow
                 grid.Rows(i).DefaultCellStyle.BackColor = Color.Yellow
                 grid.Rows(i).DefaultCellStyle.SelectionBackColor = Color.Khaki
+                ' need a darker font
+                grid.Rows(i).DefaultCellStyle.SelectionForeColor = Color.Black
             Else
                 ' end date is NULL
                 grid.Rows(i).DefaultCellStyle.BackColor = Color.SpringGreen
                 grid.Rows(i).DefaultCellStyle.SelectionBackColor = Color.MediumSeaGreen
-                'grid.Rows(i).DefaultCellStyle.SelectionForeColor = Color.Black
+                ' need a default font
+                grid.Rows(i).DefaultCellStyle.SelectionForeColor = SystemColors.HighlightText
             End If
         Next i
     End Sub
