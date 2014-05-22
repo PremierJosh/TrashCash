@@ -1,12 +1,11 @@
 ﻿Imports QBFC12Lib
-Imports TrashCash.TrashCash_Utils.Err_Handling
 Imports System.ComponentModel
 
 'Imports System.Windows.Forms.ToolStripComboBox
 
-Public Class TrashCash_Utils
+Public Class Utilities
     ' can be used by any where this class is included
-    Public Shared qta_util As DataSetTableAdapters.QueriesTableAdapter
+    Public Shared QtaUtil As DataSetTableAdapters.QueriesTableAdapter
 
     Public Class ProgressObj
         Public Property MaximumValue As Integer
@@ -14,9 +13,9 @@ Public Class TrashCash_Utils
         Public Property CurrentCustomer As String
     End Class
 
-    Public Class _Functions
+    Public Class Functions
         Public Shared Function FormExists(ByVal formName As String,
-                                   Optional ByRef _form As Form = Nothing,
+                                   Optional ByRef form As Form = Nothing,
                                    Optional ByVal bringToFront As Boolean = False) As Boolean
             ' return var
             Dim exists As Boolean
@@ -32,8 +31,8 @@ Public Class TrashCash_Utils
                     End If
 
                     ' if form ref needs passed back
-                    If (_form IsNot Nothing) Then
-                        _form = forms.Item(i)
+                    If (Form IsNot Nothing) Then
+                        Form = forms.Item(i)
                     End If
                 End If
             Next i
@@ -41,18 +40,18 @@ Public Class TrashCash_Utils
             Return exists
         End Function
     End Class
-    Public Class Err_Handling
+    Public Class ErrHandling
         'Protected qta As DataSetTableAdapters.QueriesTableAdapter
 
         Public Shared Sub ResponseErr_Misc(ByVal resp As IResponse)
             If (resp.StatusCode = 1) Then
                 MsgBox("No matching results from Quickbooks")
             Else
-                If (qta_util Is Nothing) Then
-                    qta_util = New DataSetTableAdapters.QueriesTableAdapter
+                If (QtaUtil Is Nothing) Then
+                    QtaUtil = New DataSetTableAdapters.QueriesTableAdapter
                 End If
                 Try
-                    qta_util.ERR_MISC_Insert(resp.Type.GetValue.ToString,
+                    QtaUtil.ERR_MISC_Insert(resp.Type.GetValue.ToString,
                                         resp.StatusCode.ToString,
                                         resp.StatusMessage,
                                         Date.Now)
@@ -76,18 +75,18 @@ Namespace Database_ComboBoxes
     Public Class ts_cmb_BadCheckBanks
         Inherits Windows.Forms.ToolStripComboBox
 
-        Private dt As DataSet.BanksListDataTable
-        Private ta As DataSetTableAdapters.BanksListTableAdapter
+        Private ReadOnly _dt As DataSet.BanksListDataTable
+        Private ReadOnly _ta As DataSetTableAdapters.BanksListTableAdapter
 
         Public Sub New()
-            dt = New DataSet.BanksListDataTable
-            ta = New DataSetTableAdapters.BanksListTableAdapter
+            _dt = New DataSet.BanksListDataTable
+            _ta = New DataSetTableAdapters.BanksListTableAdapter
 
-            ta.ClearBeforeFill = True
-            ta.Fill(dt)
+            _ta.ClearBeforeFill = True
+            _ta.Fill(_dt)
 
             ' bind
-            Me.ComboBox.DataSource = dt
+            Me.ComboBox.DataSource = _dt
             Me.ComboBox.DisplayMember = "BANK_NAME"
             Me.ComboBox.ValueMember = "BC_BANK_ID"
 
@@ -97,22 +96,22 @@ Namespace Database_ComboBoxes
 
 
         Public Sub RefreshForChanges()
-            ta.Fill(dt)
+            _ta.Fill(_dt)
         End Sub
     End Class
 
     Public Class cmb_PaymentTypes
         Inherits ComboBox
 
-        Private dt As ds_Types.PaymentTypesDataTable
-        Private ta As ds_TypesTableAdapters.PaymentTypesTableAdapter
+        Private ReadOnly _dt As ds_Types.PaymentTypesDataTable
+        Private ReadOnly _ta As ds_TypesTableAdapters.PaymentTypesTableAdapter
 
         Public Sub New()
-            ta = New ds_TypesTableAdapters.PaymentTypesTableAdapter
-            dt = New ds_Types.PaymentTypesDataTable
-            ta.Fill(dt)
+            _ta = New ds_TypesTableAdapters.PaymentTypesTableAdapter
+            _dt = New ds_Types.PaymentTypesDataTable
+            _ta.Fill(_dt)
 
-            Me.DataSource = dt
+            Me.DataSource = _dt
             Me.DisplayMember = "PaymentTypeName"
             Me.ValueMember = "PaymentTypeID"
         End Sub
@@ -122,48 +121,48 @@ Namespace Database_ComboBoxes
         Inherits ComboBox
 
         ' events
-        Public Event ServiceChanged(ByVal ServiceID As Integer, ByVal Rate As Double, ByVal BillLength As Integer)
+        Public Event ServiceChanged(ByVal serviceID As Integer, ByVal Rate As Double, ByVal billLength As Integer)
 
         ' property
-        Private rate As Decimal
-        Private length As Integer
+        Private _rate As Decimal
+        Private _length As Integer
         ReadOnly Property SelectedServiceRate As Decimal
             Get
-                If (rate = Nothing) Then
+                If (_rate = Nothing) Then
                     GetRate()
                 End If
-                Return rate
+                Return _rate
             End Get
         End Property
         ReadOnly Property SelectedServiceLength As Integer
             Get
-                If (length = Nothing) Then
+                If (_length = Nothing) Then
                     GetLength()
                 End If
-                Return length
+                Return _length
             End Get
         End Property
 
         ' custList dt and ta
-        Public dt As ds_Types.ServiceTypesListDataTable
+        Public DT As ds_Types.ServiceTypesListDataTable
         <DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)> _
         Public Property DataTable As ds_Types.ServiceTypesListDataTable
             Get
-                Return dt
+                Return DT
             End Get
             Set(value As ds_Types.ServiceTypesListDataTable)
-                dt = value
+                DT = value
             End Set
         End Property
 
-        Public ta As ds_TypesTableAdapters.ServiceTypesListTableAdapter
+        Public TA As ds_TypesTableAdapters.ServiceTypesListTableAdapter
         <DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)> _
         Public Property TableAdapater As ds_TypesTableAdapters.ServiceTypesListTableAdapter
             Get
-                Return ta
+                Return TA
             End Get
             Set(value As ds_TypesTableAdapters.ServiceTypesListTableAdapter)
-                ta = value
+                TA = value
             End Set
         End Property
 
@@ -183,24 +182,24 @@ Namespace Database_ComboBoxes
         Private Sub GetRate()
             If (Me.SelectedValue IsNot Nothing) Then
                 Dim row As DataRowView = DirectCast(Me.SelectedItem, DataRowView)
-                rate = row.Item("ServiceRate")
+                _rate = row.Item("ServiceRate")
             End If
         End Sub
 
         Private Sub GetLength()
             If (Me.SelectedValue IsNot Nothing) Then
                 Dim row As DataRowView = DirectCast(Me.SelectedItem, DataRowView)
-                length = row.Item("ServiceBillLength")
+                _length = row.Item("ServiceBillLength")
             End If
         End Sub
 
-        Public Sub RefreshList(Optional ByVal Rebind As Boolean = False)
+        Public Sub RefreshList(Optional ByVal rebind As Boolean = False)
             DataTable = New ds_Types.ServiceTypesListDataTable
             TableAdapater = New ds_TypesTableAdapters.ServiceTypesListTableAdapter
             ' fill table
             TableAdapater.Fill(DataTable)
 
-            If (Rebind = True) Then
+            If (rebind = True) Then
                 ' bind
                 Me.DataSource = DataTable
                 Me.DisplayMember = "ServiceName"
@@ -212,24 +211,24 @@ Namespace Database_ComboBoxes
         Private Sub ChangeCommited() Handles Me.SelectionChangeCommitted
             GetRate()
             GetLength()
-            RaiseEvent ServiceChanged(CInt(Me.SelectedValue), rate, length)
+            RaiseEvent ServiceChanged(CInt(Me.SelectedValue), _rate, _length)
         End Sub
     End Class
 
     Public Class cmb_BadCheckBanks
         Inherits ComboBox
 
-        Dim dt As DataSet.BanksListDataTable
-        Dim ta As DataSetTableAdapters.BanksListTableAdapter
+        ReadOnly _dt As DataSet.BanksListDataTable
+        ReadOnly _ta As DataSetTableAdapters.BanksListTableAdapter
 
         Public Sub New()
-            dt = New DataSet.BanksListDataTable
-            ta = New DataSetTableAdapters.BanksListTableAdapter
+            _dt = New DataSet.BanksListDataTable
+            _ta = New DataSetTableAdapters.BanksListTableAdapter
 
-            ta.Fill(dt)
+            _ta.Fill(_dt)
 
             ' bind
-            Me.DataSource = dt
+            Me.DataSource = _dt
             Me.DisplayMember = "BANK_NAME"
             Me.ValueMember = "BC_BANK_ID"
         End Sub
@@ -238,16 +237,16 @@ Namespace Database_ComboBoxes
     Public Class cmb_Users
         Inherits ComboBox
 
-        Private dt As ds_Program.USERSDataTable
-        Private ta As ds_ProgramTableAdapters.USERSTableAdapter
+        Private ReadOnly _dt As ds_Program.USERSDataTable
+        Private ReadOnly _ta As ds_ProgramTableAdapters.USERSTableAdapter
 
         Public Sub New()
-            ta = New ds_ProgramTableAdapters.USERSTableAdapter
-            dt = ta.GetUsersList
+            _ta = New ds_ProgramTableAdapters.USERSTableAdapter
+            _dt = _ta.GetUsersList
 
             Me.DisplayMember = "USER_NAME"
             Me.ValueMember = "USER_UD"
-            Me.DataSource = dt
+            Me.DataSource = _dt
         End Sub
 
         Private _authLevel As Integer
@@ -269,16 +268,16 @@ Namespace Database_ComboBoxes
     Public Class cmb_BatchPaymentHistory
         Inherits ComboBox
 
-        Dim dt As Report_DataSet.BatchPayments_ListDataTable
-        Dim ta As Report_DataSetTableAdapters.BatchPayments_ListTableAdapter
+        ReadOnly _dt As Report_DataSet.BatchPayments_ListDataTable
+        ReadOnly _ta As Report_DataSetTableAdapters.BatchPayments_ListTableAdapter
 
         Public Sub New()
-            dt = New Report_DataSet.BatchPayments_ListDataTable
-            ta = New Report_DataSetTableAdapters.BatchPayments_ListTableAdapter
+            _dt = New Report_DataSet.BatchPayments_ListDataTable
+            _ta = New Report_DataSetTableAdapters.BatchPayments_ListTableAdapter
 
-            ta.Fill(dt)
+            _ta.Fill(_dt)
 
-            Me.DataSource = dt
+            Me.DataSource = _dt
             Me.DisplayMember = "BatchPaymentInfoText"
             Me.ValueMember = "BATCH_PAY_ID"
         End Sub

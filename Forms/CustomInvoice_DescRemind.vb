@@ -1,5 +1,5 @@
 ﻿Imports QBFC12Lib
-Imports TrashCash.TrashCash_Utils
+Imports TrashCash.Utilities
 
 
 Public Class CustomInvoice_DescRemind

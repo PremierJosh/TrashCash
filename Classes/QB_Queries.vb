@@ -21,7 +21,7 @@ Namespace Classes
         End Class
 
 
-        Public Function Invoice_GetBalance(ByVal TxnID As String) As InvoiceTotalBalance
+        Public Function Invoice_GetBalance(ByVal txnID As String) As InvoiceTotalBalance
             Dim invObj As New InvoiceTotalBalance
 
             Dim invoiceQuery As IInvoiceQuery = MsgSetReq.AppendInvoiceQueryRq
@@ -51,14 +51,14 @@ Namespace Classes
                 ElseIf (resp.StatusCode = 1) Then
                     MsgBox("No Invoices match search criteria in QuickBooks")
                 Else
-                    TrashCash_Utils.Err_Handling.ResponseErr_Misc(resp)
+                    Utilities.ErrHandling.ResponseErr_Misc(resp)
 
                 End If
             Next i
 
             Return invObj
         End Function
-        Public Sub Invoice_ForDisplay(ByRef paidStatus As QBFC12Lib.ENPaidStatus, ByRef dg_dt As ds_Display.QB_InvoiceDisplayDataTable,
+        Public Sub Invoice_ForDisplay(ByRef paidStatus As QBFC12Lib.ENPaidStatus, ByRef dgDT As ds_Display.QB_InvoiceDisplayDataTable,
                                       Optional ByRef custListID As String = Nothing,
                                       Optional ByRef fromDate As Date = Nothing, Optional ByRef toDate As Date = Nothing)
 
@@ -106,14 +106,14 @@ Namespace Classes
                 Dim resp As IResponse = respList.GetAt(i)
                 If (resp.StatusCode = 0) Then
                     ' if response is good then clear table for incoming rows
-                    dg_dt.Clear()
+                    dgDT.Clear()
 
                     Dim invRetList As IInvoiceRetList = resp.Detail
                     ' looping through invoice ret list
                     For j = 0 To invRetList.Count - 1
                         Dim invRet As IInvoiceRet = invRetList.GetAt(j)
                         ' building new row
-                        Dim newRow As ds_Display.QB_InvoiceDisplayRow = dg_dt.NewQB_InvoiceDisplayRow
+                        Dim newRow As ds_Display.QB_InvoiceDisplayRow = dgDT.NewQB_InvoiceDisplayRow
                         newRow.InvoiceNumber = invRet.RefNumber.GetValue
                         newRow.InvoicePostDate = invRet.TxnDate.GetValue.Date
                         newRow.InvoiceCreationDate = invRet.TimeCreated.GetValue.Date
@@ -123,12 +123,12 @@ Namespace Classes
                         newRow.InvoiceTotal = invRet.Subtotal.GetValue
                         newRow.InvoiceBalance = invRet.BalanceRemaining.GetValue
                         newRow.InvoiceDueDate = invRet.DueDate.GetValue.Date
-                        dg_dt.AddQB_InvoiceDisplayRow(newRow)
+                        dgDT.AddQB_InvoiceDisplayRow(newRow)
                     Next j
                 ElseIf (resp.StatusCode = 1) Then
                     'MsgBox("No Invoices match search criteria in QuickBooks")
                 ElseIf (resp.StatusCode > 1) Then
-                    TrashCash_Utils.Err_Handling.ResponseErr_Misc(resp)
+                    Utilities.ErrHandling.ResponseErr_Misc(resp)
                 End If
             Next i
 
@@ -194,7 +194,7 @@ Namespace Classes
                 ElseIf (resp.StatusCode = 1) Then
                     'MsgBox("No Recieved Payments match search criteria in Quickbooks.")
                 ElseIf (resp.StatusCode > 1) Then
-                    TrashCash_Utils.Err_Handling.ResponseErr_Misc(resp)
+                    Utilities.ErrHandling.ResponseErr_Misc(resp)
                 End If
             Next i
         End Sub
@@ -250,7 +250,7 @@ Namespace Classes
                         returnVar = custRet.TotalBalance.GetValue
                     Next
                 Else
-                    TrashCash_Utils.Err_Handling.ResponseErr_Misc(resp)
+                    Utilities.ErrHandling.ResponseErr_Misc(resp)
                 End If
             Next i
 
@@ -310,7 +310,7 @@ Namespace Classes
                     End If
                 Else
                     ' error logging
-                    TrashCash_Utils.Err_Handling.ResponseErr_Misc(response)
+                    Utilities.ErrHandling.ResponseErr_Misc(response)
                 End If
             Next i
 
@@ -365,7 +365,7 @@ Namespace Classes
                         itemList.Add(item)
                     Next
                 Else
-                    TrashCash_Utils.Err_Handling.ResponseErr_Misc(response)
+                    Utilities.ErrHandling.ResponseErr_Misc(response)
                 End If
             Next
 
@@ -413,7 +413,7 @@ Namespace Classes
                         itemList.Add(item)
                     Next
                 Else
-                    TrashCash_Utils.Err_Handling.ResponseErr_Misc(response)
+                    Utilities.ErrHandling.ResponseErr_Misc(response)
                 End If
             Next
 
@@ -459,7 +459,7 @@ Namespace Classes
                         vendorList.Add(item)
                     Next
                 Else
-                    TrashCash_Utils.Err_Handling.ResponseErr_Misc(response)
+                    Utilities.ErrHandling.ResponseErr_Misc(response)
                 End If
             Next
 
@@ -519,7 +519,7 @@ Namespace Classes
                         Next l
                     End If
                 Else
-                    TrashCash_Utils.Err_Handling.ResponseErr_Misc(response)
+                    Utilities.ErrHandling.ResponseErr_Misc(response)
                 End If
             Next i
 

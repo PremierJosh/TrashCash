@@ -1,5 +1,7 @@
 ﻿Imports System.Windows.Forms
 Imports System.ServiceProcess
+Imports TrashCash.Classes
+Imports TrashCash.Admin
 Imports TrashCash.ds_ProgramTableAdapters
 Imports QBFC12Lib
 

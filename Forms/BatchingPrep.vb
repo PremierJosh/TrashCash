@@ -1,6 +1,6 @@
 ﻿'Imports TrashCash.QBSubs
-Imports TrashCash.TrashCash_Utils
-Imports TrashCash.TrashCash_Utils._Functions
+Imports TrashCash.Utilities
+Imports TrashCash.Utilities.Functions
 Imports QBFC12Lib
 
 Public Class BatchingPrep

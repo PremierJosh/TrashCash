@@ -4,40 +4,27 @@ Imports TrashCash.Admin
 Namespace Classes
 
 
+    ' ReSharper disable once InconsistentNaming
     Public Class QB_Procedures
-        Protected _msgSetReq As IMsgSetRequest
-        Private ReadOnly Property MsgSetRequest As IMsgSetRequest
-            Get
-                Return _msgSetReq
-            End Get
-        End Property
-        Protected _sessMgr As QBSessionManager
-        Private ReadOnly Property SessionManager As QBSessionManager
-            Get
-                Return _sessMgr
-            End Get
-        End Property
-        Protected _homeForm As TrashCashHome
-        Private ReadOnly Property HomeForm As TrashCashHome
-            Get
-                Return _homeForm
-            End Get
-        End Property
+        Protected MsgSetReq As IMsgSetRequest
+        Protected SessMgr As QBSessionManager
+        Protected HomeForm As TrashCashHome
+
 
         'Protected qta As DataSetTableAdapters.QueriesTableAdapter
-        Protected cta As ds_CustomerTableAdapters.CustomerTableAdapter
-        Protected rsta As ds_RecurringServiceTableAdapters.RecurringServiceTableAdapter
+        Private ReadOnly _cta As ds_CustomerTableAdapters.CustomerTableAdapter
+        Private ReadOnly _rsta As ds_RecurringServiceTableAdapters.RecurringServiceTableAdapter
 
-        Public Sub New(ByRef sessionManager As QBSessionManager, ByRef msgSetReq As IMsgSetRequest, Optional ByRef homeForm As TrashCashHome = Nothing)
+        Public Sub New(ByRef sessionManager As QBSessionManager, ByRef msgSetRequest As IMsgSetRequest, Optional ByRef homeForm As TrashCashHome = Nothing)
             ' setting sess mgr and msgsetreq
-            _sessMgr = sessionManager
-            _msgSetReq = MsgSetReq
+            SessMgr = sessionManager
+            MsgSetReq = msgSetRequest
             If (homeForm IsNot Nothing) Then
-                _homeForm = homeForm
+                homeForm = homeForm
             End If
 
-            cta = New ds_CustomerTableAdapters.CustomerTableAdapter
-            rsta = New ds_RecurringServiceTableAdapters.RecurringServiceTableAdapter
+            _cta = New ds_CustomerTableAdapters.CustomerTableAdapter
+            _rsta = New ds_RecurringServiceTableAdapters.RecurringServiceTableAdapter
         End Sub
 
         Public Sub Customer_AddMissingListID(ByRef form As AdminExportImport)
@@ -49,7 +36,7 @@ Namespace Classes
 
             ' fill table
             If (missingCount > 0) Then
-                Dim dt As ds_Customer.CustomerDataTable = cta.GetDataByMissingListID
+                Dim dt As ds_Customer.CustomerDataTable = _cta.GetDataByMissingListID
 
                 ' pb init stuff
                 Dim progCounter As Integer = 0
@@ -64,7 +51,7 @@ Namespace Classes
                     form.pb_AllCustAdd.Value = progCounter
                     form.lbl_AllCustAddCount.Text = progCounter & "/" & dt.Rows.Count
 
-                    Dim customerAdd As ICustomerAdd = MsgSetRequest.AppendCustomerAddRq
+                    Dim customerAdd As ICustomerAdd = MsgSetReq.AppendCustomerAddRq
 
                     ' General Customer Information
                     customerAdd.Name.SetValue(custRow.CustomerFullName)
@@ -108,11 +95,11 @@ Namespace Classes
                     customerAdd.BillAddress.PostalCode.SetValue(custRow.CustomerBillingZip)
 
                     ' sending request
-                    Dim msgSetResp As IMsgSetResponse = SessionManager.DoRequests(MsgSetRequest)
+                    Dim msgSetResp As IMsgSetResponse = SessMgr.DoRequests(MsgSetReq)
                     Dim responseList As IResponseList = msgSetResp.ResponseList
 
                     'clear msgSetREq
-                    MsgSetRequest.ClearRequests()
+                    MsgSetReq.ClearRequests()
 
                     ' looping through response with error checking
                     For i = 0 To responseList.Count - 1
@@ -128,7 +115,7 @@ Namespace Classes
 
                                 Try
                                     ' commiting to DB
-                                    cta.Update(custRow)
+                                    _cta.Update(custRow)
                                 Catch ex As Exception
                                     MsgBox(ex.Message)
                                 End Try
@@ -142,7 +129,7 @@ Namespace Classes
 
                                 Try
                                     ' commiting to DB
-                                    cta.Update(custRow)
+                                    _cta.Update(custRow)
                                 Catch ex As Exception
                                     MsgBox(ex.Message)
                                 End Try
@@ -152,7 +139,7 @@ Namespace Classes
                             End If
                         Else
                             ' error logging
-                            TrashCash_Utils.Err_Handling.ResponseErr_Misc(response)
+                            Utilities.ErrHandling.ResponseErr_Misc(response)
 
                             ' bail out
                             Exit Sub
@@ -186,7 +173,7 @@ skipCustomer:
             End If
 
 retry:
-            Dim customerAdd As ICustomerAdd = MsgSetRequest.AppendCustomerAddRq
+            Dim customerAdd As ICustomerAdd = MsgSetReq.AppendCustomerAddRq
 
             ' General Customer Information
             customerAdd.Name.SetValue(custRow.CustomerFullName)
@@ -224,11 +211,11 @@ retry:
             customerAdd.BillAddress.PostalCode.SetValue(custRow.CustomerBillingZip)
 
             ' sending request
-            Dim msgSetResp As IMsgSetResponse = SessionManager.DoRequests(MsgSetRequest)
+            Dim msgSetResp As IMsgSetResponse = SessMgr.DoRequests(MsgSetReq)
             Dim respList As IResponseList = msgSetResp.ResponseList
 
             ' clear requests
-            MsgSetRequest.ClearRequests()
+            MsgSetReq.ClearRequests()
 
             ' looping through response with error checking
             For i = 0 To respList.Count - 1
@@ -244,7 +231,7 @@ retry:
 
                     Try
                         ' commiting to DB
-                        cta.Update(custRow)
+                        _cta.Update(custRow)
                     Catch ex As Exception
                         MsgBox(ex.Message)
                     End Try
@@ -257,7 +244,7 @@ retry:
 
                         Try
                             ' commiting to DB
-                            cta.Update(custRow)
+                            _cta.Update(custRow)
                             GoTo retry
                             'Exit Function
                         Catch ex As Exception
@@ -269,7 +256,7 @@ retry:
                     addOk = False
 
                     ' error logging
-                    TrashCash_Utils.Err_Handling.ResponseErr_Misc(resp)
+                    Utilities.ErrHandling.ResponseErr_Misc(resp)
 
                     ' delete row
                     Using qta As New ds_CustomerTableAdapters.QueriesTableAdapter
@@ -288,7 +275,7 @@ retry:
 
         Public Sub Customer_Update(ByRef custRow As ds_Customer.CustomerRow)
 retry:
-            Dim customerMod As ICustomerMod = MsgSetRequest.AppendCustomerModRq
+            Dim customerMod As ICustomerMod = MsgSetReq.AppendCustomerModRq
 
             customerMod.ListID.SetValue(custRow.CustomerListID)
             customerMod.EditSequence.SetValue(custRow.CustomerEditSeq)
@@ -338,11 +325,11 @@ retry:
             End If
 
             ' doing request and catching in msgSetResp
-            Dim msgSetResp As IMsgSetResponse = SessionManager.DoRequests(MsgSetRequest)
+            Dim msgSetResp As IMsgSetResponse = SessMgr.DoRequests(MsgSetReq)
             Dim respList As IResponseList = msgSetResp.ResponseList
 
             ' clear requests
-            MsgSetRequest.ClearRequests()
+            MsgSetReq.ClearRequests()
 
             ' looping through response for errors and writing to error log
             For i = 0 To respList.Count - 1
@@ -357,7 +344,7 @@ retry:
 
                     Try
                         ' update table
-                        cta.Update(custRow)
+                        _cta.Update(custRow)
                     Catch ex As Exception
                         MsgBox(ex.Message)
                     End Try
@@ -365,14 +352,14 @@ retry:
                     MsgBox("Changes Complete")
                 ElseIf (resp.StatusCode = 3200) Then
                     ' edit sequence missmatch
-                    Dim q As New QB_Queries(SessionManager, MsgSetRequest)
+                    Dim q As New QB_Queries(SessMgr, MsgSetReq)
                     custRow.BeginEdit()
                     custRow.CustomerEditSeq = q.Customer_EditSequence(custRow.CustomerListID)
                     custRow.EndEdit()
 
                     Try
                         ' update table then retry
-                        cta.Update(custRow)
+                        _cta.Update(custRow)
                         GoTo retry
                     Catch ex As Exception
                         MsgBox(ex.Message)
@@ -380,7 +367,7 @@ retry:
 
                 Else
                     custRow.RejectChanges()
-                    TrashCash_Utils.Err_Handling.ResponseErr_Misc(resp)
+                    Utilities.ErrHandling.ResponseErr_Misc(resp)
                 End If
             Next i
         End Sub
@@ -390,9 +377,9 @@ retry:
                                    ByVal autoApply As Boolean, Optional ByVal applyOrder As String = "Desc")
 
             ' getting cuystomer listid
-            Dim custListID As String = cta.GetListID(customerNumber)
+            Dim custListID As String = _cta.GetListID(customerNumber)
 
-            Dim creditAdd As ICreditMemoAdd = MsgSetRequest.AppendCreditMemoAddRq
+            Dim creditAdd As ICreditMemoAdd = MsgSetReq.AppendCreditMemoAddRq
             creditAdd.CustomerRef.ListID.SetValue(custListID)
             creditAdd.IsToBePrinted.SetValue(print)
 
@@ -410,10 +397,10 @@ retry:
             descLine.CreditMemoLineAdd.Quantity.Unset()
 
             ' go
-            Dim msgSetResp As IMsgSetResponse = SessionManager.DoRequests(MsgSetRequest)
+            Dim msgSetResp As IMsgSetResponse = SessMgr.DoRequests(MsgSetReq)
             Dim respList As IResponseList = msgSetResp.ResponseList
 
-            MsgSetRequest.ClearRequests()
+            MsgSetReq.ClearRequests()
 
             For i = 0 To respList.Count - 1
                 Dim resp As IResponse = respList.GetAt(i)
@@ -433,11 +420,11 @@ retry:
                         Dim dt As ds_Payments.MovePayment_OpenInvoicesDataTable = Invoicing_GetUnpaidTable(custListID)
                         If (dt.Rows.Count > 0) Then
                             ' apply credit
-                            Credits_PayOpenInvoices(custListID, creditRet.TxnID.GetValue, creditRet.CreditRemaining.GetValue, dt, ApplyOrder)
+                            Credits_PayOpenInvoices(custListID, creditRet.TxnID.GetValue, creditRet.CreditRemaining.GetValue, dt, applyOrder)
                         End If
                     End If
                 Else
-                    TrashCash_Utils.Err_Handling.ResponseErr_Misc(resp)
+                    Utilities.ErrHandling.ResponseErr_Misc(resp)
                 End If
             Next
 
@@ -445,15 +432,15 @@ retry:
 
         ' customer credit void
         Public Sub Customer_Credit_Void(ByRef row As ds_Customer.Customer_CreditsRow, ByVal voidReason As String)
-            Dim voidTxn As ITxnVoid = MsgSetRequest.AppendTxnVoidRq
+            Dim voidTxn As ITxnVoid = MsgSetReq.AppendTxnVoidRq
             voidTxn.TxnVoidType.SetValue(ENTxnVoidType.tvtCreditMemo)
             voidTxn.TxnID.SetValue(row.CreditTxnID)
 
             ' go
-            Dim msgSetResp As IMsgSetResponse = SessionManager.DoRequests(MsgSetRequest)
+            Dim msgSetResp As IMsgSetResponse = SessMgr.DoRequests(MsgSetReq)
             Dim respList As IResponseList = msgSetResp.ResponseList
 
-            MsgSetRequest.ClearRequests()
+            MsgSetReq.ClearRequests()
 
             For i = 0 To respList.Count - 1
                 Dim resp As IResponse = respList.GetAt(i)
@@ -461,7 +448,7 @@ retry:
                 If (resp.StatusCode = 0) Then
                     ' update row
                     row.Voided = True
-                    row.VoidReason = VoidReason
+                    row.VoidReason = voidReason
                     row.VoidTime = Date.Now
                     row.VoidUser = HomeForm.CurrentUserRow.USER_NAME
 
@@ -473,7 +460,7 @@ retry:
                         End Try
                     End Using
                 Else
-                    TrashCash_Utils.Err_Handling.ResponseErr_Misc(resp)
+                    Utilities.ErrHandling.ResponseErr_Misc(resp)
                 End If
             Next
 
@@ -482,7 +469,7 @@ retry:
         Public Sub RecurringService_EndDateCredit(ByRef row As ds_RecurringService.RecurringServiceRow, ByVal creditAmount As Double,
                                                   ByVal newEndDate As Date, ByVal billThruDate As Date)
             ' getting customer listid
-            Dim customerListID As String = cta.GetListID(row.CustomerNumber)
+            Dim customerListID As String = _cta.GetListID(row.CustomerNumber)
 
 
             ' getting service listid
@@ -490,7 +477,7 @@ retry:
             Dim ta As New ds_TypesTableAdapters.ServiceTypesTableAdapter
             serviceRow = ta.GetDataByID(row.ServiceTypeID).Rows(0)
 
-            Dim creditMemoAdd As ICreditMemoAdd = MsgSetRequest.AppendCreditMemoAddRq
+            Dim creditMemoAdd As ICreditMemoAdd = MsgSetReq.AppendCreditMemoAddRq
 
             ' passing listid
             creditMemoAdd.CustomerRef.ListID.SetValue(customerListID)
@@ -505,16 +492,16 @@ retry:
             Dim descLine As IORCreditMemoLineAdd = creditMemoAdd.ORCreditMemoLineAddList.Append()
             descLine.CreditMemoLineAdd.ItemRef.ListID.Unset()
             descLine.CreditMemoLineAdd.ItemRef.FullName.Unset()
-            descLine.CreditMemoLineAdd.Desc.SetValue("This service has been Invoiced upto " & BillThruDate & ". The new End Date overlaps this Invoiced period. | New End Date: " & newEndDate.Date)
+            descLine.CreditMemoLineAdd.Desc.SetValue("This service has been Invoiced upto " & billThruDate & ". The new End Date overlaps this Invoiced period. | New End Date: " & newEndDate.Date)
             descLine.CreditMemoLineAdd.Amount.Unset()
             descLine.CreditMemoLineAdd.Quantity.Unset()
 
             ' send request
-            Dim msgSetResp As IMsgSetResponse = SessionManager.DoRequests(MsgSetRequest)
+            Dim msgSetResp As IMsgSetResponse = SessMgr.DoRequests(MsgSetReq)
             Dim respList As IResponseList = msgSetResp.ResponseList
 
             ' clear msgsetreq
-            MsgSetRequest.ClearRequests()
+            MsgSetReq.ClearRequests()
 
             For i = 0 To respList.Count - 1
                 Dim resp As IResponse = respList.GetAt(i)
@@ -539,7 +526,7 @@ retry:
                     row.Credited = True
                     ' commit
                     Try
-                        rsta.Update(row)
+                        _rsta.Update(row)
                     Catch ex As Exception
                         MsgBox(ex.Message)
                     End Try
@@ -550,23 +537,23 @@ retry:
                     ' use new credit to pay newest invoices first
                     Credits_PayOpenInvoices(customerListID, creditMemoRet.TxnID.GetValue, creditMemoRet.CreditRemaining.GetValue, openInvDt, "Desc")
                 Else
-                    TrashCash_Utils.Err_Handling.ResponseErr_Misc(resp)
+                    Utilities.ErrHandling.ResponseErr_Misc(resp)
                 End If
             Next i
         End Sub
 
         ' void recurring service end date credit
         Public Sub RecurringService_EndDateCredit_Void(ByRef row As ds_RecurringService.RecurringService_EndDateCreditsRow, ByVal voidReason As String)
-            Dim txnVoid As ITxnVoid = MsgSetRequest.AppendTxnVoidRq
+            Dim txnVoid As ITxnVoid = MsgSetReq.AppendTxnVoidRq
             ' setting credit memo type and id
             txnVoid.TxnVoidType.SetValue(ENTxnVoidType.tvtCreditMemo)
             txnVoid.TxnID.SetValue(row.CreditMemoTxnID)
 
             ' go
-            Dim msgSetResp As IMsgSetResponse = SessionManager.DoRequests(MsgSetRequest)
+            Dim msgSetResp As IMsgSetResponse = SessMgr.DoRequests(MsgSetReq)
             Dim respList As IResponseList = msgSetResp.ResponseList
 
-            MsgSetRequest.ClearRequests()
+            MsgSetReq.ClearRequests()
 
             For i = 0 To respList.Count - 1
                 Dim resp As IResponse = respList.GetAt(i)
@@ -575,7 +562,7 @@ retry:
                     ' updating row
                     row.Voided = True
                     row.VoidDateTime = Date.Now
-                    row.VoidReason = VoidReason
+                    row.VoidReason = voidReason
                     row.VoidUser = HomeForm.CurrentUserRow.USER_NAME
 
                     ' commit
@@ -583,7 +570,7 @@ retry:
                         ta.Update(row)
                     End Using
                 Else
-                    TrashCash_Utils.Err_Handling.ResponseErr_Misc(resp)
+                    Utilities.ErrHandling.ResponseErr_Misc(resp)
                 End If
             Next
         End Sub
@@ -591,9 +578,9 @@ retry:
         ' credit a recurring service on a specific day
         Public Sub RecurringService_Credit(ByVal recurringServiceID As Integer, ByVal creditAmount As Double, ByVal dateOfCredit As Date, ByVal reason As String)
             ' get recurring service row
-            Dim row As ds_RecurringService.RecurringServiceRow = rsta.GetDataByID(recurringServiceID).Rows(0)
+            Dim row As ds_RecurringService.RecurringServiceRow = _rsta.GetDataByID(recurringServiceID).Rows(0)
             ' getting customer listid
-            Dim custListID As String = cta.GetListID(row.CustomerNumber)
+            Dim custListID As String = _cta.GetListID(row.CustomerNumber)
             ' getting service type listid
             Dim serviceListID As String
             Using ta As New ds_TypesTableAdapters.ServiceTypesTableAdapter
@@ -601,7 +588,7 @@ retry:
             End Using
 
             ' create credit for customer
-            Dim creditAdd As ICreditMemoAdd = MsgSetRequest.AppendCreditMemoAddRq
+            Dim creditAdd As ICreditMemoAdd = MsgSetReq.AppendCreditMemoAddRq
             creditAdd.CustomerRef.ListID.SetValue(custListID)
 
             ' credit line1 = service type
@@ -613,15 +600,15 @@ retry:
             Dim descLine As IORCreditMemoLineAdd = creditAdd.ORCreditMemoLineAddList.Append()
             descLine.CreditMemoLineAdd.ItemRef.ListID.Unset()
             descLine.CreditMemoLineAdd.ItemRef.FullName.Unset()
-            descLine.CreditMemoLineAdd.Desc.SetValue("Credit Issued for Service on " & dateOfCredit & ". Reason: " & Reason)
+            descLine.CreditMemoLineAdd.Desc.SetValue("Credit Issued for Service on " & dateOfCredit & ". Reason: " & reason)
             descLine.CreditMemoLineAdd.Amount.Unset()
             descLine.CreditMemoLineAdd.Quantity.Unset()
 
             ' go
-            Dim msgSetResp As IMsgSetResponse = SessionManager.DoRequests(MsgSetRequest)
+            Dim msgSetResp As IMsgSetResponse = SessMgr.DoRequests(MsgSetReq)
             Dim respList As IResponseList = msgSetResp.ResponseList
 
-            MsgSetRequest.ClearRequests()
+            MsgSetReq.ClearRequests()
 
             For i = 0 To respList.Count - 1
                 Dim resp As IResponse = respList.GetAt(i)
@@ -636,7 +623,7 @@ retry:
                                       dateOfCredit,
                                       creditRet.TotalAmount.GetValue,
                                       creditRet.TimeCreated.GetValue,
-                                      Reason,
+                                      reason,
                                       HomeForm.CurrentUserRow.USER_NAME,
                                       False,
                                       Nothing,
@@ -652,7 +639,7 @@ retry:
                     ' use new credit for these
                     Credits_PayOpenInvoices(custListID, creditRet.TxnID.GetValue, creditRet.CreditRemaining.GetValue, openInvDT, "Asc")
                 Else
-                    TrashCash_Utils.Err_Handling.ResponseErr_Misc(resp)
+                    Utilities.ErrHandling.ResponseErr_Misc(resp)
                 End If
             Next
 
@@ -670,7 +657,7 @@ retry:
                 Dim creditRemain As Double = availAmount
 
                 ' payAdd to use credit
-                Dim payAdd As IReceivePaymentAdd = MsgSetRequest.AppendReceivePaymentAddRq
+                Dim payAdd As IReceivePaymentAdd = MsgSetReq.AppendReceivePaymentAddRq
                 payAdd.CustomerRef.ListID.SetValue(customerListID)
 
                 For Each row As ds_Payments.MovePayment_OpenInvoicesRow In dvInvoices.Table.Rows
@@ -699,17 +686,17 @@ retry:
                 Next
 
                 ' go
-                Dim msgSetResp As IMsgSetResponse = SessionManager.DoRequests(MsgSetRequest)
+                Dim msgSetResp As IMsgSetResponse = SessMgr.DoRequests(MsgSetReq)
                 Dim respList As IResponseList = msgSetResp.ResponseList
 
-                MsgSetRequest.ClearRequests()
+                MsgSetReq.ClearRequests()
 
                 For i = 0 To respList.Count - 1
                     Dim resp As IResponse = respList.GetAt(i)
 
                     ' resp wont = 1 since not a query
                     If (resp.StatusCode <> 0) Then
-                        TrashCash_Utils.Err_Handling.ResponseErr_Misc(resp)
+                        Utilities.ErrHandling.ResponseErr_Misc(resp)
                     End If
                 Next
             End If
@@ -721,17 +708,17 @@ retry:
             Dim row As ds_RecurringService.RecurringService_CreditsRow = ta.GetDataByCreditID(recurringServiceCreditID).Rows(0)
 
             If (Not row.Voided) Then
-                Dim txnVoid As ITxnVoid = MsgSetRequest.AppendTxnVoidRq
+                Dim txnVoid As ITxnVoid = MsgSetReq.AppendTxnVoidRq
 
                 ' talking about credit
                 txnVoid.TxnVoidType.SetValue(ENTxnVoidType.tvtCreditMemo)
                 txnVoid.TxnID.SetValue(row.CreditMemoTxnID)
 
                 ' go
-                Dim msgSetResp As IMsgSetResponse = SessionManager.DoRequests(MsgSetRequest)
+                Dim msgSetResp As IMsgSetResponse = SessMgr.DoRequests(MsgSetReq)
                 Dim respList As IResponseList = msgSetResp.ResponseList
 
-                MsgSetRequest.ClearRequests()
+                MsgSetReq.ClearRequests()
 
                 For i = 0 To respList.Count - 1
                     Dim resp As IResponse = respList.GetAt(i)
@@ -739,7 +726,7 @@ retry:
                     If (resp.StatusCode = 0) Then
                         ' credit voided: update row
                         row.Voided = True
-                        row.VoidReason = VoidReason
+                        row.VoidReason = voidReason
                         row.VoidTime = Date.Now
                         row.VoidUser = HomeForm.CurrentUserRow.USER_NAME
 
@@ -749,7 +736,7 @@ retry:
                             MsgBox("Credit Row Update SQL Error: " & ex.Message)
                         End Try
                     Else
-                        TrashCash_Utils.Err_Handling.ResponseErr_Misc(resp)
+                        Utilities.ErrHandling.ResponseErr_Misc(resp)
                     End If
                 Next
             End If
@@ -760,14 +747,14 @@ retry:
             Dim bounced As Boolean
 
             ' getting customer listid
-            Dim custListID As String = cta.GetListID(checkRow.CustomerNumber)
+            Dim custListID As String = _cta.GetListID(checkRow.CustomerNumber)
 
             ' need to do 2 things:
             ' 1. invoice customer for bounced check amount and our fee
             ' 2. checkadd for bank
 
             ' 1. invoice first
-            Dim invoiceAdd As IInvoiceAdd = MsgSetRequest.AppendInvoiceAddRq
+            Dim invoiceAdd As IInvoiceAdd = MsgSetReq.AppendInvoiceAddRq
 
             ' going to need app defaults row for items
             Dim appRow As ds_Program.APP_SETTINGS_Row
@@ -791,14 +778,14 @@ retry:
             ' 2nd line till be for the fee we are charging the customer
             Dim feeLine As IORInvoiceLineAdd = lineList.Append
             feeLine.InvoiceLineAdd.ItemRef.ListID.SetValue(appRow.BAD_CHECK_CUSTITEM_LISTID)
-            feeLine.InvoiceLineAdd.ORRatePriceLevel.Rate.SetValue(Fee)
+            feeLine.InvoiceLineAdd.ORRatePriceLevel.Rate.SetValue(fee)
             feeLine.InvoiceLineAdd.Quantity.SetValue(1)
 
-            Dim msgSetResp As IMsgSetResponse = SessionManager.DoRequests(MsgSetRequest)
+            Dim msgSetResp As IMsgSetResponse = SessMgr.DoRequests(MsgSetReq)
             Dim respList As IResponseList = msgSetResp.ResponseList
 
             ' clear msgSetReq
-            MsgSetRequest.ClearRequests()
+            MsgSetReq.ClearRequests()
 
             For i = 0 To respList.Count - 1
                 Dim resp As IResponse = respList.GetAt(i)
@@ -813,13 +800,13 @@ retry:
                         MsgBox(ex.Message)
                     End Try
                 Else
-                    TrashCash_Utils.Err_Handling.ResponseErr_Misc(resp)
+                    Utilities.ErrHandling.ResponseErr_Misc(resp)
                     Return bounced
                 End If
             Next
 
             ' doing checkadd to pay bank fee
-            Dim checkAdd As ICheckAdd = MsgSetRequest.AppendCheckAddRq
+            Dim checkAdd As ICheckAdd = MsgSetReq.AppendCheckAddRq
 
             'account ref is bank paying from
             checkAdd.AccountRef.ListID.SetValue(bankRow.QB_BANK_LISTID)
@@ -838,7 +825,7 @@ retry:
             bankFeeLine.ItemLineAdd.Amount.SetValue(bankRow.BANK_FEE_DEFAULT)
             bankFeeLine.ItemLineAdd.Quantity.SetValue(1)
 
-            msgSetResp = SessionManager.DoRequests(MsgSetRequest)
+            msgSetResp = SessMgr.DoRequests(MsgSetReq)
             respList = msgSetResp.ResponseList
 
             For i = 0 To respList.Count - 1
@@ -846,14 +833,14 @@ retry:
                 If (resp.StatusCode = 0) Then
                     bounced = True
                 Else
-                    TrashCash_Utils.Err_Handling.ResponseErr_Misc(resp)
+                    Utilities.ErrHandling.ResponseErr_Misc(resp)
                 End If
             Next
 
             ' inserting note for customer that check bounced
             Try
                 Using ta As New ds_CustomerTableAdapters.CustomerNotesTableAdapter
-                    ta.CustomerNotes_Insert(checkRow.CustomerNumber, "Bounced Check Ref #: " & checkRow.RefNumber & ". Bank Fee of " & FormatCurrency(bankRow.BANK_FEE_DEFAULT) & ". Customer charged " & FormatCurrency(Fee) & ".")
+                    ta.CustomerNotes_Insert(checkRow.CustomerNumber, "Bounced Check Ref #: " & checkRow.RefNumber & ". Bank Fee of " & FormatCurrency(bankRow.BANK_FEE_DEFAULT) & ". Customer charged " & FormatCurrency(fee) & ".")
                 End Using
             Catch ex As Exception
                 MsgBox("NoteInsert Err: " & ex.Message)
@@ -884,7 +871,7 @@ retry:
             End If
 
             ' move payment - after reset payments by inv txnDate on orig customer
-            Dim recPayMod As IReceivePaymentMod = MsgSetRequest.AppendReceivePaymentModRq
+            Dim recPayMod As IReceivePaymentMod = MsgSetReq.AppendReceivePaymentModRq
 
             ' payment im talking about
             recPayMod.TxnID.SetValue(paymentHistoryRow.PaymentTxnID)
@@ -894,16 +881,16 @@ retry:
             recPayMod.IncludeRetElementList.Add("EditSequence")
 
             ' who its going to now
-            recPayMod.CustomerRef.ListID.SetValue(cta.GetListID(NewCustomerNumber))
+            recPayMod.CustomerRef.ListID.SetValue(_cta.GetListID(newCustomerNumber))
 
             ' wiping applied txns
             ' ReSharper disable once UnusedVariable
             Dim appliedTxnList As IAppliedToTxnModList = recPayMod.AppliedToTxnModList
 
-            Dim msgSetResp As IMsgSetResponse = SessionManager.DoRequests(MsgSetRequest)
+            Dim msgSetResp As IMsgSetResponse = SessMgr.DoRequests(MsgSetReq)
             Dim respList As IResponseList = msgSetResp.ResponseList
 
-            MsgSetRequest.ClearRequests()
+            MsgSetReq.ClearRequests()
 
             For i = 0 To respList.Count - 1
                 Dim resp As IResponse = respList.GetAt(i)
@@ -914,7 +901,7 @@ retry:
 
                     Try
                         Using qta As New ds_PaymentsTableAdapters.QueriesTableAdapter
-                            qta.PaymentHistory_MovePayToCust(paymentHistoryRow.PaymentID, NewCustomerNumber, payRet.EditSequence.GetValue)
+                            qta.PaymentHistory_MovePayToCust(paymentHistoryRow.PaymentID, newCustomerNumber, payRet.EditSequence.GetValue)
                         End Using
                     Catch ex As Exception
                         MessageBox.Show("PaymentHistory_MovePayToCust: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
@@ -922,7 +909,7 @@ retry:
 
                     Try
                         ' need to reset all payments on new customer made after this payment txn date, and then reapply them all
-                        Payments_ResetAfterDate(NewCustomerNumber, paymentHistoryRow.DateReceived, "Payments")
+                        Payments_ResetAfterDate(newCustomerNumber, paymentHistoryRow.DateReceived, "Payments")
                     Catch ex As Exception
                         MessageBox.Show("Error Reset Payments New Customer: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
                     End Try
@@ -935,7 +922,7 @@ retry:
                     End Try
 
                 Else
-                    TrashCash_Utils.Err_Handling.ResponseErr_Misc(resp)
+                    Utilities.ErrHandling.ResponseErr_Misc(resp)
                 End If
             Next
 
@@ -945,17 +932,17 @@ retry:
             ' list im going to gather of applied txns to this payment
             Dim appTxnList As List(Of String) = Nothing
 
-            Dim payQuery As IReceivePaymentQuery = MsgSetRequest.AppendReceivePaymentQueryRq
-            payQuery.ORTxnQuery.TxnIDList.Add(Row.PaymentTxnID)
+            Dim payQuery As IReceivePaymentQuery = MsgSetReq.AppendReceivePaymentQueryRq
+            payQuery.ORTxnQuery.TxnIDList.Add(row.PaymentTxnID)
 
             ' only need edit sequence back
             payQuery.IncludeRetElementList.Add("EditSequence")
             payQuery.IncludeRetElementList.Add("AppliedToTxnRetList")
 
-            Dim msgSetResp As IMsgSetResponse = SessionManager.DoRequests(MsgSetRequest)
+            Dim msgSetResp As IMsgSetResponse = SessMgr.DoRequests(MsgSetReq)
             Dim respList As IResponseList = msgSetResp.ResponseList
 
-            MsgSetRequest.ClearRequests()
+            MsgSetReq.ClearRequests()
 
             ' loop through response
             For i = 0 To respList.Count - 1
@@ -966,7 +953,7 @@ retry:
                         Dim payRet As IReceivePaymentRet = payRetList.GetAt(l)
 
                         ' grabbing edit seq for return
-                        Row.PaymentEditSeq = payRet.EditSequence.GetValue
+                        row.PaymentEditSeq = payRet.EditSequence.GetValue
 
                         If (payRet.AppliedToTxnRetList IsNot Nothing) Then
 
@@ -981,7 +968,7 @@ retry:
                         End If
                     Next
                 Else
-                    TrashCash_Utils.Err_Handling.ResponseErr_Misc(resp)
+                    Utilities.ErrHandling.ResponseErr_Misc(resp)
                 End If
             Next
 
@@ -992,17 +979,17 @@ retry:
             ' return date var
             Dim earliestDate As Date = Nothing
 
-            For Each txnID As String In InvoiceTxnIDList
-                Dim invQuery As IInvoiceQuery = MsgSetRequest.AppendInvoiceQueryRq
+            For Each txnID As String In invoiceTxnIDList
+                Dim invQuery As IInvoiceQuery = MsgSetReq.AppendInvoiceQueryRq
                 invQuery.ORInvoiceQuery.TxnIDList.Add(txnID)
 
                 ' only need creation date back
                 invQuery.IncludeRetElementList.Add("TxnDate")
 
-                Dim msgSetResp As IMsgSetResponse = SessionManager.DoRequests(MsgSetRequest)
+                Dim msgSetResp As IMsgSetResponse = SessMgr.DoRequests(MsgSetReq)
                 Dim respList As IResponseList = msgSetResp.ResponseList
 
-                MsgSetRequest.ClearRequests()
+                MsgSetReq.ClearRequests()
 
                 For i = 0 To respList.Count - 1
                     Dim resp As IResponse = respList.GetAt(i)
@@ -1020,17 +1007,17 @@ retry:
 
         Private Sub Payments_ResetAfterDate(ByVal customerNumber As Integer, ByVal afterDate As Date, ByVal routeMethod As String)
             ' getting customerlistid
-            Dim custListID As String = cta.GetListID(customerNumber)
+            Dim custListID As String = _cta.GetListID(customerNumber)
 
             ' need to get list of rec pay txnID's that pay invoices after this date
             Dim unappliedPaymentDT As New ds_Payments.MovePayment_UnappliedPaymentsDataTable
 
             ' checking method going after payids
-            If (RouteMethod = "Invoices") Then
+            If (routeMethod = "Invoices") Then
                 ' get invoices after this date and payments ids on them
                 unappliedPaymentDT = Invoicing_PayTxnIDsOnInvsAfterDate(custListID, afterDate)
 
-            ElseIf (RouteMethod = "Payments") Then
+            ElseIf (routeMethod = "Payments") Then
                 ' simple - can query for pays after date and get edit seq there too
                 unappliedPaymentDT = Payments_PayTxnIDsAfterDate(custListID, afterDate)
             End If
@@ -1041,7 +1028,7 @@ retry:
             End If
 
             ' if we went the inv method to get payments, we need edit sequences
-            If (RouteMethod = "Invoices") Then
+            If (routeMethod = "Invoices") Then
                 Payments_GetEditSequences(unappliedPaymentDT)
             End If
 
@@ -1066,20 +1053,20 @@ retry:
             ' return list of pays need to unapply
             Dim unappliedDT As New ds_Payments.MovePayment_UnappliedPaymentsDataTable
 
-            Dim invQuery As IInvoiceQuery = MsgSetRequest.AppendInvoiceQueryRq
+            Dim invQuery As IInvoiceQuery = MsgSetReq.AppendInvoiceQueryRq
             ' setting customer and date
             invQuery.ORInvoiceQuery.InvoiceFilter.EntityFilter.OREntityFilter.ListIDList.Add(customerListID)
             ' note qbfc says itll return any from OR on this date forward
-            invQuery.ORInvoiceQuery.InvoiceFilter.ORDateRangeFilter.TxnDateRangeFilter.ORTxnDateRangeFilter.TxnDateFilter.FromTxnDate.SetValue(AfterDate)
+            invQuery.ORInvoiceQuery.InvoiceFilter.ORDateRangeFilter.TxnDateRangeFilter.ORTxnDateRangeFilter.TxnDateFilter.FromTxnDate.SetValue(afterDate)
 
             ' making sure getting linked txns to get rec pays used for this inv
             invQuery.IncludeLinkedTxns.SetValue(True)
 
             ' go
-            Dim msgSetResp As IMsgSetResponse = SessionManager.DoRequests(MsgSetRequest)
+            Dim msgSetResp As IMsgSetResponse = SessMgr.DoRequests(MsgSetReq)
             Dim respList As IResponseList = msgSetResp.ResponseList
 
-            MsgSetRequest.ClearRequests()
+            MsgSetReq.ClearRequests()
 
             ' looping
             For i = 0 To respList.Count - 1
@@ -1113,7 +1100,7 @@ retry:
                         End If
                     Next
                 ElseIf (resp.StatusCode <> 1) Then
-                    TrashCash_Utils.Err_Handling.ResponseErr_Misc(resp)
+                    Utilities.ErrHandling.ResponseErr_Misc(resp)
                 End If
             Next
 
@@ -1122,8 +1109,8 @@ retry:
 
         Private Sub Payments_GetEditSequences(ByRef unappliedDT As ds_Payments.MovePayment_UnappliedPaymentsDataTable)
             ' looping through row to build large query to update at end
-            For Each row As ds_Payments.MovePayment_UnappliedPaymentsRow In UnappliedDT.Rows
-                Dim payQuery As IReceivePaymentQuery = MsgSetRequest.AppendReceivePaymentQueryRq
+            For Each row As ds_Payments.MovePayment_UnappliedPaymentsRow In unappliedDT.Rows
+                Dim payQuery As IReceivePaymentQuery = MsgSetReq.AppendReceivePaymentQueryRq
                 payQuery.ORTxnQuery.TxnIDList.Add(row.Pay_TxnID)
 
                 ' only need edit seq back for now - will get txndate and total amount after mod since need new edit seq then anyways
@@ -1134,10 +1121,10 @@ retry:
             Next
 
             ' sending grouped request
-            Dim msgSetResp As IMsgSetResponse = SessionManager.DoRequests(MsgSetRequest)
+            Dim msgSetResp As IMsgSetResponse = SessMgr.DoRequests(MsgSetReq)
             Dim respList As IResponseList = msgSetResp.ResponseList
 
-            MsgSetRequest.ClearRequests()
+            MsgSetReq.ClearRequests()
 
             For i = 0 To respList.Count - 1
                 Dim resp As IResponse = respList.GetAt(i)
@@ -1151,7 +1138,7 @@ retry:
                         Dim payRet As IReceivePaymentRet = payRetList.GetAt(l)
 
                         ' get row from select which returns array, 0 index
-                        Dim row As ds_Payments.MovePayment_UnappliedPaymentsRow = UnappliedDT.Select("Pay_TxnID LIKE '" & payRet.TxnID.GetValue & "'")(0)
+                        Dim row As ds_Payments.MovePayment_UnappliedPaymentsRow = unappliedDT.Select("Pay_TxnID LIKE '" & payRet.TxnID.GetValue & "'")(0)
                         row.Pay_EditSeq = payRet.EditSequence.GetValue
                         row.Pay_TxnDate = payRet.TxnDate.GetValue
                         row.Pay_Amount = payRet.TotalAmount.GetValue
@@ -1160,7 +1147,7 @@ retry:
                         row.AcceptChanges()
                     Next
                 Else
-                    TrashCash_Utils.Err_Handling.ResponseErr_Misc(resp)
+                    Utilities.ErrHandling.ResponseErr_Misc(resp)
                 End If
             Next
 
@@ -1170,9 +1157,9 @@ retry:
             ' return list of pays need to unapply
             Dim unappliedDT As New ds_Payments.MovePayment_UnappliedPaymentsDataTable
 
-            Dim payQuery As IReceivePaymentQuery = MsgSetRequest.AppendReceivePaymentQueryRq
+            Dim payQuery As IReceivePaymentQuery = MsgSetReq.AppendReceivePaymentQueryRq
             ' setting customer and date
-            payQuery.ORTxnQuery.TxnFilter.EntityFilter.OREntityFilter.ListIDList.Add(CustomerListID)
+            payQuery.ORTxnQuery.TxnFilter.EntityFilter.OREntityFilter.ListIDList.Add(customerListID)
             payQuery.ORTxnQuery.TxnFilter.ORDateRangeFilter.TxnDateRangeFilter.ORTxnDateRangeFilter.TxnDateFilter.FromTxnDate.SetValue(afterDate)
 
             ' only need a couple things back
@@ -1182,10 +1169,10 @@ retry:
             payQuery.IncludeRetElementList.Add("EditSequence")
 
             ' go
-            Dim msgSetResp As IMsgSetResponse = SessionManager.DoRequests(MsgSetRequest)
+            Dim msgSetResp As IMsgSetResponse = SessMgr.DoRequests(MsgSetReq)
             Dim respList As IResponseList = msgSetResp.ResponseList
 
-            MsgSetRequest.ClearRequests()
+            MsgSetReq.ClearRequests()
 
             ' loop through getting info
             For i = 0 To respList.Count - 1
@@ -1204,7 +1191,7 @@ retry:
                         unappliedDT.AcceptChanges()
                     Next
                 ElseIf (resp.StatusCode <> 1) Then
-                    TrashCash_Utils.Err_Handling.ResponseErr_Misc(resp)
+                    Utilities.ErrHandling.ResponseErr_Misc(resp)
                 End If
             Next
 
@@ -1214,9 +1201,9 @@ retry:
 
         Private Sub Payments_UnapplyFromTable(ByRef unappliedDT As ds_Payments.MovePayment_UnappliedPaymentsDataTable)
             ' going to update this table
-            For Each row As ds_Payments.MovePayment_UnappliedPaymentsRow In UnappliedDT.Rows
+            For Each row As ds_Payments.MovePayment_UnappliedPaymentsRow In unappliedDT.Rows
                 ' mod to remove
-                Dim recPayMod As IReceivePaymentMod = MsgSetRequest.AppendReceivePaymentModRq
+                Dim recPayMod As IReceivePaymentMod = MsgSetReq.AppendReceivePaymentModRq
                 recPayMod.TxnID.SetValue(row.Pay_TxnID)
                 recPayMod.EditSequence.SetValue(row.Pay_EditSeq)
 
@@ -1231,13 +1218,13 @@ retry:
             Next row
 
             ' fixing onError - rollback txns if errors
-            MsgSetRequest.Attributes.OnError = ENRqOnError.roeStop
+            MsgSetReq.Attributes.OnError = ENRqOnError.roeStop
 
             ' send request to wipe applied txns
-            Dim msgSetResp As IMsgSetResponse = SessionManager.DoRequests(MsgSetRequest)
+            Dim msgSetResp As IMsgSetResponse = SessMgr.DoRequests(MsgSetReq)
             Dim respList As IResponseList = msgSetResp.ResponseList
 
-            MsgSetRequest.ClearRequests()
+            MsgSetReq.ClearRequests()
 
             ' looping to update dt with new edit seq and remaining 
             For i = 0 To respList.Count - 1
@@ -1253,14 +1240,14 @@ retry:
                     End Using
 
                     ' get row from select which returns array, 0 index
-                    Dim row As ds_Payments.MovePayment_UnappliedPaymentsRow = UnappliedDT.Select("Pay_TxnID LIKE '" & payRet.TxnID.GetValue & "'")(0)
+                    Dim row As ds_Payments.MovePayment_UnappliedPaymentsRow = unappliedDT.Select("Pay_TxnID LIKE '" & payRet.TxnID.GetValue & "'")(0)
                     row.Pay_EditSeq = payRet.EditSequence.GetValue
                     row.Remaining = payRet.UnusedPayment.GetValue
 
                     ' commit changes
                     row.AcceptChanges()
                 Else
-                    TrashCash_Utils.Err_Handling.ResponseErr_Misc(resp)
+                    Utilities.ErrHandling.ResponseErr_Misc(resp)
                 End If
             Next
         End Sub
@@ -1269,9 +1256,9 @@ retry:
             ' return table of open invoices and their info
             Dim openInvDT As New ds_Payments.MovePayment_OpenInvoicesDataTable
 
-            Dim invQuery As IInvoiceQuery = MsgSetRequest.AppendInvoiceQueryRq
+            Dim invQuery As IInvoiceQuery = MsgSetReq.AppendInvoiceQueryRq
             ' setting customer and paid status
-            invQuery.ORInvoiceQuery.InvoiceFilter.EntityFilter.OREntityFilter.ListIDList.Add(CustomerListID)
+            invQuery.ORInvoiceQuery.InvoiceFilter.EntityFilter.OREntityFilter.ListIDList.Add(customerListID)
             invQuery.ORInvoiceQuery.InvoiceFilter.PaidStatus.SetValue(ENPaidStatus.psNotPaidOnly)
 
             ' only need a couple values back
@@ -1280,10 +1267,10 @@ retry:
             invQuery.IncludeRetElementList.Add("BalanceRemaining")
 
             ' go
-            Dim msgSetResp As IMsgSetResponse = SessionManager.DoRequests(MsgSetRequest)
+            Dim msgSetResp As IMsgSetResponse = SessMgr.DoRequests(MsgSetReq)
             Dim respList As IResponseList = msgSetResp.ResponseList
 
-            MsgSetRequest.ClearRequests()
+            MsgSetReq.ClearRequests()
 
             For i = 0 To respList.Count - 1
                 Dim resp As IResponse = respList.GetAt(i)
@@ -1300,7 +1287,7 @@ retry:
                         openInvDT.AcceptChanges()
                     Next
                 ElseIf (resp.StatusCode <> 1) Then
-                    TrashCash_Utils.Err_Handling.ResponseErr_Misc(resp)
+                    Utilities.ErrHandling.ResponseErr_Misc(resp)
                 End If
             Next
 
@@ -1315,7 +1302,7 @@ retry:
             For Each payRow As ds_Payments.MovePayment_UnappliedPaymentsRow In dvPay.Table.Rows
                 If (payRow.Remaining > 0) Then
                     ' going to mod this payment and append as many invoices as it can pay onto its apllied to txn list
-                    Dim payMod As IReceivePaymentMod = MsgSetRequest.AppendReceivePaymentModRq
+                    Dim payMod As IReceivePaymentMod = MsgSetReq.AppendReceivePaymentModRq
                     payMod.TxnID.SetValue(payRow.Pay_TxnID)
                     payMod.EditSequence.SetValue(payRow.Pay_EditSeq)
 
@@ -1351,10 +1338,10 @@ retry:
                     Next
 
                     ' go
-                    Dim msgSetResp As IMsgSetResponse = SessionManager.DoRequests(MsgSetRequest)
+                    Dim msgSetResp As IMsgSetResponse = SessMgr.DoRequests(MsgSetReq)
                     Dim respList As IResponseList = msgSetResp.ResponseList
 
-                    MsgSetRequest.ClearRequests()
+                    MsgSetReq.ClearRequests()
 
                     For i = 0 To respList.Count - 1
                         Dim resp As IResponse = respList.GetAt(i)
@@ -1373,7 +1360,7 @@ retry:
                             payRow.Pay_EditSeq = payRet.EditSequence.GetValue
 
                         Else
-                            TrashCash_Utils.Err_Handling.ResponseErr_Misc(resp)
+                            Utilities.ErrHandling.ResponseErr_Misc(resp)
                         End If
                     Next
 
@@ -1389,7 +1376,7 @@ retry:
         '    Dim historyID As Integer
 
         '    ' checking balance of customer
-        '    Dim c_Queries As New QB_Queries(SessionManager, MsgSetRequest)
+        '    Dim c_Queries As New QB_Queries(SessMgr, MsgSetRequest)
         '    Dim custListID As String = cta.GetListID(CustomerNumber)
 
         '    Dim custBalance As Double = c_Queries.Customer_Balance(custListID)
@@ -1437,7 +1424,7 @@ retry:
         '    descLine.InvoiceLineAdd.Amount.Unset()
         '    descLine.InvoiceLineAdd.Quantity.Unset()
 
-        '    Dim msgSetResp As IMsgSetResponse = SessionManager.DoRequests(MsgSetRequest)
+        '    Dim msgSetResp As IMsgSetResponse = SessMgr.DoRequests(MsgSetRequest)
         '    Dim respList As IResponseList = msgSetResp.ResponseList
 
         '    MsgSetRequest.ClearRequests()
@@ -1494,7 +1481,7 @@ retry:
         'End Function
 
         Public Sub Customer_CheckOverpayments(ByRef newInv As NewInvObj)
-            Dim recievePayQuery As IReceivePaymentQuery = MsgSetRequest.AppendReceivePaymentQueryRq
+            Dim recievePayQuery As IReceivePaymentQuery = MsgSetReq.AppendReceivePaymentQueryRq
 
             ' only things i want back
             recievePayQuery.IncludeRetElementList.Add("UnusedPayment")
@@ -1507,11 +1494,11 @@ retry:
             ' limiting results to last 30 payments
             recievePayQuery.ORTxnQuery.TxnFilter.MaxReturned.SetValue(30)
 
-            Dim msgSetResp As IMsgSetResponse = SessionManager.DoRequests(MsgSetRequest)
+            Dim msgSetResp As IMsgSetResponse = SessMgr.DoRequests(MsgSetReq)
             Dim respList As IResponseList = msgSetResp.ResponseList
 
             ' clearMsgSetReq
-            MsgSetRequest.ClearRequests()
+            MsgSetReq.ClearRequests()
 
             ' looping through responseList
             For i = 0 To respList.Count - 1
@@ -1553,7 +1540,7 @@ retry:
                     ' no payments = exit sub
                     Exit Sub
                 ElseIf (resp.StatusCode > 1) Then
-                    TrashCash_Utils.Err_Handling.ResponseErr_Misc(resp)
+                    Utilities.ErrHandling.ResponseErr_Misc(resp)
                 End If
             Next i
         End Sub
@@ -1565,7 +1552,7 @@ retry:
             ' this var will be returned after every overpayment to let the calling sub know if it needs to use another
             Dim paidOff As Boolean
 
-            Dim recievePayMod As IReceivePaymentMod = MsgSetRequest.AppendReceivePaymentModRq
+            Dim recievePayMod As IReceivePaymentMod = MsgSetReq.AppendReceivePaymentModRq
 
             recievePayMod.TxnID.SetValue(overpayTxnID)
             recievePayMod.EditSequence.SetValue(overpayEditSeq)
@@ -1574,11 +1561,11 @@ retry:
             Dim appliedTxn As IAppliedToTxnMod
 
             ' readding existing attached txns
-            If (AttachedTxns IsNot Nothing) Then
-                For i = 0 To AttachedTxns.Count - 1
+            If (attachedTxns IsNot Nothing) Then
+                For i = 0 To attachedTxns.Count - 1
                     appliedTxn = appliedTxnList.Append()
-                    appliedTxn.TxnID.SetValue(AttachedTxns.GetAt(i).TxnID.GetValue)
-                    appliedTxn.PaymentAmount.SetValue(AttachedTxns.GetAt(i).Amount.GetValue)
+                    appliedTxn.TxnID.SetValue(attachedTxns.GetAt(i).TxnID.GetValue)
+                    appliedTxn.PaymentAmount.SetValue(attachedTxns.GetAt(i).Amount.GetValue)
                 Next i
             End If
 
@@ -1608,24 +1595,24 @@ retry:
 
 
             ' request is fully built, time to send and do response work
-            Dim msgSetResp As IMsgSetResponse = SessionManager.DoRequests(MsgSetRequest)
+            Dim msgSetResp As IMsgSetResponse = SessMgr.DoRequests(MsgSetReq)
             Dim responseList As IResponseList = msgSetResp.ResponseList
 
             ' clear msgset
-            MsgSetRequest.ClearRequests()
+            MsgSetReq.ClearRequests()
 
             ' looping through responseList
             For i = 0 To responseList.Count - 1
                 Dim resp As IResponse = responseList.GetAt(i)
                 If (resp.StatusCode > 0) Then
-                    TrashCash_Utils.Err_Handling.ResponseErr_Misc(resp)
+                    Utilities.ErrHandling.ResponseErr_Misc(resp)
                 End If
             Next i
 
             Return paidOff
         End Function
         Public Sub Customer_CheckCredits(ByRef newInv As NewInvObj)
-            Dim creditMemoQuery As ICreditMemoQuery = MsgSetRequest.AppendCreditMemoQueryRq
+            Dim creditMemoQuery As ICreditMemoQuery = MsgSetReq.AppendCreditMemoQueryRq
 
             ' only want these 2 things back
             creditMemoQuery.IncludeRetElementList.Add("CreditRemaining")
@@ -1634,11 +1621,11 @@ retry:
             ' passing paramater here
             creditMemoQuery.ORTxnQuery.TxnFilter.EntityFilter.OREntityFilter.ListIDList.Add(newInv.CustomerListID)
 
-            Dim msgSetResp As IMsgSetResponse = SessionManager.DoRequests(MsgSetRequest)
+            Dim msgSetResp As IMsgSetResponse = SessMgr.DoRequests(MsgSetReq)
             Dim respList As IResponseList = msgSetResp.ResponseList
 
             ' clear msgSetReq
-            MsgSetRequest.ClearRequests()
+            MsgSetReq.ClearRequests()
 
             ' looping through responseList
             For i = 0 To respList.Count - 1
@@ -1669,7 +1656,7 @@ retry:
                     'no credits = exit sub
                     Exit Sub
                 ElseIf (resp.StatusCode > 1) Then
-                    TrashCash_Utils.Err_Handling.ResponseErr_Misc(resp)
+                    Utilities.ErrHandling.ResponseErr_Misc(resp)
                 End If
             Next i
 
@@ -1678,7 +1665,7 @@ retry:
             Dim paidOff As Boolean
 
             ' create interface
-            Dim recievePayAdd As IReceivePaymentAdd = MsgSetRequest.AppendReceivePaymentAddRq
+            Dim recievePayAdd As IReceivePaymentAdd = MsgSetReq.AppendReceivePaymentAddRq
 
             ' set attached cust
             recievePayAdd.CustomerRef.ListID.SetValue(newInv.CustomerListID)
@@ -1692,7 +1679,7 @@ retry:
 
             If (newInv.BalanceRemaining > 0) Then
                 ' checking how much i can apply
-                If ((newInv.BalanceRemaining - CreditRemain) <= 0) Then
+                If ((newInv.BalanceRemaining - creditRemain) <= 0) Then
                     ' credit can cover the balance, so applied amount is the same as balance
                     setCredit.AppliedAmount.SetValue(newInv.BalanceRemaining)
 
@@ -1700,25 +1687,25 @@ retry:
                     newInv.BalanceRemaining = 0
                 Else
                     ' balance will remain, so applied amount is the same as remaining credit
-                    setCredit.AppliedAmount.SetValue(CreditRemain)
+                    setCredit.AppliedAmount.SetValue(creditRemain)
 
                     ' updating balance
-                    newInv.BalanceRemaining = Math.Round((newInv.BalanceRemaining - CreditRemain), 2)
+                    newInv.BalanceRemaining = Math.Round((newInv.BalanceRemaining - creditRemain), 2)
                 End If
             End If
 
             ' request is fully built, time to send and do response work
-            Dim msgSetResp As IMsgSetResponse = SessionManager.DoRequests(MsgSetRequest)
+            Dim msgSetResp As IMsgSetResponse = SessMgr.DoRequests(MsgSetReq)
             Dim responseList As IResponseList = msgSetResp.ResponseList
 
             ' clear msgSetReq
-            MsgSetRequest.ClearRequests()
+            MsgSetReq.ClearRequests()
 
             ' looping through responseList
             For i = 0 To responseList.Count - 1
                 Dim resp As IResponse = responseList.GetAt(i)
                 If (resp.StatusCode > 0) Then
-                    TrashCash_Utils.Err_Handling.ResponseErr_Misc(resp)
+                    Utilities.ErrHandling.ResponseErr_Misc(resp)
                 End If
             Next i
 
@@ -1730,14 +1717,14 @@ retry:
             Dim ta As New ds_TypesTableAdapters.ServiceTypesTableAdapter
             Dim serviceRow As ds_Types.ServiceTypesRow = ta.GetDataByID(serviceTypeID).Rows(0)
 
-            Dim itemAdd As IItemServiceAdd = MsgSetRequest.AppendItemServiceAddRq
+            Dim itemAdd As IItemServiceAdd = MsgSetReq.AppendItemServiceAddRq
 
             ' setting item stuff
             itemAdd.Name.SetValue(serviceRow.ServiceName)
             itemAdd.ORSalesPurchase.SalesOrPurchase.Desc.SetValue(serviceRow.ServiceDescription)
             itemAdd.ORSalesPurchase.SalesOrPurchase.ORPrice.Price.SetValue(serviceRow.ServiceRate)
             ' passing attached account
-            itemAdd.ORSalesPurchase.SalesOrPurchase.AccountRef.ListID.SetValue(QBAccount)
+            itemAdd.ORSalesPurchase.SalesOrPurchase.AccountRef.ListID.SetValue(qbAccount)
 
             ' checking active state
             If (serviceRow.ServiceActive = False) Then
@@ -1746,11 +1733,11 @@ retry:
                 itemAdd.IsActive.SetValue(True)
             End If
 
-            Dim msgSetResp As IMsgSetResponse = SessionManager.DoRequests(MsgSetRequest)
+            Dim msgSetResp As IMsgSetResponse = SessMgr.DoRequests(MsgSetReq)
             Dim respList As IResponseList = msgSetResp.ResponseList
 
             ' clear msgSetREq
-            MsgSetRequest.ClearRequests()
+            MsgSetReq.ClearRequests()
 
             For i = 0 To respList.Count - 1
                 Dim resp As IResponse = respList.GetAt(i)
@@ -1768,7 +1755,7 @@ retry:
                         MsgBox(ex.Message)
                     End Try
                 Else
-                    TrashCash_Utils.Err_Handling.ResponseErr_Misc(resp)
+                    Utilities.ErrHandling.ResponseErr_Misc(resp)
                     ta.DeleteByID(serviceTypeID)
                 End If
             Next i
@@ -1777,9 +1764,9 @@ retry:
         Public Sub Items_UpdateServiceItem(ByVal serviceTypeID As Decimal)
             ' getting row
             Dim ta As New ds_TypesTableAdapters.ServiceTypesTableAdapter
-            Dim serviceRow As ds_Types.ServiceTypesRow = ta.GetDataByID(ServiceTypeID).Rows(0)
+            Dim serviceRow As ds_Types.ServiceTypesRow = ta.GetDataByID(serviceTypeID).Rows(0)
 
-            Dim itemMod As IItemServiceMod = MsgSetRequest.AppendItemServiceModRq
+            Dim itemMod As IItemServiceMod = MsgSetReq.AppendItemServiceModRq
 
             ' setting item we are talking about
             itemMod.ListID.SetValue(serviceRow.ServiceListID)
@@ -1796,11 +1783,11 @@ retry:
                 itemMod.IsActive.SetValue(True)
             End If
 
-            Dim msgSetResp As IMsgSetResponse = SessionManager.DoRequests(MsgSetRequest)
+            Dim msgSetResp As IMsgSetResponse = SessMgr.DoRequests(MsgSetReq)
             Dim respList As IResponseList = msgSetResp.ResponseList
 
             ' clear msgSetReq
-            MsgSetRequest.ClearRequests()
+            MsgSetReq.ClearRequests()
 
             For i = 0 To respList.Count - 1
                 Dim resp As IResponse = respList.GetAt(i)
@@ -1816,15 +1803,15 @@ retry:
                     End Try
                 ElseIf (resp.StatusCode = 3200) Then
                     ' update edit sequence in db
-                    Items_UpdateEditSeq(ServiceTypeID)
+                    Items_UpdateEditSeq(serviceTypeID)
                 Else
-                    TrashCash_Utils.Err_Handling.ResponseErr_Misc(resp)
+                    Utilities.ErrHandling.ResponseErr_Misc(resp)
                 End If
             Next i
         End Sub
 
         Private Sub Items_UpdateEditSeq(ByVal serviceTypeID As Integer)
-            Dim itemQuery As IItemQuery = MsgSetRequest.AppendItemQueryRq
+            Dim itemQuery As IItemQuery = MsgSetReq.AppendItemQueryRq
 
             ' getting service row
             Dim ta As New ds_TypesTableAdapters.ServiceTypesTableAdapter
@@ -1834,11 +1821,11 @@ retry:
             ' setting listid
             itemQuery.ORListQuery.ListIDList.Add(serviceRow.ServiceListID)
 
-            Dim msgSetResp As IMsgSetResponse = SessionManager.DoRequests(MsgSetRequest)
+            Dim msgSetResp As IMsgSetResponse = SessMgr.DoRequests(MsgSetReq)
             Dim respList As IResponseList = msgSetResp.ResponseList
 
             'clear msgSetReq
-            MsgSetRequest.ClearRequests()
+            MsgSetReq.ClearRequests()
 
             For i = 0 To respList.Count - 1
                 Dim resp As IResponse = respList.GetAt(i)
@@ -1866,14 +1853,14 @@ retry:
 
             For Each row As ds_Types.ServiceTypesRow In dt.Rows
                 If (row.IsServiceListIDNull = True) Then
-                    Dim itemAdd As IItemServiceAdd = MsgSetRequest.AppendItemServiceAddRq
+                    Dim itemAdd As IItemServiceAdd = MsgSetReq.AppendItemServiceAddRq
 
                     ' setting item stuff
                     itemAdd.Name.SetValue(row.ServiceName)
                     itemAdd.ORSalesPurchase.SalesOrPurchase.Desc.SetValue(row.ServiceDescription)
                     itemAdd.ORSalesPurchase.SalesOrPurchase.ORPrice.Price.SetValue(row.ServiceRate)
                     ' passing attached account
-                    itemAdd.ORSalesPurchase.SalesOrPurchase.AccountRef.ListID.SetValue(QBAccount)
+                    itemAdd.ORSalesPurchase.SalesOrPurchase.AccountRef.ListID.SetValue(qbAccount)
 
                     ' checking active state
                     If (row.ServiceActive = False) Then
@@ -1882,11 +1869,11 @@ retry:
                         itemAdd.IsActive.SetValue(True)
                     End If
 
-                    Dim msgSetResp As IMsgSetResponse = SessionManager.DoRequests(MsgSetRequest)
+                    Dim msgSetResp As IMsgSetResponse = SessMgr.DoRequests(MsgSetReq)
                     Dim respList As IResponseList = msgSetResp.ResponseList
 
                     ' clear msgSetREq
-                    MsgSetRequest.ClearRequests()
+                    MsgSetReq.ClearRequests()
 
                     For i = 0 To respList.Count - 1
                         Dim resp As IResponse = respList.GetAt(i)
@@ -1904,7 +1891,7 @@ retry:
                                 MsgBox(ex.Message)
                             End Try
                         Else
-                            TrashCash_Utils.Err_Handling.ResponseErr_Misc(resp)
+                            Utilities.ErrHandling.ResponseErr_Misc(resp)
                             'ta.DeleteByID(row.ServiceTypeID)
                         End If
                     Next i

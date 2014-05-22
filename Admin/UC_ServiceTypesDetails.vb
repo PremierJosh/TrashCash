@@ -1,8 +1,9 @@
 ﻿
 Namespace Admin
+    ' ReSharper disable once InconsistentNaming
     Public Class UC_ServiceTypesDetails
         ' property for home form ref
-        Private _homeForm As TrashCashHome
+        Private homeForm As TrashCashHome
 
         Private Property IsNew As Boolean
 
@@ -69,59 +70,59 @@ Namespace Admin
         '    End If
         'End Sub
 
-        Private Function ValidateTBs()
-            Dim err As Integer = 0
-            Dim defaultColor = SystemColors.Window
-            Dim errorColor = Color.MistyRose
-
-            ' checking name
-            If (tb_ServiceName.Text.Length = 0 Or tb_ServiceName.Text = "ItemName") Then
-                err += 1
-                tb_ServiceName.BackColor = errorColor
-            Else
-                tb_ServiceName.BackColor = defaultColor
-            End If
-
-            'checking description
-            If (tb_ServiceDescription.Text.Length = 0 Or tb_ServiceDescription.Text = "Description required") Then
-                err += 1
-                tb_ServiceDescription.BackColor = errorColor
-            Else
-                tb_ServiceDescription.BackColor = defaultColor
-            End If
-
-            ' checking rate box
-            If (IsNumeric(tb_ServiceRate.Text) = True) Then
-                If (tb_ServiceRate.Text <= 0) Then
-                    tb_ServiceRate.BackColor = errorColor
-                    err += 1
-                Else
-                    tb_ServiceRate.BackColor = defaultColor
-                End If
-            Else
-                tb_ServiceRate.BackColor = errorColor
-                err += 1
-            End If
-
-            ' checking bill length
-            If (IsNumeric(tb_ServiceBillLength.Text) = True) Then
-                If (tb_ServiceBillLength.Text <= 0) Then
-                    tb_ServiceBillLength.BackColor = errorColor
-                    err += 1
-                Else
-                    tb_ServiceBillLength.BackColor = defaultColor
-                End If
-            Else
-                tb_ServiceBillLength.BackColor = errorColor
-                err += 1
-            End If
-
-            If (err = 0) Then
-                Return True
-            Else
-                Return False
-            End If
-        End Function
+        '        Private Function ValidateTBs()
+        '            Dim err As Integer = 0
+        '            Dim defaultColor = SystemColors.Window
+        '            Dim errorColor = Color.MistyRose
+        '
+        '            ' checking name
+        '            If (tb_ServiceName.Text.Length = 0 Or tb_ServiceName.Text = "ItemName") Then
+        '                err += 1
+        '                tb_ServiceName.BackColor = errorColor
+        '            Else
+        '                tb_ServiceName.BackColor = defaultColor
+        '            End If
+        '
+        '            'checking description
+        '            If (tb_ServiceDescription.Text.Length = 0 Or tb_ServiceDescription.Text = "Description required") Then
+        '                err += 1
+        '                tb_ServiceDescription.BackColor = errorColor
+        '            Else
+        '                tb_ServiceDescription.BackColor = defaultColor
+        '            End If
+        '
+        '            ' checking rate box
+        '            If (IsNumeric(tb_ServiceRate.Text) = True) Then
+        '                If (tb_ServiceRate.Text <= 0) Then
+        '                    tb_ServiceRate.BackColor = errorColor
+        '                    err += 1
+        '                Else
+        '                    tb_ServiceRate.BackColor = defaultColor
+        '                End If
+        '            Else
+        '                tb_ServiceRate.BackColor = errorColor
+        '                err += 1
+        '            End If
+        '
+        '            ' checking bill length
+        '            If (IsNumeric(tb_ServiceBillLength.Text) = True) Then
+        '                If (tb_ServiceBillLength.Text <= 0) Then
+        '                    tb_ServiceBillLength.BackColor = errorColor
+        '                    err += 1
+        '                Else
+        '                    tb_ServiceBillLength.BackColor = defaultColor
+        '                End If
+        '            Else
+        '                tb_ServiceBillLength.BackColor = errorColor
+        '                err += 1
+        '            End If
+        '
+        '            If (err = 0) Then
+        '                Return True
+        '            Else
+        '                Return False
+        '            End If
+        '        End Function
         Public Sub New()
 
             ' This call is required by the designer.
@@ -133,7 +134,7 @@ Namespace Admin
 
         Private Sub UC_ServiceTypesDetails_Load(sender As Object, e As System.EventArgs) Handles Me.Load
             ' bind account box
-            _HomeForm.Queries.CMB_BindIncomeAccount(cmb_IncomeAcc)
+            homeForm.Queries.CMB_BindIncomeAccount(cmb_IncomeAcc)
         End Sub
 
         'Private Sub Label1_Click(sender As System.Object, e As System.Windows.Forms.MouseEventArgs) Handles Label1.Click

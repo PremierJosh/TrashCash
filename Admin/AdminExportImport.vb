@@ -131,7 +131,7 @@ Namespace Admin
                     If (resp.StatusCode <> 0) Then
 
                         Try
-                            TrashCash_Utils.Err_Handling.ResponseErr_Misc(resp)
+                            Utilities.ErrHandling.ResponseErr_Misc(resp)
                             Exit Sub
                         Catch ex As Exception
                             MsgBox("Err_Invoice_Insert: " & ex.Message)

@@ -212,7 +212,7 @@ Partial Class TrashCashHome
         '
         Me.Batch_RefreshBalance.Interval = 10000
         '
-        'TrashCash_Home
+        'TrashCashHome
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font

@@ -1,5 +1,5 @@
 ﻿Imports QBFC12Lib
-Imports TrashCash.TrashCash_Utils.Err_Handling
+Imports TrashCash.Utilities.ErrHandling
 
 Public Class f_AllCustBalances
 

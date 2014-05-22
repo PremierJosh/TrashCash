@@ -3,6 +3,7 @@
 Namespace Classes
 
 
+    ' ReSharper disable once InconsistentNaming
     Public MustInherit Class QB_Batching
         Protected MsgSetReq As IMsgSetRequest
         Private ReadOnly Property MsgSetRequest As IMsgSetRequest
@@ -22,8 +23,8 @@ Namespace Classes
         ' session status bool
         Protected InSession As Boolean
         ' class vars
-        Private ReadOnly Queries As QB_Queries
-        Private ReadOnly Procedures As QB_Procedures
+        Private ReadOnly _queries As QB_Queries
+        Private ReadOnly _procedures As QB_Procedures
         ' qta
         Private ReadOnly _qta As ds_BatchingTableAdapters.QueriesTableAdapter
 
@@ -42,8 +43,8 @@ Namespace Classes
             MsgSetReq = SessionManager.CreateMsgSetRequest("US", 11, 0)
 
             ' instantiate 
-            Queries = New QB_Queries(SessionManager, MsgSetRequest)
-            Procedures = New QB_Procedures(SessionManager, MsgSetRequest)
+            _queries = New QB_Queries(SessionManager, MsgSetRequest)
+            _procedures = New QB_Procedures(SessionManager, MsgSetRequest)
             _qta = New ds_BatchingTableAdapters.QueriesTableAdapter
         End Sub
 
@@ -74,7 +75,7 @@ Namespace Classes
                              ByVal e As System.ComponentModel.DoWorkEventArgs)
                 If (InSession) Then
                     ' this will keep track of this batches progress
-                    Dim progress As New TrashCash_Utils.ProgressObj
+                    Dim progress As New Utilities.ProgressObj
 
                     ' this is passed to the worker
                     Dim progPercent As Integer
@@ -114,7 +115,7 @@ Namespace Classes
                             End If
 
                             ' checking balance of customer
-                            Dim custBalance As Double = Queries.Customer_Balance(row.CustomerListID)
+                            Dim custBalance As Double = _queries.Customer_Balance(row.CustomerListID)
 
                             ' send row
                             Invoice(row)
@@ -160,10 +161,10 @@ Namespace Classes
                                         invObj.BalanceRemaining = row.InvoiceBalance
 
                                         ' check for credits
-                                        Procedures.Customer_CheckCredits(invObj)
+                                        _procedures.Customer_CheckCredits(invObj)
                                         If (invObj.BalanceRemaining > 0) Then
                                             ' if balance remain after credits, check for overpayments
-                                            Procedures.Customer_CheckOverpayments(invObj)
+                                            _procedures.Customer_CheckOverpayments(invObj)
                                         End If
                                     End If
                                 End If
@@ -328,7 +329,7 @@ Namespace Classes
 
                 If (InSession) Then
                     ' this will keep track of this batches progress
-                    Dim progress As New TrashCash_Utils.ProgressObj
+                    Dim progress As New Utilities.ProgressObj
 
                     ' this is passed to the worker
                     Dim progPercent As Integer
