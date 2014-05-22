@@ -4,7 +4,7 @@ Imports TrashCash.Classes.QBConMgr
 Namespace Invoicing
     Module QBMethods
 
-        Public Function CreateCustomInvoice(ByRef ds As ds_Invoicing, ByVal print As Boolean) As Boolean
+        Public Function CustomInvoice_Create(ByRef ds As ds_Invoicing, ByVal print As Boolean) As Boolean
             ' return succeed or fail
             Dim pass As Boolean = False
 
@@ -45,11 +45,12 @@ Namespace Invoicing
             ' submit and update row for submited
             invRow.Time_Submitted = Date.Now
             invRow.StatusID = ENItemStatus.Submitted
-
+            
             Try
                 ta.Update(invRow)
-            Catch ex As Exception
-                MessageBox.Show("Error Updating CustomInvRow: " & ex.Message, "Update Err", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            Catch ex as SqlException
+                MessageBox.Show("Message: " & ex.Message & vbCrLf & "LineNumber: " & ex.LineNumber,
+                                "Sql Error: " & ex.Procedure, MessageBoxButtons.OK, MessageBoxIcon.Error)
             End Try
 
             Dim respList As IResponseList = GetRespList()
@@ -71,15 +72,63 @@ Namespace Invoicing
                     Try
                         ta.Update(invRow)
                         pass = True
-                    Catch ex As Exception
-                        MessageBox.Show("Error Updating CustomInvRow: " & ex.Message, "Update Err", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                    Catch ex As SqlException
+                        MessageBox.Show("Message: " & ex.Message & vbCrLf & "LineNumber: " & ex.LineNumber,
+                                        "Sql Error: " & ex.Procedure, MessageBoxButtons.OK, MessageBoxIcon.Error)
                     End Try
 
                 Else
                     ' log and update row
                     ResponseErr_Misc(resp)
                     invRow.StatusID = ENItemStatus.Err
-                    ta.Update(invRow)
+
+                    Try
+                        ta.Update(invRow)
+                    Catch ex As SqlException
+                        MessageBox.Show("Message: " & ex.Message & vbCrLf & "LineNumber: " & ex.LineNumber,
+                                        "Sql Error: " & ex.Procedure, MessageBoxButtons.OK, MessageBoxIcon.Error)
+                    End Try
+                End If
+            Next
+
+            Return pass
+        End Function
+
+        Public Function CustomInvoice_Void(ByVal id As Integer, ByVal reason As String) As Boolean
+            ' return for succeed or fail
+            Dim pass As Boolean = False
+
+            ' ta needed
+            Dim ta As New ds_InvoicingTableAdapters.CustomInvoicesTableAdapter
+            Dim row As ds_Invoicing.CustomInvoicesRow = ta.GetDataByID(id).Rows(0)
+
+            Dim void As ITxnVoid = MessageSetRequest.AppendTxnVoidRq
+            void.TxnVoidType.SetValue(ENTxnVoidType.tvtInvoice)
+            void.TxnID.SetValue(row.InvoiceListID)
+
+            Dim respList As IResponseList = GetRespList()
+
+            For i = 0 To respList.Count - 1
+                Dim resp As IResponse = respList.GetAt(i)
+                If (resp.StatusCode = 0) Then
+
+                    ' update db
+                    With row
+                        .Voided = True
+                        .VoidReason = reason
+                        .VoidTime = Date.Now
+                        .VoidUser = CurrentUser.USER_NAME
+                    End With
+
+                    Try
+                        ta.Update(row)
+                        pass = True
+                    Catch ex As SqlException
+                        MessageBox.Show("Message: " & ex.Message & vbCrLf & "LineNumber: " & ex.LineNumber, "Sql Error: " & ex.Procedure,
+                                        MessageBoxButtons.OK, MessageBoxIcon.Error)
+                    End Try
+                Else
+                    ResponseErr_Misc(resp)
                 End If
             Next
 

@@ -8,6 +8,9 @@ Namespace Classes
         Public Shared SessionManager As QBSessionManager
         Public Shared MessageSetRequest As IMsgSetRequest
 
+        ' useful vars all forms will use
+        Public Shared CurrentUser As ds_Program.USERSRow
+
         Public Shared Sub InitCon()
             SessionManager = New QBSessionManager()
 
