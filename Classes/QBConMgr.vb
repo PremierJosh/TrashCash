@@ -62,18 +62,17 @@ Namespace Classes
             MyBase.Finalize()
 
             Try
-                SessionManager.CloseConnection
+                SessionManager.CloseConnection()
             Catch ex As Exception
                 MsgBox(ex.Message)
                 Application.Exit()
             End Try
         End Sub
 
+        Private Shared ReadOnly TA As New ds_CustomerTableAdapters.CustomerTableAdapter
         Public Shared Function CustomerListID(ByVal customerNumber As Integer)
-            Using ta As New ds_CustomerTableAdapters.CustomerTableAdapter
-                Dim s As String = ta.GetListID(customerNumber)
-                Return s
-            End Using
+            Dim s As String = TA.GetListID(customerNumber)
+            Return s
         End Function
 
         Public Shared Sub ResponseErr_Misc(ByVal resp As IResponse)
@@ -87,7 +86,7 @@ Namespace Classes
                                            resp.StatusMessage,
                                            Date.Now)
                     End Using
-                
+
                     MsgBox("Error Encounterd with Quickbooks. Contact Premier.", MsgBoxStyle.Critical)
                 Catch ex As Exception
                     MsgBox("ERR_MISC_Insert: " & ex.Message)
@@ -102,5 +101,42 @@ Namespace Classes
             Complete = 7
             Submitted = 8
         End Enum
+    End Class
+
+
+
+    Public Class QBLineItem
+        Public ItemListID As String
+        Public Rate As Double
+        Public Quantity As Integer = 1
+        Public Desc As String
+
+        ' optional data fields
+        Public Other1 As String
+        Public Other2 As String
+
+        Public Sub New(Optional ByVal description As string)
+            Quantity = 0
+            If (description IsNot Nothing) Then
+                Desc = description
+            End If
+        End Sub
+        Public Sub New(ByVal itemListID As String, ByVal rate As Double, Optional ByVal quantity As Integer = 1, Optional ByVal desc As String = Nothing,
+                       Optional ByVal other1 As String = Nothing, Optional ByVal other2 As String = Nothing)
+            Me.ItemListID = itemListID
+            Me.Rate = rate
+            If (quantity <> 1) Then
+                Me.Quantity = quantity
+            End If
+            If (desc IsNot Nothing) Then
+                    Me.Desc = desc
+            End If
+            If (other1 IsNot Nothing) Then
+                Me.Other1 = other1
+            End If
+            If (other2 IsNot Nothing) Then
+                Me.Other2 = other2
+            End If
+        End Sub
     End Class
 End Namespace
