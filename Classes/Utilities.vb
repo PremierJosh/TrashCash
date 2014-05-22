@@ -2,8 +2,14 @@
 Imports System.ComponentModel
 
 'Imports System.Windows.Forms.ToolStripComboBox
-
 Public Class Utilities
+    ' going to enum item status
+    Enum ItemStatus
+        Ready = 5
+        Err = 6
+        Complete = 7
+    End Enum
+
     ' can be used by any where this class is included
     Public Shared QtaUtil As DataSetTableAdapters.QueriesTableAdapter
 
@@ -31,8 +37,8 @@ Public Class Utilities
                     End If
 
                     ' if form ref needs passed back
-                    If (Form IsNot Nothing) Then
-                        Form = forms.Item(i)
+                    If (form IsNot Nothing) Then
+                        form = forms.Item(i)
                     End If
                 End If
             Next i
