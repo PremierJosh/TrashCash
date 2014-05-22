@@ -2,7 +2,7 @@
 
 Namespace Admin
     Public Class MovePayment
-        ' home form ref var
+        ' home form ref  var
         Private ReadOnly _homeForm As TrashCashHome
 
         ' event to let pay history form refresh

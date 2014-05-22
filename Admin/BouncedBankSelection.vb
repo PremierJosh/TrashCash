@@ -21,8 +21,7 @@ Namespace Admin
                     ' query for row and set refrence
                     Dim ta As New PaymentHistory_DBTableAdapter
                     CheckRow = ta.GetData(value).Rows(0)
-                    ta = Nothing
-                End If
+                    End If
             End Set
         End Property
 
@@ -87,7 +86,7 @@ Namespace Admin
                 bounceOk = _home.Procedures.Customer_BounceCheck(CheckRow, BankRow, tb_CustFee.Text)
                 If (bounceOk) Then
                     MsgBox("Check Bounce Completed.")
-                    Me.Close()
+                    Close()
                 End If
             End If
         End Sub
@@ -101,11 +100,9 @@ Namespace Admin
             _bta.Fill(_banks)
 
             ' grabbing default fee here and then disposing of ta
-            Dim _ta As New APP_SETTINGS_TableAdapter
-            Dim _dr As ds_Program.APP_SETTINGS_Row = _ta.GetData().Rows(0)
-            tb_CustFee.Text = _dr.BAD_CHECK_CUST_FEE
-            _ta = Nothing
-            _dr = Nothing
+            Dim ta As New APP_SETTINGS_TableAdapter
+            Dim dr As ds_Program.APP_SETTINGS_Row = ta.GetData().Rows(0)
+            tb_CustFee.Text = dr.BAD_CHECK_CUST_FEE
 
             ' grabbing default bank selection
             If (Cmb_BadCheckBanks.SelectedValue IsNot Nothing) Then
@@ -117,7 +114,7 @@ Namespace Admin
         End Sub
 
         Private Sub btn_Cancel_Click(sender As Object, e As EventArgs) Handles btn_Cancel.Click
-            Me.Close()
+            Close()
         End Sub
 
         Private Sub Cmb_BadCheckBanks_SelectionChangeCommitted(sender As cmb_BadCheckBanks, e As EventArgs) _

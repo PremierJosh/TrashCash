@@ -1,4 +1,5 @@
 ﻿Imports System.Windows.Forms
+Imports TrashCash.Admin
 
 Public Class TrashCash_Admin
     ' home form ref
