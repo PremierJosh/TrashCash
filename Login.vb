@@ -14,7 +14,7 @@
             Dim splash As New SplashScreen
             splash.Show()
             Me.Hide()
-            Dim home As New TrashCash_Home(splash, userID)
+            Dim home As New TrashCashHome(splash, userID)
             home.Show()
             Me.Close()
         Else

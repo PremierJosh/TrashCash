@@ -2,7 +2,7 @@
 
 Public Class TrashCash_Admin
     ' home form ref
-    Friend HomeForm As TrashCash_Home
+    Friend HomeForm As TrashCashHome
 
     ' user row
     Private _userRow As ds_Program.USERSRow
@@ -19,7 +19,7 @@ Public Class TrashCash_Admin
         End Set
     End Property
 
-    Public Sub New(ByRef p_HomeForm As TrashCash_Home, ByVal p_UserRow As ds_Program.USERSRow)
+    Public Sub New(ByRef p_HomeForm As TrashCashHome, ByVal p_UserRow As ds_Program.USERSRow)
 
         ' This call is required by the designer.
         InitializeComponent()

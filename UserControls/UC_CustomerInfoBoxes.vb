@@ -13,12 +13,12 @@
     End Property
 
     ' property for home form ref
-    Private _home As TrashCash_Home
-    Friend Property HomeForm As TrashCash_Home
+    Private _home As TrashCashHome
+    Friend Property HomeForm As TrashCashHome
         Get
             Return _home
         End Get
-        Set(value As TrashCash_Home)
+        Set(value As TrashCashHome)
             _home = value
         End Set
     End Property

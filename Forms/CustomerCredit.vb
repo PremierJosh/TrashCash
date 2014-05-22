@@ -1,6 +1,6 @@
 ﻿Public Class CustomerCredit
     ' home form ref
-    Private _homeForm As TrashCash_Home
+    Private _homeForm As TrashCashHome
     ' dt vars for service type binding
     Private c_dt As ds_Customer.Customer_RecurringServiceTypesDataTable
     Private s_dt As ds_Types.ServiceTypesDataTable
@@ -47,7 +47,7 @@
         End Set
     End Property
 
-    Public Sub New(ByRef HomeForm As TrashCash_Home, ByVal CustomerNumber As Integer)
+    Public Sub New(ByRef HomeForm As TrashCashHome, ByVal CustomerNumber As Integer)
 
         ' This call is required by the designer.
         InitializeComponent()

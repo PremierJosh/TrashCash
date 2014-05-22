@@ -55,7 +55,7 @@ Public Class CustomInvoice_DescRemind
     End Property
 
     ' home form ref var
-    Private _home As TrashCash_Home
+    Private _home As TrashCashHome
 
     Friend Event SubmitInvoice(ByVal Description As String)
 
@@ -157,7 +157,7 @@ Public Class CustomInvoice_DescRemind
         End If
     End Sub
 
-    Public Sub New(ByRef HomeForm As TrashCash_Home)
+    Public Sub New(ByRef HomeForm As TrashCashHome)
 
         ' This call is required by the designer.
         InitializeComponent()

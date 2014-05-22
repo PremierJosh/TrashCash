@@ -15,8 +15,8 @@ Public Class QB_Procedures
             Return _sessMgr
         End Get
     End Property
-    Protected _homeForm As TrashCash_Home
-    Private ReadOnly Property HomeForm As TrashCash_Home
+    Protected _homeForm As TrashCashHome
+    Private ReadOnly Property HomeForm As TrashCashHome
         Get
             Return _homeForm
         End Get
@@ -26,7 +26,7 @@ Public Class QB_Procedures
     Protected cta As ds_CustomerTableAdapters.CustomerTableAdapter
     Protected rsta As ds_RecurringServiceTableAdapters.RecurringServiceTableAdapter
 
-    Public Sub New(ByRef SessionManager As QBSessionManager, ByRef MsgSetReq As IMsgSetRequest, Optional ByRef HomeForm As TrashCash_Home = Nothing)
+    Public Sub New(ByRef SessionManager As QBSessionManager, ByRef MsgSetReq As IMsgSetRequest, Optional ByRef HomeForm As TrashCashHome = Nothing)
         ' setting sess mgr and msgsetreq
         _sessMgr = SessionManager
         _msgSetReq = MsgSetReq

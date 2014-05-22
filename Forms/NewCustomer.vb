@@ -6,7 +6,7 @@ Public Class NewCustomer
     Friend Event NewCustomerAdded(ByVal CustomerNumber As Integer)
 
     ' home form ref var
-    Private _home As TrashCash_Home
+    Private _home As TrashCashHome
 
     Private custRow As ds_Customer.CustomerRow
     ' LOAD EVENTS
@@ -15,7 +15,7 @@ Public Class NewCustomer
         Me.Ds_Customer.Customer.AddCustomerRow(custRow)
     End Sub
 
-    Public Sub New(ByRef HomeForm As TrashCash_Home)
+    Public Sub New(ByRef HomeForm As TrashCashHome)
 
         ' This call is required by the designer.
         InitializeComponent()

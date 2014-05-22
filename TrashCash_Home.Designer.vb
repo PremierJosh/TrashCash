@@ -1,5 +1,5 @@
 ﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
-Partial Class TrashCash_Home
+Partial Class TrashCashHome
     Inherits System.Windows.Forms.Form
 
     'Form overrides dispose to clean up the component list.
@@ -24,7 +24,7 @@ Partial Class TrashCash_Home
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
-        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(TrashCash_Home))
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(TrashCashHome))
         Me.StatusStrip = New System.Windows.Forms.StatusStrip()
         Me.btn_CurrentUser = New System.Windows.Forms.ToolStripDropDownButton()
         Me.btn_SwitchUser = New System.Windows.Forms.ToolStripMenuItem()
@@ -220,7 +220,7 @@ Partial Class TrashCash_Home
         Me.Controls.Add(Me.StatusStrip)
         Me.Controls.Add(Me.ts_AppBtns)
         Me.IsMdiContainer = True
-        Me.Name = "TrashCash_Home"
+        Me.Name = "TrashCashHome"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "TrashCash"
         Me.StatusStrip.ResumeLayout(False)

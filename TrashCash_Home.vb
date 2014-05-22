@@ -1,13 +1,9 @@
 ﻿Imports System.Windows.Forms
-Imports TrashCash.TrashCash_Utils
-Imports TrashCash.TrashCash_Utils._Functions
-Imports TrashCash.TrashCash_Utils.Err_Handling
+Imports System.ServiceProcess
+Imports TrashCash.ds_ProgramTableAdapters
 Imports QBFC12Lib
-'Imports System.Data.Sql
-'Imports System.Data.SqlClient
 
-
-Public Class TrashCash_Home
+Public Class TrashCashHome
     ' var for current user id row
     Private _currentUserRow As ds_Program.USERSRow
     Public Property CurrentUserRow As ds_Program.USERSRow
@@ -19,24 +15,23 @@ Public Class TrashCash_Home
 
             ' update name on status bars
             btn_CurrentUser.Text = "Current User: " & value.USER_NAME
-            Me.Text = "TrashCash       | Current User: " & value.USER_NAME
+            Text = "TrashCash       | Current User: " & value.USER_NAME
             ' update auth level
             AuthLevel = value.USER_AUTHLVL
 
             ' close all child windows
-            For Each f As Form In Me.MdiChildren
+            For Each f As Form In MdiChildren
                 f.Close()
-                f = Nothing
             Next
 
             ' close admin form if open
-            If (f_TrashCash_Admin IsNot Nothing) Then
-                f_TrashCash_Admin.Close()
-                f_TrashCash_Admin = Nothing
+            If (TrashCashAdmin IsNot Nothing) Then
+                TrashCashAdmin.Close()
+                TrashCashAdmin = Nothing
             End If
 
             ' CHANGE CONNECTION STRING
-            Dim conPW As String = "Yealink01"
+            Const conPW As String = "Yealink01"
             My.Settings.Item("QBDBConnectionString") = "Data Source=" & My.Settings.SQLSERVER & ";Initial Catalog=" & My.Settings.DATABASENAME & ";Integrated Security=False;USER ID=" & value.USER_NAME & ";Password=" & conPW
         End Set
     End Property
@@ -70,64 +65,61 @@ Public Class TrashCash_Home
     End Property
 
 
-    ' ds_program qta
-    Private qta As ds_ProgramTableAdapters.QueriesTableAdapter
-
     'var for batching
-    Private _BatchRunning As Boolean
+    Private _batchRunning As Boolean
 
     ' var for class files
-    Protected c_QB_Queries As QB_Queries
+    Protected QBQueries As QB_Queries
     Public ReadOnly Property Queries As QB_Queries
         Get
-            Return c_QB_Queries
+            Return QBQueries
         End Get
     End Property
-    Protected c_QB_Procedures As QB_Procedures
+    Protected QBProcedures As QB_Procedures
     Public ReadOnly Property Procedures As QB_Procedures
         Get
-            Return c_QB_Procedures
+            Return QBProcedures
         End Get
     End Property
-    Protected c_Reporting As Reporting
+    Protected CReporting As Reporting
     Public ReadOnly Property Reporting As Reporting
         Get
-            Return c_Reporting
+            Return CReporting
         End Get
     End Property
 
     ' var for all child forms
-    Friend WithEvents _payForm As Payments
-    Friend WithEvents _batchForm As BatchingPrep
-    Friend WithEvents _customer As Customer
-    Friend WithEvents _pendingApprovals As PendingApprovals
+    Friend WithEvents PayForm As Payments
+    Friend WithEvents BatchForm As BatchingPrep
+    Friend WithEvents Customer As Customer
+    Friend WithEvents PendingApprovals As PendingApprovals
 
     ' vars for admin forms'
-    Friend WithEvents f_UserSelection As UserSelection
-    Friend WithEvents f_TrashCash_Admin As TrashCash_Admin
+    Friend WithEvents UserSelection As UserSelection
+    Friend WithEvents TrashCashAdmin As TrashCash_Admin
 
     ' qb session and msg set req
-    Friend app_SessMgr As QBSessionManager
+    Friend AppSessMgr As QBSessionManager
     Public ReadOnly Property SessionManager As QBSessionManager
         Get
-            Return app_SessMgr
+            Return AppSessMgr
         End Get
     End Property
-    Protected Friend app_MsgSetReq As IMsgSetRequest
+    Protected Friend AppMsgSetReq As IMsgSetRequest
     Public ReadOnly Property MsgSetRequest As IMsgSetRequest
         Get
-            Return app_MsgSetReq
+            Return AppMsgSetReq
         End Get
     End Property
 
     ' pending approvals property
-    Dim _pendingApprovalC As Integer = 0
-    Public Property PendingApprovals As Integer
+    Dim _pendingApprovalCount As Integer = 0
+    Public Property PendingApprovalsCount As Integer
         Get
-            Return _pendingApprovalC
+            Return _pendingApprovalCount
         End Get
         Set(value As Integer)
-            _pendingApprovalC = value
+            _pendingApprovalCount = value
 
             If (value > 0) Then
                 btn_PendApprovs.Visible = True
@@ -139,23 +131,23 @@ Public Class TrashCash_Home
     End Property
 
     ' batch running event catch
-    Private Sub BatchRunning(ByVal running As Boolean) Handles _batchForm.BatchRunning
-        _BatchRunning = running
+    Private Sub BatchRunning(ByVal running As Boolean) Handles BatchForm.BatchRunning
+        _batchRunning = running
         ' start timer to refresh balance every 10 seconds
         Batch_RefreshBalance.Enabled = running
         ' make progress bar visible
         pb_Batching.Visible = running
         lbl_BatchProg.Visible = running
     End Sub
-    Private Sub BatchProgPercUpdate(ByVal batchProg As Integer) Handles _batchForm.e_BatchProgPerc
+    Private Sub BatchProgPercUpdate(ByVal batchProg As Integer) Handles BatchForm.e_BatchProgPerc
         lbl_BatchProg.Text = batchProg & "%"
     End Sub
 
-    Private Sub btn_Payments_Click(sender As System.Object, e As System.EventArgs) Handles btn_Payments.Click
+    Private Sub btn_Payments_Click(sender As Object, e As EventArgs) Handles btn_Payments.Click
         Dim needNew As Boolean = False
 
-        If (_payForm IsNot Nothing) Then
-            If (_payForm.IsDisposed = True) Then
+        If (PayForm IsNot Nothing) Then
+            If (PayForm.IsDisposed = True) Then
                 needNew = True
             End If
         Else
@@ -163,19 +155,19 @@ Public Class TrashCash_Home
         End If
 
         If (needNew) Then
-            _payForm = New Payments(Me)
-            _payForm.MdiParent = Me
+            PayForm = New Payments(Me)
+            PayForm.MdiParent = Me
         End If
 
-        _payForm.Show()
-        _payForm.BringToFront()
+        PayForm.Show()
+        PayForm.BringToFront()
     End Sub
 
-    Private Sub btn_NewCustTab_Click(sender As System.Object, e As System.EventArgs) Handles btn_CustTab.Click
+    Private Sub btn_NewCustTab_Click(sender As Object, e As EventArgs) Handles btn_CustTab.Click
         Dim needNew As Boolean = False
 
-        If (_customer IsNot Nothing) Then
-            If (_customer.IsDisposed = True) Then
+        If (Customer IsNot Nothing) Then
+            If (Customer.IsDisposed = True) Then
                 needNew = True
             End If
         Else
@@ -183,34 +175,34 @@ Public Class TrashCash_Home
         End If
 
         If (needNew) Then
-            _customer = New Customer(Me)
-            _customer.MdiParent = Me
+            Customer = New Customer(Me)
+            Customer.MdiParent = Me
         End If
-        _customer.Show()
-        _customer.BringToFront()
+        Customer.Show()
+        Customer.BringToFront()
     End Sub
 
-    Private Sub btn_BatchWork_Click(sender As System.Object, e As System.EventArgs) Handles btn_BatchWork.Click
-        If (_batchForm Is Nothing) Then
-            _batchForm = New BatchingPrep
-            _batchForm.MdiParent = Me
+    Private Sub btn_BatchWork_Click(sender As Object, e As EventArgs) Handles btn_BatchWork.Click
+        If (BatchForm Is Nothing) Then
+            BatchForm = New BatchingPrep
+            BatchForm.MdiParent = Me
         End If
 
-        _batchForm.Show()
-        _batchForm.BringToFront()
+        BatchForm.Show()
+        BatchForm.BringToFront()
     End Sub
 
 
 
-    Private Sub TrashCash_Home_FormClosing(sender As Object, e As System.Windows.Forms.FormClosingEventArgs) Handles Me.FormClosing
-        If (_BatchRunning) Then
+    Private Sub TrashCash_Home_FormClosing(sender As Object, e As FormClosingEventArgs) Handles Me.FormClosing
+        If (_batchRunning) Then
             e.Cancel = True
             MsgBox("You cannot exit in the middle of a Batch. Please wait for the batch to finish.")
-            _batchForm.BringToFront()
+            BatchForm.BringToFront()
         Else
             Try
-                app_SessMgr.EndSession()
-                app_SessMgr.CloseConnection()
+                AppSessMgr.EndSession()
+                AppSessMgr.CloseConnection()
             Catch ex As Exception
                 MsgBox(ex.Message)
             Finally
@@ -220,11 +212,11 @@ Public Class TrashCash_Home
 
     End Sub
 
-    Private Sub TrashCash_Home_Load(sender As Object, e As System.EventArgs) Handles Me.Load
+    Private Sub TrashCash_Home_Load(sender As Object, e As EventArgs) Handles Me.Load
         GetQBFileLocation()
 
         Try
-            app_SessMgr = New QBSessionManager
+            AppSessMgr = New QBSessionManager
         Catch ex As Exception
             MsgBox(ex.Message)
         End Try
@@ -237,41 +229,41 @@ Public Class TrashCash_Home
         _splash.Close()
 
         ' maximize window
-        Me.WindowState = FormWindowState.Maximized
+        WindowState = FormWindowState.Maximized
 
         ' getting approvals pending on load
         RefreshApprovCount(True)
 
     End Sub
 
-    Private Sub ApprovalsWorked(ByVal countRemain As Integer) Handles _pendingApprovals.RemainingApprovals
-        PendingApprovals = countRemain
+    Private Sub ApprovalsWorked(ByVal countRemain As Integer) Handles PendingApprovals.RemainingApprovals
+        PendingApprovalsCount = countRemain
     End Sub
 
-    Friend Sub RefreshApprovCount(Optional ByRef InitLoad As Boolean = False)
+    Friend Sub RefreshApprovCount(Optional ByRef initLoad As Boolean = False)
         ' fetching pending approval count
-        PendingApprovals = Me.RecurringService_PendingApprovalsTableAdapter.RecurringService_PendingApprovals_Count()
+        PendingApprovals = RecurringService_PendingApprovalsTableAdapter.RecurringService_PendingApprovals_Count()
 
         ' checking if initial load
-        If (InitLoad) Then
+        If (initLoad) Then
             btn_PendApprovs.PerformClick()
         End If
 
         ' tell approval form if its open to refresh
-        If (_pendingApprovals IsNot Nothing) Then
-            If (_pendingApprovals.IsDisposed = False) Then
-                _pendingApprovals.RefreshApprovalList()
+        If (_PendingApprovals IsNot Nothing) Then
+            If (_PendingApprovals.IsDisposed = False) Then
+                _PendingApprovals.RefreshApprovalList()
             End If
         End If
     End Sub
     Private Sub QBInitConnection(Optional ByVal retry As Boolean = False)
         Try
-            app_SessMgr.CloseConnection()
-            app_SessMgr.OpenConnection2("V1", "TrashCash", ENConnectionType.ctLocalQBD)
-            app_SessMgr.BeginSession(My.Settings.QB_FILE_LOCATION.ToString, ENOpenMode.omSingleUser)
+            AppSessMgr.CloseConnection()
+            AppSessMgr.OpenConnection2("V1", "TrashCash", ENConnectionType.ctLocalQBD)
+            AppSessMgr.BeginSession(My.Settings.QB_FILE_LOCATION.ToString, ENOpenMode.omSingleUser)
 
             ' new msg set
-            app_MsgSetReq = app_SessMgr.CreateMsgSetRequest("US", 11, 0)
+            AppMsgSetReq = AppSessMgr.CreateMsgSetRequest("US", 11, 0)
         Catch ex As Exception
             ' going to check if services are running and if not, start them
             If (Not retry) Then
@@ -290,8 +282,8 @@ Public Class TrashCash_Home
         s.Add("QuickbooksDB23")
 
         For Each service As String In s
-            Dim sc As New ServiceProcess.ServiceController(service)
-            If (sc.Status = ServiceProcess.ServiceControllerStatus.Stopped) Then
+            Dim sc As New ServiceController(service)
+            If (sc.Status = ServiceControllerStatus.Stopped) Then
                 Try
                     sc.Start()
                 Catch ex As Exception
@@ -302,43 +294,43 @@ Public Class TrashCash_Home
 
         QBInitConnection(True)
     End Sub
-    Private Sub KillQBProcess()
-        ' QBW32.exe killing
-        For Each p As Process In Process.GetProcessesByName("QBW32.exe")
-            p.CloseMainWindow()
-            p.WaitForExit(20000)
-            If (p.HasExited = False) Then
-                p.Kill()
-            End If
-        Next
-
-        ' QBW32Pro.exe killing
-        For Each p As Process In Process.GetProcessesByName("QBW32Pro.exe")
-            p.CloseMainWindow()
-            p.WaitForExit(20000)
-            If (p.HasExited = False) Then
-                p.Kill()
-            End If
-        Next
-
-        Try
-            app_SessMgr.CloseConnection()
-            app_SessMgr.OpenConnection2("V1", "TrashCash", ENConnectionType.ctLocalQBD)
-            app_SessMgr.BeginSession(My.Settings.QB_FILE_LOCATION.ToString, ENOpenMode.omSingleUser)
-
-            ' new msg set
-            app_MsgSetReq = app_SessMgr.CreateMsgSetRequest("US", 11, 0)
-        Catch ex As Exception
-            MsgBox("Retry failed and Kill Process failed. Please try restarting TrashCash.")
-            Application.Exit()
-        End Try
-
-    End Sub
+    '    Private Sub KillQBProcess()
+    '        ' QBW32.exe killing
+    '        For Each p As Process In Process.GetProcessesByName("QBW32.exe")
+    '            p.CloseMainWindow()
+    '            p.WaitForExit(20000)
+    '            If (p.HasExited = False) Then
+    '                p.Kill()
+    '            End If
+    '        Next
+    '
+    '        ' QBW32Pro.exe killing
+    '        For Each p As Process In Process.GetProcessesByName("QBW32Pro.exe")
+    '            p.CloseMainWindow()
+    '            p.WaitForExit(20000)
+    '            If (p.HasExited = False) Then
+    '                p.Kill()
+    '            End If
+    '        Next
+    '
+    '        Try
+    '            app_SessMgr.CloseConnection()
+    '            app_SessMgr.OpenConnection2("V1", "TrashCash", ENConnectionType.ctLocalQBD)
+    '            app_SessMgr.BeginSession(My.Settings.QB_FILE_LOCATION.ToString, ENOpenMode.omSingleUser)
+    '
+    '            ' new msg set
+    '            app_MsgSetReq = app_SessMgr.CreateMsgSetRequest("US", 11, 0)
+    '        Catch ex As Exception
+    '            MsgBox("Retry failed and Kill Process failed. Please try restarting TrashCash.")
+    '            Application.Exit()
+    '        End Try
+    '
+    '    End Sub
 
     Private Sub CreateAllClasses()
-        c_QB_Queries = New QB_Queries(SessionManager, MsgSetRequest)
-        c_QB_Procedures = New QB_Procedures(SessionManager, MsgSetRequest, Me)
-        c_Reporting = New Reporting(SessionManager, MsgSetRequest)
+        QBQueries = New QB_Queries(SessionManager, MsgSetRequest)
+        QBProcedures = New QB_Procedures(SessionManager, MsgSetRequest, Me)
+        CReporting = New Reporting(SessionManager, MsgSetRequest)
     End Sub
 
     Private Sub GetQBFileLocation()
@@ -370,55 +362,53 @@ Public Class TrashCash_Home
         End Try
     End Sub
 
-    Private Sub btn_Rpt_AllCustomerBalances_Click(sender As System.Object, e As System.EventArgs) Handles btn_Rpt_AllCustomerBalances.Click
+    Private Sub btn_Rpt_AllCustomerBalances_Click(sender As Object, e As EventArgs) Handles btn_Rpt_AllCustomerBalances.Click
         Dim rf As New f_AllCustBalances(Me)
         rf.Show()
     End Sub
 
-    Private Sub btn_Rpt_PayReceived_Click(sender As System.Object, e As System.EventArgs) Handles btn_Rpt_PayReceived.Click
+    Private Sub btn_Rpt_PayReceived_Click(sender As Object, e As EventArgs) Handles btn_Rpt_PayReceived.Click
         Dim rf As New f_PaymentsReceived
         rf.Show()
     End Sub
 
 
-    Private Sub btn_Rpt_DaysEvents_Click(sender As System.Object, e As System.EventArgs) Handles btn_Rpt_DaysEvents.Click
+    Private Sub btn_Rpt_DaysEvents_Click(sender As Object, e As EventArgs) Handles btn_Rpt_DaysEvents.Click
         Dim rf As New f_DaysEvents
         rf.Show()
     End Sub
 
-    Private _splash As SplashScreen
-    Public Sub New(ByRef Splash As SplashScreen, ByVal UserID As Integer)
+    Private ReadOnly _splash As SplashScreen
+    Public Sub New(ByRef splash As SplashScreen, ByVal userID As Integer)
 
         ' This call is required by the designer.
         InitializeComponent()
 
         ' Add any initialization after the InitializeComponent() call.
-        _splash = Splash
+        _splash = splash
 
         ' setting userid row
-        Using ta As New ds_ProgramTableAdapters.USERSTableAdapter
-            CurrentUserRow = ta.GetDataByID(UserID).Rows(0)
+        Using ta As New USERSTableAdapter
+            CurrentUserRow = ta.GetDataByID(userID).Rows(0)
         End Using
-
-        qta = New ds_ProgramTableAdapters.QueriesTableAdapter
     End Sub
 
-    Private Sub UnderOverEvenCustomerToolStripMenuItem_Click(sender As System.Object, e As System.EventArgs) Handles UnderOverEvenCustomerToolStripMenuItem.Click
+    Private Sub UnderOverEvenCustomerToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles UnderOverEvenCustomerToolStripMenuItem.Click
         Dim rf As New f_UnderOverEven(Me)
         rf.Show()
     End Sub
 
     Friend Sub RefreshCustomerForm()
-        If (_customer IsNot Nothing) Then
-            _customer.CurrentCustomer = _customer.CurrentCustomer
+        If (Customer IsNot Nothing) Then
+            Customer.CurrentCustomer = Customer.CurrentCustomer
         End If
     End Sub
 
-    Private Sub btn_PendApprovs_Click(sender As System.Object, e As System.EventArgs) Handles btn_PendApprovs.Click
+    Private Sub btn_PendApprovs_Click(sender As Object, e As EventArgs) Handles btn_PendApprovs.Click
         Dim needNew As Boolean = False
 
-        If (_pendingApprovals IsNot Nothing) Then
-            If (_pendingApprovals.IsDisposed = True) Then
+        If (_PendingApprovals IsNot Nothing) Then
+            If (_PendingApprovals.IsDisposed = True) Then
                 needNew = True
             End If
         Else
@@ -426,27 +416,27 @@ Public Class TrashCash_Home
         End If
 
         If (needNew) Then
-            _pendingApprovals = New PendingApprovals(Me)
-            _pendingApprovals.MdiParent = Me
+            _PendingApprovals = New PendingApprovals(Me)
+            _PendingApprovals.MdiParent = Me
         End If
 
-        _pendingApprovals.Show()
-        _pendingApprovals.BringToFront()
+        _PendingApprovals.Show()
+        _PendingApprovals.BringToFront()
 
     End Sub
 
-    Private Sub Batch_RefreshBalance_Tick(sender As System.Object, e As System.EventArgs) Handles Batch_RefreshBalance.Tick
+    Private Sub Batch_RefreshBalance_Tick(sender As Object, e As EventArgs) Handles Batch_RefreshBalance.Tick
         ' if customer form already open, refresh the balance
-        If (_customer IsNot Nothing) Then
-            _customer.RefreshCustBalance()
+        If (Customer IsNot Nothing) Then
+            Customer.RefreshCustBalance()
         End If
     End Sub
 
-    Private Sub menu_Admin_Click(sender As System.Object, e As System.EventArgs) Handles menu_Admin.Click
-        If (f_TrashCash_Admin IsNot Nothing) Then
-            If (f_TrashCash_Admin.IsDisposed = False) Then
-                f_TrashCash_Admin.BringToFront()
-                f_TrashCash_Admin.Show()
+    Private Sub menu_Admin_Click(sender As Object, e As EventArgs) Handles menu_Admin.Click
+        If (TrashCashAdmin IsNot Nothing) Then
+            If (TrashCashAdmin.IsDisposed = False) Then
+                TrashCashAdmin.BringToFront()
+                TrashCashAdmin.Show()
             End If
         Else
             Dim open As Boolean = False
@@ -455,20 +445,20 @@ Public Class TrashCash_Home
             If (_bypassLogin) Then
                 open = True
             Else
-                f_UserSelection = New UserSelection("Administration Login")
-                f_UserSelection.ShowDialog()
-                If (f_UserSelection.AuthUserRow IsNot Nothing) Then
+                UserSelection = New UserSelection("Administration Login")
+                UserSelection.ShowDialog()
+                If (UserSelection.AuthUserRow IsNot Nothing) Then
                     open = True
-                    userRow = f_UserSelection.AuthUserRow
+                    userRow = UserSelection.AuthUserRow
                 End If
-                f_UserSelection = Nothing
+                UserSelection = Nothing
             End If
 
             If (open) Then
                 ' making sure userrow is less than 3
                 If (userRow.USER_AUTHLVL < 3) Then
-                    f_TrashCash_Admin = New TrashCash_Admin(Me, userRow)
-                    f_TrashCash_Admin.Show()
+                    TrashCashAdmin = New TrashCash_Admin(Me, userRow)
+                    TrashCashAdmin.Show()
                 Else
                     MessageBox.Show("No administrator privledges.", "No privledges", MessageBoxButtons.OK, MessageBoxIcon.Error)
                 End If
@@ -476,48 +466,47 @@ Public Class TrashCash_Home
         End If
     End Sub
 
-    Private Sub btn_SwitchUser_Click(sender As System.Object, e As System.EventArgs) Handles btn_SwitchUser.Click
+    Private Sub btn_SwitchUser_Click(sender As Object, e As EventArgs) Handles btn_SwitchUser.Click
         If (Not _BatchRunning) Then
-            Dim f_userSwitch As New UserSelection("User Switch")
-            f_userSwitch.ShowDialog()
-            If (f_userSwitch.AuthUserRow IsNot Nothing) Then
+            Dim userSwitch As New UserSelection("User Switch")
+            userSwitch.ShowDialog()
+            If (userSwitch.AuthUserRow IsNot Nothing) Then
                 ' get new row 
-                CurrentUserRow = f_userSwitch.AuthUserRow
+                CurrentUserRow = userSwitch.AuthUserRow
             End If
 
-            f_userSwitch = Nothing
         Else
             MessageBox.Show("Cannot switch user during a batch.", "Batch Running", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End If
     End Sub
 
-    Private Sub btn_ChangePass_Click(sender As System.Object, e As System.EventArgs) Handles btn_ChangePass.Click
+    Private Sub btn_ChangePass_Click(sender As Object, e As EventArgs) Handles btn_ChangePass.Click
         ' check password
-        f_UserSelection = New UserSelection("Select User for Password Change")
-        f_UserSelection.ShowDialog()
+        UserSelection = New UserSelection("Select User for Password Change")
+        UserSelection.ShowDialog()
 
-        If (f_UserSelection.AuthUserRow IsNot Nothing) Then
+        If (UserSelection.AuthUserRow IsNot Nothing) Then
             ' grab id and current pw of confirmed user
-            Dim changeUserID As Integer = f_UserSelection.AuthUserRow.USER_ID
-            Dim currentPW As String = f_UserSelection.AuthPWText
+            Dim changeUserID As Integer = UserSelection.AuthUserRow.USER_ID
+            Dim currentPW As String = UserSelection.AuthPWText
 
             'get new password
-            f_UserSelection = New UserSelection("New Password", ChangePW:=True)
-            f_UserSelection.Cmb_Users.SelectedValue = changeUserID
-            f_UserSelection.Cmb_Users.Enabled = False
-            f_UserSelection.ShowDialog()
+            UserSelection = New UserSelection("New Password", ChangePW:=True)
+            UserSelection.Cmb_Users.SelectedValue = changeUserID
+            UserSelection.Cmb_Users.Enabled = False
+            UserSelection.ShowDialog()
 
             ' change password
-            If (f_UserSelection.AuthPWText IsNot Nothing) Then
-                Using ta As New ds_ProgramTableAdapters.USERSTableAdapter
-                    ta.ChangePassword(changeUserID, f_UserSelection.AuthPWText, currentPW)
+            If (UserSelection.AuthPWText IsNot Nothing) Then
+                Using ta As New USERSTableAdapter
+                    ta.ChangePassword(changeUserID, UserSelection.AuthPWText, currentPW)
                 End Using
             End If
 
         End If
     End Sub
 
-    Private Sub btn_Invoicing_Click(sender As System.Object, e As System.EventArgs) Handles btn_Invoicing.Click
+    Private Sub btn_Invoicing_Click(sender As Object, e As EventArgs) Handles btn_Invoicing.Click
 
     End Sub
 End Class

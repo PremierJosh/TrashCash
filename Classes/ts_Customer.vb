@@ -38,12 +38,12 @@ Public Class ts_M_Customer
         End Get
     End Property
 
-    Private _homeForm As TrashCash_Home
-    Public Property HomeForm As TrashCash_Home
+    Private _homeForm As TrashCashHome
+    Public Property HomeForm As TrashCashHome
         Get
             Return _homeForm
         End Get
-        Set(value As TrashCash_Home)
+        Set(value As TrashCashHome)
             _homeForm = value
         End Set
     End Property

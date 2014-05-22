@@ -32,12 +32,12 @@
         End Set
     End Property
 
-    Private _homeForm As TrashCash_Home
-    Friend Property HomeForm As TrashCash_Home
+    Private _homeForm As TrashCashHome
+    Friend Property HomeForm As TrashCashHome
         Get
             Return _homeForm
         End Get
-        Set(value As TrashCash_Home)
+        Set(value As TrashCashHome)
             _homeForm = value
         End Set
     End Property

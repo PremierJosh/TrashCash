@@ -7,12 +7,12 @@ Public Class UC_Quickbooks
     Implements INotifyPropertyChanged
 
     ' home form ref property
-    Private _home As TrashCash_Home
-    Friend Property _HomeForm As TrashCash_Home
+    Private _home As TrashCashHome
+    Friend Property _HomeForm As TrashCashHome
         Get
             Return _home
         End Get
-        Set(value As TrashCash_Home)
+        Set(value As TrashCashHome)
             _home = value
         End Set
     End Property

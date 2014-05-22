@@ -1,5 +1,5 @@
 ﻿Public Class AdminBanks
-    Private _Home As TrashCash_Home
+    Private _Home As TrashCashHome
 
     Private Sub BankMaint_Load(sender As Object, e As System.EventArgs) Handles Me.Load
         'If (ts_cb_BankList.Items.Count > 0) Then
@@ -73,7 +73,7 @@
         btn_AddBank.Enabled = False
     End Sub
 
-    Public Sub New(ByRef HomeForm As TrashCash_Home)
+    Public Sub New(ByRef HomeForm As TrashCashHome)
 
         ' This call is required by the designer.
         InitializeComponent()

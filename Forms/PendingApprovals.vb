@@ -1,7 +1,7 @@
 ﻿Public Class PendingApprovals
 
     ' home form var
-    Private _HomeForm As TrashCash_Home
+    Private _HomeForm As TrashCashHome
 
     ' property for tracking unapproved and approved counts
     Private _approvedCount As Integer = 0
@@ -25,7 +25,7 @@
                 lbl_Approved.Visible = True
                 lbl_Approved.Text = "Approved: " & value
             End If
-          
+
         End Set
     End Property
 
@@ -50,7 +50,7 @@
                 lbl_UnApproved.Visible = True
                 lbl_UnApproved.Text = "Unapproved: " & value
             End If
-            
+
         End Set
     End Property
 
@@ -111,7 +111,7 @@
     End Sub
 
 
-    Public Sub New(ByRef HomeForm As TrashCash_Home)
+    Public Sub New(ByRef HomeForm As TrashCashHome)
 
         ' This call is required by the designer.
         InitializeComponent()

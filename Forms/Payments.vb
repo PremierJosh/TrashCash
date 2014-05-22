@@ -3,7 +3,7 @@
     Protected ta As DataSetTableAdapters.WorkingPaymentsTableAdapter
 
     ' home form ref var
-    Private _home As TrashCash_Home
+    Private _home As TrashCashHome
 
     Private _custNum As Integer
     Public Property CurrentCustomer
@@ -44,7 +44,7 @@
 
     End Sub
 
-    Public Sub New(ByRef HomeForm As TrashCash_Home, Optional ByVal _customerNumber As Integer = 0)
+    Public Sub New(ByRef HomeForm As TrashCashHome, Optional ByVal _customerNumber As Integer = 0)
 
         ' This call is required by the designer.
         InitializeComponent()

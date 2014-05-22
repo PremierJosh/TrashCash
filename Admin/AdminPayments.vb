@@ -1,6 +1,8 @@
-﻿Public Class AdminPayments
+﻿Imports TrashCash.Admin
+
+Public Class AdminPayments
     ' home form ref var
-    Private _home As TrashCash_Home
+    Private _home As TrashCashHome
 
     ' move payment form ref
     Friend WithEvents f_movePayment As MovePayment
@@ -137,7 +139,7 @@
         End If
     End Sub
 
-    Public Sub New(ByRef HomeForm As TrashCash_Home)
+    Public Sub New(ByRef HomeForm As TrashCashHome)
 
         ' This call is required by the designer.
         InitializeComponent()

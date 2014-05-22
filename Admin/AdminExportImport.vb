@@ -22,12 +22,12 @@ Public Class AdminExportImport
         End Set
     End Property
 
-    Private _homeForm As TrashCash_Home
-    Friend Property TC_Home As TrashCash_Home
+    Private _homeForm As TrashCashHome
+    Friend Property TC_Home As TrashCashHome
         Get
             Return _homeForm
         End Get
-        Set(value As TrashCash_Home)
+        Set(value As TrashCashHome)
             _homeForm = value
         End Set
     End Property
@@ -85,7 +85,7 @@ Public Class AdminExportImport
         End If
     End Sub
 
-    Public Sub New(ByRef HomeForm As TrashCash_Home)
+    Public Sub New(ByRef HomeForm As TrashCashHome)
 
         ' This call is required by the designer.
         InitializeComponent()

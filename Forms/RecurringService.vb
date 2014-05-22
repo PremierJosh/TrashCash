@@ -278,7 +278,7 @@ Public Class RecurringService
         End Set
     End Property
     ' home form ref var
-    Private HomeForm As TrashCash_Home
+    Private HomeForm As TrashCashHome
 
     Private Sub CreditOverlapCheck(ByVal newDate As Date)
         Dim s As String = Nothing
@@ -329,7 +329,7 @@ Public Class RecurringService
     Friend Event RefreshService(ByVal CustomerNumber As Integer, ByVal RecurringServiceID As Integer)
 
 
-    Public Sub New(ByVal _HomeForm As TrashCash_Home, ByVal _CustomerName As String, ByVal _CustomerNumber As Integer, Optional ByVal _RecurringServiceID As Integer = 0)
+    Public Sub New(ByVal _HomeForm As TrashCashHome, ByVal _CustomerName As String, ByVal _CustomerNumber As Integer, Optional ByVal _RecurringServiceID As Integer = 0)
 
         ' This call is required by the designer.
         InitializeComponent()

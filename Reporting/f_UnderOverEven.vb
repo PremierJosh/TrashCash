@@ -16,8 +16,8 @@
         Me.Cursor = Cursors.Default
     End Sub
 
-    Private _home As TrashCash_Home
-    Public Sub New(ByRef HomeForm As TrashCash_Home)
+    Private _home As TrashCashHome
+    Public Sub New(ByRef HomeForm As TrashCashHome)
 
         ' This call is required by the designer.
         InitializeComponent()

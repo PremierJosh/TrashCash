@@ -1,5 +1,5 @@
 ﻿Public Class AdminDefaults
-    Private ReadOnly _home As TrashCash_Home
+    Private ReadOnly _home As TrashCashHome
 
     ' tas
     Private ReadOnly _ta As ds_ProgramTableAdapters.APP_SETTINGS_TableAdapter
@@ -11,7 +11,7 @@
     ' previous values
     Private _defaultInvItem
 
-    Public Sub New(ByRef HomeForm As TrashCash_Home)
+    Public Sub New(ByRef HomeForm As TrashCashHome)
 
         ' This call is required by the designer.
         InitializeComponent()
