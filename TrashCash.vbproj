@@ -265,6 +265,7 @@
     <Compile Include="Forms\RecurringService.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Invoicing\c_Invoicing.vb" />
     <Compile Include="Login.Designer.vb">
       <DependentUpon>Login.vb</DependentUpon>
     </Compile>
