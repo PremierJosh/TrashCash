@@ -4,6 +4,7 @@ Imports System.ServiceProcess
 Namespace Classes
     Public Class QBConMgr
 
+        ' qb items
         Public Shared SessionManager As QBSessionManager
         Public Shared MessageSetRequest As IMsgSetRequest
 
@@ -64,5 +65,39 @@ Namespace Classes
                 Application.Exit()
             End Try
         End Sub
+
+        Public Shared Function CustomerListID(ByVal customerNumber As Integer)
+            Using ta As New ds_CustomerTableAdapters.CustomerTableAdapter
+                Dim s As String = ta.GetListID(customerNumber)
+                Return s
+            End Using
+        End Function
+
+        Public Shared Sub ResponseErr_Misc(ByVal resp As IResponse)
+            If (resp.StatusCode = 1) Then
+                MsgBox("No matching results from Quickbooks")
+            Else
+                Try
+                    Using ta As New ds_ProgramTableAdapters.QueriesTableAdapter
+                        ta.ERR_MISC_Insert(resp.Type.GetValue.ToString,
+                                           resp.StatusCode.ToString,
+                                           resp.StatusMessage,
+                                           Date.Now)
+                    End Using
+                
+                    MsgBox("Error Encounterd with Quickbooks. Contact Premier.", MsgBoxStyle.Critical)
+                Catch ex As Exception
+                    MsgBox("ERR_MISC_Insert: " & ex.Message)
+                End Try
+            End If
+        End Sub
+
+        ' enumerated item status from database
+        Enum ENItemStatus As Int32
+            Ready = 5
+            Err = 6
+            Complete = 7
+            Submitted = 8
+        End Enum
     End Class
 End Namespace
