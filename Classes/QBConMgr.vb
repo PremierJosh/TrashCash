@@ -103,40 +103,5 @@ Namespace Classes
         End Enum
     End Class
 
-
-
-    Public Class QBLineItem
-        Public ItemListID As String
-        Public Rate As Double
-        Public Quantity As Integer = 1
-        Public Desc As String
-
-        ' optional data fields
-        Public Other1 As String
-        Public Other2 As String
-
-        Public Sub New(Optional ByVal description As string)
-            Quantity = 0
-            If (description IsNot Nothing) Then
-                Desc = description
-            End If
-        End Sub
-        Public Sub New(ByVal itemListID As String, ByVal rate As Double, Optional ByVal quantity As Integer = 1, Optional ByVal desc As String = Nothing,
-                       Optional ByVal other1 As String = Nothing, Optional ByVal other2 As String = Nothing)
-            Me.ItemListID = itemListID
-            Me.Rate = rate
-            If (quantity <> 1) Then
-                Me.Quantity = quantity
-            End If
-            If (desc IsNot Nothing) Then
-                    Me.Desc = desc
-            End If
-            If (other1 IsNot Nothing) Then
-                Me.Other1 = other1
-            End If
-            If (other2 IsNot Nothing) Then
-                Me.Other2 = other2
-            End If
-        End Sub
-    End Class
+    
 End Namespace

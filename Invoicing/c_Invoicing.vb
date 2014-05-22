@@ -1,4 +1,5 @@
 ﻿Imports QBFC12Lib
+Imports TrashCash.Classes.QBObjects
 Imports TrashCash.Classes.QBConMgr
 
 Namespace Invoicing
