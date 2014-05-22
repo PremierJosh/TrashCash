@@ -1,8 +1,8 @@
 ﻿Public Class AdminDefaults
-    Private _Home As TrashCash_Home
+    Private ReadOnly _home As TrashCash_Home
 
     ' tas
-    Private ta As ds_ProgramTableAdapters.APP_SETTINGS_TableAdapter
+    Private ReadOnly _ta As ds_ProgramTableAdapters.APP_SETTINGS_TableAdapter
 
     ' refrences
     Private dt As ds_Program.APP_SETTINGS_DataTable
@@ -17,16 +17,16 @@
         InitializeComponent()
 
         ' Add any initialization after the InitializeComponent() call.
-        ta = Me.APP_SETTINGS_TableAdapter
-        _Home = HomeForm
+        _ta = Me.APP_SETTINGS_TableAdapter
+        _home = HomeForm
     End Sub
     Private Sub App_Defaults_Load(sender As Object, e As System.EventArgs) Handles Me.Load
-        _Home.Queries.CMB_BindServiceItem(cmb_CustomInvItem)
-        _Home.Queries.CMB_BindOtherChargeItems(cmb_BadCheckCustInvItem)
-        _Home.Queries.CMB_BindOtherChargeItems(cmb_BadCheckItem)
+        _home.Queries.CMB_BindServiceItem(cmb_CustomInvItem)
+        _home.Queries.CMB_BindOtherChargeItems(cmb_BadCheckCustInvItem)
+        _home.Queries.CMB_BindOtherChargeItems(cmb_BadCheckItem)
 
         ' fill table
-        dt = ta.GetData
+        dt = _ta.GetData
         row = dt.Rows(0)
 
         SetControls()
@@ -56,7 +56,7 @@
         row.EndEdit()
         If (row.RowState = DataRowState.Modified) Then
             Try
-                ta.Update(row)
+                _ta.Update(row)
                 MsgBox("Settings Saved.")
                 Me.Close()
             Catch ex As Exception

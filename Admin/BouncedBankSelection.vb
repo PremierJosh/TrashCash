@@ -3,7 +3,7 @@ Imports TrashCash.TrashCash_Utils.Err_Handling
 
 Public Class BouncedBankSelection
     ' home form refrence
-    Private _home As TrashCash_Home
+    Private ReadOnly _home As TrashCash_Home
 
     ' passing id from pay history table
     Private _PayHistoryID As Integer
@@ -53,19 +53,20 @@ Public Class BouncedBankSelection
     End Property
 
     ' vars to hold refrence
-    Dim banks As ds_Program.BAD_CHECK_BANKS_DataTable
-    Dim bta As ds_ProgramTableAdapters.BAD_CHECK_BANKS_TableAdapter
+    ReadOnly _banks As ds_Program.BAD_CHECK_BANKS_DataTable
+    ReadOnly _bta As ds_ProgramTableAdapters.BAD_CHECK_BANKS_TableAdapter
 
-    Private _payHisForm As AdminPayments
-    Public Sub New(ByRef HomeForm As TrashCash_Home, ByRef PayHistoryForm As AdminPayments)
+    Private ReadOnly _payHisForm As AdminPayments
+
+    Public Sub New(ByRef homeForm As TrashCash_Home, ByRef payHistoryForm As AdminPayments)
         ' This call is required by the designer.
         InitializeComponent()
 
         ' Add any initialization after the InitializeComponent() call.
-        banks = New ds_Program.BAD_CHECK_BANKS_DataTable
-        bta = New ds_ProgramTableAdapters.BAD_CHECK_BANKS_TableAdapter
-        _home = HomeForm
-        _payHisForm = PayHistoryForm
+        _banks = New ds_Program.BAD_CHECK_BANKS_DataTable
+        _bta = New ds_ProgramTableAdapters.BAD_CHECK_BANKS_TableAdapter
+        _home = homeForm
+        _payHisForm = payHistoryForm
     End Sub
 
 
@@ -88,7 +89,7 @@ Public Class BouncedBankSelection
 
     Private Sub BouncedBankSelection_Load(sender As Object, e As System.EventArgs) Handles Me.Load
         ' filling dt with possible bad check banks
-        bta.Fill(banks)
+        _bta.Fill(_banks)
 
         ' grabbing default fee here and then disposing of ta
         Dim _ta As New ds_ProgramTableAdapters.APP_SETTINGS_TableAdapter
@@ -99,7 +100,7 @@ Public Class BouncedBankSelection
 
         ' grabbing default bank selection
         If (Cmb_BadCheckBanks.SelectedValue IsNot Nothing) Then
-            BankRow = banks.FindByBC_BANK_ID(Cmb_BadCheckBanks.SelectedValue)
+            BankRow = _banks.FindByBC_BANK_ID(Cmb_BadCheckBanks.SelectedValue)
         End If
 
         ' hiding ts_m controls
@@ -111,7 +112,7 @@ Public Class BouncedBankSelection
     End Sub
 
     Private Sub Cmb_BadCheckBanks_SelectionChangeCommitted(sender As Database_ComboBoxes.cmb_BadCheckBanks, e As System.EventArgs) Handles Cmb_BadCheckBanks.SelectionChangeCommitted
-        BankRow = banks.FindByBC_BANK_ID(sender.SelectedValue)
+        BankRow = _banks.FindByBC_BANK_ID(sender.SelectedValue)
     End Sub
 
 
