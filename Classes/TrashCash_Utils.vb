@@ -1,5 +1,7 @@
 ﻿Imports QBFC12Lib
 Imports TrashCash.TrashCash_Utils.Err_Handling
+Imports System.ComponentModel
+
 'Imports System.Windows.Forms.ToolStripComboBox
 
 Public Class TrashCash_Utils
@@ -59,7 +61,7 @@ Public Class TrashCash_Utils
                     MsgBox("ERR_MISC_Insert: " & ex.Message)
                 End Try
             End If
-            
+
         End Sub
     End Class
 End Class
@@ -92,6 +94,7 @@ Namespace Database_ComboBoxes
             ' resizing
             Me.Size = New Size(200, 25)
         End Sub
+
 
         Public Sub RefreshForChanges()
             ta.Fill(dt)
@@ -143,6 +146,7 @@ Namespace Database_ComboBoxes
 
         ' custList dt and ta
         Public dt As ds_Types.ServiceTypesListDataTable
+        <DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)> _
         Public Property DataTable As ds_Types.ServiceTypesListDataTable
             Get
                 Return dt
@@ -151,7 +155,9 @@ Namespace Database_ComboBoxes
                 dt = value
             End Set
         End Property
+
         Public ta As ds_TypesTableAdapters.ServiceTypesListTableAdapter
+        <DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)> _
         Public Property TableAdapater As ds_TypesTableAdapters.ServiceTypesListTableAdapter
             Get
                 Return ta
