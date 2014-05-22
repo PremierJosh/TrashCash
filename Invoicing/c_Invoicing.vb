@@ -6,7 +6,8 @@ Namespace Invoicing
 
         Public Function CreateCustomInvoice(ByRef ds As ds_Invoicing, ByVal print As Boolean) As Boolean
             ' return succeed or fail
-            Dim result As Boolean
+            Dim pass As Boolean = False
+
             ' ta needed
             Dim ta As New ds_InvoicingTableAdapters.CustomInvoicesTableAdapter
 
@@ -34,7 +35,7 @@ Namespace Invoicing
 
                 ' set line item
                 Dim line As IORInvoiceLineAdd = lineList.Append
-                With line 
+                With line
                     .InvoiceLineAdd.ItemRef.ListID.SetValue(typeRow(0).CI_TypeID)
                     .InvoiceLineAdd.ORRatePriceLevel.Rate.SetValue(row.Rate)
                     .InvoiceLineAdd.Quantity.SetValue(1)
@@ -69,18 +70,20 @@ Namespace Invoicing
 
                     Try
                         ta.Update(invRow)
+                        pass = True
                     Catch ex As Exception
                         MessageBox.Show("Error Updating CustomInvRow: " & ex.Message, "Update Err", MessageBoxButtons.OK, MessageBoxIcon.Error)
                     End Try
 
-                    Else
+                Else
                     ' log and update row
                     ResponseErr_Misc(resp)
                     invRow.StatusID = ENItemStatus.Err
+                    ta.Update(invRow)
                 End If
             Next
 
-            Return result
+            Return pass
         End Function
     End Module
 
