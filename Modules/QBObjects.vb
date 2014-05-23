@@ -105,16 +105,20 @@ Namespace Modules
             Public TxnID As String
             Public CreditRemaining As Double
             Public TxnDate As Date
-            ' optional fields on new
             Public EditSequence As String
             Public TotalAmount As Double
             
-            Public Sub New(ByVal txnID As String, ByVal creditRemaining As Double, ByVal txnDate As Date, Optional ByVal editSequence As String = Nothing,
-                           Optional ByVal totalAmount As Double = Nothing)
-                Me.TxnID = txnID
-                Me.CreditRemaining = creditRemaining
-                Me.TxnDate = txnDate
-                ' optional params
+            Public Sub New(Optional ByVal txnID As String = Nothing, Optional ByVal creditRemaining As Double = Nothing, Optional ByVal txnDate As Date = Nothing,
+                           Optional ByVal editSequence As String = Nothing, Optional ByVal totalAmount As Double = Nothing)
+                If (txnID IsNot Nothing) Then
+                    Me.TxnID = txnID
+                End IF
+                If (creditRemaining <> Nothing) Then
+                    Me.CreditRemaining = creditRemaining
+                End If
+                If (txnDate <> Nothing) Then
+                    Me.TxnDate = txnDate
+                End If
                 If (totalAmount <> Nothing) Then
                     Me.TotalAmount = totalAmount
                 End If
@@ -125,10 +129,10 @@ Namespace Modules
         End Class
 
         Public Class QBInvoiceObj
+            ' all params are optional
             Public TxnID As String
             Public CustomerListID As String
             Public TxnDate As Date
-            ' optional fields on new
             Public EditSequence As String
             Public BalanceRemaining As Double
 
@@ -136,12 +140,18 @@ Namespace Modules
             ' this is used for an applied txn for a payment
             Public AppliedPaymentAmount As Double
 
-            Public Sub New(ByVal txnID As String, ByVal customerListID As String, ByVal txnDate As Date, Optional ByVal editSequence As String = Nothing,
-                           Optional ByVal balanceRemaining As Double = Nothing)
-                Me.TxnID = txnID
-                Me.CustomerListID = customerListID
-                Me.TxnDate = txnDate
-                ' optional params
+            Public Sub New(Optional ByVal txnID As String = Nothing, Optional ByVal customerListID As String = Nothing, Optional ByVal txnDate As Date = Nothing,
+                           Optional ByVal editSequence As String = Nothing, Optional ByVal balanceRemaining As Double = Nothing)
+                ' all params are optional
+                If (txnID IsNot Nothing) Then
+                    Me.TxnID = txnID
+                End If
+                If (customerListID IsNot Nothing) Then
+                    Me.CustomerListID = customerListID
+                End If
+                If (txnDate <> Nothing) Then
+                    Me.TxnDate = txnDate
+                End If
                 If (editSequence IsNot Nothing) Then
                     Me.EditSequence = editSequence
                 End If
@@ -164,28 +174,28 @@ Namespace Modules
             ' optional list of applied invoices
             Public AppliedInvList As List(Of QBInvoiceObj)
 
-            Public Sub new(ByVal txnID As String, ByVal txnDate As Date, ByVal totalAmount As Double, byval payTypeName As String, Optional ByVal refNumber As String = Nothing,
+            Public Sub new(Optional ByVal txnID As String = nothing, optByVal txnDate As Date, ByVal totalAmount As Double, byval payTypeName As String, Optional ByVal refNumber As String = Nothing,
                            Optional ByVal editSequence As String = Nothing,Optional byval customerListID As String  = nothing,
                            Optional byval unusedPayment As Double = Nothing,Optional ByVal appliedInvList As List(Of QBInvoiceObj))
                 Me.TxnID = txnID
-                Me.TxnDate = txnDate
-                Me.TotalAmount = totalAmount
-                Me.PayTypeName = payTypeName
+                Me.TxnDate = TxnDate
+                Me.TotalAmount = TotalAmount
+                Me.PayTypeName = PayTypeName
                 ' optional params
-                If (customerListID IsNot Nothing) Then
-                    Me.CustomerListID = customerListID
+                If (CustomerListID IsNot Nothing) Then
+                    Me.CustomerListID = CustomerListID
                 End If
-                If (editSequence IsNot Nothing) Then
-                    Me.EditSequence = editSequence
+                If (EditSequence IsNot Nothing) Then
+                    Me.EditSequence = EditSequence
                 End If
-                If (unusedPayment <> Nothing) Then
-                    Me.UnusedPayment = unusedPayment
+                If (UnusedPayment <> Nothing) Then
+                    Me.UnusedPayment = UnusedPayment
                 End If
-                If (refNumber IsNot Nothing) Then
-                    Me.RefNumber = refNumber
-                End IF
-                If (appliedInvList IsNot Nothing) Then
-                    Me.AppliedInvList = appliedInvList
+                If (RefNumber IsNot Nothing) Then
+                    Me.RefNumber = RefNumber
+                End If
+                If (AppliedInvList IsNot Nothing) Then
+                    Me.AppliedInvList = AppliedInvList
                 End If
                 End
             End Sub
