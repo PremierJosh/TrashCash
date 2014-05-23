@@ -46,31 +46,31 @@ Namespace Classes
                 Dim lineAdd As IORInvoiceLineAdd = invAdd.ORInvoiceLineAddList.Append
 
                 ' set fields
-                With lineAdd
+                With lineAdd.InvoiceLineAdd
                     If (lineObj.ItemListID IsNot Nothing) Then
-                        .InvoiceLineAdd.ItemRef.ListID.SetValue(lineObj.ItemListID)
+                        .ItemRef.ListID.SetValue(lineObj.ItemListID)
                     Else
-                        .InvoiceLineAdd.ItemRef.ListID.Unset()
+                        .ItemRef.ListID.Unset()
                     End If
                     If (lineObj.Rate = 0) Then
-                        .InvoiceLineAdd.ORRatePriceLevel.Rate.SetValue(lineObj.Rate)
+                        .ORRatePriceLevel.Rate.SetValue(lineObj.Rate)
                     Else
-                        .InvoiceLineAdd.ORRatePriceLevel.Rate.Unset()
+                        .ORRatePriceLevel.Rate.Unset()
                     End If
                     If (lineObj.Quantity = 0) Then
-                        .InvoiceLineAdd.Quantity.SetValue(lineObj.Quantity)
+                        .Quantity.SetValue(lineObj.Quantity)
                     Else
-                        .InvoiceLineAdd.Quantity.Unset()
+                        .Quantity.Unset()
                     End If
                     If (lineObj.Desc IsNot Nothing) Then
-                        .InvoiceLineAdd.Desc.SetValue(lineObj.Desc)
+                        .Desc.SetValue(lineObj.Desc)
                     End If
                     ' other fields
                     If (lineObj.Other1 IsNot Nothing) Then
-                        .InvoiceLineAdd.Other1.SetValue(lineObj.Other1)
+                        .Other1.SetValue(lineObj.Other1)
                     End If
                     If (lineObj.Other2 IsNot Nothing) Then
-                        .InvoiceLineAdd.Other2.SetValue(lineObj.Other2)
+                        .Other2.SetValue(lineObj.Other2)
                     End If
                 End With
             Next lineObj
@@ -112,31 +112,31 @@ Namespace Classes
                     Dim lineAdd As IORInvoiceLineAdd = invAdd.ORInvoiceLineAddList.Append
 
                     ' set fields
-                    With lineAdd
+                    With lineAdd.InvoiceLineAdd
                         If (lineObj.ItemListID IsNot Nothing) Then
-                            .InvoiceLineAdd.ItemRef.ListID.SetValue(lineObj.ItemListID)
+                            .ItemRef.ListID.SetValue(lineObj.ItemListID)
                         Else
-                            .InvoiceLineAdd.ItemRef.ListID.Unset()
+                            .ItemRef.ListID.Unset()
                         End If
                         If (lineObj.Rate = 0) Then
-                            .InvoiceLineAdd.ORRatePriceLevel.Rate.SetValue(lineObj.Rate)
+                            .ORRatePriceLevel.Rate.SetValue(lineObj.Rate)
                         Else
-                            .InvoiceLineAdd.ORRatePriceLevel.Rate.Unset()
+                            .ORRatePriceLevel.Rate.Unset()
                         End If
                         If (lineObj.Quantity = 0) Then
-                            .InvoiceLineAdd.Quantity.SetValue(lineObj.Quantity)
+                            .Quantity.SetValue(lineObj.Quantity)
                         Else
-                            .InvoiceLineAdd.Quantity.Unset()
+                            .Quantity.Unset()
                         End If
                         If (lineObj.Desc IsNot Nothing) Then
-                            .InvoiceLineAdd.Desc.SetValue(lineObj.Desc)
+                            .Desc.SetValue(lineObj.Desc)
                         End If
                         ' other fields
                         If (lineObj.Other1 IsNot Nothing) Then
-                            .InvoiceLineAdd.Other1.SetValue(lineObj.Other1)
+                            .Other1.SetValue(lineObj.Other1)
                         End If
                         If (lineObj.Other2 IsNot Nothing) Then
-                            .InvoiceLineAdd.Other2.SetValue(lineObj.Other2)
+                            .Other2.SetValue(lineObj.Other2)
                         End If
                     End With
                 Next lineObj
@@ -144,6 +144,32 @@ Namespace Classes
 
             ' all invoices preped, go
             Return conMgr.GetRespList()
+        End Function
+
+        Public Shared Function CreditAdd(ByVal creditObj As QBAddCreditObj) As IResponse
+            Dim credAdd As ICreditMemoAdd = GlobalConMgr.MessageSetRequest.AppendCreditMemoAddRq
+            With credAdd
+                .CustomerRef.ListID.SetValue(creditObj.CustomerListID)
+                .IsToBePrinted.SetValue(creditObj.IsToBePrinted)
+            End With
+
+            Dim creditLine As IORCreditMemoLineAdd = credAdd.ORCreditMemoLineAddList.Append
+            With creditLine.CreditMemoLineAdd
+                .ItemRef.ListID.SetValue(creditObj.ItemListID)
+                .ORRatePriceLevel.Rate.SetValue(creditObj.CreditAmount)
+            End With
+
+            Dim descLine As IORCreditMemoLineAdd = credAdd.ORCreditMemoLineAddList.Append
+            With descLine.CreditMemoLineAdd
+                .Desc.SetValue(creditObj.Desc)
+                .ItemRef.ListID.Unset()
+                .ItemRef.FullName.Unset()
+                .Amount.Unset()
+                .Quantity.Unset()
+            End With
+
+            Dim respList As IResponseList = GlobalConMgr.GetRespList()
+            Return respList.GetAt(0)
         End Function
 
     End Class
