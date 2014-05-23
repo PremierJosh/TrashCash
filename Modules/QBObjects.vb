@@ -1,4 +1,4 @@
-﻿Imports TrashCash.Classes
+﻿
 
 Namespace Modules
     Public Module QBObjects
@@ -98,6 +98,85 @@ Namespace Modules
                 Me.ItemListID = itemListID
                 Me.CreditAmount = creditAmount
                 Me.Desc = desc
+            End Sub
+        End Class
+
+        Public Class QBCreditObj
+            Public TxnID As String
+            Public CreditRemaining As Double
+            Public TxnDate As Date
+            ' optional fields on new
+            Public EditSequence As String
+            Public TotalAmount As Double
+            
+            Public Sub New(ByVal txnID As String, ByVal creditRemaining As Double, ByVal txnDate As Date, Optional ByVal editSequence As String = Nothing,
+                           Optional ByVal totalAmount As Double = Nothing)
+                Me.TxnID = txnID
+                Me.CreditRemaining = creditRemaining
+                Me.TxnDate = txnDate
+                ' optional params
+                If (totalAmount <> Nothing) Then
+                    Me.TotalAmount = totalAmount
+                End If
+                If (editSequence IsNot Nothing) Then
+                    Me.EditSequence = editSequence
+                End If
+            End Sub
+        End Class
+
+        Public Class QBInvoiceObj
+            Public TxnID As String
+            Public CustomerListID As String
+            Public TxnDate As Date
+            ' optional fields on new
+            Public EditSequence As String
+            Public BalanceRemaining As Double
+
+            ' optional fields can be used to enhance the obj for other queries
+            ' this is used for an applied txn for a payment
+            Public AppliedPaymentAmount As Double
+
+            Public Sub New(ByVal txnID As String, ByVal customerListID As String, ByVal txnDate As Date, Optional ByVal editSequence As String = Nothing,
+                           Optional ByVal balanceRemaining As Double = Nothing)
+                Me.TxnID = txnID
+                Me.CustomerListID = customerListID
+                Me.TxnDate = txnDate
+                ' optional params
+                If (editSequence IsNot Nothing) Then
+                    Me.EditSequence = editSequence
+                End If
+                If (balanceRemaining <> Nothing) Then
+                    Me.BalanceRemaining = balanceRemaining
+                End If
+            End Sub
+        End Class
+
+        Public Class QBRecievePaymentObj
+            Public TxnID As String
+            Public TxnDate As Date
+            Public TotalAmount As Double
+            ' optional fields for new
+            Public EditSequence As String
+            Public UnusedPayment As Double
+            ' optional list of applied invoices
+            Public AppliedInvList As List(Of QBInvoiceObj)
+
+            Public Sub new(ByVal txnID As String, ByVal txnDate As Date, ByVal totalAmount As Double, Optional ByVal editSequence As String = Nothing,
+                            Optional byval unusedPayment As Double = Nothing, Optional ByVal appliedInvList As List(Of QBInvoiceObj))
+                Me.TxnID = txnID
+                Me.TxnDate = txnDate
+                Me.TotalAmount = totalAmount
+                ' optional params
+                If (editSequence IsNot Nothing) Then
+                    Me.EditSequence = editSequence
+                End If
+                If (unusedPayment <> Nothing) Then
+                    Me.UnusedPayment = unusedPayment
+                End If
+                If (appliedInvList IsNot Nothing) Then
+                    Me.AppliedInvList = appliedInvList
+                End If
+                End
             End Sub
         End Class
     End Module
