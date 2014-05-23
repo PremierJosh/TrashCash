@@ -18,7 +18,7 @@ Namespace Classes
 
 
         ' invoicing
-        Public Overloads Shared Function InvoiceAdd(ByRef invObj As QBAddInvoiceObj, Optional ByRef qbConMgr As QBConMgr = Nothing) As IResponse
+        Public Overloads Shared Function InvoiceAdd(ByRef invObj As QBInvoiceObj, Optional ByRef qbConMgr As QBConMgr = Nothing) As IResponse
             ' ref for msgSetReq incase one is passed for doing this through a different thread
             Dim invAdd As IInvoiceAdd = ConCheck(qbConMgr).MessageSetRequest.AppendInvoiceAddRq
 
@@ -76,11 +76,11 @@ Namespace Classes
 
         End Function
 
-        Public Overloads Shared Function InvoiceAdd(ByRef invObjList As List(Of QBAddInvoiceObj), Optional ByRef qbConMgr As QBConMgr = Nothing) As List(Of IResponse)
+        Public Overloads Shared Function InvoiceAdd(ByRef invObjList As List(Of QBInvoiceObj), Optional ByRef qbConMgr As QBConMgr = Nothing) As List(Of IResponse)
             ' return list
             Dim retRespList As New List(Of IResponse)
 
-            For Each invObj As QBAddInvoiceObj In invObjList
+            For Each invObj As QBInvoiceObj In invObjList
                 Dim invAdd As IInvoiceAdd = ConCheck(qbConMgr).MessageSetRequest.AppendInvoiceAddRq
 
                 ' set fields
