@@ -4,6 +4,7 @@ Imports QBFC12Lib
 Namespace Classes
     Public Class QBMethods
 
+        ' misc
         Public Shared Function TxnVoid(ByVal txnID As String, ByVal voidType As ENTxnVoidType, Optional ByRef qbConMgr As QBConMgr = Nothing) As IResponse
             Dim txnVoidRq As ITxnVoid = ConCheck(qbConMgr).MessageSetRequest.AppendTxnVoidRq
             With txnVoidRq
@@ -15,7 +16,9 @@ Namespace Classes
             Return respList.GetAt(0)
         End Function
 
-        Public Overloads Shared Function InvoiceAdd(ByVal invObj As QBAddInvoiceObj, Optional ByRef qbConMgr As QBConMgr = Nothing) As IResponse
+
+        ' invoicing
+        Public Overloads Shared Function InvoiceAdd(ByRef invObj As QBAddInvoiceObj, Optional ByRef qbConMgr As QBConMgr = Nothing) As IResponse
             ' ref for msgSetReq incase one is passed for doing this through a different thread
             Dim invAdd As IInvoiceAdd = ConCheck(qbConMgr).MessageSetRequest.AppendInvoiceAddRq
 
@@ -73,12 +76,12 @@ Namespace Classes
 
         End Function
 
-        Public Overloads Shared Function InvoiceAdd(ByVal invObjList As List(Of QBAddInvoiceObj), Optional ByRef qbConMgr As QBConMgr = Nothing) As IResponseList
-            ' ref for msgSetReq incase one is passed for doing this through a different thread
-            Dim conMgr As QBConMgr = ConCheck(qbConMgr)
+        Public Overloads Shared Function InvoiceAdd(ByRef invObjList As List(Of QBAddInvoiceObj), Optional ByRef qbConMgr As QBConMgr = Nothing) As List(Of IResponse)
+            ' return list
+            Dim retRespList As New List(Of IResponse)
 
             For Each invObj As QBAddInvoiceObj In invObjList
-                Dim invAdd As IInvoiceAdd = conMgr.MessageSetRequest.AppendInvoiceAddRq
+                Dim invAdd As IInvoiceAdd = ConCheck(qbConMgr).MessageSetRequest.AppendInvoiceAddRq
 
                 ' set fields
                 With invAdd
@@ -128,13 +131,17 @@ Namespace Classes
                         End If
                     End With
                 Next lineObj
+
+                ' invoice prepped, go
+                Dim respList As IResponseList = ConCheck(qbConMgr).GetRespList()
+                retRespList.Add(respList.GetAt(0))
             Next invObj
 
-            ' all invoices preped, go
-            Return conMgr.GetRespList()
+            Return retRespList
         End Function
 
-        Public Shared Function CreditAdd(ByVal creditObj As QBAddCreditObj) As IResponse
+        ' crediting
+        Public Shared Function CreditAdd(ByRef creditObj As QBAddCreditObj) As IResponse
             Dim credAdd As ICreditMemoAdd = GlobalConMgr.MessageSetRequest.AppendCreditMemoAddRq
             With credAdd
                 .CustomerRef.ListID.SetValue(creditObj.CustomerListID)
@@ -160,6 +167,57 @@ Namespace Classes
             Return respList.GetAt(0)
         End Function
 
+        ' payments
+        Public Overloads Shared Function PaymentAdd(ByRef payObj As QBRecievePaymentObj, Optional ByRef qbConMgr As QBConMgr = Nothing,
+                                          Optional ByVal autoApply As Boolean = True) As IResponse
+            Dim payAdd As IReceivePaymentAdd = ConCheck(qbConMgr).MessageSetRequest.AppendReceivePaymentAddRq
+            With payAdd
+                .CustomerRef.ListID.SetValue(payObj.CustomerListID)
+                .TotalAmount.SetValue(payObj.TotalAmount)
+                .PaymentMethodRef.FullName.SetValue(payObj.PayTypeName)
+                .TxnDate.SetValue(payObj.TxnDate)
+                .ORApplyPayment.IsAutoApply.SetValue(autoApply)
+                ' optional check number
+                If (payObj.RefNumber IsNot Nothing) Then
+                    .RefNumber.SetValue(payObj.RefNumber)
+                End If
+            End With
+
+            Dim respList As IResponseList = ConCheck(qbConMgr).GetRespList()
+            Return respList.GetAt(0)
+        End Function
+
+        Public Overloads Shared Function PaymentAdd(ByRef payObjList As List(Of QBRecievePaymentObj), Optional ByRef qbConMgr As QBConMgr = Nothing,
+                                          Optional ByVal autoApply As Boolean = True) As List(Of IResponse)
+            ' return list of response
+            Dim retRespList As New List(Of IResponse)
+
+            For Each payObj As QBRecievePaymentObj In payObjList
+                Dim payAdd As IReceivePaymentAdd = ConCheck(qbConMgr).MessageSetRequest.AppendReceivePaymentAddRq
+                With payAdd
+                    .CustomerRef.ListID.SetValue(payObj.CustomerListID)
+                    .TotalAmount.SetValue(payObj.TotalAmount)
+                    .PaymentMethodRef.FullName.SetValue(payObj.PayTypeName)
+                    .TxnDate.SetValue(payObj.TxnDate)
+                    .ORApplyPayment.IsAutoApply.SetValue(autoApply)
+                    ' optional check number
+                    If (payObj.RefNumber IsNot Nothing) Then
+                        .RefNumber.SetValue(payObj.RefNumber)
+                    End If
+                End With
+
+                Dim respList As IResponseList = ConCheck(qbConMgr).GetRespList()
+                retRespList.Add(respList.GetAt(0))
+            Next
+
+            Return retRespList
+        End Function
+
+        Public Shared Function PaymentMod(ByRef payObj As QBRecievePaymentObj, Optional ByRef qbConMgr As QBConMgr = Nothing) As IResponse
+            Dim rec
+        End Function
+
+        ' queries
         Public Shared Function InvoiceQuery(ByVal customerListID As String, Optional ByVal fromDate As Date = Nothing, Optional ByVal toDate As Date = Nothing,
                                             Optional ByVal paidStatus As ENPaidStatus = Nothing, Optional ByRef qbConMgr As QBConMgr = Nothing,
                                             Optional ByVal responseLimit As Integer = 100) As IResponse
@@ -221,5 +279,5 @@ Namespace Classes
             Return respList.GetAt(0)
         End Function
 
-    End Class
+        End Class
 End Namespace

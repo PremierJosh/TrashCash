@@ -155,24 +155,35 @@ Namespace Modules
             Public TxnID As String
             Public TxnDate As Date
             Public TotalAmount As Double
+            Public PayTypeName As String
             ' optional fields for new
+            Public CustomerListID As String
             Public EditSequence As String
             Public UnusedPayment As Double
+            Public RefNumber As String
             ' optional list of applied invoices
             Public AppliedInvList As List(Of QBInvoiceObj)
 
-            Public Sub new(ByVal txnID As String, ByVal txnDate As Date, ByVal totalAmount As Double, Optional ByVal editSequence As String = Nothing,
-                            Optional byval unusedPayment As Double = Nothing, Optional ByVal appliedInvList As List(Of QBInvoiceObj))
+            Public Sub new(ByVal txnID As String, ByVal txnDate As Date, ByVal totalAmount As Double, byval payTypeName As String, Optional ByVal refNumber As String = Nothing,
+                           Optional ByVal editSequence As String = Nothing,Optional byval customerListID As String  = nothing,
+                           Optional byval unusedPayment As Double = Nothing,Optional ByVal appliedInvList As List(Of QBInvoiceObj))
                 Me.TxnID = txnID
                 Me.TxnDate = txnDate
                 Me.TotalAmount = totalAmount
+                Me.PayTypeName = payTypeName
                 ' optional params
+                If (customerListID IsNot Nothing) Then
+                    Me.CustomerListID = customerListID
+                End If
                 If (editSequence IsNot Nothing) Then
                     Me.EditSequence = editSequence
                 End If
                 If (unusedPayment <> Nothing) Then
                     Me.UnusedPayment = unusedPayment
                 End If
+                If (refNumber IsNot Nothing) Then
+                    Me.RefNumber = refNumber
+                End IF
                 If (appliedInvList IsNot Nothing) Then
                     Me.AppliedInvList = appliedInvList
                 End If
