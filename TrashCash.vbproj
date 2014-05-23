@@ -197,7 +197,7 @@
     </Compile>
     <Compile Include="Classes\QBConMgr.vb" />
     <Compile Include="Classes\QBMethods.vb" />
-    <Compile Include="Modules\AppVars.vb" />
+    <Compile Include="Modules\AppModule.vb" />
     <Compile Include="Modules\QBObjects.vb" />
     <Compile Include="Classes\Reporting.vb" />
     <Compile Include="Classes\QB_Procedures.vb" />

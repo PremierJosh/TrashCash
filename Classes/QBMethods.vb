@@ -172,5 +172,38 @@ Namespace Classes
             Return respList.GetAt(0)
         End Function
 
+        Public Shared Function InvoiceQuery(ByVal customerListID As String, Optional ByVal fromDate As Date = Nothing, Optional ByVal toDate As Date = Nothing,
+                                            Optional byval paidStatus As ENPaidStatus = Nothing, Optional ByRef qbConMgr As QBConMgr,
+                                            Optional ByVal responseLimit As Integer = 100) As IResponse
+
+            Dim invQuery As IInvoiceQuery = ConCheck(qbConMgr).MessageSetRequest.AppendInvoiceQueryRq()
+            With invQuery.ORInvoiceQuery.InvoiceFilter
+                .EntityFilter.OREntityFilter.ListIDList.Add(customerListID)
+                ' checking optional params
+                If (fromDate <> Nothing) Then
+                    .ORDateRangeFilter.TxnDateRangeFilter.ORTxnDateRangeFilter.TxnDateFilter.FromTxnDate.SetValue(fromDate)
+                End If
+                If (toDate <> Nothing) Then
+                    .ORDateRangeFilter.TxnDateRangeFilter.ORTxnDateRangeFilter.TxnDateFilter.ToTxnDate.SetValue(toDate)
+                End If
+                ' if not dates are passed, limit response to param, default 100
+                If ((toDate = Nothing) And (fromDate = Nothing)) Then
+                    .MaxReturned.SetValue(responseLimit)
+                End If
+
+                .PaidStatus.SetValue(paidStatus)
+            End With
+
+            Dim respList As IResponseList = conMgr.GetRespList
+            Return respList.GetAt(0)
+        End Function
+
+        Public Shared Function PaymentQuery(ByVal customerListID As String, Optional ByRef fromDate As Date = Nothing, Optional ByRef toDate As Date = Nothing, 
+                                            Optional ByRef qbConMgr As QBConMgr) As IResponse
+            ' ref for msgSetReq incase one is passed for doing this through a different thread
+            ConCheck(qbConMgr).MessageSetRequest.AppendReceivePaymentQueryRq()
+
+        End Function
+
     End Class
 End Namespace
