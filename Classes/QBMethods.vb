@@ -4,27 +4,20 @@ Imports QBFC12Lib
 Namespace Classes
     Public Class QBMethods
 
-        Public Shared Function TxnVoid(ByVal txnID As String, ByVal voidType As ENTxnVoidType) As IResponse
-            Dim txnVoidRq As ITxnVoid = GlobalConMgr.MessageSetRequest.AppendTxnVoidRq
+        Public Shared Function TxnVoid(ByVal txnID As String, ByVal voidType As ENTxnVoidType, Optional ByRef qbConMgr As QBConMgr = Nothing) As IResponse
+            Dim txnVoidRq As ITxnVoid = ConCheck(qbConMgr).MessageSetRequest.AppendTxnVoidRq
             With txnVoidRq
                 .TxnID.SetValue(txnID)
                 .TxnVoidType.SetValue(voidType)
             End With
 
-            Dim respList As IResponseList = GlobalConMgr.GetRespList()
+            Dim respList As IResponseList = ConCheck(qbConMgr).GetRespList()
             Return respList.GetAt(0)
         End Function
 
         Public Overloads Shared Function InvoiceAdd(ByVal invObj As QBAddInvoiceObj, Optional ByRef qbConMgr As QBConMgr = Nothing) As IResponse
             ' ref for msgSetReq incase one is passed for doing this through a different thread
-            Dim conMgr As QBConMgr
-            If (qbConMgr IsNot Nothing) Then
-                conMgr = qbConMgr
-            Else
-                conMgr = GlobalConMgr
-            End If
-
-            Dim invAdd As IInvoiceAdd = conMgr.MessageSetRequest.AppendInvoiceAddRq
+            Dim invAdd As IInvoiceAdd = ConCheck(qbConMgr).MessageSetRequest.AppendInvoiceAddRq
 
             ' set fields
             With invAdd
@@ -75,19 +68,14 @@ Namespace Classes
                 End With
             Next lineObj
 
-            Dim respList As IResponseList = conMgr.GetRespList
+            Dim respList As IResponseList = ConCheck(qbConMgr).GetRespList
             Return respList.GetAt(0)
 
         End Function
 
         Public Overloads Shared Function InvoiceAdd(ByVal invObjList As List(Of QBAddInvoiceObj), Optional ByRef qbConMgr As QBConMgr = Nothing) As IResponseList
             ' ref for msgSetReq incase one is passed for doing this through a different thread
-            Dim conMgr As QBConMgr
-            If (qbConMgr IsNot Nothing) Then
-                conMgr = qbConMgr
-            Else
-                conMgr = GlobalConMgr
-            End If
+            Dim conMgr As QBConMgr = ConCheck(qbConMgr)
 
             For Each invObj As QBAddInvoiceObj In invObjList
                 Dim invAdd As IInvoiceAdd = conMgr.MessageSetRequest.AppendInvoiceAddRq
@@ -173,36 +161,64 @@ Namespace Classes
         End Function
 
         Public Shared Function InvoiceQuery(ByVal customerListID As String, Optional ByVal fromDate As Date = Nothing, Optional ByVal toDate As Date = Nothing,
-                                            Optional byval paidStatus As ENPaidStatus = Nothing, Optional ByRef qbConMgr As QBConMgr,
+                                            Optional ByVal paidStatus As ENPaidStatus = Nothing, Optional ByRef qbConMgr As QBConMgr = Nothing,
                                             Optional ByVal responseLimit As Integer = 100) As IResponse
 
             Dim invQuery As IInvoiceQuery = ConCheck(qbConMgr).MessageSetRequest.AppendInvoiceQueryRq()
+            ' setting filters
             With invQuery.ORInvoiceQuery.InvoiceFilter
                 .EntityFilter.OREntityFilter.ListIDList.Add(customerListID)
                 ' checking optional params
-                If (fromDate <> Nothing) Then
-                    .ORDateRangeFilter.TxnDateRangeFilter.ORTxnDateRangeFilter.TxnDateFilter.FromTxnDate.SetValue(fromDate)
-                End If
-                If (toDate <> Nothing) Then
-                    .ORDateRangeFilter.TxnDateRangeFilter.ORTxnDateRangeFilter.TxnDateFilter.ToTxnDate.SetValue(toDate)
-                End If
-                ' if not dates are passed, limit response to param, default 100
-                If ((toDate = Nothing) And (fromDate = Nothing)) Then
-                    .MaxReturned.SetValue(responseLimit)
-                End If
+                With .ORDateRangeFilter.TxnDateRangeFilter.ORTxnDateRangeFilter.TxnDateFilter
+                    If (fromDate <> Nothing) Then
+                        .FromTxnDate.SetValue(fromDate)
+                    End If
+                    If (toDate <> Nothing) Then
+                        .ToTxnDate.SetValue(toDate)
+                    End If
+                End With
+                ' checking if no dates set to limit response, or of responseLimit was passed
+                Select Case responseLimit
+                    Case toDate = Nothing And fromDate = Nothing
+                        .MaxReturned.SetValue(responseLimit)
+                    Case Is <> 100
+                        .MaxReturned.SetValue(responseLimit)
+                End Select
 
                 .PaidStatus.SetValue(paidStatus)
             End With
 
-            Dim respList As IResponseList = conMgr.GetRespList
+            Dim respList As IResponseList = ConCheck(qbConMgr).GetRespList
             Return respList.GetAt(0)
         End Function
 
-        Public Shared Function PaymentQuery(ByVal customerListID As String, Optional ByRef fromDate As Date = Nothing, Optional ByRef toDate As Date = Nothing, 
-                                            Optional ByRef qbConMgr As QBConMgr) As IResponse
+        Public Shared Function PaymentQuery(ByVal customerListID As String, Optional ByRef fromDate As Date = Nothing, Optional ByRef toDate As Date = Nothing,
+                                            Optional ByRef qbConMgr As QBConMgr = Nothing, Optional ByVal responseLimit As Integer = 100) As IResponse
             ' ref for msgSetReq incase one is passed for doing this through a different thread
-            ConCheck(qbConMgr).MessageSetRequest.AppendReceivePaymentQueryRq()
+            Dim payQuery As IReceivePaymentQuery = ConCheck(qbConMgr).MessageSetRequest.AppendReceivePaymentQueryRq
+            ' setting filter
+            With payQuery.ORTxnQuery.TxnFilter
+                .EntityFilter.OREntityFilter.ListIDList.Add(customerListID)
+                ' checking dates
+                With .ORDateRangeFilter.TxnDateRangeFilter.ORTxnDateRangeFilter.TxnDateFilter
+                    If (fromDate <> Nothing) Then
+                        .FromTxnDate.SetValue(fromDate)
+                    End If
+                    If (toDate <> Nothing) Then
+                        .ToTxnDate.SetValue(toDate)
+                    End If
+                End With
+                ' checking if no dates set to limit response, or of responseLimit was passed
+                Select Case responseLimit
+                    Case toDate = Nothing And fromDate = Nothing
+                        .MaxReturned.SetValue(responseLimit)
+                    Case Is <> 100
+                        .MaxReturned.SetValue(responseLimit)
+                End Select
+            End With
 
+            Dim respList As IResponseList = ConCheck(qbConMgr).GetRespList
+            Return respList.GetAt(0)
         End Function
 
     End Class
