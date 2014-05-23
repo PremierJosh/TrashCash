@@ -4,14 +4,10 @@ Imports System.ServiceProcess
 Namespace Classes
     Public Class QBConMgr
 
-        ' qb items
-        Public Shared SessionManager As QBSessionManager
-        Public Shared MessageSetRequest As IMsgSetRequest
+        Public SessionManager As QBSessionManager
+        Public MessageSetRequest As IMsgSetRequest
 
-        ' useful vars all forms will use
-        Public Shared CurrentUser As ds_Program.USERSRow
-
-        Public Shared Sub InitCon()
+       Public Sub InitCon()
             SessionManager = New QBSessionManager()
 
             Try
@@ -31,7 +27,10 @@ Namespace Classes
             MessageSetRequest = SessionManager.CreateMsgSetRequest("US", 11, 0)
         End Sub
 
-        Private Shared Sub StartQBFCServices()
+        Public Sub New()
+            _ta = New ds_CustomerTableAdapters.CustomerTableAdapter
+        End Sub
+        Private Sub StartQBFCServices()
             Dim s As New List(Of String)
             s.Add("QBCFMonitorService")
             s.Add("QBIDPService")
@@ -49,7 +48,7 @@ Namespace Classes
             Next
         End Sub
 
-        Public Shared Function GetRespList() As IResponseList
+        Public Function GetRespList() As IResponseList
             Dim msgSetResp As IMsgSetResponse = SessionManager.DoRequests(MessageSetRequest)
             Dim respList As IResponseList = msgSetResp.ResponseList
 
@@ -69,13 +68,13 @@ Namespace Classes
             End Try
         End Sub
 
-        Private Shared ReadOnly TA As New ds_CustomerTableAdapters.CustomerTableAdapter
-        Public Shared Function CustomerListID(ByVal customerNumber As Integer)
-            Dim s As String = TA.GetListID(customerNumber)
+        Private ReadOnly _ta As ds_CustomerTableAdapters.CustomerTableAdapter
+        Public Function CustomerListID(ByVal customerNumber As Integer)
+            Dim s As String = _ta.GetListID(customerNumber)
             Return s
         End Function
 
-        Public Shared Sub ResponseErr_Misc(ByVal resp As IResponse)
+        Public Sub ResponseErr_Misc(ByVal resp As IResponse)
             If (resp.StatusCode = 1) Then
                 MsgBox("No matching results from Quickbooks")
             Else

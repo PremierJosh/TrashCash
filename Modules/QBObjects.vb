@@ -1,6 +1,7 @@
-﻿Namespace Classes
-    Public Module QBObjects
+﻿Imports TrashCash.Classes
 
+Namespace Modules
+    Public Module QBObjects
 
         Public Class QBAddInvoiceObj
             Public CustomerListID As String
@@ -33,7 +34,7 @@
             End Sub
             Public Sub New(ByVal customerNumber As Integer, ByVal txnDate As Date, ByVal dueDate As Date, ByVal lineList As List(Of QBLineItemObj),
                           Optional ByVal isToBePrinted As Boolean = False, Optional memo As String = Nothing, Optional other As String = Nothing)
-                CustomerListID = QBConMgr.CustomerListID(customerNumber)
+                CustomerListID = GlobalConMgr.CustomerListID(customerNumber)
                 Me.TxnDate = txnDate
                 Me.DueDate = dueDate
                 Me.IsToBePrinted = isToBePrinted

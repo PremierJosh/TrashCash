@@ -196,7 +196,9 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Classes\QBConMgr.vb" />
-    <Compile Include="Classes\QBObjects.vb" />
+    <Compile Include="Classes\QBMethods.vb" />
+    <Compile Include="Modules\AppVars.vb" />
+    <Compile Include="Modules\QBObjects.vb" />
     <Compile Include="Classes\Reporting.vb" />
     <Compile Include="Classes\QB_Procedures.vb" />
     <Compile Include="Classes\QB_Queries.vb" />
@@ -835,6 +837,7 @@
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </COMReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <ProjectExtensions>
     <VisualStudio>

@@ -1,9 +1,8 @@
 ﻿Imports QBFC12Lib
-Imports TrashCash.Classes.QBObjects
 Imports TrashCash.Classes.QBConMgr
 
 Namespace Invoicing
-    Module QBMethods
+    Module Custom
 
         Public Function CustomInvoice_Create(ByRef ds As ds_Invoicing, ByVal print As Boolean) As Boolean
             ' return succeed or fail
@@ -46,10 +45,10 @@ Namespace Invoicing
             ' submit and update row for submited
             invRow.Time_Submitted = Date.Now
             invRow.StatusID = ENItemStatus.Submitted
-            
+
             Try
                 ta.Update(invRow)
-            Catch ex as SqlException
+            Catch ex As SqlException
                 MessageBox.Show("Message: " & ex.Message & vbCrLf & "LineNumber: " & ex.LineNumber,
                                 "Sql Error: " & ex.Procedure, MessageBoxButtons.OK, MessageBoxIcon.Error)
             End Try
