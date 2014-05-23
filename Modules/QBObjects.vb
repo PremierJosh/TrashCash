@@ -85,6 +85,20 @@ Namespace Modules
             End Sub
         End Class
 
+        Public Class QBAddCreditObj
+            Public CustomerListID As String
+            Public IsToBePrinted As Boolean
+            Public ItemListID As String
+            Public CreditAmount As Double
+            Public Desc As String
 
+            Public Sub New(ByVal customerListID As String, ByVal isToBePrinted As Boolean, ByVal itemListID As String, ByVal creditAmount As Double, ByVal desc As String)
+                Me.CustomerListID = customerListID
+                Me.IsToBePrinted = isToBePrinted
+                Me.ItemListID = itemListID
+                Me.CreditAmount = creditAmount
+                Me.Desc = desc
+            End Sub
+        End Class
     End Module
 End Namespace
