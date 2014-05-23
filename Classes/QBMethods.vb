@@ -4,7 +4,18 @@ Imports QBFC12Lib
 Namespace Classes
     Public Class QBMethods
 
-        Public Shared Function InvoiceAdd(ByVal invObj As QBAddInvoiceObj, Optional ByRef qbConMgr As QBConMgr = Nothing) As IResponse
+        Public Shared Function TxnVoid(ByVal txnID As String, ByVal voidType As ENTxnVoidType) As IResponse
+            Dim txnVoidRq As ITxnVoid = GlobalConMgr.MessageSetRequest.AppendTxnVoidRq
+            With txnVoidRq
+                .TxnID.SetValue(txnID)
+                .TxnVoidType.SetValue(voidType)
+            End With
+
+            Dim respList As IResponseList = GlobalConMgr.GetRespList()
+            Return respList.GetAt(0)
+        End Function
+
+        Public Overloads Shared Function InvoiceAdd(ByVal invObj As QBAddInvoiceObj, Optional ByRef qbConMgr As QBConMgr = Nothing) As IResponse
             ' ref for msgSetReq incase one is passed for doing this through a different thread
             Dim conMgr As QBConMgr
             If (qbConMgr IsNot Nothing) Then
@@ -69,7 +80,7 @@ Namespace Classes
 
         End Function
 
-        Public Shared Function InvoiceAdd(ByVal invObjList As List(Of QBAddInvoiceObj), Optional ByRef qbConMgr As QBConMgr = Nothing) As IResponseList
+        Public Overloads Shared Function InvoiceAdd(ByVal invObjList As List(Of QBAddInvoiceObj), Optional ByRef qbConMgr As QBConMgr = Nothing) As IResponseList
             ' ref for msgSetReq incase one is passed for doing this through a different thread
             Dim conMgr As QBConMgr
             If (qbConMgr IsNot Nothing) Then
