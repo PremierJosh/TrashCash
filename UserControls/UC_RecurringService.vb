@@ -1,6 +1,6 @@
 ﻿Public Class UC_RecurringService
     ' details form ref so can handle vents
-    Friend WithEvents _RecurringServiceForm As RecurringService
+    Friend WithEvents _RecurringServiceForm As RecurringServiceForm
 
     ' friend events
     Friend Event RefreshBalance(ByVal CustomerNumber As Integer)
@@ -153,7 +153,7 @@
     Private Sub dg_RecSrvc_DoubleClick(sender As System.Object, e As System.EventArgs) Handles dg_RecSrvc.DoubleClick
         If (dg_RecSrvc.SelectedRows.Count = 1) Then
             Dim dvRow As DataRowView = dg_RecSrvc.SelectedRows(0).DataBoundItem
-            _RecurringServiceForm = New RecurringService(HomeForm, _custName, CurrentCustomer, CType(dvRow.Row, ds_RecurringService.RecurringService_DisplayByCustomerIDRow).RecurringServiceID)
+            _RecurringServiceForm = New RecurringServiceForm(HomeForm, _custName, CurrentCustomer, CType(dvRow.Row, ds_RecurringService.RecurringService_DisplayByCustomerIDRow).RecurringServiceID)
             _RecurringServiceForm.ShowDialog()
         End If
     End Sub
@@ -175,7 +175,7 @@
     Private Sub btn_NewSrvc_Click(sender As System.Object, e As System.EventArgs) Handles btn_NewSrvc.Click
         '_serviceDetails = New RecurringServicesForm(CurrentCustomer, _custName, HomeForm)
         '_serviceDetails.ShowDialog()
-        _RecurringServiceForm = New RecurringService(HomeForm, _custName, CurrentCustomer)
+        _RecurringServiceForm = New RecurringServiceForm(HomeForm, _custName, CurrentCustomer)
         _RecurringServiceForm.ShowDialog()
     End Sub
 

@@ -120,7 +120,7 @@
         _HomeForm = HomeForm
     End Sub
 
-    Friend WithEvents _RecurringServiceForm As RecurringService
+    Friend WithEvents _RecurringServiceForm As RecurringServiceForm
 
     Private Sub dg_PendingApprovals_DoubleClick(sender As System.Object, e As System.EventArgs) Handles dg_PendingApprovals.DoubleClick
         If (dg_PendingApprovals.SelectedRows.Count = 1) Then
@@ -128,7 +128,7 @@
             Dim row As ds_RecurringService.RecurringService_PendingApprovalsRow = dvRow.Row
 
             ' set and open rec form for selected service
-            _RecurringServiceForm = New RecurringService(_HomeForm, row.CustomerFullName, row.CustomerNumber, row.RecurringServiceID)
+            _RecurringServiceForm = New RecurringServiceForm(_HomeForm, row.CustomerFullName, row.CustomerNumber, row.RecurringServiceID)
             _RecurringServiceForm.ShowDialog()
         End If
     End Sub

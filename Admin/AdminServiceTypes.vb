@@ -7,7 +7,7 @@
             InitializeComponent()
 
             ' Add any initialization after the InitializeComponent() call.
-            UC_ServiceTypesDetails1._HomeForm = homeForm
+            'UC_ServiceTypesDetails1._HomeForm = homeForm
         End Sub
 
         Private Sub ServiceTypes_Load(sender As System.Object, e As System.EventArgs) Handles MyBase.Load
@@ -38,14 +38,14 @@
             End If
         End Sub
 
-        Private Sub CatchUpdate(ByVal message As String) Handles UC_ServiceTypesDetails1.UpdateComplete
-            MsgBox(message)
-            grp_ServiceEdit.Visible = False
-            ServiceTypesTableAdapter.Fill(ds_Types.ServiceTypes)
-            If (dg_Item.RowCount > 0) Then
-                ColorRows(dg_Item)
-            End If
-        End Sub
+        'Private Sub CatchUpdate(ByVal message As String) Handles UC_ServiceTypesDetails1.UpdateComplete
+        '    MsgBox(message)
+        '    grp_ServiceEdit.Visible = False
+        '    ServiceTypesTableAdapter.Fill(ds_Types.ServiceTypes)
+        '    If (dg_Item.RowCount > 0) Then
+        '        ColorRows(dg_Item)
+        '    End If
+        'End Sub
 
         Private Sub NewItemToolStripMenuItem_Click(sender As System.Object, e As System.EventArgs) Handles NewItemToolStripMenuItem.Click
             UC_ServiceTypesDetails1.PrepNew()

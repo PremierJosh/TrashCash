@@ -417,7 +417,7 @@ retry:
                     ' check if were going to use
                     If (autoApply) Then
                         ' get table of unpaid invoices
-                        Dim dt As ds_Payments.MovePayment_OpenInvoicesDataTable = Invoicing_GetUnpaidTable(custListID)
+                        Dim dt As ds_Display.QBOpenInvoicesDataTable = Invoicing_GetUnpaidTable(custListID)
                         If (dt.Rows.Count > 0) Then
                             ' apply credit
                             Credits_PayOpenInvoices(custListID, creditRet.TxnID.GetValue, creditRet.CreditRemaining.GetValue, dt, applyOrder)
@@ -532,7 +532,7 @@ retry:
                     End Try
 
                     ' get table of unpaid invoices
-                    Dim openInvDt As ds_Payments.MovePayment_OpenInvoicesDataTable = Invoicing_GetUnpaidTable(customerListID)
+                    Dim openInvDt As ds_Display.QBOpenInvoicesDataTable = Invoicing_GetUnpaidTable(customerListID)
 
                     ' use new credit to pay newest invoices first
                     Credits_PayOpenInvoices(customerListID, creditMemoRet.TxnID.GetValue, creditMemoRet.CreditRemaining.GetValue, openInvDt, "Desc")
@@ -635,7 +635,7 @@ retry:
                     End Try
 
                     ' now query for open invoices
-                    Dim openInvDT As ds_Payments.MovePayment_OpenInvoicesDataTable = Invoicing_GetUnpaidTable(custListID)
+                    Dim openInvDT As ds_Display.QBOpenInvoicesDataTable = Invoicing_GetUnpaidTable(custListID)
                     ' use new credit for these
                     Credits_PayOpenInvoices(custListID, creditRet.TxnID.GetValue, creditRet.CreditRemaining.GetValue, openInvDT, "Asc")
                 Else
@@ -647,7 +647,7 @@ retry:
         End Sub
 
         ' sub to use newly created credit to pay invoices using the move payment open inv table
-        Private Sub Credits_PayOpenInvoices(ByVal customerListID As String, ByVal creditTxnID As String, ByVal availAmount As Double, ByRef openInvoiceDT As ds_Payments.MovePayment_OpenInvoicesDataTable, ByVal applyOrder As String)
+        Private Sub Credits_PayOpenInvoices(ByVal customerListID As String, ByVal creditTxnID As String, ByVal availAmount As Double, ByRef openInvoiceDT As ds_Display.QBOpenInvoicesDataTable, ByVal applyOrder As String)
             ' making sure we have rows
             If (openInvoiceDT.Rows.Count > 0) Then
                 ' create data view that is sorted depending on the direction paramater Asc or Desc
@@ -660,7 +660,7 @@ retry:
                 Dim payAdd As IReceivePaymentAdd = MsgSetReq.AppendReceivePaymentAddRq
                 payAdd.CustomerRef.ListID.SetValue(customerListID)
 
-                For Each row As ds_Payments.MovePayment_OpenInvoicesRow In dvInvoices.Table.Rows
+                For Each row As ds_Display.QBOpenInvoicesRow In dvInvoices.Table.Rows
                     ' making sure we have credit still
                     If (creditRemain > 0) Then
                         Dim newAttached As IAppliedToTxnAdd = payAdd.ORApplyPayment.AppliedToTxnAddList.Append()
@@ -1010,7 +1010,7 @@ retry:
             Dim custListID As String = _cta.GetListID(customerNumber)
 
             ' need to get list of rec pay txnID's that pay invoices after this date
-            Dim unappliedPaymentDT As New ds_Payments.MovePayment_UnappliedPaymentsDataTable
+            Dim unappliedPaymentDT As New ds_Display.QBUnappliedPaymentsDataTable
 
             ' checking method going after payids
             If (routeMethod = "Invoices") Then
@@ -1037,7 +1037,7 @@ retry:
             Payments_UnapplyFromTable(unappliedPaymentDT)
 
             ' now need to get list of all open invoices
-            Dim openInvoiceDT As ds_Payments.MovePayment_OpenInvoicesDataTable = Invoicing_GetUnpaidTable(custListID)
+            Dim openInvoiceDT As ds_Display.QBOpenInvoicesDataTable = Invoicing_GetUnpaidTable(custListID)
 
             ' making sure we have rows in both tables, otherwise just end procedure
             If (unappliedPaymentDT.Rows.Count > 0) Then
@@ -1049,10 +1049,10 @@ retry:
 
         End Sub
 
-        Private Function Invoicing_PayTxnIDsOnInvsAfterDate(ByVal customerListID As String, ByVal afterDate As Date) As ds_Payments.MovePayment_UnappliedPaymentsDataTable
+        Private Function Invoicing_PayTxnIDsOnInvsAfterDate(ByVal customerListID As String, ByVal afterDate As Date) As ds_Display.QBUnappliedPaymentsDataTable
             ' return list of pays need to unapply
-            Dim unappliedDT As New ds_Payments.MovePayment_UnappliedPaymentsDataTable
-
+            Dim unappliedDT As New ds_Display.QBUnappliedPaymentsDataTable
+        
             Dim invQuery As IInvoiceQuery = MsgSetReq.AppendInvoiceQueryRq
             ' setting customer and date
             invQuery.ORInvoiceQuery.InvoiceFilter.EntityFilter.OREntityFilter.ListIDList.Add(customerListID)
@@ -1091,7 +1091,7 @@ retry:
                                     ' type check
                                     If (linkedTxn.TxnType.GetValue = QBFC12Lib.ENTxnType.ttReceivePayment) Then
                                         ' add to return table
-                                        unappliedDT.AddMovePayment_UnappliedPaymentsRow(linkedTxn.TxnID.GetValue, Nothing, Nothing, Nothing, Nothing)
+                                        unappliedDT.add(linkedTxn.TxnID.GetValue, Nothing, Nothing, Nothing, Nothing)
 
                                         unappliedDT.AcceptChanges()
                                     End If
@@ -1107,9 +1107,9 @@ retry:
             Return unappliedDT
         End Function
 
-        Private Sub Payments_GetEditSequences(ByRef unappliedDT As ds_Payments.MovePayment_UnappliedPaymentsDataTable)
+        Private Sub Payments_GetEditSequences(ByRef unappliedDT As ds_Display.QBUnappliedPaymentsDataTable)
             ' looping through row to build large query to update at end
-            For Each row As ds_Payments.MovePayment_UnappliedPaymentsRow In unappliedDT.Rows
+            For Each row As ds_Display.QBUnappliedPaymentsRow In unappliedDT.Rows
                 Dim payQuery As IReceivePaymentQuery = MsgSetReq.AppendReceivePaymentQueryRq
                 payQuery.ORTxnQuery.TxnIDList.Add(row.Pay_TxnID)
 
@@ -1138,7 +1138,7 @@ retry:
                         Dim payRet As IReceivePaymentRet = payRetList.GetAt(l)
 
                         ' get row from select which returns array, 0 index
-                        Dim row As ds_Payments.MovePayment_UnappliedPaymentsRow = unappliedDT.Select("Pay_TxnID LIKE '" & payRet.TxnID.GetValue & "'")(0)
+                        Dim row As ds_Display.QBUnappliedPaymentsRow = unappliedDT.Select("Pay_TxnID LIKE '" & payRet.TxnID.GetValue & "'")(0)
                         row.Pay_EditSeq = payRet.EditSequence.GetValue
                         row.Pay_TxnDate = payRet.TxnDate.GetValue
                         row.Pay_Amount = payRet.TotalAmount.GetValue
@@ -1153,9 +1153,9 @@ retry:
 
         End Sub
 
-        Private Function Payments_PayTxnIDsAfterDate(ByVal customerListID As String, ByVal afterDate As Date) As ds_Payments.MovePayment_UnappliedPaymentsDataTable
+        Private Function Payments_PayTxnIDsAfterDate(ByVal customerListID As String, ByVal afterDate As Date) As ds_Display.QBUnappliedPaymentsDataTable
             ' return list of pays need to unapply
-            Dim unappliedDT As New ds_Payments.MovePayment_UnappliedPaymentsDataTable
+            Dim unappliedDT As New ds_Display.QBUnappliedPaymentsDataTable
 
             Dim payQuery As IReceivePaymentQuery = MsgSetReq.AppendReceivePaymentQueryRq
             ' setting customer and date
@@ -1199,9 +1199,9 @@ retry:
             Return unappliedDT
         End Function
 
-        Private Sub Payments_UnapplyFromTable(ByRef unappliedDT As ds_Payments.MovePayment_UnappliedPaymentsDataTable)
+        Private Sub Payments_UnapplyFromTable(ByRef unappliedDT As ds_Display.QBUnappliedPaymentsDataTable)
             ' going to update this table
-            For Each row As ds_Payments.MovePayment_UnappliedPaymentsRow In unappliedDT.Rows
+            For Each row As ds_Display.QBUnappliedPaymentsRow In unappliedDT.Rows
                 ' mod to remove
                 Dim recPayMod As IReceivePaymentMod = MsgSetReq.AppendReceivePaymentModRq
                 recPayMod.TxnID.SetValue(row.Pay_TxnID)
@@ -1240,7 +1240,7 @@ retry:
                     End Using
 
                     ' get row from select which returns array, 0 index
-                    Dim row As ds_Payments.MovePayment_UnappliedPaymentsRow = unappliedDT.Select("Pay_TxnID LIKE '" & payRet.TxnID.GetValue & "'")(0)
+                    Dim row As ds_Display.QBUnappliedPaymentsRow = unappliedDT.Select("Pay_TxnID LIKE '" & payRet.TxnID.GetValue & "'")(0)
                     row.Pay_EditSeq = payRet.EditSequence.GetValue
                     row.Remaining = payRet.UnusedPayment.GetValue
 
@@ -1252,9 +1252,9 @@ retry:
             Next
         End Sub
 
-        Private Function Invoicing_GetUnpaidTable(ByVal customerListID As String) As ds_Payments.MovePayment_OpenInvoicesDataTable
+        Private Function Invoicing_GetUnpaidTable(ByVal customerListID As String) As ds_Display.QBOpenInvoicesDataTable
             ' return table of open invoices and their info
-            Dim openInvDT As New ds_Payments.MovePayment_OpenInvoicesDataTable
+            Dim openInvDT As New ds_Display.QBOpenInvoicesDataTable
 
             Dim invQuery As IInvoiceQuery = MsgSetReq.AppendInvoiceQueryRq
             ' setting customer and paid status
@@ -1283,7 +1283,7 @@ retry:
                         Dim invRet As IInvoiceRet = invRetList.GetAt(l)
 
                         ' adding to table
-                        openInvDT.AddMovePayment_OpenInvoicesRow(invRet.TxnID.GetValue, invRet.TxnDate.GetValue, invRet.BalanceRemaining.GetValue, invRet.BalanceRemaining.GetValue)
+                        openInvDT.AddQBOpenInvoicesRow(invRet.TxnID.GetValue, invRet.TxnDate.GetValue, invRet.BalanceRemaining.GetValue, invRet.BalanceRemaining.GetValue)
                         openInvDT.AcceptChanges()
                     Next
                 ElseIf (resp.StatusCode <> 1) Then
@@ -1294,12 +1294,12 @@ retry:
             Return openInvDT
         End Function
 
-        Private Sub Payments_ApplyFromTblToTbl(ByRef unappliedPaymentDT As ds_Payments.MovePayment_UnappliedPaymentsDataTable, ByRef openInvoiceDT As ds_Payments.MovePayment_OpenInvoicesDataTable)
+        Private Sub Payments_ApplyFromTblToTbl(ByRef unappliedPaymentDT As ds_Display.QBUnappliedPaymentsDataTable, ByRef openInvoiceDT As ds_Display.QBOpenInvoicesDataTable)
             ' dataview for unapplied payments sorted by date
             Dim dvPay As New DataView(unappliedPaymentDT, "", "Pay_TxnDate ASC", DataViewRowState.CurrentRows)
             Dim dvInv As New DataView(openInvoiceDT, "", "Inv_TxnDate ASC", DataViewRowState.CurrentRows)
 
-            For Each payRow As ds_Payments.MovePayment_UnappliedPaymentsRow In dvPay.Table.Rows
+            For Each payRow As ds_Display.QBUnappliedPaymentsRow In dvPay.Table.Rows
                 If (payRow.Remaining > 0) Then
                     ' going to mod this payment and append as many invoices as it can pay onto its apllied to txn list
                     Dim payMod As IReceivePaymentMod = MsgSetReq.AppendReceivePaymentModRq
@@ -1314,7 +1314,7 @@ retry:
                     ' applied txn list
                     Dim appliedList As IAppliedToTxnModList = payMod.AppliedToTxnModList
 
-                    For Each invRow As ds_Payments.MovePayment_OpenInvoicesRow In dvInv.Table.Rows
+                    For Each invRow As ds_Display.QBOpenInvoicesRow In dvInv.Table.Rows
                         ' making sure inv still needs to be paid
                         If (invRow.Remaining > 0) Then
                             Dim appliedItem As IAppliedToTxnMod = appliedList.Append

@@ -20,7 +20,7 @@ Namespace Classes
             Else
                 Try
                     Using ta As New ds_ProgramTableAdapters.QueriesTableAdapter
-                        ERR_MISC_Insert(resp.Type.GetValue.ToString,
+                        ta.ERR_MISC_Insert(resp.Type.GetValue.ToString,
                                         resp.StatusCode.ToString,
                                         resp.StatusMessage,
                                         Date.Now)

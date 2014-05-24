@@ -1,4 +1,5 @@
 ﻿'Imports TrashCash.QBSubs
+Imports TrashCash.Classes
 Imports TrashCash.Utilities
 Imports TrashCash.Utilities.Functions
 Imports QBFC12Lib

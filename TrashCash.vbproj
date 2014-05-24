@@ -263,16 +263,17 @@
     <Compile Include="Forms\PendingApprovals.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\RecurringService.Designer.vb">
-      <DependentUpon>RecurringService.vb</DependentUpon>
+    <Compile Include="RecurringService\RecurringService.vb" />
+    <Compile Include="RecurringService\RecurringServiceForm.Designer.vb">
+      <DependentUpon>RecurringServiceForm.vb</DependentUpon>
     </Compile>
-    <Compile Include="Forms\RecurringService.vb">
+    <Compile Include="RecurringService\RecurringServiceForm.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Invoicing\CustomInvoicing.Designer.vb">
-      <DependentUpon>CustomInvoicing.vb</DependentUpon>
+    <Compile Include="Invoicing\CustomInvoicingForm.Designer.vb">
+      <DependentUpon>CustomInvoicingForm.vb</DependentUpon>
     </Compile>
-    <Compile Include="Invoicing\CustomInvoicing.vb">
+    <Compile Include="Invoicing\CustomInvoicingForm.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Invoicing\Invoicing.vb" />
@@ -456,7 +457,7 @@
     <Compile Include="_DataSets\ds_Program.vb">
       <DependentUpon>ds_Program.xsd</DependentUpon>
     </Compile>
-    <Compile Include="_DataSets\ds_RecurringService.Designer.vb">
+    <Compile Include="RecurringService\ds_RecurringService.Designer.vb">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>ds_RecurringService.xsd</DependentUpon>
@@ -538,12 +539,12 @@
     <EmbeddedResource Include="Forms\NewCustomer.resx">
       <DependentUpon>NewCustomer.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\RecurringService.resx">
-      <DependentUpon>RecurringService.vb</DependentUpon>
+    <EmbeddedResource Include="RecurringService\RecurringServiceForm.resx">
+      <DependentUpon>RecurringServiceForm.vb</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Invoicing\CustomInvoicing.resx">
-      <DependentUpon>CustomInvoicing.vb</DependentUpon>
+    <EmbeddedResource Include="Invoicing\CustomInvoicingForm.resx">
+      <DependentUpon>CustomInvoicingForm.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Login.resx">
       <DependentUpon>Login.vb</DependentUpon>
@@ -703,15 +704,15 @@
     <None Include="_DataSets\ds_Program.xss">
       <DependentUpon>ds_Program.xsd</DependentUpon>
     </None>
-    <None Include="_DataSets\ds_RecurringService.xsc">
+    <None Include="RecurringService\ds_RecurringService.xsc">
       <DependentUpon>ds_RecurringService.xsd</DependentUpon>
     </None>
-    <None Include="_DataSets\ds_RecurringService.xsd">
+    <None Include="RecurringService\ds_RecurringService.xsd">
       <SubType>Designer</SubType>
       <Generator>MSDataSetGenerator</Generator>
       <LastGenOutput>ds_RecurringService.Designer.vb</LastGenOutput>
     </None>
-    <None Include="_DataSets\ds_RecurringService.xss">
+    <None Include="RecurringService\ds_RecurringService.xss">
       <DependentUpon>ds_RecurringService.xsd</DependentUpon>
     </None>
     <None Include="_DataSets\ds_Types.xsc">
@@ -841,7 +842,7 @@
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties BuildVersion_AssemblyInfoFilename="My Project\AssemblyInfo.vb" BuildVersion_UpdateAssemblyVersion="True" BuildVersion_UpdateFileVersion="True" BuildVersion_BuildVersioningStyle="None.None.None.Increment" BuildVersion_StartDate="2014/3/2" />
+      <UserProperties BuildVersion_StartDate="2014/3/2" BuildVersion_BuildVersioningStyle="None.None.None.Increment" BuildVersion_UpdateFileVersion="True" BuildVersion_UpdateAssemblyVersion="True" BuildVersion_AssemblyInfoFilename="My Project\AssemblyInfo.vb" />
     </VisualStudio>
   </ProjectExtensions>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

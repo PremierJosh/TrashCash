@@ -1,4 +1,2 @@
-﻿
-
-Partial Public Class ds_Display
+﻿Partial Public Class ds_Display
 End Class

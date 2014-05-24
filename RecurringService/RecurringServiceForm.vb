@@ -1,5 +1,5 @@
 ﻿
-Public Class RecurringService
+Public Class RecurringServiceForm
     ' need recurring service queries ta
     Dim qta As ds_RecurringServiceTableAdapters.QueriesTableAdapter
 
