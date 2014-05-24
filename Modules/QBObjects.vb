@@ -17,6 +17,9 @@ Namespace Modules
             Public TxnDate As Date
             Public EditSequence As String
             Public TotalAmount As Double
+
+            ' this is used when a credit is applied through ISetCredit
+            Public AppliedAmount As Double
         End Class
 
         Public Class QBInvoiceObj
@@ -38,6 +41,12 @@ Namespace Modules
 
             ' this is used for an applied txn for a payment
             Public AppliedPaymentAmount As Double
+            
+            ' this is used to carry an invoices applied credits
+            ''' chose to put this here since the way you apply a credit to an invoice
+            ''' is to recieve a payment with no amount, apply payment to invoice by id
+            ''' and set the credit txn id and amount used to pay it
+            Public SetCreditList As List(Of QBCreditObj)
         End Class
 
         Public Class QBLineItemObj
@@ -71,6 +80,6 @@ Namespace Modules
 
             ' optional list of invoices this payment is paying
             Public AppliedInvList As List(Of QBInvoiceObj)
-        End Class
+            End Class
     End Module
 End Namespace

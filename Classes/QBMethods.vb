@@ -141,6 +141,7 @@ Namespace Classes
         End Function
 
         ' crediting
+
         Public Shared Function CreditAdd(ByRef creditObj As QBAddCreditObj) As IResponse
             Dim credAdd As ICreditMemoAdd = GlobalConMgr.MessageSetRequest.AppendCreditMemoAddRq
             With credAdd
@@ -181,6 +182,27 @@ Namespace Classes
                 If (payObj.RefNumber IsNot Nothing) Then
                     .RefNumber.SetValue(payObj.RefNumber)
                 End If
+                ' checking if appTxnList isnot nothing
+                If (payObj.AppliedInvList IsNot Nothing) Then
+                    Dim appTxnList As IAppliedToTxnAddList = .ORApplyPayment.AppliedToTxnAddList
+                    For Each invObj As QBInvoiceObj In payObj.AppliedInvList
+                        Dim appTxn As IAppliedToTxnMod = appTxnList.Append
+                        appTxn.TxnID.SetValue(invObj.TxnID)
+                        ' checking if there is an applied amount
+                        If (invObj.AppliedPaymentAmount <> Nothing) Then
+                            appTxn.PaymentAmount.SetValue(invObj.AppliedPaymentAmount)
+                        End If
+                        ' checking if credit list is applied
+                        If (invObj.SetCreditList IsNot Nothing) Then
+                            Dim setCreditList As ISetCreditList = appTxn.SetCreditList
+                            For Each creditObj As QBCreditObj In invObj.SetCreditList
+                                Dim setCredit As ISetCredit = setCreditList.Append
+                                setCredit.CreditTxnID.SetValue(creditObj.TxnID)
+                                setCredit.AppliedAmount.SetValue(creditObj.AppliedAmount)
+                            Next
+                        End If
+                    Next
+                End If
             End With
 
             Dim respList As IResponseList = ConCheck(qbConMgr).GetRespList()
@@ -204,6 +226,28 @@ Namespace Classes
                     If (payObj.RefNumber IsNot Nothing) Then
                         .RefNumber.SetValue(payObj.RefNumber)
                     End If
+                    ' checking if appTxnList isnot nothing
+                    If (payObj.AppliedInvList IsNot Nothing) Then
+                        Dim appTxnList As IAppliedToTxnAddList = .ORApplyPayment.AppliedToTxnAddList
+                        For Each invObj As QBInvoiceObj In payObj.AppliedInvList
+                            Dim appTxn As IAppliedToTxnMod = appTxnList.Append
+                            appTxn.TxnID.SetValue(invObj.TxnID)
+                            ' checking if there is an applied amount
+                            If (invObj.AppliedPaymentAmount <> Nothing) Then
+                                appTxn.PaymentAmount.SetValue(invObj.AppliedPaymentAmount)
+                            End If
+                            ' checking if credit list is applied
+                            If (invObj.SetCreditList IsNot Nothing) Then
+                                Dim setCreditList As ISetCreditList = appTxn.SetCreditList
+                                For Each creditObj As QBCreditObj In invObj.SetCreditList
+                                    Dim setCredit As ISetCredit = setCreditList.Append
+                                    setCredit.CreditTxnID.SetValue(creditObj.TxnID)
+                                    setCredit.AppliedAmount.SetValue(creditObj.AppliedAmount)
+                                Next
+                            End If
+                        Next
+                    End If
+
                 End With
 
                 Dim respList As IResponseList = ConCheck(qbConMgr).GetRespList()
@@ -213,11 +257,95 @@ Namespace Classes
             Return retRespList
         End Function
 
-        Public Shared Function PaymentMod(ByRef payObj As QBRecievePaymentObj, Optional ByRef qbConMgr As QBConMgr = Nothing) As IResponse
-            Dim rec
+        Public Overloads Shared Function PaymentMod(ByRef payObj As QBRecievePaymentObj, Optional ByRef qbConMgr As QBConMgr = Nothing,
+                                                     Optional ByVal wipeAppList As Boolean = False) As IResponse
+            Dim payMod As IReceivePaymentMod = ConCheck(qbConMgr).MessageSetRequest.AppendReceivePaymentModRq
+            ' set fields
+            With payMod
+                .TxnID.SetValue(payObj.TxnID)
+                .EditSequence.SetValue(payObj.EditSequence)
+            End With
+
+            ' set applied to txns if not nothing
+            If (payObj.AppliedInvList IsNot Nothing) Then
+                Dim appTxnList As IAppliedToTxnModList = payMod.AppliedToTxnModList
+                For Each invObj As QBInvoiceObj In payObj.AppliedInvList
+                    Dim appTxn As IAppliedToTxnMod = appTxnList.Append
+                    appTxn.TxnID.SetValue(invObj.TxnID)
+                    ' checking if there is an applied amount
+                    If (invObj.AppliedPaymentAmount <> Nothing) Then
+                        appTxn.PaymentAmount.SetValue(invObj.AppliedPaymentAmount)
+                    End If
+                    ' checking if credit list is applied
+                    If (invObj.SetCreditList IsNot Nothing) Then
+                        Dim setCreditList As ISetCreditList = appTxn.SetCreditList
+                        For Each creditObj As QBCreditObj In invObj.SetCreditList
+                            Dim setCredit As ISetCredit = setCreditList.Append
+                            setCredit.CreditTxnID.SetValue(creditObj.TxnID)
+                            setCredit.AppliedAmount.SetValue(creditObj.AppliedAmount)
+                        Next
+                    End If
+                Next
+            Else
+                ' checking if optional param to wipe applied list is set to true
+                If (wipeAppList) Then
+                    Dim appTxnList As IAppliedToTxnModList = payMod.AppliedToTxnModList
+                End If
+            End If
+
+            Dim respList As IResponseList = ConCheck(qbConMgr).GetRespList
+            Return respList.GetAt(0)
         End Function
 
+        Public Shared Function PaymentMod(ByRef payObjList As List(Of QBRecievePaymentObj), Optional ByRef qbConMgr As QBConMgr = Nothing,
+                                          Optional ByVal wipeAppList As Boolean = False) As List(Of IResponse)
+            ' ret list
+            Dim retRespList As New List(Of IResponse)
+
+            For Each payObj As QBRecievePaymentObj In payObjList
+                Dim payMod As IReceivePaymentMod = ConCheck(qbConMgr).MessageSetRequest.AppendReceivePaymentModRq
+                ' set fields
+                With payMod
+                    .TxnID.SetValue(payObj.TxnID)
+                    .EditSequence.SetValue(payObj.EditSequence)
+                End With
+
+                ' set applied to txns if not nothing
+                If (payObj.AppliedInvList IsNot Nothing) Then
+                    Dim appTxnList As IAppliedToTxnModList = payMod.AppliedToTxnModList
+                    For Each invObj As QBInvoiceObj In payObj.AppliedInvList
+                        Dim appTxn As IAppliedToTxnMod = appTxnList.Append
+                        appTxn.TxnID.SetValue(invObj.TxnID)
+                        ' checking if there is an applied amount
+                        If (invObj.AppliedPaymentAmount <> Nothing) Then
+                            appTxn.PaymentAmount.SetValue(invObj.AppliedPaymentAmount)
+                        End If
+                        ' checking if credit list is applied
+                        If (invObj.SetCreditList IsNot Nothing) Then
+                            Dim setCreditList As ISetCreditList = appTxn.SetCreditList
+                            For Each creditObj As QBCreditObj In invObj.SetCreditList
+                                Dim setCredit As ISetCredit = setCreditList.Append
+                                setCredit.CreditTxnID.SetValue(creditObj.TxnID)
+                                setCredit.AppliedAmount.SetValue(creditObj.AppliedAmount)
+                            Next
+                        End If
+                    Next
+                Else
+                    ' checking if optional param to wipe applied list is set to true
+                    If (wipeAppList) Then
+                        Dim appTxnList As IAppliedToTxnModList = payMod.AppliedToTxnModList
+                    End If
+                End If
+
+                Dim respList As IResponseList = ConCheck(qbConMgr).GetRespList
+                retRespList.Add(respList.GetAt(0))
+            Next
+
+            Return retRespList
+        End Function
+        
         ' queries
+
         Public Shared Function InvoiceQuery(ByVal customerListID As String, Optional ByVal fromDate As Date = Nothing, Optional ByVal toDate As Date = Nothing,
                                             Optional ByVal paidStatus As ENPaidStatus = Nothing, Optional ByRef qbConMgr As QBConMgr = Nothing,
                                             Optional ByVal responseLimit As Integer = 100) As IResponse
