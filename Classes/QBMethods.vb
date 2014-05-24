@@ -11,9 +11,8 @@ Namespace Classes
                 .TxnID.SetValue(txnID)
                 .TxnVoidType.SetValue(voidType)
             End With
-
-            Dim respList As IResponseList = ConCheck(qbConMgr).GetRespList()
-            Return respList.GetAt(0)
+            
+            Return ConCheck(qbConMgr).GetRespList.GetAt(0)
         End Function
         Public Shared Sub ResponseErr_Misc(ByVal resp As IResponse)
             If (resp.StatusCode = 1) Then
@@ -33,6 +32,102 @@ Namespace Classes
             End If
 
         End Sub
+
+        ' customer
+        Public Shared Function CustomerAdd(ByRef custRow As ds_Customer.CustomerRow, Optional ByRef qbConMgr As QBConMgr = Nothing) As IResponse
+            Dim custAdd As ICustomerAdd = ConCheck(qbConMgr).MessageSetRequest.AppendCustomerAddRq
+            With custAdd
+                .Name.SetValue(custRow.CustomerFullName)
+                If (custRow.IsCustomerCompanyNameNull = False) Then
+                    .CompanyName.SetValue(custRow.CustomerCompanyName)
+                End If
+                If (custRow.IsCustomerFirstNameNull = False) Then
+                    .FirstName.SetValue(custRow.CustomerFirstName)
+                End If
+                If (custRow.IsCustomerLastNameNull = False) Then
+                    .LastName.SetValue(custRow.CustomerLastName)
+                End If
+                .Phone.SetValue(custRow.CustomerPhone)
+
+                If (custRow.IsCustomerAltPhoneNull = False) Then
+                    .AltPhone.SetValue(custRow.CustomerAltPhone)
+                End If
+                If (custRow.IsCustomerContactNull = False) Then
+                    .Contact.SetValue(custRow.CustomerContact)
+                End If
+
+                ' Billing Address Information
+                .BillAddress.Addr1.SetValue(custRow.CustomerBillingAddr1)
+                If (custRow.IsCustomerBillingAddr2Null = False) Then
+                    .BillAddress.Addr2.SetValue(custRow.CustomerBillingAddr2)
+                End If
+                If (custRow.IsCustomerBillingAddr3Null = False) Then
+                    .BillAddress.Addr3.SetValue(custRow.CustomerBillingAddr3)
+                End If
+                If (custRow.IsCustomerBillingAddr4Null = False) Then
+                    .BillAddress.Addr4.SetValue(custRow.CustomerBillingAddr4)
+                End If
+                .BillAddress.City.SetValue(custRow.CustomerBillingCity)
+                .BillAddress.State.SetValue(custRow.CustomerBillingState)
+                .BillAddress.PostalCode.SetValue(custRow.CustomerBillingZip)
+            End With
+
+            Return ConCheck(qbConMgr).GetRespList.GetAt(0)
+        End Function
+
+        Public Shared Function CustomerMod(ByRef custRow As ds_Customer.CustomerRow, Optional ByRef qbConMgr As QBConMgr = Nothing) As IResponse
+            Dim custMod As ICustomerMod = ConCheck(qbConMgr).MessageSetRequest.AppendCustomerModRq
+            With custMod
+                .ListID.SetValue(custRow.CustomerListID)
+                .EditSequence.SetValue(custRow.CustomerEditSeq)
+
+                '''' customer information ''''
+                .Name.SetValue(custRow.CustomerFullName)
+                If (custRow.IsCustomerCompanyNameNull = False) Then
+                    .CompanyName.SetValue(custRow.CustomerCompanyName)
+                End If
+                If (custRow.IsCustomerFirstNameNull = False) Then
+                    .FirstName.SetValue(custRow.CustomerFirstName)
+                End If
+                If (custRow.IsCustomerLastNameNull = False) Then
+                    .LastName.SetValue(custRow.CustomerLastName)
+                End If
+                .Phone.SetValue(custRow.CustomerPhone)
+
+                ' checking possibly blank alt phone
+                If (custRow.IsCustomerAltPhoneNull = False) Then
+                    .AltPhone.SetValue(custRow.CustomerAltPhone)
+                End If
+                ' checking possibly blank contact field
+                If (custRow.IsCustomerContactNull = False) Then
+                    .Contact.SetValue(custRow.CustomerContact)
+                End If
+
+                '''' billing information ''''
+                ' required billAddr1
+                .BillAddress.Addr1.SetValue(custRow.CustomerBillingAddr1)
+                ' checking billAddr2
+                If (custRow.IsCustomerBillingAddr2Null = False) Then
+                    .BillAddress.Addr2.SetValue(custRow.CustomerBillingAddr2)
+                End If
+                ' checking billAddr3
+                If (custRow.IsCustomerBillingAddr3Null = False) Then
+                    .BillAddress.Addr3.SetValue(custRow.CustomerBillingAddr3)
+                End If
+                .BillAddress.City.SetValue(custRow.CustomerBillingCity)
+                .BillAddress.State.SetValue(custRow.CustomerBillingState)
+                .BillAddress.PostalCode.SetValue(custRow.CustomerBillingZip)
+
+                ' if cell = true, then customer is deactive
+                If (custRow.CustomerIsDeactive = True) Then
+                    .IsActive.SetValue(False)
+                Else
+                    .IsActive.SetValue(True)
+                End If
+            End With
+
+            Return ConCheck(qbConMgr).GetRespList.GetAt(0)
+        End Function
 
         ' invoicing
         Public Overloads Shared Function InvoiceAdd(ByRef invObj As QBInvoiceObj, Optional ByRef qbConMgr As QBConMgr = Nothing) As IResponse
@@ -88,14 +183,12 @@ Namespace Classes
                 End With
             Next lineObj
 
-            Dim respList As IResponseList = ConCheck(qbConMgr).GetRespList
-            Return respList.GetAt(0)
-
-        End Function
+            Return ConCheck(qbConMgr).GetRespList.GetAt(0)
+            End Function
 
         ' crediting
-        Public Shared Function CreditMemoAdd(ByRef creditObj As QBAddCreditObj) As IResponse
-            Dim credAdd As ICreditMemoAdd = GlobalConMgr.MessageSetRequest.AppendCreditMemoAddRq
+        Public Shared Function CreditMemoAdd(ByRef creditObj As QBAddCreditObj, Optional ByRef qbConMgr As QBConMgr = Nothing) As IResponse
+            Dim credAdd As ICreditMemoAdd = ConCheck(qbConMgr).MessageSetRequest.AppendCreditMemoAddRq
             With credAdd
                 .CustomerRef.ListID.SetValue(creditObj.CustomerListID)
                 .IsToBePrinted.SetValue(creditObj.IsToBePrinted)
@@ -116,8 +209,7 @@ Namespace Classes
                 .Quantity.Unset()
             End With
 
-            Dim respList As IResponseList = GlobalConMgr.GetRespList()
-            Return respList.GetAt(0)
+            Return ConCheck(QBConMgr).GetRespList.GetAt(0)
         End Function
 
         ' payments
@@ -159,8 +251,8 @@ Namespace Classes
                 End If
             End With
 
-            Dim respList As IResponseList = ConCheck(qbConMgr).GetRespList()
-            Return respList.GetAt(0)
+
+            Return ConCheck(qbConMgr).GetRespList.GetAt(0)
         End Function
 
         Public Overloads Shared Function PaymentMod(ByRef payObj As QBRecievePaymentObj, Optional ByRef qbConMgr As QBConMgr = Nothing,
@@ -197,12 +289,12 @@ Namespace Classes
             Else
                 ' checking if optional param to wipe applied list is set to true
                 If (wipeAppList) Then
+                    ' ReSharper disable once UnusedVariable
                     Dim appTxnList As IAppliedToTxnModList = payMod.AppliedToTxnModList
                 End If
             End If
 
-            Dim respList As IResponseList = ConCheck(qbConMgr).GetRespList
-            Return respList.GetAt(0)
+            Return ConCheck(qbConMgr).GetRespList.GetAt(0)
         End Function
 
         ' queries
@@ -245,8 +337,7 @@ Namespace Classes
                 .InvoiceFilter.PaidStatus.SetValue(paidStatus)
             End With
 
-            Dim respList As IResponseList = ConCheck(qbConMgr).GetRespList
-            Return respList.GetAt(0)
+            Return ConCheck(qbConMgr).GetRespList.GetAt(0)
         End Function
 
         Public Shared Function PaymentQuery(Optional ByVal customerListID As String = Nothing, Optional ByVal txnID As String = Nothing,
@@ -285,8 +376,7 @@ Namespace Classes
                 End Select
             End With
 
-            Dim respList As IResponseList = ConCheck(qbConMgr).GetRespList
-            Return respList.GetAt(0)
+            Return ConCheck(qbConMgr).GetRespList.GetAt(0)
         End Function
 
         Public Shared Function CreditMemoQuery(Optional ByVal customerListID As String = Nothing, Optional ByVal txnID As String = Nothing,
@@ -325,8 +415,7 @@ Namespace Classes
                 End Select
             End With
 
-            Dim respList As IResponseList = ConCheck(qbConMgr).GetRespList
-            Return respList.GetAt(0)
+            Return ConCheck(qbConMgr).GetRespList.GetAt(0)
         End Function
 
         Public Shared Function CustomerQuery(Optional ByVal customerListID As String = Nothing, Optional ByVal retEleList As List(Of String) = Nothing,
@@ -345,8 +434,7 @@ Namespace Classes
                 custQuery.IncludeRetElementList.Add(s)
             Next
 
-            Dim respList As IResponseList = ConCheck(qbConMgr).GetRespList
-            Return respList.GetAt(0)
+            Return ConCheck(qbConMgr).GetRespList.GetAt(0)
         End Function
 
     End Class

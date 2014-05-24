@@ -4,8 +4,7 @@ Imports QBFC12Lib
 
 Namespace Invoicing
     Module Invoicing
-
-
+        
         Public Function CustomInvoice_Create(ByRef ds As ds_Invoicing, ByVal print As Boolean) As Boolean
             ' return succeed or fail
             Dim pass As Boolean = False
