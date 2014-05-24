@@ -95,14 +95,7 @@ Namespace Classes
             End If
         End Sub
 
-        ' enumerated item status from database
-        Enum ENItemStatus As Int32
-            Ready = 5
-            Err = 6
-            Complete = 7
-            Submitted = 8
-        End Enum
-    End Class
+       End Class
 
     
 End Namespace

@@ -15,6 +15,24 @@ Namespace Classes
             Dim respList As IResponseList = ConCheck(qbConMgr).GetRespList()
             Return respList.GetAt(0)
         End Function
+        Public Shared Sub ResponseErr_Misc(ByVal resp As IResponse)
+            If (resp.StatusCode = 1) Then
+                MsgBox("No matching results from Quickbooks")
+            Else
+                Try
+                    Using ta As New ds_ProgramTableAdapters.QueriesTableAdapter
+                        ERR_MISC_Insert(resp.Type.GetValue.ToString,
+                                        resp.StatusCode.ToString,
+                                        resp.StatusMessage,
+                                        Date.Now)
+                    End Using
+                    MsgBox("Error Encounterd with Quickbooks. Contact Premier.", MsgBoxStyle.Critical)
+                Catch ex As Exception
+                    MsgBox("ERR_MISC_Insert: " & ex.Message)
+                End Try
+            End If
+
+        End Sub
 
         ' invoicing
         Public Overloads Shared Function InvoiceAdd(ByRef invObj As QBInvoiceObj, Optional ByRef qbConMgr As QBConMgr = Nothing) As IResponse
@@ -131,8 +149,10 @@ Namespace Classes
                             Dim setCreditList As ISetCreditList = appTxn.SetCreditList
                             For Each creditObj As QBCreditObj In invObj.SetCreditList
                                 Dim setCredit As ISetCredit = setCreditList.Append
-                                setCredit.CreditTxnID.SetValue(creditObj.TxnID)
-                                setCredit.AppliedAmount.SetValue(creditObj.AppliedAmount)
+                                With setCredit
+                                    .CreditTxnID.SetValue(creditObj.TxnID)
+                                    .AppliedAmount.SetValue(creditObj.AppliedAmount)
+                                End With
                             Next
                         End If
                     Next
@@ -167,8 +187,10 @@ Namespace Classes
                         Dim setCreditList As ISetCreditList = appTxn.SetCreditList
                         For Each creditObj As QBCreditObj In invObj.SetCreditList
                             Dim setCredit As ISetCredit = setCreditList.Append
-                            setCredit.CreditTxnID.SetValue(creditObj.TxnID)
-                            setCredit.AppliedAmount.SetValue(creditObj.AppliedAmount)
+                            With setCredit
+                                .CreditTxnID.SetValue(creditObj.TxnID)
+                                .AppliedAmount.SetValue(creditObj.AppliedAmount)
+                            End With
                         Next
                     End If
                 Next
@@ -308,10 +330,15 @@ Namespace Classes
         End Function
 
         Public Shared Function CustomerQuery(Optional ByVal customerListID As String = Nothing, Optional ByVal retEleList As List(Of String) = Nothing,
-                                             Optional ByRef qbConMgr As QBConMgr = Nothing) As IResponse
+                                             Optional ByVal balanceFilter As ITotalBalanceFilter = Nothing, Optional ByRef qbConMgr As QBConMgr = Nothing) As IResponse
             Dim custQuery As ICustomerQuery = ConCheck(qbConMgr).MessageSetRequest.AppendCustomerQueryRq
             If (customerListID IsNot Nothing) Then
                 custQuery.ORCustomerListQuery.ListIDList.Add(customerListID)
+            End If
+            ' checking if balance filter transfered
+            If (balanceFilter IsNot Nothing) Then
+                custQuery.ORCustomerListQuery.CustomerListFilter.TotalBalanceFilter.Operator.SetValue(balanceFilter.Operator.GetValue)
+                custQuery.ORCustomerListQuery.CustomerListFilter.TotalBalanceFilter.Amount.SetValue(balanceFilter.Amount.GetValue)
             End If
             ' checking for ret element list
             For Each s As String In retEleList

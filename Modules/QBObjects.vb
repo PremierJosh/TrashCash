@@ -47,6 +47,14 @@ Namespace Modules
             ''' is to recieve a payment with no amount, apply payment to invoice by id
             ''' and set the credit txn id and amount used to pay it
             Public SetCreditList As List(Of QBCreditObj)
+
+            Public Sub New(Optional ByVal txnID As String = Nothing)
+                SetCreditList = New List(Of QBCreditObj)
+                LineList = New List(Of QBLineItemObj)
+                If (txnID IsNot Nothing) Then
+                    Me.TxnID = txnID
+                End If
+            End Sub
         End Class
 
         Public Class QBLineItemObj
@@ -80,6 +88,10 @@ Namespace Modules
 
             ' optional list of invoices this payment is paying
             Public AppliedInvList As List(Of QBInvoiceObj)
+
+            Public Sub New()
+                AppliedInvList = New List(Of QBInvoiceObj)
+            End Sub
             End Class
     End Module
 End Namespace
