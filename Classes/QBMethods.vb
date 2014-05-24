@@ -184,13 +184,12 @@ Namespace Classes
         End Function
 
         ' queries
-
         Public Shared Function InvoiceQuery(Optional ByVal customerListID As String = Nothing, Optional ByVal txnID As String = Nothing,
                                             Optional ByVal fromDate As Date = Nothing, Optional ByVal toDate As Date = Nothing,
                                             Optional ByVal paidStatus As ENPaidStatus = Nothing, Optional ByRef qbConMgr As QBConMgr = Nothing,
-                                            Optional ByVal responseLimit As Integer = 100) As IResponse
+                                            Optional ByVal responseLimit As Integer = 100, Optional ByVal retEleList As List(Of String) = Nothing) As IResponse
 
-            Dim invQuery As IInvoiceQuery = ConCheck(QBConMgr).MessageSetRequest.AppendInvoiceQueryRq()
+            Dim invQuery As IInvoiceQuery = ConCheck(qbConMgr).MessageSetRequest.AppendInvoiceQueryRq()
             ' setting filters
             With invQuery.ORInvoiceQuery
                 ' checking for customer id or txn id
@@ -199,6 +198,10 @@ Namespace Classes
                 ElseIf (txnID IsNot Nothing) Then
                     .TxnIDList.Add(txnID)
                 End If
+                ' checking for ret element list
+                For Each s As String In retEleList
+                    invQuery.IncludeRetElementList.Add(s)
+                Next
 
                 ' checking optional params
                 With .InvoiceFilter.ORDateRangeFilter.TxnDateRangeFilter.ORTxnDateRangeFilter.TxnDateFilter
@@ -220,14 +223,14 @@ Namespace Classes
                 .InvoiceFilter.PaidStatus.SetValue(paidStatus)
             End With
 
-            Dim respList As IResponseList = ConCheck(QBConMgr).GetRespList
+            Dim respList As IResponseList = ConCheck(qbConMgr).GetRespList
             Return respList.GetAt(0)
         End Function
 
         Public Shared Function PaymentQuery(Optional ByVal customerListID As String = Nothing, Optional ByVal txnID As String = Nothing,
                                             Optional ByRef fromDate As Date = Nothing, Optional ByRef toDate As Date = Nothing,
                                             Optional ByRef qbConMgr As QBConMgr = Nothing, Optional ByVal responseLimit As Integer = 100,
-                                            Optional ByRef retList As List(Of String) = Nothing) As IResponse
+                                            Optional ByRef retEleList As List(Of String) = Nothing) As IResponse
             Dim payQuery As IReceivePaymentQuery = ConCheck(qbConMgr).MessageSetRequest.AppendReceivePaymentQueryRq
             ' setting filter
             With payQuery.ORTxnQuery
@@ -237,6 +240,10 @@ Namespace Classes
                 ElseIf (txnID IsNot Nothing) Then
                     .TxnIDList.Add(txnID)
                 End If
+                ' checking for ret element list
+                For Each s As String In retEleList
+                    payQuery.IncludeRetElementList.Add(s)
+                Next
 
                 ' checking dates
                 With .TxnFilter.ORDateRangeFilter.TxnDateRangeFilter.ORTxnDateRangeFilter.TxnDateFilter
@@ -255,6 +262,61 @@ Namespace Classes
                         .TxnFilter.MaxReturned.SetValue(responseLimit)
                 End Select
             End With
+
+            Dim respList As IResponseList = ConCheck(qbConMgr).GetRespList
+            Return respList.GetAt(0)
+        End Function
+
+        Public Shared Function CreditMemoQuery(Optional ByVal customerListID As String = Nothing, Optional ByVal txnID As String = Nothing,
+                                            Optional ByRef fromDate As Date = Nothing, Optional ByRef toDate As Date = Nothing,
+                                            Optional ByRef qbConMgr As QBConMgr = Nothing, Optional ByVal responseLimit As Integer = 100,
+                                            Optional ByRef retEleList As List(Of String) = Nothing) As IResponse
+            Dim creditQuery As ICreditMemoQuery = ConCheck(qbConMgr).MessageSetRequest.AppendCreditMemoQueryRq
+            ' setting filter
+            With creditQuery.ORTxnQuery
+                ' checking for customer id or txnid filter
+                If (customerListID IsNot Nothing) Then
+                    .TxnFilter.EntityFilter.OREntityFilter.ListIDList.Add(customerListID)
+                ElseIf (txnID IsNot Nothing) Then
+                    .TxnIDList.Add(txnID)
+                End If
+                ' checking for ret element list
+                For Each s As String In retEleList
+                    creditQuery.IncludeRetElementList.Add(s)
+                Next
+
+                ' checking dates
+                With .TxnFilter.ORDateRangeFilter.TxnDateRangeFilter.ORTxnDateRangeFilter.TxnDateFilter
+                    If (fromDate <> Nothing) Then
+                        .FromTxnDate.SetValue(fromDate)
+                    End If
+                    If (toDate <> Nothing) Then
+                        .ToTxnDate.SetValue(toDate)
+                    End If
+                End With
+                ' checking if no dates set to limit response, or of responseLimit was passed
+                Select Case responseLimit
+                    Case toDate = Nothing And fromDate = Nothing
+                        .TxnFilter.MaxReturned.SetValue(responseLimit)
+                    Case Is <> 100
+                        .TxnFilter.MaxReturned.SetValue(responseLimit)
+                End Select
+            End With
+
+            Dim respList As IResponseList = ConCheck(qbConMgr).GetRespList
+            Return respList.GetAt(0)
+        End Function
+
+        Public Shared Function CustomerQuery(Optional ByVal customerListID As String = Nothing, Optional ByVal retEleList As List(Of String) = Nothing,
+                                             Optional ByRef qbConMgr As QBConMgr = Nothing) As IResponse
+            Dim custQuery As ICustomerQuery = ConCheck(qbConMgr).MessageSetRequest.AppendCustomerQueryRq
+            If (customerListID IsNot Nothing) Then
+                custQuery.ORCustomerListQuery.ListIDList.Add(customerListID)
+            End If
+            ' checking for ret element list
+            For Each s As String In retEleList
+                custQuery.IncludeRetElementList.Add(s)
+            Next
 
             Dim respList As IResponseList = ConCheck(qbConMgr).GetRespList
             Return respList.GetAt(0)

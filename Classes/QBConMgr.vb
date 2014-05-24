@@ -29,6 +29,8 @@ Namespace Classes
 
         Public Sub New()
             _ta = New ds_CustomerTableAdapters.CustomerTableAdapter
+            ' think i can call init con here too
+            InitCon()
         End Sub
         Private Sub StartQBFCServices()
             Dim s As New List(Of String)
