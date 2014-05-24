@@ -16,7 +16,6 @@ Namespace Classes
             Return respList.GetAt(0)
         End Function
 
-
         ' invoicing
         Public Overloads Shared Function InvoiceAdd(ByRef invObj As QBInvoiceObj, Optional ByRef qbConMgr As QBConMgr = Nothing) As IResponse
             ' ref for msgSetReq incase one is passed for doing this through a different thread
@@ -76,73 +75,8 @@ Namespace Classes
 
         End Function
 
-        Public Overloads Shared Function InvoiceAdd(ByRef invObjList As List(Of QBInvoiceObj), Optional ByRef qbConMgr As QBConMgr = Nothing) As List(Of IResponse)
-            ' return list
-            Dim retRespList As New List(Of IResponse)
-
-            For Each invObj As QBInvoiceObj In invObjList
-                Dim invAdd As IInvoiceAdd = ConCheck(qbConMgr).MessageSetRequest.AppendInvoiceAddRq
-
-                ' set fields
-                With invAdd
-                    .CustomerRef.ListID.SetValue(invObj.CustomerListID)
-                    .TxnDate.SetValue(invObj.TxnDate)
-                    .DueDate.SetValue(invObj.DueDate)
-                    .IsToBePrinted.SetValue(invObj.IsToBePrinted)
-                    ' optional fields
-                    If (invObj.Memo IsNot Nothing) Then
-                        .Memo.SetValue(invObj.Memo)
-                    End If
-                    If (invObj.Other IsNot Nothing) Then
-                        .Other.SetValue(invObj.Other)
-                    End If
-                End With
-
-                ' set line items
-                For Each lineObj As QBLineItemObj In invObj.LineList
-                    Dim lineAdd As IORInvoiceLineAdd = invAdd.ORInvoiceLineAddList.Append
-
-                    ' set fields
-                    With lineAdd.InvoiceLineAdd
-                        If (lineObj.ItemListID IsNot Nothing) Then
-                            .ItemRef.ListID.SetValue(lineObj.ItemListID)
-                        Else
-                            .ItemRef.ListID.Unset()
-                        End If
-                        If (lineObj.Rate = 0) Then
-                            .ORRatePriceLevel.Rate.SetValue(lineObj.Rate)
-                        Else
-                            .ORRatePriceLevel.Rate.Unset()
-                        End If
-                        If (lineObj.Quantity = 0) Then
-                            .Quantity.SetValue(lineObj.Quantity)
-                        Else
-                            .Quantity.Unset()
-                        End If
-                        If (lineObj.Desc IsNot Nothing) Then
-                            .Desc.SetValue(lineObj.Desc)
-                        End If
-                        ' other fields
-                        If (lineObj.Other1 IsNot Nothing) Then
-                            .Other1.SetValue(lineObj.Other1)
-                        End If
-                        If (lineObj.Other2 IsNot Nothing) Then
-                            .Other2.SetValue(lineObj.Other2)
-                        End If
-                    End With
-                Next lineObj
-
-                ' invoice prepped, go
-                Dim respList As IResponseList = ConCheck(qbConMgr).GetRespList()
-                retRespList.Add(respList.GetAt(0))
-            Next invObj
-
-            Return retRespList
-        End Function
-
         ' crediting
-
-        Public Shared Function CreditAdd(ByRef creditObj As QBAddCreditObj) As IResponse
+        Public Shared Function CreditMemoAdd(ByRef creditObj As QBAddCreditObj) As IResponse
             Dim credAdd As ICreditMemoAdd = GlobalConMgr.MessageSetRequest.AppendCreditMemoAddRq
             With credAdd
                 .CustomerRef.ListID.SetValue(creditObj.CustomerListID)
@@ -209,54 +143,6 @@ Namespace Classes
             Return respList.GetAt(0)
         End Function
 
-        Public Overloads Shared Function PaymentAdd(ByRef payObjList As List(Of QBRecievePaymentObj), Optional ByRef qbConMgr As QBConMgr = Nothing,
-                                          Optional ByVal autoApply As Boolean = True) As List(Of IResponse)
-            ' return list of response
-            Dim retRespList As New List(Of IResponse)
-
-            For Each payObj As QBRecievePaymentObj In payObjList
-                Dim payAdd As IReceivePaymentAdd = ConCheck(qbConMgr).MessageSetRequest.AppendReceivePaymentAddRq
-                With payAdd
-                    .CustomerRef.ListID.SetValue(payObj.CustomerListID)
-                    .TotalAmount.SetValue(payObj.TotalAmount)
-                    .PaymentMethodRef.FullName.SetValue(payObj.PayTypeName)
-                    .TxnDate.SetValue(payObj.TxnDate)
-                    .ORApplyPayment.IsAutoApply.SetValue(autoApply)
-                    ' optional check number
-                    If (payObj.RefNumber IsNot Nothing) Then
-                        .RefNumber.SetValue(payObj.RefNumber)
-                    End If
-                    ' checking if appTxnList isnot nothing
-                    If (payObj.AppliedInvList IsNot Nothing) Then
-                        Dim appTxnList As IAppliedToTxnAddList = .ORApplyPayment.AppliedToTxnAddList
-                        For Each invObj As QBInvoiceObj In payObj.AppliedInvList
-                            Dim appTxn As IAppliedToTxnMod = appTxnList.Append
-                            appTxn.TxnID.SetValue(invObj.TxnID)
-                            ' checking if there is an applied amount
-                            If (invObj.AppliedPaymentAmount <> Nothing) Then
-                                appTxn.PaymentAmount.SetValue(invObj.AppliedPaymentAmount)
-                            End If
-                            ' checking if credit list is applied
-                            If (invObj.SetCreditList IsNot Nothing) Then
-                                Dim setCreditList As ISetCreditList = appTxn.SetCreditList
-                                For Each creditObj As QBCreditObj In invObj.SetCreditList
-                                    Dim setCredit As ISetCredit = setCreditList.Append
-                                    setCredit.CreditTxnID.SetValue(creditObj.TxnID)
-                                    setCredit.AppliedAmount.SetValue(creditObj.AppliedAmount)
-                                Next
-                            End If
-                        Next
-                    End If
-
-                End With
-
-                Dim respList As IResponseList = ConCheck(qbConMgr).GetRespList()
-                retRespList.Add(respList.GetAt(0))
-            Next
-
-            Return retRespList
-        End Function
-
         Public Overloads Shared Function PaymentMod(ByRef payObj As QBRecievePaymentObj, Optional ByRef qbConMgr As QBConMgr = Nothing,
                                                      Optional ByVal wipeAppList As Boolean = False) As IResponse
             Dim payMod As IReceivePaymentMod = ConCheck(qbConMgr).MessageSetRequest.AppendReceivePaymentModRq
@@ -297,65 +183,25 @@ Namespace Classes
             Return respList.GetAt(0)
         End Function
 
-        Public Shared Function PaymentMod(ByRef payObjList As List(Of QBRecievePaymentObj), Optional ByRef qbConMgr As QBConMgr = Nothing,
-                                          Optional ByVal wipeAppList As Boolean = False) As List(Of IResponse)
-            ' ret list
-            Dim retRespList As New List(Of IResponse)
-
-            For Each payObj As QBRecievePaymentObj In payObjList
-                Dim payMod As IReceivePaymentMod = ConCheck(qbConMgr).MessageSetRequest.AppendReceivePaymentModRq
-                ' set fields
-                With payMod
-                    .TxnID.SetValue(payObj.TxnID)
-                    .EditSequence.SetValue(payObj.EditSequence)
-                End With
-
-                ' set applied to txns if not nothing
-                If (payObj.AppliedInvList IsNot Nothing) Then
-                    Dim appTxnList As IAppliedToTxnModList = payMod.AppliedToTxnModList
-                    For Each invObj As QBInvoiceObj In payObj.AppliedInvList
-                        Dim appTxn As IAppliedToTxnMod = appTxnList.Append
-                        appTxn.TxnID.SetValue(invObj.TxnID)
-                        ' checking if there is an applied amount
-                        If (invObj.AppliedPaymentAmount <> Nothing) Then
-                            appTxn.PaymentAmount.SetValue(invObj.AppliedPaymentAmount)
-                        End If
-                        ' checking if credit list is applied
-                        If (invObj.SetCreditList IsNot Nothing) Then
-                            Dim setCreditList As ISetCreditList = appTxn.SetCreditList
-                            For Each creditObj As QBCreditObj In invObj.SetCreditList
-                                Dim setCredit As ISetCredit = setCreditList.Append
-                                setCredit.CreditTxnID.SetValue(creditObj.TxnID)
-                                setCredit.AppliedAmount.SetValue(creditObj.AppliedAmount)
-                            Next
-                        End If
-                    Next
-                Else
-                    ' checking if optional param to wipe applied list is set to true
-                    If (wipeAppList) Then
-                        Dim appTxnList As IAppliedToTxnModList = payMod.AppliedToTxnModList
-                    End If
-                End If
-
-                Dim respList As IResponseList = ConCheck(qbConMgr).GetRespList
-                retRespList.Add(respList.GetAt(0))
-            Next
-
-            Return retRespList
-        End Function
-        
         ' queries
 
-        Public Shared Function InvoiceQuery(ByVal customerListID As String, Optional ByVal fromDate As Date = Nothing, Optional ByVal toDate As Date = Nothing,
+        Public Shared Function InvoiceQuery(Optional ByVal customerListID As String = Nothing, Optional ByVal txnID As String = Nothing,
+                                            Optional ByVal fromDate As Date = Nothing, Optional ByVal toDate As Date = Nothing,
                                             Optional ByVal paidStatus As ENPaidStatus = Nothing, Optional ByRef qbConMgr As QBConMgr = Nothing,
                                             Optional ByVal responseLimit As Integer = 100) As IResponse
 
-            Dim invQuery As IInvoiceQuery = ConCheck(qbConMgr).MessageSetRequest.AppendInvoiceQueryRq()
+            Dim invQuery As IInvoiceQuery = ConCheck(QBConMgr).MessageSetRequest.AppendInvoiceQueryRq()
             ' setting filters
-            With invQuery.ORInvoiceQuery.InvoiceFilter
-                .EntityFilter.OREntityFilter.ListIDList.Add(customerListID)
+            With invQuery.ORInvoiceQuery
+                ' checking for customer id or txn id
+                If (customerListID IsNot Nothing) Then
+                    .InvoiceFilter.EntityFilter.OREntityFilter.ListIDList.Add(customerListID)
+                ElseIf (txnID IsNot Nothing) Then
+                    .TxnIDList.Add(txnID)
+                End If
+
                 ' checking optional params
-                With .ORDateRangeFilter.TxnDateRangeFilter.ORTxnDateRangeFilter.TxnDateFilter
+                With .InvoiceFilter.ORDateRangeFilter.TxnDateRangeFilter.ORTxnDateRangeFilter.TxnDateFilter
                     If (fromDate <> Nothing) Then
                         .FromTxnDate.SetValue(fromDate)
                     End If
@@ -366,27 +212,34 @@ Namespace Classes
                 ' checking if no dates set to limit response, or of responseLimit was passed
                 Select Case responseLimit
                     Case toDate = Nothing And fromDate = Nothing
-                        .MaxReturned.SetValue(responseLimit)
+                        .InvoiceFilter.MaxReturned.SetValue(responseLimit)
                     Case Is <> 100
-                        .MaxReturned.SetValue(responseLimit)
+                        .InvoiceFilter.MaxReturned.SetValue(responseLimit)
                 End Select
 
-                .PaidStatus.SetValue(paidStatus)
+                .InvoiceFilter.PaidStatus.SetValue(paidStatus)
             End With
 
-            Dim respList As IResponseList = ConCheck(qbConMgr).GetRespList
+            Dim respList As IResponseList = ConCheck(QBConMgr).GetRespList
             Return respList.GetAt(0)
         End Function
 
-        Public Shared Function PaymentQuery(ByVal customerListID As String, Optional ByRef fromDate As Date = Nothing, Optional ByRef toDate As Date = Nothing,
-                                            Optional ByRef qbConMgr As QBConMgr = Nothing, Optional ByVal responseLimit As Integer = 100) As IResponse
-            ' ref for msgSetReq incase one is passed for doing this through a different thread
+        Public Shared Function PaymentQuery(Optional ByVal customerListID As String = Nothing, Optional ByVal txnID As String = Nothing,
+                                            Optional ByRef fromDate As Date = Nothing, Optional ByRef toDate As Date = Nothing,
+                                            Optional ByRef qbConMgr As QBConMgr = Nothing, Optional ByVal responseLimit As Integer = 100,
+                                            Optional ByRef retList As List(Of String) = Nothing) As IResponse
             Dim payQuery As IReceivePaymentQuery = ConCheck(qbConMgr).MessageSetRequest.AppendReceivePaymentQueryRq
             ' setting filter
-            With payQuery.ORTxnQuery.TxnFilter
-                .EntityFilter.OREntityFilter.ListIDList.Add(customerListID)
+            With payQuery.ORTxnQuery
+                ' checking for customer id or txnid filter
+                If (customerListID IsNot Nothing) Then
+                    .TxnFilter.EntityFilter.OREntityFilter.ListIDList.Add(customerListID)
+                ElseIf (txnID IsNot Nothing) Then
+                    .TxnIDList.Add(txnID)
+                End If
+
                 ' checking dates
-                With .ORDateRangeFilter.TxnDateRangeFilter.ORTxnDateRangeFilter.TxnDateFilter
+                With .TxnFilter.ORDateRangeFilter.TxnDateRangeFilter.ORTxnDateRangeFilter.TxnDateFilter
                     If (fromDate <> Nothing) Then
                         .FromTxnDate.SetValue(fromDate)
                     End If
@@ -397,9 +250,9 @@ Namespace Classes
                 ' checking if no dates set to limit response, or of responseLimit was passed
                 Select Case responseLimit
                     Case toDate = Nothing And fromDate = Nothing
-                        .MaxReturned.SetValue(responseLimit)
+                        .TxnFilter.MaxReturned.SetValue(responseLimit)
                     Case Is <> 100
-                        .MaxReturned.SetValue(responseLimit)
+                        .TxnFilter.MaxReturned.SetValue(responseLimit)
                 End Select
             End With
 
@@ -407,5 +260,5 @@ Namespace Classes
             Return respList.GetAt(0)
         End Function
 
-        End Class
+    End Class
 End Namespace
