@@ -2,7 +2,7 @@
 Imports QBFC12Lib
 
 Namespace Classes
-    Public Class QBMethods
+    Friend Class QBRequests
 
         ' misc
         Public Shared Function TxnVoid(ByVal txnID As String, ByVal voidType As ENTxnVoidType, Optional ByRef qbConMgr As QBConMgr = Nothing) As IResponse
@@ -11,27 +11,10 @@ Namespace Classes
                 .TxnID.SetValue(txnID)
                 .TxnVoidType.SetValue(voidType)
             End With
-            
+
             Return ConCheck(qbConMgr).GetRespList.GetAt(0)
         End Function
-        Public Shared Sub ResponseErr_Misc(ByVal resp As IResponse)
-            If (resp.StatusCode = 1) Then
-                MsgBox("No matching results from Quickbooks")
-            Else
-                Try
-                    Using ta As New ds_ProgramTableAdapters.QueriesTableAdapter
-                        ta.ERR_MISC_Insert(resp.Type.GetValue.ToString,
-                                        resp.StatusCode.ToString,
-                                        resp.StatusMessage,
-                                        Date.Now)
-                    End Using
-                    MsgBox("Error Encounterd with Quickbooks. Contact Premier.", MsgBoxStyle.Critical)
-                Catch ex As Exception
-                    MsgBox("ERR_MISC_Insert: " & ex.Message)
-                End Try
-            End If
 
-        End Sub
 
         ' customer
         Public Shared Function CustomerAdd(ByRef custRow As ds_Customer.CustomerRow, Optional ByRef qbConMgr As QBConMgr = Nothing) As IResponse
@@ -184,7 +167,7 @@ Namespace Classes
             Next lineObj
 
             Return ConCheck(qbConMgr).GetRespList.GetAt(0)
-            End Function
+        End Function
 
         ' crediting
         Public Shared Function CreditMemoAdd(ByRef creditObj As QBAddCreditObj, Optional ByRef qbConMgr As QBConMgr = Nothing) As IResponse
@@ -209,7 +192,7 @@ Namespace Classes
                 .Quantity.Unset()
             End With
 
-            Return ConCheck(QBConMgr).GetRespList.GetAt(0)
+            Return ConCheck(qbConMgr).GetRespList.GetAt(0)
         End Function
 
         ' payments
@@ -437,5 +420,45 @@ Namespace Classes
             Return ConCheck(qbConMgr).GetRespList.GetAt(0)
         End Function
 
+    End Class
+
+    Friend Class QBMethods
+
+        Public Shared Function ConvertToInvObjs(ByRef resp As IResponse) As List(Of QBInvoiceObj)
+            ' return list
+            Dim invObjList As New List(Of QBInvoiceObj)
+            ' making sure resp is invoice
+            If (resp.Type.GetValue = ENResponseType.rtInvoiceQueryRs) Then
+                Dim invRetList As IInvoiceRetList = resp.Detail
+                For i = 0 To invRetList.Count - 1
+                    Dim invRet As IInvoiceRet = invRetList.GetAt(i)
+                    Dim invObj As New QBInvoiceObj(invRet.TxnID.GetValue)
+                    invObj.BalanceRemaining = invRet.BalanceRemaining.GetValue
+                    invObjList.Add(invObj)
+                Next
+            End If
+
+            Return invObjList
+        End Function
+
+
+        Public Shared Sub ResponseErr_Misc(ByVal resp As IResponse)
+            If (resp.StatusCode = 1) Then
+                MsgBox("No matching results from Quickbooks")
+            Else
+                Try
+                    Using ta As New ds_ProgramTableAdapters.QueriesTableAdapter
+                        ta.ERR_MISC_Insert(resp.Type.GetValue.ToString,
+                                        resp.StatusCode.ToString,
+                                        resp.StatusMessage,
+                                        Date.Now)
+                    End Using
+                    MsgBox("Error Encounterd with Quickbooks. Contact Premier.", MsgBoxStyle.Critical)
+                Catch ex As Exception
+                    MsgBox("ERR_MISC_Insert: " & ex.Message)
+                End Try
+            End If
+
+        End Sub
     End Class
 End Namespace

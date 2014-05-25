@@ -29,7 +29,7 @@ Partial Public Class ds_Display
     
     Private tableQB_PaymentsDisplay As QB_PaymentsDisplayDataTable
     
-    Private tableQBOpenInvoices As QBOpenInvoicesDataTable
+    Private tableQBUnpaidInvoices As QBUnpaidInvoicesDataTable
     
     Private tableQBUnappliedPayments As QBUnappliedPaymentsDataTable
     
@@ -68,8 +68,8 @@ Partial Public Class ds_Display
             If (Not (ds.Tables("QB_PaymentsDisplay")) Is Nothing) Then
                 MyBase.Tables.Add(New QB_PaymentsDisplayDataTable(ds.Tables("QB_PaymentsDisplay")))
             End If
-            If (Not (ds.Tables("QBOpenInvoices")) Is Nothing) Then
-                MyBase.Tables.Add(New QBOpenInvoicesDataTable(ds.Tables("QBOpenInvoices")))
+            If (Not (ds.Tables("QBUnpaidInvoices")) Is Nothing) Then
+                MyBase.Tables.Add(New QBUnpaidInvoicesDataTable(ds.Tables("QBUnpaidInvoices")))
             End If
             If (Not (ds.Tables("QBUnappliedPayments")) Is Nothing) Then
                 MyBase.Tables.Add(New QBUnappliedPaymentsDataTable(ds.Tables("QBUnappliedPayments")))
@@ -115,9 +115,9 @@ Partial Public Class ds_Display
      Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0"),  _
      Global.System.ComponentModel.Browsable(false),  _
      Global.System.ComponentModel.DesignerSerializationVisibility(Global.System.ComponentModel.DesignerSerializationVisibility.Content)>  _
-    Public ReadOnly Property QBOpenInvoices() As QBOpenInvoicesDataTable
+    Public ReadOnly Property QBUnpaidInvoices() As QBUnpaidInvoicesDataTable
         Get
-            Return Me.tableQBOpenInvoices
+            Return Me.tableQBUnpaidInvoices
         End Get
     End Property
     
@@ -204,8 +204,8 @@ Partial Public Class ds_Display
             If (Not (ds.Tables("QB_PaymentsDisplay")) Is Nothing) Then
                 MyBase.Tables.Add(New QB_PaymentsDisplayDataTable(ds.Tables("QB_PaymentsDisplay")))
             End If
-            If (Not (ds.Tables("QBOpenInvoices")) Is Nothing) Then
-                MyBase.Tables.Add(New QBOpenInvoicesDataTable(ds.Tables("QBOpenInvoices")))
+            If (Not (ds.Tables("QBUnpaidInvoices")) Is Nothing) Then
+                MyBase.Tables.Add(New QBUnpaidInvoicesDataTable(ds.Tables("QBUnpaidInvoices")))
             End If
             If (Not (ds.Tables("QBUnappliedPayments")) Is Nothing) Then
                 MyBase.Tables.Add(New QBUnappliedPaymentsDataTable(ds.Tables("QBUnappliedPayments")))
@@ -254,10 +254,10 @@ Partial Public Class ds_Display
                 Me.tableQB_PaymentsDisplay.InitVars
             End If
         End If
-        Me.tableQBOpenInvoices = CType(MyBase.Tables("QBOpenInvoices"),QBOpenInvoicesDataTable)
+        Me.tableQBUnpaidInvoices = CType(MyBase.Tables("QBUnpaidInvoices"),QBUnpaidInvoicesDataTable)
         If (initTable = true) Then
-            If (Not (Me.tableQBOpenInvoices) Is Nothing) Then
-                Me.tableQBOpenInvoices.InitVars
+            If (Not (Me.tableQBUnpaidInvoices) Is Nothing) Then
+                Me.tableQBUnpaidInvoices.InitVars
             End If
         End If
         Me.tableQBUnappliedPayments = CType(MyBase.Tables("QBUnappliedPayments"),QBUnappliedPaymentsDataTable)
@@ -280,8 +280,8 @@ Partial Public Class ds_Display
         MyBase.Tables.Add(Me.tableQB_InvoiceDisplay)
         Me.tableQB_PaymentsDisplay = New QB_PaymentsDisplayDataTable()
         MyBase.Tables.Add(Me.tableQB_PaymentsDisplay)
-        Me.tableQBOpenInvoices = New QBOpenInvoicesDataTable()
-        MyBase.Tables.Add(Me.tableQBOpenInvoices)
+        Me.tableQBUnpaidInvoices = New QBUnpaidInvoicesDataTable()
+        MyBase.Tables.Add(Me.tableQBUnpaidInvoices)
         Me.tableQBUnappliedPayments = New QBUnappliedPaymentsDataTable()
         MyBase.Tables.Add(Me.tableQBUnappliedPayments)
     End Sub
@@ -300,7 +300,7 @@ Partial Public Class ds_Display
     
     <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
      Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-    Private Function ShouldSerializeQBOpenInvoices() As Boolean
+    Private Function ShouldSerializeQBUnpaidInvoices() As Boolean
         Return false
     End Function
     
@@ -375,7 +375,7 @@ Partial Public Class ds_Display
     Public Delegate Sub QB_PaymentsDisplayRowChangeEventHandler(ByVal sender As Object, ByVal e As QB_PaymentsDisplayRowChangeEvent)
     
     <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-    Public Delegate Sub QBOpenInvoicesRowChangeEventHandler(ByVal sender As Object, ByVal e As QBOpenInvoicesRowChangeEvent)
+    Public Delegate Sub QBUnpaidInvoicesRowChangeEventHandler(ByVal sender As Object, ByVal e As QBUnpaidInvoicesRowChangeEvent)
     
     <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
     Public Delegate Sub QBUnappliedPaymentsRowChangeEventHandler(ByVal sender As Object, ByVal e As QBUnappliedPaymentsRowChangeEvent)
@@ -1032,8 +1032,8 @@ Partial Public Class ds_Display
     '''</summary>
     <Global.System.Serializable(),  _
      Global.System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedTableSchema")>  _
-    Partial Public Class QBOpenInvoicesDataTable
-        Inherits Global.System.Data.TypedTableBase(Of QBOpenInvoicesRow)
+    Partial Public Class QBUnpaidInvoicesDataTable
+        Inherits Global.System.Data.TypedTableBase(Of QBUnpaidInvoicesRow)
         
         Private columnInv_TxnID As Global.System.Data.DataColumn
         
@@ -1047,7 +1047,7 @@ Partial Public Class ds_Display
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
         Public Sub New()
             MyBase.New
-            Me.TableName = "QBOpenInvoices"
+            Me.TableName = "QBUnpaidInvoices"
             Me.BeginInit
             Me.InitClass
             Me.EndInit
@@ -1121,44 +1121,44 @@ Partial Public Class ds_Display
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Default ReadOnly Property Item(ByVal index As Integer) As QBOpenInvoicesRow
+        Public Default ReadOnly Property Item(ByVal index As Integer) As QBUnpaidInvoicesRow
             Get
-                Return CType(Me.Rows(index),QBOpenInvoicesRow)
+                Return CType(Me.Rows(index),QBUnpaidInvoicesRow)
             End Get
         End Property
         
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Event QBOpenInvoicesRowChanging As QBOpenInvoicesRowChangeEventHandler
+        Public Event QBUnpaidInvoicesRowChanging As QBUnpaidInvoicesRowChangeEventHandler
         
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Event QBOpenInvoicesRowChanged As QBOpenInvoicesRowChangeEventHandler
+        Public Event QBUnpaidInvoicesRowChanged As QBUnpaidInvoicesRowChangeEventHandler
         
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Event QBOpenInvoicesRowDeleting As QBOpenInvoicesRowChangeEventHandler
+        Public Event QBUnpaidInvoicesRowDeleting As QBUnpaidInvoicesRowChangeEventHandler
         
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Event QBOpenInvoicesRowDeleted As QBOpenInvoicesRowChangeEventHandler
+        Public Event QBUnpaidInvoicesRowDeleted As QBUnpaidInvoicesRowChangeEventHandler
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Overloads Sub AddQBOpenInvoicesRow(ByVal row As QBOpenInvoicesRow)
+        Public Overloads Sub AddQBUnpaidInvoicesRow(ByVal row As QBUnpaidInvoicesRow)
             Me.Rows.Add(row)
         End Sub
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Overloads Function AddQBOpenInvoicesRow(ByVal Inv_TxnID As String, ByVal Inv_TxnDate As Date, ByVal Inv_Balance As Double, ByVal Remaining As Double) As QBOpenInvoicesRow
-            Dim rowQBOpenInvoicesRow As QBOpenInvoicesRow = CType(Me.NewRow,QBOpenInvoicesRow)
+        Public Overloads Function AddQBUnpaidInvoicesRow(ByVal Inv_TxnID As String, ByVal Inv_TxnDate As Date, ByVal Inv_Balance As Double, ByVal Remaining As Double) As QBUnpaidInvoicesRow
+            Dim rowQBUnpaidInvoicesRow As QBUnpaidInvoicesRow = CType(Me.NewRow,QBUnpaidInvoicesRow)
             Dim columnValuesArray() As Object = New Object() {Inv_TxnID, Inv_TxnDate, Inv_Balance, Remaining}
-            rowQBOpenInvoicesRow.ItemArray = columnValuesArray
-            Me.Rows.Add(rowQBOpenInvoicesRow)
-            Return rowQBOpenInvoicesRow
+            rowQBUnpaidInvoicesRow.ItemArray = columnValuesArray
+            Me.Rows.Add(rowQBUnpaidInvoicesRow)
+            Return rowQBUnpaidInvoicesRow
         End Function
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
         Public Overrides Function Clone() As Global.System.Data.DataTable
-            Dim cln As QBOpenInvoicesDataTable = CType(MyBase.Clone,QBOpenInvoicesDataTable)
+            Dim cln As QBUnpaidInvoicesDataTable = CType(MyBase.Clone,QBUnpaidInvoicesDataTable)
             cln.InitVars
             Return cln
         End Function
@@ -1166,7 +1166,7 @@ Partial Public Class ds_Display
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
         Protected Overrides Function CreateInstance() As Global.System.Data.DataTable
-            Return New QBOpenInvoicesDataTable()
+            Return New QBUnpaidInvoicesDataTable()
         End Function
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
@@ -1193,28 +1193,28 @@ Partial Public Class ds_Display
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Function NewQBOpenInvoicesRow() As QBOpenInvoicesRow
-            Return CType(Me.NewRow,QBOpenInvoicesRow)
+        Public Function NewQBUnpaidInvoicesRow() As QBUnpaidInvoicesRow
+            Return CType(Me.NewRow,QBUnpaidInvoicesRow)
         End Function
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
         Protected Overrides Function NewRowFromBuilder(ByVal builder As Global.System.Data.DataRowBuilder) As Global.System.Data.DataRow
-            Return New QBOpenInvoicesRow(builder)
+            Return New QBUnpaidInvoicesRow(builder)
         End Function
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
         Protected Overrides Function GetRowType() As Global.System.Type
-            Return GetType(QBOpenInvoicesRow)
+            Return GetType(QBUnpaidInvoicesRow)
         End Function
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
         Protected Overrides Sub OnRowChanged(ByVal e As Global.System.Data.DataRowChangeEventArgs)
             MyBase.OnRowChanged(e)
-            If (Not (Me.QBOpenInvoicesRowChangedEvent) Is Nothing) Then
-                RaiseEvent QBOpenInvoicesRowChanged(Me, New QBOpenInvoicesRowChangeEvent(CType(e.Row,QBOpenInvoicesRow), e.Action))
+            If (Not (Me.QBUnpaidInvoicesRowChangedEvent) Is Nothing) Then
+                RaiseEvent QBUnpaidInvoicesRowChanged(Me, New QBUnpaidInvoicesRowChangeEvent(CType(e.Row,QBUnpaidInvoicesRow), e.Action))
             End If
         End Sub
         
@@ -1222,8 +1222,8 @@ Partial Public Class ds_Display
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
         Protected Overrides Sub OnRowChanging(ByVal e As Global.System.Data.DataRowChangeEventArgs)
             MyBase.OnRowChanging(e)
-            If (Not (Me.QBOpenInvoicesRowChangingEvent) Is Nothing) Then
-                RaiseEvent QBOpenInvoicesRowChanging(Me, New QBOpenInvoicesRowChangeEvent(CType(e.Row,QBOpenInvoicesRow), e.Action))
+            If (Not (Me.QBUnpaidInvoicesRowChangingEvent) Is Nothing) Then
+                RaiseEvent QBUnpaidInvoicesRowChanging(Me, New QBUnpaidInvoicesRowChangeEvent(CType(e.Row,QBUnpaidInvoicesRow), e.Action))
             End If
         End Sub
         
@@ -1231,8 +1231,8 @@ Partial Public Class ds_Display
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
         Protected Overrides Sub OnRowDeleted(ByVal e As Global.System.Data.DataRowChangeEventArgs)
             MyBase.OnRowDeleted(e)
-            If (Not (Me.QBOpenInvoicesRowDeletedEvent) Is Nothing) Then
-                RaiseEvent QBOpenInvoicesRowDeleted(Me, New QBOpenInvoicesRowChangeEvent(CType(e.Row,QBOpenInvoicesRow), e.Action))
+            If (Not (Me.QBUnpaidInvoicesRowDeletedEvent) Is Nothing) Then
+                RaiseEvent QBUnpaidInvoicesRowDeleted(Me, New QBUnpaidInvoicesRowChangeEvent(CType(e.Row,QBUnpaidInvoicesRow), e.Action))
             End If
         End Sub
         
@@ -1240,14 +1240,14 @@ Partial Public Class ds_Display
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
         Protected Overrides Sub OnRowDeleting(ByVal e As Global.System.Data.DataRowChangeEventArgs)
             MyBase.OnRowDeleting(e)
-            If (Not (Me.QBOpenInvoicesRowDeletingEvent) Is Nothing) Then
-                RaiseEvent QBOpenInvoicesRowDeleting(Me, New QBOpenInvoicesRowChangeEvent(CType(e.Row,QBOpenInvoicesRow), e.Action))
+            If (Not (Me.QBUnpaidInvoicesRowDeletingEvent) Is Nothing) Then
+                RaiseEvent QBUnpaidInvoicesRowDeleting(Me, New QBUnpaidInvoicesRowChangeEvent(CType(e.Row,QBUnpaidInvoicesRow), e.Action))
             End If
         End Sub
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Sub RemoveQBOpenInvoicesRow(ByVal row As QBOpenInvoicesRow)
+        Public Sub RemoveQBUnpaidInvoicesRow(ByVal row As QBUnpaidInvoicesRow)
             Me.Rows.Remove(row)
         End Sub
         
@@ -1274,7 +1274,7 @@ Partial Public Class ds_Display
             type.Attributes.Add(attribute1)
             Dim attribute2 As Global.System.Xml.Schema.XmlSchemaAttribute = New Global.System.Xml.Schema.XmlSchemaAttribute()
             attribute2.Name = "tableTypeName"
-            attribute2.FixedValue = "QBOpenInvoicesDataTable"
+            attribute2.FixedValue = "QBUnpaidInvoicesDataTable"
             type.Attributes.Add(attribute2)
             type.Particle = sequence
             Dim dsSchema As Global.System.Xml.Schema.XmlSchema = ds.GetSchemaSerializable
@@ -2009,16 +2009,16 @@ Partial Public Class ds_Display
     '''<summary>
     '''Represents strongly named DataRow class.
     '''</summary>
-    Partial Public Class QBOpenInvoicesRow
+    Partial Public Class QBUnpaidInvoicesRow
         Inherits Global.System.Data.DataRow
         
-        Private tableQBOpenInvoices As QBOpenInvoicesDataTable
+        Private tableQBUnpaidInvoices As QBUnpaidInvoicesDataTable
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
         Friend Sub New(ByVal rb As Global.System.Data.DataRowBuilder)
             MyBase.New(rb)
-            Me.tableQBOpenInvoices = CType(Me.Table,QBOpenInvoicesDataTable)
+            Me.tableQBUnpaidInvoices = CType(Me.Table,QBUnpaidInvoicesDataTable)
         End Sub
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
@@ -2026,13 +2026,13 @@ Partial Public Class ds_Display
         Public Property Inv_TxnID() As String
             Get
                 Try 
-                    Return CType(Me(Me.tableQBOpenInvoices.Inv_TxnIDColumn),String)
+                    Return CType(Me(Me.tableQBUnpaidInvoices.Inv_TxnIDColumn),String)
                 Catch e As Global.System.InvalidCastException
-                    Throw New Global.System.Data.StrongTypingException("The value for column 'Inv_TxnID' in table 'QBOpenInvoices' is DBNull.", e)
+                    Throw New Global.System.Data.StrongTypingException("The value for column 'Inv_TxnID' in table 'QBUnpaidInvoices' is DBNull.", e)
                 End Try
             End Get
             Set
-                Me(Me.tableQBOpenInvoices.Inv_TxnIDColumn) = value
+                Me(Me.tableQBUnpaidInvoices.Inv_TxnIDColumn) = value
             End Set
         End Property
         
@@ -2041,13 +2041,13 @@ Partial Public Class ds_Display
         Public Property Inv_TxnDate() As Date
             Get
                 Try 
-                    Return CType(Me(Me.tableQBOpenInvoices.Inv_TxnDateColumn),Date)
+                    Return CType(Me(Me.tableQBUnpaidInvoices.Inv_TxnDateColumn),Date)
                 Catch e As Global.System.InvalidCastException
-                    Throw New Global.System.Data.StrongTypingException("The value for column 'Inv_TxnDate' in table 'QBOpenInvoices' is DBNull.", e)
+                    Throw New Global.System.Data.StrongTypingException("The value for column 'Inv_TxnDate' in table 'QBUnpaidInvoices' is DBNull.", e)
                 End Try
             End Get
             Set
-                Me(Me.tableQBOpenInvoices.Inv_TxnDateColumn) = value
+                Me(Me.tableQBUnpaidInvoices.Inv_TxnDateColumn) = value
             End Set
         End Property
         
@@ -2056,13 +2056,13 @@ Partial Public Class ds_Display
         Public Property Inv_Balance() As Double
             Get
                 Try 
-                    Return CType(Me(Me.tableQBOpenInvoices.Inv_BalanceColumn),Double)
+                    Return CType(Me(Me.tableQBUnpaidInvoices.Inv_BalanceColumn),Double)
                 Catch e As Global.System.InvalidCastException
-                    Throw New Global.System.Data.StrongTypingException("The value for column 'Inv_Balance' in table 'QBOpenInvoices' is DBNull.", e)
+                    Throw New Global.System.Data.StrongTypingException("The value for column 'Inv_Balance' in table 'QBUnpaidInvoices' is DBNull.", e)
                 End Try
             End Get
             Set
-                Me(Me.tableQBOpenInvoices.Inv_BalanceColumn) = value
+                Me(Me.tableQBUnpaidInvoices.Inv_BalanceColumn) = value
             End Set
         End Property
         
@@ -2071,62 +2071,62 @@ Partial Public Class ds_Display
         Public Property Remaining() As Double
             Get
                 Try 
-                    Return CType(Me(Me.tableQBOpenInvoices.RemainingColumn),Double)
+                    Return CType(Me(Me.tableQBUnpaidInvoices.RemainingColumn),Double)
                 Catch e As Global.System.InvalidCastException
-                    Throw New Global.System.Data.StrongTypingException("The value for column 'Remaining' in table 'QBOpenInvoices' is DBNull.", e)
+                    Throw New Global.System.Data.StrongTypingException("The value for column 'Remaining' in table 'QBUnpaidInvoices' is DBNull.", e)
                 End Try
             End Get
             Set
-                Me(Me.tableQBOpenInvoices.RemainingColumn) = value
+                Me(Me.tableQBUnpaidInvoices.RemainingColumn) = value
             End Set
         End Property
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
         Public Function IsInv_TxnIDNull() As Boolean
-            Return Me.IsNull(Me.tableQBOpenInvoices.Inv_TxnIDColumn)
+            Return Me.IsNull(Me.tableQBUnpaidInvoices.Inv_TxnIDColumn)
         End Function
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
         Public Sub SetInv_TxnIDNull()
-            Me(Me.tableQBOpenInvoices.Inv_TxnIDColumn) = Global.System.Convert.DBNull
+            Me(Me.tableQBUnpaidInvoices.Inv_TxnIDColumn) = Global.System.Convert.DBNull
         End Sub
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
         Public Function IsInv_TxnDateNull() As Boolean
-            Return Me.IsNull(Me.tableQBOpenInvoices.Inv_TxnDateColumn)
+            Return Me.IsNull(Me.tableQBUnpaidInvoices.Inv_TxnDateColumn)
         End Function
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
         Public Sub SetInv_TxnDateNull()
-            Me(Me.tableQBOpenInvoices.Inv_TxnDateColumn) = Global.System.Convert.DBNull
+            Me(Me.tableQBUnpaidInvoices.Inv_TxnDateColumn) = Global.System.Convert.DBNull
         End Sub
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
         Public Function IsInv_BalanceNull() As Boolean
-            Return Me.IsNull(Me.tableQBOpenInvoices.Inv_BalanceColumn)
+            Return Me.IsNull(Me.tableQBUnpaidInvoices.Inv_BalanceColumn)
         End Function
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
         Public Sub SetInv_BalanceNull()
-            Me(Me.tableQBOpenInvoices.Inv_BalanceColumn) = Global.System.Convert.DBNull
+            Me(Me.tableQBUnpaidInvoices.Inv_BalanceColumn) = Global.System.Convert.DBNull
         End Sub
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
         Public Function IsRemainingNull() As Boolean
-            Return Me.IsNull(Me.tableQBOpenInvoices.RemainingColumn)
+            Return Me.IsNull(Me.tableQBUnpaidInvoices.RemainingColumn)
         End Function
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
         Public Sub SetRemainingNull()
-            Me(Me.tableQBOpenInvoices.RemainingColumn) = Global.System.Convert.DBNull
+            Me(Me.tableQBUnpaidInvoices.RemainingColumn) = Global.System.Convert.DBNull
         End Sub
     End Class
     
@@ -2357,16 +2357,16 @@ Partial Public Class ds_Display
     '''Row event argument class
     '''</summary>
     <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-    Public Class QBOpenInvoicesRowChangeEvent
+    Public Class QBUnpaidInvoicesRowChangeEvent
         Inherits Global.System.EventArgs
         
-        Private eventRow As QBOpenInvoicesRow
+        Private eventRow As QBUnpaidInvoicesRow
         
         Private eventAction As Global.System.Data.DataRowAction
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Sub New(ByVal row As QBOpenInvoicesRow, ByVal action As Global.System.Data.DataRowAction)
+        Public Sub New(ByVal row As QBUnpaidInvoicesRow, ByVal action As Global.System.Data.DataRowAction)
             MyBase.New
             Me.eventRow = row
             Me.eventAction = action
@@ -2374,7 +2374,7 @@ Partial Public Class ds_Display
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public ReadOnly Property Row() As QBOpenInvoicesRow
+        Public ReadOnly Property Row() As QBUnpaidInvoicesRow
             Get
                 Return Me.eventRow
             End Get

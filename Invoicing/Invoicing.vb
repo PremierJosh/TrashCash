@@ -55,7 +55,7 @@ Namespace Invoicing
                                 "Sql Error: " & ex.Procedure, MessageBoxButtons.OK, MessageBoxIcon.Error)
             End Try
 
-            Dim resp As IResponse = QBMethods.InvoiceAdd(invObj)
+            Dim resp As IResponse = QBRequests.InvoiceAdd(invObj)
             If (resp.StatusCode = 0) Then
                 Dim invRet As IInvoiceRet = resp.Detail
                 ' update row
@@ -99,7 +99,7 @@ Namespace Invoicing
 
             Const voidType As ENTxnVoidType = ENTxnVoidType.tvtInvoice
 
-            Dim resp As IResponse = QBMethods.TxnVoid(row.InvoiceListID, voidType)
+            Dim resp As IResponse = QBRequests.TxnVoid(row.InvoiceListID, voidType)
             If (resp.StatusCode = 0) Then
 
                 ' update db

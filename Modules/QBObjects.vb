@@ -20,6 +20,12 @@ Namespace Modules
 
             ' this is used when a credit is applied through ISetCredit
             Public AppliedAmount As Double
+
+            Public Sub New(Optional ByVal txnID As String = Nothing)
+                If (txnID IsNot Nothing) Then
+                    Me.TxnID = txnID
+                End IF
+            End Sub
         End Class
 
         Public Class QBInvoiceObj
@@ -29,6 +35,8 @@ Namespace Modules
             Public TxnDate As Date
             Public DueDate As Date
             Public IsToBePrinted As Boolean
+
+            ' this can be used to track balance after applying credits or payments
             Public BalanceRemaining As Double
 
             ' line items
@@ -92,6 +100,10 @@ Namespace Modules
             Public Sub New()
                 AppliedInvList = New List(Of QBInvoiceObj)
             End Sub
-            End Class
+        End Class
+
+
+
     End Module
+
 End Namespace

@@ -8,8 +8,8 @@
   <Shapes>
     <Shape ID="DesignTable:QB_InvoiceDisplay" ZOrder="4" X="338" Y="49" Height="181" Width="172" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="177" />
     <Shape ID="DesignTable:QB_PaymentsDisplay" ZOrder="3" X="566" Y="135" Height="124" Width="187" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="120" />
-    <Shape ID="DesignTable:QBOpenInvoices" ZOrder="2" X="0" Y="0" Height="90" Width="158" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="0" />
-    <Shape ID="DesignTable:QBUnappliedPayments" ZOrder="1" X="142" Y="-101" Height="201" Width="158" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="197" />
+    <Shape ID="DesignTable:QBUnpaidInvoices" ZOrder="2" X="0" Y="0" Height="90" Width="158" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="0" />
+    <Shape ID="DesignTable:QBUnappliedPayments" ZOrder="1" X="169" Y="-106" Height="201" Width="158" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="197" />
   </Shapes>
   <Connectors />
 </DiagramLayout>

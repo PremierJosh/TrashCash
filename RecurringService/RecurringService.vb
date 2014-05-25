@@ -5,9 +5,9 @@ Imports QBFC12Lib
 Namespace RecurringService
     Friend Module RecurringService
 
-        Private Function GetUnpaidTable(ByVal customerListID As String) As ds_Display.QBOpenInvoicesDataTable
+        Private Function GetUnpaidTable(ByVal customerListID As String) As ds_Display.QBUnpaidInvoicesDataTable
             ' return table of open invoices and their info
-            Dim openInvDT As New ds_Display.QBOpenInvoicesDataTable
+            Dim openInvDT As New ds_Display.QBUnpaidInvoicesDataTable
 
             ' building retEleList so my query only returns stuff I need
             Dim retEleList As New List(Of String)
@@ -17,7 +17,7 @@ Namespace RecurringService
             retEleList.Add("TxnDate")
             retEleList.Add("BalanceRemaining")
 
-            Dim resp As IResponse = QBMethods.InvoiceQuery(customerListID:=customerListID, paidStatus:=ENPaidStatus.psNotPaidOnly, retEleList:=retEleList)
+            Dim resp As IResponse = QBRequests.InvoiceQuery(customerListID:=customerListID, paidStatus:=ENPaidStatus.psNotPaidOnly, retEleList:=retEleList)
 
             ' status check
             If (resp.StatusCode = 0) Then
@@ -27,7 +27,7 @@ Namespace RecurringService
                     Dim invRet As IInvoiceRet = invRetList.GetAt(l)
 
                     ' adding to table
-                    openInvDT.AddQBOpenInvoicesRow(invRet.TxnID.GetValue, invRet.TxnDate.GetValue, invRet.BalanceRemaining.GetValue,
+                    openInvDT.AddQBUnpaidInvoicesRow(invRet.TxnID.GetValue, invRet.TxnDate.GetValue, invRet.BalanceRemaining.GetValue,
                                                              invRet.BalanceRemaining.GetValue)
                     openInvDT.AcceptChanges()
                 Next
@@ -36,6 +36,29 @@ Namespace RecurringService
             End If
 
             Return openInvDT
+        End Function
+
+        Private Function UseCredit(ByVal customerListID As String, ByRef unpaidDT As ds_Display.QBUnpaidInvoicesDataTable, ByVal creditObj As QBCreditObj)
+            While creditObj.CreditRemaining > 0
+                For Each row As ds_Display.QBUnpaidInvoicesRow In unpaidDT
+                    ' creating applied inv item from the row
+                    Dim invObj As New QBInvoiceObj(row.Inv_TxnID)
+                    invObj.BalanceRemaining = row.Remaining
+                    Dim appCredit As QBCreditObj = New QBCreditObj(creditObj.TxnID)
+
+                With creditObj.TxnID = 
+                        Dim payObj As New QBRecievePaymentObj
+                        With payObj
+                            .CustomerListID = customerListID
+                            .AppliedInvList()
+                        End With
+            Next
+            End While
+            
+
+
+
+
         End Function
 
         Public Sub RecurringService_EndDateCredit(ByRef row As ds_RecurringService.RecurringServiceRow, ByVal creditAmount As Double,
@@ -104,7 +127,7 @@ Namespace RecurringService
                     End Try
 
                     ' get table of unpaid invoices
-                    Dim openInvDt As ds_Display.QBOpenInvoicesDataTable = Invoicing_GetUnpaidTable(customerListID)
+                    Dim openInvDt As ds_Display.QBUnpaidInvoicesDataTable = Invoicing_GetUnpaidTable(customerListID)
 
                     ' use new credit to pay newest invoices first
                     Credits_PayOpenInvoices(customerListID, creditMemoRet.TxnID.GetValue, creditMemoRet.CreditRemaining.GetValue, openInvDt, "Desc")

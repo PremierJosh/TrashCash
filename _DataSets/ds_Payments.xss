@@ -11,7 +11,7 @@
     <Shape ID="DesignTable:BanksList" ZOrder="4" X="458" Y="295" Height="115" Width="199" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="64" />
     <Shape ID="DesignTable:BAD_CHECK_BANKS" ZOrder="3" X="122" Y="400" Height="210" Width="266" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="140" />
     <Shape ID="DesignTable:MovePayment_UnappliedPayments" ZOrder="6" X="744" Y="35" Height="124" Width="271" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="120" />
-    <Shape ID="DesignTable:QBOpenInvoices" ZOrder="5" X="1077" Y="46" Height="105" Width="233" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="101" />
+    <Shape ID="DesignTable:QBUnpaidInvoices" ZOrder="5" X="1077" Y="46" Height="105" Width="233" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="101" />
     <Shape ID="DesignSources:QueriesTableAdapter" ZOrder="8" X="427" Y="70" Height="86" Width="300" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="82" />
     <Shape ID="DesignTable:QB_PaymentsDisplay" ZOrder="2" X="1086" Y="234" Height="124" Width="187" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="120" />
     <Shape ID="DesignTable:QB_InvoiceDisplay" ZOrder="1" X="1031" Y="424" Height="181" Width="172" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="177" />
