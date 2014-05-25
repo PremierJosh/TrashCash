@@ -3,15 +3,15 @@
 Namespace Modules
     Public Module QBObjects
 
-        Public Class QBAddCreditObj
+        Public Structure QBAddCreditObj
             Public CustomerListID As String
             Public IsToBePrinted As Boolean
             Public ItemListID As String
             Public CreditAmount As Double
             Public Desc As String
-        End Class
+        End Structure
 
-        Public Class QBCreditObj
+        Public Structure QBCreditObj
             Public TxnID As String
             Public CreditRemaining As Double
             Public TxnDate As Date
@@ -20,15 +20,9 @@ Namespace Modules
 
             ' this is used when a credit is applied through ISetCredit
             Public AppliedAmount As Double
+        End Structure
 
-            Public Sub New(Optional ByVal txnID As String = Nothing)
-                If (txnID IsNot Nothing) Then
-                    Me.TxnID = txnID
-                End IF
-            End Sub
-        End Class
-
-        Public Class QBInvoiceObj
+        Public Structure QBInvoiceObj
             Public TxnID As String
             Public EditSequence As String
             Public CustomerListID As String
@@ -42,6 +36,9 @@ Namespace Modules
             ' line items
             Public LineList As List(Of QBLineItemObj)
 
+            ' linked txns
+            Public LinkTxnList As List(Of QBLinkedTxnObj)
+
             ' optional text field
             Public Memo As String
             ' optional data field
@@ -49,42 +46,38 @@ Namespace Modules
 
             ' this is used for an applied txn for a payment
             Public AppliedPaymentAmount As Double
-            
+
             ' this is used to carry an invoices applied credits
             ''' chose to put this here since the way you apply a credit to an invoice
             ''' is to recieve a payment with no amount, apply payment to invoice by id
             ''' and set the credit txn id and amount used to pay it
             Public SetCreditList As List(Of QBCreditObj)
+        End Structure
 
-            Public Sub New(Optional ByVal txnID As String = Nothing)
-                SetCreditList = New List(Of QBCreditObj)
-                LineList = New List(Of QBLineItemObj)
-                If (txnID IsNot Nothing) Then
-                    Me.TxnID = txnID
-                End If
-            End Sub
-        End Class
-
-        Public Class QBLineItemObj
+        Public Structure QBLineItemObj
             Public ItemListID As String
             Public Rate As Double
-            Public Quantity As Integer = 1
+            Public Quantity As Integer
             Public Desc As String
 
             ' optional data fields
             Public Other1 As String
             Public Other2 As String
+        End Structure
 
-            ' if a string is passed on new, this is a desc only line
-            Public Sub New(Optional ByVal desc As String = Nothing)
-                Quantity = 0
-                If (desc IsNot Nothing) Then
-                    Me.Desc = desc
-                End If
-            End Sub
-        End Class
+        Public Structure QBLinkedTxnObj
+            Public TxnID As String
+            Public RefNumber As String
+            Public Amount As Double
 
-        Public Class QBRecievePaymentObj
+            ' this is the date of the link, not the date of the txn that is linked
+            Public TxnDate As Date
+
+            ' these are enumerated on the return and will need to be ctyped to be read
+            Public TxnType As Integer
+        End Structure
+
+        Public Structure QBRecievePaymentObj
             Public TxnID As String
             Public TxnDate As Date
             Public TotalAmount As Double
@@ -97,15 +90,9 @@ Namespace Modules
             ' optional list of invoices this payment is paying
             Public AppliedInvList As List(Of QBInvoiceObj)
 
-            Public Sub New(Optional ByVal txnID As String = Nothing)
-                AppliedInvList = New List(Of QBInvoiceObj)
-                If (txnID IsNot Nothing) Then
-                    Me.TxnID = txnID
-                End If
-            End Sub
-        End Class
-
-
+            ' this is used for a linked txn amount
+            Public LinkedTxnAmount As Double
+        End Structure
 
     End Module
 

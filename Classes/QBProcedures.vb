@@ -284,21 +284,34 @@ Namespace Classes
         Public Shared Function InvoiceQuery(Optional ByVal customerListID As String = Nothing, Optional ByVal txnID As String = Nothing,
                                             Optional ByVal fromDate As Date = Nothing, Optional ByVal toDate As Date = Nothing,
                                             Optional ByVal paidStatus As ENPaidStatus = Nothing, Optional ByRef qbConMgr As QBConMgr = Nothing,
-                                            Optional ByVal responseLimit As Integer = 100, Optional ByVal retEleList As List(Of String) = Nothing) As IResponse
+                                            Optional ByVal responseLimit As Integer = 100, Optional ByVal retEleList As List(Of String) = Nothing,
+                                            Optional ByVal incLinkTxn As Boolean = False, Optional ByVal incLineItems As Boolean = False) As IResponse
 
-            Dim invQuery As IInvoiceQuery = ConCheck(qbConMgr).MessageSetRequest.AppendInvoiceQueryRq()
-            ' setting filters
-            With invQuery.ORInvoiceQuery
+            Dim query As IInvoiceQuery = ConCheck(qbConMgr).MessageSetRequest.AppendInvoiceQueryRq()
+            ' setting linked txn and linked line items filter
+            With query
+                If (incLinkTxn) Then
+                    .IncludeLinkedTxns.SetValue(incLinkTxn)
+                End If
+                If (incLineItems) Then
+                    .IncludeLineItems.SetValue(incLineItems)
+                End If
+                ' checking for ret element list
+                If (retEleList IsNot Nothing) Then
+                    For Each s As String In retEleList
+                        .IncludeRetElementList.Add(s)
+                    Next
+                End If
+            End With
+
+            ' setting inv level filters
+            With query.ORInvoiceQuery
                 ' checking for customer id or txn id
                 If (customerListID IsNot Nothing) Then
                     .InvoiceFilter.EntityFilter.OREntityFilter.ListIDList.Add(customerListID)
                 ElseIf (txnID IsNot Nothing) Then
                     .TxnIDList.Add(txnID)
                 End If
-                ' checking for ret element list
-                For Each s As String In retEleList
-                    invQuery.IncludeRetElementList.Add(s)
-                Next
 
                 ' checking optional params
                 With .InvoiceFilter.ORDateRangeFilter.TxnDateRangeFilter.ORTxnDateRangeFilter.TxnDateFilter
@@ -324,23 +337,31 @@ Namespace Classes
         End Function
 
         Public Shared Function PaymentQuery(Optional ByVal customerListID As String = Nothing, Optional ByVal txnID As String = Nothing,
-                                            Optional ByRef fromDate As Date = Nothing, Optional ByRef toDate As Date = Nothing,
-                                            Optional ByRef qbConMgr As QBConMgr = Nothing, Optional ByVal responseLimit As Integer = 100,
-                                            Optional ByRef retEleList As List(Of String) = Nothing) As IResponse
-            Dim payQuery As IReceivePaymentQuery = ConCheck(qbConMgr).MessageSetRequest.AppendReceivePaymentQueryRq
+                                            Optional ByVal fromDate As Date = Nothing, Optional ByVal toDate As Date = Nothing,
+                                            Optional ByVal paidStatus As ENPaidStatus = Nothing, Optional ByRef qbConMgr As QBConMgr = Nothing,
+                                            Optional ByVal responseLimit As Integer = 100, Optional ByVal retEleList As List(Of String) = Nothing,
+                                            Optional ByVal incLinkTxn As Boolean = False, Optional ByVal incLineItems As Boolean = False) As IResponse
+            Dim query As IReceivePaymentQuery = ConCheck(qbConMgr).MessageSetRequest.AppendReceivePaymentQueryRq
+            ' setting high level filters
+            With query
+                If (incLineItems) Then
+                    .IncludeLineItems.SetValue(incLineItems)
+                End If
+                ' checking for ret element list
+                If (retEleList IsNot Nothing) Then
+                    For Each s As String In retEleList
+                        .IncludeRetElementList.Add(s)
+                    Next
+                End If
+            End With
             ' setting filter
-            With payQuery.ORTxnQuery
+            With query.ORTxnQuery
                 ' checking for customer id or txnid filter
                 If (customerListID IsNot Nothing) Then
                     .TxnFilter.EntityFilter.OREntityFilter.ListIDList.Add(customerListID)
                 ElseIf (txnID IsNot Nothing) Then
                     .TxnIDList.Add(txnID)
                 End If
-                ' checking for ret element list
-                For Each s As String In retEleList
-                    payQuery.IncludeRetElementList.Add(s)
-                Next
-
                 ' checking dates
                 With .TxnFilter.ORDateRangeFilter.TxnDateRangeFilter.ORTxnDateRangeFilter.TxnDateFilter
                     If (fromDate <> Nothing) Then
@@ -432,7 +453,8 @@ Namespace Classes
                 Dim invRetList As IInvoiceRetList = resp.Detail
                 For i = 0 To invRetList.Count - 1
                     Dim invRet As IInvoiceRet = invRetList.GetAt(i)
-                    Dim invObj As New QBInvoiceObj(invRet.TxnID.GetValue)
+                    Dim invObj As New QBInvoiceObj
+                    invObj.TxnID = invRet.TxnID.GetValue
                     If (invRet.BalanceRemaining IsNot Nothing) Then
                         invObj.BalanceRemaining = invRet.BalanceRemaining.GetValue
                     End If
@@ -448,6 +470,42 @@ Namespace Classes
                     If (invRet.Other IsNot Nothing) Then
                         invObj.Other = invRet.Other.GetValue
                     End If
+                    ' checking for line items
+                    If (invRet.ORInvoiceLineRetList IsNot Nothing) Then
+                        For i2 = 0 To invRet.ORInvoiceLineRetList.Count - 1
+                            Dim lineRet As IORInvoiceLineRet = invRet.ORInvoiceLineRetList.GetAt(i2)
+                            Dim line As New QBLineItemObj
+                            With lineRet.InvoiceLineRet
+                                line.Desc = lineRet.InvoiceLineRet.Desc.GetValue
+                                line.ItemListID = .ItemRef.ListID.GetValue
+                                line.Quantity = .Quantity.GetValue
+                                line.Rate = .ORRate.Rate.GetValue
+                                If (.Other1 IsNot Nothing) Then
+                                    line.Other1 = .Other1.GetValue
+                                End If
+                                If (.Other2 IsNot Nothing) Then
+                                    line.Other2 = .Other2.GetValue
+                                End If
+                            End With
+                            ' add to invObj
+                            invObj.LineList.Add(line)
+                        Next
+                    End If
+                    ' checking for linked txns
+                    If (invRet.LinkedTxnList IsNot Nothing) Then
+                        For i2 = 0 To invRet.LinkedTxnList.Count - 1
+                            Dim linkRet As ILinkedTxn = invRet.LinkedTxnList.GetAt(i2)
+                            Dim linkTxn As New QBLinkedTxnObj
+                            With linkRet
+                                linkTxn.TxnID = .TxnID.GetValue
+                                linkTxn.TxnType = .TxnType.GetValue
+                                linkTxn.RefNumber = .RefNumber.GetValue
+                                linkTxn.Amount = .Amount.GetValue
+                            End With
+                            ' add to invOBj
+                            invObj.linkTxnList.Add(linkTxn)
+                        Next
+                    End If
                     ' adding to return list
                     invObjList.Add(invObj)
                 Next
@@ -460,7 +518,127 @@ Namespace Classes
             Return invObjList
         End Function
 
-        Public Shared Function UseCredit(ByVal customerListID As String, ByRef invObj As QBInvoiceObj, ByRef creditObj As QBCreditObj) As IResponse
+        ''' <summary>
+        ''' Function takes a RecievePaymentQueryRs or an InvoiceQueryRs and 
+        ''' its LinkedTxn's that are Payments (using other methods to get complete data) and returns a List (Of QBRecievePaymentObj)
+      ''' </summary>
+        ''' <param name="resp">RecievePaymentQueryRs or InvoiceQueryRs</param>
+        ''' <param name="newestFirst">List comes out oldest (by TxnDate) Payment first by default.</param>
+        ''' <returns>List (Of QBRecievePaymentObj)</returns>
+        ''' <remarks></remarks>
+        Public Shared Function ConvertToPayObjs(ByRef resp As IResponse, Optional ByVal newestFirst As Boolean = False) As List(Of QBRecievePaymentObj)
+            ' return list
+            Dim payObjList As New List(Of QBRecievePaymentObj)
+
+            ' checking what response it is
+            If (resp.Type.GetValue = ENResponseType.rtReceivePaymentQueryRs) Then
+            Dim payRetList As IReceivePaymentRetList = resp.Detail
+                For i = 0 To payRetList.Count - 1
+                    Dim payRet As IReceivePaymentRet = payRetList.GetAt(i)
+                    Dim payObj As New QBRecievePaymentObj
+                    With payObj
+                        .TxnID = payRet.TxnID.GetValue
+                        .TxnDate = payRet.TxnDate.GetValue
+                        .EditSequence = payRet.EditSequence.GetValue
+                        .TotalAmount = payRet.TotalAmount.GetValue
+                        .RefNumber = payRet.RefNumber.GetValue
+                        .CustomerListID = payRet.CustomerRef.ListID.GetValue
+                        .PayTypeName = payRet.PaymentMethodRef.FullName.GetValue
+                        .UnusedPayment = payRet.UnusedPayment.GetValue
+                    End With
+                Next
+            ElseIf (resp.Type.GetValue = ENResponseType.rtInvoiceQueryRs) Then
+                ' get linked txns from query rs
+                Dim linkObjList As List(Of QBLinkedTxnObj) = ConvertToLinkedTxnObjs(resp)
+                ' now get objList
+                payObjList = ConvertToPayObjs(linkObjList, newestFirst)
+            Else
+                MessageBox.Show("UNKNOWN QUERY RECEIEVED - UNABLE TO PROCESS - FATAL ERROR")
+                Exit Function
+            End If
+
+            ' sort list by txn date, oldest to newest
+            payObjList.Sort(Function(x, y) x.TxnDate.CompareTo(y.TxnDate))
+            If (newestFirst) Then
+                payObjList.Reverse()
+            End If
+            Return payObjList
+        End Function
+        
+        Private Shared Function ConvertToPayObjs(ByVal linkObjList As List(Of QBLinkedTxnObj), Optional ByVal newestFirst As Boolean = False) As List(Of QBRecievePaymentObj)
+            ' return list
+            Dim payObjList As New List(Of QBRecievePaymentObj)
+
+            ' only need a couple of fields for returning this info so going to limit here
+            Dim retEleList As New List(Of String)
+            With retEleList
+                .Add("TxnID")
+                .Add("TxnDate")
+                .Add("EditSequence")
+                .Add("TotalAmount")
+                .Add("RefNumber")
+                .Add("CustomerListID")
+                .Add("PayMethodRef")
+                .Add("UnusedPayment")
+            End With
+
+            For Each linkObj As QBLinkedTxnObj In linkObjList
+                Dim resp As IResponse = QBRequests.PaymentQuery(txnID:=linkObj.TxnID, retEleList:=retEleList)
+                Dim payRetList As IReceivePaymentRetList = resp.Detail
+                For i = 0 To payRetList.Count - 1
+                    Dim payRet As IReceivePaymentRet = payRetList.GetAt(i)
+                    Dim payObj As New QBRecievePaymentObj
+                    With payObj
+                        .TxnID = payRet.TxnID.GetValue
+                        .TxnDate = payRet.TxnDate.GetValue
+                        .EditSequence = payRet.EditSequence.GetValue
+                        .TotalAmount = payRet.TotalAmount.GetValue
+                        .RefNumber = payRet.RefNumber.GetValue
+                        .CustomerListID = payRet.CustomerRef.ListID.GetValue
+                        .PayTypeName = payRet.PaymentMethodRef.FullName.GetValue
+                        .UnusedPayment = payRet.UnusedPayment.GetValue
+                    End With
+                Next
+            Next
+            
+            ' sort list by txn date, oldest to newest
+            payObjList.Sort(Function(x, y) x.TxnDate.CompareTo(y.TxnDate))
+            If (newestFirst) Then
+                payObjList.Reverse()
+            End If
+            Return payObjList
+        End Function
+        
+        Public Shared Function ConvertToLinkedTxnObjs(ByRef resp As IResponse) As List(Of QBLinkedTxnObj)
+            ' return list
+            Dim linkObjList As New List(Of QBLinkedTxnObj)
+
+            Dim invRetList As IInvoiceRetList = resp.Detail
+            For i = 0 To invRetList.Count - 1
+                Dim invRet As IInvoiceRet = invRetList.GetAt(i)
+                If (invRet.LinkedTxnList IsNot Nothing) Then
+                    For i2 = 0 To invRet.LinkedTxnList.Count - 1
+                        Dim linkTxn As ILinkedTxn = invRet.LinkedTxnList.GetAt(i2)
+                        ' creating linkObj
+                        Dim linkObj As New QBLinkedTxnObj
+                        With linkObj
+                            .TxnID = linkTxn.TxnType.GetValue
+                            .TxnID = linkTxn.TxnID.GetValue
+                            .TxnDate = linkTxn.TxnDate.GetValue
+                            .RefNumber = linkTxn.RefNumber.GetValue
+                            .Amount = linkTxn.Amount.GetValue
+                        End With
+                        ' adding to return list
+                        linkObjList.Add(linkObj)
+                    Next
+                End If
+            Next
+
+            Return linkObjList
+        End Function
+
+        Public Shared Function UseCredit(ByVal customerListID As String, ByRef invObj As QBInvoiceObj, ByRef creditObj As QBCreditObj,
+                                         Optional ByRef qbConMgr As QBConMgr = Nothing) As IResponse
             ' creating payment to apply
             Dim payObj As New QBRecievePaymentObj
             ' setting to customer
@@ -468,9 +646,10 @@ Namespace Classes
 
             While creditObj.CreditRemaining > 0
                 ' adding applied txn
-                Dim appInv As New QBInvoiceObj(invObj.TxnID)
+                Dim appInv As New QBInvoiceObj
+                appInv.TxnID = invObj.TxnID
                 ' creating applied inv item from the row
-                Dim appCredit As QBCreditObj = New QBCreditObj(creditObj.TxnID)
+                Dim appCredit As QBCreditObj = New QBCreditObj                appCredit.TxnID = creditObj.TxnID
                 If (creditObj.CreditRemaining >= invObj.BalanceRemaining) Then
                     ' if remaining credit is greater than balance, apply balance
                     appCredit.AppliedAmount = invObj.BalanceRemaining
@@ -484,11 +663,26 @@ Namespace Classes
                 payObj.AppliedInvList.Add(appInv)
             End While
 
-            Return QBRequests.PaymentAdd(payObj, autoApply:=False)
+            Return QBRequests.PaymentAdd(payObj, qbConMgr:=ConCheck(qbConMgr), autoApply:=False)
         End Function
 
-        Public Shared Function UseOverpayment(ByRef payObj As QBRecievePaymentObj, ByRef invObj As QBInvoiceObj) As IResponse
+        Public Shared Function UseOverpayment(ByRef payObj As QBRecievePaymentObj, ByRef invObj As QBInvoiceObj, Optional ByRef qbConMgr As QBConMgr = Nothing) As IResponse
+            ' going to use passed payObj as mod obj
+            payObj.AppliedInvList.Add(invObj)
+            ' checking how much we can apply
+            If (payObj.UnusedPayment >= invObj.BalanceRemaining) Then
+                invObj.AppliedPaymentAmount = invObj.BalanceRemaining
+                ' update balances
+                invObj.BalanceRemaining = 0
+                payObj.UnusedPayment = payObj.UnusedPayment - invObj.BalanceRemaining
+            Else
+                invObj.AppliedPaymentAmount = payObj.UnusedPayment
+                ' update balances
+                payObj.UnusedPayment = 0
+                invObj.BalanceRemaining = invObj.BalanceRemaining - payObj.UnusedPayment
+            End If
 
+            Return QBRequests.PaymentMod(payObj, qbConMgr:=ConCheck(qbConMgr))
         End Function
 
         Public Shared Sub ResponseErr_Misc(ByVal resp As IResponse)
