@@ -1091,7 +1091,7 @@ retry:
                                     ' type check
                                     If (linkedTxn.TxnType.GetValue = QBFC12Lib.ENTxnType.ttReceivePayment) Then
                                         ' add to return table
-                                        unappliedDT.add(linkedTxn.TxnID.GetValue, Nothing, Nothing, Nothing, Nothing)
+                                        unappliedDT.AddQBUnappliedPaymentsRow(linkedTxn.TxnID.GetValue, Nothing, Nothing, Nothing, Nothing)
 
                                         unappliedDT.AcceptChanges()
                                     End If
@@ -1187,7 +1187,7 @@ retry:
                         Dim payRet As IReceivePaymentRet = payRetList.GetAt(l)
 
                         ' adding to return table
-                        unappliedDT.AddMovePayment_UnappliedPaymentsRow(payRet.TxnID.GetValue, payRet.EditSequence.GetValue, payRet.TxnDate.GetValue, payRet.TotalAmount.GetValue, Nothing)
+                        unappliedDT.AddQBUnappliedPaymentsRow(payRet.TxnID.GetValue, payRet.EditSequence.GetValue, payRet.TxnDate.GetValue, payRet.TotalAmount.GetValue, Nothing)
                         unappliedDT.AcceptChanges()
                     Next
                 ElseIf (resp.StatusCode <> 1) Then

@@ -37,9 +37,12 @@ Namespace Invoicing
                     .ItemListID = typeRow(0).QBListID
                     .Rate = row.Rate
                     .Desc = row.DefaultDesc
+                    ' quantity always 1
+                    .Quantity = 1
                 End With
                 ' building desc line
-                Dim descLine As New QBLineItemObj(row.DescText)
+                Dim descLine As New QBLineItemObj
+                descLine.Desc = row.DefaultDesc
 
                 ' add line items
                 invObj.LineList.Add(itemLine)

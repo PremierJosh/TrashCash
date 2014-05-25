@@ -38,80 +38,80 @@ Namespace RecurringService
             Return openInvDT
         End Function
 
-       Public Sub RecurringService_EndDateCredit(ByRef row As ds_RecurringService.RecurringServiceRow, ByVal creditAmount As Double,
-                                                  ByVal newEndDate As Date, ByVal billThruDate As Date)
-            ' getting customer listid
-            Dim customerListID As String = _cta.GetListID(row.CustomerNumber)
+        'Public Sub RecurringService_EndDateCredit(ByRef row As ds_RecurringService.RecurringServiceRow, ByVal creditAmount As Double,
+        '                                           ByVal newEndDate As Date, ByVal billThruDate As Date)
+        '     ' getting customer listid
+        '     Dim customerListID As String = _cta.GetListID(row.CustomerNumber)
 
 
-            ' getting service listid
-            Dim serviceRow As ds_Types.ServiceTypesRow
-            Dim ta As New ds_TypesTableAdapters.ServiceTypesTableAdapter
-            serviceRow = ta.GetDataByID(row.ServiceTypeID).Rows(0)
+        '     ' getting service listid
+        '     Dim serviceRow As ds_Types.ServiceTypesRow
+        '     Dim ta As New ds_TypesTableAdapters.ServiceTypesTableAdapter
+        '     serviceRow = ta.GetDataByID(row.ServiceTypeID).Rows(0)
 
-            Dim creditMemoAdd As ICreditMemoAdd = MsgSetReq.AppendCreditMemoAddRq
+        '     Dim creditMemoAdd As ICreditMemoAdd = MsgSetReq.AppendCreditMemoAddRq
 
-            ' passing listid
-            creditMemoAdd.CustomerRef.ListID.SetValue(customerListID)
-            creditMemoAdd.IsToBePrinted.SetValue(False)
+        '     ' passing listid
+        '     creditMemoAdd.CustomerRef.ListID.SetValue(customerListID)
+        '     creditMemoAdd.IsToBePrinted.SetValue(False)
 
-            Dim creditLine As IORCreditMemoLineAdd = creditMemoAdd.ORCreditMemoLineAddList.Append()
-            ' credit line info
-            creditLine.CreditMemoLineAdd.ItemRef.ListID.SetValue(serviceRow.ServiceListID)
-            creditLine.CreditMemoLineAdd.ORRatePriceLevel.Rate.SetValue(creditAmount)
+        '     Dim creditLine As IORCreditMemoLineAdd = creditMemoAdd.ORCreditMemoLineAddList.Append()
+        '     ' credit line info
+        '     creditLine.CreditMemoLineAdd.ItemRef.ListID.SetValue(serviceRow.ServiceListID)
+        '     creditLine.CreditMemoLineAdd.ORRatePriceLevel.Rate.SetValue(creditAmount)
 
-            ' description line
-            Dim descLine As IORCreditMemoLineAdd = creditMemoAdd.ORCreditMemoLineAddList.Append()
-            descLine.CreditMemoLineAdd.ItemRef.ListID.Unset()
-            descLine.CreditMemoLineAdd.ItemRef.FullName.Unset()
-            descLine.CreditMemoLineAdd.Desc.SetValue("This service has been Invoiced upto " & billThruDate & ". The new End Date overlaps this Invoiced period. | New End Date: " & newEndDate.Date)
-            descLine.CreditMemoLineAdd.Amount.Unset()
-            descLine.CreditMemoLineAdd.Quantity.Unset()
+        '     ' description line
+        '     Dim descLine As IORCreditMemoLineAdd = creditMemoAdd.ORCreditMemoLineAddList.Append()
+        '     descLine.CreditMemoLineAdd.ItemRef.ListID.Unset()
+        '     descLine.CreditMemoLineAdd.ItemRef.FullName.Unset()
+        '     descLine.CreditMemoLineAdd.Desc.SetValue("This service has been Invoiced upto " & billThruDate & ". The new End Date overlaps this Invoiced period. | New End Date: " & newEndDate.Date)
+        '     descLine.CreditMemoLineAdd.Amount.Unset()
+        '     descLine.CreditMemoLineAdd.Quantity.Unset()
 
-            ' send request
-            Dim msgSetResp As IMsgSetResponse = SessMgr.DoRequests(MsgSetReq)
-            Dim respList As IResponseList = msgSetResp.ResponseList
+        '     ' send request
+        '     Dim msgSetResp As IMsgSetResponse = SessMgr.DoRequests(MsgSetReq)
+        '     Dim respList As IResponseList = msgSetResp.ResponseList
 
-            ' clear msgsetreq
-            MsgSetReq.ClearRequests()
+        '     ' clear msgsetreq
+        '     MsgSetReq.ClearRequests()
 
-            For i = 0 To respList.Count - 1
-                Dim resp As IResponse = respList.GetAt(i)
-                If (resp.StatusCode = 0) Then
+        '     For i = 0 To respList.Count - 1
+        '         Dim resp As IResponse = respList.GetAt(i)
+        '         If (resp.StatusCode = 0) Then
 
-                    ' insert record
-                    Dim creditMemoRet As ICreditMemoRet = resp.Detail
-                    Try
-                        Using qta As New ds_RecurringServiceTableAdapters.QueriesTableAdapter
-                            If (row.IsRecurringServiceEndDateNull) Then
-                                qta.RecurringService_EndDateCredit_Insert(row.RecurringServiceID, Nothing, newEndDate, creditAmount, creditMemoRet.TxnID.GetValue)
-                            Else
-                                qta.RecurringService_EndDateCredit_Insert(row.RecurringServiceID, row.RecurringServiceEndDate, newEndDate, creditAmount, creditMemoRet.TxnID.GetValue)
-                            End If
-                        End Using
-                    Catch ex As Exception
-                        MessageBox.Show("Error inserting Credit History: " & ex.Message, "Error Credit Record Insert", MessageBoxButtons.OK, MessageBoxIcon.Error)
-                    End Try
+        '             ' insert record
+        '             Dim creditMemoRet As ICreditMemoRet = resp.Detail
+        '             Try
+        '                 Using qta As New ds_RecurringServiceTableAdapters.QueriesTableAdapter
+        '                     If (row.IsRecurringServiceEndDateNull) Then
+        '                         qta.RecurringService_EndDateCredit_Insert(row.RecurringServiceID, Nothing, newEndDate, creditAmount, creditMemoRet.TxnID.GetValue)
+        '                     Else
+        '                         qta.RecurringService_EndDateCredit_Insert(row.RecurringServiceID, row.RecurringServiceEndDate, newEndDate, creditAmount, creditMemoRet.TxnID.GetValue)
+        '                     End If
+        '                 End Using
+        '             Catch ex As Exception
+        '                 MessageBox.Show("Error inserting Credit History: " & ex.Message, "Error Credit Record Insert", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        '             End Try
 
-                    ' update row
-                    row.RecurringServiceEndDate = newEndDate.Date
-                    row.Credited = True
-                    ' commit
-                    Try
-                        _rsta.Update(row)
-                    Catch ex As Exception
-                        MsgBox(ex.Message)
-                    End Try
+        '             ' update row
+        '             row.RecurringServiceEndDate = newEndDate.Date
+        '             row.Credited = True
+        '             ' commit
+        '             Try
+        '                 _rsta.Update(row)
+        '             Catch ex As Exception
+        '                 MsgBox(ex.Message)
+        '             End Try
 
-                    ' get table of unpaid invoices
-                    Dim openInvDt As ds_Display.QBUnpaidInvoicesDataTable = Invoicing_GetUnpaidTable(customerListID)
+        '             ' get table of unpaid invoices
+        '             Dim openInvDt As ds_Display.QBUnpaidInvoicesDataTable = Invoicing_GetUnpaidTable(customerListID)
 
-                    ' use new credit to pay newest invoices first
-                    Credits_PayOpenInvoices(customerListID, creditMemoRet.TxnID.GetValue, creditMemoRet.CreditRemaining.GetValue, openInvDt, "Desc")
-                Else
-                    Utilities.ErrHandling.ResponseErr_Misc(resp)
-                End If
-            Next i
-        End Sub
+        '             ' use new credit to pay newest invoices first
+        '             Credits_PayOpenInvoices(customerListID, creditMemoRet.TxnID.GetValue, creditMemoRet.CreditRemaining.GetValue, openInvDt, "Desc")
+        '         Else
+        '             Utilities.ErrHandling.ResponseErr_Misc(resp)
+        '         End If
+        '     Next i
+        ' End Sub
     End Module
 End Namespace

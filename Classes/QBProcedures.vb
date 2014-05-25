@@ -554,7 +554,7 @@ Namespace Classes
                 payObjList = ConvertToPayObjs(linkObjList, newestFirst)
             Else
                 MessageBox.Show("UNKNOWN QUERY RECEIEVED - UNABLE TO PROCESS - FATAL ERROR")
-                Exit Function
+                Return payObjList
             End If
 
             ' sort list by txn date, oldest to newest
