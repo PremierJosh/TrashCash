@@ -3,6 +3,7 @@ Imports System.ServiceProcess
 Imports TrashCash.Classes
 Imports TrashCash.Admin
 Imports TrashCash.ds_ProgramTableAdapters
+Imports TrashCash.Modules
 Imports QBFC12Lib
 
 Public Class TrashCashHome
@@ -89,6 +90,8 @@ Public Class TrashCashHome
             Return CReporting
         End Get
     End Property
+
+    Public Property GlobalConMgr As QBConMgr
 
     ' var for all child forms
     Friend WithEvents PayForm As Payments
@@ -218,23 +221,41 @@ Public Class TrashCashHome
         GetQBFileLocation()
 
         Try
-            AppSessMgr = New QBSessionManager
+
+            ' create new conMgrObj
+            AppModule.GlobalConMgr = New QBConMgr
+            GlobalConMgr = AppModule.GlobalConMgr
+            ' connect
+            GlobalConMgr.InitCon()
+
+            'temp: setting vars here for other forms
+            AppSessMgr = GlobalConMgr.SessionManager
+            AppMsgSetReq = GlobalConMgr.MessageSetRequest
+
+            ' dim all classes
+            CreateAllClasses()
+            _splash.Close()
+
+            ' maximize window
+            WindowState = FormWindowState.Maximized
+
+            ' getting approvals pending on load
+            RefreshApprovCount(True)
         Catch ex As Exception
-            MsgBox(ex.Message)
+            MessageBox.Show("Message: " & ex.Message & vbCrLf)
         End Try
 
 
-        QBInitConnection()
+        'Try
+        '    AppSessMgr = New QBSessionManager
+        'Catch ex As Exception
+        '    MsgBox(ex.Message)
+        'End Try
 
-        ' dim all classes
-        CreateAllClasses()
-        _splash.Close()
 
-        ' maximize window
-        WindowState = FormWindowState.Maximized
+        'QBInitConnection()
 
-        ' getting approvals pending on load
-        RefreshApprovCount(True)
+        
 
     End Sub
 
@@ -244,7 +265,7 @@ Public Class TrashCashHome
 
     Friend Sub RefreshApprovCount(Optional ByRef initLoad As Boolean = False)
         ' fetching pending approval count
-        PendingApprovals = RecurringService_PendingApprovalsTableAdapter.RecurringService_PendingApprovals_Count()
+        PendingApprovalsCount = RecurringService_PendingApprovalsTableAdapter.RecurringService_PendingApprovals_Count()
 
         ' checking if initial load
         If (initLoad) Then
@@ -252,85 +273,16 @@ Public Class TrashCashHome
         End If
 
         ' tell approval form if its open to refresh
-        If (_PendingApprovals IsNot Nothing) Then
-            If (_PendingApprovals.IsDisposed = False) Then
-                _PendingApprovals.RefreshApprovalList()
+        If (PendingApprovals IsNot Nothing) Then
+            If (PendingApprovals.IsDisposed = False) Then
+                PendingApprovals.RefreshApprovalList()
             End If
         End If
     End Sub
-    Private Sub QBInitConnection(Optional ByVal retry As Boolean = False)
-        Try
-            AppSessMgr.CloseConnection()
-            AppSessMgr.OpenConnection2("V1", "TrashCash", ENConnectionType.ctLocalQBD)
-            AppSessMgr.BeginSession(My.Settings.QB_FILE_LOCATION.ToString, ENOpenMode.omSingleUser)
-
-            ' new msg set
-            AppMsgSetReq = AppSessMgr.CreateMsgSetRequest("US", 11, 0)
-        Catch ex As Exception
-            ' going to check if services are running and if not, start them
-            If (Not retry) Then
-                StartQBFCServices()
-            Else
-                MsgBox(ex.Message)
-                Application.Exit()
-            End If
-        End Try
-    End Sub
-
-    Private Sub StartQBFCServices()
-        Dim s As New List(Of String)
-        s.Add("QBCFMonitorService")
-        s.Add("QBIDPService")
-        s.Add("QuickbooksDB23")
-
-        For Each service As String In s
-            Dim sc As New ServiceController(service)
-            If (sc.Status = ServiceControllerStatus.Stopped) Then
-                Try
-                    sc.Start()
-                Catch ex As Exception
-                    MsgBox("Failed to start Service: " & service & ". EX: " & ex.Message)
-                End Try
-            End If
-        Next
-
-        QBInitConnection(True)
-    End Sub
-    '    Private Sub KillQBProcess()
-    '        ' QBW32.exe killing
-    '        For Each p As Process In Process.GetProcessesByName("QBW32.exe")
-    '            p.CloseMainWindow()
-    '            p.WaitForExit(20000)
-    '            If (p.HasExited = False) Then
-    '                p.Kill()
-    '            End If
-    '        Next
-    '
-    '        ' QBW32Pro.exe killing
-    '        For Each p As Process In Process.GetProcessesByName("QBW32Pro.exe")
-    '            p.CloseMainWindow()
-    '            p.WaitForExit(20000)
-    '            If (p.HasExited = False) Then
-    '                p.Kill()
-    '            End If
-    '        Next
-    '
-    '        Try
-    '            app_SessMgr.CloseConnection()
-    '            app_SessMgr.OpenConnection2("V1", "TrashCash", ENConnectionType.ctLocalQBD)
-    '            app_SessMgr.BeginSession(My.Settings.QB_FILE_LOCATION.ToString, ENOpenMode.omSingleUser)
-    '
-    '            ' new msg set
-    '            app_MsgSetReq = app_SessMgr.CreateMsgSetRequest("US", 11, 0)
-    '        Catch ex As Exception
-    '            MsgBox("Retry failed and Kill Process failed. Please try restarting TrashCash.")
-    '            Application.Exit()
-    '        End Try
-    '
-    '    End Sub
-
+    
+    
     Private Sub CreateAllClasses()
-        QBQueries = New QB_Queries(SessionManager, MsgSetRequest)
+        QBQueries = New QB_Queries()
         QBProcedures = New QB_Procedures(SessionManager, MsgSetRequest, Me)
         CReporting = New Reporting(SessionManager, MsgSetRequest)
     End Sub
@@ -358,10 +310,8 @@ Public Class TrashCashHome
             End If
             'con.Close()
         Catch ex As Exception
-            MsgBox(ex.Message)
-        Finally
-            'ParentForm.Close()
-        End Try
+            MsgBox("Error getting QBFileLoc: " & ex.Message)
+     End Try
     End Sub
 
     Private Sub btn_Rpt_AllCustomerBalances_Click(sender As Object, e As EventArgs) Handles btn_Rpt_AllCustomerBalances.Click

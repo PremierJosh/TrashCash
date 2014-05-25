@@ -29,9 +29,7 @@ Namespace Classes
 
         Public Sub New()
             _ta = New ds_CustomerTableAdapters.CustomerTableAdapter
-            ' think i can call init con here too
-            InitCon()
-        End Sub
+         End Sub
         Private Sub StartQBFCServices()
             Dim s As New List(Of String)
             s.Add("QBCFMonitorService")
@@ -59,21 +57,18 @@ Namespace Classes
             Return respList
         End Function
 
-        Protected Overrides Sub Finalize()
-            MyBase.Finalize()
-
+        Public Sub CloseCon()
             Try
+                SessionManager.EndSession()
                 SessionManager.CloseConnection()
             Catch ex As Exception
-                MsgBox(ex.Message)
-                Application.Exit()
+                MsgBox("Close connection error: " & ex.Message)
             End Try
         End Sub
 
         Private ReadOnly _ta As ds_CustomerTableAdapters.CustomerTableAdapter
-        Public Function CustomerListID(ByVal customerNumber As Integer)
-            Dim s As String = _ta.GetListID(customerNumber)
-            Return s
+        Public Function CustomerListID(ByVal customerNumber As Integer) As String
+            Return _ta.GetListID(customerNumber)
         End Function
 
         Public Sub ResponseErr_Misc(ByVal resp As IResponse)
@@ -97,5 +92,37 @@ Namespace Classes
 
        End Class
 
+    '    Private Sub KillQBProcess()
+    '        ' QBW32.exe killing
+    '        For Each p As Process In Process.GetProcessesByName("QBW32.exe")
+    '            p.CloseMainWindow()
+    '            p.WaitForExit(20000)
+    '            If (p.HasExited = False) Then
+    '                p.Kill()
+    '            End If
+    '        Next
+    '
+    '        ' QBW32Pro.exe killing
+    '        For Each p As Process In Process.GetProcessesByName("QBW32Pro.exe")
+    '            p.CloseMainWindow()
+    '            p.WaitForExit(20000)
+    '            If (p.HasExited = False) Then
+    '                p.Kill()
+    '            End If
+    '        Next
+    '
+    '        Try
+    '            app_SessMgr.CloseConnection()
+    '            app_SessMgr.OpenConnection2("V1", "TrashCash", ENConnectionType.ctLocalQBD)
+    '            app_SessMgr.BeginSession(My.Settings.QB_FILE_LOCATION.ToString, ENOpenMode.omSingleUser)
+    '
+    '            ' new msg set
+    '            app_MsgSetReq = app_SessMgr.CreateMsgSetRequest("US", 11, 0)
+    '        Catch ex As Exception
+    '            MsgBox("Retry failed and Kill Process failed. Please try restarting TrashCash.")
+    '            Application.Exit()
+    '        End Try
+    '
+    '    End Sub
     
 End Namespace

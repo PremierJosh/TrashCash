@@ -1,4 +1,5 @@
 ﻿Imports QBFC12Lib
+Imports TrashCash.Modules
 
 Namespace Classes
 
@@ -13,6 +14,10 @@ Namespace Classes
         Public Sub New(ByRef sessionManager As QBSessionManager, ByRef msgSetRequest As IMsgSetRequest)
             SessMgr = sessionManager
             msgSetRequest = msgSetRequest
+        End Sub
+        Public Sub New()
+            SessMgr = GlobalConMgr.SessionManager
+            MsgSetReq = GlobalConMgr.MessageSetRequest
         End Sub
 
         Public Class InvoiceTotalBalance

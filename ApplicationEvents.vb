@@ -1,4 +1,6 @@
-﻿Namespace My
+﻿Imports TrashCash.Modules
+
+Namespace My
 
     ' The following events are available for MyApplication:
     ' 
@@ -9,7 +11,12 @@
     ' NetworkAvailabilityChanged: Raised when the network connection is connected or disconnected.
     Partial Friend Class MyApplication
 
-        
+
+        Private Sub MyApplication_Shutdown(sender As Object, e As System.EventArgs) Handles Me.Shutdown
+            If (GlobalConMgr IsNot Nothing) Then
+                GlobalConMgr.CloseCon()
+            End If
+        End Sub
     End Class
 
 
