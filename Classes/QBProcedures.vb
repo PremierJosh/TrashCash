@@ -424,7 +424,7 @@ Namespace Classes
 
     Friend Class QBMethods
 
-        Public Shared Function ConvertToInvObjs(ByRef resp As IResponse) As List(Of QBInvoiceObj)
+        Public Shared Function ConvertToInvObjs(ByRef resp As IResponse, Optional ByVal newestFirst As Boolean = False) As List(Of QBInvoiceObj)
             ' return list
             Dim invObjList As New List(Of QBInvoiceObj)
             ' making sure resp is invoice
@@ -433,14 +433,63 @@ Namespace Classes
                 For i = 0 To invRetList.Count - 1
                     Dim invRet As IInvoiceRet = invRetList.GetAt(i)
                     Dim invObj As New QBInvoiceObj(invRet.TxnID.GetValue)
-                    invObj.BalanceRemaining = invRet.BalanceRemaining.GetValue
+                    If (invRet.BalanceRemaining IsNot Nothing) Then
+                        invObj.BalanceRemaining = invRet.BalanceRemaining.GetValue
+                    End If
+                    If (invRet.DueDate IsNot Nothing) Then
+                        invObj.DueDate = invRet.DueDate.GetValue
+                    End IF
+                    If (invRet.TxnDate IsNot Nothing) Then
+                        invObj.TxnDate = invRet.TxnDate.GetValue
+                    End IF
+                    If (invRet.EditSequence IsNot Nothing) Then
+                        invObj.EditSequence = invRet.EditSequence.GetValue
+                    End IF
+                    If (invRet.Other IsNot Nothing) Then
+                        invObj.Other = invRet.Other.GetValue
+                    End If
+                    ' adding to return list
                     invObjList.Add(invObj)
                 Next
             End If
 
+            ' checking if order needs to be flipped
+            If (newestFirst) Then
+                invObjList.Reverse()
+            End If
             Return invObjList
         End Function
 
+        Public Shared Function UseCredit(ByVal customerListID As String, ByRef invObj As QBInvoiceObj, ByRef creditObj As QBCreditObj) As IResponse
+            ' creating payment to apply
+            Dim payObj As New QBRecievePaymentObj
+            ' setting to customer
+            payObj.CustomerListID = customerListID
+
+            While creditObj.CreditRemaining > 0
+                ' adding applied txn
+                Dim appInv As New QBInvoiceObj(invObj.TxnID)
+                ' creating applied inv item from the row
+                Dim appCredit As QBCreditObj = New QBCreditObj(creditObj.TxnID)
+                If (creditObj.CreditRemaining >= invObj.BalanceRemaining) Then
+                    ' if remaining credit is greater than balance, apply balance
+                    appCredit.AppliedAmount = invObj.BalanceRemaining
+                    creditObj.CreditRemaining = invObj.BalanceRemaining
+                Else
+                    appCredit.AppliedAmount = creditObj.CreditRemaining
+                    creditObj.CreditRemaining = 0
+                End If
+                ' adding credit
+                appInv.SetCreditList.Add(appCredit)
+                payObj.AppliedInvList.Add(appInv)
+            End While
+
+            Return QBRequests.PaymentAdd(payObj, autoApply:=False)
+        End Function
+
+        Public Shared Function UseOverpayment(ByRef payObj As QBRecievePaymentObj, ByRef invObj As QBInvoiceObj) As IResponse
+
+        End Function
 
         Public Shared Sub ResponseErr_Misc(ByVal resp As IResponse)
             If (resp.StatusCode = 1) Then

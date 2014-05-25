@@ -38,30 +38,7 @@ Namespace RecurringService
             Return openInvDT
         End Function
 
-        Private Function UseCredit(ByVal customerListID As String, ByRef unpaidDT As ds_Display.QBUnpaidInvoicesDataTable, ByVal creditObj As QBCreditObj)
-            While creditObj.CreditRemaining > 0
-                For Each row As ds_Display.QBUnpaidInvoicesRow In unpaidDT
-                    ' creating applied inv item from the row
-                    Dim invObj As New QBInvoiceObj(row.Inv_TxnID)
-                    invObj.BalanceRemaining = row.Remaining
-                    Dim appCredit As QBCreditObj = New QBCreditObj(creditObj.TxnID)
-
-                With creditObj.TxnID = 
-                        Dim payObj As New QBRecievePaymentObj
-                        With payObj
-                            .CustomerListID = customerListID
-                            .AppliedInvList()
-                        End With
-            Next
-            End While
-            
-
-
-
-
-        End Function
-
-        Public Sub RecurringService_EndDateCredit(ByRef row As ds_RecurringService.RecurringServiceRow, ByVal creditAmount As Double,
+       Public Sub RecurringService_EndDateCredit(ByRef row As ds_RecurringService.RecurringServiceRow, ByVal creditAmount As Double,
                                                   ByVal newEndDate As Date, ByVal billThruDate As Date)
             ' getting customer listid
             Dim customerListID As String = _cta.GetListID(row.CustomerNumber)

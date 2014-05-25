@@ -97,8 +97,11 @@ Namespace Modules
             ' optional list of invoices this payment is paying
             Public AppliedInvList As List(Of QBInvoiceObj)
 
-            Public Sub New()
+            Public Sub New(Optional ByVal txnID As String = Nothing)
                 AppliedInvList = New List(Of QBInvoiceObj)
+                If (txnID IsNot Nothing) Then
+                    Me.TxnID = txnID
+                End If
             End Sub
         End Class
 
