@@ -29,8 +29,8 @@
             Dim lbl_Addr3 As System.Windows.Forms.Label
             Dim lbl_CityState As System.Windows.Forms.Label
             Dim ZipLabel As System.Windows.Forms.Label
-            Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-            Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+            Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+            Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
             Me.FlowLayoutPanel = New System.Windows.Forms.FlowLayoutPanel()
             Me.pnl_1 = New System.Windows.Forms.Panel()
             Me.pnl_TopContent = New System.Windows.Forms.Panel()
@@ -458,8 +458,8 @@
             '
             Me.RateDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
             Me.RateDataGridViewTextBoxColumn.DataPropertyName = "Rate"
-            DataGridViewCellStyle1.Format = "d"
-            Me.RateDataGridViewTextBoxColumn.DefaultCellStyle = DataGridViewCellStyle1
+            DataGridViewCellStyle3.Format = "d"
+            Me.RateDataGridViewTextBoxColumn.DefaultCellStyle = DataGridViewCellStyle3
             Me.RateDataGridViewTextBoxColumn.HeaderText = "Rate"
             Me.RateDataGridViewTextBoxColumn.Name = "RateDataGridViewTextBoxColumn"
             Me.RateDataGridViewTextBoxColumn.ReadOnly = True
@@ -469,8 +469,8 @@
             '
             Me.RenderedOnDateDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
             Me.RenderedOnDateDataGridViewTextBoxColumn.DataPropertyName = "RenderedOnDate"
-            DataGridViewCellStyle2.Format = "d"
-            Me.RenderedOnDateDataGridViewTextBoxColumn.DefaultCellStyle = DataGridViewCellStyle2
+            DataGridViewCellStyle4.Format = "d"
+            Me.RenderedOnDateDataGridViewTextBoxColumn.DefaultCellStyle = DataGridViewCellStyle4
             Me.RenderedOnDateDataGridViewTextBoxColumn.HeaderText = "Date of service"
             Me.RenderedOnDateDataGridViewTextBoxColumn.Name = "RenderedOnDateDataGridViewTextBoxColumn"
             Me.RenderedOnDateDataGridViewTextBoxColumn.ReadOnly = True
