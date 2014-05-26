@@ -579,18 +579,18 @@ Public Class RecurringServiceForm
         If (confirm = True) Then
 
             ' updating addr tbs
-            ' checking for null values for addr1-3
-            If (custRow.IsCustomerBillingAddr1Null = False) Then
-                ' tb_SrvcAddr1.Text = custRow.CustomerBillingAddr1
-                RecurringServiceRow.RecurringServiceAddr1 = custRow.CustomerBillingAddr1
-            End If
+            ' checking for null values for addr2-4
             If (custRow.IsCustomerBillingAddr2Null = False) Then
-                'tb_SrvcAddr2.Text = custRow.CustomerBillingAddr2
-                RecurringServiceRow.RecurringServiceAddr2 = custRow.CustomerBillingAddr2
+                ' tb_SrvcAddr1.Text = custRow.CustomerBillingAddr1
+                RecurringServiceRow.RecurringServiceAddr1 = custRow.CustomerBillingAddr2
             End If
             If (custRow.IsCustomerBillingAddr3Null = False) Then
+                'tb_SrvcAddr2.Text = custRow.CustomerBillingAddr2
+                RecurringServiceRow.RecurringServiceAddr2 = custRow.CustomerBillingAddr3
+            End If
+            If (custRow.IsCustomerBillingAddr4Null = False) Then
                 'tb_SrvcAddr3.Text = custRow.CustomerBillingAddr3
-                RecurringServiceRow.RecurringServiceAddr3 = custRow.CustomerBillingAddr3
+                RecurringServiceRow.RecurringServiceAddr3 = custRow.CustomerBillingAddr4
             End If
 
             'tb_SrvcCity.Text = custRow.CustomerBillingCity

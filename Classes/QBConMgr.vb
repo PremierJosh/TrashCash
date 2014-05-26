@@ -9,11 +9,9 @@ Namespace Classes
 
        Public Sub InitCon()
             SessionManager = New QBSessionManager()
-
             Try
                 ' attempt to start qbfc services
                 StartQBFCServices()
-
                 ' get connection
                 With SessionManager
                     .OpenConnection2("V1", "TrashCash", ENConnectionType.ctLocalQBD)

@@ -649,7 +649,8 @@ Namespace Classes
                 Dim appInv As New QBInvoiceObj
                 appInv.TxnID = invObj.TxnID
                 ' creating applied inv item from the row
-                Dim appCredit As QBCreditObj = New QBCreditObj                appCredit.TxnID = creditObj.TxnID
+                Dim appCredit As QBCreditObj = New QBCreditObj
+                appCredit.TxnID = creditObj.TxnID
                 If (creditObj.CreditRemaining >= invObj.BalanceRemaining) Then
                     ' if remaining credit is greater than balance, apply balance
                     appCredit.AppliedAmount = invObj.BalanceRemaining

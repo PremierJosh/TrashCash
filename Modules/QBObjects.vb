@@ -52,7 +52,7 @@ Namespace Modules
             ''' is to recieve a payment with no amount, apply payment to invoice by id
             ''' and set the credit txn id and amount used to pay it
             Public SetCreditList As List(Of QBCreditObj)
-        End Structure
+           End Structure
 
         Public Structure QBLineItemObj
             Public ItemListID As String
