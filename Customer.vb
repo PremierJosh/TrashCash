@@ -8,6 +8,7 @@ Public Class Customer
     Friend WithEvents _newCust As NewCustomer
     Friend WithEvents _payForm As Payments
     Friend WithEvents _creditForm As CustomerCredit
+    Friend WithEvents _invForm As Invoicing.CustomInvoicingForm
 
     ' home form ref var
     Private _home As TrashCashHome
@@ -125,6 +126,7 @@ Public Class Customer
     End Sub
 
     Private Sub btn_Inv_Click(sender As System.Object, e As System.EventArgs) Handles btn_Inv.Click
-
+        _invForm = New Invoicing.CustomInvoicingForm(_home, CurrentCustomer)
+        _invForm.ShowDialog()
     End Sub
 End Class

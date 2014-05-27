@@ -29,8 +29,8 @@
             Dim lbl_Addr3 As System.Windows.Forms.Label
             Dim lbl_CityState As System.Windows.Forms.Label
             Dim ZipLabel As System.Windows.Forms.Label
-            Dim DataGridViewCellStyle5 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-            Dim DataGridViewCellStyle6 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+            Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+            Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
             Me.CustomInvoiceLineTypesBindingSource = New System.Windows.Forms.BindingSource(Me.components)
             Me.Ds_Invoicing = New TrashCash.ds_Invoicing()
             Me.CustomerRecentAddrsBindingSource = New System.Windows.Forms.BindingSource(Me.components)
@@ -100,8 +100,6 @@
             Me.STATEDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
             Me.Ds_HistoryInv = New TrashCash.ds_Invoicing()
             Me.dg_InvHistory = New System.Windows.Forms.DataGridView()
-            Me.CustomInvoicesBindingSource = New System.Windows.Forms.BindingSource(Me.components)
-            Me.InvoiceHistoryBindingSource = New System.Windows.Forms.BindingSource(Me.components)
             Me.CIIDDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
             Me.CustomerNumberDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
             Me.StatusIDDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
@@ -117,6 +115,9 @@
             Me.VoidReasonDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
             Me.VoidTimeDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
             Me.VoidUserDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+            Me.CustomInvoicesBindingSource = New System.Windows.Forms.BindingSource(Me.components)
+            Me.InvoiceHistoryBindingSource = New System.Windows.Forms.BindingSource(Me.components)
+            Me.ToolTip1 = New System.Windows.Forms.ToolTip(Me.components)
             lbl_Addr1 = New System.Windows.Forms.Label()
             lbl_Addr2 = New System.Windows.Forms.Label()
             lbl_Addr3 = New System.Windows.Forms.Label()
@@ -241,6 +242,8 @@
             Me.Ts_M_Customer.Size = New System.Drawing.Size(819, 31)
             Me.Ts_M_Customer.TabIndex = 2
             Me.Ts_M_Customer.Text = "Ts_M_Customer1"
+            Me.ToolTip1.SetToolTip(Me.Ts_M_Customer, "Opening the Custom Invoice screen from the Customer window will lock you to that " & _
+            "Customer. Opening from the Home window will not lock you to any Customer.")
             '
             'TabControl1
             '
@@ -293,7 +296,6 @@
             Me.pnl_2.Name = "pnl_2"
             Me.pnl_2.Size = New System.Drawing.Size(840, 229)
             Me.pnl_2.TabIndex = 101
-            Me.pnl_2.Visible = False
             '
             'lbl_Rate
             '
@@ -534,8 +536,8 @@
             '
             Me.RateDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
             Me.RateDataGridViewTextBoxColumn.DataPropertyName = "Rate"
-            DataGridViewCellStyle5.Format = "d"
-            Me.RateDataGridViewTextBoxColumn.DefaultCellStyle = DataGridViewCellStyle5
+            DataGridViewCellStyle1.Format = "d"
+            Me.RateDataGridViewTextBoxColumn.DefaultCellStyle = DataGridViewCellStyle1
             Me.RateDataGridViewTextBoxColumn.HeaderText = "Rate"
             Me.RateDataGridViewTextBoxColumn.Name = "RateDataGridViewTextBoxColumn"
             Me.RateDataGridViewTextBoxColumn.ReadOnly = True
@@ -545,8 +547,8 @@
             '
             Me.RenderedOnDateDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
             Me.RenderedOnDateDataGridViewTextBoxColumn.DataPropertyName = "RenderedOnDate"
-            DataGridViewCellStyle6.Format = "d"
-            Me.RenderedOnDateDataGridViewTextBoxColumn.DefaultCellStyle = DataGridViewCellStyle6
+            DataGridViewCellStyle2.Format = "d"
+            Me.RenderedOnDateDataGridViewTextBoxColumn.DefaultCellStyle = DataGridViewCellStyle2
             Me.RenderedOnDateDataGridViewTextBoxColumn.HeaderText = "Date of service"
             Me.RenderedOnDateDataGridViewTextBoxColumn.Name = "RenderedOnDateDataGridViewTextBoxColumn"
             Me.RenderedOnDateDataGridViewTextBoxColumn.ReadOnly = True
@@ -841,17 +843,6 @@
             Me.dg_InvHistory.Size = New System.Drawing.Size(784, 150)
             Me.dg_InvHistory.TabIndex = 0
             '
-            'CustomInvoicesBindingSource
-            '
-            Me.CustomInvoicesBindingSource.DataMember = "CustomInvoices"
-            Me.CustomInvoicesBindingSource.DataSource = Me.Ds_Invoicing
-            '
-            'InvoiceHistoryBindingSource
-            '
-            Me.InvoiceHistoryBindingSource.DataMember = "CustomInvoices"
-            Me.InvoiceHistoryBindingSource.DataSource = Me.Ds_HistoryInv
-            Me.InvoiceHistoryBindingSource.Filter = "StatusID = 7"
-            '
             'CIIDDataGridViewTextBoxColumn
             '
             Me.CIIDDataGridViewTextBoxColumn.DataPropertyName = "CI_ID"
@@ -956,6 +947,21 @@
             Me.VoidUserDataGridViewTextBoxColumn.HeaderText = "VoidUser"
             Me.VoidUserDataGridViewTextBoxColumn.Name = "VoidUserDataGridViewTextBoxColumn"
             Me.VoidUserDataGridViewTextBoxColumn.ReadOnly = True
+            '
+            'CustomInvoicesBindingSource
+            '
+            Me.CustomInvoicesBindingSource.DataMember = "CustomInvoices"
+            Me.CustomInvoicesBindingSource.DataSource = Me.Ds_Invoicing
+            '
+            'InvoiceHistoryBindingSource
+            '
+            Me.InvoiceHistoryBindingSource.DataMember = "CustomInvoices"
+            Me.InvoiceHistoryBindingSource.DataSource = Me.Ds_HistoryInv
+            Me.InvoiceHistoryBindingSource.Filter = "StatusID = 7"
+            '
+            'ToolTip1
+            '
+            Me.ToolTip1.Active = False
             '
             'CustomInvoicingForm
             '
@@ -1082,5 +1088,6 @@
         Friend WithEvents VoidReasonDataGridViewTextBoxColumn As System.Windows.Forms.DataGridViewTextBoxColumn
         Friend WithEvents VoidTimeDataGridViewTextBoxColumn As System.Windows.Forms.DataGridViewTextBoxColumn
         Friend WithEvents VoidUserDataGridViewTextBoxColumn As System.Windows.Forms.DataGridViewTextBoxColumn
+        Friend WithEvents ToolTip1 As System.Windows.Forms.ToolTip
     End Class
 End Namespace

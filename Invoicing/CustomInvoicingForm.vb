@@ -12,6 +12,7 @@ Namespace Invoicing
             End Get
             Set(value As Integer)
                 _currentCustomer = value
+                Ts_M_Customer.CurrentCustomer = value
             End Set
         End Property
 
@@ -96,7 +97,7 @@ Namespace Invoicing
             ck_Reminder.Checked = False
 
             ' address
-            For Each control As Control In grp_Address
+            For Each control As Control In grp_Address.Controls
                 If (TypeOf control Is TextBox) Then
                     control.Text = ""
                 End If
@@ -252,6 +253,24 @@ Namespace Invoicing
 
         Private Sub dg_InvHistory_RowsRemoved(sender As System.Object, e As System.Windows.Forms.DataGridViewRowsRemovedEventArgs) Handles dg_InvHistory.RowsRemoved
             ColorHistoryForVoids()
+        End Sub
+        Public Sub New(ByRef homeForm As TrashCashHome, Optional ByVal customerNumber As Integer = Nothing)
+
+            ' This call is required by the designer.
+            InitializeComponent()
+
+            ' Add any initialization after the InitializeComponent() call.
+            Ts_M_Customer.HomeForm = homeForm
+
+            If (customerNumber <> Nothing) Then
+                CurrentCustomer = customerNumber
+                ' lock customer bar
+                Ts_M_Customer.Enabled = False
+                ' testing tooltip for info as to why they cant change
+                ToolTip1.Active = True
+            Else
+                ToolTip1.Active = False
+            End If
         End Sub
     End Class
 End Namespace

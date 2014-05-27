@@ -50,4 +50,16 @@
             btn_Login.PerformClick()
         End If
     End Sub
+
+    Private Sub tb_Username_Enter(sender As System.Object, e As System.EventArgs) Handles tb_Username.Enter
+        If (tb_Username.Text <> "") Then
+            tb_Username.SelectAll()
+        End If
+    End Sub
+
+    Private Sub mtb_Password_Enter(sender As System.Object, e As System.EventArgs) Handles mtb_Password.Enter
+        If (mtb_Password.Text <> "") Then
+            mtb_Password.SelectAll()
+        End If
+    End Sub
 End Class

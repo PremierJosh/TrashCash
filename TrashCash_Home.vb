@@ -219,9 +219,7 @@ Public Class TrashCashHome
 
     Private Sub TrashCash_Home_Load(sender As Object, e As EventArgs) Handles Me.Load
         GetQBFileLocation()
-
         Try
-
             ' create new conMgrObj
             AppModule.GlobalConMgr = New QBConMgr
             GlobalConMgr = AppModule.GlobalConMgr
@@ -242,22 +240,9 @@ Public Class TrashCashHome
             ' getting approvals pending on load
             RefreshApprovCount(True)
         Catch ex As Exception
-            MessageBox.Show("Message: " & ex.Message & vbCrLf)
+            MessageBox.Show("Home Load Message: " & ex.Message & vbCrLf)
         End Try
-
-
-        'Try
-        '    AppSessMgr = New QBSessionManager
-        'Catch ex As Exception
-        '    MsgBox(ex.Message)
-        'End Try
-
-
-        'QBInitConnection()
-
-        
-
-    End Sub
+        End Sub
 
     Private Sub ApprovalsWorked(ByVal countRemain As Integer) Handles PendingApprovals.RemainingApprovals
         PendingApprovalsCount = countRemain

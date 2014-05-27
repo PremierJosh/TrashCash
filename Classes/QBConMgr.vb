@@ -18,7 +18,7 @@ Namespace Classes
                     .BeginSession(My.Settings.QB_FILE_LOCATION.ToString, ENOpenMode.omSingleUser)
                 End With
             Catch ex As Exception
-                MsgBox(ex.Message)
+                MsgBox(ex.Message & vbCrLf & ex.InnerException.Message)
                 Application.Exit()
             End Try
 
@@ -28,6 +28,7 @@ Namespace Classes
         Public Sub New()
             _ta = New ds_CustomerTableAdapters.CustomerTableAdapter
          End Sub
+
         Private Sub StartQBFCServices()
             Dim s As New List(Of String)
             s.Add("QBCFMonitorService")
