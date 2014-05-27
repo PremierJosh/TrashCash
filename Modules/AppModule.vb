@@ -32,8 +32,105 @@ Namespace Modules
             Submitted = 8
         End Enum
 
+        ' global colors for app
+        Public Class AppColors
+            ' grid colors
+            Public Shared ReadOnly Property GridRed As Color
+                Get
+                    Return Color.Red
+                End Get
+            End Property
+            Public Shared ReadOnly Property GridRedSel As Color
+                Get
+                    Return Color.IndianRed
+                End Get
+            End Property
+            Public Shared ReadOnly Property GridYellow As Color
+                Get
+                    Return Color.Yellow
+                End Get
+            End Property
+            Public Shared ReadOnly Property GridYellowSel As Color
+                Get
+                    Return Color.Khaki
+                End Get
+            End Property
+            Public Shared ReadOnly Property GridGreen As Color
+                Get
+                    Return Color.SpringGreen
+                End Get
+            End Property
+            Public Shared ReadOnly Property GridGreenSel As Color
+                Get
+                    Return Color.MediumSeaGreen
+                End Get
+            End Property
+            Public Shared ReadOnly Property GridDefText As Color
+                Get
+                    Return Color.Black
+                End Get
+            End Property
+            Public Shared ReadOnly Property GridDefTextSel As Color
+                Get
+                    Return SystemColors.HighlightText
+                End Get
+            End Property
 
-      
+            ''' <summary>
+            ''' This will take a DGV and color its rows when a boolean column value is true (green) or red (false).
+            ''' </summary>
+            ''' <param name="grid">DGV that a DataGrid is bound that that needs colored</param>
+            ''' <param name="greenRedColName">Column that will turn the row green when true or red when false</param>
+            ''' <param name="yellowColName">When this column is true, the row will turn yellow over any other color.</param>
+            ''' <remarks></remarks>
+            Public Shared Sub ColorGrid(ByRef grid As DataGridView, ByVal greenRedColName As String, Optional ByVal yellowColName As String = Nothing)
+                Dim row As DataRow
+                For i = 0 To grid.RowCount - 1
+                    row = CType(grid.Rows(i).DataBoundItem, DataRowView).Row
+                    If (row.Item(greenRedColName) = True) Then
+                        grid.Rows(i).DefaultCellStyle.BackColor = GridRed
+                        grid.Rows(i).DefaultCellStyle.SelectionBackColor = GridRedSel
+                        ' setting sel text color white
+                        grid.Rows(i).DefaultCellStyle.SelectionForeColor = GridDefTextSel
+                    ElseIf (row.Item(greenRedColName) = False) Then
+                        grid.Rows(i).DefaultCellStyle.BackColor = GridGreen
+                        grid.Rows(i).DefaultCellStyle.SelectionBackColor = GridGreenSel
+                        ' setting sel text color white
+                        grid.Rows(i).DefaultCellStyle.SelectionForeColor = GridDefTextSel
+                    End If
+                    ' checking yellow
+                    If (yellowColName IsNot Nothing) Then
+                        If (row.Item(yellowColName) = True) Then
+                            grid.Rows(i).DefaultCellStyle.BackColor = GridYellow
+                            grid.Rows(i).DefaultCellStyle.SelectionBackColor = GridYellowSel
+                            ' setting sel text color to black
+                            grid.Rows(i).DefaultCellStyle.SelectionForeColor = GridDefText
+                        End If
+                    End If
+                Next
+            End Sub
+
+            ' text box color and default
+            Public Shared ReadOnly Property TextBoxErr As Color
+                Get
+                    Return Color.MistyRose
+                End Get
+            End Property
+            Public Shared ReadOnly Property TextBoxDef As Color
+                Get
+                    Return SystemColors.Control
+                End Get
+            End Property
+        End Class
+
+        ' structure for combo box pair
+        Public Structure ComboBoxPair
+            Public ValueMember
+            Public DisplayMember
+        End Structure
+
+
+
     End Module
 
 

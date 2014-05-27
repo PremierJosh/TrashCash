@@ -15,7 +15,38 @@ Namespace Classes
             Return ConCheck(qbConMgr).GetRespList.GetAt(0)
         End Function
 
+        ' service item
+        Public Shared Function ServiceItemAdd(ByRef item As QBItemObj, Optional ByRef qbConMgr As QBConMgr = Nothing) As IResponse
+            Dim newItem As IItemServiceAdd = ConCheck(qbConMgr).MessageSetRequest.AppendItemServiceAddRq
+            newItem.Name.SetValue(item.ItemName)
+            With newItem.ORSalesPurchase.SalesOrPurchase
+                .AccountRef.ListID.SetValue(item.IncomeAccountListID)
+                .Desc.SetValue(item.Desc)
+                If (item.Price <> Nothing) Then
+                    .ORPrice.Price.SetValue(item.Price)
+                End If
+            End With
 
+            Return ConCheck(qbConMgr).GetRespList.GetAt(0)
+        End Function
+
+        Public Shared Function ServiceItemMod(ByRef item As QBItemObj, Optional ByRef qbConMgr As QBConMgr = Nothing) As IResponse
+            Dim itemMod As IItemServiceMod = ConCheck(qbConMgr).MessageSetRequest.AppendItemServiceModRq
+            ' setting item
+            itemMod.ListID.SetValue(item.ListID)
+            itemMod.EditSequence.SetValue(item.EditSequence)
+            ' checking for passed value changes
+            If (item.ItemName IsNot Nothing) Then
+                itemMod.Name.SetValue(item.ItemName)
+            End If
+            With itemMod.ORSalesPurchaseMod.SalesOrPurchaseMod
+                .AccountRef.ListID.SetValue(item.IncomeAccountListID)
+                .ORPrice.Price.SetValue(item.Price)
+                .Desc.SetValue(item.Desc)
+            End With
+
+            Return ConCheck(qbConMgr).GetRespList.GetAt(0)
+        End Function
         ' customer
         Public Shared Function CustomerAdd(ByRef custRow As ds_Customer.CustomerRow, Optional ByRef qbConMgr As QBConMgr = Nothing) As IResponse
             Dim custAdd As ICustomerAdd = ConCheck(qbConMgr).MessageSetRequest.AppendCustomerAddRq
@@ -441,6 +472,20 @@ Namespace Classes
             Return ConCheck(qbConMgr).GetRespList.GetAt(0)
         End Function
 
+        Public Shared Function ItemQuery(Optional ByVal itemListID As String = Nothing, Optional ByRef retEleList As List(Of String) = Nothing,
+                                         Optional ByRef qbConMgr As QBConMgr = Nothing) As IResponse
+            Dim iQuery As IItemQuery = ConCheck(qbConMgr).MessageSetRequest.AppendItemQueryRq
+
+            If (itemListID IsNot Nothing) Then
+                iQuery.ORListQuery.ListIDList.Add(itemListID)
+            End If
+            If (retEleList IsNot Nothing) Then
+                For Each s As String In retEleList
+                    iQuery.IncludeRetElementList.Add(s)
+                Next
+            End If
+            Return ConCheck(qbConMgr).GetRespList.GetAt(0)
+        End Function
     End Class
 
     Friend Class QBMethods

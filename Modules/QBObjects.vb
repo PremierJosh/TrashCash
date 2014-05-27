@@ -94,6 +94,16 @@ Namespace Modules
             Public LinkedTxnAmount As Double
         End Structure
 
+        Public Structure QBItemObj
+            Public ItemName As String
+            Public ListID As String
+            Public EditSequence As String
+            Public Price As Double
+            Public Desc As String
+
+            Public IncomeAccountListID As String
+        End Structure
+
     End Module
 
 End Namespace

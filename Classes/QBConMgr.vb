@@ -1,5 +1,6 @@
 ﻿Imports QBFC12Lib
 Imports System.ServiceProcess
+Imports TrashCash.Modules
 
 Namespace Classes
     Public Class QBConMgr
@@ -89,39 +90,58 @@ Namespace Classes
             End If
         End Sub
 
-       End Class
+        ' going to put customer balance sub here for quick access
+        Public Function GetCustomerBalance(ByVal customerListID As String) As Double
+            ' return var
+            Dim b As Double
 
-    '    Private Sub KillQBProcess()
-    '        ' QBW32.exe killing
-    '        For Each p As Process In Process.GetProcessesByName("QBW32.exe")
-    '            p.CloseMainWindow()
-    '            p.WaitForExit(20000)
-    '            If (p.HasExited = False) Then
-    '                p.Kill()
-    '            End If
-    '        Next
-    '
-    '        ' QBW32Pro.exe killing
-    '        For Each p As Process In Process.GetProcessesByName("QBW32Pro.exe")
-    '            p.CloseMainWindow()
-    '            p.WaitForExit(20000)
-    '            If (p.HasExited = False) Then
-    '                p.Kill()
-    '            End If
-    '        Next
-    '
-    '        Try
-    '            app_SessMgr.CloseConnection()
-    '            app_SessMgr.OpenConnection2("V1", "TrashCash", ENConnectionType.ctLocalQBD)
-    '            app_SessMgr.BeginSession(My.Settings.QB_FILE_LOCATION.ToString, ENOpenMode.omSingleUser)
-    '
-    '            ' new msg set
-    '            app_MsgSetReq = app_SessMgr.CreateMsgSetRequest("US", 11, 0)
-    '        Catch ex As Exception
-    '            MsgBox("Retry failed and Kill Process failed. Please try restarting TrashCash.")
-    '            Application.Exit()
-    '        End Try
-    '
-    '    End Sub
-    
+            ' only need balance returned
+            Dim s As New List(Of String)
+            s.Add("TotalBalance")
+            Dim resp As IResponse = QBRequests.CustomerQuery(customerListID:=customerListID, retEleList:=s, qbConMgr:=Me)
+            If (resp.StatusCode = 0) Then
+                Dim retList As ICustomerRetList = resp.Detail
+                Dim ret As ICustomerRet = retList.GetAt(0)
+                b = ret.TotalBalance.GetValue
+            Else
+                ResponseErr_Misc(resp)
+            End If
+
+            Return b
+        End Function
+        
+
+        '    Private Sub KillQBProcess()
+        '        ' QBW32.exe killing
+        '        For Each p As Process In Process.GetProcessesByName("QBW32.exe")
+        '            p.CloseMainWindow()
+        '            p.WaitForExit(20000)
+        '            If (p.HasExited = False) Then
+        '                p.Kill()
+        '            End If
+        '        Next
+        '
+        '        ' QBW32Pro.exe killing
+        '        For Each p As Process In Process.GetProcessesByName("QBW32Pro.exe")
+        '            p.CloseMainWindow()
+        '            p.WaitForExit(20000)
+        '            If (p.HasExited = False) Then
+        '                p.Kill()
+        '            End If
+        '        Next
+        '
+        '        Try
+        '            app_SessMgr.CloseConnection()
+        '            app_SessMgr.OpenConnection2("V1", "TrashCash", ENConnectionType.ctLocalQBD)
+        '            app_SessMgr.BeginSession(My.Settings.QB_FILE_LOCATION.ToString, ENOpenMode.omSingleUser)
+        '
+        '            ' new msg set
+        '            app_MsgSetReq = app_SessMgr.CreateMsgSetRequest("US", 11, 0)
+        '        Catch ex As Exception
+        '            MsgBox("Retry failed and Kill Process failed. Please try restarting TrashCash.")
+        '            Application.Exit()
+        '        End Try
+        '
+        '    End Sub
+
 End Namespace

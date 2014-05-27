@@ -323,21 +323,21 @@ Namespace Classes
         End Function
 
 
-        Public Class ComboBoxPair
+        Public Class OldComboBoxPair
             Public Property ValueMember
             Public Property DisplayMember
         End Class
 
         Public Sub CMB_BindServiceItem(ByRef cmb As ComboBox)
-            Dim list As List(Of ComboBoxPair) = CMB_ServiceItemList()
+            Dim list As List(Of OldComboBoxPair) = CMB_ServiceItemList()
             cmb.DisplayMember = "DisplayMember"
             cmb.ValueMember = "ValueMember"
             cmb.DataSource = list
         End Sub
 
-        Private Function CMB_ServiceItemList() As List(Of ComboBoxPair)
+        Private Function CMB_ServiceItemList() As List(Of OldComboBoxPair)
             ' return list
-            Dim itemList As New List(Of ComboBoxPair)
+            Dim itemList As New List(Of OldComboBoxPair)
 
 
             Dim itemQuery As IItemServiceQuery = MsgSetReq.AppendItemServiceQueryRq
@@ -363,7 +363,7 @@ Namespace Classes
                         Dim itemRet As IItemServiceRet = itemRetList.GetAt(j)
 
                         ' making item
-                        Dim item As New ComboBoxPair
+                        Dim item As New OldComboBoxPair
                         item.DisplayMember = itemRet.FullName.GetValue
                         item.ValueMember = itemRet.ListID.GetValue
 
@@ -378,14 +378,14 @@ Namespace Classes
         End Function
 
         Public Sub CMB_BindOtherChargeItems(ByRef cmb As ComboBox)
-            Dim list As List(Of ComboBoxPair) = CMB_OtherChargeItemList()
+            Dim list As List(Of OldComboBoxPair) = CMB_OtherChargeItemList()
             cmb.DisplayMember = "DisplayMember"
             cmb.ValueMember = "ValueMember"
             cmb.DataSource = list
         End Sub
-        Private Function CMB_OtherChargeItemList() As List(Of ComboBoxPair)
+        Private Function CMB_OtherChargeItemList() As List(Of OldComboBoxPair)
             ' return list
-            Dim itemList As New List(Of ComboBoxPair)
+            Dim itemList As New List(Of OldComboBoxPair)
 
 
             Dim itemQuery As IItemOtherChargeQuery = MsgSetReq.AppendItemOtherChargeQueryRq
@@ -411,7 +411,7 @@ Namespace Classes
                         Dim itemRet As IItemOtherChargeRet = itemRetList.GetAt(j)
 
                         ' making item
-                        Dim item As New ComboBoxPair
+                        Dim item As New OldComboBoxPair
                         item.DisplayMember = itemRet.FullName.GetValue
                         item.ValueMember = itemRet.ListID.GetValue
 
@@ -426,14 +426,14 @@ Namespace Classes
         End Function
 
         Public Sub CMB_BindVendorAccount(ByRef cmb As ComboBox)
-            Dim list As List(Of ComboBoxPair) = CMB_VendorAccountList()
+            Dim list As List(Of OldComboBoxPair) = CMB_VendorAccountList()
             cmb.DisplayMember = "DisplayMember"
             cmb.ValueMember = "ValueMember"
             cmb.DataSource = list
         End Sub
-        Private Function CMB_VendorAccountList() As List(Of ComboBoxPair)
+        Private Function CMB_VendorAccountList() As List(Of OldComboBoxPair)
             ' return list
-            Dim vendorList As New List(Of ComboBoxPair)
+            Dim vendorList As New List(Of OldComboBoxPair)
 
             Dim vendorQuery As IVendorQuery = MsgSetReq.AppendVendorQueryRq
 
@@ -456,7 +456,7 @@ Namespace Classes
                         Dim vendorRet As IVendorRet = vendorRetList.GetAt(j)
 
                         ' item going into list
-                        Dim item As New ComboBoxPair
+                        Dim item As New OldComboBoxPair
                         item.DisplayMember = vendorRet.Name.GetValue
                         item.ValueMember = vendorRet.ListID.GetValue
 
@@ -472,20 +472,20 @@ Namespace Classes
         End Function
 
         Public Sub CMB_BindBankAccount(ByRef cmb As ComboBox)
-            Dim list As List(Of ComboBoxPair) = CMB_GetAccountList(bank:=True)
+            Dim list As List(Of OldComboBoxPair) = CMB_GetAccountList(bank:=True)
             cmb.DisplayMember = "DisplayMember"
             cmb.ValueMember = "ValueMember"
             cmb.DataSource = list
         End Sub
         Public Sub CMB_BindIncomeAccount(ByRef cmb As ComboBox)
-            Dim list As List(Of ComboBoxPair) = CMB_GetAccountList(income:=True)
+            Dim list As List(Of OldComboBoxPair) = CMB_GetAccountList(income:=True)
             cmb.DisplayMember = "DisplayMember"
             cmb.ValueMember = "ValueMember"
             cmb.DataSource = list
         End Sub
-        Private Function CMB_GetAccountList(Optional ByVal income As Boolean = False, Optional ByVal bank As Boolean = False) As List(Of ComboBoxPair)
+        Private Function CMB_GetAccountList(Optional ByVal income As Boolean = False, Optional ByVal bank As Boolean = False) As List(Of OldComboBoxPair)
             ' return array for data binding
-            Dim accountList As New List(Of ComboBoxPair)
+            Dim accountList As New List(Of OldComboBoxPair)
 
             Dim accountQuery As IAccountQuery = MsgSetReq.AppendAccountQueryRq
 
@@ -515,7 +515,7 @@ Namespace Classes
                             Dim accountRet As IAccountRet = accountRetList.GetAt(l)
 
                             'creating list item
-                            Dim item As New ComboBoxPair
+                            Dim item As New OldComboBoxPair
                             item.DisplayMember = accountRet.Name.GetValue.ToString
                             item.ValueMember = accountRet.ListID.GetValue.ToString
 
