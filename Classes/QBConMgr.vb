@@ -98,7 +98,7 @@ Namespace Classes
             ' only need balance returned
             Dim s As New List(Of String)
             s.Add("TotalBalance")
-            Dim resp As IResponse = QBRequests.CustomerQuery(customerListID:=customerListID, retEleList:=s, qbConMgr:=Me)
+            Dim resp As IResponse = QBRequests.CustomerQuery(listID:=customerListID, retEleList:=s, qbConMgr:=Me)
             If (resp.StatusCode = 0) Then
                 Dim retList As ICustomerRetList = resp.Detail
                 Dim ret As ICustomerRet = retList.GetAt(0)

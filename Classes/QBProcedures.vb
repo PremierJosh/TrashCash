@@ -312,7 +312,7 @@ Namespace Classes
         End Function
 
         ' queries
-        Public Shared Function InvoiceQuery(Optional ByVal customerListID As String = Nothing, Optional ByVal txnID As String = Nothing,
+        Public Shared Function InvoiceQuery(Optional ByVal listID As String = Nothing, Optional ByVal txnID As String = Nothing,
                                             Optional ByVal fromDate As Date = Nothing, Optional ByVal toDate As Date = Nothing,
                                             Optional ByVal paidStatus As ENPaidStatus = Nothing, Optional ByRef qbConMgr As QBConMgr = Nothing,
                                             Optional ByVal responseLimit As Integer = 100, Optional ByVal retEleList As List(Of String) = Nothing,
@@ -338,8 +338,8 @@ Namespace Classes
             ' setting inv level filters
             With query.ORInvoiceQuery
                 ' checking for customer id or txn id
-                If (customerListID IsNot Nothing) Then
-                    .InvoiceFilter.EntityFilter.OREntityFilter.ListIDList.Add(customerListID)
+                If (listID IsNot Nothing) Then
+                    .InvoiceFilter.EntityFilter.OREntityFilter.ListIDList.Add(listID)
                 ElseIf (txnID IsNot Nothing) Then
                     .TxnIDList.Add(txnID)
                 End If
@@ -367,7 +367,7 @@ Namespace Classes
             Return ConCheck(qbConMgr).GetRespList.GetAt(0)
         End Function
 
-        Public Shared Function PaymentQuery(Optional ByVal customerListID As String = Nothing, Optional ByVal txnID As String = Nothing,
+        Public Shared Function PaymentQuery(Optional ByVal listID As String = Nothing, Optional ByVal txnID As String = Nothing,
                                             Optional ByVal fromDate As Date = Nothing, Optional ByVal toDate As Date = Nothing,
                                             Optional ByVal paidStatus As ENPaidStatus = Nothing, Optional ByRef qbConMgr As QBConMgr = Nothing,
                                             Optional ByVal responseLimit As Integer = 100, Optional ByVal retEleList As List(Of String) = Nothing,
@@ -388,8 +388,8 @@ Namespace Classes
             ' setting filter
             With query.ORTxnQuery
                 ' checking for customer id or txnid filter
-                If (customerListID IsNot Nothing) Then
-                    .TxnFilter.EntityFilter.OREntityFilter.ListIDList.Add(customerListID)
+                If (listID IsNot Nothing) Then
+                    .TxnFilter.EntityFilter.OREntityFilter.ListIDList.Add(listID)
                 ElseIf (txnID IsNot Nothing) Then
                     .TxnIDList.Add(txnID)
                 End If
@@ -414,7 +414,7 @@ Namespace Classes
             Return ConCheck(qbConMgr).GetRespList.GetAt(0)
         End Function
 
-        Public Shared Function CreditMemoQuery(Optional ByVal customerListID As String = Nothing, Optional ByVal txnID As String = Nothing,
+        Public Shared Function CreditMemoQuery(Optional ByVal listID As String = Nothing, Optional ByVal txnID As String = Nothing,
                                             Optional ByRef fromDate As Date = Nothing, Optional ByRef toDate As Date = Nothing,
                                             Optional ByRef qbConMgr As QBConMgr = Nothing, Optional ByVal responseLimit As Integer = 100,
                                             Optional ByRef retEleList As List(Of String) = Nothing) As IResponse
@@ -422,8 +422,8 @@ Namespace Classes
             ' setting filter
             With creditQuery.ORTxnQuery
                 ' checking for customer id or txnid filter
-                If (customerListID IsNot Nothing) Then
-                    .TxnFilter.EntityFilter.OREntityFilter.ListIDList.Add(customerListID)
+                If (listID IsNot Nothing) Then
+                    .TxnFilter.EntityFilter.OREntityFilter.ListIDList.Add(listID)
                 ElseIf (txnID IsNot Nothing) Then
                     .TxnIDList.Add(txnID)
                 End If
@@ -453,11 +453,11 @@ Namespace Classes
             Return ConCheck(qbConMgr).GetRespList.GetAt(0)
         End Function
 
-        Public Shared Function CustomerQuery(Optional ByVal customerListID As String = Nothing, Optional ByVal retEleList As List(Of String) = Nothing,
+        Public Shared Function CustomerQuery(Optional ByVal listID As String = Nothing, Optional ByVal retEleList As List(Of String) = Nothing,
                                              Optional ByVal balanceFilter As ITotalBalanceFilter = Nothing, Optional ByRef qbConMgr As QBConMgr = Nothing) As IResponse
             Dim custQuery As ICustomerQuery = ConCheck(qbConMgr).MessageSetRequest.AppendCustomerQueryRq
-            If (customerListID IsNot Nothing) Then
-                custQuery.ORCustomerListQuery.ListIDList.Add(customerListID)
+            If (listID IsNot Nothing) Then
+                custQuery.ORCustomerListQuery.ListIDList.Add(listID)
             End If
             ' checking if balance filter transfered
             If (balanceFilter IsNot Nothing) Then
@@ -472,18 +472,40 @@ Namespace Classes
             Return ConCheck(qbConMgr).GetRespList.GetAt(0)
         End Function
 
-        Public Shared Function ItemQuery(Optional ByVal itemListID As String = Nothing, Optional ByRef retEleList As List(Of String) = Nothing,
+        Public Shared Function ItemQuery(Optional ByVal listID As String = Nothing, Optional ByRef retEleList As List(Of String) = Nothing,
                                          Optional ByRef qbConMgr As QBConMgr = Nothing) As IResponse
             Dim iQuery As IItemQuery = ConCheck(qbConMgr).MessageSetRequest.AppendItemQueryRq
 
-            If (itemListID IsNot Nothing) Then
-                iQuery.ORListQuery.ListIDList.Add(itemListID)
+            If (listID IsNot Nothing) Then
+                iQuery.ORListQuery.ListIDList.Add(listID)
             End If
             If (retEleList IsNot Nothing) Then
                 For Each s As String In retEleList
                     iQuery.IncludeRetElementList.Add(s)
                 Next
             End If
+            Return ConCheck(qbConMgr).GetRespList.GetAt(0)
+        End Function
+
+        Public Shared Function VendorQuery(Optional ByVal listID As String = Nothing, Optional ByRef retEleList As List(Of String) = Nothing, Optional ByRef qbConMgr As QBConMgr = Nothing) As IResponse
+            Dim vendQ As IVendorQuery = ConCheck(qbConMgr).MessageSetRequest.AppendVendorQueryRq
+            If (listID IsNot Nothing) Then
+                vendQ.ORVendorListQuery.ListIDList.Add(listID)
+            End If
+            If (retEleList IsNot Nothing) Then
+                For Each s As String In retEleList
+                    vendQ.IncludeRetElementList.Add(s)
+                Next
+            End If
+
+            Return ConCheck(qbConMgr).GetRespList.GetAt(0)
+        End Function
+
+        Public Shared Function AccountQuery(ByVal accType As ENAccountType, Optional ByRef qbConMgr As QBConMgr = Nothing) As IResponse
+            Dim accQ As IAccountQuery = ConCheck(qbConMgr).MessageSetRequest.AppendAccountQueryRq
+            accQ.ORAccountListQuery.AccountListFilter.AccountTypeList.Add(accType)
+
+
             Return ConCheck(qbConMgr).GetRespList.GetAt(0)
         End Function
     End Class
@@ -505,13 +527,13 @@ Namespace Classes
                     End If
                     If (invRet.DueDate IsNot Nothing) Then
                         invObj.DueDate = invRet.DueDate.GetValue
-                    End IF
+                    End If
                     If (invRet.TxnDate IsNot Nothing) Then
                         invObj.TxnDate = invRet.TxnDate.GetValue
-                    End IF
+                    End If
                     If (invRet.EditSequence IsNot Nothing) Then
                         invObj.EditSequence = invRet.EditSequence.GetValue
-                    End IF
+                    End If
                     If (invRet.Other IsNot Nothing) Then
                         invObj.Other = invRet.Other.GetValue
                     End If
@@ -548,7 +570,7 @@ Namespace Classes
                                 linkTxn.Amount = .Amount.GetValue
                             End With
                             ' add to invOBj
-                            invObj.linkTxnList.Add(linkTxn)
+                            invObj.LinkTxnList.Add(linkTxn)
                         Next
                     End If
                     ' adding to return list
@@ -566,7 +588,7 @@ Namespace Classes
         ''' <summary>
         ''' Function takes a RecievePaymentQueryRs or an InvoiceQueryRs and 
         ''' its LinkedTxn's that are Payments (using other methods to get complete data) and returns a List (Of QBRecievePaymentObj)
-      ''' </summary>
+        ''' </summary>
         ''' <param name="resp">RecievePaymentQueryRs or InvoiceQueryRs</param>
         ''' <param name="newestFirst">List comes out oldest (by TxnDate) Payment first by default.</param>
         ''' <returns>List (Of QBRecievePaymentObj)</returns>
@@ -577,7 +599,7 @@ Namespace Classes
 
             ' checking what response it is
             If (resp.Type.GetValue = ENResponseType.rtReceivePaymentQueryRs) Then
-            Dim payRetList As IReceivePaymentRetList = resp.Detail
+                Dim payRetList As IReceivePaymentRetList = resp.Detail
                 For i = 0 To payRetList.Count - 1
                     Dim payRet As IReceivePaymentRet = payRetList.GetAt(i)
                     Dim payObj As New QBRecievePaymentObj
@@ -609,7 +631,7 @@ Namespace Classes
             End If
             Return payObjList
         End Function
-        
+
         Private Shared Function ConvertToPayObjs(ByVal linkObjList As List(Of QBLinkedTxnObj), Optional ByVal newestFirst As Boolean = False) As List(Of QBRecievePaymentObj)
             ' return list
             Dim payObjList As New List(Of QBRecievePaymentObj)
@@ -622,7 +644,7 @@ Namespace Classes
                 .Add("EditSequence")
                 .Add("TotalAmount")
                 .Add("RefNumber")
-                .Add("CustomerListID")
+                .Add("listID")
                 .Add("PayMethodRef")
                 .Add("UnusedPayment")
             End With
@@ -645,7 +667,7 @@ Namespace Classes
                     End With
                 Next
             Next
-            
+
             ' sort list by txn date, oldest to newest
             payObjList.Sort(Function(x, y) x.TxnDate.CompareTo(y.TxnDate))
             If (newestFirst) Then
@@ -653,7 +675,7 @@ Namespace Classes
             End If
             Return payObjList
         End Function
-        
+
         Public Shared Function ConvertToLinkedTxnObjs(ByRef resp As IResponse) As List(Of QBLinkedTxnObj)
             ' return list
             Dim linkObjList As New List(Of QBLinkedTxnObj)
@@ -731,23 +753,53 @@ Namespace Classes
             Return QBRequests.PaymentMod(payObj, qbConMgr:=ConCheck(qbConMgr))
         End Function
 
-        Public Shared Sub ResponseErr_Misc(ByVal resp As IResponse)
-            If (resp.StatusCode = 1) Then
-                MsgBox("No matching results from Quickbooks")
-            Else
-                Try
-                    Using ta As New ds_ProgramTableAdapters.QueriesTableAdapter
-                        ta.ERR_MISC_Insert(resp.Type.GetValue.ToString,
-                                        resp.StatusCode.ToString,
-                                        resp.StatusMessage,
-                                        Date.Now)
-                    End Using
-                    MsgBox("Error Encounterd with Quickbooks. Contact Premier.", MsgBoxStyle.Critical)
-                Catch ex As Exception
-                    MsgBox("ERR_MISC_Insert: " & ex.Message)
-                End Try
-            End If
+        Public Overloads Shared Function GetComboBoxPair(ByRef itemRetList As IItemServiceRetList) As List(Of ComboBoxPair)
+            Dim pairList As New List(Of ComboBoxPair)
+            For i = 0 To itemRetList.Count - 1
+                Dim ret As IItemServiceRet = itemRetList.GetAt(i)
+                Dim pair As New ComboBoxPair
+                pair.DisplayMember = ret.FullName.GetValue
+                pair.ValueMember = ret.ListID.GetValue
+                pairList.Add(pair)
+            Next
 
-        End Sub
+            Return pairList
+        End Function
+        Public Overloads Shared Function GetComboBoxPair(ByRef itemRetList As IItemOtherChargeRetList) As List(Of ComboBoxPair)
+            Dim pairList As New List(Of ComboBoxPair)
+            For i = 0 To itemRetList.Count - 1
+                Dim ret As IItemOtherChargeRet = itemRetList.GetAt(i)
+                Dim pair As New ComboBoxPair
+                pair.DisplayMember = ret.FullName.GetValue
+                pair.ValueMember = ret.ListID.GetValue
+                pairList.Add(pair)
+            Next
+
+            Return pairList
+        End Function
+        Public Overloads Shared Function GetComboBoxPair(ByRef itemRetList As IVendorRetList) As List(Of ComboBoxPair)
+            Dim pairList As New List(Of ComboBoxPair)
+            For i = 0 To itemRetList.Count - 1
+                Dim ret As IVendorRet = itemRetList.GetAt(i)
+                Dim pair As New ComboBoxPair
+                pair.DisplayMember = ret.Name.GetValue
+                pair.ValueMember = ret.ListID.GetValue
+                pairList.Add(pair)
+            Next
+
+            Return pairList
+        End Function
+        Public Overloads Shared Function GetComboBoxPair(ByRef itemRetList As IAccountRetList) As List(Of ComboBoxPair)
+            Dim pairList As New List(Of ComboBoxPair)
+            For i = 0 To itemRetList.Count - 1
+                Dim ret As IAccountRet = itemRetList.GetAt(i)
+                Dim pair As New ComboBoxPair
+                pair.DisplayMember = ret.Name.GetValue
+                pair.ValueMember = ret.ListID.GetValue
+                pairList.Add(pair)
+            Next
+
+            Return pairList
+        End Function
     End Class
 End Namespace

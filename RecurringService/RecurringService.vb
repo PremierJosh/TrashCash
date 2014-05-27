@@ -17,7 +17,7 @@ Namespace RecurringService
             retEleList.Add("TxnDate")
             retEleList.Add("BalanceRemaining")
 
-            Dim resp As IResponse = QBRequests.InvoiceQuery(customerListID:=customerListID, paidStatus:=ENPaidStatus.psNotPaidOnly, retEleList:=retEleList)
+            Dim resp As IResponse = QBRequests.InvoiceQuery(listID:=customerListID, paidStatus:=ENPaidStatus.psNotPaidOnly, retEleList:=retEleList)
 
             ' status check
             If (resp.StatusCode = 0) Then
@@ -41,7 +41,7 @@ Namespace RecurringService
         'Public Sub RecurringService_EndDateCredit(ByRef row As ds_RecurringService.RecurringServiceRow, ByVal creditAmount As Double,
         '                                           ByVal newEndDate As Date, ByVal billThruDate As Date)
         '     ' getting customer listid
-        '     Dim customerListID As String = _cta.GetListID(row.CustomerNumber)
+        '     Dim listID As String = _cta.GetListID(row.CustomerNumber)
 
 
         '     ' getting service listid
@@ -52,7 +52,7 @@ Namespace RecurringService
         '     Dim creditMemoAdd As ICreditMemoAdd = MsgSetReq.AppendCreditMemoAddRq
 
         '     ' passing listid
-        '     creditMemoAdd.CustomerRef.ListID.SetValue(customerListID)
+        '     creditMemoAdd.CustomerRef.ListID.SetValue(listID)
         '     creditMemoAdd.IsToBePrinted.SetValue(False)
 
         '     Dim creditLine As IORCreditMemoLineAdd = creditMemoAdd.ORCreditMemoLineAddList.Append()
@@ -104,10 +104,10 @@ Namespace RecurringService
         '             End Try
 
         '             ' get table of unpaid invoices
-        '             Dim openInvDt As ds_Display.QBUnpaidInvoicesDataTable = Invoicing_GetUnpaidTable(customerListID)
+        '             Dim openInvDt As ds_Display.QBUnpaidInvoicesDataTable = Invoicing_GetUnpaidTable(listID)
 
         '             ' use new credit to pay newest invoices first
-        '             Credits_PayOpenInvoices(customerListID, creditMemoRet.TxnID.GetValue, creditMemoRet.CreditRemaining.GetValue, openInvDt, "Desc")
+        '             Credits_PayOpenInvoices(listID, creditMemoRet.TxnID.GetValue, creditMemoRet.CreditRemaining.GetValue, openInvDt, "Desc")
         '         Else
         '             Utilities.ErrHandling.ResponseErr_Misc(resp)
         '         End If
