@@ -753,10 +753,10 @@ Namespace Classes
             Return QBRequests.PaymentMod(payObj, qbConMgr:=ConCheck(qbConMgr))
         End Function
 
-        Public Overloads Shared Function GetComboBoxPair(ByRef itemRetList As IItemServiceRetList) As List(Of ComboBoxPair)
+        Public Overloads Shared Function GetComboBoxPair(ByRef retList As IItemServiceRetList) As List(Of ComboBoxPair)
             Dim pairList As New List(Of ComboBoxPair)
-            For i = 0 To itemRetList.Count - 1
-                Dim ret As IItemServiceRet = itemRetList.GetAt(i)
+            For i = 0 To retList.Count - 1
+                Dim ret As IItemServiceRet = retList.GetAt(i)
                 Dim pair As New ComboBoxPair
                 pair.DisplayMember = ret.FullName.GetValue
                 pair.ValueMember = ret.ListID.GetValue
@@ -765,10 +765,10 @@ Namespace Classes
 
             Return pairList
         End Function
-        Public Overloads Shared Function GetComboBoxPair(ByRef itemRetList As IItemOtherChargeRetList) As List(Of ComboBoxPair)
+        Public Overloads Shared Function GetComboBoxPair(ByRef retList As IItemOtherChargeRetList) As List(Of ComboBoxPair)
             Dim pairList As New List(Of ComboBoxPair)
-            For i = 0 To itemRetList.Count - 1
-                Dim ret As IItemOtherChargeRet = itemRetList.GetAt(i)
+            For i = 0 To retList.Count - 1
+                Dim ret As IItemOtherChargeRet = retList.GetAt(i)
                 Dim pair As New ComboBoxPair
                 pair.DisplayMember = ret.FullName.GetValue
                 pair.ValueMember = ret.ListID.GetValue
@@ -777,10 +777,10 @@ Namespace Classes
 
             Return pairList
         End Function
-        Public Overloads Shared Function GetComboBoxPair(ByRef itemRetList As IVendorRetList) As List(Of ComboBoxPair)
+        Public Overloads Shared Function GetComboBoxPair(ByRef retList As IVendorRetList) As List(Of ComboBoxPair)
             Dim pairList As New List(Of ComboBoxPair)
-            For i = 0 To itemRetList.Count - 1
-                Dim ret As IVendorRet = itemRetList.GetAt(i)
+            For i = 0 To retList.Count - 1
+                Dim ret As IVendorRet = retList.GetAt(i)
                 Dim pair As New ComboBoxPair
                 pair.DisplayMember = ret.Name.GetValue
                 pair.ValueMember = ret.ListID.GetValue
@@ -789,10 +789,10 @@ Namespace Classes
 
             Return pairList
         End Function
-        Public Overloads Shared Function GetComboBoxPair(ByRef itemRetList As IAccountRetList) As List(Of ComboBoxPair)
+        Public Overloads Shared Function GetComboBoxPair(ByRef retList As IAccountRetList) As List(Of ComboBoxPair)
             Dim pairList As New List(Of ComboBoxPair)
-            For i = 0 To itemRetList.Count - 1
-                Dim ret As IAccountRet = itemRetList.GetAt(i)
+            For i = 0 To retList.Count - 1
+                Dim ret As IAccountRet = retList.GetAt(i)
                 Dim pair As New ComboBoxPair
                 pair.DisplayMember = ret.Name.GetValue
                 pair.ValueMember = ret.ListID.GetValue
@@ -801,5 +801,28 @@ Namespace Classes
 
             Return pairList
         End Function
+
+
+
+
+
+        Public Shared Sub ResponseErr_Misc(ByVal resp As IResponse)
+            If (resp.StatusCode = 1) Then
+                MsgBox("No matching results from Quickbooks")
+            Else
+                Try
+                    Using ta As New ds_ProgramTableAdapters.QueriesTableAdapter
+                        ta.ERR_MISC_Insert(resp.Type.GetValue.ToString,
+                                           resp.StatusCode.ToString,
+                                           resp.StatusMessage,
+                                           Date.Now)
+                    End Using
+
+                    MsgBox("Error Encounterd with Quickbooks. Contact Premier.", MsgBoxStyle.Critical)
+                Catch ex As Exception
+                    MsgBox("ERR_MISC_Insert: " & ex.Message)
+                End Try
+            End If
+        End Sub
     End Class
 End Namespace

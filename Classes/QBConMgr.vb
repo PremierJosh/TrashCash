@@ -1,6 +1,5 @@
 ﻿Imports QBFC12Lib
 Imports System.ServiceProcess
-Imports TrashCash.Modules
 
 Namespace Classes
     Public Class QBConMgr
@@ -71,26 +70,7 @@ Namespace Classes
             Return _ta.GetListID(customerNumber)
         End Function
 
-        Public Sub ResponseErr_Misc(ByVal resp As IResponse)
-            If (resp.StatusCode = 1) Then
-                MsgBox("No matching results from Quickbooks")
-            Else
-                Try
-                    Using ta As New ds_ProgramTableAdapters.QueriesTableAdapter
-                        ta.ERR_MISC_Insert(resp.Type.GetValue.ToString,
-                                           resp.StatusCode.ToString,
-                                           resp.StatusMessage,
-                                           Date.Now)
-                    End Using
-
-                    MsgBox("Error Encounterd with Quickbooks. Contact Premier.", MsgBoxStyle.Critical)
-                Catch ex As Exception
-                    MsgBox("ERR_MISC_Insert: " & ex.Message)
-                End Try
-            End If
-        End Sub
-
-        ' going to put customer balance sub here for quick access
+       ' going to put customer balance sub here for quick access
         Public Function GetCustomerBalance(ByVal customerListID As String) As Double
             ' return var
             Dim b As Double
@@ -109,6 +89,25 @@ Namespace Classes
 
             Return b
         End Function
+        ' copy kept here
+        Public Shared Sub ResponseErr_Misc(ByVal resp As IResponse)
+            If (resp.StatusCode = 1) Then
+                MsgBox("No matching results from Quickbooks")
+            Else
+                Try
+                    Using ta As New ds_ProgramTableAdapters.QueriesTableAdapter
+                        ta.ERR_MISC_Insert(resp.Type.GetValue.ToString,
+                                           resp.StatusCode.ToString,
+                                           resp.StatusMessage,
+                                           Date.Now)
+                    End Using
+
+                    MsgBox("Error Encounterd with Quickbooks. Contact Premier.", MsgBoxStyle.Critical)
+                Catch ex As Exception
+                    MsgBox("ERR_MISC_Insert: " & ex.Message)
+                End Try
+            End If
+        End Sub
         
 
         '    Private Sub KillQBProcess()
@@ -143,5 +142,5 @@ Namespace Classes
         '        End Try
         '
         '    End Sub
-
+    End Class
 End Namespace

@@ -32,6 +32,12 @@ Partial Class TrashCash_Admin
         Me.btn_Banks = New System.Windows.Forms.ToolStripButton()
         Me.btn_Defaults = New System.Windows.Forms.ToolStripButton()
         Me.btn_ExportImport = New System.Windows.Forms.ToolStripButton()
+        Me.btn_InvTypes = New System.Windows.Forms.ToolStripButton()
+        Me.ToolStripSeparator1 = New System.Windows.Forms.ToolStripSeparator()
+        Me.ToolStripSeparator2 = New System.Windows.Forms.ToolStripSeparator()
+        Me.ToolStripSeparator3 = New System.Windows.Forms.ToolStripSeparator()
+        Me.ToolStripSeparator4 = New System.Windows.Forms.ToolStripSeparator()
+        Me.ToolStripSeparator5 = New System.Windows.Forms.ToolStripSeparator()
         Me.StatusStrip.SuspendLayout()
         Me.ts_Admin.SuspendLayout()
         Me.SuspendLayout()
@@ -41,7 +47,7 @@ Partial Class TrashCash_Admin
         Me.StatusStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.lbl_AdminUser})
         Me.StatusStrip.Location = New System.Drawing.Point(0, 431)
         Me.StatusStrip.Name = "StatusStrip"
-        Me.StatusStrip.Size = New System.Drawing.Size(632, 22)
+        Me.StatusStrip.Size = New System.Drawing.Size(848, 22)
         Me.StatusStrip.TabIndex = 7
         Me.StatusStrip.Text = "StatusStrip"
         '
@@ -54,10 +60,10 @@ Partial Class TrashCash_Admin
         'ts_Admin
         '
         Me.ts_Admin.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden
-        Me.ts_Admin.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.btn_AdminPay, Me.btn_ServiceTypes, Me.btn_Banks, Me.btn_Defaults, Me.btn_ExportImport})
+        Me.ts_Admin.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.btn_AdminPay, Me.ToolStripSeparator5, Me.btn_ServiceTypes, Me.ToolStripSeparator4, Me.btn_Banks, Me.ToolStripSeparator2, Me.btn_Defaults, Me.btn_ExportImport, Me.ToolStripSeparator3, Me.btn_InvTypes, Me.ToolStripSeparator1})
         Me.ts_Admin.Location = New System.Drawing.Point(0, 0)
         Me.ts_Admin.Name = "ts_Admin"
-        Me.ts_Admin.Size = New System.Drawing.Size(632, 25)
+        Me.ts_Admin.Size = New System.Drawing.Size(848, 25)
         Me.ts_Admin.TabIndex = 9
         Me.ts_Admin.Text = "ToolStrip1"
         '
@@ -108,11 +114,45 @@ Partial Class TrashCash_Admin
         Me.btn_ExportImport.Size = New System.Drawing.Size(85, 22)
         Me.btn_ExportImport.Text = "Import/Export"
         '
+        'btn_InvTypes
+        '
+        Me.btn_InvTypes.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text
+        Me.btn_InvTypes.Image = CType(resources.GetObject("btn_InvTypes.Image"), System.Drawing.Image)
+        Me.btn_InvTypes.ImageTransparentColor = System.Drawing.Color.Magenta
+        Me.btn_InvTypes.Name = "btn_InvTypes"
+        Me.btn_InvTypes.Size = New System.Drawing.Size(83, 22)
+        Me.btn_InvTypes.Text = "Invoice Types"
+        '
+        'ToolStripSeparator1
+        '
+        Me.ToolStripSeparator1.Name = "ToolStripSeparator1"
+        Me.ToolStripSeparator1.Size = New System.Drawing.Size(6, 25)
+        '
+        'ToolStripSeparator2
+        '
+        Me.ToolStripSeparator2.Name = "ToolStripSeparator2"
+        Me.ToolStripSeparator2.Size = New System.Drawing.Size(6, 25)
+        '
+        'ToolStripSeparator3
+        '
+        Me.ToolStripSeparator3.Name = "ToolStripSeparator3"
+        Me.ToolStripSeparator3.Size = New System.Drawing.Size(6, 25)
+        '
+        'ToolStripSeparator4
+        '
+        Me.ToolStripSeparator4.Name = "ToolStripSeparator4"
+        Me.ToolStripSeparator4.Size = New System.Drawing.Size(6, 25)
+        '
+        'ToolStripSeparator5
+        '
+        Me.ToolStripSeparator5.Name = "ToolStripSeparator5"
+        Me.ToolStripSeparator5.Size = New System.Drawing.Size(6, 25)
+        '
         'TrashCash_Admin
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(632, 453)
+        Me.ClientSize = New System.Drawing.Size(848, 453)
         Me.Controls.Add(Me.ts_Admin)
         Me.Controls.Add(Me.StatusStrip)
         Me.IsMdiContainer = True
@@ -135,5 +175,11 @@ Partial Class TrashCash_Admin
     Friend WithEvents btn_Banks As System.Windows.Forms.ToolStripButton
     Friend WithEvents btn_Defaults As System.Windows.Forms.ToolStripButton
     Friend WithEvents btn_ExportImport As System.Windows.Forms.ToolStripButton
+    Friend WithEvents ToolStripSeparator5 As System.Windows.Forms.ToolStripSeparator
+    Friend WithEvents ToolStripSeparator4 As System.Windows.Forms.ToolStripSeparator
+    Friend WithEvents ToolStripSeparator2 As System.Windows.Forms.ToolStripSeparator
+    Friend WithEvents ToolStripSeparator3 As System.Windows.Forms.ToolStripSeparator
+    Friend WithEvents btn_InvTypes As System.Windows.Forms.ToolStripButton
+    Friend WithEvents ToolStripSeparator1 As System.Windows.Forms.ToolStripSeparator
 
 End Class
