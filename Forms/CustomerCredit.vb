@@ -64,8 +64,6 @@
         Ts_M_Customer.HideQuickSearch()
     End Sub
 
-    Private _rightClickRowIndex As Integer
-
     Private Sub btn_VoidCredit_Click(sender As System.Object, e As System.EventArgs) Handles btn_VoidCredit.Click
         If (dg_Credits.SelectedRows.Count = 1) Then
             Dim row As ds_Customer.Customer_CreditsRow = CType(dg_Credits.SelectedRows(0).DataBoundItem, DataRowView).Row

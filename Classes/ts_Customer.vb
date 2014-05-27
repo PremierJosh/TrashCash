@@ -113,6 +113,9 @@ Public Class ts_M_Customer
             Else
                 lbl_AdjustedBalAmount.ForeColor = Color.Red
             End If
+            
+            ' shrink cmb_Customer
+            cmb_Customer.Size = New Size(275, 25)
         Else
             ' hide queue controls
             sep_QueueAmount.Visible = False
@@ -122,6 +125,9 @@ Public Class ts_M_Customer
             sep_AdjustedBal.Visible = False
             lbl_AdjustedBalHeader.Visible = False
             lbl_AdjustedBalAmount.Visible = False
+            
+            ' grow cmb_Customer
+            cmb_Customer.Size = New Size(350, 25)
         End If
     End Sub
 
@@ -190,9 +196,6 @@ Public Class ts_M_Customer
         Me.GripStyle = ToolStripGripStyle.Hidden
         'Me.Dock = DockStyle.Fill
         Me.Items.AddRange(New ToolStripItem() {cmb_Customer, New ToolStripSeparator, lbl_Quicksearch, tb_QuickSearch, sep_QuickSearch, balanceHeader, lbl_CustBalance, sep_QueueAmount, lbl_QueueHeader, lbl_QueueAmount, sep_AdjustedBal, lbl_AdjustedBalHeader, lbl_AdjustedBalAmount})
-
-        ' resize cmb_Customer
-        cmb_Customer.Size = New Size(275, 25)
     End Sub
 
     ' these subs catch search events from the tb

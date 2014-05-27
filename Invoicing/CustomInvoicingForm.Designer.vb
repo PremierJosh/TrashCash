@@ -29,20 +29,24 @@
             Dim lbl_Addr3 As System.Windows.Forms.Label
             Dim lbl_CityState As System.Windows.Forms.Label
             Dim ZipLabel As System.Windows.Forms.Label
-            Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-            Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-            Me.FlowLayoutPanel = New System.Windows.Forms.FlowLayoutPanel()
+            Dim DataGridViewCellStyle5 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+            Dim DataGridViewCellStyle6 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+            Me.CustomInvoiceLineTypesBindingSource = New System.Windows.Forms.BindingSource(Me.components)
+            Me.Ds_Invoicing = New TrashCash.ds_Invoicing()
+            Me.CustomerRecentAddrsBindingSource = New System.Windows.Forms.BindingSource(Me.components)
+            Me.CustomInvoiceLineItemsBindingSource = New System.Windows.Forms.BindingSource(Me.components)
             Me.pnl_1 = New System.Windows.Forms.Panel()
             Me.pnl_TopContent = New System.Windows.Forms.Panel()
             Me.Ts_M_Customer = New TrashCash.ts_M_Customer()
+            Me.TabControl1 = New System.Windows.Forms.TabControl()
+            Me.tp_NewInv = New System.Windows.Forms.TabPage()
+            Me.FlowLayoutPanel = New System.Windows.Forms.FlowLayoutPanel()
             Me.pnl_2 = New System.Windows.Forms.Panel()
             Me.lbl_Rate = New System.Windows.Forms.Label()
             Me.tb_Rate = New TrashCash.Currency_TextBox()
             Me.lbl_LineType = New System.Windows.Forms.Label()
             Me.btn_AddLine = New System.Windows.Forms.Button()
             Me.cmb_LineTypes = New System.Windows.Forms.ComboBox()
-            Me.CustomInvoiceLineTypesBindingSource = New System.Windows.Forms.BindingSource(Me.components)
-            Me.Ds_Invoicing = New TrashCash.ds_Invoicing()
             Me.tb_DescText = New System.Windows.Forms.TextBox()
             Me.ck_Reminder = New System.Windows.Forms.CheckBox()
             Me.lbl_DescText = New System.Windows.Forms.Label()
@@ -55,7 +59,6 @@
             Me.tb_State = New System.Windows.Forms.TextBox()
             Me.lbl_RecentAddrs = New System.Windows.Forms.Label()
             Me.cmb_RecentAddr = New System.Windows.Forms.ComboBox()
-            Me.CustomerRecentAddrsBindingSource = New System.Windows.Forms.BindingSource(Me.components)
             Me.tb_Zip = New System.Windows.Forms.TextBox()
             Me.dtp_DateOfSrvc = New System.Windows.Forms.DateTimePicker()
             Me.pnl_3 = New System.Windows.Forms.Panel()
@@ -66,7 +69,8 @@
             Me.RenderedOnDateDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
             Me.Addr1DataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
             Me.DescTextDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
-            Me.CustomInvoiceLineItemsBindingSource = New System.Windows.Forms.BindingSource(Me.components)
+            Me.ContextMenuStrip1 = New System.Windows.Forms.ContextMenuStrip(Me.components)
+            Me.btn_DeleteLine = New System.Windows.Forms.ToolStripMenuItem()
             Me.lbl_LineItems = New System.Windows.Forms.Label()
             Me.btn_CreateInv = New System.Windows.Forms.Button()
             Me.grp_InvDets = New System.Windows.Forms.GroupBox()
@@ -75,27 +79,70 @@
             Me.lbl_PostDate = New System.Windows.Forms.Label()
             Me.lbl_DueDate = New System.Windows.Forms.Label()
             Me.ck_Print = New System.Windows.Forms.CheckBox()
-            Me.CustomInvoice_LineTypesTableAdapter = New TrashCash.ds_InvoicingTableAdapters.CustomInvoice_LineTypesTableAdapter()
-            Me.Customer_RecentAddrsTableAdapter = New TrashCash.ds_InvoicingTableAdapters.Customer_RecentAddrsTableAdapter()
-            Me.TableAdapterManager = New TrashCash.ds_InvoicingTableAdapters.TableAdapterManager()
-            Me.CustomInvoice_LineItemsTableAdapter = New TrashCash.ds_InvoicingTableAdapters.CustomInvoice_LineItemsTableAdapter()
+            Me.tp_History = New System.Windows.Forms.TabPage()
+            Me.lbl_VoidReason = New System.Windows.Forms.Label()
+            Me.tb_VoidReason = New System.Windows.Forms.TextBox()
+            Me.btn_VoidInv = New System.Windows.Forms.Button()
+            Me.DataGridView1 = New System.Windows.Forms.DataGridView()
+            Me.CILineIDDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+            Me.CIIDDataGridViewTextBoxColumn1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+            Me.CITypeIDDataGridViewTextBoxColumn1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+            Me.RateDataGridViewTextBoxColumn1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+            Me.DefaultDescDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+            Me.RenderedOnDateDataGridViewTextBoxColumn1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+            Me.DescTextDataGridViewTextBoxColumn1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+            Me.Addr1DataGridViewTextBoxColumn1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+            Me.Addr2DataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+            Me.Addr3DataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+            Me.ZipDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+            Me.CompiledDescTextDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+            Me.CityDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+            Me.STATEDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+            Me.Ds_HistoryInv = New TrashCash.ds_Invoicing()
+            Me.dg_InvHistory = New System.Windows.Forms.DataGridView()
+            Me.CustomInvoicesBindingSource = New System.Windows.Forms.BindingSource(Me.components)
+            Me.InvoiceHistoryBindingSource = New System.Windows.Forms.BindingSource(Me.components)
+            Me.CIIDDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+            Me.CustomerNumberDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+            Me.StatusIDDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+            Me.InsertedUserDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+            Me.TimeInsertedDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+            Me.InvoiceListIDDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+            Me.InvoiceRefNumDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+            Me.TimeSubmittedDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+            Me.TimeCreatedDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+            Me.DueDateDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+            Me.PostDateDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+            Me.VoidedDataGridViewCheckBoxColumn = New System.Windows.Forms.DataGridViewCheckBoxColumn()
+            Me.VoidReasonDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+            Me.VoidTimeDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+            Me.VoidUserDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
             lbl_Addr1 = New System.Windows.Forms.Label()
             lbl_Addr2 = New System.Windows.Forms.Label()
             lbl_Addr3 = New System.Windows.Forms.Label()
             lbl_CityState = New System.Windows.Forms.Label()
             ZipLabel = New System.Windows.Forms.Label()
-            Me.FlowLayoutPanel.SuspendLayout()
-            Me.pnl_1.SuspendLayout()
-            Me.pnl_TopContent.SuspendLayout()
-            Me.pnl_2.SuspendLayout()
             CType(Me.CustomInvoiceLineTypesBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
             CType(Me.Ds_Invoicing, System.ComponentModel.ISupportInitialize).BeginInit()
-            Me.grp_Address.SuspendLayout()
             CType(Me.CustomerRecentAddrsBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
+            CType(Me.CustomInvoiceLineItemsBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
+            Me.pnl_1.SuspendLayout()
+            Me.pnl_TopContent.SuspendLayout()
+            Me.TabControl1.SuspendLayout()
+            Me.tp_NewInv.SuspendLayout()
+            Me.FlowLayoutPanel.SuspendLayout()
+            Me.pnl_2.SuspendLayout()
+            Me.grp_Address.SuspendLayout()
             Me.pnl_3.SuspendLayout()
             CType(Me.dg_LineItems, System.ComponentModel.ISupportInitialize).BeginInit()
-            CType(Me.CustomInvoiceLineItemsBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
+            Me.ContextMenuStrip1.SuspendLayout()
             Me.grp_InvDets.SuspendLayout()
+            Me.tp_History.SuspendLayout()
+            CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).BeginInit()
+            CType(Me.Ds_HistoryInv, System.ComponentModel.ISupportInitialize).BeginInit()
+            CType(Me.dg_InvHistory, System.ComponentModel.ISupportInitialize).BeginInit()
+            CType(Me.CustomInvoicesBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
+            CType(Me.InvoiceHistoryBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
             Me.SuspendLayout()
             '
             'lbl_Addr1
@@ -143,26 +190,35 @@
             ZipLabel.TabIndex = 14
             ZipLabel.Text = "Zip:"
             '
-            'FlowLayoutPanel
+            'CustomInvoiceLineTypesBindingSource
             '
-            Me.FlowLayoutPanel.Controls.Add(Me.pnl_1)
-            Me.FlowLayoutPanel.Controls.Add(Me.pnl_2)
-            Me.FlowLayoutPanel.Controls.Add(Me.pnl_3)
-            Me.FlowLayoutPanel.Dock = System.Windows.Forms.DockStyle.Fill
-            Me.FlowLayoutPanel.FlowDirection = System.Windows.Forms.FlowDirection.TopDown
-            Me.FlowLayoutPanel.Location = New System.Drawing.Point(0, 0)
-            Me.FlowLayoutPanel.Name = "FlowLayoutPanel"
-            Me.FlowLayoutPanel.Size = New System.Drawing.Size(855, 589)
-            Me.FlowLayoutPanel.TabIndex = 0
+            Me.CustomInvoiceLineTypesBindingSource.DataMember = "CustomInvoice_LineTypes"
+            Me.CustomInvoiceLineTypesBindingSource.DataSource = Me.Ds_Invoicing
+            '
+            'Ds_Invoicing
+            '
+            Me.Ds_Invoicing.DataSetName = "ds_Invoicing"
+            Me.Ds_Invoicing.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema
+            '
+            'CustomerRecentAddrsBindingSource
+            '
+            Me.CustomerRecentAddrsBindingSource.DataMember = "Customer_RecentAddrs"
+            Me.CustomerRecentAddrsBindingSource.DataSource = Me.Ds_Invoicing
+            '
+            'CustomInvoiceLineItemsBindingSource
+            '
+            Me.CustomInvoiceLineItemsBindingSource.DataMember = "CustomInvoice_LineItems"
+            Me.CustomInvoiceLineItemsBindingSource.DataSource = Me.Ds_Invoicing
             '
             'pnl_1
             '
             Me.pnl_1.Controls.Add(Me.pnl_TopContent)
-            Me.pnl_1.Location = New System.Drawing.Point(3, 3)
+            Me.pnl_1.Dock = System.Windows.Forms.DockStyle.Top
+            Me.pnl_1.Location = New System.Drawing.Point(0, 0)
             Me.pnl_1.Name = "pnl_1"
             Me.pnl_1.Padding = New System.Windows.Forms.Padding(20, 10, 20, 10)
-            Me.pnl_1.Size = New System.Drawing.Size(850, 53)
-            Me.pnl_1.TabIndex = 98
+            Me.pnl_1.Size = New System.Drawing.Size(861, 53)
+            Me.pnl_1.TabIndex = 104
             '
             'pnl_TopContent
             '
@@ -171,7 +227,7 @@
             Me.pnl_TopContent.Dock = System.Windows.Forms.DockStyle.Fill
             Me.pnl_TopContent.Location = New System.Drawing.Point(20, 10)
             Me.pnl_TopContent.Name = "pnl_TopContent"
-            Me.pnl_TopContent.Size = New System.Drawing.Size(810, 33)
+            Me.pnl_TopContent.Size = New System.Drawing.Size(821, 33)
             Me.pnl_TopContent.TabIndex = 2
             '
             'Ts_M_Customer
@@ -182,9 +238,42 @@
             Me.Ts_M_Customer.HomeForm = Nothing
             Me.Ts_M_Customer.Location = New System.Drawing.Point(0, 0)
             Me.Ts_M_Customer.Name = "Ts_M_Customer"
-            Me.Ts_M_Customer.Size = New System.Drawing.Size(808, 31)
+            Me.Ts_M_Customer.Size = New System.Drawing.Size(819, 31)
             Me.Ts_M_Customer.TabIndex = 2
             Me.Ts_M_Customer.Text = "Ts_M_Customer1"
+            '
+            'TabControl1
+            '
+            Me.TabControl1.Controls.Add(Me.tp_NewInv)
+            Me.TabControl1.Controls.Add(Me.tp_History)
+            Me.TabControl1.Dock = System.Windows.Forms.DockStyle.Fill
+            Me.TabControl1.Location = New System.Drawing.Point(0, 53)
+            Me.TabControl1.Name = "TabControl1"
+            Me.TabControl1.SelectedIndex = 0
+            Me.TabControl1.Size = New System.Drawing.Size(861, 540)
+            Me.TabControl1.TabIndex = 105
+            '
+            'tp_NewInv
+            '
+            Me.tp_NewInv.BackColor = System.Drawing.SystemColors.Control
+            Me.tp_NewInv.Controls.Add(Me.FlowLayoutPanel)
+            Me.tp_NewInv.Location = New System.Drawing.Point(4, 22)
+            Me.tp_NewInv.Name = "tp_NewInv"
+            Me.tp_NewInv.Padding = New System.Windows.Forms.Padding(3)
+            Me.tp_NewInv.Size = New System.Drawing.Size(853, 514)
+            Me.tp_NewInv.TabIndex = 0
+            Me.tp_NewInv.Text = "New Invoice"
+            '
+            'FlowLayoutPanel
+            '
+            Me.FlowLayoutPanel.Controls.Add(Me.pnl_2)
+            Me.FlowLayoutPanel.Controls.Add(Me.pnl_3)
+            Me.FlowLayoutPanel.Dock = System.Windows.Forms.DockStyle.Fill
+            Me.FlowLayoutPanel.FlowDirection = System.Windows.Forms.FlowDirection.TopDown
+            Me.FlowLayoutPanel.Location = New System.Drawing.Point(3, 3)
+            Me.FlowLayoutPanel.Name = "FlowLayoutPanel"
+            Me.FlowLayoutPanel.Size = New System.Drawing.Size(847, 508)
+            Me.FlowLayoutPanel.TabIndex = 1
             '
             'pnl_2
             '
@@ -200,7 +289,7 @@
             Me.pnl_2.Controls.Add(Me.lbl_DateOfSrvc)
             Me.pnl_2.Controls.Add(Me.grp_Address)
             Me.pnl_2.Controls.Add(Me.dtp_DateOfSrvc)
-            Me.pnl_2.Location = New System.Drawing.Point(3, 62)
+            Me.pnl_2.Location = New System.Drawing.Point(3, 3)
             Me.pnl_2.Name = "pnl_2"
             Me.pnl_2.Size = New System.Drawing.Size(840, 229)
             Me.pnl_2.TabIndex = 101
@@ -252,16 +341,6 @@
             Me.cmb_LineTypes.Size = New System.Drawing.Size(156, 21)
             Me.cmb_LineTypes.TabIndex = 0
             Me.cmb_LineTypes.ValueMember = "CI_TypeID"
-            '
-            'CustomInvoiceLineTypesBindingSource
-            '
-            Me.CustomInvoiceLineTypesBindingSource.DataMember = "CustomInvoice_LineTypes"
-            Me.CustomInvoiceLineTypesBindingSource.DataSource = Me.Ds_Invoicing
-            '
-            'Ds_Invoicing
-            '
-            Me.Ds_Invoicing.DataSetName = "ds_Invoicing"
-            Me.Ds_Invoicing.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema
             '
             'tb_DescText
             '
@@ -378,11 +457,6 @@
             Me.cmb_RecentAddr.TabIndex = 1
             Me.cmb_RecentAddr.ValueMember = "ID"
             '
-            'CustomerRecentAddrsBindingSource
-            '
-            Me.CustomerRecentAddrsBindingSource.DataMember = "Customer_RecentAddrs"
-            Me.CustomerRecentAddrsBindingSource.DataSource = Me.Ds_Invoicing
-            '
             'tb_Zip
             '
             Me.tb_Zip.Location = New System.Drawing.Point(73, 123)
@@ -405,7 +479,7 @@
             Me.pnl_3.Controls.Add(Me.lbl_LineItems)
             Me.pnl_3.Controls.Add(Me.btn_CreateInv)
             Me.pnl_3.Controls.Add(Me.grp_InvDets)
-            Me.pnl_3.Location = New System.Drawing.Point(3, 297)
+            Me.pnl_3.Location = New System.Drawing.Point(3, 238)
             Me.pnl_3.Name = "pnl_3"
             Me.pnl_3.Padding = New System.Windows.Forms.Padding(5)
             Me.pnl_3.Size = New System.Drawing.Size(840, 266)
@@ -430,9 +504,11 @@
             Me.dg_LineItems.AutoGenerateColumns = False
             Me.dg_LineItems.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
             Me.dg_LineItems.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.CITypeIDDataGridViewTextBoxColumn, Me.RateDataGridViewTextBoxColumn, Me.RenderedOnDateDataGridViewTextBoxColumn, Me.Addr1DataGridViewTextBoxColumn, Me.DescTextDataGridViewTextBoxColumn})
+            Me.dg_LineItems.ContextMenuStrip = Me.ContextMenuStrip1
             Me.dg_LineItems.DataSource = Me.CustomInvoiceLineItemsBindingSource
             Me.dg_LineItems.Dock = System.Windows.Forms.DockStyle.Top
             Me.dg_LineItems.Location = New System.Drawing.Point(5, 25)
+            Me.dg_LineItems.MultiSelect = False
             Me.dg_LineItems.Name = "dg_LineItems"
             Me.dg_LineItems.ReadOnly = True
             Me.dg_LineItems.RowHeadersVisible = False
@@ -458,8 +534,8 @@
             '
             Me.RateDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
             Me.RateDataGridViewTextBoxColumn.DataPropertyName = "Rate"
-            DataGridViewCellStyle3.Format = "d"
-            Me.RateDataGridViewTextBoxColumn.DefaultCellStyle = DataGridViewCellStyle3
+            DataGridViewCellStyle5.Format = "d"
+            Me.RateDataGridViewTextBoxColumn.DefaultCellStyle = DataGridViewCellStyle5
             Me.RateDataGridViewTextBoxColumn.HeaderText = "Rate"
             Me.RateDataGridViewTextBoxColumn.Name = "RateDataGridViewTextBoxColumn"
             Me.RateDataGridViewTextBoxColumn.ReadOnly = True
@@ -469,8 +545,8 @@
             '
             Me.RenderedOnDateDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
             Me.RenderedOnDateDataGridViewTextBoxColumn.DataPropertyName = "RenderedOnDate"
-            DataGridViewCellStyle4.Format = "d"
-            Me.RenderedOnDateDataGridViewTextBoxColumn.DefaultCellStyle = DataGridViewCellStyle4
+            DataGridViewCellStyle6.Format = "d"
+            Me.RenderedOnDateDataGridViewTextBoxColumn.DefaultCellStyle = DataGridViewCellStyle6
             Me.RenderedOnDateDataGridViewTextBoxColumn.HeaderText = "Date of service"
             Me.RenderedOnDateDataGridViewTextBoxColumn.Name = "RenderedOnDateDataGridViewTextBoxColumn"
             Me.RenderedOnDateDataGridViewTextBoxColumn.ReadOnly = True
@@ -493,10 +569,17 @@
             Me.DescTextDataGridViewTextBoxColumn.Name = "DescTextDataGridViewTextBoxColumn"
             Me.DescTextDataGridViewTextBoxColumn.ReadOnly = True
             '
-            'CustomInvoiceLineItemsBindingSource
+            'ContextMenuStrip1
             '
-            Me.CustomInvoiceLineItemsBindingSource.DataMember = "CustomInvoice_LineItems"
-            Me.CustomInvoiceLineItemsBindingSource.DataSource = Me.Ds_Invoicing
+            Me.ContextMenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.btn_DeleteLine})
+            Me.ContextMenuStrip1.Name = "ContextMenuStrip1"
+            Me.ContextMenuStrip1.Size = New System.Drawing.Size(133, 26)
+            '
+            'btn_DeleteLine
+            '
+            Me.btn_DeleteLine.Name = "btn_DeleteLine"
+            Me.btn_DeleteLine.Size = New System.Drawing.Size(132, 22)
+            Me.btn_DeleteLine.Text = "Delete Line"
             '
             'lbl_LineItems
             '
@@ -579,65 +662,353 @@
             Me.ck_Print.Text = "Print Invoice"
             Me.ck_Print.UseVisualStyleBackColor = True
             '
-            'CustomInvoice_LineTypesTableAdapter
+            'tp_History
             '
-            Me.CustomInvoice_LineTypesTableAdapter.ClearBeforeFill = True
+            Me.tp_History.BackColor = System.Drawing.SystemColors.Control
+            Me.tp_History.Controls.Add(Me.lbl_VoidReason)
+            Me.tp_History.Controls.Add(Me.tb_VoidReason)
+            Me.tp_History.Controls.Add(Me.btn_VoidInv)
+            Me.tp_History.Controls.Add(Me.DataGridView1)
+            Me.tp_History.Controls.Add(Me.dg_InvHistory)
+            Me.tp_History.Location = New System.Drawing.Point(4, 22)
+            Me.tp_History.Name = "tp_History"
+            Me.tp_History.Padding = New System.Windows.Forms.Padding(3)
+            Me.tp_History.Size = New System.Drawing.Size(853, 514)
+            Me.tp_History.TabIndex = 1
+            Me.tp_History.Text = "Custom Invoice History"
             '
-            'Customer_RecentAddrsTableAdapter
+            'lbl_VoidReason
             '
-            Me.Customer_RecentAddrsTableAdapter.ClearBeforeFill = True
+            Me.lbl_VoidReason.AutoSize = True
+            Me.lbl_VoidReason.Location = New System.Drawing.Point(577, 302)
+            Me.lbl_VoidReason.Name = "lbl_VoidReason"
+            Me.lbl_VoidReason.Size = New System.Drawing.Size(71, 13)
+            Me.lbl_VoidReason.TabIndex = 4
+            Me.lbl_VoidReason.Text = "Void Reason:"
             '
-            'TableAdapterManager
+            'tb_VoidReason
             '
-            Me.TableAdapterManager.BackupDataSetBeforeUpdate = False
-            Me.TableAdapterManager.CustomInvoice_LineItemsTableAdapter = Me.CustomInvoice_LineItemsTableAdapter
-            Me.TableAdapterManager.CustomInvoice_LineTypesTableAdapter = Me.CustomInvoice_LineTypesTableAdapter
-            Me.TableAdapterManager.CustomInvoicesTableAdapter = Nothing
-            Me.TableAdapterManager.UpdateOrder = TrashCash.ds_InvoicingTableAdapters.TableAdapterManager.UpdateOrderOption.InsertUpdateDelete
+            Me.tb_VoidReason.Location = New System.Drawing.Point(572, 316)
+            Me.tb_VoidReason.Multiline = True
+            Me.tb_VoidReason.Name = "tb_VoidReason"
+            Me.tb_VoidReason.Size = New System.Drawing.Size(230, 56)
+            Me.tb_VoidReason.TabIndex = 3
             '
-            'CustomInvoice_LineItemsTableAdapter
+            'btn_VoidInv
             '
-            Me.CustomInvoice_LineItemsTableAdapter.ClearBeforeFill = True
+            Me.btn_VoidInv.AutoSize = True
+            Me.btn_VoidInv.ForeColor = System.Drawing.Color.Red
+            Me.btn_VoidInv.Location = New System.Drawing.Point(655, 378)
+            Me.btn_VoidInv.Name = "btn_VoidInv"
+            Me.btn_VoidInv.Size = New System.Drawing.Size(76, 23)
+            Me.btn_VoidInv.TabIndex = 2
+            Me.btn_VoidInv.Text = "Void Invoice"
+            Me.btn_VoidInv.UseVisualStyleBackColor = True
+            '
+            'DataGridView1
+            '
+            Me.DataGridView1.AllowUserToAddRows = False
+            Me.DataGridView1.AllowUserToDeleteRows = False
+            Me.DataGridView1.AutoGenerateColumns = False
+            Me.DataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+            Me.DataGridView1.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.CILineIDDataGridViewTextBoxColumn, Me.CIIDDataGridViewTextBoxColumn1, Me.CITypeIDDataGridViewTextBoxColumn1, Me.RateDataGridViewTextBoxColumn1, Me.DefaultDescDataGridViewTextBoxColumn, Me.RenderedOnDateDataGridViewTextBoxColumn1, Me.DescTextDataGridViewTextBoxColumn1, Me.Addr1DataGridViewTextBoxColumn1, Me.Addr2DataGridViewTextBoxColumn, Me.Addr3DataGridViewTextBoxColumn, Me.ZipDataGridViewTextBoxColumn, Me.CompiledDescTextDataGridViewTextBoxColumn, Me.CityDataGridViewTextBoxColumn, Me.STATEDataGridViewTextBoxColumn})
+            Me.DataGridView1.DataMember = "CustomInvoice_LineItems"
+            Me.DataGridView1.DataSource = Me.Ds_HistoryInv
+            Me.DataGridView1.Location = New System.Drawing.Point(38, 268)
+            Me.DataGridView1.Name = "DataGridView1"
+            Me.DataGridView1.ReadOnly = True
+            Me.DataGridView1.Size = New System.Drawing.Size(406, 150)
+            Me.DataGridView1.TabIndex = 1
+            '
+            'CILineIDDataGridViewTextBoxColumn
+            '
+            Me.CILineIDDataGridViewTextBoxColumn.DataPropertyName = "CI_LineID"
+            Me.CILineIDDataGridViewTextBoxColumn.HeaderText = "CI_LineID"
+            Me.CILineIDDataGridViewTextBoxColumn.Name = "CILineIDDataGridViewTextBoxColumn"
+            Me.CILineIDDataGridViewTextBoxColumn.ReadOnly = True
+            '
+            'CIIDDataGridViewTextBoxColumn1
+            '
+            Me.CIIDDataGridViewTextBoxColumn1.DataPropertyName = "CI_ID"
+            Me.CIIDDataGridViewTextBoxColumn1.HeaderText = "CI_ID"
+            Me.CIIDDataGridViewTextBoxColumn1.Name = "CIIDDataGridViewTextBoxColumn1"
+            Me.CIIDDataGridViewTextBoxColumn1.ReadOnly = True
+            '
+            'CITypeIDDataGridViewTextBoxColumn1
+            '
+            Me.CITypeIDDataGridViewTextBoxColumn1.DataPropertyName = "CI_TypeID"
+            Me.CITypeIDDataGridViewTextBoxColumn1.HeaderText = "CI_TypeID"
+            Me.CITypeIDDataGridViewTextBoxColumn1.Name = "CITypeIDDataGridViewTextBoxColumn1"
+            Me.CITypeIDDataGridViewTextBoxColumn1.ReadOnly = True
+            '
+            'RateDataGridViewTextBoxColumn1
+            '
+            Me.RateDataGridViewTextBoxColumn1.DataPropertyName = "Rate"
+            Me.RateDataGridViewTextBoxColumn1.HeaderText = "Rate"
+            Me.RateDataGridViewTextBoxColumn1.Name = "RateDataGridViewTextBoxColumn1"
+            Me.RateDataGridViewTextBoxColumn1.ReadOnly = True
+            '
+            'DefaultDescDataGridViewTextBoxColumn
+            '
+            Me.DefaultDescDataGridViewTextBoxColumn.DataPropertyName = "DefaultDesc"
+            Me.DefaultDescDataGridViewTextBoxColumn.HeaderText = "DefaultDesc"
+            Me.DefaultDescDataGridViewTextBoxColumn.Name = "DefaultDescDataGridViewTextBoxColumn"
+            Me.DefaultDescDataGridViewTextBoxColumn.ReadOnly = True
+            '
+            'RenderedOnDateDataGridViewTextBoxColumn1
+            '
+            Me.RenderedOnDateDataGridViewTextBoxColumn1.DataPropertyName = "RenderedOnDate"
+            Me.RenderedOnDateDataGridViewTextBoxColumn1.HeaderText = "RenderedOnDate"
+            Me.RenderedOnDateDataGridViewTextBoxColumn1.Name = "RenderedOnDateDataGridViewTextBoxColumn1"
+            Me.RenderedOnDateDataGridViewTextBoxColumn1.ReadOnly = True
+            '
+            'DescTextDataGridViewTextBoxColumn1
+            '
+            Me.DescTextDataGridViewTextBoxColumn1.DataPropertyName = "DescText"
+            Me.DescTextDataGridViewTextBoxColumn1.HeaderText = "DescText"
+            Me.DescTextDataGridViewTextBoxColumn1.Name = "DescTextDataGridViewTextBoxColumn1"
+            Me.DescTextDataGridViewTextBoxColumn1.ReadOnly = True
+            '
+            'Addr1DataGridViewTextBoxColumn1
+            '
+            Me.Addr1DataGridViewTextBoxColumn1.DataPropertyName = "Addr1"
+            Me.Addr1DataGridViewTextBoxColumn1.HeaderText = "Addr1"
+            Me.Addr1DataGridViewTextBoxColumn1.Name = "Addr1DataGridViewTextBoxColumn1"
+            Me.Addr1DataGridViewTextBoxColumn1.ReadOnly = True
+            '
+            'Addr2DataGridViewTextBoxColumn
+            '
+            Me.Addr2DataGridViewTextBoxColumn.DataPropertyName = "Addr2"
+            Me.Addr2DataGridViewTextBoxColumn.HeaderText = "Addr2"
+            Me.Addr2DataGridViewTextBoxColumn.Name = "Addr2DataGridViewTextBoxColumn"
+            Me.Addr2DataGridViewTextBoxColumn.ReadOnly = True
+            '
+            'Addr3DataGridViewTextBoxColumn
+            '
+            Me.Addr3DataGridViewTextBoxColumn.DataPropertyName = "Addr3"
+            Me.Addr3DataGridViewTextBoxColumn.HeaderText = "Addr3"
+            Me.Addr3DataGridViewTextBoxColumn.Name = "Addr3DataGridViewTextBoxColumn"
+            Me.Addr3DataGridViewTextBoxColumn.ReadOnly = True
+            '
+            'ZipDataGridViewTextBoxColumn
+            '
+            Me.ZipDataGridViewTextBoxColumn.DataPropertyName = "Zip"
+            Me.ZipDataGridViewTextBoxColumn.HeaderText = "Zip"
+            Me.ZipDataGridViewTextBoxColumn.Name = "ZipDataGridViewTextBoxColumn"
+            Me.ZipDataGridViewTextBoxColumn.ReadOnly = True
+            '
+            'CompiledDescTextDataGridViewTextBoxColumn
+            '
+            Me.CompiledDescTextDataGridViewTextBoxColumn.DataPropertyName = "CompiledDescText"
+            Me.CompiledDescTextDataGridViewTextBoxColumn.HeaderText = "CompiledDescText"
+            Me.CompiledDescTextDataGridViewTextBoxColumn.Name = "CompiledDescTextDataGridViewTextBoxColumn"
+            Me.CompiledDescTextDataGridViewTextBoxColumn.ReadOnly = True
+            '
+            'CityDataGridViewTextBoxColumn
+            '
+            Me.CityDataGridViewTextBoxColumn.DataPropertyName = "City"
+            Me.CityDataGridViewTextBoxColumn.HeaderText = "City"
+            Me.CityDataGridViewTextBoxColumn.Name = "CityDataGridViewTextBoxColumn"
+            Me.CityDataGridViewTextBoxColumn.ReadOnly = True
+            '
+            'STATEDataGridViewTextBoxColumn
+            '
+            Me.STATEDataGridViewTextBoxColumn.DataPropertyName = "STATE"
+            Me.STATEDataGridViewTextBoxColumn.HeaderText = "STATE"
+            Me.STATEDataGridViewTextBoxColumn.Name = "STATEDataGridViewTextBoxColumn"
+            Me.STATEDataGridViewTextBoxColumn.ReadOnly = True
+            '
+            'Ds_HistoryInv
+            '
+            Me.Ds_HistoryInv.DataSetName = "ds_Invoicing"
+            Me.Ds_HistoryInv.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema
+            '
+            'dg_InvHistory
+            '
+            Me.dg_InvHistory.AllowUserToAddRows = False
+            Me.dg_InvHistory.AllowUserToDeleteRows = False
+            Me.dg_InvHistory.AutoGenerateColumns = False
+            Me.dg_InvHistory.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+            Me.dg_InvHistory.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.CIIDDataGridViewTextBoxColumn, Me.CustomerNumberDataGridViewTextBoxColumn, Me.StatusIDDataGridViewTextBoxColumn, Me.InsertedUserDataGridViewTextBoxColumn, Me.TimeInsertedDataGridViewTextBoxColumn, Me.InvoiceListIDDataGridViewTextBoxColumn, Me.InvoiceRefNumDataGridViewTextBoxColumn, Me.TimeSubmittedDataGridViewTextBoxColumn, Me.TimeCreatedDataGridViewTextBoxColumn, Me.DueDateDataGridViewTextBoxColumn, Me.PostDateDataGridViewTextBoxColumn, Me.VoidedDataGridViewCheckBoxColumn, Me.VoidReasonDataGridViewTextBoxColumn, Me.VoidTimeDataGridViewTextBoxColumn, Me.VoidUserDataGridViewTextBoxColumn})
+            Me.dg_InvHistory.DataMember = "CustomInvoices"
+            Me.dg_InvHistory.DataSource = Me.Ds_HistoryInv
+            Me.dg_InvHistory.Location = New System.Drawing.Point(27, 38)
+            Me.dg_InvHistory.MultiSelect = False
+            Me.dg_InvHistory.Name = "dg_InvHistory"
+            Me.dg_InvHistory.ReadOnly = True
+            Me.dg_InvHistory.RowHeadersVisible = False
+            Me.dg_InvHistory.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
+            Me.dg_InvHistory.Size = New System.Drawing.Size(784, 150)
+            Me.dg_InvHistory.TabIndex = 0
+            '
+            'CustomInvoicesBindingSource
+            '
+            Me.CustomInvoicesBindingSource.DataMember = "CustomInvoices"
+            Me.CustomInvoicesBindingSource.DataSource = Me.Ds_Invoicing
+            '
+            'InvoiceHistoryBindingSource
+            '
+            Me.InvoiceHistoryBindingSource.DataMember = "CustomInvoices"
+            Me.InvoiceHistoryBindingSource.DataSource = Me.Ds_HistoryInv
+            Me.InvoiceHistoryBindingSource.Filter = "StatusID = 7"
+            '
+            'CIIDDataGridViewTextBoxColumn
+            '
+            Me.CIIDDataGridViewTextBoxColumn.DataPropertyName = "CI_ID"
+            Me.CIIDDataGridViewTextBoxColumn.HeaderText = "CI_ID"
+            Me.CIIDDataGridViewTextBoxColumn.Name = "CIIDDataGridViewTextBoxColumn"
+            Me.CIIDDataGridViewTextBoxColumn.ReadOnly = True
+            '
+            'CustomerNumberDataGridViewTextBoxColumn
+            '
+            Me.CustomerNumberDataGridViewTextBoxColumn.DataPropertyName = "CustomerNumber"
+            Me.CustomerNumberDataGridViewTextBoxColumn.HeaderText = "CustomerNumber"
+            Me.CustomerNumberDataGridViewTextBoxColumn.Name = "CustomerNumberDataGridViewTextBoxColumn"
+            Me.CustomerNumberDataGridViewTextBoxColumn.ReadOnly = True
+            '
+            'StatusIDDataGridViewTextBoxColumn
+            '
+            Me.StatusIDDataGridViewTextBoxColumn.DataPropertyName = "StatusID"
+            Me.StatusIDDataGridViewTextBoxColumn.HeaderText = "StatusID"
+            Me.StatusIDDataGridViewTextBoxColumn.Name = "StatusIDDataGridViewTextBoxColumn"
+            Me.StatusIDDataGridViewTextBoxColumn.ReadOnly = True
+            '
+            'InsertedUserDataGridViewTextBoxColumn
+            '
+            Me.InsertedUserDataGridViewTextBoxColumn.DataPropertyName = "InsertedUser"
+            Me.InsertedUserDataGridViewTextBoxColumn.HeaderText = "InsertedUser"
+            Me.InsertedUserDataGridViewTextBoxColumn.Name = "InsertedUserDataGridViewTextBoxColumn"
+            Me.InsertedUserDataGridViewTextBoxColumn.ReadOnly = True
+            '
+            'TimeInsertedDataGridViewTextBoxColumn
+            '
+            Me.TimeInsertedDataGridViewTextBoxColumn.DataPropertyName = "Time_Inserted"
+            Me.TimeInsertedDataGridViewTextBoxColumn.HeaderText = "Time_Inserted"
+            Me.TimeInsertedDataGridViewTextBoxColumn.Name = "TimeInsertedDataGridViewTextBoxColumn"
+            Me.TimeInsertedDataGridViewTextBoxColumn.ReadOnly = True
+            '
+            'InvoiceListIDDataGridViewTextBoxColumn
+            '
+            Me.InvoiceListIDDataGridViewTextBoxColumn.DataPropertyName = "InvoiceListID"
+            Me.InvoiceListIDDataGridViewTextBoxColumn.HeaderText = "InvoiceListID"
+            Me.InvoiceListIDDataGridViewTextBoxColumn.Name = "InvoiceListIDDataGridViewTextBoxColumn"
+            Me.InvoiceListIDDataGridViewTextBoxColumn.ReadOnly = True
+            '
+            'InvoiceRefNumDataGridViewTextBoxColumn
+            '
+            Me.InvoiceRefNumDataGridViewTextBoxColumn.DataPropertyName = "InvoiceRefNum"
+            Me.InvoiceRefNumDataGridViewTextBoxColumn.HeaderText = "InvoiceRefNum"
+            Me.InvoiceRefNumDataGridViewTextBoxColumn.Name = "InvoiceRefNumDataGridViewTextBoxColumn"
+            Me.InvoiceRefNumDataGridViewTextBoxColumn.ReadOnly = True
+            '
+            'TimeSubmittedDataGridViewTextBoxColumn
+            '
+            Me.TimeSubmittedDataGridViewTextBoxColumn.DataPropertyName = "Time_Submitted"
+            Me.TimeSubmittedDataGridViewTextBoxColumn.HeaderText = "Time_Submitted"
+            Me.TimeSubmittedDataGridViewTextBoxColumn.Name = "TimeSubmittedDataGridViewTextBoxColumn"
+            Me.TimeSubmittedDataGridViewTextBoxColumn.ReadOnly = True
+            '
+            'TimeCreatedDataGridViewTextBoxColumn
+            '
+            Me.TimeCreatedDataGridViewTextBoxColumn.DataPropertyName = "Time_Created"
+            Me.TimeCreatedDataGridViewTextBoxColumn.HeaderText = "Time_Created"
+            Me.TimeCreatedDataGridViewTextBoxColumn.Name = "TimeCreatedDataGridViewTextBoxColumn"
+            Me.TimeCreatedDataGridViewTextBoxColumn.ReadOnly = True
+            '
+            'DueDateDataGridViewTextBoxColumn
+            '
+            Me.DueDateDataGridViewTextBoxColumn.DataPropertyName = "DueDate"
+            Me.DueDateDataGridViewTextBoxColumn.HeaderText = "DueDate"
+            Me.DueDateDataGridViewTextBoxColumn.Name = "DueDateDataGridViewTextBoxColumn"
+            Me.DueDateDataGridViewTextBoxColumn.ReadOnly = True
+            '
+            'PostDateDataGridViewTextBoxColumn
+            '
+            Me.PostDateDataGridViewTextBoxColumn.DataPropertyName = "PostDate"
+            Me.PostDateDataGridViewTextBoxColumn.HeaderText = "PostDate"
+            Me.PostDateDataGridViewTextBoxColumn.Name = "PostDateDataGridViewTextBoxColumn"
+            Me.PostDateDataGridViewTextBoxColumn.ReadOnly = True
+            '
+            'VoidedDataGridViewCheckBoxColumn
+            '
+            Me.VoidedDataGridViewCheckBoxColumn.DataPropertyName = "Voided"
+            Me.VoidedDataGridViewCheckBoxColumn.HeaderText = "Voided"
+            Me.VoidedDataGridViewCheckBoxColumn.Name = "VoidedDataGridViewCheckBoxColumn"
+            Me.VoidedDataGridViewCheckBoxColumn.ReadOnly = True
+            '
+            'VoidReasonDataGridViewTextBoxColumn
+            '
+            Me.VoidReasonDataGridViewTextBoxColumn.DataPropertyName = "VoidReason"
+            Me.VoidReasonDataGridViewTextBoxColumn.HeaderText = "VoidReason"
+            Me.VoidReasonDataGridViewTextBoxColumn.Name = "VoidReasonDataGridViewTextBoxColumn"
+            Me.VoidReasonDataGridViewTextBoxColumn.ReadOnly = True
+            '
+            'VoidTimeDataGridViewTextBoxColumn
+            '
+            Me.VoidTimeDataGridViewTextBoxColumn.DataPropertyName = "VoidTime"
+            Me.VoidTimeDataGridViewTextBoxColumn.HeaderText = "VoidTime"
+            Me.VoidTimeDataGridViewTextBoxColumn.Name = "VoidTimeDataGridViewTextBoxColumn"
+            Me.VoidTimeDataGridViewTextBoxColumn.ReadOnly = True
+            '
+            'VoidUserDataGridViewTextBoxColumn
+            '
+            Me.VoidUserDataGridViewTextBoxColumn.DataPropertyName = "VoidUser"
+            Me.VoidUserDataGridViewTextBoxColumn.HeaderText = "VoidUser"
+            Me.VoidUserDataGridViewTextBoxColumn.Name = "VoidUserDataGridViewTextBoxColumn"
+            Me.VoidUserDataGridViewTextBoxColumn.ReadOnly = True
             '
             'CustomInvoicingForm
             '
             Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
             Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-            Me.ClientSize = New System.Drawing.Size(855, 589)
-            Me.Controls.Add(Me.FlowLayoutPanel)
+            Me.ClientSize = New System.Drawing.Size(861, 593)
+            Me.Controls.Add(Me.TabControl1)
+            Me.Controls.Add(Me.pnl_1)
             Me.Name = "CustomInvoicingForm"
             Me.Text = "Custom Invoicing"
-            Me.FlowLayoutPanel.ResumeLayout(False)
+            CType(Me.CustomInvoiceLineTypesBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
+            CType(Me.Ds_Invoicing, System.ComponentModel.ISupportInitialize).EndInit()
+            CType(Me.CustomerRecentAddrsBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
+            CType(Me.CustomInvoiceLineItemsBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
             Me.pnl_1.ResumeLayout(False)
             Me.pnl_TopContent.ResumeLayout(False)
             Me.pnl_TopContent.PerformLayout()
+            Me.TabControl1.ResumeLayout(False)
+            Me.tp_NewInv.ResumeLayout(False)
+            Me.FlowLayoutPanel.ResumeLayout(False)
             Me.pnl_2.ResumeLayout(False)
             Me.pnl_2.PerformLayout()
-            CType(Me.CustomInvoiceLineTypesBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
-            CType(Me.Ds_Invoicing, System.ComponentModel.ISupportInitialize).EndInit()
             Me.grp_Address.ResumeLayout(False)
             Me.grp_Address.PerformLayout()
-            CType(Me.CustomerRecentAddrsBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
             Me.pnl_3.ResumeLayout(False)
             Me.pnl_3.PerformLayout()
             CType(Me.dg_LineItems, System.ComponentModel.ISupportInitialize).EndInit()
-            CType(Me.CustomInvoiceLineItemsBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
+            Me.ContextMenuStrip1.ResumeLayout(False)
             Me.grp_InvDets.ResumeLayout(False)
             Me.grp_InvDets.PerformLayout()
+            Me.tp_History.ResumeLayout(False)
+            Me.tp_History.PerformLayout()
+            CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).EndInit()
+            CType(Me.Ds_HistoryInv, System.ComponentModel.ISupportInitialize).EndInit()
+            CType(Me.dg_InvHistory, System.ComponentModel.ISupportInitialize).EndInit()
+            CType(Me.CustomInvoicesBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
+            CType(Me.InvoiceHistoryBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
             Me.ResumeLayout(False)
 
         End Sub
-        Friend WithEvents FlowLayoutPanel As System.Windows.Forms.FlowLayoutPanel
+        Friend WithEvents CustomInvoiceLineTypesBindingSource As System.Windows.Forms.BindingSource
+        Friend WithEvents Ds_Invoicing As TrashCash.ds_Invoicing
+        Friend WithEvents CustomerRecentAddrsBindingSource As System.Windows.Forms.BindingSource
+        Friend WithEvents CustomInvoiceLineItemsBindingSource As System.Windows.Forms.BindingSource
         Friend WithEvents pnl_1 As System.Windows.Forms.Panel
         Friend WithEvents pnl_TopContent As System.Windows.Forms.Panel
         Friend WithEvents Ts_M_Customer As TrashCash.ts_M_Customer
-        Friend WithEvents CustomInvoiceLineTypesBindingSource As System.Windows.Forms.BindingSource
-        Friend WithEvents Ds_Invoicing As TrashCash.ds_Invoicing
-        Friend WithEvents CustomInvoice_LineTypesTableAdapter As TrashCash.ds_InvoicingTableAdapters.CustomInvoice_LineTypesTableAdapter
-        Friend WithEvents CustomerRecentAddrsBindingSource As System.Windows.Forms.BindingSource
-        Friend WithEvents Customer_RecentAddrsTableAdapter As TrashCash.ds_InvoicingTableAdapters.Customer_RecentAddrsTableAdapter
-        Friend WithEvents TableAdapterManager As TrashCash.ds_InvoicingTableAdapters.TableAdapterManager
+        Friend WithEvents TabControl1 As System.Windows.Forms.TabControl
+        Friend WithEvents tp_NewInv As System.Windows.Forms.TabPage
+        Friend WithEvents FlowLayoutPanel As System.Windows.Forms.FlowLayoutPanel
         Friend WithEvents pnl_2 As System.Windows.Forms.Panel
+        Friend WithEvents lbl_Rate As System.Windows.Forms.Label
+        Friend WithEvents tb_Rate As TrashCash.Currency_TextBox
         Friend WithEvents lbl_LineType As System.Windows.Forms.Label
         Friend WithEvents btn_AddLine As System.Windows.Forms.Button
         Friend WithEvents cmb_LineTypes As System.Windows.Forms.ComboBox
@@ -663,7 +1034,8 @@
         Friend WithEvents RenderedOnDateDataGridViewTextBoxColumn As System.Windows.Forms.DataGridViewTextBoxColumn
         Friend WithEvents Addr1DataGridViewTextBoxColumn As System.Windows.Forms.DataGridViewTextBoxColumn
         Friend WithEvents DescTextDataGridViewTextBoxColumn As System.Windows.Forms.DataGridViewTextBoxColumn
-        Friend WithEvents CustomInvoiceLineItemsBindingSource As System.Windows.Forms.BindingSource
+        Friend WithEvents ContextMenuStrip1 As System.Windows.Forms.ContextMenuStrip
+        Friend WithEvents btn_DeleteLine As System.Windows.Forms.ToolStripMenuItem
         Friend WithEvents lbl_LineItems As System.Windows.Forms.Label
         Friend WithEvents btn_CreateInv As System.Windows.Forms.Button
         Friend WithEvents grp_InvDets As System.Windows.Forms.GroupBox
@@ -672,8 +1044,43 @@
         Friend WithEvents lbl_PostDate As System.Windows.Forms.Label
         Friend WithEvents lbl_DueDate As System.Windows.Forms.Label
         Friend WithEvents ck_Print As System.Windows.Forms.CheckBox
-        Friend WithEvents CustomInvoice_LineItemsTableAdapter As TrashCash.ds_InvoicingTableAdapters.CustomInvoice_LineItemsTableAdapter
-        Friend WithEvents lbl_Rate As System.Windows.Forms.Label
-        Friend WithEvents tb_Rate As TrashCash.Currency_TextBox
+        Friend WithEvents tp_History As System.Windows.Forms.TabPage
+        Friend WithEvents dg_InvHistory As System.Windows.Forms.DataGridView
+        Friend WithEvents CustomInvoicesBindingSource As System.Windows.Forms.BindingSource
+        Friend WithEvents DataGridView1 As System.Windows.Forms.DataGridView
+        Friend WithEvents Ds_HistoryInv As TrashCash.ds_Invoicing
+        Friend WithEvents CILineIDDataGridViewTextBoxColumn As System.Windows.Forms.DataGridViewTextBoxColumn
+        Friend WithEvents CIIDDataGridViewTextBoxColumn1 As System.Windows.Forms.DataGridViewTextBoxColumn
+        Friend WithEvents CITypeIDDataGridViewTextBoxColumn1 As System.Windows.Forms.DataGridViewTextBoxColumn
+        Friend WithEvents RateDataGridViewTextBoxColumn1 As System.Windows.Forms.DataGridViewTextBoxColumn
+        Friend WithEvents DefaultDescDataGridViewTextBoxColumn As System.Windows.Forms.DataGridViewTextBoxColumn
+        Friend WithEvents RenderedOnDateDataGridViewTextBoxColumn1 As System.Windows.Forms.DataGridViewTextBoxColumn
+        Friend WithEvents DescTextDataGridViewTextBoxColumn1 As System.Windows.Forms.DataGridViewTextBoxColumn
+        Friend WithEvents Addr1DataGridViewTextBoxColumn1 As System.Windows.Forms.DataGridViewTextBoxColumn
+        Friend WithEvents Addr2DataGridViewTextBoxColumn As System.Windows.Forms.DataGridViewTextBoxColumn
+        Friend WithEvents Addr3DataGridViewTextBoxColumn As System.Windows.Forms.DataGridViewTextBoxColumn
+        Friend WithEvents ZipDataGridViewTextBoxColumn As System.Windows.Forms.DataGridViewTextBoxColumn
+        Friend WithEvents CompiledDescTextDataGridViewTextBoxColumn As System.Windows.Forms.DataGridViewTextBoxColumn
+        Friend WithEvents CityDataGridViewTextBoxColumn As System.Windows.Forms.DataGridViewTextBoxColumn
+        Friend WithEvents STATEDataGridViewTextBoxColumn As System.Windows.Forms.DataGridViewTextBoxColumn
+        Friend WithEvents InvoiceHistoryBindingSource As System.Windows.Forms.BindingSource
+        Friend WithEvents lbl_VoidReason As System.Windows.Forms.Label
+        Friend WithEvents tb_VoidReason As System.Windows.Forms.TextBox
+        Friend WithEvents btn_VoidInv As System.Windows.Forms.Button
+        Friend WithEvents CIIDDataGridViewTextBoxColumn As System.Windows.Forms.DataGridViewTextBoxColumn
+        Friend WithEvents CustomerNumberDataGridViewTextBoxColumn As System.Windows.Forms.DataGridViewTextBoxColumn
+        Friend WithEvents StatusIDDataGridViewTextBoxColumn As System.Windows.Forms.DataGridViewTextBoxColumn
+        Friend WithEvents InsertedUserDataGridViewTextBoxColumn As System.Windows.Forms.DataGridViewTextBoxColumn
+        Friend WithEvents TimeInsertedDataGridViewTextBoxColumn As System.Windows.Forms.DataGridViewTextBoxColumn
+        Friend WithEvents InvoiceListIDDataGridViewTextBoxColumn As System.Windows.Forms.DataGridViewTextBoxColumn
+        Friend WithEvents InvoiceRefNumDataGridViewTextBoxColumn As System.Windows.Forms.DataGridViewTextBoxColumn
+        Friend WithEvents TimeSubmittedDataGridViewTextBoxColumn As System.Windows.Forms.DataGridViewTextBoxColumn
+        Friend WithEvents TimeCreatedDataGridViewTextBoxColumn As System.Windows.Forms.DataGridViewTextBoxColumn
+        Friend WithEvents DueDateDataGridViewTextBoxColumn As System.Windows.Forms.DataGridViewTextBoxColumn
+        Friend WithEvents PostDateDataGridViewTextBoxColumn As System.Windows.Forms.DataGridViewTextBoxColumn
+        Friend WithEvents VoidedDataGridViewCheckBoxColumn As System.Windows.Forms.DataGridViewCheckBoxColumn
+        Friend WithEvents VoidReasonDataGridViewTextBoxColumn As System.Windows.Forms.DataGridViewTextBoxColumn
+        Friend WithEvents VoidTimeDataGridViewTextBoxColumn As System.Windows.Forms.DataGridViewTextBoxColumn
+        Friend WithEvents VoidUserDataGridViewTextBoxColumn As System.Windows.Forms.DataGridViewTextBoxColumn
     End Class
 End Namespace

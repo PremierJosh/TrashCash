@@ -5,12 +5,14 @@ Imports QBFC12Lib
 Namespace Invoicing
     Friend Module Invoicing
 
+        Friend ReadOnly _ciTA As New ds_InvoicingTableAdapters.CustomInvoicesTableAdapter
+        Friend ReadOnly _liTA As New ds_InvoicingTableAdapters.CustomInvoice_LineItemsTableAdapter
+        Friend ReadOnly _ltTA As New ds_InvoicingTableAdapters.CustomInvoice_LineTypesTableAdapter
+        Friend ReadOnly _raTA As New ds_InvoicingTableAdapters.Customer_RecentAddrsTableAdapter
+
         Public Function CustomInvoice_Create(ByRef ds As ds_Invoicing, ByVal print As Boolean) As Boolean
             ' return succeed or fail
             Dim pass As Boolean = False
-
-            ' ta needed
-            Dim ta As New ds_InvoicingTableAdapters.CustomInvoicesTableAdapter
 
             ' table refs
             Dim invRow As ds_Invoicing.CustomInvoicesRow = ds.CustomInvoices.Rows(0)
@@ -52,7 +54,7 @@ Namespace Invoicing
             invRow.Time_Submitted = Date.Now
             invRow.StatusID = ENItemStatus.Submitted
             Try
-                ta.Update(invRow)
+                _ciTA.Update(invRow)
             Catch ex As SqlException
                 MessageBox.Show("Message: " & ex.Message & vbCrLf & "LineNumber: " & ex.LineNumber,
                                 "Sql Error: " & ex.Procedure, MessageBoxButtons.OK, MessageBoxIcon.Error)
@@ -70,7 +72,7 @@ Namespace Invoicing
                 End With
 
                 Try
-                    ta.Update(invRow)
+                    _ciTA.Update(invRow)
                     pass = True
                 Catch ex As SqlException
                     MessageBox.Show("Message: " & ex.Message & vbCrLf & "LineNumber: " & ex.LineNumber,
@@ -82,7 +84,7 @@ Namespace Invoicing
                 invRow.StatusID = ENItemStatus.Err
 
                 Try
-                    ta.Update(invRow)
+                    _ciTA.Update(invRow)
                 Catch ex As SqlException
                     MessageBox.Show("Message: " & ex.Message & vbCrLf & "LineNumber: " & ex.LineNumber,
                                     "Sql Error: " & ex.Procedure, MessageBoxButtons.OK, MessageBoxIcon.Error)
@@ -92,13 +94,9 @@ Namespace Invoicing
             Return pass
         End Function
 
-        Public Function CustomInvoice_Void(ByVal id As Integer, ByVal reason As String) As Boolean
+        Public Function CustomInvoice_Void(ByRef row As ds_Invoicing.CustomInvoicesRow, ByVal reason As String) As Boolean
             ' return for succeed or fail
             Dim pass As Boolean = False
-
-            ' ta needed
-            Dim ta As New ds_InvoicingTableAdapters.CustomInvoicesTableAdapter
-            Dim row As ds_Invoicing.CustomInvoicesRow = ta.GetDataByID(id).Rows(0)
 
             Const voidType As ENTxnVoidType = ENTxnVoidType.tvtInvoice
 
@@ -114,7 +112,7 @@ Namespace Invoicing
                 End With
 
                 Try
-                    ta.Update(row)
+                    _ciTA.Update(row)
                     pass = True
                 Catch ex As SqlException
                     MessageBox.Show("Message: " & ex.Message & vbCrLf & "LineNumber: " & ex.LineNumber, "Sql Error: " & ex.Procedure,

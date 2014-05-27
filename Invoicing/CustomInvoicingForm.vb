@@ -15,20 +15,17 @@ Namespace Invoicing
             End Set
         End Property
 
-        ' invoice row for easier refrence
+       ' invoice row for easier refrence
         Private _invRow As ds_Invoicing.CustomInvoicesRow
-
-        ' custom invoices ta
-        Private _ta As ds_InvoicingTableAdapters.CustomInvoicesTableAdapter
 
         Private Sub CustomInvoicingForm_Load(sender As Object, e As System.EventArgs) Handles Me.Load
             ' line type fill
-            CustomInvoice_LineTypesTableAdapter.Fill(Ds_Invoicing.CustomInvoice_LineTypes)
+            _ltTA.Fill(Ds_Invoicing.CustomInvoice_LineTypes)
             ' recent addr fill
-            Customer_RecentAddrsTableAdapter.Fill(Ds_Invoicing.Customer_RecentAddrs, CurrentCustomer)
-            ' create ta
-            _ta = New ds_InvoicingTableAdapters.CustomInvoicesTableAdapter
-        End Sub
+            _raTA.Fill(Ds_Invoicing.Customer_RecentAddrs, CurrentCustomer)
+            ' fill history tables
+            _ciTA.Fill(Ds_HistoryInv.CustomInvoices, CurrentCustomer)
+           End Sub
 
         Private Sub dtp_PostDate_ValueChanged(sender As System.Object, e As System.EventArgs) Handles dtp_PostDate.ValueChanged
             dtp_DueDate.Value = dtp_PostDate.Value
@@ -183,15 +180,78 @@ Namespace Invoicing
                 _invRow.Time_Inserted = Date.Now
                 ' submit invoice and line items
                 Try
-                    _ta.Update(Ds_Invoicing.CustomInvoices)
-                    CustomInvoice_LineItemsTableAdapter.Update(Ds_Invoicing.CustomInvoice_LineItems)
+                    _ciTA.Update(Ds_Invoicing.CustomInvoices)
+                    _liTA.Update(Ds_Invoicing.CustomInvoice_LineItems)
                 Catch ex As SqlException
                     MessageBox.Show("Message: " & ex.Message & vbCrLf & "LineNumber: " & ex.LineNumber,
                                     "Sql Error: " & ex.Procedure, MessageBoxButtons.OK, MessageBoxIcon.Error)
                 End Try
                 ' send to QB
-                CustomInvoice_Create(Ds_Invoicing, ck_Print.Checked)
+                Dim succeed As Boolean = CustomInvoice_Create(Ds_Invoicing, ck_Print.Checked)
+                If (Not succeed) Then
+                    MessageBox.Show("Error - Invoice not created.", "QB Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                End If
             End If
+        End Sub
+
+        Private Sub dg_InvHistory_CellMouseDown(sender As System.Object, e As System.Windows.Forms.DataGridViewCellMouseEventArgs) Handles dg_InvHistory.CellMouseDown
+            ' left click = fill line table with history
+            If (e.Button = Windows.Forms.MouseButtons.Left) Then
+                _liTA.Fill(Ds_HistoryInv.CustomInvoice_LineItems,
+                                                         CType(CType(dg_InvHistory.SelectedRows(0).DataBoundItem, DataRowView).Row, ds_Invoicing.CustomInvoicesRow).CI_ID)
+            End If
+        End Sub
+
+        Private Sub btn_DeleteLine_Click(sender As System.Object, e As System.EventArgs) Handles btn_DeleteLine.Click
+            Dim row As DataRow = CType(dg_LineItems.SelectedRows(0).DataBoundItem, DataRowView).Row
+            row.Delete()
+        End Sub
+
+        Private Sub btn_VoidInv_Click(sender As System.Object, e As System.EventArgs) Handles btn_VoidInv.Click
+            If (Trim(tb_VoidReason.Text) <> "") Then
+                ' get row reference
+                Dim row As ds_Invoicing.CustomInvoicesRow = CType(dg_InvHistory.SelectedRows(0).DataBoundItem, DataRowView).Row
+                ' checking if row is voided
+                If (Not row.Voided) Then
+                    ' getting total of invoice
+                    Dim total As Double = CDbl(Ds_HistoryInv.CustomInvoice_LineItems.Compute("Sum(Rate)", ""))
+                    Dim prompt As DialogResult = MessageBox.Show("Void Invoice in the amount of " & FormatCurrency(total) & " created on " & row.Time_Created, "Confirm Void", MessageBoxButtons.YesNo, MessageBoxIcon.Question)
+                    If (prompt = Windows.Forms.DialogResult.Yes) Then
+                        Dim succeed As Boolean = CustomInvoice_Void(row, tb_VoidReason.Text)
+                        If (Not succeed) Then
+                            MessageBox.Show("Error - Invoice not voided.", "QB Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                        End If
+                    End If
+                Else
+                    MessageBox.Show("This invoice was already voided on " & row.VoidTime & " by user" & row.VoidUser & ". Reason given: " & vbCrLf & row.VoidReason,
+                                    "Already Voided", MessageBoxButtons.OK, MessageBoxIcon.Hand)
+                End If
+            End If
+        End Sub
+
+
+        Private Sub ColorHistoryForVoids()
+            If (dg_InvHistory.RowCount > 0) Then
+                For i = 0 To dg_InvHistory.RowCount - 1
+                    Dim row As ds_Invoicing.CustomInvoicesRow = CType(dg_InvHistory.Rows(i).DataBoundItem, DataRowView).Row
+                    If (row.Voided) Then
+                        ' credit is voided
+                        dg_InvHistory.Rows(i).DefaultCellStyle.BackColor = Color.Red
+                        dg_InvHistory.Rows(i).DefaultCellStyle.SelectionBackColor = Color.IndianRed
+                    Else
+                        dg_InvHistory.Rows(i).DefaultCellStyle.BackColor = Color.SpringGreen
+                        dg_InvHistory.Rows(i).DefaultCellStyle.SelectionBackColor = Color.MediumSeaGreen
+                    End If
+                Next
+            End If
+        End Sub
+
+        Private Sub dg_InvHistory_RowsAdded(sender As System.Object, e As System.Windows.Forms.DataGridViewRowsAddedEventArgs) Handles dg_InvHistory.RowsAdded
+            ColorHistoryForVoids()
+        End Sub
+
+        Private Sub dg_InvHistory_RowsRemoved(sender As System.Object, e As System.Windows.Forms.DataGridViewRowsRemovedEventArgs) Handles dg_InvHistory.RowsRemoved
+            ColorHistoryForVoids()
         End Sub
     End Class
 End Namespace
