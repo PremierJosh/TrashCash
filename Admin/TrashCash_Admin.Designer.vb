@@ -28,16 +28,16 @@ Partial Class TrashCash_Admin
         Me.lbl_AdminUser = New System.Windows.Forms.ToolStripStatusLabel()
         Me.ts_Admin = New System.Windows.Forms.ToolStrip()
         Me.btn_AdminPay = New System.Windows.Forms.ToolStripButton()
+        Me.ToolStripSeparator5 = New System.Windows.Forms.ToolStripSeparator()
         Me.btn_ServiceTypes = New System.Windows.Forms.ToolStripButton()
+        Me.ToolStripSeparator4 = New System.Windows.Forms.ToolStripSeparator()
         Me.btn_Banks = New System.Windows.Forms.ToolStripButton()
+        Me.ToolStripSeparator2 = New System.Windows.Forms.ToolStripSeparator()
         Me.btn_Defaults = New System.Windows.Forms.ToolStripButton()
         Me.btn_ExportImport = New System.Windows.Forms.ToolStripButton()
+        Me.ToolStripSeparator3 = New System.Windows.Forms.ToolStripSeparator()
         Me.btn_InvTypes = New System.Windows.Forms.ToolStripButton()
         Me.ToolStripSeparator1 = New System.Windows.Forms.ToolStripSeparator()
-        Me.ToolStripSeparator2 = New System.Windows.Forms.ToolStripSeparator()
-        Me.ToolStripSeparator3 = New System.Windows.Forms.ToolStripSeparator()
-        Me.ToolStripSeparator4 = New System.Windows.Forms.ToolStripSeparator()
-        Me.ToolStripSeparator5 = New System.Windows.Forms.ToolStripSeparator()
         Me.StatusStrip.SuspendLayout()
         Me.ts_Admin.SuspendLayout()
         Me.SuspendLayout()
@@ -76,6 +76,11 @@ Partial Class TrashCash_Admin
         Me.btn_AdminPay.Size = New System.Drawing.Size(63, 22)
         Me.btn_AdminPay.Text = "Payments"
         '
+        'ToolStripSeparator5
+        '
+        Me.ToolStripSeparator5.Name = "ToolStripSeparator5"
+        Me.ToolStripSeparator5.Size = New System.Drawing.Size(6, 25)
+        '
         'btn_ServiceTypes
         '
         Me.btn_ServiceTypes.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text
@@ -85,6 +90,11 @@ Partial Class TrashCash_Admin
         Me.btn_ServiceTypes.Size = New System.Drawing.Size(82, 22)
         Me.btn_ServiceTypes.Text = "Service Types"
         '
+        'ToolStripSeparator4
+        '
+        Me.ToolStripSeparator4.Name = "ToolStripSeparator4"
+        Me.ToolStripSeparator4.Size = New System.Drawing.Size(6, 25)
+        '
         'btn_Banks
         '
         Me.btn_Banks.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text
@@ -93,6 +103,11 @@ Partial Class TrashCash_Admin
         Me.btn_Banks.Name = "btn_Banks"
         Me.btn_Banks.Size = New System.Drawing.Size(141, 22)
         Me.btn_Banks.Text = "Banks (Bounced Checks)"
+        '
+        'ToolStripSeparator2
+        '
+        Me.ToolStripSeparator2.Name = "ToolStripSeparator2"
+        Me.ToolStripSeparator2.Size = New System.Drawing.Size(6, 25)
         '
         'btn_Defaults
         '
@@ -114,6 +129,11 @@ Partial Class TrashCash_Admin
         Me.btn_ExportImport.Size = New System.Drawing.Size(85, 22)
         Me.btn_ExportImport.Text = "Import/Export"
         '
+        'ToolStripSeparator3
+        '
+        Me.ToolStripSeparator3.Name = "ToolStripSeparator3"
+        Me.ToolStripSeparator3.Size = New System.Drawing.Size(6, 25)
+        '
         'btn_InvTypes
         '
         Me.btn_InvTypes.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text
@@ -127,26 +147,6 @@ Partial Class TrashCash_Admin
         '
         Me.ToolStripSeparator1.Name = "ToolStripSeparator1"
         Me.ToolStripSeparator1.Size = New System.Drawing.Size(6, 25)
-        '
-        'ToolStripSeparator2
-        '
-        Me.ToolStripSeparator2.Name = "ToolStripSeparator2"
-        Me.ToolStripSeparator2.Size = New System.Drawing.Size(6, 25)
-        '
-        'ToolStripSeparator3
-        '
-        Me.ToolStripSeparator3.Name = "ToolStripSeparator3"
-        Me.ToolStripSeparator3.Size = New System.Drawing.Size(6, 25)
-        '
-        'ToolStripSeparator4
-        '
-        Me.ToolStripSeparator4.Name = "ToolStripSeparator4"
-        Me.ToolStripSeparator4.Size = New System.Drawing.Size(6, 25)
-        '
-        'ToolStripSeparator5
-        '
-        Me.ToolStripSeparator5.Name = "ToolStripSeparator5"
-        Me.ToolStripSeparator5.Size = New System.Drawing.Size(6, 25)
         '
         'TrashCash_Admin
         '

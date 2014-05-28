@@ -125,8 +125,8 @@ Namespace Modules
 
         ' structure for combo box pair
         Public Structure ComboBoxPair
-            Public ValueMember
-            Public DisplayMember
+            Public Property ValueMember
+            Public Property DisplayMember
         End Structure
 
 

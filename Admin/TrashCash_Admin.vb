@@ -71,6 +71,7 @@ Public Class TrashCash_Admin
     Friend WithEvents f_AdminBanks As AdminBanks
     Friend WithEvents f_AdminDefaults As AdminDefaults
     Friend WithEvents f_AdminExportImport As AdminExportImport
+    Friend WithEvents AdminInvoiceTypes As AdminInvoiceTypes
 
     Private Sub btn_AdminPay_Click(sender As System.Object, e As System.EventArgs) Handles btn_AdminPay.Click
         If (f_AdminPay IsNot Nothing) Then
@@ -193,4 +194,31 @@ Public Class TrashCash_Admin
             End If
         End If
     End Sub
+
+    Private Sub btn_InvTypes_Click(sender As System.Object, e As System.EventArgs) Handles btn_InvTypes.Click
+        If (AdminInvoiceTypes IsNot Nothing) Then
+            AdminInvoiceTypes.BringToFront()
+            AdminInvoiceTypes.Show()
+        Else
+            Dim open As Boolean = False
+
+            ' checking if auth level can bypass logins
+            If (_bypassLogin) Then
+                open = True
+            Else
+                f_UserSelection = New UserSelection("Administration Login")
+                f_UserSelection.ShowDialog()
+                If (f_UserSelection.AuthUserRow IsNot Nothing) Then
+                    open = True
+                End If
+                f_UserSelection = Nothing
+            End If
+
+            If (open) Then
+                AdminInvoiceTypes = New AdminInvoiceTypes
+                AdminInvoiceTypes.MdiParent = Me
+                AdminInvoiceTypes.Show()
+            End If
+        End If
+        End Sub
 End Class

@@ -25,15 +25,15 @@
         Private Sub InitializeComponent()
             Me.components = New System.ComponentModel.Container()
             Me.DataGridView1 = New System.Windows.Forms.DataGridView()
-            Me.Ds_Invoicing = New TrashCash.ds_Invoicing()
-            Me.CustomInvoiceLineTypesBindingSource = New System.Windows.Forms.BindingSource(Me.components)
-            Me.CustomInvoice_LineTypesTableAdapter = New TrashCash.ds_InvoicingTableAdapters.CustomInvoice_LineTypesTableAdapter()
             Me.CITypeIDDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
             Me.QBListIDDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
             Me.QBEditSeqDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
             Me.DescriptionDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
             Me.InactiveDataGridViewCheckBoxColumn = New System.Windows.Forms.DataGridViewCheckBoxColumn()
             Me.NAMEDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+            Me.CustomInvoiceLineTypesBindingSource = New System.Windows.Forms.BindingSource(Me.components)
+            Me.Ds_Invoicing = New TrashCash.ds_Invoicing()
+            Me.CustomInvoice_LineTypesTableAdapter = New TrashCash.ds_InvoicingTableAdapters.CustomInvoice_LineTypesTableAdapter()
             Me.tb_Name = New System.Windows.Forms.TextBox()
             Me.tb_Desc = New System.Windows.Forms.TextBox()
             Me.cmb_QBAccount = New System.Windows.Forms.ComboBox()
@@ -43,8 +43,8 @@
             Me.lbl_QBaccount = New System.Windows.Forms.Label()
             Me.Label1 = New System.Windows.Forms.Label()
             CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).BeginInit()
-            CType(Me.Ds_Invoicing, System.ComponentModel.ISupportInitialize).BeginInit()
             CType(Me.CustomInvoiceLineTypesBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
+            CType(Me.Ds_Invoicing, System.ComponentModel.ISupportInitialize).BeginInit()
             Me.SuspendLayout()
             '
             'DataGridView1
@@ -63,20 +63,6 @@
             Me.DataGridView1.RowHeadersVisible = False
             Me.DataGridView1.Size = New System.Drawing.Size(757, 183)
             Me.DataGridView1.TabIndex = 0
-            '
-            'Ds_Invoicing
-            '
-            Me.Ds_Invoicing.DataSetName = "ds_Invoicing"
-            Me.Ds_Invoicing.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema
-            '
-            'CustomInvoiceLineTypesBindingSource
-            '
-            Me.CustomInvoiceLineTypesBindingSource.DataMember = "CustomInvoice_LineTypes"
-            Me.CustomInvoiceLineTypesBindingSource.DataSource = Me.Ds_Invoicing
-            '
-            'CustomInvoice_LineTypesTableAdapter
-            '
-            Me.CustomInvoice_LineTypesTableAdapter.ClearBeforeFill = True
             '
             'CITypeIDDataGridViewTextBoxColumn
             '
@@ -120,6 +106,20 @@
             Me.NAMEDataGridViewTextBoxColumn.Name = "NAMEDataGridViewTextBoxColumn"
             Me.NAMEDataGridViewTextBoxColumn.ReadOnly = True
             '
+            'CustomInvoiceLineTypesBindingSource
+            '
+            Me.CustomInvoiceLineTypesBindingSource.DataMember = "CustomInvoice_LineTypes"
+            Me.CustomInvoiceLineTypesBindingSource.DataSource = Me.Ds_Invoicing
+            '
+            'Ds_Invoicing
+            '
+            Me.Ds_Invoicing.DataSetName = "ds_Invoicing"
+            Me.Ds_Invoicing.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema
+            '
+            'CustomInvoice_LineTypesTableAdapter
+            '
+            Me.CustomInvoice_LineTypesTableAdapter.ClearBeforeFill = True
+            '
             'tb_Name
             '
             Me.tb_Name.Location = New System.Drawing.Point(31, 59)
@@ -154,7 +154,7 @@
             'lbl_Name
             '
             Me.lbl_Name.AutoSize = True
-            Me.lbl_Name.Location = New System.Drawing.Point(49, 43)
+            Me.lbl_Name.Location = New System.Drawing.Point(28, 43)
             Me.lbl_Name.Name = "lbl_Name"
             Me.lbl_Name.Size = New System.Drawing.Size(62, 13)
             Me.lbl_Name.TabIndex = 6
@@ -165,9 +165,9 @@
             Me.lbl_Desc.AutoSize = True
             Me.lbl_Desc.Location = New System.Drawing.Point(137, 43)
             Me.lbl_Desc.Name = "lbl_Desc"
-            Me.lbl_Desc.Size = New System.Drawing.Size(62, 13)
+            Me.lbl_Desc.Size = New System.Drawing.Size(60, 13)
             Me.lbl_Desc.TabIndex = 7
-            Me.lbl_Desc.Text = "Type Name"
+            Me.lbl_Desc.Text = "Description"
             '
             'lbl_QBaccount
             '
@@ -186,7 +186,7 @@
             Me.Label1.Size = New System.Drawing.Size(506, 13)
             Me.Label1.TabIndex = 9
             Me.Label1.Text = "Here you can add custom invoice types to Quickbooks and make them available to yo" & _
-                             "u inside TrashCash."
+        "u inside TrashCash."
             '
             'AdminInvoiceTypes
             '
@@ -205,8 +205,8 @@
             Me.Name = "AdminInvoiceTypes"
             Me.Text = "Invoice Types"
             CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).EndInit()
-            CType(Me.Ds_Invoicing, System.ComponentModel.ISupportInitialize).EndInit()
             CType(Me.CustomInvoiceLineTypesBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
+            CType(Me.Ds_Invoicing, System.ComponentModel.ISupportInitialize).EndInit()
             Me.ResumeLayout(False)
             Me.PerformLayout()
 

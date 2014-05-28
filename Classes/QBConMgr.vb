@@ -15,7 +15,7 @@ Namespace Classes
                 ' get connection
                 With SessionManager
                     .OpenConnection2("V1", "TrashCash", ENConnectionType.ctLocalQBD)
-                    .BeginSession(My.Settings.QB_FILE_LOCATION.ToString, ENOpenMode.omSingleUser)
+                    .BeginSession(My.Settings.QB_FILE_LOCATION.ToString, ENOpenMode.omDontCare)
                 End With
             Catch ex As Exception
                 MsgBox(ex.Message & vbCrLf & ex.InnerException.Message)
@@ -34,7 +34,7 @@ Namespace Classes
             s.Add("QBCFMonitorService")
             s.Add("QBIDPService")
             s.Add("QuickbooksDB23")
-
+           
             For Each service As String In s
                 Dim sc As New ServiceController(service)
                 If (sc.Status <> ServiceControllerStatus.Running) Then

@@ -16,6 +16,8 @@ Public Class TrashCashHome
         Set(value As ds_Program.USERSRow)
             _currentUserRow = value
 
+            CurrentUser = value
+
             ' update name on status bars
             btn_CurrentUser.Text = "Current User: " & value.USER_NAME
             Text = "TrashCash       | Current User: " & value.USER_NAME
@@ -59,9 +61,9 @@ Public Class TrashCashHome
 
             ' auth level 1 is super admin, no login prompts
             Select Case value
-                Case value = 1
+                Case 1
                     _bypassLogin = True
-                Case value > 3
+                Case Is > 3
                     MessageBox.Show("AUTH LEVEL UNKNOWKN")
             End Select
         End Set
