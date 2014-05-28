@@ -18,7 +18,7 @@
             _currentCustomer = value
 
             ' set combo box
-            Ts_M_Customer.CurrentCustomer = value
+            Ts_M_Customer.SelectCustomer(value)
 
             ' getting service table
             If (value > 0) Then
@@ -54,8 +54,7 @@
 
         ' Add any initialization after the InitializeComponent() call.
         _homeForm = HomeForm
-        Ts_M_Customer.HomeForm = HomeForm
-
+        
         ' set customer
         CurrentCustomer = CustomerNumber
 

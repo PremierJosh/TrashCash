@@ -33,18 +33,20 @@ Partial Public Class ds_Invoicing
     
     Private tableCustomer_RecentAddrs As Customer_RecentAddrsDataTable
     
+    Private relationFK_CustomInvoices_CustomInvoice_LineItems As Global.System.Data.DataRelation
+    
     Private _schemaSerializationMode As Global.System.Data.SchemaSerializationMode = Global.System.Data.SchemaSerializationMode.IncludeSchema
     
-    <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
-     Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
+    <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+     Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
     Public Sub New()
-        MyBase.New()
-        Me.BeginInit()
-        Me.InitClass()
+        MyBase.New
+        Me.BeginInit
+        Me.InitClass
         Dim schemaChangedHandler As Global.System.ComponentModel.CollectionChangeEventHandler = AddressOf Me.SchemaChanged
         AddHandler MyBase.Tables.CollectionChanged, schemaChangedHandler
         AddHandler MyBase.Relations.CollectionChanged, schemaChangedHandler
-        Me.EndInit()
+        Me.EndInit
     End Sub
     
     <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
@@ -266,6 +268,7 @@ Partial Public Class ds_Invoicing
                 Me.tableCustomer_RecentAddrs.InitVars
             End If
         End If
+        Me.relationFK_CustomInvoices_CustomInvoice_LineItems = Me.Relations("FK_CustomInvoices_CustomInvoice_LineItems")
     End Sub
     
     <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
@@ -284,6 +287,14 @@ Partial Public Class ds_Invoicing
         MyBase.Tables.Add(Me.tableCustomInvoice_LineTypes)
         Me.tableCustomer_RecentAddrs = New Customer_RecentAddrsDataTable()
         MyBase.Tables.Add(Me.tableCustomer_RecentAddrs)
+        Dim fkc As Global.System.Data.ForeignKeyConstraint
+        fkc = New Global.System.Data.ForeignKeyConstraint("FK_CustomInvoices_CustomInvoice_LineItems", New Global.System.Data.DataColumn() {Me.tableCustomInvoices.CI_IDColumn}, New Global.System.Data.DataColumn() {Me.tableCustomInvoice_LineItems.CI_IDColumn})
+        Me.tableCustomInvoice_LineItems.Constraints.Add(fkc)
+        fkc.AcceptRejectRule = Global.System.Data.AcceptRejectRule.None
+        fkc.DeleteRule = Global.System.Data.Rule.Cascade
+        fkc.UpdateRule = Global.System.Data.Rule.Cascade
+        Me.relationFK_CustomInvoices_CustomInvoice_LineItems = New Global.System.Data.DataRelation("FK_CustomInvoices_CustomInvoice_LineItems", New Global.System.Data.DataColumn() {Me.tableCustomInvoices.CI_IDColumn}, New Global.System.Data.DataColumn() {Me.tableCustomInvoice_LineItems.CI_IDColumn}, false)
+        Me.Relations.Add(Me.relationFK_CustomInvoices_CustomInvoice_LineItems)
     End Sub
     
     <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
@@ -1058,9 +1069,12 @@ Partial Public Class ds_Invoicing
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Overloads Function AddCustomInvoice_LineItemsRow(ByVal CI_ID As Integer, ByVal CI_TypeID As Integer, ByVal Rate As Decimal, ByVal DefaultDesc As String, ByVal RenderedOnDate As Date, ByVal DescText As String, ByVal Addr1 As String, ByVal Addr2 As String, ByVal Addr3 As String, ByVal Zip As String, ByVal CompiledDescText As String, ByVal City As String, ByVal STATE As String) As CustomInvoice_LineItemsRow
+        Public Overloads Function AddCustomInvoice_LineItemsRow(ByVal parentCustomInvoicesRowByFK_CustomInvoices_CustomInvoice_LineItems As CustomInvoicesRow, ByVal CI_TypeID As Integer, ByVal Rate As Decimal, ByVal DefaultDesc As String, ByVal RenderedOnDate As Date, ByVal DescText As String, ByVal Addr1 As String, ByVal Addr2 As String, ByVal Addr3 As String, ByVal Zip As String, ByVal CompiledDescText As String, ByVal City As String, ByVal STATE As String) As CustomInvoice_LineItemsRow
             Dim rowCustomInvoice_LineItemsRow As CustomInvoice_LineItemsRow = CType(Me.NewRow,CustomInvoice_LineItemsRow)
-            Dim columnValuesArray() As Object = New Object() {Nothing, CI_ID, CI_TypeID, Rate, DefaultDesc, RenderedOnDate, DescText, Addr1, Addr2, Addr3, Zip, CompiledDescText, City, STATE}
+            Dim columnValuesArray() As Object = New Object() {Nothing, Nothing, CI_TypeID, Rate, DefaultDesc, RenderedOnDate, DescText, Addr1, Addr2, Addr3, Zip, CompiledDescText, City, STATE}
+            If (Not (parentCustomInvoicesRowByFK_CustomInvoices_CustomInvoice_LineItems) Is Nothing) Then
+                columnValuesArray(1) = parentCustomInvoicesRowByFK_CustomInvoices_CustomInvoice_LineItems(0)
+            End If
             rowCustomInvoice_LineItemsRow.ItemArray = columnValuesArray
             Me.Rows.Add(rowCustomInvoice_LineItemsRow)
             Return rowCustomInvoice_LineItemsRow
@@ -2275,6 +2289,16 @@ Partial Public Class ds_Invoicing
         Public Sub SetVoidUserNull()
             Me(Me.tableCustomInvoices.VoidUserColumn) = Global.System.Convert.DBNull
         End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        Public Function GetCustomInvoice_LineItemsRows() As CustomInvoice_LineItemsRow()
+            If (Me.Table.ChildRelations("FK_CustomInvoices_CustomInvoice_LineItems") Is Nothing) Then
+                Return New CustomInvoice_LineItemsRow(-1) {}
+            Else
+                Return CType(MyBase.GetChildRows(Me.Table.ChildRelations("FK_CustomInvoices_CustomInvoice_LineItems")),CustomInvoice_LineItemsRow())
+            End If
+        End Function
     End Class
     
     '''<summary>
@@ -2455,6 +2479,17 @@ Partial Public Class ds_Invoicing
             End Get
             Set
                 Me(Me.tableCustomInvoice_LineItems.STATEColumn) = value
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        Public Property CustomInvoicesRow() As CustomInvoicesRow
+            Get
+                Return CType(Me.GetParentRow(Me.Table.ParentRelations("FK_CustomInvoices_CustomInvoice_LineItems")),CustomInvoicesRow)
+            End Get
+            Set
+                Me.SetParentRow(value, Me.Table.ParentRelations("FK_CustomInvoices_CustomInvoice_LineItems"))
             End Set
         End Property
         
@@ -4823,21 +4858,21 @@ Namespace ds_InvoicingTableAdapters
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
         Private Function UpdateUpdatedRows(ByVal dataSet As ds_Invoicing, ByVal allChangedRows As Global.System.Collections.Generic.List(Of Global.System.Data.DataRow), ByVal allAddedRows As Global.System.Collections.Generic.List(Of Global.System.Data.DataRow)) As Integer
             Dim result As Integer = 0
-            If (Not (Me._customInvoice_LineTypesTableAdapter) Is Nothing) Then
-                Dim updatedRows() As Global.System.Data.DataRow = dataSet.CustomInvoice_LineTypes.Select(Nothing, Nothing, Global.System.Data.DataViewRowState.ModifiedCurrent)
-                updatedRows = Me.GetRealUpdatedRows(updatedRows, allAddedRows)
-                If ((Not (updatedRows) Is Nothing)  _
-                            AndAlso (0 < updatedRows.Length)) Then
-                    result = (result + Me._customInvoice_LineTypesTableAdapter.Update(updatedRows))
-                    allChangedRows.AddRange(updatedRows)
-                End If
-            End If
             If (Not (Me._customInvoicesTableAdapter) Is Nothing) Then
                 Dim updatedRows() As Global.System.Data.DataRow = dataSet.CustomInvoices.Select(Nothing, Nothing, Global.System.Data.DataViewRowState.ModifiedCurrent)
                 updatedRows = Me.GetRealUpdatedRows(updatedRows, allAddedRows)
                 If ((Not (updatedRows) Is Nothing)  _
                             AndAlso (0 < updatedRows.Length)) Then
                     result = (result + Me._customInvoicesTableAdapter.Update(updatedRows))
+                    allChangedRows.AddRange(updatedRows)
+                End If
+            End If
+            If (Not (Me._customInvoice_LineTypesTableAdapter) Is Nothing) Then
+                Dim updatedRows() As Global.System.Data.DataRow = dataSet.CustomInvoice_LineTypes.Select(Nothing, Nothing, Global.System.Data.DataViewRowState.ModifiedCurrent)
+                updatedRows = Me.GetRealUpdatedRows(updatedRows, allAddedRows)
+                If ((Not (updatedRows) Is Nothing)  _
+                            AndAlso (0 < updatedRows.Length)) Then
+                    result = (result + Me._customInvoice_LineTypesTableAdapter.Update(updatedRows))
                     allChangedRows.AddRange(updatedRows)
                 End If
             End If
@@ -4860,19 +4895,19 @@ Namespace ds_InvoicingTableAdapters
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
         Private Function UpdateInsertedRows(ByVal dataSet As ds_Invoicing, ByVal allAddedRows As Global.System.Collections.Generic.List(Of Global.System.Data.DataRow)) As Integer
             Dim result As Integer = 0
-            If (Not (Me._customInvoice_LineTypesTableAdapter) Is Nothing) Then
-                Dim addedRows() As Global.System.Data.DataRow = dataSet.CustomInvoice_LineTypes.Select(Nothing, Nothing, Global.System.Data.DataViewRowState.Added)
-                If ((Not (addedRows) Is Nothing)  _
-                            AndAlso (0 < addedRows.Length)) Then
-                    result = (result + Me._customInvoice_LineTypesTableAdapter.Update(addedRows))
-                    allAddedRows.AddRange(addedRows)
-                End If
-            End If
             If (Not (Me._customInvoicesTableAdapter) Is Nothing) Then
                 Dim addedRows() As Global.System.Data.DataRow = dataSet.CustomInvoices.Select(Nothing, Nothing, Global.System.Data.DataViewRowState.Added)
                 If ((Not (addedRows) Is Nothing)  _
                             AndAlso (0 < addedRows.Length)) Then
                     result = (result + Me._customInvoicesTableAdapter.Update(addedRows))
+                    allAddedRows.AddRange(addedRows)
+                End If
+            End If
+            If (Not (Me._customInvoice_LineTypesTableAdapter) Is Nothing) Then
+                Dim addedRows() As Global.System.Data.DataRow = dataSet.CustomInvoice_LineTypes.Select(Nothing, Nothing, Global.System.Data.DataViewRowState.Added)
+                If ((Not (addedRows) Is Nothing)  _
+                            AndAlso (0 < addedRows.Length)) Then
+                    result = (result + Me._customInvoice_LineTypesTableAdapter.Update(addedRows))
                     allAddedRows.AddRange(addedRows)
                 End If
             End If
@@ -4902,19 +4937,19 @@ Namespace ds_InvoicingTableAdapters
                     allChangedRows.AddRange(deletedRows)
                 End If
             End If
-            If (Not (Me._customInvoicesTableAdapter) Is Nothing) Then
-                Dim deletedRows() As Global.System.Data.DataRow = dataSet.CustomInvoices.Select(Nothing, Nothing, Global.System.Data.DataViewRowState.Deleted)
-                If ((Not (deletedRows) Is Nothing)  _
-                            AndAlso (0 < deletedRows.Length)) Then
-                    result = (result + Me._customInvoicesTableAdapter.Update(deletedRows))
-                    allChangedRows.AddRange(deletedRows)
-                End If
-            End If
             If (Not (Me._customInvoice_LineTypesTableAdapter) Is Nothing) Then
                 Dim deletedRows() As Global.System.Data.DataRow = dataSet.CustomInvoice_LineTypes.Select(Nothing, Nothing, Global.System.Data.DataViewRowState.Deleted)
                 If ((Not (deletedRows) Is Nothing)  _
                             AndAlso (0 < deletedRows.Length)) Then
                     result = (result + Me._customInvoice_LineTypesTableAdapter.Update(deletedRows))
+                    allChangedRows.AddRange(deletedRows)
+                End If
+            End If
+            If (Not (Me._customInvoicesTableAdapter) Is Nothing) Then
+                Dim deletedRows() As Global.System.Data.DataRow = dataSet.CustomInvoices.Select(Nothing, Nothing, Global.System.Data.DataViewRowState.Deleted)
+                If ((Not (deletedRows) Is Nothing)  _
+                            AndAlso (0 < deletedRows.Length)) Then
+                    result = (result + Me._customInvoicesTableAdapter.Update(deletedRows))
                     allChangedRows.AddRange(deletedRows)
                 End If
             End If

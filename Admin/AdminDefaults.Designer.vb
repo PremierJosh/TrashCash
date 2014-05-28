@@ -92,7 +92,7 @@
             Me.Label1.Name = "Label1"
             Me.Label1.Size = New System.Drawing.Size(70, 16)
             Me.Label1.TabIndex = 6
-            Me.Label1.Text = "Invoicing"
+            Me.Label1.Text = "InvoicingForm"
             '
             'pnl_InvDefItem
             '

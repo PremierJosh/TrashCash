@@ -1,4 +1,6 @@
-﻿Namespace Admin
+﻿Imports TrashCash.Classes
+
+Namespace Admin
     <Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
     Partial Class BouncedBankSelection
         Inherits System.Windows.Forms.Form
@@ -41,7 +43,7 @@
             Me.tb_CheckAmount = New System.Windows.Forms.TextBox()
             Me.Cmb_BadCheckBanks = New TrashCash.Database_ComboBoxes.cmb_BadCheckBanks()
             Me.tb_RefNum = New System.Windows.Forms.TextBox()
-            Me.Ts_M_Customer1 = New TrashCash.ts_M_Customer()
+            Me.Ts_M_Customer1 = New ts_M_Customer()
             BankBounceFeeLabel = New System.Windows.Forms.Label()
             CustomerChargeRateLabel = New System.Windows.Forms.Label()
             lbl_checkAmount = New System.Windows.Forms.Label()
@@ -201,7 +203,6 @@
             '
             'Ts_M_Customer1
             '
-            Me.Ts_M_Customer1.CurrentCustomer = 0
             Me.Ts_M_Customer1.Enabled = False
             Me.Ts_M_Customer1.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden
             Me.Ts_M_Customer1.Location = New System.Drawing.Point(5, 5)
@@ -249,6 +250,6 @@
         Friend WithEvents Cmb_BadCheckBanks As TrashCash.Database_ComboBoxes.cmb_BadCheckBanks
         Friend WithEvents btn_Cancel As System.Windows.Forms.Button
         Friend WithEvents tb_RefNum As System.Windows.Forms.TextBox
-        Friend WithEvents Ts_M_Customer1 As TrashCash.ts_M_Customer
+        Friend WithEvents Ts_M_Customer1 As ts_M_Customer
     End Class
 End Namespace

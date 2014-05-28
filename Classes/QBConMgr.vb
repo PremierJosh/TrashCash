@@ -66,7 +66,7 @@ Namespace Classes
         End Sub
 
         Private ReadOnly _ta As ds_CustomerTableAdapters.CustomerTableAdapter
-        Public Function CustomerListID(ByVal customerNumber As Integer) As String
+        Public Function GetCustomerListID(ByVal customerNumber As Integer) As String
             Return _ta.GetListID(customerNumber)
         End Function
 

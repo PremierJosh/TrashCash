@@ -40,7 +40,7 @@ Public Class CustomInvoice_DescRemind
         Set(value As Integer)
             If (value <> 0) Then
                 _custNum = value
-                Ts_M_Customer1.CurrentCustomer = value
+
                 Ts_M_Customer1.Enabled = False
                 Ts_M_Customer1.HideQuickSearch()
             End If

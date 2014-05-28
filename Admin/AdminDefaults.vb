@@ -33,7 +33,7 @@
         End Sub
 
         Private Sub SetControls()
-            ' invoicing
+            ' InvoicingForm
             cmb_CustomInvItem.SelectedValue = _row.DEFAULT_INV_ITEM_LISTID
 
             ' bad check
@@ -44,7 +44,7 @@
         End Sub
 
         Private Sub btn_Save_Click(sender As System.Object, e As System.EventArgs) Handles btn_Save.Click
-            ' invoicing
+            ' InvoicingForm
             _row.DEFAULT_INV_ITEM_LISTID = cmb_CustomInvItem.SelectedValue
 
             ' bad check

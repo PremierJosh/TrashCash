@@ -1,5 +1,6 @@
 ﻿Imports System.Windows.Forms
 Imports System.ServiceProcess
+Imports TrashCash.Invoicing
 Imports TrashCash.Classes
 Imports TrashCash.Admin
 Imports TrashCash.ds_ProgramTableAdapters
@@ -100,6 +101,7 @@ Public Class TrashCashHome
     Friend WithEvents BatchForm As BatchingPrep
     Friend WithEvents Customer As Customer
     Friend WithEvents PendingApprovals As PendingApprovals
+    Friend WithEvents InvoicingForm As CustomInvoicingForm
 
     ' vars for admin forms'
     Friend WithEvents UserSelection As UserSelection
@@ -244,7 +246,7 @@ Public Class TrashCashHome
         Catch ex As Exception
             MessageBox.Show("Home Load Message: " & ex.Message & vbCrLf)
         End Try
-        End Sub
+    End Sub
 
     Private Sub ApprovalsWorked(ByVal countRemain As Integer) Handles PendingApprovals.RemainingApprovals
         PendingApprovalsCount = countRemain
@@ -266,8 +268,8 @@ Public Class TrashCashHome
             End If
         End If
     End Sub
-    
-    
+
+
     Private Sub CreateAllClasses()
         QBQueries = New QB_Queries()
         QBProcedures = New QB_Procedures(SessionManager, MsgSetRequest, Me)
@@ -298,7 +300,7 @@ Public Class TrashCashHome
             'con.Close()
         Catch ex As Exception
             MsgBox("Error getting QBFileLoc: " & ex.Message)
-     End Try
+        End Try
     End Sub
 
     Private Sub btn_Rpt_AllCustomerBalances_Click(sender As Object, e As EventArgs) Handles btn_Rpt_AllCustomerBalances.Click
@@ -406,7 +408,7 @@ Public Class TrashCashHome
     End Sub
 
     Private Sub btn_SwitchUser_Click(sender As Object, e As EventArgs) Handles btn_SwitchUser.Click
-        If (Not _BatchRunning) Then
+        If (Not _batchRunning) Then
             Dim userSwitch As New UserSelection("User Switch")
             userSwitch.ShowDialog()
             If (userSwitch.AuthUserRow IsNot Nothing) Then
@@ -446,6 +448,15 @@ Public Class TrashCashHome
     End Sub
 
     Private Sub btn_Invoicing_Click(sender As Object, e As EventArgs) Handles btn_Invoicing.Click
+        If (InvoicingForm IsNot Nothing) Then
+            If (InvoicingForm.IsDisposed) Then
+                InvoicingForm = New CustomInvoicingForm
+            End If
+        Else
+            InvoicingForm = New CustomInvoicingForm
+        End If
 
+        InvoicingForm.BringToFront()
+        InvoicingForm.Show()
     End Sub
 End Class

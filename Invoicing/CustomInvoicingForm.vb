@@ -12,7 +12,10 @@ Namespace Invoicing
             End Get
             Set(value As Integer)
                 _currentCustomer = value
-                Ts_M_Customer.CurrentCustomer = value
+                ' recent addr fill and select nothing
+                _raTA.Fill(Ds_Invoicing.Customer_RecentAddrs, CurrentCustomer)
+                ' fill history tables
+                _ciTA.Fill(Ds_HistoryInv.CustomInvoices, CurrentCustomer)
             End Set
         End Property
 
@@ -22,11 +25,15 @@ Namespace Invoicing
         Private Sub CustomInvoicingForm_Load(sender As Object, e As System.EventArgs) Handles Me.Load
             ' line type fill
             _ltTA.Fill(Ds_Invoicing.CustomInvoice_LineTypes)
-            ' recent addr fill
-            _raTA.Fill(Ds_Invoicing.Customer_RecentAddrs, CurrentCustomer)
-            ' fill history tables
-            _ciTA.Fill(Ds_HistoryInv.CustomInvoices, CurrentCustomer)
-           End Sub
+            If (CurrentCustomer = Nothing) Then
+                CurrentCustomer = Ts_M_Customer.CurrentCustomer
+            End If
+        End Sub
+
+        Private Sub CustomerChanged(ByVal customerNumber As Integer) Handles Ts_M_Customer.CustomerChanging
+            CurrentCustomer = customerNumber
+            ResetInvoice()
+        End Sub
 
         Private Sub dtp_PostDate_ValueChanged(sender As System.Object, e As System.EventArgs) Handles dtp_PostDate.ValueChanged
             dtp_DueDate.Value = dtp_PostDate.Value
@@ -153,7 +160,7 @@ Namespace Invoicing
         End Function
 
         Private Function InvoiceValidation() As Boolean
-            If (dtp_PostDate.Value > dtp_DueDate.Value) Then
+            If (dtp_PostDate.Value.Date <= dtp_DueDate.Value.Date) Then
                 Return True
             Else
                 MessageBox.Show("Due Date cannot be before Post Date", "Error with Post/Due Dates", MessageBoxButtons.OK, MessageBoxIcon.Error)
@@ -163,16 +170,20 @@ Namespace Invoicing
         Private Sub btn_CancelInv_Click(sender As System.Object, e As System.EventArgs) Handles btn_CancelInv.Click
             Dim prompt As DialogResult = MessageBox.Show("Cancel creation of Custom Invoice?", "Confirm cancel", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation)
             If (prompt = Windows.Forms.DialogResult.Yes) Then
-                ' clear dataset
-                Ds_Invoicing.CustomInvoice_LineItems.Clear()
-                Ds_Invoicing.CustomInvoices.Clear()
-                ' reset post date
-                dtp_PostDate.Value = Date.Now
-                ck_Print.Checked = True
-                ResetLinePnl()
-                ' hide bottom panel
-                pnl_3.Visible = False
+                ResetInvoice()
             End If
+        End Sub
+
+        Private Sub ResetInvoice()
+            ' clear dataset
+            Ds_Invoicing.CustomInvoice_LineItems.Clear()
+            Ds_Invoicing.CustomInvoices.Clear()
+            ' reset post date
+            dtp_PostDate.Value = Date.Now
+            ck_Print.Checked = True
+            ResetLinePnl()
+            ' hide bottom panel
+            pnl_3.Visible = False
         End Sub
 
         Private Sub btn_CreateInv_Click(sender As System.Object, e As System.EventArgs) Handles btn_CreateInv.Click
@@ -191,6 +202,12 @@ Namespace Invoicing
                 Dim succeed As Boolean = CustomInvoice_Create(Ds_Invoicing, ck_Print.Checked)
                 If (Not succeed) Then
                     MessageBox.Show("Error - Invoice not created.", "QB Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                Else
+                    MessageBox.Show("Invoice Added.")
+                    ' refill history grid
+                    Ds_HistoryInv.Clear()
+                    _ciTA.Fill(Ds_HistoryInv.CustomInvoices, CurrentCustomer)
+                    ResetInvoice()
                 End If
             End If
         End Sub
@@ -221,6 +238,10 @@ Namespace Invoicing
                         Dim succeed As Boolean = CustomInvoice_Void(row, tb_VoidReason.Text)
                         If (Not succeed) Then
                             MessageBox.Show("Error - Invoice not voided.", "QB Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                        Else
+                            MessageBox.Show("Invoice Voided.")
+                            Ds_HistoryInv.Clear()
+                            _ciTA.Fill(Ds_HistoryInv.CustomInvoices, CurrentCustomer)
                         End If
                     End If
                 Else
@@ -229,16 +250,15 @@ Namespace Invoicing
                 End If
             End If
         End Sub
-
-
+        
         Private Sub ColorHistoryForVoids()
             If (dg_InvHistory.RowCount > 0) Then
                 For i = 0 To dg_InvHistory.RowCount - 1
                     Dim row As ds_Invoicing.CustomInvoicesRow = CType(dg_InvHistory.Rows(i).DataBoundItem, DataRowView).Row
                     If (row.Voided) Then
                         ' credit is voided
-                        dg_InvHistory.Rows(i).DefaultCellStyle.BackColor = Color.Red
-                        dg_InvHistory.Rows(i).DefaultCellStyle.SelectionBackColor = Color.IndianRed
+                        dg_InvHistory.Rows(i).DefaultCellStyle.BackColor = AppColors.GridRed
+                        dg_InvHistory.Rows(i).DefaultCellStyle.SelectionBackColor = AppColors.GridRedSel
                     Else
                         dg_InvHistory.Rows(i).DefaultCellStyle.BackColor = Color.SpringGreen
                         dg_InvHistory.Rows(i).DefaultCellStyle.SelectionBackColor = Color.MediumSeaGreen
@@ -247,20 +267,12 @@ Namespace Invoicing
             End If
         End Sub
 
-        Private Sub dg_InvHistory_RowsAdded(sender As System.Object, e As System.Windows.Forms.DataGridViewRowsAddedEventArgs) Handles dg_InvHistory.RowsAdded
-            ColorHistoryForVoids()
-        End Sub
-
-        Private Sub dg_InvHistory_RowsRemoved(sender As System.Object, e As System.Windows.Forms.DataGridViewRowsRemovedEventArgs) Handles dg_InvHistory.RowsRemoved
-            ColorHistoryForVoids()
-        End Sub
-        Public Sub New(ByRef homeForm As TrashCashHome, Optional ByVal customerNumber As Integer = Nothing)
+        Public Sub New(Optional ByVal customerNumber As Integer = Nothing)
 
             ' This call is required by the designer.
             InitializeComponent()
 
             ' Add any initialization after the InitializeComponent() call.
-            Ts_M_Customer.HomeForm = homeForm
 
             If (customerNumber <> Nothing) Then
                 CurrentCustomer = customerNumber
@@ -270,7 +282,29 @@ Namespace Invoicing
                 ToolTip1.Active = True
             Else
                 ToolTip1.Active = False
+                Ts_M_Customer.GetCustomerBalance()
             End If
+        End Sub
+
+        Private Sub cmb_RecentAddr_SelectionChangeCommitted(sender As System.Object, e As System.EventArgs) Handles cmb_RecentAddr.SelectionChangeCommitted
+            ' get row
+            If (cmb_RecentAddr.SelectedValue IsNot Nothing) Then
+                Dim row As ds_Invoicing.Customer_RecentAddrsRow = CType(DirectCast(cmb_RecentAddr.SelectedItem, DataRowView).Row, ds_Invoicing.Customer_RecentAddrsRow)
+                tb_Addr1.Text = row.Addr1
+                If (Not row.IsAddr2Null) Then
+                    tb_Addr2.Text = row.Addr2
+                End If
+                If (Not row.IsAddr3Null) Then
+                    tb_Addr3.Text = row.Addr3
+                End If
+                tb_City.Text = row.City
+                tb_State.Text = row.State
+                tb_Zip.Text = row.Zip
+              End If
+        End Sub
+
+        Private Sub dg_InvHistory_RowsAdded(sender As System.Object, e As System.Windows.Forms.DataGridViewRowsAddedEventArgs) Handles dg_InvHistory.RowsAdded
+            ColorHistoryForVoids()
         End Sub
     End Class
 End Namespace

@@ -22,7 +22,7 @@ Namespace Invoicing
             ' creating invObj
             Dim invObj As New QBInvoiceObj
             With invObj
-                .CustomerListID = invRow.InvoiceListID
+                .CustomerListID = GlobalConMgr.GetCustomerListID(invRow.CustomerNumber)
                 .DueDate = invRow.DueDate
                 .TxnDate = invRow.PostDate
                 .IsToBePrinted = print
@@ -44,9 +44,10 @@ Namespace Invoicing
                 End With
                 ' building desc line
                 Dim descLine As New QBLineItemObj
-                descLine.Desc = row.DefaultDesc
+                descLine.Desc = row.CompiledDescText
 
                 ' add line items
+                invObj.LineList = New List(Of QBLineItemObj)
                 invObj.LineList.Add(itemLine)
                 invObj.LineList.Add(descLine)
             Next

@@ -30,16 +30,16 @@ Public Class Customer
                 UC_PreparedItems.CurrentCustomer = value
 
                 ' update window title
-                Me.Text = Ts_M_Customer.cmb_Customer.ComboBox.Text.ToString
+                Me.Text = Ts_M_Customer1.cmb_Customer.ComboBox.Text.ToString
                 ' send name to uc_recsrvc
-                UC_RecurringService.CustomerName = Ts_M_Customer.cmb_Customer.ComboBox.Text.ToString
+                UC_RecurringService.CustomerName = Ts_M_Customer1.cmb_Customer.ComboBox.Text.ToString
             End If
         End Set
     End Property
 
     ' refresh balance event handleing
     Friend Sub RefreshCustBalance(Optional ByVal CustomerNumber As Integer = 0) Handles UC_RecurringService.RefreshBalance
-        Ts_M_Customer.GetCustomerBalance()
+        Ts_M_Customer1.GetCustomerBalance()
     End Sub
 
     Private Sub Customer_FormClosing(sender As Object, e As System.Windows.Forms.FormClosingEventArgs) Handles Me.FormClosing
@@ -50,31 +50,30 @@ Public Class Customer
     End Sub
 
     Private Sub Customer_Load(sender As Object, e As System.EventArgs) Handles Me.Load
-        If (Ts_M_Customer.cmb_Customer.ComboBox.SelectedValue IsNot Nothing) Then
-            Me.CurrentCustomer = Ts_M_Customer.cmb_Customer.ComboBox.SelectedValue
-            Ts_M_Customer.CurrentCustomer = Me.CurrentCustomer
-        End If
+        If (Ts_M_Customer1.cmb_Customer.ComboBox.SelectedValue IsNot Nothing) Then
+            Me.CurrentCustomer = Ts_M_Customer1.cmb_Customer.ComboBox.SelectedValue
+      End If
         UC_Quickbooks._HomeForm = _home
 
         ' set quick type box as focus
-        Ts_M_Customer.tb_QuickSearch.Focus()
+        Ts_M_Customer1.tb_QuickSearch.Focus()
     End Sub
 
-    Private Sub CustomerChanged(ByVal CustomerNumber As Integer) Handles Ts_M_Customer.CustomerChanging
+    Private Sub CustomerChanged(ByVal CustomerNumber As Integer) Handles Ts_M_Customer1.CustomerChanging
         Me.CurrentCustomer = CustomerNumber
     End Sub
 
     ' event handle for begining to update customer info
     Private Sub LockAll(ByVal bool As Boolean) Handles UC_CustomerInfoBoxes.Updating
         If (bool = True) Then
-            Ts_M_Customer.Enabled = False
+            Ts_M_Customer1.Enabled = False
             ts_Top.Enabled = False
 
             ' lock tc
             tc_Master.Enabled = False
 
         Else
-            Ts_M_Customer.Enabled = True
+            Ts_M_Customer1.Enabled = True
             ts_Top.Enabled = True
 
             ' unlock tc
@@ -84,7 +83,7 @@ Public Class Customer
 
     ' event handle for completed updating
     Private Sub CustomerInfoUpdated(ByVal CustomerNumber As Decimal) Handles UC_CustomerInfoBoxes.UpdateComplete
-        Ts_M_Customer.RefreshCustomerList()
+        Ts_M_Customer1.RefreshCustomerList()
     End Sub
 
     Private Sub btn_NewCust_Click(sender As System.Object, e As System.EventArgs) Handles btn_NewCust.Click
@@ -94,9 +93,9 @@ Public Class Customer
 
     ' new cust event handle to switch to it
     Private Sub NewCustomer(ByVal newCustNum As Integer) Handles _newCust.NewCustomerAdded
-        Ts_M_Customer.tb_QuickSearch.Text = ""
-        Ts_M_Customer.RefreshCustomerList()
-        Ts_M_Customer.SelectCustWithEvent(newCustNum)
+        Ts_M_Customer1.tb_QuickSearch.Text = ""
+        Ts_M_Customer1.RefreshCustomerList()
+        Ts_M_Customer1.SelectCustomer(newCustNum, True)
         ' clearing newcust var
         _newCust = Nothing
     End Sub
@@ -110,7 +109,7 @@ Public Class Customer
         UC_Quickbooks._HomeForm = HomeForm
         UC_CustomerInfoBoxes.HomeForm = HomeForm
         UC_RecurringService.HomeForm = HomeForm
-        Ts_M_Customer.HomeForm = HomeForm
+        Ts_M_Customer1.GetCustomerBalance()
     End Sub
 
 
@@ -126,7 +125,7 @@ Public Class Customer
     End Sub
 
     Private Sub btn_Inv_Click(sender As System.Object, e As System.EventArgs) Handles btn_Inv.Click
-        _invForm = New Invoicing.CustomInvoicingForm(_home, CurrentCustomer)
+        _invForm = New Invoicing.CustomInvoicingForm(CurrentCustomer)
         _invForm.ShowDialog()
     End Sub
 End Class

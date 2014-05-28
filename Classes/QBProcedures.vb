@@ -174,12 +174,12 @@ Namespace Classes
                     Else
                         .ItemRef.ListID.Unset()
                     End If
-                    If (lineObj.Rate = 0) Then
+                    If (lineObj.Rate <> 0) Then
                         .ORRatePriceLevel.Rate.SetValue(lineObj.Rate)
                     Else
                         .ORRatePriceLevel.Rate.Unset()
                     End If
-                    If (lineObj.Quantity = 0) Then
+                    If (lineObj.Quantity <> 0) Then
                         .Quantity.SetValue(lineObj.Quantity)
                     Else
                         .Quantity.Unset()
@@ -471,6 +471,7 @@ Namespace Classes
 
             Return ConCheck(qbConMgr).GetRespList.GetAt(0)
         End Function
+
 
         Public Shared Function ItemQuery(Optional ByVal listID As String = Nothing, Optional ByRef retEleList As List(Of String) = Nothing,
                                          Optional ByRef qbConMgr As QBConMgr = Nothing) As IResponse

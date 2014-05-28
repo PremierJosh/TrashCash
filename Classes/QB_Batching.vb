@@ -199,7 +199,7 @@ Namespace Classes
                     ' fill line table
                     Linedt = Lita.GetData(invRow.WorkingInvoiceID)
 
-                    ' interfaces needed for invoicing and line items
+                    ' interfaces needed for InvoicingForm and line items
                     Dim invoiceAdd As IInvoiceAdd = MsgSetRequest.AppendInvoiceAddRq
                     ' not going to limit response. i want a lot of data back
                     'invoiceAdd.IncludeRetElementList.Add("TxnID")

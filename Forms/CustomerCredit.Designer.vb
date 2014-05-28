@@ -1,4 +1,6 @@
-﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+﻿Imports TrashCash.Classes
+
+<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
 Partial Class CustomerCredit
     Inherits System.Windows.Forms.Form
 
@@ -27,7 +29,7 @@ Partial Class CustomerCredit
         Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.Panel1 = New System.Windows.Forms.Panel()
         Me.pnl_TopContent = New System.Windows.Forms.Panel()
-        Me.Ts_M_Customer = New TrashCash.ts_M_Customer()
+        Me.Ts_M_Customer = New ts_M_Customer()
         Me.pnl_Left = New System.Windows.Forms.Panel()
         Me.dg_Credits = New System.Windows.Forms.DataGridView()
         Me.CreditAmountDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
@@ -82,7 +84,7 @@ Partial Class CustomerCredit
         '
         'Ts_M_Customer
         '
-        Me.Ts_M_Customer.CurrentCustomer = 0
+
         Me.Ts_M_Customer.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Ts_M_Customer.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden
         Me.Ts_M_Customer.Location = New System.Drawing.Point(0, 0)
@@ -341,7 +343,7 @@ Partial Class CustomerCredit
     End Sub
     Friend WithEvents Panel1 As System.Windows.Forms.Panel
     Friend WithEvents pnl_TopContent As System.Windows.Forms.Panel
-    Friend WithEvents Ts_M_Customer As TrashCash.ts_M_Customer
+    Friend WithEvents Ts_M_Customer As ts_M_Customer
     Friend WithEvents pnl_Left As System.Windows.Forms.Panel
     Friend WithEvents dg_Credits As System.Windows.Forms.DataGridView
     Friend WithEvents CreditAmountDataGridViewTextBoxColumn As System.Windows.Forms.DataGridViewTextBoxColumn

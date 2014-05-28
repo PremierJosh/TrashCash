@@ -1,4 +1,6 @@
-﻿Namespace Admin
+﻿Imports TrashCash.Classes
+
+Namespace Admin
     <Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
     Partial Class AdminPayments
         Inherits System.Windows.Forms.Form
@@ -48,7 +50,7 @@
             Me.AmountDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
             Me.DateReceivedDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
             Me.InsertedByUserDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
-            Me.Ts_M_Customer = New TrashCash.ts_M_Customer()
+            Me.Ts_M_Customer = New ts_M_Customer()
             Me.Cmb_PaymentTypes = New TrashCash.Database_ComboBoxes.cmb_PaymentTypes()
             Me.pnl_Top.SuspendLayout()
             Me.pnl_TopContent.SuspendLayout()
@@ -238,7 +240,6 @@
             '
             'Ts_M_Customer
             '
-            Me.Ts_M_Customer.CurrentCustomer = 0
             Me.Ts_M_Customer.Dock = System.Windows.Forms.DockStyle.Fill
             Me.Ts_M_Customer.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden
             Me.Ts_M_Customer.Location = New System.Drawing.Point(0, 0)
@@ -295,7 +296,7 @@
         Friend WithEvents lbl_DateFilter As System.Windows.Forms.Label
         Friend WithEvents cm_AlterPayment As System.Windows.Forms.ContextMenuStrip
         Friend WithEvents cm_i_BounceCheck As System.Windows.Forms.ToolStripMenuItem
-        Friend WithEvents Ts_M_Customer As TrashCash.ts_M_Customer
+        Friend WithEvents Ts_M_Customer As ts_M_Customer
         Friend WithEvents cm_i_MovePayment As System.Windows.Forms.ToolStripMenuItem
         Friend WithEvents PaymentTypeNameDataGridViewTextBoxColumn As System.Windows.Forms.DataGridViewTextBoxColumn
         Friend WithEvents RefNumberDataGridViewTextBoxColumn As System.Windows.Forms.DataGridViewTextBoxColumn

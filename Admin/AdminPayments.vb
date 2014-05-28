@@ -78,7 +78,6 @@
             ' setting initial customer to screen isnt blank
             If (Ts_M_Customer.cmb_Customer.ComboBox.SelectedValue IsNot Nothing) Then
                 CurrentCustomer = Ts_M_Customer.cmb_Customer.ComboBox.SelectedValue
-                Ts_M_Customer.CurrentCustomer = CurrentCustomer
             End If
         End Sub
 
@@ -146,8 +145,7 @@
 
             ' Add any initialization after the InitializeComponent() call.
             _home = HomeForm
-            Ts_M_Customer.HomeForm = HomeForm
-        End Sub
+           End Sub
 
         Private Sub cm_i_MovePayment_Click(sender As System.Object, e As System.EventArgs) Handles cm_i_MovePayment.Click
             If (dg_PaymentHistory.SelectedRows.Count = 1) Then

@@ -206,7 +206,7 @@ Public Class RecurringServiceForm
             If (value = False) Then
                 btn_Approve.Visible = True
                 ' update status text
-                StatusText = "This Recurring Service has not been Approved for invoicing. You can still change anything related to this service."
+                StatusText = "This Recurring Service has not been Approved for InvoicingForm. You can still change anything related to this service."
             Else
                 btn_Approve.Visible = False
             End If

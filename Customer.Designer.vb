@@ -1,4 +1,6 @@
-﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+﻿Imports TrashCash.Classes
+
+<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
 Partial Class Customer
     Inherits System.Windows.Forms.Form
 
@@ -34,7 +36,7 @@ Partial Class Customer
         Me.UC_PreparedItems = New TrashCash.UC_PreparedItems()
         Me.pnl_Top = New System.Windows.Forms.Panel()
         Me.pnl_TopContent = New System.Windows.Forms.Panel()
-        Me.Ts_M_Customer = New TrashCash.ts_M_Customer()
+        Me.Ts_M_Customer1 = New TrashCash.Classes.ts_M_Customer()
         Me.ts_Top = New System.Windows.Forms.ToolStrip()
         Me.btn_Inv = New System.Windows.Forms.ToolStripButton()
         Me.btn_Payments = New System.Windows.Forms.ToolStripButton()
@@ -159,24 +161,22 @@ Partial Class Customer
         'pnl_TopContent
         '
         Me.pnl_TopContent.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.pnl_TopContent.Controls.Add(Me.Ts_M_Customer)
+        Me.pnl_TopContent.Controls.Add(Me.Ts_M_Customer1)
         Me.pnl_TopContent.Dock = System.Windows.Forms.DockStyle.Fill
         Me.pnl_TopContent.Location = New System.Drawing.Point(20, 10)
         Me.pnl_TopContent.Name = "pnl_TopContent"
         Me.pnl_TopContent.Size = New System.Drawing.Size(862, 33)
         Me.pnl_TopContent.TabIndex = 14
         '
-        'Ts_M_Customer
+        'Ts_M_Customer1
         '
-        Me.Ts_M_Customer.CurrentCustomer = 0
-        Me.Ts_M_Customer.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.Ts_M_Customer.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden
-        Me.Ts_M_Customer.HomeForm = Nothing
-        Me.Ts_M_Customer.Location = New System.Drawing.Point(0, 0)
-        Me.Ts_M_Customer.Name = "Ts_M_Customer"
-        Me.Ts_M_Customer.Size = New System.Drawing.Size(860, 31)
-        Me.Ts_M_Customer.TabIndex = 0
-        Me.Ts_M_Customer.Text = "Ts_M_Customer1"
+        Me.Ts_M_Customer1.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.Ts_M_Customer1.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden
+        Me.Ts_M_Customer1.Location = New System.Drawing.Point(0, 0)
+        Me.Ts_M_Customer1.Name = "Ts_M_Customer1"
+        Me.Ts_M_Customer1.Size = New System.Drawing.Size(860, 31)
+        Me.Ts_M_Customer1.TabIndex = 0
+        Me.Ts_M_Customer1.Text = "Ts_M_Customer1"
         '
         'ts_Top
         '
@@ -271,7 +271,7 @@ Partial Class Customer
     Friend WithEvents UC_PreparedItems As TrashCash.UC_PreparedItems
     Friend WithEvents pnl_Top As System.Windows.Forms.Panel
     Friend WithEvents pnl_TopContent As System.Windows.Forms.Panel
-    Friend WithEvents Ts_M_Customer As TrashCash.ts_M_Customer
+    Friend WithEvents Ts_M_Customer1 As ts_M_Customer
     Friend WithEvents ts_Top As System.Windows.Forms.ToolStrip
     Friend WithEvents btn_Inv As System.Windows.Forms.ToolStripButton
     Friend WithEvents btn_Payments As System.Windows.Forms.ToolStripButton

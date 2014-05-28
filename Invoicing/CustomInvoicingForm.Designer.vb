@@ -1,4 +1,6 @@
-﻿Namespace Invoicing
+﻿Imports TrashCash.Classes
+
+Namespace Invoicing
     <Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
     Partial Class CustomInvoicingForm
         Inherits System.Windows.Forms.Form
@@ -37,7 +39,7 @@
             Me.CustomInvoiceLineItemsBindingSource = New System.Windows.Forms.BindingSource(Me.components)
             Me.pnl_1 = New System.Windows.Forms.Panel()
             Me.pnl_TopContent = New System.Windows.Forms.Panel()
-            Me.Ts_M_Customer = New TrashCash.ts_M_Customer()
+            Me.Ts_M_Customer = New TrashCash.Classes.ts_M_Customer()
             Me.TabControl1 = New System.Windows.Forms.TabControl()
             Me.tp_NewInv = New System.Windows.Forms.TabPage()
             Me.FlowLayoutPanel = New System.Windows.Forms.FlowLayoutPanel()
@@ -149,7 +151,7 @@
             'lbl_Addr1
             '
             lbl_Addr1.AutoSize = True
-            lbl_Addr1.Location = New System.Drawing.Point(10, 22)
+            lbl_Addr1.Location = New System.Drawing.Point(10, 62)
             lbl_Addr1.Name = "lbl_Addr1"
             lbl_Addr1.Size = New System.Drawing.Size(57, 13)
             lbl_Addr1.TabIndex = 4
@@ -158,7 +160,7 @@
             'lbl_Addr2
             '
             lbl_Addr2.AutoSize = True
-            lbl_Addr2.Location = New System.Drawing.Point(10, 48)
+            lbl_Addr2.Location = New System.Drawing.Point(10, 88)
             lbl_Addr2.Name = "lbl_Addr2"
             lbl_Addr2.Size = New System.Drawing.Size(57, 13)
             lbl_Addr2.TabIndex = 6
@@ -167,7 +169,7 @@
             'lbl_Addr3
             '
             lbl_Addr3.AutoSize = True
-            lbl_Addr3.Location = New System.Drawing.Point(10, 74)
+            lbl_Addr3.Location = New System.Drawing.Point(10, 114)
             lbl_Addr3.Name = "lbl_Addr3"
             lbl_Addr3.Size = New System.Drawing.Size(57, 13)
             lbl_Addr3.TabIndex = 8
@@ -176,7 +178,7 @@
             'lbl_CityState
             '
             lbl_CityState.AutoSize = True
-            lbl_CityState.Location = New System.Drawing.Point(10, 100)
+            lbl_CityState.Location = New System.Drawing.Point(10, 140)
             lbl_CityState.Name = "lbl_CityState"
             lbl_CityState.Size = New System.Drawing.Size(57, 13)
             lbl_CityState.TabIndex = 10
@@ -185,7 +187,7 @@
             'ZipLabel
             '
             ZipLabel.AutoSize = True
-            ZipLabel.Location = New System.Drawing.Point(42, 127)
+            ZipLabel.Location = New System.Drawing.Point(42, 167)
             ZipLabel.Name = "ZipLabel"
             ZipLabel.Size = New System.Drawing.Size(25, 13)
             ZipLabel.TabIndex = 14
@@ -233,10 +235,8 @@
             '
             'Ts_M_Customer
             '
-            Me.Ts_M_Customer.CurrentCustomer = 0
             Me.Ts_M_Customer.Dock = System.Windows.Forms.DockStyle.Fill
             Me.Ts_M_Customer.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden
-            Me.Ts_M_Customer.HomeForm = Nothing
             Me.Ts_M_Customer.Location = New System.Drawing.Point(0, 0)
             Me.Ts_M_Customer.Name = "Ts_M_Customer"
             Me.Ts_M_Customer.Size = New System.Drawing.Size(819, 31)
@@ -406,35 +406,35 @@
             '
             'tb_Addr1
             '
-            Me.tb_Addr1.Location = New System.Drawing.Point(73, 19)
+            Me.tb_Addr1.Location = New System.Drawing.Point(73, 59)
             Me.tb_Addr1.Name = "tb_Addr1"
             Me.tb_Addr1.Size = New System.Drawing.Size(147, 20)
             Me.tb_Addr1.TabIndex = 5
             '
             'tb_Addr2
             '
-            Me.tb_Addr2.Location = New System.Drawing.Point(73, 45)
+            Me.tb_Addr2.Location = New System.Drawing.Point(73, 85)
             Me.tb_Addr2.Name = "tb_Addr2"
             Me.tb_Addr2.Size = New System.Drawing.Size(147, 20)
             Me.tb_Addr2.TabIndex = 7
             '
             'tb_Addr3
             '
-            Me.tb_Addr3.Location = New System.Drawing.Point(73, 71)
+            Me.tb_Addr3.Location = New System.Drawing.Point(73, 111)
             Me.tb_Addr3.Name = "tb_Addr3"
             Me.tb_Addr3.Size = New System.Drawing.Size(147, 20)
             Me.tb_Addr3.TabIndex = 9
             '
             'tb_City
             '
-            Me.tb_City.Location = New System.Drawing.Point(73, 97)
+            Me.tb_City.Location = New System.Drawing.Point(73, 137)
             Me.tb_City.Name = "tb_City"
             Me.tb_City.Size = New System.Drawing.Size(100, 20)
             Me.tb_City.TabIndex = 11
             '
             'tb_State
             '
-            Me.tb_State.Location = New System.Drawing.Point(179, 97)
+            Me.tb_State.Location = New System.Drawing.Point(179, 137)
             Me.tb_State.Name = "tb_State"
             Me.tb_State.Size = New System.Drawing.Size(41, 20)
             Me.tb_State.TabIndex = 13
@@ -442,7 +442,7 @@
             'lbl_RecentAddrs
             '
             Me.lbl_RecentAddrs.AutoSize = True
-            Me.lbl_RecentAddrs.Location = New System.Drawing.Point(10, 162)
+            Me.lbl_RecentAddrs.Location = New System.Drawing.Point(10, 16)
             Me.lbl_RecentAddrs.Name = "lbl_RecentAddrs"
             Me.lbl_RecentAddrs.Size = New System.Drawing.Size(97, 13)
             Me.lbl_RecentAddrs.TabIndex = 0
@@ -453,7 +453,7 @@
             Me.cmb_RecentAddr.DataSource = Me.CustomerRecentAddrsBindingSource
             Me.cmb_RecentAddr.DisplayMember = "Addr1"
             Me.cmb_RecentAddr.FormattingEnabled = True
-            Me.cmb_RecentAddr.Location = New System.Drawing.Point(13, 178)
+            Me.cmb_RecentAddr.Location = New System.Drawing.Point(13, 32)
             Me.cmb_RecentAddr.Name = "cmb_RecentAddr"
             Me.cmb_RecentAddr.Size = New System.Drawing.Size(266, 21)
             Me.cmb_RecentAddr.TabIndex = 1
@@ -461,7 +461,7 @@
             '
             'tb_Zip
             '
-            Me.tb_Zip.Location = New System.Drawing.Point(73, 123)
+            Me.tb_Zip.Location = New System.Drawing.Point(73, 163)
             Me.tb_Zip.Name = "tb_Zip"
             Me.tb_Zip.Size = New System.Drawing.Size(100, 20)
             Me.tb_Zip.TabIndex = 15
@@ -536,7 +536,7 @@
             '
             Me.RateDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
             Me.RateDataGridViewTextBoxColumn.DataPropertyName = "Rate"
-            DataGridViewCellStyle1.Format = "d"
+            DataGridViewCellStyle1.Format = "C2"
             Me.RateDataGridViewTextBoxColumn.DefaultCellStyle = DataGridViewCellStyle1
             Me.RateDataGridViewTextBoxColumn.HeaderText = "Rate"
             Me.RateDataGridViewTextBoxColumn.Name = "RateDataGridViewTextBoxColumn"
@@ -971,7 +971,7 @@
             Me.Controls.Add(Me.TabControl1)
             Me.Controls.Add(Me.pnl_1)
             Me.Name = "CustomInvoicingForm"
-            Me.Text = "Custom Invoicing"
+            Me.Text = "Custom InvoicingForm"
             CType(Me.CustomInvoiceLineTypesBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
             CType(Me.Ds_Invoicing, System.ComponentModel.ISupportInitialize).EndInit()
             CType(Me.CustomerRecentAddrsBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
@@ -1008,7 +1008,7 @@
         Friend WithEvents CustomInvoiceLineItemsBindingSource As System.Windows.Forms.BindingSource
         Friend WithEvents pnl_1 As System.Windows.Forms.Panel
         Friend WithEvents pnl_TopContent As System.Windows.Forms.Panel
-        Friend WithEvents Ts_M_Customer As TrashCash.ts_M_Customer
+        Friend WithEvents Ts_M_Customer As ts_M_Customer
         Friend WithEvents TabControl1 As System.Windows.Forms.TabControl
         Friend WithEvents tp_NewInv As System.Windows.Forms.TabPage
         Friend WithEvents FlowLayoutPanel As System.Windows.Forms.FlowLayoutPanel
@@ -1035,11 +1035,6 @@
         Friend WithEvents pnl_3 As System.Windows.Forms.Panel
         Friend WithEvents btn_CancelInv As System.Windows.Forms.Button
         Friend WithEvents dg_LineItems As System.Windows.Forms.DataGridView
-        Friend WithEvents CITypeIDDataGridViewTextBoxColumn As System.Windows.Forms.DataGridViewComboBoxColumn
-        Friend WithEvents RateDataGridViewTextBoxColumn As System.Windows.Forms.DataGridViewTextBoxColumn
-        Friend WithEvents RenderedOnDateDataGridViewTextBoxColumn As System.Windows.Forms.DataGridViewTextBoxColumn
-        Friend WithEvents Addr1DataGridViewTextBoxColumn As System.Windows.Forms.DataGridViewTextBoxColumn
-        Friend WithEvents DescTextDataGridViewTextBoxColumn As System.Windows.Forms.DataGridViewTextBoxColumn
         Friend WithEvents ContextMenuStrip1 As System.Windows.Forms.ContextMenuStrip
         Friend WithEvents btn_DeleteLine As System.Windows.Forms.ToolStripMenuItem
         Friend WithEvents lbl_LineItems As System.Windows.Forms.Label
@@ -1089,5 +1084,10 @@
         Friend WithEvents VoidTimeDataGridViewTextBoxColumn As System.Windows.Forms.DataGridViewTextBoxColumn
         Friend WithEvents VoidUserDataGridViewTextBoxColumn As System.Windows.Forms.DataGridViewTextBoxColumn
         Friend WithEvents ToolTip1 As System.Windows.Forms.ToolTip
+        Friend WithEvents CITypeIDDataGridViewTextBoxColumn As System.Windows.Forms.DataGridViewComboBoxColumn
+        Friend WithEvents RateDataGridViewTextBoxColumn As System.Windows.Forms.DataGridViewTextBoxColumn
+        Friend WithEvents RenderedOnDateDataGridViewTextBoxColumn As System.Windows.Forms.DataGridViewTextBoxColumn
+        Friend WithEvents Addr1DataGridViewTextBoxColumn As System.Windows.Forms.DataGridViewTextBoxColumn
+        Friend WithEvents DescTextDataGridViewTextBoxColumn As System.Windows.Forms.DataGridViewTextBoxColumn
     End Class
 End Namespace

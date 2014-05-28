@@ -1,4 +1,6 @@
-﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+﻿Imports TrashCash.Classes
+
+<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
 Partial Class CustomInvoice_DescRemind
     Inherits System.Windows.Forms.Form
 
@@ -34,7 +36,7 @@ Partial Class CustomInvoice_DescRemind
         Me.lbl_InvDescHeader = New System.Windows.Forms.Label()
         Me.tb_InvDesc = New System.Windows.Forms.TextBox()
         Me.pnl_Top = New System.Windows.Forms.Panel()
-        Me.Ts_M_Customer1 = New TrashCash.ts_M_Customer()
+        Me.Ts_M_Customer1 = New ts_M_Customer()
         Me.lbl_InvDescLen = New System.Windows.Forms.Label()
         Me.lbl_ReminderText = New System.Windows.Forms.Label()
         Me.ck_CreateReminder = New System.Windows.Forms.CheckBox()
@@ -179,7 +181,6 @@ Partial Class CustomInvoice_DescRemind
         '
         'Ts_M_Customer1
         '
-        Me.Ts_M_Customer1.CurrentCustomer = 0
         Me.Ts_M_Customer1.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden
         Me.Ts_M_Customer1.Location = New System.Drawing.Point(0, 0)
         Me.Ts_M_Customer1.Name = "Ts_M_Customer1"
@@ -347,5 +348,5 @@ Partial Class CustomInvoice_DescRemind
     Friend WithEvents lbl_RemindDate As System.Windows.Forms.Label
     Friend WithEvents pnl_BtnBottom As System.Windows.Forms.Panel
     Friend WithEvents btn_Submit As System.Windows.Forms.Button
-    Friend WithEvents Ts_M_Customer1 As TrashCash.ts_M_Customer
+    Friend WithEvents Ts_M_Customer1 As ts_M_Customer
 End Class

@@ -1,4 +1,6 @@
-﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+﻿Imports TrashCash.Classes
+
+<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
 Partial Class Payments
     Inherits System.Windows.Forms.Form
 
@@ -46,7 +48,7 @@ Partial Class Payments
         Me.Panel1 = New System.Windows.Forms.Panel()
         Me.pnl_TopContent = New System.Windows.Forms.Panel()
         Me.UC_PaymentDetails = New TrashCash.UC_PaymentDetails()
-        Me.Ts_M_Customer = New TrashCash.ts_M_Customer()
+        Me.Ts_M_Customer = New ts_M_Customer()
         Me.UC_CustomerNotes = New TrashCash.UC_CustomerNotes()
         Me.UC_CustomerInfoBoxes = New TrashCash.UC_CustomerInfoBoxes()
         Me.pnl_Mid.SuspendLayout()
@@ -272,7 +274,7 @@ Partial Class Payments
         '
         'Ts_M_Customer
         '
-        Me.Ts_M_Customer.CurrentCustomer = 0
+
         Me.Ts_M_Customer.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Ts_M_Customer.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden
         Me.Ts_M_Customer.Location = New System.Drawing.Point(0, 0)
@@ -351,7 +353,7 @@ Partial Class Payments
     Friend WithEvents DeleteToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents Panel1 As System.Windows.Forms.Panel
     Friend WithEvents pnl_TopContent As System.Windows.Forms.Panel
-    Friend WithEvents Ts_M_Customer As TrashCash.ts_M_Customer
+    Friend WithEvents Ts_M_Customer As ts_M_Customer
     Friend WithEvents pnl_MidLeft As System.Windows.Forms.Panel
     Friend WithEvents UC_PaymentDetails As TrashCash.UC_PaymentDetails
 End Class

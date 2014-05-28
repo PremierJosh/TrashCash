@@ -15,8 +15,7 @@
                 _custNum = value
 
                 ' do stuff when cust changes here
-                Ts_M_Customer.CurrentCustomer = value
-                UC_PaymentDetails.CurrentCustomer = value
+              UC_PaymentDetails.CurrentCustomer = value
                 UC_CustomerNotes.CurrentCustomer = value
                 UC_CustomerInfoBoxes.CurrentCustomer = value
                 ' update window title text
@@ -52,13 +51,14 @@
         ' Add any initialization after the InitializeComponent() call.
         ta = Me.WorkingPaymentsTableAdapter
         _home = HomeForm
-        Ts_M_Customer.HomeForm = HomeForm
-
+       
         ' if number is passed, lock ts
         If (_customerNumber <> 0) Then
             Ts_M_Customer.Enabled = False
             Ts_M_Customer.HideQuickSearch()
             Me.CurrentCustomer = _customerNumber
+        Else
+            Ts_M_Customer.SelectCustomer(_customerNumber)
         End If
     End Sub
     Public Overrides Function ToString() As String
@@ -97,6 +97,6 @@
             End If
         End If
 
-        Ts_M_Customer.CurrentCustomer = Me.CurrentCustomer
+        Ts_M_Customer.SelectCustomer(CurrentCustomer)
     End Sub
 End Class

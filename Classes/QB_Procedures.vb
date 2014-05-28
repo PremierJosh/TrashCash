@@ -1382,7 +1382,7 @@ retry:
         '    Dim custBalance As Double = c_Queries.Customer_Balance(custListID)
         '    c_Queries = Nothing
 
-        '    ' interfaces needed for invoicing and line items
+        '    ' interfaces needed for InvoicingForm and line items
         '    Dim invoiceAdd As IInvoiceAdd = MsgSetRequest.AppendInvoiceAddRq
         '    ' limiting response
         '    invoiceAdd.IncludeRetElementList.Add("TxnID")
