@@ -4,7 +4,7 @@ Imports TrashCash.Modules
 Namespace Invoicing
     Public Class CustomInvoicingForm
 
-        ' current customer property
+   ' current customer property
         Private _currentCustomer As Integer
         Public Property CurrentCustomer As Integer
             Get
@@ -19,7 +19,7 @@ Namespace Invoicing
             End Set
         End Property
 
-       ' invoice row for easier refrence
+        ' invoice row for easier refrence
         Private _invRow As ds_Invoicing.CustomInvoicesRow
 
         Private Sub CustomInvoicingForm_Load(sender As Object, e As System.EventArgs) Handles Me.Load
@@ -79,9 +79,13 @@ Namespace Invoicing
                     .STATE = tb_State.Text
                     .Zip = tb_Zip.Text
                     .CompiledDescText = CompileLineDesc()
+                    ' reminder check
+                    If (ck_Reminder.Checked) Then
+                        .Reminder = True
+                    End If
                 End With
                 Ds_Invoicing.CustomInvoice_LineItems.AddCustomInvoice_LineItemsRow(line)
-
+                
                 ' setting pnl3 visible
                 pnl_3.Visible = True
                 ResetLinePnl()
@@ -198,15 +202,23 @@ Namespace Invoicing
                     MessageBox.Show("Message: " & ex.Message & vbCrLf & "LineNumber: " & ex.LineNumber,
                                     "Sql Error: " & ex.Procedure, MessageBoxButtons.OK, MessageBoxIcon.Error)
                 End Try
+
                 ' send to QB
                 Dim succeed As Boolean = CustomInvoice_Create(Ds_Invoicing, ck_Print.Checked)
                 If (Not succeed) Then
                     MessageBox.Show("Error - Invoice not created.", "QB Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
                 Else
-                    MessageBox.Show("Invoice Added.")
+                    ' creating reminders
+                    For Each row As ds_Invoicing.CustomInvoice_LineItemsRow In Ds_Invoicing.CustomInvoice_LineItems
+                        If (row.Reminder) Then
+                            _liTA.Reminder_CustomInvoice_Insert(row.CI_ID, row.RenderedOnDate, row.CompiledDescText, CurrentUser.USER_NAME)
+                        End If
+                    Next
+
                     ' refill history grid
                     Ds_HistoryInv.Clear()
                     _ciTA.Fill(Ds_HistoryInv.CustomInvoices, CurrentCustomer)
+                    MessageBox.Show("Invoice Added.")
                     ResetInvoice()
                 End If
             End If
@@ -250,7 +262,7 @@ Namespace Invoicing
                 End If
             End If
         End Sub
-        
+
         Private Sub ColorHistoryForVoids()
             If (dg_InvHistory.RowCount > 0) Then
                 For i = 0 To dg_InvHistory.RowCount - 1
@@ -300,7 +312,7 @@ Namespace Invoicing
                 tb_City.Text = row.City
                 tb_State.Text = row.State
                 tb_Zip.Text = row.Zip
-              End If
+            End If
         End Sub
 
         Private Sub dg_InvHistory_RowsAdded(sender As System.Object, e As System.Windows.Forms.DataGridViewRowsAddedEventArgs) Handles dg_InvHistory.RowsAdded

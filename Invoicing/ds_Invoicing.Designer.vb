@@ -885,6 +885,8 @@ Partial Public Class ds_Invoicing
         
         Private columnSTATE As Global.System.Data.DataColumn
         
+        Private columnReminder As Global.System.Data.DataColumn
+        
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
         Public Sub New()
@@ -1033,6 +1035,14 @@ Partial Public Class ds_Invoicing
         End Property
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        Public ReadOnly Property ReminderColumn() As Global.System.Data.DataColumn
+            Get
+                Return Me.columnReminder
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0"),  _
          Global.System.ComponentModel.Browsable(false)>  _
         Public ReadOnly Property Count() As Integer
@@ -1069,9 +1079,9 @@ Partial Public Class ds_Invoicing
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Overloads Function AddCustomInvoice_LineItemsRow(ByVal parentCustomInvoicesRowByFK_CustomInvoices_CustomInvoice_LineItems As CustomInvoicesRow, ByVal CI_TypeID As Integer, ByVal Rate As Decimal, ByVal DefaultDesc As String, ByVal RenderedOnDate As Date, ByVal DescText As String, ByVal Addr1 As String, ByVal Addr2 As String, ByVal Addr3 As String, ByVal Zip As String, ByVal CompiledDescText As String, ByVal City As String, ByVal STATE As String) As CustomInvoice_LineItemsRow
+        Public Overloads Function AddCustomInvoice_LineItemsRow(ByVal parentCustomInvoicesRowByFK_CustomInvoices_CustomInvoice_LineItems As CustomInvoicesRow, ByVal CI_TypeID As Integer, ByVal Rate As Decimal, ByVal DefaultDesc As String, ByVal RenderedOnDate As Date, ByVal DescText As String, ByVal Addr1 As String, ByVal Addr2 As String, ByVal Addr3 As String, ByVal Zip As String, ByVal CompiledDescText As String, ByVal City As String, ByVal STATE As String, ByVal Reminder As Boolean) As CustomInvoice_LineItemsRow
             Dim rowCustomInvoice_LineItemsRow As CustomInvoice_LineItemsRow = CType(Me.NewRow,CustomInvoice_LineItemsRow)
-            Dim columnValuesArray() As Object = New Object() {Nothing, Nothing, CI_TypeID, Rate, DefaultDesc, RenderedOnDate, DescText, Addr1, Addr2, Addr3, Zip, CompiledDescText, City, STATE}
+            Dim columnValuesArray() As Object = New Object() {Nothing, Nothing, CI_TypeID, Rate, DefaultDesc, RenderedOnDate, DescText, Addr1, Addr2, Addr3, Zip, CompiledDescText, City, STATE, Reminder}
             If (Not (parentCustomInvoicesRowByFK_CustomInvoices_CustomInvoice_LineItems) Is Nothing) Then
                 columnValuesArray(1) = parentCustomInvoicesRowByFK_CustomInvoices_CustomInvoice_LineItems(0)
             End If
@@ -1117,6 +1127,7 @@ Partial Public Class ds_Invoicing
             Me.columnCompiledDescText = MyBase.Columns("CompiledDescText")
             Me.columnCity = MyBase.Columns("City")
             Me.columnSTATE = MyBase.Columns("STATE")
+            Me.columnReminder = MyBase.Columns("Reminder")
         End Sub
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
@@ -1150,6 +1161,8 @@ Partial Public Class ds_Invoicing
             MyBase.Columns.Add(Me.columnCity)
             Me.columnSTATE = New Global.System.Data.DataColumn("STATE", GetType(String), Nothing, Global.System.Data.MappingType.Element)
             MyBase.Columns.Add(Me.columnSTATE)
+            Me.columnReminder = New Global.System.Data.DataColumn("Reminder", GetType(Boolean), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnReminder)
             Me.Constraints.Add(New Global.System.Data.UniqueConstraint("Constraint1", New Global.System.Data.DataColumn() {Me.columnCI_LineID}, true))
             Me.columnCI_LineID.AutoIncrement = true
             Me.columnCI_LineID.AutoIncrementSeed = -1
@@ -1176,6 +1189,7 @@ Partial Public Class ds_Invoicing
             Me.columnCity.MaxLength = 50
             Me.columnSTATE.AllowDBNull = false
             Me.columnSTATE.MaxLength = 50
+            Me.columnReminder.DefaultValue = CType(false,Boolean)
         End Sub
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
@@ -2484,6 +2498,21 @@ Partial Public Class ds_Invoicing
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        Public Property Reminder() As Boolean
+            Get
+                Try 
+                    Return CType(Me(Me.tableCustomInvoice_LineItems.ReminderColumn),Boolean)
+                Catch e As Global.System.InvalidCastException
+                    Throw New Global.System.Data.StrongTypingException("The value for column 'Reminder' in table 'CustomInvoice_LineItems' is DBNull.", e)
+                End Try
+            End Get
+            Set
+                Me(Me.tableCustomInvoice_LineItems.ReminderColumn) = value
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
         Public Property CustomInvoicesRow() As CustomInvoicesRow
             Get
                 Return CType(Me.GetParentRow(Me.Table.ParentRelations("FK_CustomInvoices_CustomInvoice_LineItems")),CustomInvoicesRow)
@@ -2527,6 +2556,18 @@ Partial Public Class ds_Invoicing
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
         Public Sub SetAddr3Null()
             Me(Me.tableCustomInvoice_LineItems.Addr3Column) = Global.System.Convert.DBNull
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        Public Function IsReminderNull() As Boolean
+            Return Me.IsNull(Me.tableCustomInvoice_LineItems.ReminderColumn)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        Public Sub SetReminderNull()
+            Me(Me.tableCustomInvoice_LineItems.ReminderColumn) = Global.System.Convert.DBNull
         End Sub
     End Class
     
@@ -3766,13 +3807,22 @@ Namespace ds_InvoicingTableAdapters
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
         Private Sub InitCommandCollection()
-            Me._commandCollection = New Global.System.Data.SqlClient.SqlCommand(0) {}
+            Me._commandCollection = New Global.System.Data.SqlClient.SqlCommand(1) {}
             Me._commandCollection(0) = New Global.System.Data.SqlClient.SqlCommand()
             Me._commandCollection(0).Connection = Me.Connection
             Me._commandCollection(0).CommandText = "dbo.CustomInvoice_LineItems_SelectByInvID"
             Me._commandCollection(0).CommandType = Global.System.Data.CommandType.StoredProcedure
             Me._commandCollection(0).Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@RETURN_VALUE", Global.System.Data.SqlDbType.Int, 4, Global.System.Data.ParameterDirection.ReturnValue, 10, 0, Nothing, Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
             Me._commandCollection(0).Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@CI_ID", Global.System.Data.SqlDbType.Int, 4, Global.System.Data.ParameterDirection.Input, 10, 0, Nothing, Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
+            Me._commandCollection(1) = New Global.System.Data.SqlClient.SqlCommand()
+            Me._commandCollection(1).Connection = Me.Connection
+            Me._commandCollection(1).CommandText = "dbo.Reminder_CustomInvoice_Insert"
+            Me._commandCollection(1).CommandType = Global.System.Data.CommandType.StoredProcedure
+            Me._commandCollection(1).Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@RETURN_VALUE", Global.System.Data.SqlDbType.Int, 4, Global.System.Data.ParameterDirection.ReturnValue, 10, 0, Nothing, Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
+            Me._commandCollection(1).Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@CI_LineID", Global.System.Data.SqlDbType.Int, 4, Global.System.Data.ParameterDirection.Input, 10, 0, Nothing, Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
+            Me._commandCollection(1).Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@ReminderDate", Global.System.Data.SqlDbType.[Date], 3, Global.System.Data.ParameterDirection.Input, 10, 0, Nothing, Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
+            Me._commandCollection(1).Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@ReminderText", Global.System.Data.SqlDbType.VarChar, 4000, Global.System.Data.ParameterDirection.Input, 0, 0, Nothing, Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
+            Me._commandCollection(1).Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@User", Global.System.Data.SqlDbType.VarChar, 50, Global.System.Data.ParameterDirection.Input, 0, 0, Nothing, Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
         End Sub
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
@@ -4149,6 +4199,47 @@ Namespace ds_InvoicingTableAdapters
                     ByVal Original_Zip As String,  _
                     ByVal Original_CompiledDescText As String) As Integer
             Return Me.Update(CI_ID, CI_TypeID, Rate, DefaultDesc, RenderedOnDate, DescText, Addr1, Addr2, Addr3, City, State, Zip, CompiledDescText, Original_CI_LineID, Original_CI_ID, Original_CI_TypeID, Original_Rate, Original_DefaultDesc, Original_RenderedOnDate, Original_DescText, Original_Addr1, Original_Addr2, Original_Addr3, Original_City, Original_State, Original_Zip, Original_CompiledDescText, Original_CI_LineID)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0"),  _
+         Global.System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")>  _
+        Public Overloads Overridable Function Reminder_CustomInvoice_Insert(ByVal CI_LineID As Global.System.Nullable(Of Integer), ByVal ReminderDate As Global.System.Nullable(Of Date), ByVal ReminderText As String, ByVal User As String) As Integer
+            Dim command As Global.System.Data.SqlClient.SqlCommand = Me.CommandCollection(1)
+            If (CI_LineID.HasValue = true) Then
+                command.Parameters(1).Value = CType(CI_LineID.Value,Integer)
+            Else
+                command.Parameters(1).Value = Global.System.DBNull.Value
+            End If
+            If (ReminderDate.HasValue = true) Then
+                command.Parameters(2).Value = CType(ReminderDate.Value,Date)
+            Else
+                command.Parameters(2).Value = Global.System.DBNull.Value
+            End If
+            If (ReminderText Is Nothing) Then
+                command.Parameters(3).Value = Global.System.DBNull.Value
+            Else
+                command.Parameters(3).Value = CType(ReminderText,String)
+            End If
+            If (User Is Nothing) Then
+                command.Parameters(4).Value = Global.System.DBNull.Value
+            Else
+                command.Parameters(4).Value = CType(User,String)
+            End If
+            Dim previousConnectionState As Global.System.Data.ConnectionState = command.Connection.State
+            If ((command.Connection.State And Global.System.Data.ConnectionState.Open)  _
+                        <> Global.System.Data.ConnectionState.Open) Then
+                command.Connection.Open
+            End If
+            Dim returnValue As Integer
+            Try 
+                returnValue = command.ExecuteNonQuery
+            Finally
+                If (previousConnectionState = Global.System.Data.ConnectionState.Closed) Then
+                    command.Connection.Close
+                End If
+            End Try
+            Return returnValue
         End Function
     End Class
     

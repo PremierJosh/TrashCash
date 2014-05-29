@@ -14,6 +14,7 @@
             If (_custNum <> value) Then
                 _custNum = value
 
+
                 ' do stuff when cust changes here
               UC_PaymentDetails.CurrentCustomer = value
                 UC_CustomerNotes.CurrentCustomer = value
