@@ -31,8 +31,13 @@ Namespace Invoicing
             Dim lbl_Addr3 As System.Windows.Forms.Label
             Dim lbl_CityState As System.Windows.Forms.Label
             Dim ZipLabel As System.Windows.Forms.Label
-            Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-            Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+            Dim DataGridViewCellStyle8 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+            Dim DataGridViewCellStyle9 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+            Dim DataGridViewCellStyle10 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+            Dim DataGridViewCellStyle11 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+            Dim DataGridViewCellStyle12 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+            Dim DataGridViewCellStyle13 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+            Dim DataGridViewCellStyle14 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
             Me.CustomInvoiceLineTypesBindingSource = New System.Windows.Forms.BindingSource(Me.components)
             Me.Ds_Invoicing = New TrashCash.ds_Invoicing()
             Me.CustomerRecentAddrsBindingSource = New System.Windows.Forms.BindingSource(Me.components)
@@ -86,40 +91,24 @@ Namespace Invoicing
             Me.tb_VoidReason = New System.Windows.Forms.TextBox()
             Me.btn_VoidInv = New System.Windows.Forms.Button()
             Me.DataGridView1 = New System.Windows.Forms.DataGridView()
-            Me.CILineIDDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
-            Me.CIIDDataGridViewTextBoxColumn1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-            Me.CITypeIDDataGridViewTextBoxColumn1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-            Me.RateDataGridViewTextBoxColumn1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-            Me.DefaultDescDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
-            Me.RenderedOnDateDataGridViewTextBoxColumn1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-            Me.DescTextDataGridViewTextBoxColumn1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-            Me.Addr1DataGridViewTextBoxColumn1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-            Me.Addr2DataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
-            Me.Addr3DataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
-            Me.ZipDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
-            Me.CompiledDescTextDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
-            Me.CityDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
-            Me.STATEDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
             Me.Ds_HistoryInv = New TrashCash.ds_Invoicing()
             Me.dg_InvHistory = New System.Windows.Forms.DataGridView()
-            Me.CIIDDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
-            Me.CustomerNumberDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
-            Me.StatusIDDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
-            Me.InsertedUserDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
-            Me.TimeInsertedDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
-            Me.InvoiceListIDDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
-            Me.InvoiceRefNumDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
-            Me.TimeSubmittedDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
-            Me.TimeCreatedDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
-            Me.DueDateDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
-            Me.PostDateDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
-            Me.VoidedDataGridViewCheckBoxColumn = New System.Windows.Forms.DataGridViewCheckBoxColumn()
-            Me.VoidReasonDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
-            Me.VoidTimeDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
-            Me.VoidUserDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
             Me.CustomInvoicesBindingSource = New System.Windows.Forms.BindingSource(Me.components)
             Me.InvoiceHistoryBindingSource = New System.Windows.Forms.BindingSource(Me.components)
             Me.ToolTip1 = New System.Windows.Forms.ToolTip(Me.components)
+            Me.lbl_InvHistory = New System.Windows.Forms.Label()
+            Me.InvoiceRefNumDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+            Me.TimeCreatedDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+            Me.DueDateDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+            Me.PostDateDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+            Me.InsertedUserDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+            Me.lbl_HistoryLines = New System.Windows.Forms.Label()
+            Me.CITypeIDDataGridViewTextBoxColumn1 = New System.Windows.Forms.DataGridViewComboBoxColumn()
+            Me.RateDataGridViewTextBoxColumn1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+            Me.RenderedOnDateDataGridViewTextBoxColumn1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+            Me.DescTextDataGridViewTextBoxColumn1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+            Me.Addr1DataGridViewTextBoxColumn1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+            Me.lbl_VoidInfo = New System.Windows.Forms.Label()
             lbl_Addr1 = New System.Windows.Forms.Label()
             lbl_Addr2 = New System.Windows.Forms.Label()
             lbl_Addr3 = New System.Windows.Forms.Label()
@@ -536,8 +525,8 @@ Namespace Invoicing
             '
             Me.RateDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
             Me.RateDataGridViewTextBoxColumn.DataPropertyName = "Rate"
-            DataGridViewCellStyle1.Format = "C2"
-            Me.RateDataGridViewTextBoxColumn.DefaultCellStyle = DataGridViewCellStyle1
+            DataGridViewCellStyle8.Format = "C2"
+            Me.RateDataGridViewTextBoxColumn.DefaultCellStyle = DataGridViewCellStyle8
             Me.RateDataGridViewTextBoxColumn.HeaderText = "Rate"
             Me.RateDataGridViewTextBoxColumn.Name = "RateDataGridViewTextBoxColumn"
             Me.RateDataGridViewTextBoxColumn.ReadOnly = True
@@ -547,8 +536,8 @@ Namespace Invoicing
             '
             Me.RenderedOnDateDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
             Me.RenderedOnDateDataGridViewTextBoxColumn.DataPropertyName = "RenderedOnDate"
-            DataGridViewCellStyle2.Format = "d"
-            Me.RenderedOnDateDataGridViewTextBoxColumn.DefaultCellStyle = DataGridViewCellStyle2
+            DataGridViewCellStyle9.Format = "d"
+            Me.RenderedOnDateDataGridViewTextBoxColumn.DefaultCellStyle = DataGridViewCellStyle9
             Me.RenderedOnDateDataGridViewTextBoxColumn.HeaderText = "Date of service"
             Me.RenderedOnDateDataGridViewTextBoxColumn.Name = "RenderedOnDateDataGridViewTextBoxColumn"
             Me.RenderedOnDateDataGridViewTextBoxColumn.ReadOnly = True
@@ -667,11 +656,14 @@ Namespace Invoicing
             'tp_History
             '
             Me.tp_History.BackColor = System.Drawing.SystemColors.Control
+            Me.tp_History.Controls.Add(Me.lbl_VoidInfo)
+            Me.tp_History.Controls.Add(Me.DataGridView1)
+            Me.tp_History.Controls.Add(Me.lbl_HistoryLines)
             Me.tp_History.Controls.Add(Me.lbl_VoidReason)
             Me.tp_History.Controls.Add(Me.tb_VoidReason)
             Me.tp_History.Controls.Add(Me.btn_VoidInv)
-            Me.tp_History.Controls.Add(Me.DataGridView1)
             Me.tp_History.Controls.Add(Me.dg_InvHistory)
+            Me.tp_History.Controls.Add(Me.lbl_InvHistory)
             Me.tp_History.Location = New System.Drawing.Point(4, 22)
             Me.tp_History.Name = "tp_History"
             Me.tp_History.Padding = New System.Windows.Forms.Padding(3)
@@ -690,7 +682,7 @@ Namespace Invoicing
             '
             'tb_VoidReason
             '
-            Me.tb_VoidReason.Location = New System.Drawing.Point(572, 316)
+            Me.tb_VoidReason.Location = New System.Drawing.Point(302, 393)
             Me.tb_VoidReason.Multiline = True
             Me.tb_VoidReason.Name = "tb_VoidReason"
             Me.tb_VoidReason.Size = New System.Drawing.Size(230, 56)
@@ -700,7 +692,7 @@ Namespace Invoicing
             '
             Me.btn_VoidInv.AutoSize = True
             Me.btn_VoidInv.ForeColor = System.Drawing.Color.Red
-            Me.btn_VoidInv.Location = New System.Drawing.Point(655, 378)
+            Me.btn_VoidInv.Location = New System.Drawing.Point(385, 455)
             Me.btn_VoidInv.Name = "btn_VoidInv"
             Me.btn_VoidInv.Size = New System.Drawing.Size(76, 23)
             Me.btn_VoidInv.TabIndex = 2
@@ -712,113 +704,18 @@ Namespace Invoicing
             Me.DataGridView1.AllowUserToAddRows = False
             Me.DataGridView1.AllowUserToDeleteRows = False
             Me.DataGridView1.AutoGenerateColumns = False
+            Me.DataGridView1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
             Me.DataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-            Me.DataGridView1.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.CILineIDDataGridViewTextBoxColumn, Me.CIIDDataGridViewTextBoxColumn1, Me.CITypeIDDataGridViewTextBoxColumn1, Me.RateDataGridViewTextBoxColumn1, Me.DefaultDescDataGridViewTextBoxColumn, Me.RenderedOnDateDataGridViewTextBoxColumn1, Me.DescTextDataGridViewTextBoxColumn1, Me.Addr1DataGridViewTextBoxColumn1, Me.Addr2DataGridViewTextBoxColumn, Me.Addr3DataGridViewTextBoxColumn, Me.ZipDataGridViewTextBoxColumn, Me.CompiledDescTextDataGridViewTextBoxColumn, Me.CityDataGridViewTextBoxColumn, Me.STATEDataGridViewTextBoxColumn})
+            Me.DataGridView1.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.CITypeIDDataGridViewTextBoxColumn1, Me.RateDataGridViewTextBoxColumn1, Me.RenderedOnDateDataGridViewTextBoxColumn1, Me.DescTextDataGridViewTextBoxColumn1, Me.Addr1DataGridViewTextBoxColumn1})
             Me.DataGridView1.DataMember = "CustomInvoice_LineItems"
             Me.DataGridView1.DataSource = Me.Ds_HistoryInv
-            Me.DataGridView1.Location = New System.Drawing.Point(38, 268)
+            Me.DataGridView1.Dock = System.Windows.Forms.DockStyle.Top
+            Me.DataGridView1.Location = New System.Drawing.Point(3, 193)
             Me.DataGridView1.Name = "DataGridView1"
             Me.DataGridView1.ReadOnly = True
-            Me.DataGridView1.Size = New System.Drawing.Size(406, 150)
+            Me.DataGridView1.RowHeadersVisible = False
+            Me.DataGridView1.Size = New System.Drawing.Size(847, 150)
             Me.DataGridView1.TabIndex = 1
-            '
-            'CILineIDDataGridViewTextBoxColumn
-            '
-            Me.CILineIDDataGridViewTextBoxColumn.DataPropertyName = "CI_LineID"
-            Me.CILineIDDataGridViewTextBoxColumn.HeaderText = "CI_LineID"
-            Me.CILineIDDataGridViewTextBoxColumn.Name = "CILineIDDataGridViewTextBoxColumn"
-            Me.CILineIDDataGridViewTextBoxColumn.ReadOnly = True
-            '
-            'CIIDDataGridViewTextBoxColumn1
-            '
-            Me.CIIDDataGridViewTextBoxColumn1.DataPropertyName = "CI_ID"
-            Me.CIIDDataGridViewTextBoxColumn1.HeaderText = "CI_ID"
-            Me.CIIDDataGridViewTextBoxColumn1.Name = "CIIDDataGridViewTextBoxColumn1"
-            Me.CIIDDataGridViewTextBoxColumn1.ReadOnly = True
-            '
-            'CITypeIDDataGridViewTextBoxColumn1
-            '
-            Me.CITypeIDDataGridViewTextBoxColumn1.DataPropertyName = "CI_TypeID"
-            Me.CITypeIDDataGridViewTextBoxColumn1.HeaderText = "CI_TypeID"
-            Me.CITypeIDDataGridViewTextBoxColumn1.Name = "CITypeIDDataGridViewTextBoxColumn1"
-            Me.CITypeIDDataGridViewTextBoxColumn1.ReadOnly = True
-            '
-            'RateDataGridViewTextBoxColumn1
-            '
-            Me.RateDataGridViewTextBoxColumn1.DataPropertyName = "Rate"
-            Me.RateDataGridViewTextBoxColumn1.HeaderText = "Rate"
-            Me.RateDataGridViewTextBoxColumn1.Name = "RateDataGridViewTextBoxColumn1"
-            Me.RateDataGridViewTextBoxColumn1.ReadOnly = True
-            '
-            'DefaultDescDataGridViewTextBoxColumn
-            '
-            Me.DefaultDescDataGridViewTextBoxColumn.DataPropertyName = "DefaultDesc"
-            Me.DefaultDescDataGridViewTextBoxColumn.HeaderText = "DefaultDesc"
-            Me.DefaultDescDataGridViewTextBoxColumn.Name = "DefaultDescDataGridViewTextBoxColumn"
-            Me.DefaultDescDataGridViewTextBoxColumn.ReadOnly = True
-            '
-            'RenderedOnDateDataGridViewTextBoxColumn1
-            '
-            Me.RenderedOnDateDataGridViewTextBoxColumn1.DataPropertyName = "RenderedOnDate"
-            Me.RenderedOnDateDataGridViewTextBoxColumn1.HeaderText = "RenderedOnDate"
-            Me.RenderedOnDateDataGridViewTextBoxColumn1.Name = "RenderedOnDateDataGridViewTextBoxColumn1"
-            Me.RenderedOnDateDataGridViewTextBoxColumn1.ReadOnly = True
-            '
-            'DescTextDataGridViewTextBoxColumn1
-            '
-            Me.DescTextDataGridViewTextBoxColumn1.DataPropertyName = "DescText"
-            Me.DescTextDataGridViewTextBoxColumn1.HeaderText = "DescText"
-            Me.DescTextDataGridViewTextBoxColumn1.Name = "DescTextDataGridViewTextBoxColumn1"
-            Me.DescTextDataGridViewTextBoxColumn1.ReadOnly = True
-            '
-            'Addr1DataGridViewTextBoxColumn1
-            '
-            Me.Addr1DataGridViewTextBoxColumn1.DataPropertyName = "Addr1"
-            Me.Addr1DataGridViewTextBoxColumn1.HeaderText = "Addr1"
-            Me.Addr1DataGridViewTextBoxColumn1.Name = "Addr1DataGridViewTextBoxColumn1"
-            Me.Addr1DataGridViewTextBoxColumn1.ReadOnly = True
-            '
-            'Addr2DataGridViewTextBoxColumn
-            '
-            Me.Addr2DataGridViewTextBoxColumn.DataPropertyName = "Addr2"
-            Me.Addr2DataGridViewTextBoxColumn.HeaderText = "Addr2"
-            Me.Addr2DataGridViewTextBoxColumn.Name = "Addr2DataGridViewTextBoxColumn"
-            Me.Addr2DataGridViewTextBoxColumn.ReadOnly = True
-            '
-            'Addr3DataGridViewTextBoxColumn
-            '
-            Me.Addr3DataGridViewTextBoxColumn.DataPropertyName = "Addr3"
-            Me.Addr3DataGridViewTextBoxColumn.HeaderText = "Addr3"
-            Me.Addr3DataGridViewTextBoxColumn.Name = "Addr3DataGridViewTextBoxColumn"
-            Me.Addr3DataGridViewTextBoxColumn.ReadOnly = True
-            '
-            'ZipDataGridViewTextBoxColumn
-            '
-            Me.ZipDataGridViewTextBoxColumn.DataPropertyName = "Zip"
-            Me.ZipDataGridViewTextBoxColumn.HeaderText = "Zip"
-            Me.ZipDataGridViewTextBoxColumn.Name = "ZipDataGridViewTextBoxColumn"
-            Me.ZipDataGridViewTextBoxColumn.ReadOnly = True
-            '
-            'CompiledDescTextDataGridViewTextBoxColumn
-            '
-            Me.CompiledDescTextDataGridViewTextBoxColumn.DataPropertyName = "CompiledDescText"
-            Me.CompiledDescTextDataGridViewTextBoxColumn.HeaderText = "CompiledDescText"
-            Me.CompiledDescTextDataGridViewTextBoxColumn.Name = "CompiledDescTextDataGridViewTextBoxColumn"
-            Me.CompiledDescTextDataGridViewTextBoxColumn.ReadOnly = True
-            '
-            'CityDataGridViewTextBoxColumn
-            '
-            Me.CityDataGridViewTextBoxColumn.DataPropertyName = "City"
-            Me.CityDataGridViewTextBoxColumn.HeaderText = "City"
-            Me.CityDataGridViewTextBoxColumn.Name = "CityDataGridViewTextBoxColumn"
-            Me.CityDataGridViewTextBoxColumn.ReadOnly = True
-            '
-            'STATEDataGridViewTextBoxColumn
-            '
-            Me.STATEDataGridViewTextBoxColumn.DataPropertyName = "STATE"
-            Me.STATEDataGridViewTextBoxColumn.HeaderText = "STATE"
-            Me.STATEDataGridViewTextBoxColumn.Name = "STATEDataGridViewTextBoxColumn"
-            Me.STATEDataGridViewTextBoxColumn.ReadOnly = True
             '
             'Ds_HistoryInv
             '
@@ -830,123 +727,20 @@ Namespace Invoicing
             Me.dg_InvHistory.AllowUserToAddRows = False
             Me.dg_InvHistory.AllowUserToDeleteRows = False
             Me.dg_InvHistory.AutoGenerateColumns = False
+            Me.dg_InvHistory.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
             Me.dg_InvHistory.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-            Me.dg_InvHistory.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.CIIDDataGridViewTextBoxColumn, Me.CustomerNumberDataGridViewTextBoxColumn, Me.StatusIDDataGridViewTextBoxColumn, Me.InsertedUserDataGridViewTextBoxColumn, Me.TimeInsertedDataGridViewTextBoxColumn, Me.InvoiceListIDDataGridViewTextBoxColumn, Me.InvoiceRefNumDataGridViewTextBoxColumn, Me.TimeSubmittedDataGridViewTextBoxColumn, Me.TimeCreatedDataGridViewTextBoxColumn, Me.DueDateDataGridViewTextBoxColumn, Me.PostDateDataGridViewTextBoxColumn, Me.VoidedDataGridViewCheckBoxColumn, Me.VoidReasonDataGridViewTextBoxColumn, Me.VoidTimeDataGridViewTextBoxColumn, Me.VoidUserDataGridViewTextBoxColumn})
+            Me.dg_InvHistory.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.InvoiceRefNumDataGridViewTextBoxColumn, Me.TimeCreatedDataGridViewTextBoxColumn, Me.DueDateDataGridViewTextBoxColumn, Me.PostDateDataGridViewTextBoxColumn, Me.InsertedUserDataGridViewTextBoxColumn})
             Me.dg_InvHistory.DataMember = "CustomInvoices"
             Me.dg_InvHistory.DataSource = Me.Ds_HistoryInv
-            Me.dg_InvHistory.Location = New System.Drawing.Point(27, 38)
+            Me.dg_InvHistory.Dock = System.Windows.Forms.DockStyle.Top
+            Me.dg_InvHistory.Location = New System.Drawing.Point(3, 23)
             Me.dg_InvHistory.MultiSelect = False
             Me.dg_InvHistory.Name = "dg_InvHistory"
             Me.dg_InvHistory.ReadOnly = True
             Me.dg_InvHistory.RowHeadersVisible = False
             Me.dg_InvHistory.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-            Me.dg_InvHistory.Size = New System.Drawing.Size(784, 150)
+            Me.dg_InvHistory.Size = New System.Drawing.Size(847, 150)
             Me.dg_InvHistory.TabIndex = 0
-            '
-            'CIIDDataGridViewTextBoxColumn
-            '
-            Me.CIIDDataGridViewTextBoxColumn.DataPropertyName = "CI_ID"
-            Me.CIIDDataGridViewTextBoxColumn.HeaderText = "CI_ID"
-            Me.CIIDDataGridViewTextBoxColumn.Name = "CIIDDataGridViewTextBoxColumn"
-            Me.CIIDDataGridViewTextBoxColumn.ReadOnly = True
-            '
-            'CustomerNumberDataGridViewTextBoxColumn
-            '
-            Me.CustomerNumberDataGridViewTextBoxColumn.DataPropertyName = "CustomerNumber"
-            Me.CustomerNumberDataGridViewTextBoxColumn.HeaderText = "CustomerNumber"
-            Me.CustomerNumberDataGridViewTextBoxColumn.Name = "CustomerNumberDataGridViewTextBoxColumn"
-            Me.CustomerNumberDataGridViewTextBoxColumn.ReadOnly = True
-            '
-            'StatusIDDataGridViewTextBoxColumn
-            '
-            Me.StatusIDDataGridViewTextBoxColumn.DataPropertyName = "StatusID"
-            Me.StatusIDDataGridViewTextBoxColumn.HeaderText = "StatusID"
-            Me.StatusIDDataGridViewTextBoxColumn.Name = "StatusIDDataGridViewTextBoxColumn"
-            Me.StatusIDDataGridViewTextBoxColumn.ReadOnly = True
-            '
-            'InsertedUserDataGridViewTextBoxColumn
-            '
-            Me.InsertedUserDataGridViewTextBoxColumn.DataPropertyName = "InsertedUser"
-            Me.InsertedUserDataGridViewTextBoxColumn.HeaderText = "InsertedUser"
-            Me.InsertedUserDataGridViewTextBoxColumn.Name = "InsertedUserDataGridViewTextBoxColumn"
-            Me.InsertedUserDataGridViewTextBoxColumn.ReadOnly = True
-            '
-            'TimeInsertedDataGridViewTextBoxColumn
-            '
-            Me.TimeInsertedDataGridViewTextBoxColumn.DataPropertyName = "Time_Inserted"
-            Me.TimeInsertedDataGridViewTextBoxColumn.HeaderText = "Time_Inserted"
-            Me.TimeInsertedDataGridViewTextBoxColumn.Name = "TimeInsertedDataGridViewTextBoxColumn"
-            Me.TimeInsertedDataGridViewTextBoxColumn.ReadOnly = True
-            '
-            'InvoiceListIDDataGridViewTextBoxColumn
-            '
-            Me.InvoiceListIDDataGridViewTextBoxColumn.DataPropertyName = "InvoiceListID"
-            Me.InvoiceListIDDataGridViewTextBoxColumn.HeaderText = "InvoiceListID"
-            Me.InvoiceListIDDataGridViewTextBoxColumn.Name = "InvoiceListIDDataGridViewTextBoxColumn"
-            Me.InvoiceListIDDataGridViewTextBoxColumn.ReadOnly = True
-            '
-            'InvoiceRefNumDataGridViewTextBoxColumn
-            '
-            Me.InvoiceRefNumDataGridViewTextBoxColumn.DataPropertyName = "InvoiceRefNum"
-            Me.InvoiceRefNumDataGridViewTextBoxColumn.HeaderText = "InvoiceRefNum"
-            Me.InvoiceRefNumDataGridViewTextBoxColumn.Name = "InvoiceRefNumDataGridViewTextBoxColumn"
-            Me.InvoiceRefNumDataGridViewTextBoxColumn.ReadOnly = True
-            '
-            'TimeSubmittedDataGridViewTextBoxColumn
-            '
-            Me.TimeSubmittedDataGridViewTextBoxColumn.DataPropertyName = "Time_Submitted"
-            Me.TimeSubmittedDataGridViewTextBoxColumn.HeaderText = "Time_Submitted"
-            Me.TimeSubmittedDataGridViewTextBoxColumn.Name = "TimeSubmittedDataGridViewTextBoxColumn"
-            Me.TimeSubmittedDataGridViewTextBoxColumn.ReadOnly = True
-            '
-            'TimeCreatedDataGridViewTextBoxColumn
-            '
-            Me.TimeCreatedDataGridViewTextBoxColumn.DataPropertyName = "Time_Created"
-            Me.TimeCreatedDataGridViewTextBoxColumn.HeaderText = "Time_Created"
-            Me.TimeCreatedDataGridViewTextBoxColumn.Name = "TimeCreatedDataGridViewTextBoxColumn"
-            Me.TimeCreatedDataGridViewTextBoxColumn.ReadOnly = True
-            '
-            'DueDateDataGridViewTextBoxColumn
-            '
-            Me.DueDateDataGridViewTextBoxColumn.DataPropertyName = "DueDate"
-            Me.DueDateDataGridViewTextBoxColumn.HeaderText = "DueDate"
-            Me.DueDateDataGridViewTextBoxColumn.Name = "DueDateDataGridViewTextBoxColumn"
-            Me.DueDateDataGridViewTextBoxColumn.ReadOnly = True
-            '
-            'PostDateDataGridViewTextBoxColumn
-            '
-            Me.PostDateDataGridViewTextBoxColumn.DataPropertyName = "PostDate"
-            Me.PostDateDataGridViewTextBoxColumn.HeaderText = "PostDate"
-            Me.PostDateDataGridViewTextBoxColumn.Name = "PostDateDataGridViewTextBoxColumn"
-            Me.PostDateDataGridViewTextBoxColumn.ReadOnly = True
-            '
-            'VoidedDataGridViewCheckBoxColumn
-            '
-            Me.VoidedDataGridViewCheckBoxColumn.DataPropertyName = "Voided"
-            Me.VoidedDataGridViewCheckBoxColumn.HeaderText = "Voided"
-            Me.VoidedDataGridViewCheckBoxColumn.Name = "VoidedDataGridViewCheckBoxColumn"
-            Me.VoidedDataGridViewCheckBoxColumn.ReadOnly = True
-            '
-            'VoidReasonDataGridViewTextBoxColumn
-            '
-            Me.VoidReasonDataGridViewTextBoxColumn.DataPropertyName = "VoidReason"
-            Me.VoidReasonDataGridViewTextBoxColumn.HeaderText = "VoidReason"
-            Me.VoidReasonDataGridViewTextBoxColumn.Name = "VoidReasonDataGridViewTextBoxColumn"
-            Me.VoidReasonDataGridViewTextBoxColumn.ReadOnly = True
-            '
-            'VoidTimeDataGridViewTextBoxColumn
-            '
-            Me.VoidTimeDataGridViewTextBoxColumn.DataPropertyName = "VoidTime"
-            Me.VoidTimeDataGridViewTextBoxColumn.HeaderText = "VoidTime"
-            Me.VoidTimeDataGridViewTextBoxColumn.Name = "VoidTimeDataGridViewTextBoxColumn"
-            Me.VoidTimeDataGridViewTextBoxColumn.ReadOnly = True
-            '
-            'VoidUserDataGridViewTextBoxColumn
-            '
-            Me.VoidUserDataGridViewTextBoxColumn.DataPropertyName = "VoidUser"
-            Me.VoidUserDataGridViewTextBoxColumn.HeaderText = "VoidUser"
-            Me.VoidUserDataGridViewTextBoxColumn.Name = "VoidUserDataGridViewTextBoxColumn"
-            Me.VoidUserDataGridViewTextBoxColumn.ReadOnly = True
             '
             'CustomInvoicesBindingSource
             '
@@ -963,6 +757,121 @@ Namespace Invoicing
             '
             Me.ToolTip1.Active = False
             '
+            'lbl_InvHistory
+            '
+            Me.lbl_InvHistory.Dock = System.Windows.Forms.DockStyle.Top
+            Me.lbl_InvHistory.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+            Me.lbl_InvHistory.Location = New System.Drawing.Point(3, 3)
+            Me.lbl_InvHistory.Name = "lbl_InvHistory"
+            Me.lbl_InvHistory.Size = New System.Drawing.Size(847, 20)
+            Me.lbl_InvHistory.TabIndex = 18
+            Me.lbl_InvHistory.Text = "Custom Invoices"
+            '
+            'InvoiceRefNumDataGridViewTextBoxColumn
+            '
+            Me.InvoiceRefNumDataGridViewTextBoxColumn.DataPropertyName = "InvoiceRefNum"
+            Me.InvoiceRefNumDataGridViewTextBoxColumn.HeaderText = "Invoice #"
+            Me.InvoiceRefNumDataGridViewTextBoxColumn.Name = "InvoiceRefNumDataGridViewTextBoxColumn"
+            Me.InvoiceRefNumDataGridViewTextBoxColumn.ReadOnly = True
+            '
+            'TimeCreatedDataGridViewTextBoxColumn
+            '
+            Me.TimeCreatedDataGridViewTextBoxColumn.DataPropertyName = "Time_Created"
+            DataGridViewCellStyle10.Format = "d"
+            Me.TimeCreatedDataGridViewTextBoxColumn.DefaultCellStyle = DataGridViewCellStyle10
+            Me.TimeCreatedDataGridViewTextBoxColumn.HeaderText = "Time Created"
+            Me.TimeCreatedDataGridViewTextBoxColumn.Name = "TimeCreatedDataGridViewTextBoxColumn"
+            Me.TimeCreatedDataGridViewTextBoxColumn.ReadOnly = True
+            '
+            'DueDateDataGridViewTextBoxColumn
+            '
+            Me.DueDateDataGridViewTextBoxColumn.DataPropertyName = "DueDate"
+            DataGridViewCellStyle11.Format = "d"
+            Me.DueDateDataGridViewTextBoxColumn.DefaultCellStyle = DataGridViewCellStyle11
+            Me.DueDateDataGridViewTextBoxColumn.HeaderText = "Due Date"
+            Me.DueDateDataGridViewTextBoxColumn.Name = "DueDateDataGridViewTextBoxColumn"
+            Me.DueDateDataGridViewTextBoxColumn.ReadOnly = True
+            '
+            'PostDateDataGridViewTextBoxColumn
+            '
+            Me.PostDateDataGridViewTextBoxColumn.DataPropertyName = "PostDate"
+            DataGridViewCellStyle12.Format = "d"
+            Me.PostDateDataGridViewTextBoxColumn.DefaultCellStyle = DataGridViewCellStyle12
+            Me.PostDateDataGridViewTextBoxColumn.HeaderText = "Post Date"
+            Me.PostDateDataGridViewTextBoxColumn.Name = "PostDateDataGridViewTextBoxColumn"
+            Me.PostDateDataGridViewTextBoxColumn.ReadOnly = True
+            '
+            'InsertedUserDataGridViewTextBoxColumn
+            '
+            Me.InsertedUserDataGridViewTextBoxColumn.DataPropertyName = "InsertedUser"
+            Me.InsertedUserDataGridViewTextBoxColumn.HeaderText = "Created By"
+            Me.InsertedUserDataGridViewTextBoxColumn.Name = "InsertedUserDataGridViewTextBoxColumn"
+            Me.InsertedUserDataGridViewTextBoxColumn.ReadOnly = True
+            '
+            'lbl_HistoryLines
+            '
+            Me.lbl_HistoryLines.Dock = System.Windows.Forms.DockStyle.Top
+            Me.lbl_HistoryLines.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+            Me.lbl_HistoryLines.Location = New System.Drawing.Point(3, 173)
+            Me.lbl_HistoryLines.Name = "lbl_HistoryLines"
+            Me.lbl_HistoryLines.Size = New System.Drawing.Size(847, 20)
+            Me.lbl_HistoryLines.TabIndex = 19
+            Me.lbl_HistoryLines.Text = "Invoice Line Items"
+            '
+            'CITypeIDDataGridViewTextBoxColumn1
+            '
+            Me.CITypeIDDataGridViewTextBoxColumn1.DataPropertyName = "CI_TypeID"
+            Me.CITypeIDDataGridViewTextBoxColumn1.DataSource = Me.CustomInvoiceLineTypesBindingSource
+            Me.CITypeIDDataGridViewTextBoxColumn1.DisplayMember = "NAME"
+            Me.CITypeIDDataGridViewTextBoxColumn1.DisplayStyle = System.Windows.Forms.DataGridViewComboBoxDisplayStyle.[Nothing]
+            Me.CITypeIDDataGridViewTextBoxColumn1.HeaderText = "Line Type"
+            Me.CITypeIDDataGridViewTextBoxColumn1.Name = "CITypeIDDataGridViewTextBoxColumn1"
+            Me.CITypeIDDataGridViewTextBoxColumn1.ReadOnly = True
+            Me.CITypeIDDataGridViewTextBoxColumn1.Resizable = System.Windows.Forms.DataGridViewTriState.[True]
+            Me.CITypeIDDataGridViewTextBoxColumn1.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic
+            Me.CITypeIDDataGridViewTextBoxColumn1.ValueMember = "CI_TypeID"
+            '
+            'RateDataGridViewTextBoxColumn1
+            '
+            Me.RateDataGridViewTextBoxColumn1.DataPropertyName = "Rate"
+            DataGridViewCellStyle13.Format = "C2"
+            Me.RateDataGridViewTextBoxColumn1.DefaultCellStyle = DataGridViewCellStyle13
+            Me.RateDataGridViewTextBoxColumn1.HeaderText = "Rate"
+            Me.RateDataGridViewTextBoxColumn1.Name = "RateDataGridViewTextBoxColumn1"
+            Me.RateDataGridViewTextBoxColumn1.ReadOnly = True
+            '
+            'RenderedOnDateDataGridViewTextBoxColumn1
+            '
+            Me.RenderedOnDateDataGridViewTextBoxColumn1.DataPropertyName = "RenderedOnDate"
+            DataGridViewCellStyle14.Format = "d"
+            Me.RenderedOnDateDataGridViewTextBoxColumn1.DefaultCellStyle = DataGridViewCellStyle14
+            Me.RenderedOnDateDataGridViewTextBoxColumn1.HeaderText = "Date of Service"
+            Me.RenderedOnDateDataGridViewTextBoxColumn1.Name = "RenderedOnDateDataGridViewTextBoxColumn1"
+            Me.RenderedOnDateDataGridViewTextBoxColumn1.ReadOnly = True
+            '
+            'DescTextDataGridViewTextBoxColumn1
+            '
+            Me.DescTextDataGridViewTextBoxColumn1.DataPropertyName = "DescText"
+            Me.DescTextDataGridViewTextBoxColumn1.HeaderText = "Description"
+            Me.DescTextDataGridViewTextBoxColumn1.Name = "DescTextDataGridViewTextBoxColumn1"
+            Me.DescTextDataGridViewTextBoxColumn1.ReadOnly = True
+            '
+            'Addr1DataGridViewTextBoxColumn1
+            '
+            Me.Addr1DataGridViewTextBoxColumn1.DataPropertyName = "Addr1"
+            Me.Addr1DataGridViewTextBoxColumn1.HeaderText = "Address"
+            Me.Addr1DataGridViewTextBoxColumn1.Name = "Addr1DataGridViewTextBoxColumn1"
+            Me.Addr1DataGridViewTextBoxColumn1.ReadOnly = True
+            '
+            'lbl_VoidInfo
+            '
+            Me.lbl_VoidInfo.AutoSize = True
+            Me.lbl_VoidInfo.Location = New System.Drawing.Point(239, 377)
+            Me.lbl_VoidInfo.Name = "lbl_VoidInfo"
+            Me.lbl_VoidInfo.Size = New System.Drawing.Size(380, 13)
+            Me.lbl_VoidInfo.TabIndex = 20
+            Me.lbl_VoidInfo.Text = "You must provide a reason if you want to void the selected Invoice from above."
+            '
             'CustomInvoicingForm
             '
             Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -971,7 +880,7 @@ Namespace Invoicing
             Me.Controls.Add(Me.TabControl1)
             Me.Controls.Add(Me.pnl_1)
             Me.Name = "CustomInvoicingForm"
-            Me.Text = "Custom InvoicingForm"
+            Me.Text = "Custom Invoicing"
             CType(Me.CustomInvoiceLineTypesBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
             CType(Me.Ds_Invoicing, System.ComponentModel.ISupportInitialize).EndInit()
             CType(Me.CustomerRecentAddrsBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
@@ -1050,44 +959,28 @@ Namespace Invoicing
         Friend WithEvents CustomInvoicesBindingSource As System.Windows.Forms.BindingSource
         Friend WithEvents DataGridView1 As System.Windows.Forms.DataGridView
         Friend WithEvents Ds_HistoryInv As TrashCash.ds_Invoicing
-        Friend WithEvents CILineIDDataGridViewTextBoxColumn As System.Windows.Forms.DataGridViewTextBoxColumn
-        Friend WithEvents CIIDDataGridViewTextBoxColumn1 As System.Windows.Forms.DataGridViewTextBoxColumn
-        Friend WithEvents CITypeIDDataGridViewTextBoxColumn1 As System.Windows.Forms.DataGridViewTextBoxColumn
-        Friend WithEvents RateDataGridViewTextBoxColumn1 As System.Windows.Forms.DataGridViewTextBoxColumn
-        Friend WithEvents DefaultDescDataGridViewTextBoxColumn As System.Windows.Forms.DataGridViewTextBoxColumn
-        Friend WithEvents RenderedOnDateDataGridViewTextBoxColumn1 As System.Windows.Forms.DataGridViewTextBoxColumn
-        Friend WithEvents DescTextDataGridViewTextBoxColumn1 As System.Windows.Forms.DataGridViewTextBoxColumn
-        Friend WithEvents Addr1DataGridViewTextBoxColumn1 As System.Windows.Forms.DataGridViewTextBoxColumn
-        Friend WithEvents Addr2DataGridViewTextBoxColumn As System.Windows.Forms.DataGridViewTextBoxColumn
-        Friend WithEvents Addr3DataGridViewTextBoxColumn As System.Windows.Forms.DataGridViewTextBoxColumn
-        Friend WithEvents ZipDataGridViewTextBoxColumn As System.Windows.Forms.DataGridViewTextBoxColumn
-        Friend WithEvents CompiledDescTextDataGridViewTextBoxColumn As System.Windows.Forms.DataGridViewTextBoxColumn
-        Friend WithEvents CityDataGridViewTextBoxColumn As System.Windows.Forms.DataGridViewTextBoxColumn
-        Friend WithEvents STATEDataGridViewTextBoxColumn As System.Windows.Forms.DataGridViewTextBoxColumn
         Friend WithEvents InvoiceHistoryBindingSource As System.Windows.Forms.BindingSource
         Friend WithEvents lbl_VoidReason As System.Windows.Forms.Label
         Friend WithEvents tb_VoidReason As System.Windows.Forms.TextBox
         Friend WithEvents btn_VoidInv As System.Windows.Forms.Button
-        Friend WithEvents CIIDDataGridViewTextBoxColumn As System.Windows.Forms.DataGridViewTextBoxColumn
-        Friend WithEvents CustomerNumberDataGridViewTextBoxColumn As System.Windows.Forms.DataGridViewTextBoxColumn
-        Friend WithEvents StatusIDDataGridViewTextBoxColumn As System.Windows.Forms.DataGridViewTextBoxColumn
-        Friend WithEvents InsertedUserDataGridViewTextBoxColumn As System.Windows.Forms.DataGridViewTextBoxColumn
-        Friend WithEvents TimeInsertedDataGridViewTextBoxColumn As System.Windows.Forms.DataGridViewTextBoxColumn
-        Friend WithEvents InvoiceListIDDataGridViewTextBoxColumn As System.Windows.Forms.DataGridViewTextBoxColumn
-        Friend WithEvents InvoiceRefNumDataGridViewTextBoxColumn As System.Windows.Forms.DataGridViewTextBoxColumn
-        Friend WithEvents TimeSubmittedDataGridViewTextBoxColumn As System.Windows.Forms.DataGridViewTextBoxColumn
-        Friend WithEvents TimeCreatedDataGridViewTextBoxColumn As System.Windows.Forms.DataGridViewTextBoxColumn
-        Friend WithEvents DueDateDataGridViewTextBoxColumn As System.Windows.Forms.DataGridViewTextBoxColumn
-        Friend WithEvents PostDateDataGridViewTextBoxColumn As System.Windows.Forms.DataGridViewTextBoxColumn
-        Friend WithEvents VoidedDataGridViewCheckBoxColumn As System.Windows.Forms.DataGridViewCheckBoxColumn
-        Friend WithEvents VoidReasonDataGridViewTextBoxColumn As System.Windows.Forms.DataGridViewTextBoxColumn
-        Friend WithEvents VoidTimeDataGridViewTextBoxColumn As System.Windows.Forms.DataGridViewTextBoxColumn
-        Friend WithEvents VoidUserDataGridViewTextBoxColumn As System.Windows.Forms.DataGridViewTextBoxColumn
         Friend WithEvents ToolTip1 As System.Windows.Forms.ToolTip
         Friend WithEvents CITypeIDDataGridViewTextBoxColumn As System.Windows.Forms.DataGridViewComboBoxColumn
         Friend WithEvents RateDataGridViewTextBoxColumn As System.Windows.Forms.DataGridViewTextBoxColumn
         Friend WithEvents RenderedOnDateDataGridViewTextBoxColumn As System.Windows.Forms.DataGridViewTextBoxColumn
         Friend WithEvents Addr1DataGridViewTextBoxColumn As System.Windows.Forms.DataGridViewTextBoxColumn
         Friend WithEvents DescTextDataGridViewTextBoxColumn As System.Windows.Forms.DataGridViewTextBoxColumn
+        Friend WithEvents CITypeIDDataGridViewTextBoxColumn1 As System.Windows.Forms.DataGridViewComboBoxColumn
+        Friend WithEvents RateDataGridViewTextBoxColumn1 As System.Windows.Forms.DataGridViewTextBoxColumn
+        Friend WithEvents RenderedOnDateDataGridViewTextBoxColumn1 As System.Windows.Forms.DataGridViewTextBoxColumn
+        Friend WithEvents DescTextDataGridViewTextBoxColumn1 As System.Windows.Forms.DataGridViewTextBoxColumn
+        Friend WithEvents Addr1DataGridViewTextBoxColumn1 As System.Windows.Forms.DataGridViewTextBoxColumn
+        Friend WithEvents lbl_HistoryLines As System.Windows.Forms.Label
+        Friend WithEvents InvoiceRefNumDataGridViewTextBoxColumn As System.Windows.Forms.DataGridViewTextBoxColumn
+        Friend WithEvents TimeCreatedDataGridViewTextBoxColumn As System.Windows.Forms.DataGridViewTextBoxColumn
+        Friend WithEvents DueDateDataGridViewTextBoxColumn As System.Windows.Forms.DataGridViewTextBoxColumn
+        Friend WithEvents PostDateDataGridViewTextBoxColumn As System.Windows.Forms.DataGridViewTextBoxColumn
+        Friend WithEvents InsertedUserDataGridViewTextBoxColumn As System.Windows.Forms.DataGridViewTextBoxColumn
+        Friend WithEvents lbl_InvHistory As System.Windows.Forms.Label
+        Friend WithEvents lbl_VoidInfo As System.Windows.Forms.Label
     End Class
 End Namespace

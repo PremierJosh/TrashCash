@@ -253,6 +253,7 @@ Namespace Invoicing
                         Else
                             MessageBox.Show("Invoice Voided.")
                             Ds_HistoryInv.Clear()
+                            tb_VoidReason.Text = ""
                             _ciTA.Fill(Ds_HistoryInv.CustomInvoices, CurrentCustomer)
                         End If
                     End If
@@ -260,6 +261,8 @@ Namespace Invoicing
                     MessageBox.Show("This invoice was already voided on " & row.VoidTime & " by user" & row.VoidUser & ". Reason given: " & vbCrLf & row.VoidReason,
                                     "Already Voided", MessageBoxButtons.OK, MessageBoxIcon.Hand)
                 End If
+            Else
+                MsgBox("Must provide a reason.")
             End If
         End Sub
 

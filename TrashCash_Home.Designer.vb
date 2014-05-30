@@ -126,7 +126,7 @@ Partial Class TrashCashHome
         Me.btn_Invoicing.ImageTransparentColor = System.Drawing.Color.Magenta
         Me.btn_Invoicing.Name = "btn_Invoicing"
         Me.btn_Invoicing.Size = New System.Drawing.Size(84, 23)
-        Me.btn_Invoicing.Text = "InvoicingForm"
+        Me.btn_Invoicing.Text = "Invoicing"
         '
         'btn_Payments
         '
