@@ -8,8 +8,8 @@
             End Get
         End Property
         Private Sub UserSelection_Load(sender As Object, e As System.EventArgs) Handles Me.Load
-            ' fill users
-            UserTA.Fill(Ds_App.USERS)
+         ' fill users
+            UserTA.Fill(Ds_Application.USERS)
         End Sub
 
         ' password text after auth
@@ -27,7 +27,7 @@
             Cursor = Cursors.WaitCursor
 
             Dim userID As Integer
-            userID = AppQTA.USERS_Authenticate(cmb_Users.GetItemText(cmb_Users.SelectedItem).ToString, mtb_Password.Text)
+            userID = UserTA.Authenticate(cmb_Users.GetItemText(cmb_Users.SelectedItem).ToString, mtb_Password.Text)
 
             ' checking if this is for a pw change
             If (_pwChange) Then

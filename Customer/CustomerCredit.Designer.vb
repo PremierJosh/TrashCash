@@ -25,10 +25,11 @@ Partial Class CustomerCredit
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
-        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle9 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle10 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.Panel1 = New System.Windows.Forms.Panel()
         Me.pnl_TopContent = New System.Windows.Forms.Panel()
+        Me.CustomerToolstrip1 = New TrashCash.Classes.CustomerToolstrip.CustomerToolstrip()
         Me.pnl_Left = New System.Windows.Forms.Panel()
         Me.dg_Credits = New System.Windows.Forms.DataGridView()
         Me.CreditAmountDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
@@ -41,7 +42,7 @@ Partial Class CustomerCredit
         Me.Ds_Customer = New TrashCash.ds_Customer()
         Me.lbl_CreditHis = New System.Windows.Forms.Label()
         Me.Customer_CreditsTableAdapter = New TrashCash.ds_CustomerTableAdapters.Customer_CreditsTableAdapter()
-        Me.tb_Amount = New CurrencyTextBox()
+        Me.tb_Amount = New TrashCash.Classes.CurrencyTextBox()
         Me.lbl_Amount = New System.Windows.Forms.Label()
         Me.tb_Reason = New System.Windows.Forms.TextBox()
         Me.lbl_Reason = New System.Windows.Forms.Label()
@@ -52,7 +53,7 @@ Partial Class CustomerCredit
         Me.lbl_Type = New System.Windows.Forms.Label()
         Me.cmb_Types = New System.Windows.Forms.ComboBox()
         Me.ck_Print = New System.Windows.Forms.CheckBox()
-        Me.CustomerToolstrip1 = New TrashCash.Classes.CustomerToolstrip.CustomerToolstrip()
+        Me.Ds_App1 = New TrashCash.ds_App()
         Me.Panel1.SuspendLayout()
         Me.pnl_TopContent.SuspendLayout()
         Me.pnl_Left.SuspendLayout()
@@ -60,6 +61,7 @@ Partial Class CustomerCredit
         Me.cm_Void.SuspendLayout()
         CType(Me.CustomerCreditsBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.Ds_Customer, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.Ds_App1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'Panel1
@@ -81,6 +83,16 @@ Partial Class CustomerCredit
         Me.pnl_TopContent.Name = "pnl_TopContent"
         Me.pnl_TopContent.Size = New System.Drawing.Size(666, 33)
         Me.pnl_TopContent.TabIndex = 2
+        '
+        'CustomerToolstrip1
+        '
+        Me.CustomerToolstrip1.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.CustomerToolstrip1.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden
+        Me.CustomerToolstrip1.Location = New System.Drawing.Point(0, 0)
+        Me.CustomerToolstrip1.Name = "CustomerToolstrip1"
+        Me.CustomerToolstrip1.Size = New System.Drawing.Size(664, 31)
+        Me.CustomerToolstrip1.TabIndex = 0
+        Me.CustomerToolstrip1.Text = "CustomerToolstrip1"
         '
         'pnl_Left
         '
@@ -115,9 +127,9 @@ Partial Class CustomerCredit
         '
         Me.CreditAmountDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
         Me.CreditAmountDataGridViewTextBoxColumn.DataPropertyName = "CreditAmount"
-        DataGridViewCellStyle1.Format = "C2"
-        DataGridViewCellStyle1.NullValue = Nothing
-        Me.CreditAmountDataGridViewTextBoxColumn.DefaultCellStyle = DataGridViewCellStyle1
+        DataGridViewCellStyle9.Format = "C2"
+        DataGridViewCellStyle9.NullValue = Nothing
+        Me.CreditAmountDataGridViewTextBoxColumn.DefaultCellStyle = DataGridViewCellStyle9
         Me.CreditAmountDataGridViewTextBoxColumn.HeaderText = "Amount"
         Me.CreditAmountDataGridViewTextBoxColumn.Name = "CreditAmountDataGridViewTextBoxColumn"
         Me.CreditAmountDataGridViewTextBoxColumn.ReadOnly = True
@@ -127,9 +139,9 @@ Partial Class CustomerCredit
         '
         Me.TimeCreatedDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
         Me.TimeCreatedDataGridViewTextBoxColumn.DataPropertyName = "TimeCreated"
-        DataGridViewCellStyle2.Format = "g"
-        DataGridViewCellStyle2.NullValue = Nothing
-        Me.TimeCreatedDataGridViewTextBoxColumn.DefaultCellStyle = DataGridViewCellStyle2
+        DataGridViewCellStyle10.Format = "g"
+        DataGridViewCellStyle10.NullValue = Nothing
+        Me.TimeCreatedDataGridViewTextBoxColumn.DefaultCellStyle = DataGridViewCellStyle10
         Me.TimeCreatedDataGridViewTextBoxColumn.HeaderText = "Time Created"
         Me.TimeCreatedDataGridViewTextBoxColumn.Name = "TimeCreatedDataGridViewTextBoxColumn"
         Me.TimeCreatedDataGridViewTextBoxColumn.ReadOnly = True
@@ -171,7 +183,6 @@ Partial Class CustomerCredit
         '
         'Ds_Customer
         '
-        Me.Ds_Customer.DataSetName = "ds_Customer"
         Me.Ds_Customer.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema
         '
         'lbl_CreditHis
@@ -296,15 +307,10 @@ Partial Class CustomerCredit
         Me.ck_Print.Text = "Print"
         Me.ck_Print.UseVisualStyleBackColor = True
         '
-        'CustomerToolstrip1
+        'Ds_App1
         '
-        Me.CustomerToolstrip1.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.CustomerToolstrip1.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden
-        Me.CustomerToolstrip1.Location = New System.Drawing.Point(0, 0)
-        Me.CustomerToolstrip1.Name = "CustomerToolstrip1"
-        Me.CustomerToolstrip1.Size = New System.Drawing.Size(664, 31)
-        Me.CustomerToolstrip1.TabIndex = 0
-        Me.CustomerToolstrip1.Text = "CustomerToolstrip1"
+        Me.Ds_App1.DataSetName = "ds_App"
+        Me.Ds_App1.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema
         '
         'CustomerCredit
         '
@@ -337,6 +343,7 @@ Partial Class CustomerCredit
         Me.cm_Void.ResumeLayout(False)
         CType(Me.CustomerCreditsBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.Ds_Customer, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.Ds_App1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -367,4 +374,5 @@ Partial Class CustomerCredit
     Friend WithEvents cmb_Types As System.Windows.Forms.ComboBox
     Friend WithEvents ck_Print As System.Windows.Forms.CheckBox
     Friend WithEvents CustomerToolstrip1 As TrashCash.Classes.CustomerToolstrip.CustomerToolstrip
+    Friend WithEvents Ds_App1 As TrashCash.ds_App
 End Class

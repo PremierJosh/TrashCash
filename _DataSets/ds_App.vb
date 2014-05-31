@@ -1,4 +1,2 @@
-﻿
-
-Partial Public Class ds_App
+﻿Partial Public Class ds_App
 End Class

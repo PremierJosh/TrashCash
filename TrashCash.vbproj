@@ -139,6 +139,7 @@
     <Import Include="System.Windows.Forms" />
     <Import Include="System.Linq" />
     <Import Include="System.Xml.Linq" />
+    <Import Include="TrashCash" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Admin\AdminDefaults.Designer.vb">
@@ -428,6 +429,11 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Application.myapp</DependentUpon>
     </Compile>
+    <Compile Include="_DataSets\ds_Application.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ds_Application.xsd</DependentUpon>
+    </Compile>
     <Compile Include="_DataSets\ds_Batching.Designer.vb">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -649,6 +655,17 @@
     <None Include="My Project\Application.myapp">
       <Generator>MyApplicationCodeGenerator</Generator>
       <LastGenOutput>Application.Designer.vb</LastGenOutput>
+    </None>
+    <None Include="_DataSets\ds_Application.xsc">
+      <DependentUpon>ds_Application.xsd</DependentUpon>
+    </None>
+    <None Include="_DataSets\ds_Application.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>ds_Application.Designer.vb</LastGenOutput>
+    </None>
+    <None Include="_DataSets\ds_Application.xss">
+      <DependentUpon>ds_Application.xsd</DependentUpon>
     </None>
     <None Include="_DataSets\ds_Batching.xsc">
       <DependentUpon>ds_Batching.xsd</DependentUpon>

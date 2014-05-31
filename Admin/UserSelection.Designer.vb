@@ -29,9 +29,9 @@
             Me.lbl_Username = New System.Windows.Forms.Label()
             Me.btn_Login = New System.Windows.Forms.Button()
             Me.cmb_Users = New System.Windows.Forms.ComboBox()
-            Me.Ds_App = New TrashCash.ds_App()
+            Me.Ds_Application = New TrashCash.ds_Application()
             Me.USERSBindingSource = New System.Windows.Forms.BindingSource(Me.components)
-            CType(Me.Ds_App, System.ComponentModel.ISupportInitialize).BeginInit()
+            CType(Me.Ds_Application, System.ComponentModel.ISupportInitialize).BeginInit()
             CType(Me.USERSBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
             Me.SuspendLayout()
             '
@@ -81,15 +81,15 @@
             Me.cmb_Users.TabIndex = 8
             Me.cmb_Users.ValueMember = "USER_ID"
             '
-            'Ds_App
+            'Ds_Application
             '
-            Me.Ds_App.DataSetName = "ds_App"
-            Me.Ds_App.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema
+            Me.Ds_Application.DataSetName = "ds_Application"
+            Me.Ds_Application.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema
             '
             'USERSBindingSource
             '
             Me.USERSBindingSource.DataMember = "USERS"
-            Me.USERSBindingSource.DataSource = Me.Ds_App
+            Me.USERSBindingSource.DataSource = Me.Ds_Application
             '
             'UserSelection
             '
@@ -104,7 +104,7 @@
             Me.Name = "UserSelection"
             Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent
             Me.Text = "User Selection"
-            CType(Me.Ds_App, System.ComponentModel.ISupportInitialize).EndInit()
+            CType(Me.Ds_Application, System.ComponentModel.ISupportInitialize).EndInit()
             CType(Me.USERSBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
             Me.ResumeLayout(False)
             Me.PerformLayout()
@@ -115,7 +115,7 @@
         Friend WithEvents lbl_Username As System.Windows.Forms.Label
         Friend WithEvents btn_Login As System.Windows.Forms.Button
         Friend WithEvents cmb_Users As System.Windows.Forms.ComboBox
-        Friend WithEvents Ds_App As TrashCash.ds_App
+        Friend WithEvents Ds_Application As TrashCash.ds_Application
         Friend WithEvents USERSBindingSource As System.Windows.Forms.BindingSource
     End Class
 End Namespace
