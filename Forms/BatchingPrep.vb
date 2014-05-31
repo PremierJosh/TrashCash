@@ -1,4 +1,5 @@
 ﻿'Imports TrashCash.QBSubs
+Imports TrashCash.Customer
 Imports TrashCash.Classes
 Imports TrashCash.Utilities
 Imports TrashCash.Utilities.Functions
@@ -108,7 +109,7 @@ Public Class BatchingPrep
         End Set
     End Property
 
-    Public Property MasterForm As TrashCash.Customer
+    Public Property MasterForm As CustomerForm
     Protected qta As ds_BatchingTableAdapters.QueriesTableAdapter
 
     Private Sub BatchingPrep_FormClosed(sender As Object, e As System.Windows.Forms.FormClosingEventArgs) Handles Me.FormClosing

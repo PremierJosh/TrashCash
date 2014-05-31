@@ -25,11 +25,10 @@ Partial Class CustomerCredit
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
-        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.Panel1 = New System.Windows.Forms.Panel()
         Me.pnl_TopContent = New System.Windows.Forms.Panel()
-        Me.Ts_M_Customer = New ts_M_Customer()
         Me.pnl_Left = New System.Windows.Forms.Panel()
         Me.dg_Credits = New System.Windows.Forms.DataGridView()
         Me.CreditAmountDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
@@ -53,6 +52,7 @@ Partial Class CustomerCredit
         Me.lbl_Type = New System.Windows.Forms.Label()
         Me.cmb_Types = New System.Windows.Forms.ComboBox()
         Me.ck_Print = New System.Windows.Forms.CheckBox()
+        Me.CustomerToolstrip1 = New TrashCash.Classes.CustomerToolstrip.CustomerToolstrip()
         Me.Panel1.SuspendLayout()
         Me.pnl_TopContent.SuspendLayout()
         Me.pnl_Left.SuspendLayout()
@@ -75,23 +75,12 @@ Partial Class CustomerCredit
         'pnl_TopContent
         '
         Me.pnl_TopContent.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.pnl_TopContent.Controls.Add(Me.Ts_M_Customer)
+        Me.pnl_TopContent.Controls.Add(Me.CustomerToolstrip1)
         Me.pnl_TopContent.Dock = System.Windows.Forms.DockStyle.Fill
         Me.pnl_TopContent.Location = New System.Drawing.Point(20, 10)
         Me.pnl_TopContent.Name = "pnl_TopContent"
         Me.pnl_TopContent.Size = New System.Drawing.Size(666, 33)
         Me.pnl_TopContent.TabIndex = 2
-        '
-        'Ts_M_Customer
-        '
-
-        Me.Ts_M_Customer.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.Ts_M_Customer.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden
-        Me.Ts_M_Customer.Location = New System.Drawing.Point(0, 0)
-        Me.Ts_M_Customer.Name = "Ts_M_Customer"
-        Me.Ts_M_Customer.Size = New System.Drawing.Size(664, 31)
-        Me.Ts_M_Customer.TabIndex = 2
-        Me.Ts_M_Customer.Text = "Ts_M_Customer1"
         '
         'pnl_Left
         '
@@ -126,9 +115,9 @@ Partial Class CustomerCredit
         '
         Me.CreditAmountDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
         Me.CreditAmountDataGridViewTextBoxColumn.DataPropertyName = "CreditAmount"
-        DataGridViewCellStyle3.Format = "C2"
-        DataGridViewCellStyle3.NullValue = Nothing
-        Me.CreditAmountDataGridViewTextBoxColumn.DefaultCellStyle = DataGridViewCellStyle3
+        DataGridViewCellStyle1.Format = "C2"
+        DataGridViewCellStyle1.NullValue = Nothing
+        Me.CreditAmountDataGridViewTextBoxColumn.DefaultCellStyle = DataGridViewCellStyle1
         Me.CreditAmountDataGridViewTextBoxColumn.HeaderText = "Amount"
         Me.CreditAmountDataGridViewTextBoxColumn.Name = "CreditAmountDataGridViewTextBoxColumn"
         Me.CreditAmountDataGridViewTextBoxColumn.ReadOnly = True
@@ -138,9 +127,9 @@ Partial Class CustomerCredit
         '
         Me.TimeCreatedDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
         Me.TimeCreatedDataGridViewTextBoxColumn.DataPropertyName = "TimeCreated"
-        DataGridViewCellStyle4.Format = "g"
-        DataGridViewCellStyle4.NullValue = Nothing
-        Me.TimeCreatedDataGridViewTextBoxColumn.DefaultCellStyle = DataGridViewCellStyle4
+        DataGridViewCellStyle2.Format = "g"
+        DataGridViewCellStyle2.NullValue = Nothing
+        Me.TimeCreatedDataGridViewTextBoxColumn.DefaultCellStyle = DataGridViewCellStyle2
         Me.TimeCreatedDataGridViewTextBoxColumn.HeaderText = "Time Created"
         Me.TimeCreatedDataGridViewTextBoxColumn.Name = "TimeCreatedDataGridViewTextBoxColumn"
         Me.TimeCreatedDataGridViewTextBoxColumn.ReadOnly = True
@@ -182,6 +171,7 @@ Partial Class CustomerCredit
         '
         'Ds_Customer
         '
+        Me.Ds_Customer.DataSetName = "ds_Customer"
         Me.Ds_Customer.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema
         '
         'lbl_CreditHis
@@ -306,6 +296,16 @@ Partial Class CustomerCredit
         Me.ck_Print.Text = "Print"
         Me.ck_Print.UseVisualStyleBackColor = True
         '
+        'CustomerToolstrip1
+        '
+        Me.CustomerToolstrip1.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.CustomerToolstrip1.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden
+        Me.CustomerToolstrip1.Location = New System.Drawing.Point(0, 0)
+        Me.CustomerToolstrip1.Name = "CustomerToolstrip1"
+        Me.CustomerToolstrip1.Size = New System.Drawing.Size(664, 31)
+        Me.CustomerToolstrip1.TabIndex = 0
+        Me.CustomerToolstrip1.Text = "CustomerToolstrip1"
+        '
         'CustomerCredit
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -343,7 +343,6 @@ Partial Class CustomerCredit
     End Sub
     Friend WithEvents Panel1 As System.Windows.Forms.Panel
     Friend WithEvents pnl_TopContent As System.Windows.Forms.Panel
-    Friend WithEvents Ts_M_Customer As ts_M_Customer
     Friend WithEvents pnl_Left As System.Windows.Forms.Panel
     Friend WithEvents dg_Credits As System.Windows.Forms.DataGridView
     Friend WithEvents CreditAmountDataGridViewTextBoxColumn As System.Windows.Forms.DataGridViewTextBoxColumn
@@ -367,4 +366,5 @@ Partial Class CustomerCredit
     Friend WithEvents lbl_Type As System.Windows.Forms.Label
     Friend WithEvents cmb_Types As System.Windows.Forms.ComboBox
     Friend WithEvents ck_Print As System.Windows.Forms.CheckBox
+    Friend WithEvents CustomerToolstrip1 As TrashCash.Classes.CustomerToolstrip.CustomerToolstrip
 End Class

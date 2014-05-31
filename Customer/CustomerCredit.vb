@@ -18,7 +18,7 @@
             _currentCustomer = value
 
             ' set combo box
-            Ts_M_Customer.SelectCustomer(value)
+            CustomerToolstrip1.SelectCustomer(value)
 
             ' getting service table
             If (value > 0) Then
@@ -54,13 +54,13 @@
 
         ' Add any initialization after the InitializeComponent() call.
         _homeForm = HomeForm
-        
+
         ' set customer
         CurrentCustomer = CustomerNumber
 
         ' hide toolstrip stuff and lock to customer
-        Ts_M_Customer.Enabled = False
-        Ts_M_Customer.HideQuickSearch()
+        CustomerToolstrip1.Enabled = False
+        CustomerToolstrip1.HideQuickSearch()
     End Sub
 
     Private Sub btn_VoidCredit_Click(sender As System.Object, e As System.EventArgs) Handles btn_VoidCredit.Click
@@ -91,7 +91,7 @@
         If (Trim(tb_Amount.Text).Length > 0) Then
             ' making sure we have a reason
             If (Trim(tb_Reason.Text).Length > 0) Then
-                Dim confirmPrompt As DialogResult = MessageBox.Show("Create Credit for " & Ts_M_Customer.CurrentCustomerName & " - " & FormatCurrency(tb_Amount.Text) & vbCrLf & "Reason:" & vbCrLf & tb_Reason.Text,
+                Dim confirmPrompt As DialogResult = MessageBox.Show("Create Credit for " & CustomerToolstrip1.ToString & " - " & FormatCurrency(tb_Amount.Text) & vbCrLf & "Reason:" & vbCrLf & tb_Reason.Text,
                                                                     "Confirm Credit for Customer", MessageBoxButtons.YesNo, MessageBoxIcon.Question)
 
                 If (confirmPrompt = Windows.Forms.DialogResult.Yes) Then

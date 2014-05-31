@@ -76,13 +76,11 @@
             PaymentType = Cmb_PaymentTypes.SelectedValue
 
             ' setting initial customer to screen isnt blank
-            If (Ts_M_Customer.cmb_Customer.ComboBox.SelectedValue IsNot Nothing) Then
-                CurrentCustomer = Ts_M_Customer.cmb_Customer.ComboBox.SelectedValue
-            End If
-        End Sub
+            CurrentCustomer = CustomerToolstrip1.CurrentCustomer
+           End Sub
 
-        Private Sub CustomerCatch(ByVal custNum As Integer) Handles Ts_M_Customer.CustomerChanging
-            CurrentCustomer = CustNum
+        Private Sub CustomerCatch(ByVal custNum As Integer) Handles CustomerToolstrip1.CustomerChanging
+            CurrentCustomer = custNum
         End Sub
 
         Public Sub Fetch_History() Handles dtp_EndDate.ValueChanged, dtp_StartDate.ValueChanged

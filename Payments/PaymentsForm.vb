@@ -1,4 +1,4 @@
-﻿Public Class Payments
+﻿Public Class PaymentsForm
     ' easier refrence
     Protected ta As DataSetTableAdapters.WorkingPaymentsTableAdapter
 
@@ -16,11 +16,11 @@
 
 
                 ' do stuff when cust changes here
-              UC_PaymentDetails.CurrentCustomer = value
+                UC_PaymentDetails.CurrentCustomer = value
                 UC_CustomerNotes.CurrentCustomer = value
                 UC_CustomerInfoBoxes.CurrentCustomer = value
                 ' update window title text
-                Me.Text = Ts_M_Customer.ToString
+                Text = CustomerToolstrip1.ToString
             End If
         End Set
     End Property
@@ -34,7 +34,7 @@
 
     End Sub
 
-    Private Sub Ts_M_Customer_CustomerChanging(CustomerNumber As Integer) Handles Ts_M_Customer.CustomerChanging
+    Private Sub CustomerToolstrip1_CustomerChanging(CustomerNumber As Integer) Handles CustomerToolstrip1.CustomerChanging
         Me.CurrentCustomer = CustomerNumber
     End Sub
 
@@ -52,14 +52,15 @@
         ' Add any initialization after the InitializeComponent() call.
         ta = Me.WorkingPaymentsTableAdapter
         _home = HomeForm
-       
+
         ' if number is passed, lock ts
         If (_customerNumber <> 0) Then
-            Ts_M_Customer.Enabled = False
-            Ts_M_Customer.HideQuickSearch()
-            Me.CurrentCustomer = _customerNumber
+            CustomerToolstrip1.Enabled = False
+            CustomerToolstrip1.HideQuickSearch()
+            CurrentCustomer = _customerNumber
+            CustomerToolstrip1.SelectCustomer(_customerNumber)
         Else
-            Ts_M_Customer.SelectCustomer(_customerNumber)
+            CurrentCustomer = CustomerToolstrip1.CurrentCustomer
         End If
     End Sub
     Public Overrides Function ToString() As String
@@ -91,13 +92,5 @@
     Private Sub Payments_Load(sender As Object, e As System.EventArgs) Handles Me.Load
         ' setting uc info boxes to display only
         UC_CustomerInfoBoxes.AllowUpdate(False)
-        ' checking if customer set
-        If (CurrentCustomer = 0) Then
-            If (Ts_M_Customer.cmb_Customer.ComboBox.SelectedValue IsNot Nothing) Then
-                Me.CurrentCustomer = Ts_M_Customer.cmb_Customer.ComboBox.SelectedValue
-            End If
-        End If
-
-        Ts_M_Customer.SelectCustomer(CurrentCustomer)
-    End Sub
+       End Sub
 End Class

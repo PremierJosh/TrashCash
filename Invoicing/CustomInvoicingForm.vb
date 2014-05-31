@@ -26,11 +26,11 @@ Namespace Invoicing
             ' line type fill
             _ltTA.Fill(Ds_Invoicing.CustomInvoice_LineTypes)
             If (CurrentCustomer = Nothing) Then
-                CurrentCustomer = Ts_M_Customer.CurrentCustomer
+                CurrentCustomer = CustomerToolstrip1.CurrentCustomer
             End If
         End Sub
 
-        Private Sub CustomerChanged(ByVal customerNumber As Integer) Handles Ts_M_Customer.CustomerChanging
+        Private Sub CustomerChanged(ByVal customerNumber As Integer) Handles CustomerToolstrip1.CustomerChanging
             CurrentCustomer = customerNumber
             ResetInvoice()
         End Sub
@@ -43,7 +43,7 @@ Namespace Invoicing
             ' on first line creation, create invoice row for it and lock customer selection
             If (LineValidation()) Then
                 ' disable customer changing
-                Ts_M_Customer.Enabled = False
+                CustomerToolstrip1.Enabled = False
                 ' build inv row
                 _invRow = Ds_Invoicing.CustomInvoices.NewCustomInvoicesRow
                 With _invRow
@@ -85,7 +85,7 @@ Namespace Invoicing
                     End If
                 End With
                 Ds_Invoicing.CustomInvoice_LineItems.AddCustomInvoice_LineItemsRow(line)
-                
+
                 ' setting pnl3 visible
                 pnl_3.Visible = True
                 ResetLinePnl()
@@ -292,12 +292,12 @@ Namespace Invoicing
             If (customerNumber <> Nothing) Then
                 CurrentCustomer = customerNumber
                 ' lock customer bar
-                Ts_M_Customer.Enabled = False
+                CustomerToolstrip1.Enabled = False
                 ' testing tooltip for info as to why they cant change
                 ToolTip1.Active = True
             Else
                 ToolTip1.Active = False
-                Ts_M_Customer.GetCustomerBalance()
+                CustomerToolstrip1.GetCustomerBalance()
             End If
         End Sub
 

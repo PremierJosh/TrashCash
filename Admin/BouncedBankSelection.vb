@@ -110,7 +110,7 @@ Namespace Admin
             End If
 
             ' hiding ts_m controls
-            Ts_M_Customer1.HideQuickSearch()
+            CustomerToolstrip1.HideQuickSearch()
         End Sub
 
         Private Sub btn_Cancel_Click(sender As Object, e As EventArgs) Handles btn_Cancel.Click

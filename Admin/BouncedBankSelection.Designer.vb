@@ -25,7 +25,6 @@ Namespace Admin
         'Do not modify it using the code editor.
         <System.Diagnostics.DebuggerStepThrough()> _
         Private Sub InitializeComponent()
-            Me.components = New System.ComponentModel.Container()
             Dim BankBounceFeeLabel As System.Windows.Forms.Label
             Dim CustomerChargeRateLabel As System.Windows.Forms.Label
             Dim lbl_checkAmount As System.Windows.Forms.Label
@@ -43,13 +42,15 @@ Namespace Admin
             Me.tb_CheckAmount = New System.Windows.Forms.TextBox()
             Me.Cmb_BadCheckBanks = New TrashCash.Database_ComboBoxes.cmb_BadCheckBanks()
             Me.tb_RefNum = New System.Windows.Forms.TextBox()
-            Me.Ts_M_Customer1 = New ts_M_Customer()
+            Me.Panel1 = New System.Windows.Forms.Panel()
+            Me.CustomerToolstrip1 = New TrashCash.Classes.CustomerToolstrip.CustomerToolstrip()
             BankBounceFeeLabel = New System.Windows.Forms.Label()
             CustomerChargeRateLabel = New System.Windows.Forms.Label()
             lbl_checkAmount = New System.Windows.Forms.Label()
             lbl_RefNum = New System.Windows.Forms.Label()
             CType(Me.DataSet, System.ComponentModel.ISupportInitialize).BeginInit()
             Me.pnl_Bot.SuspendLayout()
+            Me.Panel1.SuspendLayout()
             Me.SuspendLayout()
             '
             'BankBounceFeeLabel
@@ -110,7 +111,7 @@ Namespace Admin
             Me.lbl_BankFee.Size = New System.Drawing.Size(231, 47)
             Me.lbl_BankFee.TabIndex = 29
             Me.lbl_BankFee.Text = "This is the Fee the Bank charged for the bounced check. If this amount is incorre" & _
-                                  "ct, you must update it from Administration form."
+        "ct, you must update it from Administration form."
             '
             'lbl_CustFee
             '
@@ -201,22 +202,31 @@ Namespace Admin
             Me.tb_RefNum.Size = New System.Drawing.Size(128, 20)
             Me.tb_RefNum.TabIndex = 36
             '
-            'Ts_M_Customer1
+            'Panel1
             '
-            Me.Ts_M_Customer1.Enabled = False
-            Me.Ts_M_Customer1.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden
-            Me.Ts_M_Customer1.Location = New System.Drawing.Point(5, 5)
-            Me.Ts_M_Customer1.Name = "Ts_M_Customer1"
-            Me.Ts_M_Customer1.Size = New System.Drawing.Size(535, 25)
-            Me.Ts_M_Customer1.TabIndex = 38
-            Me.Ts_M_Customer1.Text = "Ts_M_Customer1"
+            Me.Panel1.Controls.Add(Me.CustomerToolstrip1)
+            Me.Panel1.Dock = System.Windows.Forms.DockStyle.Top
+            Me.Panel1.Location = New System.Drawing.Point(5, 5)
+            Me.Panel1.Name = "Panel1"
+            Me.Panel1.Size = New System.Drawing.Size(535, 33)
+            Me.Panel1.TabIndex = 38
+            '
+            'CustomerToolstrip1
+            '
+            Me.CustomerToolstrip1.Dock = System.Windows.Forms.DockStyle.Fill
+            Me.CustomerToolstrip1.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden
+            Me.CustomerToolstrip1.Location = New System.Drawing.Point(0, 0)
+            Me.CustomerToolstrip1.Name = "CustomerToolstrip1"
+            Me.CustomerToolstrip1.Size = New System.Drawing.Size(535, 33)
+            Me.CustomerToolstrip1.TabIndex = 0
+            Me.CustomerToolstrip1.Text = "CustomerToolstrip1"
             '
             'BouncedBankSelection
             '
             Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
             Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
             Me.ClientSize = New System.Drawing.Size(545, 242)
-            Me.Controls.Add(Me.Ts_M_Customer1)
+            Me.Controls.Add(Me.Panel1)
             Me.Controls.Add(Me.tb_RefNum)
             Me.Controls.Add(lbl_RefNum)
             Me.Controls.Add(Me.Cmb_BadCheckBanks)
@@ -233,6 +243,8 @@ Namespace Admin
             CType(Me.DataSet, System.ComponentModel.ISupportInitialize).EndInit()
             Me.pnl_Bot.ResumeLayout(False)
             Me.pnl_Bot.PerformLayout()
+            Me.Panel1.ResumeLayout(False)
+            Me.Panel1.PerformLayout()
             Me.ResumeLayout(False)
             Me.PerformLayout()
 
@@ -250,6 +262,7 @@ Namespace Admin
         Friend WithEvents Cmb_BadCheckBanks As TrashCash.Database_ComboBoxes.cmb_BadCheckBanks
         Friend WithEvents btn_Cancel As System.Windows.Forms.Button
         Friend WithEvents tb_RefNum As System.Windows.Forms.TextBox
-        Friend WithEvents Ts_M_Customer1 As ts_M_Customer
+        Friend WithEvents Panel1 As System.Windows.Forms.Panel
+        Friend WithEvents CustomerToolstrip1 As TrashCash.Classes.CustomerToolstrip.CustomerToolstrip
     End Class
 End Namespace

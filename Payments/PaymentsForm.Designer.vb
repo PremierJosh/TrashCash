@@ -1,7 +1,7 @@
 ﻿Imports TrashCash.Classes
 
 <Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
-Partial Class Payments
+Partial Class PaymentsForm
     Inherits System.Windows.Forms.Form
 
     'Form overrides dispose to clean up the component list.
@@ -28,6 +28,7 @@ Partial Class Payments
         Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.pnl_Mid = New System.Windows.Forms.Panel()
         Me.pnl_MidLeft = New System.Windows.Forms.Panel()
+        Me.UC_PaymentDetails = New TrashCash.UC_PaymentDetails()
         Me.pnl_Grid = New System.Windows.Forms.Panel()
         Me.dg_WorkPay = New System.Windows.Forms.DataGridView()
         Me.CustomerNumberDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
@@ -43,14 +44,13 @@ Partial Class Payments
         Me.lbl_RecentPayHeader = New System.Windows.Forms.Label()
         Me.tc_Master = New System.Windows.Forms.TabControl()
         Me.tc_p_CustNotes = New System.Windows.Forms.TabPage()
+        Me.UC_CustomerNotes = New TrashCash.UC_CustomerNotes()
         Me.tc_p_CustInfo = New System.Windows.Forms.TabPage()
+        Me.UC_CustomerInfoBoxes = New TrashCash.UC_CustomerInfoBoxes()
         Me.WorkingPaymentsTableAdapter = New TrashCash.DataSetTableAdapters.WorkingPaymentsTableAdapter()
         Me.Panel1 = New System.Windows.Forms.Panel()
         Me.pnl_TopContent = New System.Windows.Forms.Panel()
-        Me.UC_PaymentDetails = New TrashCash.UC_PaymentDetails()
-        Me.Ts_M_Customer = New ts_M_Customer()
-        Me.UC_CustomerNotes = New TrashCash.UC_CustomerNotes()
-        Me.UC_CustomerInfoBoxes = New TrashCash.UC_CustomerInfoBoxes()
+        Me.CustomerToolstrip1 = New TrashCash.Classes.CustomerToolstrip.CustomerToolstrip()
         Me.pnl_Mid.SuspendLayout()
         Me.pnl_MidLeft.SuspendLayout()
         Me.pnl_Grid.SuspendLayout()
@@ -85,6 +85,15 @@ Partial Class Payments
         Me.pnl_MidLeft.Padding = New System.Windows.Forms.Padding(50, 0, 0, 0)
         Me.pnl_MidLeft.Size = New System.Drawing.Size(353, 214)
         Me.pnl_MidLeft.TabIndex = 1
+        '
+        'UC_PaymentDetails
+        '
+        Me.UC_PaymentDetails.CurrentCustomer = 0
+        Me.UC_PaymentDetails.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.UC_PaymentDetails.Location = New System.Drawing.Point(50, 0)
+        Me.UC_PaymentDetails.Name = "UC_PaymentDetails"
+        Me.UC_PaymentDetails.Size = New System.Drawing.Size(303, 214)
+        Me.UC_PaymentDetails.TabIndex = 2
         '
         'pnl_Grid
         '
@@ -228,6 +237,15 @@ Partial Class Payments
         Me.tc_p_CustNotes.TabIndex = 3
         Me.tc_p_CustNotes.Text = "Customer Notes"
         '
+        'UC_CustomerNotes
+        '
+        Me.UC_CustomerNotes.CurrentCustomer = New Decimal(New Integer() {0, 0, 0, 0})
+        Me.UC_CustomerNotes.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.UC_CustomerNotes.Location = New System.Drawing.Point(3, 3)
+        Me.UC_CustomerNotes.Name = "UC_CustomerNotes"
+        Me.UC_CustomerNotes.Size = New System.Drawing.Size(902, 173)
+        Me.UC_CustomerNotes.TabIndex = 0
+        '
         'tc_p_CustInfo
         '
         Me.tc_p_CustInfo.BackColor = System.Drawing.SystemColors.Control
@@ -238,6 +256,16 @@ Partial Class Payments
         Me.tc_p_CustInfo.Size = New System.Drawing.Size(908, 179)
         Me.tc_p_CustInfo.TabIndex = 0
         Me.tc_p_CustInfo.Text = "Customer Information"
+        '
+        'UC_CustomerInfoBoxes
+        '
+        Me.UC_CustomerInfoBoxes.CurrentCustomer = 0
+        Me.UC_CustomerInfoBoxes.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.UC_CustomerInfoBoxes.isUpdating = False
+        Me.UC_CustomerInfoBoxes.Location = New System.Drawing.Point(3, 3)
+        Me.UC_CustomerInfoBoxes.Name = "UC_CustomerInfoBoxes"
+        Me.UC_CustomerInfoBoxes.Size = New System.Drawing.Size(902, 173)
+        Me.UC_CustomerInfoBoxes.TabIndex = 0
         '
         'WorkingPaymentsTableAdapter
         '
@@ -256,53 +284,24 @@ Partial Class Payments
         'pnl_TopContent
         '
         Me.pnl_TopContent.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.pnl_TopContent.Controls.Add(Me.Ts_M_Customer)
+        Me.pnl_TopContent.Controls.Add(Me.CustomerToolstrip1)
         Me.pnl_TopContent.Dock = System.Windows.Forms.DockStyle.Fill
         Me.pnl_TopContent.Location = New System.Drawing.Point(20, 10)
         Me.pnl_TopContent.Name = "pnl_TopContent"
         Me.pnl_TopContent.Size = New System.Drawing.Size(876, 33)
         Me.pnl_TopContent.TabIndex = 2
         '
-        'UC_PaymentDetails
+        'CustomerToolstrip1
         '
-        Me.UC_PaymentDetails.CurrentCustomer = 0
-        Me.UC_PaymentDetails.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.UC_PaymentDetails.Location = New System.Drawing.Point(50, 0)
-        Me.UC_PaymentDetails.Name = "UC_PaymentDetails"
-        Me.UC_PaymentDetails.Size = New System.Drawing.Size(303, 214)
-        Me.UC_PaymentDetails.TabIndex = 2
+        Me.CustomerToolstrip1.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.CustomerToolstrip1.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden
+        Me.CustomerToolstrip1.Location = New System.Drawing.Point(0, 0)
+        Me.CustomerToolstrip1.Name = "CustomerToolstrip1"
+        Me.CustomerToolstrip1.Size = New System.Drawing.Size(874, 31)
+        Me.CustomerToolstrip1.TabIndex = 0
+        Me.CustomerToolstrip1.Text = "CustomerToolstrip1"
         '
-        'Ts_M_Customer
-        '
-
-        Me.Ts_M_Customer.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.Ts_M_Customer.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden
-        Me.Ts_M_Customer.Location = New System.Drawing.Point(0, 0)
-        Me.Ts_M_Customer.Name = "Ts_M_Customer"
-        Me.Ts_M_Customer.Size = New System.Drawing.Size(874, 31)
-        Me.Ts_M_Customer.TabIndex = 2
-        Me.Ts_M_Customer.Text = "Ts_M_Customer1"
-        '
-        'UC_CustomerNotes
-        '
-        Me.UC_CustomerNotes.CurrentCustomer = New Decimal(New Integer() {0, 0, 0, 0})
-        Me.UC_CustomerNotes.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.UC_CustomerNotes.Location = New System.Drawing.Point(3, 3)
-        Me.UC_CustomerNotes.Name = "UC_CustomerNotes"
-        Me.UC_CustomerNotes.Size = New System.Drawing.Size(902, 173)
-        Me.UC_CustomerNotes.TabIndex = 0
-        '
-        'UC_CustomerInfoBoxes
-        '
-        Me.UC_CustomerInfoBoxes.CurrentCustomer = 0
-        Me.UC_CustomerInfoBoxes.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.UC_CustomerInfoBoxes.isUpdating = False
-        Me.UC_CustomerInfoBoxes.Location = New System.Drawing.Point(3, 3)
-        Me.UC_CustomerInfoBoxes.Name = "UC_CustomerInfoBoxes"
-        Me.UC_CustomerInfoBoxes.Size = New System.Drawing.Size(902, 173)
-        Me.UC_CustomerInfoBoxes.TabIndex = 0
-        '
-        'Payments
+        'PaymentsForm
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
@@ -311,7 +310,7 @@ Partial Class Payments
         Me.Controls.Add(Me.Panel1)
         Me.Controls.Add(Me.tc_Master)
         Me.MaximizeBox = False
-        Me.Name = "Payments"
+        Me.Name = "PaymentsForm"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent
         Me.Text = "Payments"
         Me.pnl_Mid.ResumeLayout(False)
@@ -353,7 +352,7 @@ Partial Class Payments
     Friend WithEvents DeleteToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents Panel1 As System.Windows.Forms.Panel
     Friend WithEvents pnl_TopContent As System.Windows.Forms.Panel
-    Friend WithEvents Ts_M_Customer As ts_M_Customer
     Friend WithEvents pnl_MidLeft As System.Windows.Forms.Panel
     Friend WithEvents UC_PaymentDetails As TrashCash.UC_PaymentDetails
+    Friend WithEvents CustomerToolstrip1 As TrashCash.Classes.CustomerToolstrip.CustomerToolstrip
 End Class

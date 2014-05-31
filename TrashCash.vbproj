@@ -81,7 +81,8 @@
     <SignAssembly>false</SignAssembly>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>app.ico</ApplicationIcon>
+    <ApplicationIcon>
+    </ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Calendar.NET">
@@ -201,10 +202,19 @@
     <Compile Include="Admin\AdminPayments.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Classes\QBConMgr.vb" />
-    <Compile Include="Classes\QBProcedures.vb" />
-    <Compile Include="Modules\AppModule.vb" />
-    <Compile Include="Modules\QBObjects.vb" />
+    <Compile Include="Classes\CustomerToolstrip\CustComboBox.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Classes\CustomerToolstrip\CustomerToolstrip.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Classes\CustomerToolstrip\QuickSearch.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="QBStuff\QBConMgr.vb" />
+    <Compile Include="QBStuff\QBProcedures.vb" />
+    <Compile Include="AppModule.vb" />
+    <Compile Include="QBStuff\QBObjects.vb" />
     <Compile Include="Classes\Reporting.vb" />
     <Compile Include="Classes\QB_Procedures.vb" />
     <Compile Include="Classes\QB_Queries.vb" />
@@ -233,16 +243,10 @@
     <Compile Include="Forms\CalendarView.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\CustomerCredit.Designer.vb">
+    <Compile Include="Customer\CustomerCredit.Designer.vb">
       <DependentUpon>CustomerCredit.vb</DependentUpon>
     </Compile>
-    <Compile Include="Forms\CustomerCredit.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\CustomInvoice_DescRemind.Designer.vb">
-      <DependentUpon>CustomInvoice_DescRemind.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Forms\CustomInvoice_DescRemind.vb">
+    <Compile Include="Customer\CustomerCredit.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Admin\AdminServiceTypes.Designer.vb">
@@ -251,16 +255,16 @@
     <Compile Include="Admin\AdminServiceTypes.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\Payments.Designer.vb">
-      <DependentUpon>Payments.vb</DependentUpon>
+    <Compile Include="Payments\PaymentsForm.Designer.vb">
+      <DependentUpon>PaymentsForm.vb</DependentUpon>
     </Compile>
-    <Compile Include="Forms\Payments.vb">
+    <Compile Include="Payments\PaymentsForm.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Customer.Designer.vb">
-      <DependentUpon>Customer.vb</DependentUpon>
+    <Compile Include="Customer\CustomerForm.Designer.vb">
+      <DependentUpon>CustomerForm.vb</DependentUpon>
     </Compile>
-    <Compile Include="Customer.vb">
+    <Compile Include="Customer\CustomerForm.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Forms\PendingApprovals.Designer.vb">
@@ -299,49 +303,49 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
-    <Compile Include="Reporting\f_DaysEvents.Designer.vb">
+    <Compile Include="Reports\f_DaysEvents.Designer.vb">
       <DependentUpon>f_DaysEvents.vb</DependentUpon>
     </Compile>
-    <Compile Include="Reporting\f_DaysEvents.vb">
+    <Compile Include="Reports\f_DaysEvents.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Reporting\f_PaymentsReceived.Designer.vb">
+    <Compile Include="Reports\f_PaymentsReceived.Designer.vb">
       <DependentUpon>f_PaymentsReceived.vb</DependentUpon>
     </Compile>
-    <Compile Include="Reporting\f_PaymentsReceived.vb">
+    <Compile Include="Reports\f_PaymentsReceived.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Reporting\f_UnderOverEven.Designer.vb">
+    <Compile Include="Reports\f_UnderOverEven.Designer.vb">
       <DependentUpon>f_UnderOverEven.vb</DependentUpon>
     </Compile>
-    <Compile Include="Reporting\f_UnderOverEven.vb">
+    <Compile Include="Reports\f_UnderOverEven.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Reporting\r_AllCustBalances.vb">
+    <Compile Include="Reports\r_AllCustBalances.vb">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>r_AllCustBalances.rpt</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Reporting\f_AllCustBalances.Designer.vb">
+    <Compile Include="Reports\f_AllCustBalances.Designer.vb">
       <DependentUpon>f_AllCustBalances.vb</DependentUpon>
     </Compile>
-    <Compile Include="Reporting\f_AllCustBalances.vb">
+    <Compile Include="Reports\f_AllCustBalances.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Reporting\r_DaysEvents.vb">
+    <Compile Include="Reports\r_DaysEvents.vb">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>r_DaysEvents.rpt</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Reporting\r_PaymentsReceived.vb">
+    <Compile Include="Reports\r_PaymentsReceived.vb">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>r_PaymentsReceived.rpt</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Reporting\r_UnderOverEven.vb">
+    <Compile Include="Reports\r_UnderOverEven.vb">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>r_UnderOverEven.rpt</DependentUpon>
@@ -360,40 +364,40 @@
     <Compile Include="TrashCash_Home.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="UserControls\UC_CustomerInfoBoxes.Designer.vb">
+    <Compile Include="Customer\UC_CustomerInfoBoxes.Designer.vb">
       <DependentUpon>UC_CustomerInfoBoxes.vb</DependentUpon>
     </Compile>
-    <Compile Include="UserControls\UC_CustomerInfoBoxes.vb">
+    <Compile Include="Customer\UC_CustomerInfoBoxes.vb">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="UserControls\UC_PaymentDetails.Designer.vb">
+    <Compile Include="Payments\UC_PaymentDetails.Designer.vb">
       <DependentUpon>UC_PaymentDetails.vb</DependentUpon>
     </Compile>
-    <Compile Include="UserControls\UC_PaymentDetails.vb">
+    <Compile Include="Payments\UC_PaymentDetails.vb">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="UserControls\UC_Quickbooks.Designer.vb">
+    <Compile Include="QBStuff\UC_Quickbooks.Designer.vb">
       <DependentUpon>UC_Quickbooks.vb</DependentUpon>
     </Compile>
-    <Compile Include="UserControls\UC_Quickbooks.vb">
+    <Compile Include="QBStuff\UC_Quickbooks.vb">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="UserControls\UC_CustomerNotes.Designer.vb">
+    <Compile Include="Customer\UC_CustomerNotes.Designer.vb">
       <DependentUpon>UC_CustomerNotes.vb</DependentUpon>
     </Compile>
-    <Compile Include="UserControls\UC_CustomerNotes.vb">
+    <Compile Include="Customer\UC_CustomerNotes.vb">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="UserControls\UC_PreparedItems.Designer.vb">
+    <Compile Include="Customer\UC_PreparedItems.Designer.vb">
       <DependentUpon>UC_PreparedItems.vb</DependentUpon>
     </Compile>
-    <Compile Include="UserControls\UC_PreparedItems.vb">
+    <Compile Include="Customer\UC_PreparedItems.vb">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="UserControls\UC_RecurringService.Designer.vb">
+    <Compile Include="RecurringService\UC_RecurringService.Designer.vb">
       <DependentUpon>UC_RecurringService.vb</DependentUpon>
     </Compile>
-    <Compile Include="UserControls\UC_RecurringService.vb">
+    <Compile Include="RecurringService\UC_RecurringService.vb">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Admin\UC_ServiceTypesDetails.Designer.vb">
@@ -410,10 +414,10 @@
     <Compile Include="_DataSets\DataSet.vb">
       <DependentUpon>DataSet.xsd</DependentUpon>
     </Compile>
-    <Compile Include="Forms\NewCustomer.Designer.vb">
+    <Compile Include="Customer\NewCustomer.Designer.vb">
       <DependentUpon>NewCustomer.vb</DependentUpon>
     </Compile>
-    <Compile Include="Forms\NewCustomer.vb">
+    <Compile Include="Customer\NewCustomer.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="My Project\AssemblyInfo.vb" />
@@ -426,7 +430,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ds_Batching.xsd</DependentUpon>
     </Compile>
-    <Compile Include="_DataSets\ds_Customer.Designer.vb">
+    <Compile Include="Customer\ds_Customer.Designer.vb">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>ds_Customer.xsd</DependentUpon>
@@ -447,12 +451,12 @@
     <Compile Include="Invoicing\ds_Invoicing.vb">
       <DependentUpon>ds_Invoicing.xsd</DependentUpon>
     </Compile>
-    <Compile Include="_DataSets\ds_Payments.Designer.vb">
+    <Compile Include="Payments\ds_Payments.Designer.vb">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>ds_Payments.xsd</DependentUpon>
     </Compile>
-    <Compile Include="_DataSets\ds_Payments.vb">
+    <Compile Include="Payments\ds_Payments.vb">
       <DependentUpon>ds_Payments.xsd</DependentUpon>
     </Compile>
     <Compile Include="_DataSets\ds_Program.Designer.vb">
@@ -468,17 +472,17 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ds_RecurringService.xsd</DependentUpon>
     </Compile>
-    <Compile Include="_DataSets\ds_Types.Designer.vb">
+    <Compile Include="Types\ds_Types.Designer.vb">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>ds_Types.xsd</DependentUpon>
     </Compile>
-    <Compile Include="_DataSets\Report_DataSet.Designer.vb">
+    <Compile Include="Reports\Report_DataSet.Designer.vb">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Report_DataSet.xsd</DependentUpon>
     </Compile>
-    <Compile Include="_DataSets\Report_DataSet.vb">
+    <Compile Include="Reports\Report_DataSet.vb">
       <DependentUpon>Report_DataSet.xsd</DependentUpon>
     </Compile>
   </ItemGroup>
@@ -525,27 +529,23 @@
     <EmbeddedResource Include="Forms\CalendarView.resx">
       <DependentUpon>CalendarView.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\CustomerCredit.resx">
+    <EmbeddedResource Include="Customer\CustomerCredit.resx">
       <DependentUpon>CustomerCredit.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\CustomInvoice_DescRemind.resx">
-      <DependentUpon>CustomInvoice_DescRemind.vb</DependentUpon>
-      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Admin\AdminServiceTypes.resx">
       <DependentUpon>AdminServiceTypes.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Payments.resx">
-      <DependentUpon>Payments.vb</DependentUpon>
+    <EmbeddedResource Include="Payments\PaymentsForm.resx">
+      <DependentUpon>PaymentsForm.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Customer.resx">
-      <DependentUpon>Customer.vb</DependentUpon>
+    <EmbeddedResource Include="Customer\CustomerForm.resx">
+      <DependentUpon>CustomerForm.vb</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\PendingApprovals.resx">
       <DependentUpon>PendingApprovals.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\NewCustomer.resx">
+    <EmbeddedResource Include="Customer\NewCustomer.resx">
       <DependentUpon>NewCustomer.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="RecurringService\RecurringServiceForm.resx">
@@ -564,32 +564,32 @@
       <SubType>Designer</SubType>
       <LastGenOutput>Resources.Designer.vb</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Reporting\f_AllCustBalances.resx">
+    <EmbeddedResource Include="Reports\f_AllCustBalances.resx">
       <DependentUpon>f_AllCustBalances.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Reporting\f_DaysEvents.resx">
+    <EmbeddedResource Include="Reports\f_DaysEvents.resx">
       <DependentUpon>f_DaysEvents.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Reporting\f_PaymentsReceived.resx">
+    <EmbeddedResource Include="Reports\f_PaymentsReceived.resx">
       <DependentUpon>f_PaymentsReceived.vb</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Reporting\f_UnderOverEven.resx">
+    <EmbeddedResource Include="Reports\f_UnderOverEven.resx">
       <DependentUpon>f_UnderOverEven.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Reporting\r_AllCustBalances.rpt">
+    <EmbeddedResource Include="Reports\r_AllCustBalances.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>r_AllCustBalances.vb</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Reporting\r_DaysEvents.rpt">
+    <EmbeddedResource Include="Reports\r_DaysEvents.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>r_DaysEvents.vb</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Reporting\r_PaymentsReceived.rpt">
+    <EmbeddedResource Include="Reports\r_PaymentsReceived.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>r_PaymentsReceived.vb</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Reporting\r_UnderOverEven.rpt">
+    <EmbeddedResource Include="Reports\r_UnderOverEven.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>r_UnderOverEven.vb</LastGenOutput>
     </EmbeddedResource>
@@ -599,23 +599,23 @@
     <EmbeddedResource Include="TrashCash_Home.resx">
       <DependentUpon>TrashCash_Home.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="UserControls\UC_CustomerInfoBoxes.resx">
+    <EmbeddedResource Include="Customer\UC_CustomerInfoBoxes.resx">
       <DependentUpon>UC_CustomerInfoBoxes.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="UserControls\UC_PaymentDetails.resx">
+    <EmbeddedResource Include="Payments\UC_PaymentDetails.resx">
       <DependentUpon>UC_PaymentDetails.vb</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="UserControls\UC_Quickbooks.resx">
+    <EmbeddedResource Include="QBStuff\UC_Quickbooks.resx">
       <DependentUpon>UC_Quickbooks.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="UserControls\UC_CustomerNotes.resx">
+    <EmbeddedResource Include="Customer\UC_CustomerNotes.resx">
       <DependentUpon>UC_CustomerNotes.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="UserControls\UC_PreparedItems.resx">
+    <EmbeddedResource Include="Customer\UC_PreparedItems.resx">
       <DependentUpon>UC_PreparedItems.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="UserControls\UC_RecurringService.resx">
+    <EmbeddedResource Include="RecurringService\UC_RecurringService.resx">
       <DependentUpon>UC_RecurringService.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Admin\UC_ServiceTypesDetails.resx">
@@ -658,15 +658,15 @@
     <None Include="_DataSets\ds_Batching.xss">
       <DependentUpon>ds_Batching.xsd</DependentUpon>
     </None>
-    <None Include="_DataSets\ds_Customer.xsc">
+    <None Include="Customer\ds_Customer.xsc">
       <DependentUpon>ds_Customer.xsd</DependentUpon>
     </None>
-    <None Include="_DataSets\ds_Customer.xsd">
+    <None Include="Customer\ds_Customer.xsd">
       <SubType>Designer</SubType>
       <Generator>MSDataSetGenerator</Generator>
       <LastGenOutput>ds_Customer.Designer.vb</LastGenOutput>
     </None>
-    <None Include="_DataSets\ds_Customer.xss">
+    <None Include="Customer\ds_Customer.xss">
       <DependentUpon>ds_Customer.xsd</DependentUpon>
     </None>
     <None Include="_DataSets\ds_Display.xsc">
@@ -691,15 +691,15 @@
     <None Include="Invoicing\ds_Invoicing.xss">
       <DependentUpon>ds_Invoicing.xsd</DependentUpon>
     </None>
-    <None Include="_DataSets\ds_Payments.xsc">
+    <None Include="Payments\ds_Payments.xsc">
       <DependentUpon>ds_Payments.xsd</DependentUpon>
     </None>
-    <None Include="_DataSets\ds_Payments.xsd">
+    <None Include="Payments\ds_Payments.xsd">
       <SubType>Designer</SubType>
       <Generator>MSDataSetGenerator</Generator>
       <LastGenOutput>ds_Payments.Designer.vb</LastGenOutput>
     </None>
-    <None Include="_DataSets\ds_Payments.xss">
+    <None Include="Payments\ds_Payments.xss">
       <DependentUpon>ds_Payments.xsd</DependentUpon>
     </None>
     <None Include="_DataSets\ds_Program.xsc">
@@ -724,26 +724,26 @@
     <None Include="RecurringService\ds_RecurringService.xss">
       <DependentUpon>ds_RecurringService.xsd</DependentUpon>
     </None>
-    <None Include="_DataSets\ds_Types.xsc">
+    <None Include="Types\ds_Types.xsc">
       <DependentUpon>ds_Types.xsd</DependentUpon>
     </None>
-    <None Include="_DataSets\ds_Types.xsd">
+    <None Include="Types\ds_Types.xsd">
       <SubType>Designer</SubType>
       <Generator>MSDataSetGenerator</Generator>
       <LastGenOutput>ds_Types.Designer.vb</LastGenOutput>
     </None>
-    <None Include="_DataSets\ds_Types.xss">
+    <None Include="Types\ds_Types.xss">
       <DependentUpon>ds_Types.xsd</DependentUpon>
     </None>
-    <None Include="_DataSets\Report_DataSet.xsc">
+    <None Include="Reports\Report_DataSet.xsc">
       <DependentUpon>Report_DataSet.xsd</DependentUpon>
     </None>
-    <None Include="_DataSets\Report_DataSet.xsd">
+    <None Include="Reports\Report_DataSet.xsd">
       <SubType>Designer</SubType>
       <Generator>MSDataSetGenerator</Generator>
       <LastGenOutput>Report_DataSet.Designer.vb</LastGenOutput>
     </None>
-    <None Include="_DataSets\Report_DataSet.xss">
+    <None Include="Reports\Report_DataSet.xss">
       <DependentUpon>Report_DataSet.xsd</DependentUpon>
     </None>
   </ItemGroup>
@@ -833,7 +833,6 @@
     <None Include="Images\plus-icon.gif" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="app.ico" />
     <None Include="Images\credits.jpg" />
   </ItemGroup>
   <ItemGroup>
@@ -851,7 +850,7 @@
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties BuildVersion_StartDate="2014/3/2" BuildVersion_BuildVersioningStyle="None.None.None.Increment" BuildVersion_UpdateFileVersion="True" BuildVersion_UpdateAssemblyVersion="True" BuildVersion_AssemblyInfoFilename="My Project\AssemblyInfo.vb" />
+      <UserProperties BuildVersion_AssemblyInfoFilename="My Project\AssemblyInfo.vb" BuildVersion_UpdateAssemblyVersion="True" BuildVersion_UpdateFileVersion="True" BuildVersion_BuildVersioningStyle="None.None.None.Increment" BuildVersion_StartDate="2014/3/2" />
     </VisualStudio>
   </ProjectExtensions>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

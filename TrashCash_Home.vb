@@ -1,5 +1,6 @@
 ﻿Imports System.Windows.Forms
 Imports System.ServiceProcess
+Imports TrashCash.Customer
 Imports TrashCash.Invoicing
 Imports TrashCash.Classes
 Imports TrashCash.Admin
@@ -97,9 +98,9 @@ Public Class TrashCashHome
     Public Property GlobalConMgr As QBConMgr
 
     ' var for all child forms
-    Friend WithEvents PayForm As Payments
+    Friend WithEvents PayForm As PaymentsForm
     Friend WithEvents BatchForm As BatchingPrep
-    Friend WithEvents Customer As Customer
+    Friend WithEvents Customer As CustomerForm
     Friend WithEvents PendingApprovals As PendingApprovals
     Friend WithEvents InvoicingForm As CustomInvoicingForm
 
@@ -164,7 +165,7 @@ Public Class TrashCashHome
         End If
 
         If (needNew) Then
-            PayForm = New Payments(Me)
+            PayForm = New PaymentsForm(Me)
             PayForm.MdiParent = Me
         End If
 
@@ -184,7 +185,7 @@ Public Class TrashCashHome
         End If
 
         If (needNew) Then
-            Customer = New Customer(Me)
+            Customer = New CustomerForm(Me)
             Customer.MdiParent = Me
         End If
         Customer.Show()
