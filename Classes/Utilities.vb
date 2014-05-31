@@ -240,36 +240,7 @@ Namespace Database_ComboBoxes
         End Sub
     End Class
 
-    Public Class cmb_Users
-        Inherits ComboBox
-
-        Public Property DT As ds_App.USERSDataTable
-        Private ReadOnly _ta As ds_AppTableAdapters.USERSTableAdapter
-
-        Public Sub New()
-            _ta = New ds_AppTableAdapters.USERSTableAdapter
-            DT = _ta.GetUsersList
-
-            Me.DisplayMember = "USER_NAME"
-            Me.ValueMember = "USER_UD"
-            Me.DataSource = DT
-        End Sub
-
-        Private _authLevel As Integer
-        Public ReadOnly Property AuthLevel
-            Get
-                GetAuthLevel()
-                Return _authLevel
-            End Get
-        End Property
-
-        Private Sub GetAuthLevel()
-            If (Me.SelectedValue IsNot Nothing) Then
-                Dim row As DataRowView = DirectCast(Me.SelectedItem, DataRowView)
-                _authLevel = CType(row.Row, ds_App.USERSRow).USER_AUTHLVL
-            End If
-        End Sub
-    End Class
+    
 
     Public Class cmb_BatchPaymentHistory
         Inherits ComboBox

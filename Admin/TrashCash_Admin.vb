@@ -6,12 +6,12 @@ Public Class TrashCash_Admin
     Friend HomeForm As TrashCashHome
 
     ' user row
-    Private _userRow As ds_App.USERSRow
-    Friend Property UserRow As ds_App.USERSRow
+    Private _userRow As ds_Application.USERSRow
+    Friend Property UserRow As ds_Application.USERSRow
         Get
             Return _userRow
         End Get
-        Set(value As ds_App.USERSRow)
+        Set(value As ds_Application.USERSRow)
             _userRow = value
 
             ' update lbl
@@ -20,7 +20,7 @@ Public Class TrashCash_Admin
         End Set
     End Property
 
-    Public Sub New(ByRef p_HomeForm As TrashCashHome, ByVal p_UserRow As ds_App.USERSRow)
+    Public Sub New(ByRef p_HomeForm As TrashCashHome, ByVal p_UserRow As ds_Application.USERSRow)
 
         ' This call is required by the designer.
         InitializeComponent()

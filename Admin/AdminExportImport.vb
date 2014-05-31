@@ -27,15 +27,15 @@ Namespace Admin
 
         ' form global tas
         Dim _qta As DataSetTableAdapters.QueriesTableAdapter
-        Dim _ata As ds_AppTableAdapters.APP_SETTINGS_TableAdapter
-        Dim _cita As ds_AppTableAdapters.Initial_CustomInvoiceTableAdapter
-        Dim _cidt As ds_App.Initial_CustomInvoiceDataTable
+        Dim _ata As ds_ApplicationTableAdapters.APP_SETTINGSTableAdapter
+        Dim _cita As ds_ApplicationTableAdapters.Initial_CustomInvoiceTableAdapter
+        Dim _cidt As ds_Application.Initial_CustomInvoiceDataTable
 
 
         Private Sub ImportWork_Load(sender As Object, e As System.EventArgs) Handles Me.Load
             _qta = New DataSetTableAdapters.QueriesTableAdapter
-            _ata = New ds_AppTableAdapters.APP_SETTINGS_TableAdapter
-            _cita = New ds_AppTableAdapters.Initial_CustomInvoiceTableAdapter
+            _ata = New ds_ApplicationTableAdapters.APP_SETTINGSTableAdapter
+            _cita = New ds_ApplicationTableAdapters.Initial_CustomInvoiceTableAdapter
             _cidt = _cita.GetData
             tb_CustInvCount.Text = _cidt.Rows.Count
 
@@ -92,15 +92,12 @@ Namespace Admin
             End If
         End Sub
 
-        Private Sub btn_SetCustInvItem_Click(sender As System.Object, e As System.EventArgs) Handles btn_SetCustInvItem.Click
-            _ata.APP_SetCustomInvItem(cmb_ItemList.SelectedValue)
-        End Sub
-
+      
         Private Sub btn_AddCustInv_Click(sender As System.Object, e As System.EventArgs) Handles btn_AddCustInv.Click
             ' getting custom inv item
             Dim itemID As String = _qta.APP_GetCustomInvItem
 
-            For Each row As ds_App.Initial_CustomInvoiceRow In _cidt
+            For Each row As ds_Application.Initial_CustomInvoiceRow In _cidt
                 Dim invoiceAdd As IInvoiceAdd = _homeForm.MsgSetRequest.AppendInvoiceAddRq
 
                 ' build request

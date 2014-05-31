@@ -28,8 +28,7 @@ Namespace Admin
             Dim BankBounceFeeLabel As System.Windows.Forms.Label
             Dim lbl_vendorSelInfo As System.Windows.Forms.Label
             Dim lbl_BankInvItem As System.Windows.Forms.Label
-            Me.DataSet = New TrashCash.DataSet()
-            Me.BAD_CHECK_BANKS_TableAdapter = New TrashCash.ds_AppTableAdapters.BAD_CHECK_BANKS_TableAdapter()
+      Me.BAD_CHECK_BANKSTableAdapter = New TrashCash.ds_PaymentsTableAdapters.BAD_CHECK_BANKSTableAdapter()
             Me.pnl_BankSelection = New System.Windows.Forms.Panel()
             Me.tb_BankFee = New CurrencyTextBox()
             Me.cmb_BankAccs = New System.Windows.Forms.ComboBox()
@@ -38,13 +37,12 @@ Namespace Admin
             Me.lbl_BankSelecInfo = New System.Windows.Forms.Label()
             Me.lbl_BankName = New System.Windows.Forms.Label()
             Me.tb_BankName = New System.Windows.Forms.TextBox()
-            Me.ds_App = New TrashCash.ds_App()
+            Me.ds_Application = New TrashCash.ds_Application()
             BankBounceFeeLabel = New System.Windows.Forms.Label()
             lbl_vendorSelInfo = New System.Windows.Forms.Label()
             lbl_BankInvItem = New System.Windows.Forms.Label()
-            CType(Me.DataSet, System.ComponentModel.ISupportInitialize).BeginInit()
-            Me.pnl_BankSelection.SuspendLayout()
-            CType(Me.ds_App, System.ComponentModel.ISupportInitialize).BeginInit()
+          Me.pnl_BankSelection.SuspendLayout()
+            CType(Me.ds_Application, System.ComponentModel.ISupportInitialize).BeginInit()
             Me.SuspendLayout()
             '
             'BankBounceFeeLabel
@@ -73,15 +71,10 @@ Namespace Admin
             lbl_BankInvItem.Text = "This is the Quickbooks Item that relates to this Bank Account for returned items." & _
                                    ""
             '
-            'DataSet
             '
-            Me.DataSet.DataSetName = "DataSet"
-            Me.DataSet.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema
+            'BAD_CHECK_BANKSTableAdapter
             '
-            '
-            'BAD_CHECK_BANKS_TableAdapter
-            '
-            Me.BAD_CHECK_BANKS_TableAdapter.ClearBeforeFill = True
+            Me.BAD_CHECK_BANKSTableAdapter.ClearBeforeFill = True
             '
             'pnl_BankSelection
             '
@@ -158,8 +151,8 @@ Namespace Admin
             '
             'ds_App
             '
-            Me.ds_App.DataSetName = "ds_App"
-            Me.ds_App.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema
+            Me.ds_Application.DataSetName = "ds_App"
+            Me.ds_Application.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema
             '
             'UC_BankMaint
             '
@@ -170,16 +163,14 @@ Namespace Admin
             Me.Controls.Add(Me.pnl_BankSelection)
             Me.Name = "UC_BankMaint"
             Me.Size = New System.Drawing.Size(574, 154)
-            CType(Me.DataSet, System.ComponentModel.ISupportInitialize).EndInit()
-            Me.pnl_BankSelection.ResumeLayout(False)
+           Me.pnl_BankSelection.ResumeLayout(False)
             Me.pnl_BankSelection.PerformLayout()
-            CType(Me.ds_App, System.ComponentModel.ISupportInitialize).EndInit()
+            CType(Me.ds_Application, System.ComponentModel.ISupportInitialize).EndInit()
             Me.ResumeLayout(False)
             Me.PerformLayout()
 
         End Sub
-        Friend WithEvents DataSet As TrashCash.DataSet
-        Friend WithEvents BAD_CHECK_BANKS_TableAdapter As TrashCash.ds_AppTableAdapters.BAD_CHECK_BANKS_TableAdapter
+        Friend WithEvents BAD_CHECK_BANKSTableAdapter As TrashCash.ds_PaymentsTableAdapters.BAD_CHECK_BANKSTableAdapter
         Friend WithEvents pnl_BankSelection As System.Windows.Forms.Panel
         Friend WithEvents tb_BankFee As CurrencyTextBox
         Friend WithEvents cmb_BankAccs As System.Windows.Forms.ComboBox
@@ -188,7 +179,7 @@ Namespace Admin
         Friend WithEvents lbl_BankSelecInfo As System.Windows.Forms.Label
         Friend WithEvents lbl_BankName As System.Windows.Forms.Label
         Friend WithEvents tb_BankName As System.Windows.Forms.TextBox
-        Friend WithEvents ds_App As TrashCash.ds_App
+        Friend WithEvents ds_Application As TrashCash.ds_Application
 
     End Class
 End Namespace

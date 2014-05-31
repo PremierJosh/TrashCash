@@ -1,21 +1,18 @@
 ﻿Imports System.Windows.Forms
-Imports System.ServiceProcess
 Imports TrashCash.Customer
 Imports TrashCash.Invoicing
 Imports TrashCash.Classes
 Imports TrashCash.Admin
-Imports TrashCash.ds_AppTableAdapters
-Imports TrashCash.Modules
 Imports QBFC12Lib
 
 Public Class TrashCashHome
     ' var for current user id row
-    Private _currentUserRow As ds_App.USERSRow
-    Public Property CurrentUserRow As ds_App.USERSRow
+    Private _currentUserRow As ds_Application.USERSRow
+    Public Property CurrentUserRow As ds_Application.USERSRow
         Get
             Return _currentUserRow
         End Get
-        Set(value As ds_App.USERSRow)
+        Set(value As ds_Application.USERSRow)
             _currentUserRow = value
 
             CurrentUser = value
@@ -330,9 +327,8 @@ Public Class TrashCashHome
         _splash = splash
 
         ' setting userid row
-        Using ta As New USERSTableAdapter
-            CurrentUserRow = ta.GetDataByID(userID).Rows(0)
-        End Using
+        CurrentUserRow = UserTA.GetDataByID(userID).Rows(0)
+
     End Sub
 
     Private Sub UnderOverEvenCustomerToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles UnderOverEvenCustomerToolStripMenuItem.Click
@@ -382,7 +378,7 @@ Public Class TrashCashHome
             End If
         Else
             Dim open As Boolean = False
-            Dim userRow As ds_App.USERSRow = _currentUserRow
+            Dim userRow As ds_Application.USERSRow = _currentUserRow
 
             If (_bypassLogin) Then
                 open = True
@@ -440,9 +436,7 @@ Public Class TrashCashHome
 
             ' change password
             If (UserSelection.AuthPWText IsNot Nothing) Then
-                Using ta As New USERSTableAdapter
-                    ta.ChangePassword(changeUserID, UserSelection.AuthPWText, currentPW)
-                End Using
+                UserTA.ChangePassword(changeUserID, UserSelection.AuthPWText, currentPW)
             End If
 
         End If

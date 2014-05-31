@@ -7,8 +7,7 @@
     ' ta i can use
     Protected ta As DataSetTableAdapters.WorkingPaymentsTableAdapter
     Protected qta As DataSetTableAdapters.QueriesTableAdapter
-    Protected app_qta As ds_AppTableAdapters.QueriesTableAdapter
-
+    
     ' var to track debug mode
     Private _debugMode As Boolean
     Private Property DebugMode As Boolean
@@ -156,9 +155,7 @@
     End Sub
 
     Private Sub UC_PaymentDetails_Load(sender As Object, e As System.EventArgs) Handles Me.Load
-        app_qta = New ds_AppTableAdapters.QueriesTableAdapter
-
-        If (CBool(app_qta.APP_GetDebugMode) = True) Then
+        If (CBool(AppQTA.APP_GetDebugMode) = True) Then
             DebugMode = True
         End If
     End Sub

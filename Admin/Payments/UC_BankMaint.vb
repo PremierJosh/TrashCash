@@ -13,13 +13,13 @@
         End Property
 
         ' dt that holds all the banks avail for bouncing checks
-        Private Property Dt2 As ds_App.BAD_CHECK_BANKS_DataTable
+        Private Property Dt2 As ds_Payments.BAD_CHECK_BANKSDataTable
 
         ' tas
-        Private Property Ta2 As ds_AppTableAdapters.BAD_CHECK_BANKS_TableAdapter
+        Private Property Ta2 As ds_PaymentsTableAdapters.BAD_CHECK_BANKSTableAdapter
 
         ' row refrence so we know what our current bankID row info is
-        Private Property Row2 As ds_App.BAD_CHECK_BANKS_Row
+        Private Property Row2 As ds_Payments.BAD_CHECK_BANKSRow
 
         ' public properties
         Private _currentBankID As Integer
@@ -104,8 +104,8 @@
             Visible = True
 
             ' create new row
-            Row2 = Dt2.NewBAD_CHECK_BANKS_Row
-            Dt2.AddBAD_CHECK_BANKS_Row(Row2)
+            Row2 = Dt2.NewBAD_CHECK_BANKSRow
+            Dt2.AddBAD_CHECK_BANKSRow(Row2)
         End Sub
         Private Sub UC_BankMaint_Load(sender As Object, e As System.EventArgs) Handles Me.Load
             BindCmbs()
@@ -116,8 +116,8 @@
             InitializeComponent()
 
             ' new stuff
-            Dt2 = ds_App.BAD_CHECK_BANKS_
-            Ta2 = BAD_CHECK_BANKS_TableAdapter
+            Dt2 = New ds_Payments.BAD_CHECK_BANKSDataTable
+            Ta2 = New ds_PaymentsTableAdapters.BAD_CHECK_BANKSTableAdapter
         End Sub
 
         Private Sub BindCmbs()

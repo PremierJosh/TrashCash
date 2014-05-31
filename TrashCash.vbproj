@@ -468,14 +468,6 @@
     <Compile Include="Payments\ds_Payments.vb">
       <DependentUpon>ds_Payments.xsd</DependentUpon>
     </Compile>
-    <Compile Include="_DataSets\ds_App.Designer.vb">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>ds_App.xsd</DependentUpon>
-    </Compile>
-    <Compile Include="_DataSets\ds_App.vb">
-      <DependentUpon>ds_App.xsd</DependentUpon>
-    </Compile>
     <Compile Include="RecurringService\ds_RecurringService.Designer.vb">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -721,17 +713,6 @@
     </None>
     <None Include="Payments\ds_Payments.xss">
       <DependentUpon>ds_Payments.xsd</DependentUpon>
-    </None>
-    <None Include="_DataSets\ds_App.xsc">
-      <DependentUpon>ds_App.xsd</DependentUpon>
-    </None>
-    <None Include="_DataSets\ds_App.xsd">
-      <SubType>Designer</SubType>
-      <Generator>MSDataSetGenerator</Generator>
-      <LastGenOutput>ds_App.Designer.vb</LastGenOutput>
-    </None>
-    <None Include="_DataSets\ds_App.xss">
-      <DependentUpon>ds_App.xsd</DependentUpon>
     </None>
     <None Include="RecurringService\ds_RecurringService.xsc">
       <DependentUpon>ds_RecurringService.xsd</DependentUpon>

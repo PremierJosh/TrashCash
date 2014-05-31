@@ -1,8 +1,4 @@
-﻿Imports TrashCash.Database_ComboBoxes
-Imports TrashCash.ds_PaymentsTableAdapters
-Imports TrashCash.ds_AppTableAdapters
-
-Namespace Admin
+﻿Namespace Admin
 
     Public Class BouncedBankSelection
         ' home form refrence
@@ -19,7 +15,7 @@ Namespace Admin
                 If (value > 0) Then
                     _payHistoryId = value
                     ' query for row and set refrence
-                    Dim ta As New PaymentHistory_DBTableAdapter
+                    Dim ta As New ds_PaymentsTableAdapters.PaymentHistory_DBTableAdapter
                     CheckRow = ta.GetData(value).Rows(0)
                 End If
             End Set
@@ -42,13 +38,13 @@ Namespace Admin
             End Set
         End Property
 
-        Private _bankRow As ds_App.BAD_CHECK_BANKS_Row
+        Private _bankRow As ds_Payments.BAD_CHECK_BANKSRow
 
-        Private Property BankRow As ds_App.BAD_CHECK_BANKS_Row
+        Private Property BankRow As ds_Payments.BAD_CHECK_BANKSRow
             Get
                 Return _bankRow
             End Get
-            Set(value As ds_App.BAD_CHECK_BANKS_Row)
+            Set(value As ds_Payments.BAD_CHECK_BANKSRow)
                 _bankRow = value
 
                 ' set fee
@@ -57,8 +53,8 @@ Namespace Admin
         End Property
 
         ' vars to hold refrence
-        ReadOnly _banks As ds_App.BAD_CHECK_BANKS_DataTable
-        ReadOnly _bta As BAD_CHECK_BANKS_TableAdapter
+        ReadOnly _banks As ds_Payments.BAD_CHECK_BANKSDataTable
+        ReadOnly _bta As ds_PaymentsTableAdapters.BAD_CHECK_BANKSTableAdapter
 
         Private ReadOnly _payHisForm As AdminPayments
 
@@ -67,8 +63,8 @@ Namespace Admin
             InitializeComponent()
 
             ' Add any initialization after the InitializeComponent() call.
-            _banks = New ds_App.BAD_CHECK_BANKS_DataTable
-            _bta = New BAD_CHECK_BANKS_TableAdapter
+            _banks = New ds_Payments.BAD_CHECK_BANKSDataTable
+            _bta = New ds_PaymentsTableAdapters.BAD_CHECK_BANKSTableAdapter
             _home = homeForm
             _payHisForm = payHistoryForm
         End Sub
@@ -100,8 +96,8 @@ Namespace Admin
             _bta.Fill(_banks)
 
             ' grabbing default fee here and then disposing of ta
-            Dim ta As New APP_SETTINGS_TableAdapter
-            Dim dr As ds_App.APP_SETTINGS_Row = ta.GetData().Rows(0)
+            Dim ta As New ds_ApplicationTableAdapters.APP_SETTINGSTableAdapter
+            Dim dr As ds_Application.APP_SETTINGSRow = ta.GetData().Rows(0)
             tb_CustFee.Text = dr.BAD_CHECK_CUST_FEE
 
             ' grabbing default bank selection
@@ -117,7 +113,7 @@ Namespace Admin
             Close()
         End Sub
 
-        Private Sub Cmb_BadCheckBanks_SelectionChangeCommitted(sender As cmb_BadCheckBanks, e As EventArgs) _
+        Private Sub Cmb_BadCheckBanks_SelectionChangeCommitted(sender As ComboBox, e As EventArgs) _
             Handles Cmb_BadCheckBanks.SelectionChangeCommitted
             BankRow = _banks.FindByBC_BANK_ID(sender.SelectedValue)
         End Sub

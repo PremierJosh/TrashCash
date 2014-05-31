@@ -38,8 +38,7 @@ Namespace Admin
             Me.tb_BadCheckCustFee = New CurrencyTextBox()
             Me.cmb_BadCheckItem = New System.Windows.Forms.ComboBox()
             Me.cmb_BadCheckCustInvItem = New System.Windows.Forms.ComboBox()
-            Me.APP_SETTINGS_TableAdapter = New TrashCash.ds_AppTableAdapters.APP_SETTINGS_TableAdapter()
-            Me.btn_Save = New System.Windows.Forms.Button()
+          Me.btn_Save = New System.Windows.Forms.Button()
             lbl_CustInfoDesc = New System.Windows.Forms.Label()
             lbl_CheckItem = New System.Windows.Forms.Label()
             CustomerChargeRateLabel = New System.Windows.Forms.Label()
@@ -170,10 +169,7 @@ Namespace Admin
             Me.cmb_BadCheckCustInvItem.Size = New System.Drawing.Size(187, 21)
             Me.cmb_BadCheckCustInvItem.TabIndex = 59
             '
-            'APP_SETTINGS_TableAdapter
-            '
-            Me.APP_SETTINGS_TableAdapter.ClearBeforeFill = True
-            '
+         '
             'btn_Save
             '
             Me.btn_Save.Location = New System.Drawing.Point(264, 264)
@@ -213,7 +209,6 @@ Namespace Admin
         Friend WithEvents Label1 As System.Windows.Forms.Label
         Friend WithEvents hdr_BadCheck As System.Windows.Forms.Label
         Friend WithEvents tb_BadCheckCustFee As CurrencyTextBox
-        Friend WithEvents APP_SETTINGS_TableAdapter As TrashCash.ds_AppTableAdapters.APP_SETTINGS_TableAdapter
-        Friend WithEvents btn_Save As System.Windows.Forms.Button
+      Friend WithEvents btn_Save As System.Windows.Forms.Button
     End Class
 End Namespace

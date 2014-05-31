@@ -1,11 +1,10 @@
 ﻿Public Class Login
-    Private qta As ds_AppTableAdapters.QueriesTableAdapter
-
+    
     Private Sub btn_Login_Click(sender As System.Object, e As System.EventArgs) Handles btn_Login.Click
         Me.Cursor = Cursors.WaitCursor
 
         Dim userID As Integer
-        userID = qta.USERS_Authenticate(tb_Username.Text, mtb_Password.Text)
+        userID = UserTA.Authenticate(tb_Username.Text, mtb_Password.Text)
         If (userID <> Nothing) Then
             '' CHANGE CONNECTION STRING - doing on home form
             'Dim conPW As String = "Yealink01"
@@ -25,7 +24,6 @@
     End Sub
 
     Private Sub Login_Load(sender As Object, e As System.EventArgs) Handles Me.Load
-        qta = New ds_AppTableAdapters.QueriesTableAdapter
         'clear boxes and reset user index
         mtb_Password.Clear()
         tb_Username.Clear()

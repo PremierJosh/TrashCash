@@ -1,13 +1,13 @@
-﻿Namespace Admin
+﻿
+Namespace Admin
     Public Class AdminDefaults
         Private ReadOnly _home As TrashCashHome
 
-        ' tas
-        Private ReadOnly _ta As ds_AppTableAdapters.APP_SETTINGS_TableAdapter
+        Private _ta As ds_ApplicationTableAdapters.APP_SETTINGSTableAdapter
 
         ' refrences
-        Private _dt As ds_App.APP_SETTINGS_DataTable
-        Private _row As ds_App.APP_SETTINGS_Row
+        Private _dt As ds_Application.APP_SETTINGSDataTable
+        Private _row As ds_Application.APP_SETTINGSRow
 
 
         Public Sub New(ByRef homeForm As TrashCashHome)
@@ -16,7 +16,7 @@
             InitializeComponent()
 
             ' Add any initialization after the InitializeComponent() call.
-            _ta = APP_SETTINGS_TableAdapter
+            _ta = New ds_ApplicationTableAdapters.APP_SETTINGSTableAdapter
             _home = homeForm
         End Sub
         Private Sub App_Defaults_Load(sender As Object, e As System.EventArgs) Handles Me.Load
@@ -34,7 +34,7 @@
 
         Private Sub SetControls()
             ' InvoicingForm
-            cmb_CustomInvItem.SelectedValue = _row.DEFAULT_INV_ITEM_LISTID
+            ' cmb_CustomInvItem.SelectedValue = _row.DEFAULT_INV_ITEM_LISTID
 
             ' bad check
             cmb_BadCheckCustInvItem.SelectedValue = _row.BAD_CHECK_CUSTITEM_LISTID
@@ -45,7 +45,7 @@
 
         Private Sub btn_Save_Click(sender As System.Object, e As System.EventArgs) Handles btn_Save.Click
             ' InvoicingForm
-            _row.DEFAULT_INV_ITEM_LISTID = cmb_CustomInvItem.SelectedValue
+            '_row.DEFAULT_INV_ITEM_LISTID = cmb_CustomInvItem.SelectedValue
 
             ' bad check
             _row.BAD_CHECK_CUSTITEM_LISTID = cmb_BadCheckCustInvItem.SelectedValue

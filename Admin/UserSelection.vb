@@ -1,8 +1,8 @@
 ﻿Namespace Admin
     Public Class UserSelection
-     Private _authUserRow As ds_App.USERSRow = Nothing
+        Private _authUserRow As ds_Application.USERSRow = Nothing
 
-        Public ReadOnly Property AuthUserRow As ds_App.USERSRow
+        Public ReadOnly Property AuthUserRow As ds_Application.USERSRow
             Get
                 Return _authUserRow
             End Get

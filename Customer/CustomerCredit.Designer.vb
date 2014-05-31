@@ -53,16 +53,14 @@ Partial Class CustomerCredit
         Me.lbl_Type = New System.Windows.Forms.Label()
         Me.cmb_Types = New System.Windows.Forms.ComboBox()
         Me.ck_Print = New System.Windows.Forms.CheckBox()
-        Me.Ds_App1 = New TrashCash.ds_App()
-        Me.Panel1.SuspendLayout()
+    Me.Panel1.SuspendLayout()
         Me.pnl_TopContent.SuspendLayout()
         Me.pnl_Left.SuspendLayout()
         CType(Me.dg_Credits, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.cm_Void.SuspendLayout()
         CType(Me.CustomerCreditsBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.Ds_Customer, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.Ds_App1, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.SuspendLayout()
+     Me.SuspendLayout()
         '
         'Panel1
         '
@@ -307,11 +305,7 @@ Partial Class CustomerCredit
         Me.ck_Print.Text = "Print"
         Me.ck_Print.UseVisualStyleBackColor = True
         '
-        'Ds_App1
-        '
-        Me.Ds_App1.DataSetName = "ds_App"
-        Me.Ds_App1.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema
-        '
+   '
         'CustomerCredit
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -343,8 +337,7 @@ Partial Class CustomerCredit
         Me.cm_Void.ResumeLayout(False)
         CType(Me.CustomerCreditsBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.Ds_Customer, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.Ds_App1, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.ResumeLayout(False)
+ Me.ResumeLayout(False)
         Me.PerformLayout()
 
     End Sub
@@ -374,5 +367,4 @@ Partial Class CustomerCredit
     Friend WithEvents cmb_Types As System.Windows.Forms.ComboBox
     Friend WithEvents ck_Print As System.Windows.Forms.CheckBox
     Friend WithEvents CustomerToolstrip1 As TrashCash.Classes.CustomerToolstrip.CustomerToolstrip
-    Friend WithEvents Ds_App1 As TrashCash.ds_App
 End Class
