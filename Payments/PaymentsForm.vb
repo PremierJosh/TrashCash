@@ -1,6 +1,6 @@
 ﻿Public Class PaymentsForm
     ' easier refrence
-    Protected ta As DataSetTableAdapters.WorkingPaymentsTableAdapter
+    Protected ta As ds_PaymentsTableAdapters.WorkingPaymentsTableAdapter
 
     ' home form ref var
     Private _home As TrashCashHome
@@ -28,8 +28,8 @@
     ' override show function to also wipe recently added payments
     Public Overloads Sub Show()
         MyBase.Show()
-        If (Me.DataSet.WorkingPayments.Rows.Count > 0) Then
-            Me.DataSet.WorkingPayments.Clear()
+        If (Me.ds_Payments.WorkingPayments.Rows.Count > 0) Then
+            Me.ds_Payments.WorkingPayments.Clear()
         End If
 
     End Sub
@@ -40,7 +40,7 @@
 
     Private Sub PaymentAdded(ByVal rowID As Integer) Handles UC_PaymentDetails.PaymentAdded
         ta.ClearBeforeFill = False
-        ta.FillByID(Me.DataSet.WorkingPayments, "TblID", rowID)
+        ta.FillByID(ds_Payments.WorkingPayments, rowID)
 
     End Sub
 
@@ -70,7 +70,7 @@
     Private Sub DeleteToolStripMenuItem_Click(sender As System.Object, e As System.EventArgs) Handles DeleteToolStripMenuItem.Click
         If (dg_WorkPay.SelectedRows.Count = 1) Then
             Dim drv As DataRowView = dg_WorkPay.SelectedRows.Item(0).DataBoundItem
-            Dim row As DataSet.WorkingPaymentsRow = drv.Row
+            Dim row As ds_Payments.WorkingPaymentsRow = drv.Row
             Dim result As MsgBoxResult = MsgBox("Delete this Prepared Payment?", MsgBoxStyle.YesNo)
             If (result = MsgBoxResult.Yes) Then
                 ta.DeleteByID(row.WorkingPaymentsID)

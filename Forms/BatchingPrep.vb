@@ -359,7 +359,7 @@ Public Class BatchingPrep
     Private Sub DeleteToolStripMenuItem_Click(sender As System.Object, e As System.EventArgs) Handles DeleteToolStripMenuItem.Click
         If (dg_PrepPay.SelectedRows.Count = 1) Then
             Dim drv As DataRowView = dg_PrepPay.SelectedRows.Item(0).DataBoundItem
-            Dim row As DataSet.WorkingPaymentsRow = drv.Row
+            Dim row As ds_Payments.WorkingPaymentsRow = drv.Row
             Dim result As MsgBoxResult = MsgBox("Delete this Prepared Payment?", MsgBoxStyle.YesNo)
             If (result = MsgBoxResult.Yes) Then
                 Me.BATCH_WorkingPaymentsTableAdapter.DeleteByID(row.WorkingPaymentsID)

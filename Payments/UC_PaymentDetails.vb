@@ -3,10 +3,9 @@
     Public Event PaymentAdded(ByVal rowID As Integer)
 
     ' dt going to spawn rows from
-    Protected dt As DataSet.WorkingPaymentsDataTable
+    Protected dt As ds_Payments.WorkingPaymentsDataTable
     ' ta i can use
-    Protected ta As DataSetTableAdapters.WorkingPaymentsTableAdapter
-    Protected qta As DataSetTableAdapters.QueriesTableAdapter
+    Protected ta As ds_PaymentsTableAdapters.WorkingPaymentsTableAdapter
     
     ' var to track debug mode
     Private _debugMode As Boolean
@@ -27,11 +26,9 @@
         InitializeComponent()
 
         ' Add any initialization after the InitializeComponent() call.
-        dt = New DataSet.WorkingPaymentsDataTable
-        ta = New DataSetTableAdapters.WorkingPaymentsTableAdapter
-        qta = New DataSetTableAdapters.QueriesTableAdapter
-
-
+        dt = New ds_Payments.WorkingPaymentsDataTable
+        ta = New ds_PaymentsTableAdapters.WorkingPaymentsTableAdapter
+ 
     End Sub
 
     Private _currentCustomer As Integer
@@ -106,20 +103,20 @@
                     ' inserting override date chosen as time inserted
                     ' insert with current time and check if dateoncheck is nothing (cash payment)
                     If (Cmb_PaymentTypes.SelectedValue = 1) Then
-                        newID = ta.WorkingPayments_Insert(CurrentCustomer, tb_Amount.Text, Cmb_PaymentTypes.SelectedValue, checkRefNum,
-                          5, dtp_Override.Value.Date, Nothing)
+                        newID = ta.WorkingPayments_Insert_ReturnID(CurrentCustomer, tb_Amount.Text, Cmb_PaymentTypes.SelectedValue, checkRefNum,
+                          5, dtp_Override.Value.Date, Nothing, CurrentUser.USER_NAME)
                     Else
-                        newID = ta.WorkingPayments_Insert(CurrentCustomer, tb_Amount.Text, Cmb_PaymentTypes.SelectedValue, checkRefNum,
-                       5, dtp_Override.Value.Date, dtp_DateOnCheck.Value.Date)
+                        newID = ta.WorkingPayments_Insert_ReturnID(CurrentCustomer, tb_Amount.Text, Cmb_PaymentTypes.SelectedValue, checkRefNum,
+                       5, dtp_Override.Value.Date, dtp_DateOnCheck.Value.Date, CurrentUser.USER_NAME)
                     End If
                 Else
                     ' insert with current time and check if dateoncheck is nothing (cash payment)
                     If (Cmb_PaymentTypes.SelectedValue = 1) Then
-                        newID = ta.WorkingPayments_Insert(CurrentCustomer, tb_Amount.Text, Cmb_PaymentTypes.SelectedValue, checkRefNum,
-                          5, Date.Now, Nothing)
+                        newID = ta.WorkingPayments_Insert_ReturnID(CurrentCustomer, tb_Amount.Text, Cmb_PaymentTypes.SelectedValue, checkRefNum,
+                          5, Date.Now, Nothing, CurrentUser.USER_NAME)
                     Else
-                        newID = ta.WorkingPayments_Insert(CurrentCustomer, tb_Amount.Text, Cmb_PaymentTypes.SelectedValue, checkRefNum,
-                       5, Date.Now, dtp_DateOnCheck.Value.Date)
+                        newID = ta.WorkingPayments_Insert_ReturnID(CurrentCustomer, tb_Amount.Text, Cmb_PaymentTypes.SelectedValue, checkRefNum,
+                       5, Date.Now, dtp_DateOnCheck.Value.Date, CurrentUser.USER_NAME)
                     End If
 
                 End If
