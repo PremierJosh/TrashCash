@@ -120,50 +120,22 @@
   <metadata name="BankBounceFeeLabel.GenerateMember" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>False</value>
   </metadata>
-  <metadata name="CustomerChargeRateLabel.GenerateMember" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+  <metadata name="lbl_vendorSelInfo.GenerateMember" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>False</value>
   </metadata>
-  <metadata name="lbl_checkAmount.GenerateMember" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>False</value>
-  </metadata>
-  <metadata name="lbl_RefNum.GenerateMember" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+  <metadata name="lbl_BankInvItem.GenerateMember" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>False</value>
   </metadata>
   <metadata name="DataSet.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 17</value>
   </metadata>
-  <data name="Cmb_BadCheckBanks.DataSource" mimetype="application/x-microsoft.net.object.binary.base64">
-    <value>
-        AAEAAAD/////AQAAAAAAAAAMAgAAAEVUcmFzaENhc2gsIFZlcnNpb249MS41MC4xNDYuNDM4LCBDdWx0
-        dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPW51bGwFAQAAACRUcmFzaENhc2guRGF0YVNldCtCYW5r
-        c0xpc3REYXRhVGFibGUDAAAAGURhdGFUYWJsZS5SZW1vdGluZ1ZlcnNpb24JWG1sU2NoZW1hC1htbERp
-        ZmZHcmFtAwEBDlN5c3RlbS5WZXJzaW9uAgAAAAkDAAAABgQAAAD4CDw/eG1sIHZlcnNpb249IjEuMCIg
-        ZW5jb2Rpbmc9InV0Zi0xNiI/Pg0KPHhzOnNjaGVtYSB4bWxucz0iIiB4bWxuczp4cz0iaHR0cDovL3d3
-        dy53My5vcmcvMjAwMS9YTUxTY2hlbWEiIHhtbG5zOm1zZGF0YT0idXJuOnNjaGVtYXMtbWljcm9zb2Z0
-        LWNvbTp4bWwtbXNkYXRhIj4NCiAgPHhzOmVsZW1lbnQgbmFtZT0iQmFua3NMaXN0Ij4NCiAgICA8eHM6
-        Y29tcGxleFR5cGU+DQogICAgICA8eHM6c2VxdWVuY2U+DQogICAgICAgIDx4czplbGVtZW50IG5hbWU9
-        IkJDX0JBTktfSUQiIG1zZGF0YTpSZWFkT25seT0idHJ1ZSIgbXNkYXRhOkF1dG9JbmNyZW1lbnQ9InRy
-        dWUiIG1zZGF0YTpBdXRvSW5jcmVtZW50U2VlZD0iLTEiIG1zZGF0YTpBdXRvSW5jcmVtZW50U3RlcD0i
-        LTEiIHR5cGU9InhzOmludCIgbXNkYXRhOnRhcmdldE5hbWVzcGFjZT0iIiAvPg0KICAgICAgICA8eHM6
-        ZWxlbWVudCBuYW1lPSJCQU5LX05BTUUiIG1zZGF0YTp0YXJnZXROYW1lc3BhY2U9IiI+DQogICAgICAg
-        ICAgPHhzOnNpbXBsZVR5cGU+DQogICAgICAgICAgICA8eHM6cmVzdHJpY3Rpb24gYmFzZT0ieHM6c3Ry
-        aW5nIj4NCiAgICAgICAgICAgICAgPHhzOm1heExlbmd0aCB2YWx1ZT0iNTAiIC8+DQogICAgICAgICAg
-        ICA8L3hzOnJlc3RyaWN0aW9uPg0KICAgICAgICAgIDwveHM6c2ltcGxlVHlwZT4NCiAgICAgICAgPC94
-        czplbGVtZW50Pg0KICAgICAgPC94czpzZXF1ZW5jZT4NCiAgICA8L3hzOmNvbXBsZXhUeXBlPg0KICA8
-        L3hzOmVsZW1lbnQ+DQogIDx4czplbGVtZW50IG5hbWU9InRtcERhdGFTZXQiIG1zZGF0YTpJc0RhdGFT
-        ZXQ9InRydWUiIG1zZGF0YTpNYWluRGF0YVRhYmxlPSJCYW5rc0xpc3QiIG1zZGF0YTpVc2VDdXJyZW50
-        TG9jYWxlPSJ0cnVlIj4NCiAgICA8eHM6Y29tcGxleFR5cGU+DQogICAgICA8eHM6Y2hvaWNlIG1pbk9j
-        Y3Vycz0iMCIgbWF4T2NjdXJzPSJ1bmJvdW5kZWQiIC8+DQogICAgPC94czpjb21wbGV4VHlwZT4NCiAg
-        ICA8eHM6dW5pcXVlIG5hbWU9IkNvbnN0cmFpbnQyIj4NCiAgICAgIDx4czpzZWxlY3RvciB4cGF0aD0i
-        Li8vQmFua3NMaXN0IiAvPg0KICAgICAgPHhzOmZpZWxkIHhwYXRoPSJCQ19CQU5LX0lEIiAvPg0KICAg
-        IDwveHM6dW5pcXVlPg0KICA8L3hzOmVsZW1lbnQ+DQo8L3hzOnNjaGVtYT4GBQAAAIABPGRpZmZncjpk
-        aWZmZ3JhbSB4bWxuczptc2RhdGE9InVybjpzY2hlbWFzLW1pY3Jvc29mdC1jb206eG1sLW1zZGF0YSIg
-        eG1sbnM6ZGlmZmdyPSJ1cm46c2NoZW1hcy1taWNyb3NvZnQtY29tOnhtbC1kaWZmZ3JhbS12MSIgLz4E
-        AwAAAA5TeXN0ZW0uVmVyc2lvbgQAAAAGX01ham9yBl9NaW5vcgZfQnVpbGQJX1JldmlzaW9uAAAAAAgI
-        CAgCAAAAAAAAAP//////////Cw==
-</value>
-  </data>
-  <metadata name="CustomerToolstrip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+  <metadata name="BanksTableAdapter.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>111, 17</value>
+  </metadata>
+  <metadata name="BAD_CHECK_BANKS_TableAdapter.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>267, 17</value>
+  </metadata>
+  <metadata name="ds_App.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>751, 17</value>
   </metadata>
 </root>

@@ -13,13 +13,13 @@
         End Property
 
         ' dt that holds all the banks avail for bouncing checks
-        Private Property Dt2 As ds_Program.BAD_CHECK_BANKS_DataTable
+        Private Property Dt2 As ds_App.BAD_CHECK_BANKS_DataTable
 
         ' tas
-        Private Property Ta2 As ds_ProgramTableAdapters.BAD_CHECK_BANKS_TableAdapter
+        Private Property Ta2 As ds_AppTableAdapters.BAD_CHECK_BANKS_TableAdapter
 
         ' row refrence so we know what our current bankID row info is
-        Private Property Row2 As ds_Program.BAD_CHECK_BANKS_Row
+        Private Property Row2 As ds_App.BAD_CHECK_BANKS_Row
 
         ' public properties
         Private _currentBankID As Integer
@@ -116,7 +116,7 @@
             InitializeComponent()
 
             ' new stuff
-            Dt2 = Ds_Program.BAD_CHECK_BANKS_
+            Dt2 = ds_App.BAD_CHECK_BANKS_
             Ta2 = BAD_CHECK_BANKS_TableAdapter
         End Sub
 

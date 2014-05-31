@@ -4,18 +4,18 @@ Imports TrashCash.Customer
 Imports TrashCash.Invoicing
 Imports TrashCash.Classes
 Imports TrashCash.Admin
-Imports TrashCash.ds_ProgramTableAdapters
+Imports TrashCash.ds_AppTableAdapters
 Imports TrashCash.Modules
 Imports QBFC12Lib
 
 Public Class TrashCashHome
     ' var for current user id row
-    Private _currentUserRow As ds_Program.USERSRow
-    Public Property CurrentUserRow As ds_Program.USERSRow
+    Private _currentUserRow As ds_App.USERSRow
+    Public Property CurrentUserRow As ds_App.USERSRow
         Get
             Return _currentUserRow
         End Get
-        Set(value As ds_Program.USERSRow)
+        Set(value As ds_App.USERSRow)
             _currentUserRow = value
 
             CurrentUser = value
@@ -382,7 +382,7 @@ Public Class TrashCashHome
             End If
         Else
             Dim open As Boolean = False
-            Dim userRow As ds_Program.USERSRow = _currentUserRow
+            Dim userRow As ds_App.USERSRow = _currentUserRow
 
             If (_bypassLogin) Then
                 open = True

@@ -7,7 +7,7 @@
     ' ta i can use
     Protected ta As DataSetTableAdapters.WorkingPaymentsTableAdapter
     Protected qta As DataSetTableAdapters.QueriesTableAdapter
-    Protected app_qta As ds_ProgramTableAdapters.QueriesTableAdapter
+    Protected app_qta As ds_AppTableAdapters.QueriesTableAdapter
 
     ' var to track debug mode
     Private _debugMode As Boolean
@@ -122,10 +122,10 @@
                         newID = ta.WorkingPayments_Insert(CurrentCustomer, tb_Amount.Text, Cmb_PaymentTypes.SelectedValue, checkRefNum,
                        5, Date.Now, dtp_DateOnCheck.Value.Date)
                     End If
-                    
+
                 End If
 
-                    
+
                 RaiseEvent PaymentAdded(newID)
                 ' prep for new row
             Catch ex As Exception
@@ -156,7 +156,7 @@
     End Sub
 
     Private Sub UC_PaymentDetails_Load(sender As Object, e As System.EventArgs) Handles Me.Load
-        app_qta = New ds_ProgramTableAdapters.QueriesTableAdapter
+        app_qta = New ds_AppTableAdapters.QueriesTableAdapter
 
         If (CBool(app_qta.APP_GetDebugMode) = True) Then
             DebugMode = True

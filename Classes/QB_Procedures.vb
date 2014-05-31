@@ -742,7 +742,7 @@ retry:
             End If
         End Sub
 
-        Public Function Customer_BounceCheck(ByVal checkRow As ds_Payments.PaymentHistory_DBRow, ByVal bankRow As ds_Program.BAD_CHECK_BANKS_Row, ByVal fee As Double) As Boolean
+        Public Function Customer_BounceCheck(ByVal checkRow As ds_Payments.PaymentHistory_DBRow, ByVal bankRow As ds_App.BAD_CHECK_BANKS_Row, ByVal fee As Double) As Boolean
             ' return bool
             Dim bounced As Boolean
 
@@ -757,8 +757,8 @@ retry:
             Dim invoiceAdd As IInvoiceAdd = MsgSetReq.AppendInvoiceAddRq
 
             ' going to need app defaults row for items
-            Dim appRow As ds_Program.APP_SETTINGS_Row
-            Dim appTA As New ds_ProgramTableAdapters.APP_SETTINGS_TableAdapter
+            Dim appRow As ds_App.APP_SETTINGS_Row
+            Dim appTA As New ds_AppTableAdapters.APP_SETTINGS_TableAdapter
             appRow = appTA.GetData().Rows(0)
 
             invoiceAdd.CustomerRef.ListID.SetValue(custListID)

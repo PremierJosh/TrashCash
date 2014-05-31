@@ -147,10 +147,10 @@
     <Compile Include="Admin\AdminDefaults.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Admin\AdminBanks.Designer.vb">
+    <Compile Include="Admin\Payments\AdminBanks.Designer.vb">
       <DependentUpon>AdminBanks.vb</DependentUpon>
     </Compile>
-    <Compile Include="Admin\AdminBanks.vb">
+    <Compile Include="Admin\Payments\AdminBanks.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Admin\AdminInvoiceTypes.Designer.vb">
@@ -171,16 +171,16 @@
     <Compile Include="Admin\AdminExportImport.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Admin\MovePayment.Designer.vb">
+    <Compile Include="Admin\Payments\MovePayment.Designer.vb">
       <DependentUpon>MovePayment.vb</DependentUpon>
     </Compile>
-    <Compile Include="Admin\MovePayment.vb">
+    <Compile Include="Admin\Payments\MovePayment.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Admin\UC_BankMaint.Designer.vb">
+    <Compile Include="Admin\Payments\UC_BankMaint.Designer.vb">
       <DependentUpon>UC_BankMaint.vb</DependentUpon>
     </Compile>
-    <Compile Include="Admin\UC_BankMaint.vb">
+    <Compile Include="Admin\Payments\UC_BankMaint.vb">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Admin\UserSelection.Designer.vb">
@@ -190,17 +190,20 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="ApplicationEvents.vb" />
-    <Compile Include="Admin\BouncedBankSelection.Designer.vb">
+    <Compile Include="Admin\Payments\BouncedBankSelection.Designer.vb">
       <DependentUpon>BouncedBankSelection.vb</DependentUpon>
     </Compile>
-    <Compile Include="Admin\BouncedBankSelection.vb">
+    <Compile Include="Admin\Payments\BouncedBankSelection.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Admin\AdminPayments.Designer.vb">
+    <Compile Include="Admin\Payments\AdminPayments.Designer.vb">
       <DependentUpon>AdminPayments.vb</DependentUpon>
     </Compile>
-    <Compile Include="Admin\AdminPayments.vb">
+    <Compile Include="Admin\Payments\AdminPayments.vb">
       <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Classes\CurrencyTextBox.vb">
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="Classes\CustomerToolstrip\CustComboBox.vb">
       <SubType>Component</SubType>
@@ -459,13 +462,13 @@
     <Compile Include="Payments\ds_Payments.vb">
       <DependentUpon>ds_Payments.xsd</DependentUpon>
     </Compile>
-    <Compile Include="_DataSets\ds_Program.Designer.vb">
+    <Compile Include="_DataSets\ds_App.Designer.vb">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>ds_Program.xsd</DependentUpon>
+      <DependentUpon>ds_App.xsd</DependentUpon>
     </Compile>
-    <Compile Include="_DataSets\ds_Program.vb">
-      <DependentUpon>ds_Program.xsd</DependentUpon>
+    <Compile Include="_DataSets\ds_App.vb">
+      <DependentUpon>ds_App.xsd</DependentUpon>
     </Compile>
     <Compile Include="RecurringService\ds_RecurringService.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -490,7 +493,7 @@
     <EmbeddedResource Include="Admin\AdminDefaults.resx">
       <DependentUpon>AdminDefaults.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Admin\AdminBanks.resx">
+    <EmbeddedResource Include="Admin\Payments\AdminBanks.resx">
       <DependentUpon>AdminBanks.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Admin\AdminInvoiceTypes.resx">
@@ -499,21 +502,21 @@
     <EmbeddedResource Include="Admin\TrashCash_Admin.resx">
       <DependentUpon>TrashCash_Admin.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Admin\BouncedBankSelection.resx">
+    <EmbeddedResource Include="Admin\Payments\BouncedBankSelection.resx">
       <DependentUpon>BouncedBankSelection.vb</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Admin\AdminExportImport.resx">
       <DependentUpon>AdminExportImport.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Admin\MovePayment.resx">
+    <EmbeddedResource Include="Admin\Payments\MovePayment.resx">
       <DependentUpon>MovePayment.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Admin\AdminPayments.resx">
+    <EmbeddedResource Include="Admin\Payments\AdminPayments.resx">
       <DependentUpon>AdminPayments.vb</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Admin\UC_BankMaint.resx">
+    <EmbeddedResource Include="Admin\Payments\UC_BankMaint.resx">
       <DependentUpon>UC_BankMaint.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Admin\UserSelection.resx">
@@ -702,16 +705,16 @@
     <None Include="Payments\ds_Payments.xss">
       <DependentUpon>ds_Payments.xsd</DependentUpon>
     </None>
-    <None Include="_DataSets\ds_Program.xsc">
-      <DependentUpon>ds_Program.xsd</DependentUpon>
+    <None Include="_DataSets\ds_App.xsc">
+      <DependentUpon>ds_App.xsd</DependentUpon>
     </None>
-    <None Include="_DataSets\ds_Program.xsd">
+    <None Include="_DataSets\ds_App.xsd">
       <SubType>Designer</SubType>
       <Generator>MSDataSetGenerator</Generator>
-      <LastGenOutput>ds_Program.Designer.vb</LastGenOutput>
+      <LastGenOutput>ds_App.Designer.vb</LastGenOutput>
     </None>
-    <None Include="_DataSets\ds_Program.xss">
-      <DependentUpon>ds_Program.xsd</DependentUpon>
+    <None Include="_DataSets\ds_App.xss">
+      <DependentUpon>ds_App.xsd</DependentUpon>
     </None>
     <None Include="RecurringService\ds_RecurringService.xsc">
       <DependentUpon>ds_RecurringService.xsd</DependentUpon>
@@ -850,7 +853,7 @@
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties BuildVersion_AssemblyInfoFilename="My Project\AssemblyInfo.vb" BuildVersion_UpdateAssemblyVersion="True" BuildVersion_UpdateFileVersion="True" BuildVersion_BuildVersioningStyle="None.None.None.Increment" BuildVersion_StartDate="2014/3/2" />
+      <UserProperties BuildVersion_StartDate="2014/3/2" BuildVersion_BuildVersioningStyle="None.None.None.Increment" BuildVersion_UpdateFileVersion="True" BuildVersion_UpdateAssemblyVersion="True" BuildVersion_AssemblyInfoFilename="My Project\AssemblyInfo.vb" />
     </VisualStudio>
   </ProjectExtensions>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

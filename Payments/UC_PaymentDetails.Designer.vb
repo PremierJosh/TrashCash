@@ -1,4 +1,6 @@
-﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+﻿Imports TrashCash.Classes
+
+<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
 Partial Class UC_PaymentDetails
     Inherits System.Windows.Forms.UserControl
 
@@ -34,7 +36,7 @@ Partial Class UC_PaymentDetails
         Me.ck_Override = New System.Windows.Forms.CheckBox()
         Me.Panel1 = New System.Windows.Forms.Panel()
         Me.dtp_Override = New System.Windows.Forms.DateTimePicker()
-        Me.tb_Amount = New TrashCash.Currency_TextBox()
+        Me.tb_Amount = New CurrencyTextBox()
         Me.grp_PayInfo.SuspendLayout()
         Me.Panel1.SuspendLayout()
         Me.SuspendLayout()
@@ -178,7 +180,7 @@ Partial Class UC_PaymentDetails
     Friend WithEvents Label1 As System.Windows.Forms.Label
     Friend WithEvents lbl_RefNumber As System.Windows.Forms.Label
     Friend WithEvents tb_RefNum As System.Windows.Forms.TextBox
-    Friend WithEvents tb_Amount As TrashCash.Currency_TextBox
+    Friend WithEvents tb_Amount As CurrencyTextBox
     Friend WithEvents Cmb_PaymentTypes As TrashCash.Database_ComboBoxes.cmb_PaymentTypes
     Friend WithEvents lbl_DateOnCheck As System.Windows.Forms.Label
     Friend WithEvents dtp_DateOnCheck As System.Windows.Forms.DateTimePicker

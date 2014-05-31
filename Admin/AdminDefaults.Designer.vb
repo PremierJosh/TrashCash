@@ -1,4 +1,6 @@
-﻿Namespace Admin
+﻿Imports TrashCash.Classes
+
+Namespace Admin
     <Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
     Partial Class AdminDefaults
         Inherits System.Windows.Forms.Form
@@ -33,10 +35,10 @@
             Me.lbl_DefItemInfo = New System.Windows.Forms.Label()
             Me.hdr_BadCheck = New System.Windows.Forms.Label()
             Me.Panel1 = New System.Windows.Forms.Panel()
-            Me.tb_BadCheckCustFee = New TrashCash.Currency_TextBox()
+            Me.tb_BadCheckCustFee = New CurrencyTextBox()
             Me.cmb_BadCheckItem = New System.Windows.Forms.ComboBox()
             Me.cmb_BadCheckCustInvItem = New System.Windows.Forms.ComboBox()
-            Me.APP_SETTINGS_TableAdapter = New TrashCash.ds_ProgramTableAdapters.APP_SETTINGS_TableAdapter()
+            Me.APP_SETTINGS_TableAdapter = New TrashCash.ds_AppTableAdapters.APP_SETTINGS_TableAdapter()
             Me.btn_Save = New System.Windows.Forms.Button()
             lbl_CustInfoDesc = New System.Windows.Forms.Label()
             lbl_CheckItem = New System.Windows.Forms.Label()
@@ -210,8 +212,8 @@
         Friend WithEvents cmb_BadCheckCustInvItem As System.Windows.Forms.ComboBox
         Friend WithEvents Label1 As System.Windows.Forms.Label
         Friend WithEvents hdr_BadCheck As System.Windows.Forms.Label
-        Friend WithEvents tb_BadCheckCustFee As TrashCash.Currency_TextBox
-        Friend WithEvents APP_SETTINGS_TableAdapter As TrashCash.ds_ProgramTableAdapters.APP_SETTINGS_TableAdapter
+        Friend WithEvents tb_BadCheckCustFee As CurrencyTextBox
+        Friend WithEvents APP_SETTINGS_TableAdapter As TrashCash.ds_AppTableAdapters.APP_SETTINGS_TableAdapter
         Friend WithEvents btn_Save As System.Windows.Forms.Button
     End Class
 End Namespace

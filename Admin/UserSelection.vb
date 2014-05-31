@@ -1,15 +1,15 @@
 ﻿Namespace Admin
     Public Class UserSelection
-        Private _qta As ds_ProgramTableAdapters.QueriesTableAdapter
-        Private _authUserRow As ds_Program.USERSRow = Nothing
+     Private _authUserRow As ds_App.USERSRow = Nothing
 
-        Public ReadOnly Property AuthUserRow As ds_Program.USERSRow
+        Public ReadOnly Property AuthUserRow As ds_App.USERSRow
             Get
                 Return _authUserRow
             End Get
         End Property
         Private Sub UserSelection_Load(sender As Object, e As System.EventArgs) Handles Me.Load
-            _qta = New ds_ProgramTableAdapters.QueriesTableAdapter
+            ' fill users
+            UserTA.Fill(Ds_App.USERS)
         End Sub
 
         ' password text after auth
@@ -27,7 +27,7 @@
             Cursor = Cursors.WaitCursor
 
             Dim userID As Integer
-            userID = _qta.USERS_Authenticate(Cmb_Users.GetItemText(Cmb_Users.SelectedItem).ToString, mtb_Password.Text)
+            userID = AppQTA.USERS_Authenticate(cmb_Users.GetItemText(cmb_Users.SelectedItem).ToString, mtb_Password.Text)
 
             ' checking if this is for a pw change
             If (_pwChange) Then
@@ -42,11 +42,9 @@
             ElseIf (userID <> Nothing) Then
 
                 ' getting new user row
-                Using ta As New ds_ProgramTableAdapters.USERSTableAdapter
-                    _authUserRow = ta.GetDataByID(userID).Rows(0)
-                End Using
-
-                Cmb_Users.SelectedIndex = 0
+                _authUserRow = UserTA.GetDataByID(userID).Rows(0)
+                
+                cmb_Users.SelectedIndex = 0
                 ' grabbing pw at finish
                 _pwText = mtb_Password.Text
 

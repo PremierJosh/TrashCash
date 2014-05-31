@@ -95,7 +95,7 @@ Namespace Classes
                 MsgBox("No matching results from Quickbooks")
             Else
                 Try
-                    Using ta As New ds_ProgramTableAdapters.QueriesTableAdapter
+                    Using ta As New ds_AppTableAdapters.QueriesTableAdapter
                         ta.ERR_MISC_Insert(resp.Type.GetValue.ToString,
                                            resp.StatusCode.ToString,
                                            resp.StatusMessage,

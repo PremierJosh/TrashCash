@@ -4,7 +4,10 @@
 Module AppModule
     Public GlobalConMgr As QBConMgr
     ' useful vars all forms will use
-    Public CurrentUser As ds_Program.USERSRow
+    Public CurrentUser As ds_App.USERSRow
+
+    Public ReadOnly UserTA As New ds_AppTableAdapters.USERSTableAdapter
+    Public ReadOnly AppQTA As New ds_AppTableAdapters.QueriesTableAdapter
 
     ''' <summary>
     ''' Takes a QBConMgr param passed and returns it if not nothing, else return GlobalQBConMgr

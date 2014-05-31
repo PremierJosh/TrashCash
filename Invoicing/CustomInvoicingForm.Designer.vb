@@ -50,7 +50,7 @@ Namespace Invoicing
             Me.FlowLayoutPanel = New System.Windows.Forms.FlowLayoutPanel()
             Me.pnl_2 = New System.Windows.Forms.Panel()
             Me.lbl_Rate = New System.Windows.Forms.Label()
-            Me.tb_Rate = New TrashCash.Currency_TextBox()
+            Me.tb_Rate = New CurrencyTextBox()
             Me.lbl_LineType = New System.Windows.Forms.Label()
             Me.btn_AddLine = New System.Windows.Forms.Button()
             Me.cmb_LineTypes = New System.Windows.Forms.ComboBox()
@@ -109,7 +109,7 @@ Namespace Invoicing
             Me.CustomInvoicesBindingSource = New System.Windows.Forms.BindingSource(Me.components)
             Me.InvoiceHistoryBindingSource = New System.Windows.Forms.BindingSource(Me.components)
             Me.ToolTip1 = New System.Windows.Forms.ToolTip(Me.components)
-           lbl_Addr1 = New System.Windows.Forms.Label()
+            lbl_Addr1 = New System.Windows.Forms.Label()
             lbl_Addr2 = New System.Windows.Forms.Label()
             lbl_Addr3 = New System.Windows.Forms.Label()
             lbl_CityState = New System.Windows.Forms.Label()
@@ -870,7 +870,7 @@ Namespace Invoicing
             '
             Me.ToolTip1.Active = False
             '
-           '
+            '
             'CustomInvoicingForm
             '
             Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -922,7 +922,7 @@ Namespace Invoicing
         Friend WithEvents FlowLayoutPanel As System.Windows.Forms.FlowLayoutPanel
         Friend WithEvents pnl_2 As System.Windows.Forms.Panel
         Friend WithEvents lbl_Rate As System.Windows.Forms.Label
-        Friend WithEvents tb_Rate As TrashCash.Currency_TextBox
+        Friend WithEvents tb_Rate As CurrencyTextBox
         Friend WithEvents lbl_LineType As System.Windows.Forms.Label
         Friend WithEvents btn_AddLine As System.Windows.Forms.Button
         Friend WithEvents cmb_LineTypes As System.Windows.Forms.ComboBox

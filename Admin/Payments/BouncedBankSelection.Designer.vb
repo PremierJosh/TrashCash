@@ -37,7 +37,7 @@ Namespace Admin
             Me.Label1 = New System.Windows.Forms.Label()
             Me.pnl_Bot = New System.Windows.Forms.Panel()
             Me.btn_Cancel = New System.Windows.Forms.Button()
-            Me.tb_CustFee = New TrashCash.Currency_TextBox()
+            Me.tb_CustFee = New CurrencyTextBox()
             Me.btn_Submit = New System.Windows.Forms.Button()
             Me.tb_CheckAmount = New System.Windows.Forms.TextBox()
             Me.Cmb_BadCheckBanks = New TrashCash.Database_ComboBoxes.cmb_BadCheckBanks()
@@ -258,7 +258,7 @@ Namespace Admin
         Friend WithEvents pnl_Bot As System.Windows.Forms.Panel
         Friend WithEvents tb_CheckAmount As System.Windows.Forms.TextBox
         Friend WithEvents btn_Submit As System.Windows.Forms.Button
-        Friend WithEvents tb_CustFee As TrashCash.Currency_TextBox
+        Friend WithEvents tb_CustFee As CurrencyTextBox
         Friend WithEvents Cmb_BadCheckBanks As TrashCash.Database_ComboBoxes.cmb_BadCheckBanks
         Friend WithEvents btn_Cancel As System.Windows.Forms.Button
         Friend WithEvents tb_RefNum As System.Windows.Forms.TextBox

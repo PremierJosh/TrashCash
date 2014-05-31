@@ -243,16 +243,16 @@ Namespace Database_ComboBoxes
     Public Class cmb_Users
         Inherits ComboBox
 
-        Private ReadOnly _dt As ds_Program.USERSDataTable
-        Private ReadOnly _ta As ds_ProgramTableAdapters.USERSTableAdapter
+        Public Property DT As ds_App.USERSDataTable
+        Private ReadOnly _ta As ds_AppTableAdapters.USERSTableAdapter
 
         Public Sub New()
-            _ta = New ds_ProgramTableAdapters.USERSTableAdapter
-            _dt = _ta.GetUsersList
+            _ta = New ds_AppTableAdapters.USERSTableAdapter
+            DT = _ta.GetUsersList
 
             Me.DisplayMember = "USER_NAME"
             Me.ValueMember = "USER_UD"
-            Me.DataSource = _dt
+            Me.DataSource = DT
         End Sub
 
         Private _authLevel As Integer
@@ -266,7 +266,7 @@ Namespace Database_ComboBoxes
         Private Sub GetAuthLevel()
             If (Me.SelectedValue IsNot Nothing) Then
                 Dim row As DataRowView = DirectCast(Me.SelectedItem, DataRowView)
-                _authLevel = CType(row.Row, ds_Program.USERSRow).USER_AUTHLVL
+                _authLevel = CType(row.Row, ds_App.USERSRow).USER_AUTHLVL
             End If
         End Sub
     End Class
@@ -290,31 +290,31 @@ Namespace Database_ComboBoxes
     End Class
 End Namespace
 
-Public Class Currency_TextBox
-    Inherits TextBox
+'Public Class CurrencyTextBox
+'    Inherits TextBox
 
-    Private Sub Currency_TextBox_Validating(sender As Object, e As System.ComponentModel.CancelEventArgs) Handles Me.Validating
-        If (sender.textlength > 0) Then
-            If Not Decimal.TryParse(Me.Text, _
-                              Globalization.NumberStyles.Currency) Then
-                'Don't let the user leave the field if the value is invalid.
-                With Me
-                    .HideSelection = False
-                    .SelectAll()
+'    Private Sub Currency_TextBox_Validating(sender As Object, e As System.ComponentModel.CancelEventArgs) Handles Me.Validating
+'        If (sender.textlength > 0) Then
+'            If Not Decimal.TryParse(Me.Text, _
+'                              Globalization.NumberStyles.Currency) Then
+'                'Don't let the user leave the field if the value is invalid.
+'                With Me
+'                    .HideSelection = False
+'                    .SelectAll()
 
-                    MessageBox.Show("Please enter a valid currency amount.", _
-                                    "Invalid Value", _
-                                    MessageBoxButtons.OK, _
-                                    MessageBoxIcon.Error)
+'                    MessageBox.Show("Please enter a valid currency amount.", _
+'                                    "Invalid Value", _
+'                                    MessageBoxButtons.OK, _
+'                                    MessageBoxIcon.Error)
 
-                    .HideSelection = True
-                End With
+'                    .HideSelection = True
+'                End With
 
-                e.Cancel = True
-            End If
-        End If
-    End Sub
-End Class
+'                e.Cancel = True
+'            End If
+'        End If
+'    End Sub
+'End Class
 
 'Public Sub QB_GetAllItems(ByRef dt As DataSet.ServiceTypesDataTable)
 '    Dim msgSetReq As IMsgSetRequest = sessMgr.CreateMsgSetRequest("US", 11, 0)

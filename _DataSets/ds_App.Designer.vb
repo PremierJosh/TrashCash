@@ -20,9 +20,9 @@ Option Explicit On
  Global.System.ComponentModel.DesignerCategoryAttribute("code"),  _
  Global.System.ComponentModel.ToolboxItem(true),  _
  Global.System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedDataSetSchema"),  _
- Global.System.Xml.Serialization.XmlRootAttribute("ds_Program"),  _
+ Global.System.Xml.Serialization.XmlRootAttribute("ds_App"),  _
  Global.System.ComponentModel.Design.HelpKeywordAttribute("vs.data.DataSet")>  _
-Partial Public Class ds_Program
+Partial Public Class ds_App
     Inherits Global.System.Data.DataSet
     
     Private tableAPP_SETTINGS_ As APP_SETTINGS_DataTable
@@ -203,7 +203,7 @@ Partial Public Class ds_Program
     <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
      Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
     Public Overrides Function Clone() As Global.System.Data.DataSet
-        Dim cln As ds_Program = CType(MyBase.Clone,ds_Program)
+        Dim cln As ds_App = CType(MyBase.Clone,ds_App)
         cln.InitVars
         cln.SchemaSerializationMode = Me.SchemaSerializationMode
         Return cln
@@ -319,9 +319,9 @@ Partial Public Class ds_Program
     <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
      Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
     Private Sub InitClass()
-        Me.DataSetName = "ds_Program"
+        Me.DataSetName = "ds_App"
         Me.Prefix = ""
-        Me.Namespace = "http://tempuri.org/ds_Program.xsd"
+        Me.Namespace = "http://tempuri.org/ds_App.xsd"
         Me.EnforceConstraints = true
         Me.SchemaSerializationMode = Global.System.Data.SchemaSerializationMode.IncludeSchema
         Me.tableAPP_SETTINGS_ = New APP_SETTINGS_DataTable()
@@ -385,7 +385,7 @@ Partial Public Class ds_Program
     <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
      Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
     Public Shared Function GetTypedDataSetSchema(ByVal xs As Global.System.Xml.Schema.XmlSchemaSet) As Global.System.Xml.Schema.XmlSchemaComplexType
-        Dim ds As ds_Program = New ds_Program()
+        Dim ds As ds_App = New ds_App()
         Dim type As Global.System.Xml.Schema.XmlSchemaComplexType = New Global.System.Xml.Schema.XmlSchemaComplexType()
         Dim sequence As Global.System.Xml.Schema.XmlSchemaSequence = New Global.System.Xml.Schema.XmlSchemaSequence()
         Dim any As Global.System.Xml.Schema.XmlSchemaAny = New Global.System.Xml.Schema.XmlSchemaAny()
@@ -735,7 +735,7 @@ Partial Public Class ds_Program
         Public Shared Function GetTypedTableSchema(ByVal xs As Global.System.Xml.Schema.XmlSchemaSet) As Global.System.Xml.Schema.XmlSchemaComplexType
             Dim type As Global.System.Xml.Schema.XmlSchemaComplexType = New Global.System.Xml.Schema.XmlSchemaComplexType()
             Dim sequence As Global.System.Xml.Schema.XmlSchemaSequence = New Global.System.Xml.Schema.XmlSchemaSequence()
-            Dim ds As ds_Program = New ds_Program()
+            Dim ds As ds_App = New ds_App()
             Dim any1 As Global.System.Xml.Schema.XmlSchemaAny = New Global.System.Xml.Schema.XmlSchemaAny()
             any1.Namespace = "http://www.w3.org/2001/XMLSchema"
             any1.MinOccurs = New Decimal(0)
@@ -1074,7 +1074,7 @@ Partial Public Class ds_Program
         Public Shared Function GetTypedTableSchema(ByVal xs As Global.System.Xml.Schema.XmlSchemaSet) As Global.System.Xml.Schema.XmlSchemaComplexType
             Dim type As Global.System.Xml.Schema.XmlSchemaComplexType = New Global.System.Xml.Schema.XmlSchemaComplexType()
             Dim sequence As Global.System.Xml.Schema.XmlSchemaSequence = New Global.System.Xml.Schema.XmlSchemaSequence()
-            Dim ds As ds_Program = New ds_Program()
+            Dim ds As ds_App = New ds_App()
             Dim any1 As Global.System.Xml.Schema.XmlSchemaAny = New Global.System.Xml.Schema.XmlSchemaAny()
             any1.Namespace = "http://www.w3.org/2001/XMLSchema"
             any1.MinOccurs = New Decimal(0)
@@ -1466,7 +1466,7 @@ Partial Public Class ds_Program
         Public Shared Function GetTypedTableSchema(ByVal xs As Global.System.Xml.Schema.XmlSchemaSet) As Global.System.Xml.Schema.XmlSchemaComplexType
             Dim type As Global.System.Xml.Schema.XmlSchemaComplexType = New Global.System.Xml.Schema.XmlSchemaComplexType()
             Dim sequence As Global.System.Xml.Schema.XmlSchemaSequence = New Global.System.Xml.Schema.XmlSchemaSequence()
-            Dim ds As ds_Program = New ds_Program()
+            Dim ds As ds_App = New ds_App()
             Dim any1 As Global.System.Xml.Schema.XmlSchemaAny = New Global.System.Xml.Schema.XmlSchemaAny()
             any1.Namespace = "http://www.w3.org/2001/XMLSchema"
             any1.MinOccurs = New Decimal(0)
@@ -1756,7 +1756,7 @@ Partial Public Class ds_Program
         Public Shared Function GetTypedTableSchema(ByVal xs As Global.System.Xml.Schema.XmlSchemaSet) As Global.System.Xml.Schema.XmlSchemaComplexType
             Dim type As Global.System.Xml.Schema.XmlSchemaComplexType = New Global.System.Xml.Schema.XmlSchemaComplexType()
             Dim sequence As Global.System.Xml.Schema.XmlSchemaSequence = New Global.System.Xml.Schema.XmlSchemaSequence()
-            Dim ds As ds_Program = New ds_Program()
+            Dim ds As ds_App = New ds_App()
             Dim any1 As Global.System.Xml.Schema.XmlSchemaAny = New Global.System.Xml.Schema.XmlSchemaAny()
             any1.Namespace = "http://www.w3.org/2001/XMLSchema"
             any1.MinOccurs = New Decimal(0)
@@ -2077,7 +2077,7 @@ Partial Public Class ds_Program
         Public Shared Function GetTypedTableSchema(ByVal xs As Global.System.Xml.Schema.XmlSchemaSet) As Global.System.Xml.Schema.XmlSchemaComplexType
             Dim type As Global.System.Xml.Schema.XmlSchemaComplexType = New Global.System.Xml.Schema.XmlSchemaComplexType()
             Dim sequence As Global.System.Xml.Schema.XmlSchemaSequence = New Global.System.Xml.Schema.XmlSchemaSequence()
-            Dim ds As ds_Program = New ds_Program()
+            Dim ds As ds_App = New ds_App()
             Dim any1 As Global.System.Xml.Schema.XmlSchemaAny = New Global.System.Xml.Schema.XmlSchemaAny()
             any1.Namespace = "http://www.w3.org/2001/XMLSchema"
             any1.MinOccurs = New Decimal(0)
@@ -2680,7 +2680,7 @@ Partial Public Class ds_Program
         Public Shared Function GetTypedTableSchema(ByVal xs As Global.System.Xml.Schema.XmlSchemaSet) As Global.System.Xml.Schema.XmlSchemaComplexType
             Dim type As Global.System.Xml.Schema.XmlSchemaComplexType = New Global.System.Xml.Schema.XmlSchemaComplexType()
             Dim sequence As Global.System.Xml.Schema.XmlSchemaSequence = New Global.System.Xml.Schema.XmlSchemaSequence()
-            Dim ds As ds_Program = New ds_Program()
+            Dim ds As ds_App = New ds_App()
             Dim any1 As Global.System.Xml.Schema.XmlSchemaAny = New Global.System.Xml.Schema.XmlSchemaAny()
             any1.Namespace = "http://www.w3.org/2001/XMLSchema"
             any1.MinOccurs = New Decimal(0)
@@ -4038,7 +4038,7 @@ Partial Public Class ds_Program
     End Class
 End Class
 
-Namespace ds_ProgramTableAdapters
+Namespace ds_AppTableAdapters
     
     '''<summary>
     '''Represents the connection and commands used to retrieve and save data.
@@ -4230,9 +4230,9 @@ Namespace ds_ProgramTableAdapters
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0"),  _
          Global.System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter"),  _
          Global.System.ComponentModel.DataObjectMethodAttribute(Global.System.ComponentModel.DataObjectMethodType.[Select], true)>  _
-        Public Overloads Overridable Function GetData() As ds_Program.APP_SETTINGS_DataTable
+        Public Overloads Overridable Function GetData() As ds_App.APP_SETTINGS_DataTable
             Me.Adapter.SelectCommand = Me.CommandCollection(0)
-            Dim dataTable As ds_Program.APP_SETTINGS_DataTable = New ds_Program.APP_SETTINGS_DataTable()
+            Dim dataTable As ds_App.APP_SETTINGS_DataTable = New ds_App.APP_SETTINGS_DataTable()
             Me.Adapter.Fill(dataTable)
             Return dataTable
         End Function
@@ -4240,14 +4240,14 @@ Namespace ds_ProgramTableAdapters
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0"),  _
          Global.System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")>  _
-        Public Overloads Overridable Function Update(ByVal dataTable As ds_Program.APP_SETTINGS_DataTable) As Integer
+        Public Overloads Overridable Function Update(ByVal dataTable As ds_App.APP_SETTINGS_DataTable) As Integer
             Return Me.Adapter.Update(dataTable)
         End Function
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0"),  _
          Global.System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")>  _
-        Public Overloads Overridable Function Update(ByVal dataSet As ds_Program) As Integer
+        Public Overloads Overridable Function Update(ByVal dataSet As ds_App) As Integer
             Return Me.Adapter.Update(dataSet, "APP_SETTINGS_")
         End Function
         
@@ -4589,7 +4589,7 @@ Namespace ds_ProgramTableAdapters
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0"),  _
          Global.System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter"),  _
          Global.System.ComponentModel.DataObjectMethodAttribute(Global.System.ComponentModel.DataObjectMethodType.Fill, true)>  _
-        Public Overloads Overridable Function Fill(ByVal dataTable As ds_Program.BAD_CHECK_BANKS_DataTable) As Integer
+        Public Overloads Overridable Function Fill(ByVal dataTable As ds_App.BAD_CHECK_BANKS_DataTable) As Integer
             Me.Adapter.SelectCommand = Me.CommandCollection(0)
             If (Me.ClearBeforeFill = true) Then
                 dataTable.Clear
@@ -4602,9 +4602,9 @@ Namespace ds_ProgramTableAdapters
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0"),  _
          Global.System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter"),  _
          Global.System.ComponentModel.DataObjectMethodAttribute(Global.System.ComponentModel.DataObjectMethodType.[Select], true)>  _
-        Public Overloads Overridable Function GetData() As ds_Program.BAD_CHECK_BANKS_DataTable
+        Public Overloads Overridable Function GetData() As ds_App.BAD_CHECK_BANKS_DataTable
             Me.Adapter.SelectCommand = Me.CommandCollection(0)
-            Dim dataTable As ds_Program.BAD_CHECK_BANKS_DataTable = New ds_Program.BAD_CHECK_BANKS_DataTable()
+            Dim dataTable As ds_App.BAD_CHECK_BANKS_DataTable = New ds_App.BAD_CHECK_BANKS_DataTable()
             Me.Adapter.Fill(dataTable)
             Return dataTable
         End Function
@@ -4612,14 +4612,14 @@ Namespace ds_ProgramTableAdapters
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0"),  _
          Global.System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")>  _
-        Public Overloads Overridable Function Update(ByVal dataTable As ds_Program.BAD_CHECK_BANKS_DataTable) As Integer
+        Public Overloads Overridable Function Update(ByVal dataTable As ds_App.BAD_CHECK_BANKS_DataTable) As Integer
             Return Me.Adapter.Update(dataTable)
         End Function
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0"),  _
          Global.System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")>  _
-        Public Overloads Overridable Function Update(ByVal dataSet As ds_Program) As Integer
+        Public Overloads Overridable Function Update(ByVal dataSet As ds_App) As Integer
             Return Me.Adapter.Update(dataSet, "BAD_CHECK_BANKS_")
         End Function
         
@@ -5003,9 +5003,9 @@ Namespace ds_ProgramTableAdapters
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0"),  _
          Global.System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter"),  _
          Global.System.ComponentModel.DataObjectMethodAttribute(Global.System.ComponentModel.DataObjectMethodType.[Select], true)>  _
-        Public Overloads Overridable Function GetData() As ds_Program.WorkingPayments_SelectForQBDataTable
+        Public Overloads Overridable Function GetData() As ds_App.WorkingPayments_SelectForQBDataTable
             Me.Adapter.SelectCommand = Me.CommandCollection(0)
-            Dim dataTable As ds_Program.WorkingPayments_SelectForQBDataTable = New ds_Program.WorkingPayments_SelectForQBDataTable()
+            Dim dataTable As ds_App.WorkingPayments_SelectForQBDataTable = New ds_App.WorkingPayments_SelectForQBDataTable()
             Me.Adapter.Fill(dataTable)
             Return dataTable
         End Function
@@ -5382,13 +5382,26 @@ Namespace ds_ProgramTableAdapters
             Me._commandCollection(2).Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@UserID", Global.System.Data.SqlDbType.Int, 4, Global.System.Data.ParameterDirection.Input, 10, 0, Nothing, Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
         End Sub
         
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0"), _
+         Global.System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter"), _
+         Global.System.ComponentModel.DataObjectMethodAttribute(Global.System.ComponentModel.DataObjectMethodType.Fill, True)> _
+        Public Overridable Overloads Function Fill(ByVal dataTable As ds_App.USERSDataTable) As Integer
+            Me.Adapter.SelectCommand = Me.CommandCollection(0)
+            If (Me.ClearBeforeFill = True) Then
+                dataTable.Clear()
+            End If
+            Dim returnValue As Integer = Me.Adapter.Fill(dataTable)
+            Return returnValue
+        End Function
+        
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0"),  _
          Global.System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter"),  _
          Global.System.ComponentModel.DataObjectMethodAttribute(Global.System.ComponentModel.DataObjectMethodType.[Select], true)>  _
-        Public Overloads Overridable Function GetUsersList() As ds_Program.USERSDataTable
+        Public Overloads Overridable Function GetUsersList() As ds_App.USERSDataTable
             Me.Adapter.SelectCommand = Me.CommandCollection(0)
-            Dim dataTable As ds_Program.USERSDataTable = New ds_Program.USERSDataTable()
+            Dim dataTable As ds_App.USERSDataTable = New ds_App.USERSDataTable()
             Me.Adapter.Fill(dataTable)
             Return dataTable
         End Function
@@ -5397,14 +5410,14 @@ Namespace ds_ProgramTableAdapters
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0"),  _
          Global.System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter"),  _
          Global.System.ComponentModel.DataObjectMethodAttribute(Global.System.ComponentModel.DataObjectMethodType.[Select], false)>  _
-        Public Overloads Overridable Function GetDataByID(ByVal UserID As Global.System.Nullable(Of Integer)) As ds_Program.USERSDataTable
+        Public Overloads Overridable Function GetDataByID(ByVal UserID As Global.System.Nullable(Of Integer)) As ds_App.USERSDataTable
             Me.Adapter.SelectCommand = Me.CommandCollection(2)
             If (UserID.HasValue = true) Then
                 Me.Adapter.SelectCommand.Parameters(1).Value = CType(UserID.Value,Integer)
             Else
                 Me.Adapter.SelectCommand.Parameters(1).Value = Global.System.DBNull.Value
             End If
-            Dim dataTable As ds_Program.USERSDataTable = New ds_Program.USERSDataTable()
+            Dim dataTable As ds_App.USERSDataTable = New ds_App.USERSDataTable()
             Me.Adapter.Fill(dataTable)
             Return dataTable
         End Function
@@ -5608,9 +5621,9 @@ Namespace ds_ProgramTableAdapters
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0"),  _
          Global.System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter"),  _
          Global.System.ComponentModel.DataObjectMethodAttribute(Global.System.ComponentModel.DataObjectMethodType.[Select], true)>  _
-        Public Overloads Overridable Function GetData() As ds_Program.Initial_CustomInvoiceDataTable
+        Public Overloads Overridable Function GetData() As ds_App.Initial_CustomInvoiceDataTable
             Me.Adapter.SelectCommand = Me.CommandCollection(0)
-            Dim dataTable As ds_Program.Initial_CustomInvoiceDataTable = New ds_Program.Initial_CustomInvoiceDataTable()
+            Dim dataTable As ds_App.Initial_CustomInvoiceDataTable = New ds_App.Initial_CustomInvoiceDataTable()
             Me.Adapter.Fill(dataTable)
             Return dataTable
         End Function
@@ -5887,7 +5900,7 @@ Namespace ds_ProgramTableAdapters
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0"),  _
          Global.System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter"),  _
          Global.System.ComponentModel.DataObjectMethodAttribute(Global.System.ComponentModel.DataObjectMethodType.Fill, true)>  _
-        Public Overloads Overridable Function FillByID(ByVal dataTable As ds_Program.RecurringServiceDataTable, ByVal RecurringServiceID As Global.System.Nullable(Of Decimal)) As Integer
+        Public Overloads Overridable Function FillByID(ByVal dataTable As ds_App.RecurringServiceDataTable, ByVal RecurringServiceID As Global.System.Nullable(Of Decimal)) As Integer
             Me.Adapter.SelectCommand = Me.CommandCollection(0)
             If (RecurringServiceID.HasValue = true) Then
                 Me.Adapter.SelectCommand.Parameters(1).Value = CType(RecurringServiceID.Value,Decimal)
@@ -5905,14 +5918,14 @@ Namespace ds_ProgramTableAdapters
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0"),  _
          Global.System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter"),  _
          Global.System.ComponentModel.DataObjectMethodAttribute(Global.System.ComponentModel.DataObjectMethodType.[Select], true)>  _
-        Public Overloads Overridable Function GetDataByID(ByVal RecurringServiceID As Global.System.Nullable(Of Decimal)) As ds_Program.RecurringServiceDataTable
+        Public Overloads Overridable Function GetDataByID(ByVal RecurringServiceID As Global.System.Nullable(Of Decimal)) As ds_App.RecurringServiceDataTable
             Me.Adapter.SelectCommand = Me.CommandCollection(0)
             If (RecurringServiceID.HasValue = true) Then
                 Me.Adapter.SelectCommand.Parameters(1).Value = CType(RecurringServiceID.Value,Decimal)
             Else
                 Me.Adapter.SelectCommand.Parameters(1).Value = Global.System.DBNull.Value
             End If
-            Dim dataTable As ds_Program.RecurringServiceDataTable = New ds_Program.RecurringServiceDataTable()
+            Dim dataTable As ds_App.RecurringServiceDataTable = New ds_App.RecurringServiceDataTable()
             Me.Adapter.Fill(dataTable)
             Return dataTable
         End Function
@@ -5920,14 +5933,14 @@ Namespace ds_ProgramTableAdapters
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0"),  _
          Global.System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")>  _
-        Public Overloads Overridable Function Update(ByVal dataTable As ds_Program.RecurringServiceDataTable) As Integer
+        Public Overloads Overridable Function Update(ByVal dataTable As ds_App.RecurringServiceDataTable) As Integer
             Return Me.Adapter.Update(dataTable)
         End Function
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0"),  _
          Global.System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")>  _
-        Public Overloads Overridable Function Update(ByVal dataSet As ds_Program) As Integer
+        Public Overloads Overridable Function Update(ByVal dataSet As ds_App) As Integer
             Return Me.Adapter.Update(dataSet, "RecurringService")
         End Function
         
@@ -6860,7 +6873,7 @@ Namespace ds_ProgramTableAdapters
         '''</summary>
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Private Function UpdateUpdatedRows(ByVal dataSet As ds_Program, ByVal allChangedRows As Global.System.Collections.Generic.List(Of Global.System.Data.DataRow), ByVal allAddedRows As Global.System.Collections.Generic.List(Of Global.System.Data.DataRow)) As Integer
+        Private Function UpdateUpdatedRows(ByVal dataSet As ds_App, ByVal allChangedRows As Global.System.Collections.Generic.List(Of Global.System.Data.DataRow), ByVal allAddedRows As Global.System.Collections.Generic.List(Of Global.System.Data.DataRow)) As Integer
             Dim result As Integer = 0
             If (Not (Me._recurringServiceTableAdapter) Is Nothing) Then
                 Dim updatedRows() As Global.System.Data.DataRow = dataSet.RecurringService.Select(Nothing, Nothing, Global.System.Data.DataViewRowState.ModifiedCurrent)
@@ -6897,7 +6910,7 @@ Namespace ds_ProgramTableAdapters
         '''</summary>
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Private Function UpdateInsertedRows(ByVal dataSet As ds_Program, ByVal allAddedRows As Global.System.Collections.Generic.List(Of Global.System.Data.DataRow)) As Integer
+        Private Function UpdateInsertedRows(ByVal dataSet As ds_App, ByVal allAddedRows As Global.System.Collections.Generic.List(Of Global.System.Data.DataRow)) As Integer
             Dim result As Integer = 0
             If (Not (Me._recurringServiceTableAdapter) Is Nothing) Then
                 Dim addedRows() As Global.System.Data.DataRow = dataSet.RecurringService.Select(Nothing, Nothing, Global.System.Data.DataViewRowState.Added)
@@ -6931,7 +6944,7 @@ Namespace ds_ProgramTableAdapters
         '''</summary>
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Private Function UpdateDeletedRows(ByVal dataSet As ds_Program, ByVal allChangedRows As Global.System.Collections.Generic.List(Of Global.System.Data.DataRow)) As Integer
+        Private Function UpdateDeletedRows(ByVal dataSet As ds_App, ByVal allChangedRows As Global.System.Collections.Generic.List(Of Global.System.Data.DataRow)) As Integer
             Dim result As Integer = 0
             If (Not (Me._bAD_CHECK_BANKS_TableAdapter) Is Nothing) Then
                 Dim deletedRows() As Global.System.Data.DataRow = dataSet.BAD_CHECK_BANKS_.Select(Nothing, Nothing, Global.System.Data.DataViewRowState.Deleted)
@@ -6991,7 +7004,7 @@ Namespace ds_ProgramTableAdapters
         '''</summary>
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Overridable Function UpdateAll(ByVal dataSet As ds_Program) As Integer
+        Public Overridable Function UpdateAll(ByVal dataSet As ds_App) As Integer
             If (dataSet Is Nothing) Then
                 Throw New Global.System.ArgumentNullException("dataSet")
             End If

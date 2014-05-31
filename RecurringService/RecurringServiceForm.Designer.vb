@@ -1,4 +1,6 @@
-﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+﻿Imports TrashCash.Classes
+
+<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
 Partial Class RecurringServiceForm
     Inherits System.Windows.Forms.Form
 
@@ -112,8 +114,8 @@ Partial Class RecurringServiceForm
         Me.RecurringServiceTableAdapter = New TrashCash.ds_RecurringServiceTableAdapters.RecurringServiceTableAdapter()
         Me.RecurringService_CreditsTableAdapter = New TrashCash.ds_RecurringServiceTableAdapters.RecurringService_CreditsTableAdapter()
         Me.Cmb_ServiceTypes = New TrashCash.Database_ComboBoxes.cmb_ServiceTypes()
-        Me.tb_Rate = New TrashCash.Currency_TextBox()
-        Me.tb_CreditAmount = New TrashCash.Currency_TextBox()
+        Me.tb_Rate = New CurrencyTextBox()
+        Me.tb_CreditAmount = New CurrencyTextBox()
         Me.grp_PickupDay.SuspendLayout()
         CType(Me.RecurringServiceBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.Ds_RecurringService, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -1017,7 +1019,7 @@ Partial Class RecurringServiceForm
     Friend WithEvents grp_BasicInfo As System.Windows.Forms.GroupBox
     Friend WithEvents nud_Quantity As System.Windows.Forms.NumericUpDown
     Friend WithEvents lbl_Quantity As System.Windows.Forms.Label
-    Friend WithEvents tb_Rate As TrashCash.Currency_TextBox
+    Friend WithEvents tb_Rate As CurrencyTextBox
     Friend WithEvents lbl_DefPriceValue As System.Windows.Forms.Label
     Friend WithEvents lbl_DefPriceHeader As System.Windows.Forms.Label
     Friend WithEvents lbl_Rate As System.Windows.Forms.Label
@@ -1068,7 +1070,7 @@ Partial Class RecurringServiceForm
     Friend WithEvents RecurringServiceBindingSource As System.Windows.Forms.BindingSource
     Friend WithEvents RecurringServiceTableAdapter As TrashCash.ds_RecurringServiceTableAdapters.RecurringServiceTableAdapter
     Friend WithEvents btn_CreateCredit As System.Windows.Forms.Button
-    Friend WithEvents tb_CreditAmount As TrashCash.Currency_TextBox
+    Friend WithEvents tb_CreditAmount As CurrencyTextBox
     Friend WithEvents lbl_CreditAmount As System.Windows.Forms.Label
     Friend WithEvents tb_CreditReason As System.Windows.Forms.TextBox
     Friend WithEvents lbl_CreditReason As System.Windows.Forms.Label

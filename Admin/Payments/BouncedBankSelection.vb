@@ -1,6 +1,6 @@
 ﻿Imports TrashCash.Database_ComboBoxes
 Imports TrashCash.ds_PaymentsTableAdapters
-Imports TrashCash.ds_ProgramTableAdapters
+Imports TrashCash.ds_AppTableAdapters
 
 Namespace Admin
 
@@ -21,7 +21,7 @@ Namespace Admin
                     ' query for row and set refrence
                     Dim ta As New PaymentHistory_DBTableAdapter
                     CheckRow = ta.GetData(value).Rows(0)
-                    End If
+                End If
             End Set
         End Property
 
@@ -42,13 +42,13 @@ Namespace Admin
             End Set
         End Property
 
-        Private _bankRow As ds_Program.BAD_CHECK_BANKS_Row
+        Private _bankRow As ds_App.BAD_CHECK_BANKS_Row
 
-        Private Property BankRow As ds_Program.BAD_CHECK_BANKS_Row
+        Private Property BankRow As ds_App.BAD_CHECK_BANKS_Row
             Get
                 Return _bankRow
             End Get
-            Set(value As ds_Program.BAD_CHECK_BANKS_Row)
+            Set(value As ds_App.BAD_CHECK_BANKS_Row)
                 _bankRow = value
 
                 ' set fee
@@ -57,7 +57,7 @@ Namespace Admin
         End Property
 
         ' vars to hold refrence
-        ReadOnly _banks As ds_Program.BAD_CHECK_BANKS_DataTable
+        ReadOnly _banks As ds_App.BAD_CHECK_BANKS_DataTable
         ReadOnly _bta As BAD_CHECK_BANKS_TableAdapter
 
         Private ReadOnly _payHisForm As AdminPayments
@@ -67,7 +67,7 @@ Namespace Admin
             InitializeComponent()
 
             ' Add any initialization after the InitializeComponent() call.
-            _banks = New ds_Program.BAD_CHECK_BANKS_DataTable
+            _banks = New ds_App.BAD_CHECK_BANKS_DataTable
             _bta = New BAD_CHECK_BANKS_TableAdapter
             _home = homeForm
             _payHisForm = payHistoryForm
@@ -101,7 +101,7 @@ Namespace Admin
 
             ' grabbing default fee here and then disposing of ta
             Dim ta As New APP_SETTINGS_TableAdapter
-            Dim dr As ds_Program.APP_SETTINGS_Row = ta.GetData().Rows(0)
+            Dim dr As ds_App.APP_SETTINGS_Row = ta.GetData().Rows(0)
             tb_CustFee.Text = dr.BAD_CHECK_CUST_FEE
 
             ' grabbing default bank selection

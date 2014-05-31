@@ -117,60 +117,22 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <metadata name="CustomerToolstrip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>935, 17</value>
+  <metadata name="BankBounceFeeLabel.GenerateMember" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>False</value>
   </metadata>
-  <metadata name="cm_AlterPayment.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+  <metadata name="CustomerChargeRateLabel.GenerateMember" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>False</value>
+  </metadata>
+  <metadata name="lbl_checkAmount.GenerateMember" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>False</value>
+  </metadata>
+  <metadata name="lbl_RefNum.GenerateMember" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>False</value>
+  </metadata>
+  <metadata name="DataSet.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 17</value>
   </metadata>
-  <metadata name="PaymentHistoryDisplayBindingSource.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>423, 17</value>
-  </metadata>
-  <metadata name="Ds_Payments.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>300, 17</value>
-  </metadata>
-  <data name="Cmb_PaymentTypes.DataSource" mimetype="application/x-microsoft.net.object.binary.base64">
-    <value>
-        AAEAAAD/////AQAAAAAAAAAMAgAAAEVUcmFzaENhc2gsIFZlcnNpb249MS41MC4xNDYuNDM4LCBDdWx0
-        dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPW51bGwFAQAAAChUcmFzaENhc2guZHNfVHlwZXMrUGF5
-        bWVudFR5cGVzRGF0YVRhYmxlAwAAABlEYXRhVGFibGUuUmVtb3RpbmdWZXJzaW9uCVhtbFNjaGVtYQtY
-        bWxEaWZmR3JhbQMBAQ5TeXN0ZW0uVmVyc2lvbgIAAAAJAwAAAAYEAAAAqgk8P3htbCB2ZXJzaW9uPSIx
-        LjAiIGVuY29kaW5nPSJ1dGYtMTYiPz4NCjx4czpzY2hlbWEgeG1sbnM9IiIgeG1sbnM6eHM9Imh0dHA6
-        Ly93d3cudzMub3JnLzIwMDEvWE1MU2NoZW1hIiB4bWxuczptc2RhdGE9InVybjpzY2hlbWFzLW1pY3Jv
-        c29mdC1jb206eG1sLW1zZGF0YSI+DQogIDx4czplbGVtZW50IG5hbWU9IlBheW1lbnRUeXBlcyI+DQog
-        ICAgPHhzOmNvbXBsZXhUeXBlPg0KICAgICAgPHhzOnNlcXVlbmNlPg0KICAgICAgICA8eHM6ZWxlbWVu
-        dCBuYW1lPSJQYXltZW50VHlwZUlEIiBtc2RhdGE6UmVhZE9ubHk9InRydWUiIG1zZGF0YTpBdXRvSW5j
-        cmVtZW50PSJ0cnVlIiBtc2RhdGE6QXV0b0luY3JlbWVudFNlZWQ9Ii0xIiBtc2RhdGE6QXV0b0luY3Jl
-        bWVudFN0ZXA9Ii0xIiB0eXBlPSJ4czpkZWNpbWFsIiBtc2RhdGE6dGFyZ2V0TmFtZXNwYWNlPSIiIC8+
-        DQogICAgICAgIDx4czplbGVtZW50IG5hbWU9IlBheW1lbnRUeXBlTmFtZSIgbXNkYXRhOnRhcmdldE5h
-        bWVzcGFjZT0iIj4NCiAgICAgICAgICA8eHM6c2ltcGxlVHlwZT4NCiAgICAgICAgICAgIDx4czpyZXN0
-        cmljdGlvbiBiYXNlPSJ4czpzdHJpbmciPg0KICAgICAgICAgICAgICA8eHM6bWF4TGVuZ3RoIHZhbHVl
-        PSI1MCIgLz4NCiAgICAgICAgICAgIDwveHM6cmVzdHJpY3Rpb24+DQogICAgICAgICAgPC94czpzaW1w
-        bGVUeXBlPg0KICAgICAgICA8L3hzOmVsZW1lbnQ+DQogICAgICA8L3hzOnNlcXVlbmNlPg0KICAgIDwv
-        eHM6Y29tcGxleFR5cGU+DQogIDwveHM6ZWxlbWVudD4NCiAgPHhzOmVsZW1lbnQgbmFtZT0idG1wRGF0
-        YVNldCIgbXNkYXRhOklzRGF0YVNldD0idHJ1ZSIgbXNkYXRhOk1haW5EYXRhVGFibGU9IlBheW1lbnRU
-        eXBlcyIgbXNkYXRhOlVzZUN1cnJlbnRMb2NhbGU9InRydWUiPg0KICAgIDx4czpjb21wbGV4VHlwZT4N
-        CiAgICAgIDx4czpjaG9pY2UgbWluT2NjdXJzPSIwIiBtYXhPY2N1cnM9InVuYm91bmRlZCIgLz4NCiAg
-        ICA8L3hzOmNvbXBsZXhUeXBlPg0KICAgIDx4czp1bmlxdWUgbmFtZT0iQ29uc3RyYWludDEiIG1zZGF0
-        YTpQcmltYXJ5S2V5PSJ0cnVlIj4NCiAgICAgIDx4czpzZWxlY3RvciB4cGF0aD0iLi8vUGF5bWVudFR5
-        cGVzIiAvPg0KICAgICAgPHhzOmZpZWxkIHhwYXRoPSJQYXltZW50VHlwZUlEIiAvPg0KICAgIDwveHM6
-        dW5pcXVlPg0KICA8L3hzOmVsZW1lbnQ+DQo8L3hzOnNjaGVtYT4GBQAAAMUFPGRpZmZncjpkaWZmZ3Jh
-        bSB4bWxuczptc2RhdGE9InVybjpzY2hlbWFzLW1pY3Jvc29mdC1jb206eG1sLW1zZGF0YSIgeG1sbnM6
-        ZGlmZmdyPSJ1cm46c2NoZW1hcy1taWNyb3NvZnQtY29tOnhtbC1kaWZmZ3JhbS12MSI+DQogIDx0bXBE
-        YXRhU2V0Pg0KICAgIDxQYXltZW50VHlwZXMgZGlmZmdyOmlkPSJQYXltZW50VHlwZXMxIiBtc2RhdGE6
-        cm93T3JkZXI9IjAiPg0KICAgICAgPFBheW1lbnRUeXBlSUQ+MTwvUGF5bWVudFR5cGVJRD4NCiAgICAg
-        IDxQYXltZW50VHlwZU5hbWU+Q2FzaDwvUGF5bWVudFR5cGVOYW1lPg0KICAgIDwvUGF5bWVudFR5cGVz
-        Pg0KICAgIDxQYXltZW50VHlwZXMgZGlmZmdyOmlkPSJQYXltZW50VHlwZXMyIiBtc2RhdGE6cm93T3Jk
-        ZXI9IjEiPg0KICAgICAgPFBheW1lbnRUeXBlSUQ+MjwvUGF5bWVudFR5cGVJRD4NCiAgICAgIDxQYXlt
-        ZW50VHlwZU5hbWU+Q2hlY2s8L1BheW1lbnRUeXBlTmFtZT4NCiAgICA8L1BheW1lbnRUeXBlcz4NCiAg
-        ICA8UGF5bWVudFR5cGVzIGRpZmZncjppZD0iUGF5bWVudFR5cGVzMyIgbXNkYXRhOnJvd09yZGVyPSIy
-        Ij4NCiAgICAgIDxQYXltZW50VHlwZUlEPjM8L1BheW1lbnRUeXBlSUQ+DQogICAgICA8UGF5bWVudFR5
-        cGVOYW1lPk1vbmV5IE9yZGVyPC9QYXltZW50VHlwZU5hbWU+DQogICAgPC9QYXltZW50VHlwZXM+DQog
-        IDwvdG1wRGF0YVNldD4NCjwvZGlmZmdyOmRpZmZncmFtPgQDAAAADlN5c3RlbS5WZXJzaW9uBAAAAAZf
-        TWFqb3IGX01pbm9yBl9CdWlsZAlfUmV2aXNpb24AAAAACAgICAIAAAAAAAAA//////////8L
-</value>
-  </data>
-  <metadata name="PaymentHistory_DisplayTableAdapter.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>679, 17</value>
+  <metadata name="CustomerToolstrip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>111, 17</value>
   </metadata>
 </root>

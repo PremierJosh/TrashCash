@@ -3,11 +3,11 @@
         Private ReadOnly _home As TrashCashHome
 
         ' tas
-        Private ReadOnly _ta As ds_ProgramTableAdapters.APP_SETTINGS_TableAdapter
+        Private ReadOnly _ta As ds_AppTableAdapters.APP_SETTINGS_TableAdapter
 
         ' refrences
-        Private _dt As ds_Program.APP_SETTINGS_DataTable
-        Private _row As ds_Program.APP_SETTINGS_Row
+        Private _dt As ds_App.APP_SETTINGS_DataTable
+        Private _row As ds_App.APP_SETTINGS_Row
 
 
         Public Sub New(ByRef homeForm As TrashCashHome)

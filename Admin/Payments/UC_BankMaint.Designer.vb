@@ -1,4 +1,6 @@
-﻿Namespace Admin
+﻿Imports TrashCash.Classes
+
+Namespace Admin
     <Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
     Partial Class UC_BankMaint
         Inherits System.Windows.Forms.UserControl
@@ -27,22 +29,22 @@
             Dim lbl_vendorSelInfo As System.Windows.Forms.Label
             Dim lbl_BankInvItem As System.Windows.Forms.Label
             Me.DataSet = New TrashCash.DataSet()
-            Me.BAD_CHECK_BANKS_TableAdapter = New TrashCash.ds_ProgramTableAdapters.BAD_CHECK_BANKS_TableAdapter()
+            Me.BAD_CHECK_BANKS_TableAdapter = New TrashCash.ds_AppTableAdapters.BAD_CHECK_BANKS_TableAdapter()
             Me.pnl_BankSelection = New System.Windows.Forms.Panel()
-            Me.tb_BankFee = New TrashCash.Currency_TextBox()
+            Me.tb_BankFee = New CurrencyTextBox()
             Me.cmb_BankAccs = New System.Windows.Forms.ComboBox()
             Me.cmb_BanksInvItem = New System.Windows.Forms.ComboBox()
             Me.cmb_VendorAcc = New System.Windows.Forms.ComboBox()
             Me.lbl_BankSelecInfo = New System.Windows.Forms.Label()
             Me.lbl_BankName = New System.Windows.Forms.Label()
             Me.tb_BankName = New System.Windows.Forms.TextBox()
-            Me.Ds_Program = New TrashCash.ds_Program()
+            Me.ds_App = New TrashCash.ds_App()
             BankBounceFeeLabel = New System.Windows.Forms.Label()
             lbl_vendorSelInfo = New System.Windows.Forms.Label()
             lbl_BankInvItem = New System.Windows.Forms.Label()
             CType(Me.DataSet, System.ComponentModel.ISupportInitialize).BeginInit()
             Me.pnl_BankSelection.SuspendLayout()
-            CType(Me.Ds_Program, System.ComponentModel.ISupportInitialize).BeginInit()
+            CType(Me.ds_App, System.ComponentModel.ISupportInitialize).BeginInit()
             Me.SuspendLayout()
             '
             'BankBounceFeeLabel
@@ -154,10 +156,10 @@
             Me.tb_BankName.Size = New System.Drawing.Size(163, 20)
             Me.tb_BankName.TabIndex = 66
             '
-            'Ds_Program
+            'ds_App
             '
-            Me.Ds_Program.DataSetName = "ds_Program"
-            Me.Ds_Program.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema
+            Me.ds_App.DataSetName = "ds_App"
+            Me.ds_App.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema
             '
             'UC_BankMaint
             '
@@ -171,22 +173,22 @@
             CType(Me.DataSet, System.ComponentModel.ISupportInitialize).EndInit()
             Me.pnl_BankSelection.ResumeLayout(False)
             Me.pnl_BankSelection.PerformLayout()
-            CType(Me.Ds_Program, System.ComponentModel.ISupportInitialize).EndInit()
+            CType(Me.ds_App, System.ComponentModel.ISupportInitialize).EndInit()
             Me.ResumeLayout(False)
             Me.PerformLayout()
 
         End Sub
         Friend WithEvents DataSet As TrashCash.DataSet
-        Friend WithEvents BAD_CHECK_BANKS_TableAdapter As TrashCash.ds_ProgramTableAdapters.BAD_CHECK_BANKS_TableAdapter
+        Friend WithEvents BAD_CHECK_BANKS_TableAdapter As TrashCash.ds_AppTableAdapters.BAD_CHECK_BANKS_TableAdapter
         Friend WithEvents pnl_BankSelection As System.Windows.Forms.Panel
-        Friend WithEvents tb_BankFee As TrashCash.Currency_TextBox
+        Friend WithEvents tb_BankFee As CurrencyTextBox
         Friend WithEvents cmb_BankAccs As System.Windows.Forms.ComboBox
         Friend WithEvents cmb_BanksInvItem As System.Windows.Forms.ComboBox
         Friend WithEvents cmb_VendorAcc As System.Windows.Forms.ComboBox
         Friend WithEvents lbl_BankSelecInfo As System.Windows.Forms.Label
         Friend WithEvents lbl_BankName As System.Windows.Forms.Label
         Friend WithEvents tb_BankName As System.Windows.Forms.TextBox
-        Friend WithEvents Ds_Program As TrashCash.ds_Program
+        Friend WithEvents ds_App As TrashCash.ds_App
 
     End Class
 End Namespace

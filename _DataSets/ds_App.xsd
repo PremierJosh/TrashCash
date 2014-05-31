@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<xs:schema id="ds_Program" targetNamespace="http://tempuri.org/ds_Program.xsd" xmlns:mstns="http://tempuri.org/ds_Program.xsd" xmlns="http://tempuri.org/ds_Program.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+<xs:schema id="ds_App" targetNamespace="http://tempuri.org/ds_App.xsd" xmlns:mstns="http://tempuri.org/ds_App.xsd" xmlns="http://tempuri.org/ds_App.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
   <xs:annotation>
     <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
       <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" GeneratorFunctionsComponentClassName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" UserFunctionsComponentName="QueriesTableAdapter" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
@@ -243,7 +243,7 @@
           </TableAdapter>
           <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="USERSTableAdapter" GeneratorDataComponentClassName="USERSTableAdapter" Name="USERS" UserDataComponentName="USERSTableAdapter">
             <MainSource>
-              <DbSource ConnectionRef="QBDBConnectionString (MySettings)" DbObjectName="QuickbooksV2.dbo.USERS_List" DbObjectType="StoredProcedure" GenerateMethods="Get" GenerateShortCommands="false" GeneratorGetMethodName="GetUsersList" GetMethodModifier="Public" GetMethodName="GetUsersList" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="false" UserGetMethodName="GetUsersList" UserSourceName="GetUsersList">
+              <DbSource ConnectionRef="QBDBConnectionString (MySettings)" DbObjectName="QuickbooksV2.dbo.USERS_List" DbObjectType="StoredProcedure" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="false" GeneratorGetMethodName="GetUsersList" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetUsersList" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="false" UserGetMethodName="GetUsersList" UserSourceName="Fill">
                 <SelectCommand>
                   <DbCommand CommandType="StoredProcedure" ModifiedByUser="false">
                     <CommandText>dbo.USERS_List</CommandText>
@@ -519,7 +519,7 @@
       </DataSource>
     </xs:appinfo>
   </xs:annotation>
-  <xs:element name="ds_Program" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="ds_Program" msprop:Generator_UserDSName="ds_Program">
+  <xs:element name="ds_App" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="ds_App" msprop:Generator_UserDSName="ds_App">
     <xs:complexType>
       <xs:choice minOccurs="0" maxOccurs="unbounded">
         <xs:element name="APP_SETTINGS_" msprop:Generator_TableClassName="APP_SETTINGS_DataTable" msprop:Generator_TableVarName="tableAPP_SETTINGS_" msprop:Generator_RowChangedName="APP_SETTINGS_RowChanged" msprop:Generator_TablePropName="APP_SETTINGS_" msprop:Generator_RowDeletingName="APP_SETTINGS_RowDeleting" msprop:Generator_RowChangingName="APP_SETTINGS_RowChanging" msprop:Generator_RowEvHandlerName="APP_SETTINGS_RowChangeEventHandler" msprop:Generator_RowDeletedName="APP_SETTINGS_RowDeleted" msprop:Generator_RowClassName="APP_SETTINGS_Row" msprop:Generator_UserTableName="APP_SETTINGS_" msprop:Generator_RowEvArgName="APP_SETTINGS_RowChangeEvent">

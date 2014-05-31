@@ -1,5 +1,5 @@
 ﻿Public Class Login
-    Private qta As ds_ProgramTableAdapters.QueriesTableAdapter
+    Private qta As ds_AppTableAdapters.QueriesTableAdapter
 
     Private Sub btn_Login_Click(sender As System.Object, e As System.EventArgs) Handles btn_Login.Click
         Me.Cursor = Cursors.WaitCursor
@@ -25,7 +25,7 @@
     End Sub
 
     Private Sub Login_Load(sender As Object, e As System.EventArgs) Handles Me.Load
-        qta = New ds_ProgramTableAdapters.QueriesTableAdapter
+        qta = New ds_AppTableAdapters.QueriesTableAdapter
         'clear boxes and reset user index
         mtb_Password.Clear()
         tb_Username.Clear()

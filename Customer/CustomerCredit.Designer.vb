@@ -41,7 +41,7 @@ Partial Class CustomerCredit
         Me.Ds_Customer = New TrashCash.ds_Customer()
         Me.lbl_CreditHis = New System.Windows.Forms.Label()
         Me.Customer_CreditsTableAdapter = New TrashCash.ds_CustomerTableAdapters.Customer_CreditsTableAdapter()
-        Me.tb_Amount = New TrashCash.Currency_TextBox()
+        Me.tb_Amount = New CurrencyTextBox()
         Me.lbl_Amount = New System.Windows.Forms.Label()
         Me.tb_Reason = New System.Windows.Forms.TextBox()
         Me.lbl_Reason = New System.Windows.Forms.Label()
@@ -353,7 +353,7 @@ Partial Class CustomerCredit
     Friend WithEvents Ds_Customer As TrashCash.ds_Customer
     Friend WithEvents lbl_CreditHis As System.Windows.Forms.Label
     Friend WithEvents Customer_CreditsTableAdapter As TrashCash.ds_CustomerTableAdapters.Customer_CreditsTableAdapter
-    Friend WithEvents tb_Amount As TrashCash.Currency_TextBox
+    Friend WithEvents tb_Amount As CurrencyTextBox
     Friend WithEvents lbl_Amount As System.Windows.Forms.Label
     Friend WithEvents tb_Reason As System.Windows.Forms.TextBox
     Friend WithEvents lbl_Reason As System.Windows.Forms.Label
