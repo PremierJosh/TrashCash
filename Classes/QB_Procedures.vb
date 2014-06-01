@@ -332,281 +332,281 @@ Namespace Classes
 
         'End Sub
 
-        Public Sub RecurringService_EndDateCredit(ByRef row As ds_RecurringService.RecurringServiceRow, ByVal creditAmount As Double,
-                                                  ByVal newEndDate As Date, ByVal billThruDate As Date)
-            ' getting customer listid
-            Dim customerListID As String = _cta.GetListID(row.CustomerNumber)
+        'Public Sub RecurringService_EndDateCredit(ByRef row As ds_RecurringService.RecurringServiceRow, ByVal creditAmount As Double,
+        '                                          ByVal newEndDate As Date, ByVal billThruDate As Date)
+        '    ' getting customer listid
+        '    Dim customerListID As String = _cta.GetListID(row.CustomerNumber)
 
 
-            ' getting service listid
-            Dim serviceRow As ds_Types.ServiceTypesRow
-            Dim ta As New ds_TypesTableAdapters.ServiceTypesTableAdapter
-            serviceRow = ta.GetDataByID(row.ServiceTypeID).Rows(0)
+        '    ' getting service listid
+        '    Dim serviceRow As ds_Types.ServiceTypesRow
+        '    Dim ta As New ds_TypesTableAdapters.ServiceTypesTableAdapter
+        '    serviceRow = ta.GetDataByID(row.ServiceTypeID).Rows(0)
 
-            Dim creditMemoAdd As ICreditMemoAdd = MsgSetReq.AppendCreditMemoAddRq
+        '    Dim creditMemoAdd As ICreditMemoAdd = MsgSetReq.AppendCreditMemoAddRq
 
-            ' passing listid
-            creditMemoAdd.CustomerRef.ListID.SetValue(customerListID)
-            creditMemoAdd.IsToBePrinted.SetValue(False)
+        '    ' passing listid
+        '    creditMemoAdd.CustomerRef.ListID.SetValue(customerListID)
+        '    creditMemoAdd.IsToBePrinted.SetValue(False)
 
-            Dim creditLine As IORCreditMemoLineAdd = creditMemoAdd.ORCreditMemoLineAddList.Append()
-            ' credit line info
-            creditLine.CreditMemoLineAdd.ItemRef.ListID.SetValue(serviceRow.ServiceListID)
-            creditLine.CreditMemoLineAdd.ORRatePriceLevel.Rate.SetValue(creditAmount)
+        '    Dim creditLine As IORCreditMemoLineAdd = creditMemoAdd.ORCreditMemoLineAddList.Append()
+        '    ' credit line info
+        '    creditLine.CreditMemoLineAdd.ItemRef.ListID.SetValue(serviceRow.ServiceListID)
+        '    creditLine.CreditMemoLineAdd.ORRatePriceLevel.Rate.SetValue(creditAmount)
 
-            ' description line
-            Dim descLine As IORCreditMemoLineAdd = creditMemoAdd.ORCreditMemoLineAddList.Append()
-            descLine.CreditMemoLineAdd.ItemRef.ListID.Unset()
-            descLine.CreditMemoLineAdd.ItemRef.FullName.Unset()
-            descLine.CreditMemoLineAdd.Desc.SetValue("This service has been Invoiced upto " & billThruDate & ". The new End Date overlaps this Invoiced period. | New End Date: " & newEndDate.Date)
-            descLine.CreditMemoLineAdd.Amount.Unset()
-            descLine.CreditMemoLineAdd.Quantity.Unset()
+        '    ' description line
+        '    Dim descLine As IORCreditMemoLineAdd = creditMemoAdd.ORCreditMemoLineAddList.Append()
+        '    descLine.CreditMemoLineAdd.ItemRef.ListID.Unset()
+        '    descLine.CreditMemoLineAdd.ItemRef.FullName.Unset()
+        '    descLine.CreditMemoLineAdd.Desc.SetValue("This service has been Invoiced upto " & billThruDate & ". The new End Date overlaps this Invoiced period. | New End Date: " & newEndDate.Date)
+        '    descLine.CreditMemoLineAdd.Amount.Unset()
+        '    descLine.CreditMemoLineAdd.Quantity.Unset()
 
-            ' send request
-            Dim msgSetResp As IMsgSetResponse = SessMgr.DoRequests(MsgSetReq)
-            Dim respList As IResponseList = msgSetResp.ResponseList
+        '    ' send request
+        '    Dim msgSetResp As IMsgSetResponse = SessMgr.DoRequests(MsgSetReq)
+        '    Dim respList As IResponseList = msgSetResp.ResponseList
 
-            ' clear msgsetreq
-            MsgSetReq.ClearRequests()
+        '    ' clear msgsetreq
+        '    MsgSetReq.ClearRequests()
 
-            For i = 0 To respList.Count - 1
-                Dim resp As IResponse = respList.GetAt(i)
-                If (resp.StatusCode = 0) Then
+        '    For i = 0 To respList.Count - 1
+        '        Dim resp As IResponse = respList.GetAt(i)
+        '        If (resp.StatusCode = 0) Then
 
-                    ' insert record
-                    Dim creditMemoRet As ICreditMemoRet = resp.Detail
-                    Try
-                        Using qta As New ds_RecurringServiceTableAdapters.QueriesTableAdapter
-                            If (row.IsRecurringServiceEndDateNull) Then
-                                qta.RecurringService_EndDateCredit_Insert(row.RecurringServiceID, Nothing, newEndDate, creditAmount, creditMemoRet.TxnID.GetValue)
-                            Else
-                                qta.RecurringService_EndDateCredit_Insert(row.RecurringServiceID, row.RecurringServiceEndDate, newEndDate, creditAmount, creditMemoRet.TxnID.GetValue)
-                            End If
-                        End Using
-                    Catch ex As Exception
-                        MessageBox.Show("Error inserting Credit History: " & ex.Message, "Error Credit Record Insert", MessageBoxButtons.OK, MessageBoxIcon.Error)
-                    End Try
+        '            ' insert record
+        '            Dim creditMemoRet As ICreditMemoRet = resp.Detail
+        '            Try
+        '                Using qta As New ds_RecurringServiceTableAdapters.QueriesTableAdapter
+        '                    If (row.IsRecurringServiceEndDateNull) Then
+        '                        qta.RecurringService_EndDateCredit_Insert(row.RecurringServiceID, Nothing, newEndDate, creditAmount, creditMemoRet.TxnID.GetValue)
+        '                    Else
+        '                        qta.RecurringService_EndDateCredit_Insert(row.RecurringServiceID, row.RecurringServiceEndDate, newEndDate, creditAmount, creditMemoRet.TxnID.GetValue)
+        '                    End If
+        '                End Using
+        '            Catch ex As Exception
+        '                MessageBox.Show("Error inserting Credit History: " & ex.Message, "Error Credit Record Insert", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        '            End Try
 
-                    ' update row
-                    row.RecurringServiceEndDate = newEndDate.Date
-                    row.Credited = True
-                    ' commit
-                    Try
-                        _rsta.Update(row)
-                    Catch ex As Exception
-                        MsgBox(ex.Message)
-                    End Try
+        '            ' update row
+        '            row.RecurringServiceEndDate = newEndDate.Date
+        '            row.Credited = True
+        '            ' commit
+        '            Try
+        '                _rsta.Update(row)
+        '            Catch ex As Exception
+        '                MsgBox(ex.Message)
+        '            End Try
 
-                    ' get table of unpaid invoices
-                    Dim openInvDt As ds_Display.QBUnpaidInvoicesDataTable = Invoicing_GetUnpaidTable(customerListID)
+        '            ' get table of unpaid invoices
+        '            Dim openInvDt As ds_Display.QBUnpaidInvoicesDataTable = Invoicing_GetUnpaidTable(customerListID)
 
-                    ' use new credit to pay newest invoices first
-                    Credits_PayOpenInvoices(customerListID, creditMemoRet.TxnID.GetValue, creditMemoRet.CreditRemaining.GetValue, openInvDt, "Desc")
-                Else
-                    GlobalConMgr.ResponseErr_Misc(resp)
-                End If
-            Next i
-        End Sub
+        '            ' use new credit to pay newest invoices first
+        '            Credits_PayOpenInvoices(customerListID, creditMemoRet.TxnID.GetValue, creditMemoRet.CreditRemaining.GetValue, openInvDt, "Desc")
+        '        Else
+        '            GlobalConMgr.ResponseErr_Misc(resp)
+        '        End If
+        '    Next i
+        'End Sub
 
         ' void recurring service end date credit
-        Public Sub RecurringService_EndDateCredit_Void(ByRef row As ds_RecurringService.RecurringService_EndDateCreditsRow, ByVal voidReason As String)
-            Dim txnVoid As ITxnVoid = MsgSetReq.AppendTxnVoidRq
-            ' setting credit memo type and id
-            txnVoid.TxnVoidType.SetValue(ENTxnVoidType.tvtCreditMemo)
-            txnVoid.TxnID.SetValue(row.CreditMemoTxnID)
+        'Public Sub RecurringService_EndDateCredit_Void(ByRef row As ds_RecurringService.RecurringService_EndDateCreditsRow, ByVal voidReason As String)
+        '    Dim txnVoid As ITxnVoid = MsgSetReq.AppendTxnVoidRq
+        '    ' setting credit memo type and id
+        '    txnVoid.TxnVoidType.SetValue(ENTxnVoidType.tvtCreditMemo)
+        '    txnVoid.TxnID.SetValue(row.CreditMemoTxnID)
 
-            ' go
-            Dim msgSetResp As IMsgSetResponse = SessMgr.DoRequests(MsgSetReq)
-            Dim respList As IResponseList = msgSetResp.ResponseList
+        '    ' go
+        '    Dim msgSetResp As IMsgSetResponse = SessMgr.DoRequests(MsgSetReq)
+        '    Dim respList As IResponseList = msgSetResp.ResponseList
 
-            MsgSetReq.ClearRequests()
+        '    MsgSetReq.ClearRequests()
 
-            For i = 0 To respList.Count - 1
-                Dim resp As IResponse = respList.GetAt(i)
+        '    For i = 0 To respList.Count - 1
+        '        Dim resp As IResponse = respList.GetAt(i)
 
-                If (resp.StatusCode = 0) Then
-                    ' updating row
-                    row.Voided = True
-                    row.VoidDateTime = Date.Now
-                    row.VoidReason = voidReason
-                    row.VoidUser = HomeForm.CurrentUserRow.USER_NAME
+        '        If (resp.StatusCode = 0) Then
+        '            ' updating row
+        '            row.Voided = True
+        '            row.VoidDateTime = Date.Now
+        '            row.VoidReason = voidReason
+        '            row.VoidUser = HomeForm.CurrentUserRow.USER_NAME
 
-                    ' commit
-                    Using ta As New ds_RecurringServiceTableAdapters.RecurringService_EndDateCreditsTableAdapter
-                        ta.Update(row)
-                    End Using
-                Else
-                    GlobalConMgr.ResponseErr_Misc(resp)
-                End If
-            Next
-        End Sub
+        '            ' commit
+        '            Using ta As New ds_RecurringServiceTableAdapters.RecurringService_EndDateCreditsTableAdapter
+        '                ta.Update(row)
+        '            End Using
+        '        Else
+        '            GlobalConMgr.ResponseErr_Misc(resp)
+        '        End If
+        '    Next
+        'End Sub
 
         ' credit a recurring service on a specific day
-        Public Sub RecurringService_Credit(ByVal recurringServiceID As Integer, ByVal creditAmount As Double, ByVal dateOfCredit As Date, ByVal reason As String)
-            ' get recurring service row
-            Dim row As ds_RecurringService.RecurringServiceRow = _rsta.GetDataByID(recurringServiceID).Rows(0)
-            ' getting customer listid
-            Dim custListID As String = _cta.GetListID(row.CustomerNumber)
-            ' getting service type listid
-            Dim serviceListID As String
-            Using ta As New ds_TypesTableAdapters.ServiceTypesTableAdapter
-                serviceListID = ta.GetListIDByTypeID(row.ServiceTypeID)
-            End Using
+        'Public Sub RecurringService_Credit(ByVal recurringServiceID As Integer, ByVal creditAmount As Double, ByVal dateOfCredit As Date, ByVal reason As String)
+        '    ' get recurring service row
+        '    Dim row As ds_RecurringService.RecurringServiceRow = _rsta.GetDataByID(recurringServiceID).Rows(0)
+        '    ' getting customer listid
+        '    Dim custListID As String = _cta.GetListID(row.CustomerNumber)
+        '    ' getting service type listid
+        '    Dim serviceListID As String
+        '    Using ta As New ds_TypesTableAdapters.ServiceTypesTableAdapter
+        '        serviceListID = ta.GetListIDByTypeID(row.ServiceTypeID)
+        '    End Using
 
-            ' create credit for customer
-            Dim creditAdd As ICreditMemoAdd = MsgSetReq.AppendCreditMemoAddRq
-            creditAdd.CustomerRef.ListID.SetValue(custListID)
+        '    ' create credit for customer
+        '    Dim creditAdd As ICreditMemoAdd = MsgSetReq.AppendCreditMemoAddRq
+        '    creditAdd.CustomerRef.ListID.SetValue(custListID)
 
-            ' credit line1 = service type
-            Dim creditLine As IORCreditMemoLineAdd = creditAdd.ORCreditMemoLineAddList.Append()
-            creditLine.CreditMemoLineAdd.ItemRef.ListID.SetValue(serviceListID)
-            creditLine.CreditMemoLineAdd.ORRatePriceLevel.Rate.SetValue(creditAmount)
+        '    ' credit line1 = service type
+        '    Dim creditLine As IORCreditMemoLineAdd = creditAdd.ORCreditMemoLineAddList.Append()
+        '    creditLine.CreditMemoLineAdd.ItemRef.ListID.SetValue(serviceListID)
+        '    creditLine.CreditMemoLineAdd.ORRatePriceLevel.Rate.SetValue(creditAmount)
 
-            ' desc line
-            Dim descLine As IORCreditMemoLineAdd = creditAdd.ORCreditMemoLineAddList.Append()
-            descLine.CreditMemoLineAdd.ItemRef.ListID.Unset()
-            descLine.CreditMemoLineAdd.ItemRef.FullName.Unset()
-            descLine.CreditMemoLineAdd.Desc.SetValue("Credit Issued for Service on " & dateOfCredit & ". Reason: " & reason)
-            descLine.CreditMemoLineAdd.Amount.Unset()
-            descLine.CreditMemoLineAdd.Quantity.Unset()
+        '    ' desc line
+        '    Dim descLine As IORCreditMemoLineAdd = creditAdd.ORCreditMemoLineAddList.Append()
+        '    descLine.CreditMemoLineAdd.ItemRef.ListID.Unset()
+        '    descLine.CreditMemoLineAdd.ItemRef.FullName.Unset()
+        '    descLine.CreditMemoLineAdd.Desc.SetValue("Credit Issued for Service on " & dateOfCredit & ". Reason: " & reason)
+        '    descLine.CreditMemoLineAdd.Amount.Unset()
+        '    descLine.CreditMemoLineAdd.Quantity.Unset()
 
-            ' go
-            Dim msgSetResp As IMsgSetResponse = SessMgr.DoRequests(MsgSetReq)
-            Dim respList As IResponseList = msgSetResp.ResponseList
+        '    ' go
+        '    Dim msgSetResp As IMsgSetResponse = SessMgr.DoRequests(MsgSetReq)
+        '    Dim respList As IResponseList = msgSetResp.ResponseList
 
-            MsgSetReq.ClearRequests()
+        '    MsgSetReq.ClearRequests()
 
-            For i = 0 To respList.Count - 1
-                Dim resp As IResponse = respList.GetAt(i)
-                If (resp.StatusCode = 0) Then
+        '    For i = 0 To respList.Count - 1
+        '        Dim resp As IResponse = respList.GetAt(i)
+        '        If (resp.StatusCode = 0) Then
 
-                    Dim creditRet As ICreditMemoRet = resp.Detail
-                    ' insert record
-                    Try
-                        Using ta As New ds_RecurringServiceTableAdapters.RecurringService_CreditsTableAdapter
-                            ta.Insert(recurringServiceID,
-                                      creditRet.TxnID.GetValue,
-                                      dateOfCredit,
-                                      creditRet.TotalAmount.GetValue,
-                                      creditRet.TimeCreated.GetValue,
-                                      reason,
-                                      HomeForm.CurrentUserRow.USER_NAME,
-                                      False,
-                                      Nothing,
-                                      Nothing,
-                                      Nothing)
-                        End Using
-                    Catch ex As Exception
-                        MessageBox.Show("Error: RsCredit Insert: " & ex.Message, "Error Sql Proc Insert", MessageBoxButtons.OK, MessageBoxIcon.Error)
-                    End Try
+        '            Dim creditRet As ICreditMemoRet = resp.Detail
+        '            ' insert record
+        '            Try
+        '                Using ta As New ds_RecurringServiceTableAdapters.RecurringService_CreditsTableAdapter
+        '                    ta.Insert(recurringServiceID,
+        '                              creditRet.TxnID.GetValue,
+        '                              dateOfCredit,
+        '                              creditRet.TotalAmount.GetValue,
+        '                              creditRet.TimeCreated.GetValue,
+        '                              reason,
+        '                              HomeForm.CurrentUserRow.USER_NAME,
+        '                              False,
+        '                              Nothing,
+        '                              Nothing,
+        '                              Nothing)
+        '                End Using
+        '            Catch ex As Exception
+        '                MessageBox.Show("Error: RsCredit Insert: " & ex.Message, "Error Sql Proc Insert", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        '            End Try
 
-                    ' now query for open invoices
-                    Dim openInvDT As ds_Display.QBUnpaidInvoicesDataTable = Invoicing_GetUnpaidTable(custListID)
-                    ' use new credit for these
-                    Credits_PayOpenInvoices(custListID, creditRet.TxnID.GetValue, creditRet.CreditRemaining.GetValue, openInvDT, "Asc")
-                Else
-                    GlobalConMgr.ResponseErr_Misc(resp)
-                End If
-            Next
+        '            ' now query for open invoices
+        '            Dim openInvDT As ds_Display.QBUnpaidInvoicesDataTable = Invoicing_GetUnpaidTable(custListID)
+        '            ' use new credit for these
+        '            Credits_PayOpenInvoices(custListID, creditRet.TxnID.GetValue, creditRet.CreditRemaining.GetValue, openInvDT, "Asc")
+        '        Else
+        '            GlobalConMgr.ResponseErr_Misc(resp)
+        '        End If
+        '    Next
 
 
-        End Sub
+        'End Sub
 
         ' sub to use newly created credit to pay invoices using the move payment open inv table
-        Private Sub Credits_PayOpenInvoices(ByVal customerListID As String, ByVal creditTxnID As String, ByVal availAmount As Double, ByRef openInvoiceDT As ds_Display.QBUnpaidInvoicesDataTable, ByVal applyOrder As String)
-            ' making sure we have rows
-            If (openInvoiceDT.Rows.Count > 0) Then
-                ' create data view that is sorted depending on the direction paramater Asc or Desc
-                Dim dvInvoices As New DataView(openInvoiceDT, "", "Inv_TxnDate " & applyOrder, DataViewRowState.CurrentRows)
+        'Private Sub Credits_PayOpenInvoices(ByVal customerListID As String, ByVal creditTxnID As String, ByVal availAmount As Double, ByRef openInvoiceDT As ds_Display.QBUnpaidInvoicesDataTable, ByVal applyOrder As String)
+        '    ' making sure we have rows
+        '    If (openInvoiceDT.Rows.Count > 0) Then
+        '        ' create data view that is sorted depending on the direction paramater Asc or Desc
+        '        Dim dvInvoices As New DataView(openInvoiceDT, "", "Inv_TxnDate " & applyOrder, DataViewRowState.CurrentRows)
 
-                ' var going to keep track of remaining credit
-                Dim creditRemain As Double = availAmount
+        '        ' var going to keep track of remaining credit
+        '        Dim creditRemain As Double = availAmount
 
-                ' payAdd to use credit
-                Dim payAdd As IReceivePaymentAdd = MsgSetReq.AppendReceivePaymentAddRq
-                payAdd.CustomerRef.ListID.SetValue(customerListID)
+        '        ' payAdd to use credit
+        '        Dim payAdd As IReceivePaymentAdd = MsgSetReq.AppendReceivePaymentAddRq
+        '        payAdd.CustomerRef.ListID.SetValue(customerListID)
 
-                For Each row As ds_Display.QBUnpaidInvoicesRow In dvInvoices.Table.Rows
-                    ' making sure we have credit still
-                    If (creditRemain > 0) Then
-                        Dim newAttached As IAppliedToTxnAdd = payAdd.ORApplyPayment.AppliedToTxnAddList.Append()
-                        newAttached.TxnID.SetValue(row.Inv_TxnID)
+        '        For Each row As ds_Display.QBUnpaidInvoicesRow In dvInvoices.Table.Rows
+        '            ' making sure we have credit still
+        '            If (creditRemain > 0) Then
+        '                Dim newAttached As IAppliedToTxnAdd = payAdd.ORApplyPayment.AppliedToTxnAddList.Append()
+        '                newAttached.TxnID.SetValue(row.Inv_TxnID)
 
-                        'attaching credit
-                        Dim setCredit As ISetCredit = newAttached.SetCreditList.Append()
-                        setCredit.CreditTxnID.SetValue(creditTxnID)
+        '                'attaching credit
+        '                Dim setCredit As ISetCredit = newAttached.SetCreditList.Append()
+        '                setCredit.CreditTxnID.SetValue(creditTxnID)
 
-                        ' checking how much i can apply
-                        If (row.Remaining >= creditRemain) Then
-                            setCredit.AppliedAmount.SetValue(creditRemain)
-                            ' update remaining amount
-                            creditRemain = 0
-                            row.Remaining = row.Remaining - creditRemain
-                        Else
-                            setCredit.AppliedAmount.SetValue(row.Remaining)
-                            ' update remaining amount
-                            creditRemain = creditRemain - row.Remaining
-                            row.Remaining = 0
-                        End If
-                    End If
-                Next
+        '                ' checking how much i can apply
+        '                If (row.Remaining >= creditRemain) Then
+        '                    setCredit.AppliedAmount.SetValue(creditRemain)
+        '                    ' update remaining amount
+        '                    creditRemain = 0
+        '                    row.Remaining = row.Remaining - creditRemain
+        '                Else
+        '                    setCredit.AppliedAmount.SetValue(row.Remaining)
+        '                    ' update remaining amount
+        '                    creditRemain = creditRemain - row.Remaining
+        '                    row.Remaining = 0
+        '                End If
+        '            End If
+        '        Next
 
-                ' go
-                Dim msgSetResp As IMsgSetResponse = SessMgr.DoRequests(MsgSetReq)
-                Dim respList As IResponseList = msgSetResp.ResponseList
+        '        ' go
+        '        Dim msgSetResp As IMsgSetResponse = SessMgr.DoRequests(MsgSetReq)
+        '        Dim respList As IResponseList = msgSetResp.ResponseList
 
-                MsgSetReq.ClearRequests()
+        '        MsgSetReq.ClearRequests()
 
-                For i = 0 To respList.Count - 1
-                    Dim resp As IResponse = respList.GetAt(i)
+        '        For i = 0 To respList.Count - 1
+        '            Dim resp As IResponse = respList.GetAt(i)
 
-                    ' resp wont = 1 since not a query
-                    If (resp.StatusCode <> 0) Then
-                        GlobalConMgr.ResponseErr_Misc(resp)
-                    End If
-                Next
-            End If
-        End Sub
+        '            ' resp wont = 1 since not a query
+        '            If (resp.StatusCode <> 0) Then
+        '                GlobalConMgr.ResponseErr_Misc(resp)
+        '            End If
+        '        Next
+        '    End If
+        'End Sub
 
         ' void a recurring service credit
-        Public Sub RecurringService_Credit_Void(ByVal recurringServiceCreditID As Integer, ByVal voidReason As String)
-            Dim ta As New ds_RecurringServiceTableAdapters.RecurringService_CreditsTableAdapter
-            Dim row As ds_RecurringService.RecurringService_CreditsRow = ta.GetDataByCreditID(recurringServiceCreditID).Rows(0)
+        'Public Sub RecurringService_Credit_Void(ByVal recurringServiceCreditID As Integer, ByVal voidReason As String)
+        '    Dim ta As New ds_RecurringServiceTableAdapters.RecurringService_CreditsTableAdapter
+        '    Dim row As ds_RecurringService.RecurringService_CreditsRow = ta.GetDataByCreditID(recurringServiceCreditID).Rows(0)
 
-            If (Not row.Voided) Then
-                Dim txnVoid As ITxnVoid = MsgSetReq.AppendTxnVoidRq
+        '    If (Not row.Voided) Then
+        '        Dim txnVoid As ITxnVoid = MsgSetReq.AppendTxnVoidRq
 
-                ' talking about credit
-                txnVoid.TxnVoidType.SetValue(ENTxnVoidType.tvtCreditMemo)
-                txnVoid.TxnID.SetValue(row.CreditMemoTxnID)
+        '        ' talking about credit
+        '        txnVoid.TxnVoidType.SetValue(ENTxnVoidType.tvtCreditMemo)
+        '        txnVoid.TxnID.SetValue(row.CreditMemoTxnID)
 
-                ' go
-                Dim msgSetResp As IMsgSetResponse = SessMgr.DoRequests(MsgSetReq)
-                Dim respList As IResponseList = msgSetResp.ResponseList
+        '        ' go
+        '        Dim msgSetResp As IMsgSetResponse = SessMgr.DoRequests(MsgSetReq)
+        '        Dim respList As IResponseList = msgSetResp.ResponseList
 
-                MsgSetReq.ClearRequests()
+        '        MsgSetReq.ClearRequests()
 
-                For i = 0 To respList.Count - 1
-                    Dim resp As IResponse = respList.GetAt(i)
+        '        For i = 0 To respList.Count - 1
+        '            Dim resp As IResponse = respList.GetAt(i)
 
-                    If (resp.StatusCode = 0) Then
-                        ' credit voided: update row
-                        row.Voided = True
-                        row.VoidReason = voidReason
-                        row.VoidTime = Date.Now
-                        row.VoidUser = HomeForm.CurrentUserRow.USER_NAME
+        '            If (resp.StatusCode = 0) Then
+        '                ' credit voided: update row
+        '                row.Voided = True
+        '                row.VoidReason = voidReason
+        '                row.VoidTime = Date.Now
+        '                row.VoidUser = HomeForm.CurrentUserRow.USER_NAME
 
-                        Try
-                            ta.Update(row)
-                        Catch ex As Exception
-                            MsgBox("Credit Row Update SQL Error: " & ex.Message)
-                        End Try
-                    Else
-                        GlobalConMgr.ResponseErr_Misc(resp)
-                    End If
-                Next
-            End If
-        End Sub
+        '                Try
+        '                    ta.Update(row)
+        '                Catch ex As Exception
+        '                    MsgBox("Credit Row Update SQL Error: " & ex.Message)
+        '                End Try
+        '            Else
+        '                GlobalConMgr.ResponseErr_Misc(resp)
+        '            End If
+        '        Next
+        '    End If
+        'End Sub
 
         Public Function Customer_BounceCheck(ByVal checkRow As ds_Payments.PaymentHistory_DBRow, ByVal bankRow As ds_Payments.BAD_CHECK_BANKSRow, ByVal fee As Double) As Boolean
             ' return bool

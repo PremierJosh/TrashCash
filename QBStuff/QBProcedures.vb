@@ -202,22 +202,22 @@ Namespace QBStuff
         End Function
 
         ' crediting
-        Public Shared Function CreditMemoAdd(ByRef creditObj As QBAddCreditObj, Optional ByRef qbConMgr As QBConMgr = Nothing) As IResponse
+        Public Shared Function CreditMemoAdd(ByRef creditAddObj As QBAddCreditObj, Optional ByRef qbConMgr As QBConMgr = Nothing) As IResponse
             Dim credAdd As ICreditMemoAdd = ConCheck(qbConMgr).MessageSetRequest.AppendCreditMemoAddRq
             With credAdd
-                .CustomerRef.ListID.SetValue(creditObj.CustomerListID)
-                .IsToBePrinted.SetValue(creditObj.IsToBePrinted)
+                .CustomerRef.ListID.SetValue(creditAddObj.CustomerListID)
+                .IsToBePrinted.SetValue(creditAddObj.IsToBePrinted)
             End With
 
             Dim creditLine As IORCreditMemoLineAdd = credAdd.ORCreditMemoLineAddList.Append
             With creditLine.CreditMemoLineAdd
-                .ItemRef.ListID.SetValue(creditObj.ItemListID)
-                .ORRatePriceLevel.Rate.SetValue(creditObj.CreditAmount)
+                .ItemRef.ListID.SetValue(creditAddObj.ItemListID)
+                .ORRatePriceLevel.Rate.SetValue(creditAddObj.CreditAmount)
             End With
 
             Dim descLine As IORCreditMemoLineAdd = credAdd.ORCreditMemoLineAddList.Append
             With descLine.CreditMemoLineAdd
-                .Desc.SetValue(creditObj.Desc)
+                .Desc.SetValue(creditAddObj.Desc)
                 .ItemRef.ListID.Unset()
                 .ItemRef.FullName.Unset()
                 .Amount.Unset()
@@ -285,7 +285,7 @@ Namespace QBStuff
                 For Each invObj As QBInvoiceObj In payObj.AppliedInvList
                     Dim appTxn As IAppliedToTxnMod = appTxnList.Append
                     appTxn.TxnID.SetValue(invObj.TxnID)
-                ' checking if there is an applied amount
+                    ' checking if there is an applied amount
                     If (invObj.AppliedPaymentAmount <> Nothing) Then
                         appTxn.PaymentAmount.SetValue(invObj.AppliedPaymentAmount)
                     End If
@@ -745,6 +745,7 @@ Namespace QBStuff
             Dim creditObj As New QBCreditObj
             With creditObj
                 .TxnID = creditRet.TxnID.GetValue
+                .TxnDate = creditRet.TxnDate.GetValue
                 .EditSequence = creditRet.EditSequence.GetValue
                 .TotalAmount = creditRet.TotalAmount.GetValue
                 .CreditRemaining = creditRet.CreditRemaining.GetValue
@@ -852,7 +853,7 @@ Namespace QBStuff
         End Sub
 
         ''' <summary>
-        ''' This sub will take a QBCreditObj and attempt to use it to pay exisiting invoices and will update the passed creditOBj
+        ''' This sub will take a QBCreditObj and attempt to use it to pay exisiting invoices and will update the passed creditAddObj
         ''' </summary>
         ''' <param name="creditObj">Newly created QB Credit Memo thats going to pay attached Customers open Invoices</param>
         ''' <param name="newestInvsFirst">Pay oldest Invoices first</param>

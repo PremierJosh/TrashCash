@@ -1,4 +1,6 @@
-﻿Public Class PendingApprovals
+﻿Imports TrashCash.RecurringService
+
+Public Class PendingApprovals
 
     ' home form var
     Private _HomeForm As TrashCashHome

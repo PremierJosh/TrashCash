@@ -274,7 +274,7 @@
     <Compile Include="Forms\PendingApprovals.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="RecurringService\RecurringService.vb" />
+    <Compile Include="RecurringService\RecurringServiceModule.vb" />
     <Compile Include="RecurringService\RecurringServiceForm.Designer.vb">
       <DependentUpon>RecurringServiceForm.vb</DependentUpon>
     </Compile>
