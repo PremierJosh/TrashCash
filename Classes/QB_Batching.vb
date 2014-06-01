@@ -39,7 +39,6 @@ Namespace Classes
                 ' instantiating tas
                 _ta = New ds_BatchingTableAdapters.BATCH_WorkingInvoiceTableAdapter
                 _lineTA = New ds_BatchingTableAdapters.BATCH_LineItemsTableAdapter
-
                 _dt = invoiceDt
             End Sub
 
@@ -53,12 +52,10 @@ Namespace Classes
                 Dim lastReportTime As DateTime = Now
                 ' this is how many milliseconds between progress reporting
                 Const elapsedTime As Double = 100
-
-
+                
                 If (_dt.Rows.Count > 0) Then
                     ' setting maximum on progress class
                     progress.MaximumValue = _dt.Rows.Count
-
                     ' err counter
                     Dim err As Integer
                     Try
@@ -74,10 +71,8 @@ Namespace Classes
                         ' updating progress counter and customer
                         progress.CurrentValue += 1
                         progress.CurrentCustomer = row.CustomerFullName
-
                         ' getting percent
                         progPercent = CInt(progress.CurrentValue / progress.MaximumValue * 100)
-
                         ' report if enough time has passed
                         If (Now > lastReportTime.AddMilliseconds(elapsedTime)) Then
                             worker.ReportProgress(progPercent, progress)
@@ -245,222 +240,163 @@ Namespace Classes
         Public Class Payments
             Inherits QB_Batching
 
-            Protected Dt As ds_Batching.BATCH_WorkingPaymentsDataTable
+            Private _dt As ds_Batching.BATCH_WorkingPaymentsDataTable
 
             ' current batch id
-            Protected BatchID As Integer
+            Private _batchID As Integer
             ' ta
-            Protected Ta As ds_BatchingTableAdapters.BATCH_WorkingPaymentsTableAdapter
+            Private _ta As ds_BatchingTableAdapters.BATCH_WorkingPaymentsTableAdapter
 
             Public Sub New(ByVal batchPayDt As ds_Batching.BATCH_WorkingPaymentsDataTable)
                 MyBase.New()
                 ' instantiating ta
-
-                Ta = New ds_BatchingTableAdapters.BATCH_WorkingPaymentsTableAdapter
-                Dt = batchPayDt
+                _ta = New ds_BatchingTableAdapters.BATCH_WorkingPaymentsTableAdapter
+                _dt = batchPayDt
             End Sub
 
             Public Sub Batch(ByVal worker As System.ComponentModel.BackgroundWorker,
                              ByVal e As System.ComponentModel.DoWorkEventArgs)
 
-                If (InSession) Then
-                    ' this will keep track of this batches progress
-                    Dim progress As New Utilities.ProgressObj
+                ' this will keep track of this batches progress
+                Dim progress As New ProgressObj
+                ' this is passed to the worker
+                Dim progPercent As Integer
+                ' this will keep track of time reporting so its not insane
+                Dim lastReportTime As DateTime = Now
+                ' this is how many milliseconds between progress reporting
+                Const elapsedTime As Double = 100
 
-                    ' this is passed to the worker
-                    Dim progPercent As Integer
-
-                    ' this will keep track of time reporting so its not insane
-                    Dim lastReportTime As DateTime = Now
-                    ' this is how many milliseconds between progress reporting
-                    Const elapsedTime As Double = 100
-
-                    If (Dt.Rows.Count > 0) Then
-                        ' setting maximum on progress class
-                        progress.MaximumValue = Dt.Rows.Count
-
-                        ' err counter
-                        Dim err As Integer
-
+                If (_dt.Rows.Count > 0) Then
+                    ' setting maximum on progress class
+                    progress.MaximumValue = _dt.Rows.Count
+                    ' err counter
+                    Dim err As Integer
+                    Try
                         ' batch history insert
-                        Try
-                            BatchID = _qta.BATCH_HISTORY_PAY_Insert(Date.Now, Dt.Rows.Count)
-                        Catch ex As Exception
-                            MsgBox("Batch History Insert: " & ex.Message)
-                            e.Cancel = True
-                        End Try
+                        _batchID = _qta.BATCH_HISTORY_PAY_Insert(Date.Now, _dt.Rows.Count)
+                    Catch ex as SqlException
+                        MessageBox.Show("Message: " & ex.Message & vbCrLf & "LineNumber: " & ex.LineNumber,
+                                        "Sql Error: " & ex.Procedure, MessageBoxButtons.OK, MessageBoxIcon.Error)
+                    End Try
+                  
+                    For Each row As ds_Batching.BATCH_WorkingPaymentsRow In _dt.Rows
+                        ' updating progress counter and customer
+                        progress.CurrentValue += 1
+                        progress.CurrentCustomer = row.CustomerFullName
+                        ' getting percent
+                        progPercent = CInt(progress.CurrentValue / progress.MaximumValue * 100)
+                        ' report if enough time has passed
+                        If (Now > lastReportTime.AddMilliseconds(elapsedTime)) Then
+                            worker.ReportProgress(progPercent, progress)
+                        End If
 
-                        For Each row As ds_Batching.BATCH_WorkingPaymentsRow In Dt.Rows
-                            ' updating progress counter and customer
-                            progress.CurrentValue += 1
-                            progress.CurrentCustomer = row.CustomerFullName
-
-                            ' getting percent
-                            progPercent = CInt(progress.CurrentValue / progress.MaximumValue * 100)
-
-                            ' report if enough time has passed
-                            If (Now > lastReportTime.AddMilliseconds(elapsedTime)) Then
-                                worker.ReportProgress(progPercent, progress)
-                            End If
-
-                            ' send row
-                            ReceivePayment(row)
-
-
-                            ' update row in db
+                        ' send row
+                        Dim payObj As QBRecievePaymentObj = ReceivePayment(row)
+                        ' check status
+                        If (row.WorkingPaymentsStatus = ENItemStatus.Err) Then
+                            ' update err
+                            err += 1
+                        ElseIf (row.WorkingPaymentsStatus = ENItemStatus.Complete) Then
                             Try
-                                Ta.Update(row)
-                            Catch ex As Exception
-                                MsgBox("WorkingPayment Update: " & ex.Message)
-                                e.Cancel = True
-                                Exit For
+                                ' insert for cash 
+                                If (row.WorkingPaymentsType = 1) Then
+                                    _ta.PaymentHistory_Insert(row.CustomerNumber,
+                                                              Nothing,
+                                                              payObj.TxnID,
+                                                              payObj.EditSequence,
+                                                              row.WorkingPaymentsType,
+                                                              payObj.TotalAmount,
+                                                              row.TIME_RECEIVED,
+                                                              Nothing,
+                                                              _batchID,
+                                                              row.InsertedByUser
+                                                              )
+
+                                Else
+                                    ' insert for non cash
+                                    _ta.PaymentHistory_Insert(row.CustomerNumber,
+                                                              payObj.RefNumber,
+                                                              payObj.TxnID,
+                                                              payObj.EditSequence,
+                                                              row.WorkingPaymentsType,
+                                                              payObj.TotalAmount,
+                                                              row.TIME_RECEIVED,
+                                                              row.DATE_ON_CHECK,
+                                                              _batchID,
+                                                              row.InsertedByUser)
+
+                                End If
+                            Catch ex As SqlException
+                                MessageBox.Show("Message: " & ex.Message & vbCrLf & "LineNumber: " & ex.LineNumber,
+                                                "Sql Error: " & ex.Procedure, MessageBoxButtons.OK, MessageBoxIcon.Error)
                             End Try
-
-                            ' check status
-                            If (row.WorkingPaymentsStatus = 6) Then
-                                ' update err
-                                err += 1
-                                e.Cancel = True
-                                Exit For
-                            ElseIf (row.WorkingPaymentsStatus = 7) Then
-                                Try
-                                    ' insert for cash 
-                                    If (row.WorkingPaymentsType = 1) Then
-                                        Ta.PaymentHistory_Insert(row.CustomerNumber,
-                                                                 Nothing,
-                                                                 row.TxnID,
-                                                                 row.EditSequence,
-                                                                 row.WorkingPaymentsType,
-                                                                 row.WorkingPaymentsAmount,
-                                                                 row.TIME_RECEIVED,
-                                                                 Nothing,
-                                                                 BatchID,
-                                                                 row.InsertedByUser
-                                                                 )
-
-                                    Else
-                                        ' insert for non cash
-                                        Ta.PaymentHistory_Insert(row.CustomerNumber,
-                                                                 row.WorkingPaymentsCheckNum,
-                                                                 row.TxnID,
-                                                                 row.EditSequence,
-                                                                 row.WorkingPaymentsType,
-                                                                 row.WorkingPaymentsAmount,
-                                                                 row.TIME_RECEIVED,
-                                                                 row.DATE_ON_CHECK,
-                                                                 BatchID,
-                                                                 row.InsertedByUser)
-
-                                    End If
-
-
-                                Catch ex As Exception
-                                    MsgBox("PayHistory Insert: " & ex.Message)
-                                    e.Cancel = True
-                                    Exit For
-                                End Try
-
-                            End If
-
-                            ' checking for cancel request
-                            If (worker.CancellationPending = True) Then
-                                e.Cancel = True
-                                Exit For
-                            End If
-                        Next row
-
+                        End If
+                        ' checking for cancel request
+                        If (worker.CancellationPending = True) Then
+                            e.Cancel = True
+                            Exit For
+                        End If
+                    Next row
+                    Try
                         ' update batch row for completeion
                         ' and delete completed rows
-                        Try
-                            _qta.BATCH_HISTORY_PAY_UpdateForCompletion(BatchID, Date.Now, err)
-                            Ta.Update(Dt)
-                            Ta.DeleteComplete()
-                        Catch ex As Exception
-                            MsgBox("Batch History Pay Complete Update: " & ex.Message)
-                        End Try
-                    End If
+                        _qta.BATCH_HISTORY_PAY_UpdateForCompletion(_batchID, Date.Now, err)
+                        _ta.Update(_dt)
+                        _ta.DeleteComplete()
+                    Catch ex as SqlException
+                        MessageBox.Show("Message: " & ex.Message & vbCrLf & "LineNumber: " & ex.LineNumber,
+                                        "Sql Error: " & ex.Procedure, MessageBoxButtons.OK, MessageBoxIcon.Error)
+                    End Try
                 End If
 
-                MsgSetRequest.ClearRequests()
                 Finalize()
             End Sub
 
-            Private Sub ReceivePayment(ByRef row As ds_Batching.BATCH_WorkingPaymentsRow)
+            Private Function ReceivePayment(ByRef row As ds_Batching.BATCH_WorkingPaymentsRow) As QBRecievePaymentObj
+                ' return obj
+                Dim payObj As New QBRecievePaymentObj
+                With payObj
+                    .CustomerListID = row.CustomerListID
+                    .TotalAmount = row.WorkingPaymentsAmount
+                    .PayTypeName = row.QB_REFRENCE
+                    .TxnDate = row.TIME_RECEIVED
+                    If (Not row.IsWorkingPaymentsCheckNumNull) Then
+                        .RefNumber = row.WorkingPaymentsCheckNum
+                    End If
+                End With
 
-                ' building request
-                Dim recPayment As IReceivePaymentAdd = MsgSetRequest.AppendReceivePaymentAddRq
-
-                ' limiting response info
-                recPayment.IncludeRetElementList.Add("RefNumber")
-                recPayment.IncludeRetElementList.Add("TxnID")
-                recPayment.IncludeRetElementList.Add("TimeCreated")
-                recPayment.IncludeRetElementList.Add("EditSequence")
-
-                ' grabbing list id
-                recPayment.CustomerRef.ListID.SetValue(row.CustomerListID)
-                recPayment.TotalAmount.SetValue(row.WorkingPaymentsAmount)
-                recPayment.PaymentMethodRef.FullName.SetValue(row.QB_REFRENCE)
-                recPayment.TxnDate.SetValue(row.TIME_RECEIVED)
-
-                ' checking for a check number
-                If (row.IsWorkingPaymentsCheckNumNull = False) Then
-                    recPayment.RefNumber.SetValue(row.WorkingPaymentsCheckNum)
+                Dim resp As IResponse = QBRequests.PaymentAdd(payObj:=payObj, qbConMgr:=ConMgr)
+                If (resp.StatusCode = 0) Then
+                    Dim recPaymentRet As IReceivePaymentRet = resp.Detail
+                    ' update to complete
+                    row.WorkingPaymentsStatus = ENItemStatus.Complete
+                    ' get other values for history insert
+                    payObj.TxnID = recPaymentRet.TxnID.GetValue
+                    payObj.EditSequence = recPaymentRet.EditSequence.GetValue
+                    If (recPaymentRet.RefNumber IsNot Nothing) Then
+                        payObj.RefNumber = recPaymentRet.RefNumber.GetValue
+                    End If
+                    ' i think this goes into the db
+                    row.DateReceived = recPaymentRet.TimeCreated.GetValue.Date
+                Else
+                    row.WorkingPaymentsStatus = ENItemStatus.Err
+                    Try
+                        _ta.ERR_PAYMENTS_Insert(row.WorkingPaymentsID, resp.StatusCode.ToString, resp.StatusMessage)
+                    Catch ex As Exception
+                        MsgBox(ex.Message)
+                    End Try
                 End If
 
-                ' by default, they will auto apply and i will catch overpayments and apply them to open invoices
-                recPayment.ORApplyPayment.IsAutoApply.SetValue(True)
-
-                ' response work
-                Dim msgSetResp As IMsgSetResponse = SessionManager.DoRequests(MsgSetRequest)
-                Dim respList As IResponseList = msgSetResp.ResponseList
-
-                ' looping through response with error checking
-                For i = 0 To respList.Count - 1
-                    Dim resp As IResponse = respList.GetAt(i)
-                    If (resp.StatusCode = 0) Then
-                        Dim recPaymentRet As IReceivePaymentRet = resp.Detail
-
-
-                        ' update to complete
-                        row.WorkingPaymentsStatus = 7
-                        ' get other values for history insert
-                        row.TxnID = recPaymentRet.TxnID.GetValue
-                        row.EditSequence = recPaymentRet.EditSequence.GetValue
-
-
-                        If (recPaymentRet.RefNumber IsNot Nothing) Then
-                            row.TxnNumber = recPaymentRet.RefNumber.GetValue
-                        End If
-                        row.DateReceived = recPaymentRet.TimeCreated.GetValue.Date
-                    Else
-                        row.WorkingPaymentsStatus = 6
-
-
-                        Try
-                            Ta.ERR_PAYMENTS_Insert(row.WorkingPaymentsID, resp.StatusCode.ToString, resp.StatusMessage)
-                        Catch ex As Exception
-                            MsgBox(ex.Message)
-                        End Try
-                    End If
-                Next i
-
-                MsgSetRequest.ClearRequests()
-            End Sub
+                Try
+                    _ta.Update(row)
+                Catch ex As SqlException
+                    MessageBox.Show("Message: " & ex.Message & vbCrLf & "LineNumber: " & ex.LineNumber,
+                                    "Sql Error: " & ex.Procedure, MessageBoxButtons.OK, MessageBoxIcon.Error)
+                End Try
+                Return payObj
+            End Function
 
             Protected Overrides Sub Finalize()
-                If (Connected) Then
-                    If (InSession) Then
-                        SessionManager.EndSession()
-                        InSession = False
-                    End If
-                    SessionManager.CloseConnection()
-                    Connected = False
-                End If
-
-                ' clear vars
-                Dt = Nothing
-                Ta = Nothing
-                BatchID = Nothing
                 MyBase.Finalize()
             End Sub
         End Class
