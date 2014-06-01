@@ -207,12 +207,12 @@ Namespace Classes
         Public Class Payments
             Inherits QB_Batching
 
-            Private _dt As ds_Batching.BATCH_WorkingPaymentsDataTable
+            Private ReadOnly _dt As ds_Batching.BATCH_WorkingPaymentsDataTable
 
             ' current batch id
             Private _batchID As Integer
             ' ta
-            Private _ta As ds_BatchingTableAdapters.BATCH_WorkingPaymentsTableAdapter
+            Private ReadOnly _ta As ds_BatchingTableAdapters.BATCH_WorkingPaymentsTableAdapter
 
             Public Sub New(ByVal batchPayDt As ds_Batching.BATCH_WorkingPaymentsDataTable)
                 MyBase.New()
