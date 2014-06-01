@@ -172,10 +172,10 @@
     <Compile Include="Admin\AdminExportImport.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Admin\Payments\MovePayment.Designer.vb">
-      <DependentUpon>MovePayment.vb</DependentUpon>
+    <Compile Include="Admin\Payments\MovePaymentForm.Designer.vb">
+      <DependentUpon>MovePaymentForm.vb</DependentUpon>
     </Compile>
-    <Compile Include="Admin\Payments\MovePayment.vb">
+    <Compile Include="Admin\Payments\MovePaymentForm.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Admin\Payments\UC_BankMaint.Designer.vb">
@@ -504,8 +504,8 @@
     <EmbeddedResource Include="Admin\AdminExportImport.resx">
       <DependentUpon>AdminExportImport.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Admin\Payments\MovePayment.resx">
-      <DependentUpon>MovePayment.vb</DependentUpon>
+    <EmbeddedResource Include="Admin\Payments\MovePaymentForm.resx">
+      <DependentUpon>MovePaymentForm.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Admin\Payments\AdminPayments.resx">
       <DependentUpon>AdminPayments.vb</DependentUpon>

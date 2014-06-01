@@ -7,7 +7,7 @@ Namespace Admin
         Private _home As TrashCashHome
 
         ' move payment form ref
-        Friend WithEvents MovePayment As MovePayment
+        Friend WithEvents MovePaymentForm As MovePaymentForm
 
         ' property to keep last selected customer
         Private _currentCustomer As Integer
@@ -173,14 +173,14 @@ Namespace Admin
 
                 If (result = Windows.Forms.DialogResult.Yes) Then
                     ' create move payment form
-                    MovePayment = New MovePayment(_home, row.PaymentID)
-                    MovePayment.ShowDialog()
+                    MovePaymentForm = New MovePaymentForm(row.PaymentID)
+                    MovePaymentForm.ShowDialog()
                 End If
 
             End If
         End Sub
 
-        Private Sub PaymentMoveCompleted() Handles MovePayment.PaymentMoveComplete
+        Private Sub PaymentMoveCompleted() Handles MovePaymentForm.PaymentMoveComplete
             Fetch_History()
         End Sub
     End Class

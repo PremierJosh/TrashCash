@@ -1,6 +1,6 @@
-﻿Namespace Admin
+﻿Namespace Admin.Payments
     <Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
-    Partial Class MovePayment
+    Partial Class MovePaymentForm
         Inherits System.Windows.Forms.Form
 
         'Form overrides dispose to clean up the component list.
@@ -24,7 +24,7 @@
         <System.Diagnostics.DebuggerStepThrough()> _
         Private Sub InitializeComponent()
             Me.components = New System.ComponentModel.Container()
-            Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(MovePayment))
+            Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(MovePaymentForm))
             Me.pnl_top = New System.Windows.Forms.Panel()
             Me.lbl_FormInfo = New System.Windows.Forms.Label()
             Me.grp_CurPayInfo = New System.Windows.Forms.GroupBox()
@@ -246,7 +246,7 @@
             Me.NewCustomerBindingSource.DataMember = "Customer_ListByActive"
             Me.NewCustomerBindingSource.DataSource = Me.Ds_Customer
             '
-            'MovePayment
+            'MovePaymentForm
             '
             Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
             Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
@@ -258,7 +258,7 @@
             Me.Controls.Add(Me.pnl_top)
             Me.MaximizeBox = False
             Me.MinimizeBox = False
-            Me.Name = "MovePayment"
+            Me.Name = "MovePaymentForm"
             Me.Text = "Move Payment"
             Me.pnl_top.ResumeLayout(False)
             Me.grp_CurPayInfo.ResumeLayout(False)

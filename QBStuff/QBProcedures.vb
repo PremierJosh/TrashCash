@@ -298,6 +298,7 @@ Namespace QBStuff
             With payMod
                 .TxnID.SetValue(payObj.TxnID)
                 .EditSequence.SetValue(payObj.EditSequence)
+                .CustomerRef.ListID.SetValue(payObj.CustomerListID)
             End With
 
             ' set applied to txns if not nothing
@@ -392,8 +393,7 @@ Namespace QBStuff
         Public Shared Function PaymentQuery(Optional ByVal listID As String = Nothing, Optional ByVal txnID As String = Nothing,
                                             Optional ByVal fromDate As Date = Nothing, Optional ByVal toDate As Date = Nothing,
                                             Optional ByRef qbConMgr As QBConMgr = Nothing, Optional ByVal responseLimit As Integer = 100,
-                                            Optional ByVal retEleList As List(Of String) = Nothing, Optional ByVal incLinkTxn As Boolean = False,
-                                            Optional ByVal incLineItems As Boolean = False) As IResponse
+                                            Optional ByVal retEleList As List(Of String) = Nothing, Optional ByVal incLineItems As Boolean = False) As IResponse
             Dim query As IReceivePaymentQuery = ConCheck(qbConMgr).MessageSetRequest.AppendReceivePaymentQueryRq
             ' setting high level filters
             With query
@@ -534,7 +534,7 @@ Namespace QBStuff
     End Class
 
     Friend Class QBMethods
-        Private Shared Function ConvertToInvObjs(ByRef resp As IResponse, Optional ByVal newestFirst As Boolean = False) As List(Of QBInvoiceObj)
+        Public Shared Function ConvertToInvObjs(ByRef resp As IResponse, Optional ByVal newestFirst As Boolean = False) As List(Of QBInvoiceObj)
             ' return list
             Dim invObjList As New List(Of QBInvoiceObj)
             ' making sure resp is invoice
@@ -620,7 +620,7 @@ Namespace QBStuff
         ''' <param name="newestFirst">List comes out oldest (by TxnDate) Payment first by default.</param>
         ''' <returns>List (Of QBRecievePaymentObj)</returns>
         ''' <remarks></remarks>
-        Private Overloads Shared Function ConvertToPayObjs(ByRef resp As IResponse, Optional ByVal newestFirst As Boolean = False) As List(Of QBRecievePaymentObj)
+        Public Overloads Shared Function ConvertToPayObjs(ByRef resp As IResponse, Optional ByVal newestFirst As Boolean = False) As List(Of QBRecievePaymentObj)
             ' return list
             Dim payObjList As New List(Of QBRecievePaymentObj)
 
@@ -674,7 +674,7 @@ Namespace QBStuff
             Return payObjList
         End Function
 
-        Private Overloads Shared Function ConvertToPayObjs(ByVal linkObjList As List(Of QBLinkedTxnObj), Optional ByVal newestFirst As Boolean = False) As List(Of QBRecievePaymentObj)
+        Public Overloads Shared Function ConvertToPayObjs(ByVal linkObjList As List(Of QBLinkedTxnObj), Optional ByVal newestFirst As Boolean = False) As List(Of QBRecievePaymentObj)
             ' return list
             Dim payObjList As New List(Of QBRecievePaymentObj)
             ' only need a couple of fields for returning this info so going to limit here
@@ -707,6 +707,8 @@ Namespace QBStuff
                             .PayTypeName = payRet.PaymentMethodRef.FullName.GetValue
                             .UnusedPayment = payRet.UnusedPayment.GetValue
                         End With
+                        'add to list
+                        payObjList.Add(payObj)
                     Next
                 End If
             Next
@@ -810,23 +812,64 @@ Namespace QBStuff
             Return QBRequests.PaymentAdd(payObj, qbConMgr:=ConCheck(qbConMgr), autoApply:=False)
         End Function
 
-        Private Shared Function UseOverpayment(ByRef payObj As QBRecievePaymentObj, ByRef invObj As QBInvoiceObj, Optional ByRef qbConMgr As QBConMgr = Nothing) As IResponse
-            ' going to use passed payObj as mod obj
-            payObj.AppliedInvList.Add(invObj)
-            ' checking how much we can apply
-            If (payObj.UnusedPayment >= invObj.BalanceRemaining) Then
-                invObj.AppliedPaymentAmount = invObj.BalanceRemaining
-                ' update balances
-                invObj.BalanceRemaining = 0
-                payObj.UnusedPayment = payObj.UnusedPayment - invObj.BalanceRemaining
-            Else
-                invObj.AppliedPaymentAmount = payObj.UnusedPayment
-                ' update balances
-                payObj.UnusedPayment = 0
-                invObj.BalanceRemaining = invObj.BalanceRemaining - payObj.UnusedPayment
+        Public Shared Function UseOverpaymentsOnInvoices(ByRef payObjList As List(Of QBRecievePaymentObj), ByRef invObjList As List(Of QBInvoiceObj), Optional ByRef qbConMgr As QBConMgr = Nothing) As Boolean
+            ' err counter
+            Dim err As Integer = 0
+
+            ' checking if new customer has unapplied payments and open invoices we can pay
+            If (payObjList.Count > 0) Then
+                If (invObjList.Count > 0) Then
+                    For Each pay As QBRecievePaymentObj In payObjList
+                        If (pay.UnusedPayment > 0) Then
+                            For Each invObj As QBInvoiceObj In invObjList
+                                If (invObj.BalanceRemaining > 0) Then
+                                    If (pay.AppliedInvList Is Nothing) Then
+                                        pay.AppliedInvList = New List(Of QBInvoiceObj)
+                                    End If
+                                    ' going to use passed payObj as mod obj
+                                    pay.AppliedInvList.Add(invObj)
+                                    ' checking how much we can apply
+                                    If (pay.UnusedPayment >= invObj.BalanceRemaining) Then
+                                        invObj.AppliedPaymentAmount = invObj.BalanceRemaining
+                                        ' update balances
+                                        invObj.BalanceRemaining = 0
+                                        pay.UnusedPayment = pay.UnusedPayment - invObj.BalanceRemaining
+                                    Else
+                                        invObj.AppliedPaymentAmount = pay.UnusedPayment
+                                        ' update balances
+                                        pay.UnusedPayment = 0
+                                        invObj.BalanceRemaining = invObj.BalanceRemaining - pay.UnusedPayment
+                                    End If
+                                    ' send invoice
+                                    Dim resp As IResponse = QBRequests.PaymentMod(pay)
+                                    If (resp.StatusCode = 0) Then
+                                        Dim ret As IReceivePaymentRet = resp.Detail
+                                        Try
+                                            ' attempting to update history edit seq
+                                            Using ta As New ds_PaymentsTableAdapters.PaymentHistory_DBTableAdapter
+                                                ta.UpdateEditSeq(ret.TxnID.GetValue, ret.EditSequence.GetValue)
+                                            End Using
+                                        Catch ex As SqlException
+                                            MessageBox.Show(
+                                                "Message: " & ex.Message & vbCrLf & "LineNumber: " & ex.LineNumber,
+                                                "Sql Error: " & ex.Procedure, MessageBoxButtons.OK, MessageBoxIcon.Error)
+                                        End Try
+                                    Else
+                                        err += 1
+                                        ResponseErr_Misc(resp)
+                                    End If
+                                End If
+                            Next
+                        End If
+                    Next
+                End If
             End If
 
-            Return QBRequests.PaymentMod(payObj, qbConMgr:=ConCheck(qbConMgr))
+            If (err = 0) Then
+                Return True
+            Else
+                Return False
+            End If
         End Function
 
         ''' <summary>
@@ -858,22 +901,14 @@ Namespace QBStuff
             End If
             ' checking for overpayments if invoice has balance
             If (invObj.BalanceRemaining > 0) Then
-                Dim payResp As IResponse = QBRequests.PaymentQuery(listID:=invObj.CustomerListID, incLinkTxn:=True, qbConMgr:=ConCheck(qbConMgr))
+                Dim payResp As IResponse = QBRequests.PaymentQuery(listID:=invObj.CustomerListID, qbConMgr:=ConCheck(qbConMgr))
                 Dim payObjList As List(Of QBRecievePaymentObj) = ConvertToPayObjs(payResp, newestFirst:=newestFundsFirst)
-                If (payObjList.Count > 0) Then
-                    For i = 0 To payObjList.Count - 1
-                        If (invObj.BalanceRemaining > 0) Then
-                            Dim payObj As QBRecievePaymentObj = payObjList(i)
-                            If (payObj.UnusedPayment > 0) Then
-                                Dim resp As IResponse = UseOverpayment(payObj:=payObj, invObj:=invObj, qbConMgr:=ConCheck(qbConMgr))
-                                If (resp.StatusCode <> 0) Then
-                                    ResponseErr_Misc(resp)
-                                End If
-                            End If
-                        Else
-                            Exit For
-                        End If
-                    Next
+                ' putting invoice into a list for overpayment sub
+                Dim invList As New List(Of QBInvoiceObj)
+                invList.Add(invObj)
+                Dim pass As Boolean = UseOverpaymentsOnInvoices(payObjList:=payObjList, invObjList:=invList, qbConMgr:=ConCheck(qbConMgr))
+                If (Not pass) Then
+                    MsgBox("Overpayment use fail on PayInvoice sub. Contact premier.")
                 End If
             End If
         End Sub
@@ -903,6 +938,26 @@ Namespace QBStuff
             End If
         End Sub
 
+
+
+        ' useful function to take a set of invoicews and return the earliest creation date
+        Public Shared Function Invoices_EarliestCreationDate(ByRef invList As List(Of QBInvoiceObj)) As Date
+            ' return date var
+            Dim earliestDate As Date = Nothing
+            For Each inv As QBInvoiceObj In invList
+                Dim invQuery As IInvoiceQuery = GlobalConMgr.MessageSetRequest.AppendInvoiceQueryRq
+                invQuery.ORInvoiceQuery.TxnIDList.Add(inv.TxnID)
+                ' only need creation date back
+                invQuery.IncludeRetElementList.Add("TxnDate")
+                Dim resp As IResponse = GlobalConMgr.GetRespList.GetAt(0)
+                Dim invRet As IInvoiceRet = resp.Detail
+                ' checking if this create date is before the earliest we have so far
+                If (invRet.TimeCreated.GetValue < earliestDate) Then
+                    earliestDate = invRet.TimeCreated.GetValue
+                End If
+            Next
+            Return earliestDate
+        End Function
 
         ' these will take a query and turn it into a combo box pair of name/listid
         Public Overloads Shared Function GetComboBoxPair(ByRef retList As IItemServiceRetList) As List(Of ComboBoxPair)
