@@ -108,7 +108,7 @@ Namespace Classes
                                     End If
                                     ' checking for overpayments if invoice has balance
                                     While invObj.BalanceRemaining > 0
-                                        Dim payResp As IResponse = QBRequests.PaymentQuery(listID:=invObj.CustomerListID, qbConMgr:=ConMgr)
+                                        Dim payResp As IResponse = QBRequests.PaymentQuery(listID:=invObj.CustomerListID, incLinkTxn:=True, qbConMgr:=ConMgr)
                                         Dim payObjList As List(Of QBRecievePaymentObj) = QBMethods.ConvertToPayObjs(payResp)
                                         If (payObjList.Count > 0) Then
                                             Dim i As Integer = 0

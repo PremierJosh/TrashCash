@@ -285,7 +285,7 @@ Namespace QBStuff
                 For Each invObj As QBInvoiceObj In payObj.AppliedInvList
                     Dim appTxn As IAppliedToTxnMod = appTxnList.Append
                     appTxn.TxnID.SetValue(invObj.TxnID)
-                    ' checking if there is an applied amount
+                ' checking if there is an applied amount
                     If (invObj.AppliedPaymentAmount <> Nothing) Then
                         appTxn.PaymentAmount.SetValue(invObj.AppliedPaymentAmount)
                     End If
@@ -615,6 +615,21 @@ Namespace QBStuff
                         .PayTypeName = payRet.PaymentMethodRef.FullName.GetValue
                         .UnusedPayment = payRet.UnusedPayment.GetValue
                     End With
+                    If (payRet.AppliedToTxnRetList IsNot Nothing) Then
+                        payObj.AppliedInvList = New List(Of QBInvoiceObj)
+                        For l = 0 To payRet.AppliedToTxnRetList.Count - 1
+                            Dim appTxnRet As IAppliedToTxnRet = payRet.AppliedToTxnRetList.GetAt(l)
+                            ' only want invoices
+                            If (appTxnRet.TxnType.GetValue = ENTxnType.ttInvoice) Then
+                                Dim appInv As New QBInvoiceObj
+                                appInv.TxnID = appTxnRet.TxnID.GetValue
+                                appInv.AppliedPaymentAmount = appTxnRet.Amount.GetValue
+
+                                ' add to list
+                                payObj.AppliedInvList.Add(appInv)
+                            End If
+                        Next
+                    End If
                 Next
             ElseIf (resp.Type.GetValue = ENResponseType.rtInvoiceQueryRs) Then
                 ' get linked txns from query rs
