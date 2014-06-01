@@ -257,8 +257,9 @@ Namespace Classes
                             worker.ReportProgress(progPercent, progress)
                         End If
 
-                        ' send row
+                        ' send payment to quickbooks through row ref
                         Dim payObj As QBRecievePaymentObj = ReceivePayment(row)
+
                         ' check status
                         If (row.WorkingPaymentsStatus = ENItemStatus.Err) Then
                             ' update err
@@ -343,8 +344,6 @@ Namespace Classes
                     If (recPaymentRet.RefNumber IsNot Nothing) Then
                         payObj.RefNumber = recPaymentRet.RefNumber.GetValue
                     End If
-                    ' i think this goes into the db
-                    row.DateReceived = recPaymentRet.TimeCreated.GetValue.Date
                 Else
                     row.WorkingPaymentsStatus = ENItemStatus.Err
                     Try

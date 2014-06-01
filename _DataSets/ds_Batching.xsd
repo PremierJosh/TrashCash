@@ -54,7 +54,7 @@
               <Mapping SourceColumn="InsertedByUser" DataSetColumn="InsertedByUser" />
             </Mappings>
             <Sources>
-              <DbSource ConnectionRef="QBDBConnectionString (MySettings)" DbObjectName="QuickbooksV2.dbo.WorkingPayments_DeleteByID" DbObjectType="StoredProcedure" GenerateShortCommands="true" GeneratorSourceName="DeleteByID" Modifier="Public" Name="DeleteByID" QueryType="NoData" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetDataBy3" UserSourceName="DeleteByID">
+              <DbSource ConnectionRef="QBDBConnectionString (MySettings)" DbObjectName="QuickbooksV2.dbo.WorkingPayments_DeleteByID" DbObjectType="StoredProcedure" GenerateShortCommands="true" GeneratorSourceName="DeleteByID" Modifier="Public" Name="DeleteByID" QueryType="NoData" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetDataBy" UserSourceName="DeleteByID">
                 <SelectCommand>
                   <DbCommand CommandType="StoredProcedure" ModifiedByUser="false">
                     <CommandText>dbo.WorkingPayments_DeleteByID</CommandText>
@@ -65,7 +65,7 @@
                   </DbCommand>
                 </SelectCommand>
               </DbSource>
-              <DbSource ConnectionRef="QBDBConnectionString (MySettings)" DbObjectName="QuickbooksV2.dbo.WorkingPayments_DeleteComplete" DbObjectType="StoredProcedure" GenerateShortCommands="true" GeneratorSourceName="DeleteComplete" Modifier="Public" Name="DeleteComplete" QueryType="NoData" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetDataBy" UserSourceName="DeleteComplete">
+              <DbSource ConnectionRef="QBDBConnectionString (MySettings)" DbObjectName="QuickbooksV2.dbo.WorkingPayments_DeleteComplete" DbObjectType="StoredProcedure" GenerateShortCommands="true" GeneratorSourceName="DeleteComplete" Modifier="Public" Name="DeleteComplete" QueryType="NoData" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetDataBy1" UserSourceName="DeleteComplete">
                 <SelectCommand>
                   <DbCommand CommandType="StoredProcedure" ModifiedByUser="false">
                     <CommandText>dbo.WorkingPayments_DeleteComplete</CommandText>
@@ -75,7 +75,7 @@
                   </DbCommand>
                 </SelectCommand>
               </DbSource>
-              <DbSource ConnectionRef="QBDBConnectionString (MySettings)" DbObjectName="QuickbooksV2.dbo.ERR_PAYMENTS_Insert" DbObjectType="StoredProcedure" GenerateShortCommands="true" GeneratorSourceName="ERR_PAYMENTS_Insert" Modifier="Public" Name="ERR_PAYMENTS_Insert" QueryType="NoData" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetDataBy1" UserSourceName="ERR_PAYMENTS_Insert">
+              <DbSource ConnectionRef="QBDBConnectionString (MySettings)" DbObjectName="QuickbooksV2.dbo.ERR_PAYMENTS_Insert" DbObjectType="StoredProcedure" GenerateShortCommands="true" GeneratorSourceName="ERR_PAYMENTS_Insert" Modifier="Public" Name="ERR_PAYMENTS_Insert" QueryType="NoData" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetDataBy2" UserSourceName="ERR_PAYMENTS_Insert">
                 <SelectCommand>
                   <DbCommand CommandType="StoredProcedure" ModifiedByUser="false">
                     <CommandText>dbo.ERR_PAYMENTS_Insert</CommandText>
@@ -88,7 +88,7 @@
                   </DbCommand>
                 </SelectCommand>
               </DbSource>
-              <DbSource ConnectionRef="QBDBConnectionString (MySettings)" DbObjectName="QuickbooksV2.dbo.PaymentHistory_Insert" DbObjectType="StoredProcedure" GenerateShortCommands="true" GeneratorSourceName="PaymentHistory_Insert" Modifier="Public" Name="PaymentHistory_Insert" QueryType="NoData" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetDataBy2" UserSourceName="PaymentHistory_Insert">
+              <DbSource ConnectionRef="QBDBConnectionString (MySettings)" DbObjectName="QuickbooksV2.dbo.PaymentHistory_Insert" DbObjectType="StoredProcedure" GenerateShortCommands="true" GeneratorSourceName="PaymentHistory_Insert" Modifier="Public" Name="PaymentHistory_Insert" QueryType="NoData" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetDataBy3" UserSourceName="PaymentHistory_Insert">
                 <SelectCommand>
                   <DbCommand CommandType="StoredProcedure" ModifiedByUser="false">
                     <CommandText>dbo.PaymentHistory_Insert</CommandText>
@@ -166,7 +166,7 @@
               <Mapping SourceColumn="EndBillingDate" DataSetColumn="EndBillingDate" />
             </Mappings>
             <Sources>
-              <DbSource ConnectionRef="QBDBConnectionString (MySettings)" DbObjectName="QuickbooksV2.dbo.WorkingInvoice_DeleteAll" DbObjectType="StoredProcedure" GenerateShortCommands="true" GeneratorSourceName="DeleteAll" Modifier="Public" Name="DeleteAll" QueryType="NoData" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetDataBy2" UserSourceName="DeleteAll">
+              <DbSource ConnectionRef="QBDBConnectionString (MySettings)" DbObjectName="QuickbooksV2.dbo.WorkingInvoice_DeleteAll" DbObjectType="StoredProcedure" GenerateShortCommands="true" GeneratorSourceName="DeleteAll" Modifier="Public" Name="DeleteAll" QueryType="NoData" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetDataBy" UserSourceName="DeleteAll">
                 <SelectCommand>
                   <DbCommand CommandType="StoredProcedure" ModifiedByUser="false">
                     <CommandText>dbo.WorkingInvoice_DeleteAll</CommandText>
@@ -176,7 +176,7 @@
                   </DbCommand>
                 </SelectCommand>
               </DbSource>
-              <DbSource ConnectionRef="QBDBConnectionString (MySettings)" DbObjectName="QuickbooksV2.dbo.WorkingInvoice_DeleteComplete" DbObjectType="StoredProcedure" GenerateShortCommands="true" GeneratorSourceName="DeleteComplete" Modifier="Public" Name="DeleteComplete" QueryType="NoData" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetDataBy" UserSourceName="DeleteComplete">
+              <DbSource ConnectionRef="QBDBConnectionString (MySettings)" DbObjectName="QuickbooksV2.dbo.WorkingInvoice_DeleteComplete" DbObjectType="StoredProcedure" GenerateShortCommands="true" GeneratorSourceName="DeleteComplete" Modifier="Public" Name="DeleteComplete" QueryType="NoData" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetDataBy1" UserSourceName="DeleteComplete">
                 <SelectCommand>
                   <DbCommand CommandType="StoredProcedure" ModifiedByUser="false">
                     <CommandText>dbo.WorkingInvoice_DeleteComplete</CommandText>
@@ -186,7 +186,7 @@
                   </DbCommand>
                 </SelectCommand>
               </DbSource>
-              <DbSource ConnectionRef="QBDBConnectionString (MySettings)" DbObjectName="QuickbooksV2.dbo.ERR_INVOICE_Insert" DbObjectType="StoredProcedure" GenerateShortCommands="true" GeneratorSourceName="ERR_INVOICE_Insert" Modifier="Public" Name="ERR_INVOICE_Insert" QueryType="NoData" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetDataBy1" UserSourceName="ERR_INVOICE_Insert">
+              <DbSource ConnectionRef="QBDBConnectionString (MySettings)" DbObjectName="QuickbooksV2.dbo.ERR_INVOICE_Insert" DbObjectType="StoredProcedure" GenerateShortCommands="true" GeneratorSourceName="ERR_INVOICE_Insert" Modifier="Public" Name="ERR_INVOICE_Insert" QueryType="NoData" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetDataBy2" UserSourceName="ERR_INVOICE_Insert">
                 <SelectCommand>
                   <DbCommand CommandType="StoredProcedure" ModifiedByUser="false">
                     <CommandText>dbo.ERR_INVOICE_Insert</CommandText>
@@ -355,7 +355,7 @@
   <xs:element name="ds_Batching" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="ds_Batching" msprop:Generator_UserDSName="ds_Batching">
     <xs:complexType>
       <xs:choice minOccurs="0" maxOccurs="unbounded">
-        <xs:element name="BATCH_WorkingPayments" msprop:Generator_TableClassName="BATCH_WorkingPaymentsDataTable" msprop:Generator_TableVarName="tableBATCH_WorkingPayments" msprop:Generator_RowChangedName="BATCH_WorkingPaymentsRowChanged" msprop:Generator_TablePropName="BATCH_WorkingPayments" msprop:Generator_RowDeletingName="BATCH_WorkingPaymentsRowDeleting" msprop:Generator_RowChangingName="BATCH_WorkingPaymentsRowChanging" msprop:Generator_RowEvHandlerName="BATCH_WorkingPaymentsRowChangeEventHandler" msprop:Generator_RowDeletedName="BATCH_WorkingPaymentsRowDeleted" msprop:Generator_RowClassName="BATCH_WorkingPaymentsRow" msprop:Generator_UserTableName="BATCH_WorkingPayments" msprop:Generator_RowEvArgName="BATCH_WorkingPaymentsRowChangeEvent">
+        <xs:element name="BATCH_WorkingPayments" msprop:Generator_TableClassName="BATCH_WorkingPaymentsDataTable" msprop:Generator_TableVarName="tableBATCH_WorkingPayments" msprop:Generator_TablePropName="BATCH_WorkingPayments" msprop:Generator_RowDeletingName="BATCH_WorkingPaymentsRowDeleting" msprop:Generator_RowChangingName="BATCH_WorkingPaymentsRowChanging" msprop:Generator_RowEvHandlerName="BATCH_WorkingPaymentsRowChangeEventHandler" msprop:Generator_RowDeletedName="BATCH_WorkingPaymentsRowDeleted" msprop:Generator_UserTableName="BATCH_WorkingPayments" msprop:Generator_RowChangedName="BATCH_WorkingPaymentsRowChanged" msprop:Generator_RowEvArgName="BATCH_WorkingPaymentsRowChangeEvent" msprop:Generator_RowClassName="BATCH_WorkingPaymentsRow">
           <xs:complexType>
             <xs:sequence>
               <xs:element name="WorkingPaymentsID" msdata:ReadOnly="true" msdata:AutoIncrement="true" msdata:AutoIncrementSeed="-1" msdata:AutoIncrementStep="-1" msprop:Generator_ColumnVarNameInTable="columnWorkingPaymentsID" msprop:Generator_ColumnPropNameInRow="WorkingPaymentsID" msprop:Generator_ColumnPropNameInTable="WorkingPaymentsIDColumn" msprop:Generator_UserColumnName="WorkingPaymentsID" type="xs:decimal" />
@@ -390,9 +390,6 @@
                   </xs:restriction>
                 </xs:simpleType>
               </xs:element>
-              <xs:element name="TxnID" msprop:Generator_ColumnVarNameInTable="columnTxnID" msprop:Generator_ColumnPropNameInRow="TxnID" msprop:Generator_ColumnPropNameInTable="TxnIDColumn" msprop:Generator_UserColumnName="TxnID" type="xs:string" minOccurs="0" />
-              <xs:element name="TxnNumber" msprop:nullValue="_null" msprop:Generator_ColumnPropNameInRow="TxnNumber" msprop:Generator_ColumnVarNameInTable="columnTxnNumber" msprop:Generator_ColumnPropNameInTable="TxnNumberColumn" msprop:Generator_UserColumnName="TxnNumber" type="xs:string" minOccurs="0" />
-              <xs:element name="DateReceived" msprop:Generator_ColumnVarNameInTable="columnDateReceived" msprop:Generator_ColumnPropNameInRow="DateReceived" msprop:Generator_ColumnPropNameInTable="DateReceivedColumn" msprop:Generator_UserColumnName="DateReceived" type="xs:dateTime" minOccurs="0" />
               <xs:element name="WorkingPaymentsType" msprop:Generator_ColumnVarNameInTable="columnWorkingPaymentsType" msprop:Generator_ColumnPropNameInRow="WorkingPaymentsType" msprop:Generator_ColumnPropNameInTable="WorkingPaymentsTypeColumn" msprop:Generator_UserColumnName="WorkingPaymentsType" type="xs:decimal" />
               <xs:element name="TIME_RECEIVED" msprop:Generator_ColumnVarNameInTable="columnTIME_RECEIVED" msprop:Generator_ColumnPropNameInRow="TIME_RECEIVED" msprop:Generator_ColumnPropNameInTable="TIME_RECEIVEDColumn" msprop:Generator_UserColumnName="TIME_RECEIVED" type="xs:dateTime" />
               <xs:element name="DATE_ON_CHECK" msprop:Generator_ColumnVarNameInTable="columnDATE_ON_CHECK" msprop:Generator_ColumnPropNameInRow="DATE_ON_CHECK" msprop:Generator_ColumnPropNameInTable="DATE_ON_CHECKColumn" msprop:Generator_UserColumnName="DATE_ON_CHECK" type="xs:dateTime" minOccurs="0" />
@@ -407,7 +404,7 @@
             </xs:sequence>
           </xs:complexType>
         </xs:element>
-        <xs:element name="BATCH_WorkingInvoice" msprop:Generator_TableClassName="BATCH_WorkingInvoiceDataTable" msprop:Generator_TableVarName="tableBATCH_WorkingInvoice" msprop:Generator_RowChangedName="BATCH_WorkingInvoiceRowChanged" msprop:Generator_TablePropName="BATCH_WorkingInvoice" msprop:Generator_RowDeletingName="BATCH_WorkingInvoiceRowDeleting" msprop:Generator_RowChangingName="BATCH_WorkingInvoiceRowChanging" msprop:Generator_RowEvHandlerName="BATCH_WorkingInvoiceRowChangeEventHandler" msprop:Generator_RowDeletedName="BATCH_WorkingInvoiceRowDeleted" msprop:Generator_RowClassName="BATCH_WorkingInvoiceRow" msprop:Generator_UserTableName="BATCH_WorkingInvoice" msprop:Generator_RowEvArgName="BATCH_WorkingInvoiceRowChangeEvent">
+        <xs:element name="BATCH_WorkingInvoice" msprop:Generator_TableClassName="BATCH_WorkingInvoiceDataTable" msprop:Generator_TableVarName="tableBATCH_WorkingInvoice" msprop:Generator_TablePropName="BATCH_WorkingInvoice" msprop:Generator_RowDeletingName="BATCH_WorkingInvoiceRowDeleting" msprop:Generator_RowChangingName="BATCH_WorkingInvoiceRowChanging" msprop:Generator_RowEvHandlerName="BATCH_WorkingInvoiceRowChangeEventHandler" msprop:Generator_RowDeletedName="BATCH_WorkingInvoiceRowDeleted" msprop:Generator_UserTableName="BATCH_WorkingInvoice" msprop:Generator_RowChangedName="BATCH_WorkingInvoiceRowChanged" msprop:Generator_RowEvArgName="BATCH_WorkingInvoiceRowChangeEvent" msprop:Generator_RowClassName="BATCH_WorkingInvoiceRow">
           <xs:complexType>
             <xs:sequence>
               <xs:element name="WorkingInvoiceID" msdata:ReadOnly="true" msdata:AutoIncrement="true" msdata:AutoIncrementSeed="-1" msdata:AutoIncrementStep="-1" msprop:Generator_ColumnVarNameInTable="columnWorkingInvoiceID" msprop:Generator_ColumnPropNameInRow="WorkingInvoiceID" msprop:Generator_ColumnPropNameInTable="WorkingInvoiceIDColumn" msprop:Generator_UserColumnName="WorkingInvoiceID" type="xs:decimal" />
@@ -431,9 +428,6 @@
                   </xs:restriction>
                 </xs:simpleType>
               </xs:element>
-              <xs:element name="_InvTxnID" msprop:Generator_ColumnVarNameInTable="column_InvTxnID" msprop:Generator_ColumnPropNameInRow="_InvTxnID" msprop:Generator_ColumnPropNameInTable="_InvTxnIDColumn" msprop:Generator_UserColumnName="_InvTxnID" type="xs:string" minOccurs="0" />
-              <xs:element name="_InvRefNum" msprop:Generator_ColumnVarNameInTable="column_InvRefNum" msprop:Generator_ColumnPropNameInRow="_InvRefNum" msprop:Generator_ColumnPropNameInTable="_InvRefNumColumn" msprop:Generator_UserColumnName="_InvRefNum" type="xs:string" minOccurs="0" />
-              <xs:element name="InvoiceBalance" msprop:Generator_ColumnVarNameInTable="columnInvoiceBalance" msprop:Generator_ColumnPropNameInRow="InvoiceBalance" msprop:Generator_ColumnPropNameInTable="InvoiceBalanceColumn" msprop:Generator_UserColumnName="InvoiceBalance" type="xs:double" minOccurs="0" />
               <xs:element name="CustomerFullName" msprop:Generator_ColumnVarNameInTable="columnCustomerFullName" msprop:Generator_ColumnPropNameInRow="CustomerFullName" msprop:Generator_ColumnPropNameInTable="CustomerFullNameColumn" msprop:Generator_UserColumnName="CustomerFullName" minOccurs="0">
                 <xs:simpleType>
                   <xs:restriction base="xs:string">
@@ -447,7 +441,7 @@
             </xs:sequence>
           </xs:complexType>
         </xs:element>
-        <xs:element name="BATCH_LineItems" msprop:Generator_TableClassName="BATCH_LineItemsDataTable" msprop:Generator_TableVarName="tableBATCH_LineItems" msprop:Generator_RowChangedName="BATCH_LineItemsRowChanged" msprop:Generator_TablePropName="BATCH_LineItems" msprop:Generator_RowDeletingName="BATCH_LineItemsRowDeleting" msprop:Generator_RowChangingName="BATCH_LineItemsRowChanging" msprop:Generator_RowEvHandlerName="BATCH_LineItemsRowChangeEventHandler" msprop:Generator_RowDeletedName="BATCH_LineItemsRowDeleted" msprop:Generator_RowClassName="BATCH_LineItemsRow" msprop:Generator_UserTableName="BATCH_LineItems" msprop:Generator_RowEvArgName="BATCH_LineItemsRowChangeEvent">
+        <xs:element name="BATCH_LineItems" msprop:Generator_TableClassName="BATCH_LineItemsDataTable" msprop:Generator_TableVarName="tableBATCH_LineItems" msprop:Generator_TablePropName="BATCH_LineItems" msprop:Generator_RowDeletingName="BATCH_LineItemsRowDeleting" msprop:Generator_RowChangingName="BATCH_LineItemsRowChanging" msprop:Generator_RowEvHandlerName="BATCH_LineItemsRowChangeEventHandler" msprop:Generator_RowDeletedName="BATCH_LineItemsRowDeleted" msprop:Generator_UserTableName="BATCH_LineItems" msprop:Generator_RowChangedName="BATCH_LineItemsRowChanged" msprop:Generator_RowEvArgName="BATCH_LineItemsRowChangeEvent" msprop:Generator_RowClassName="BATCH_LineItemsRow">
           <xs:complexType>
             <xs:sequence>
               <xs:element name="LineItemID" msdata:ReadOnly="true" msdata:AutoIncrement="true" msdata:AutoIncrementSeed="-1" msdata:AutoIncrementStep="-1" msprop:Generator_ColumnVarNameInTable="columnLineItemID" msprop:Generator_ColumnPropNameInRow="LineItemID" msprop:Generator_ColumnPropNameInTable="LineItemIDColumn" msprop:Generator_UserColumnName="LineItemID" type="xs:decimal" />
@@ -470,7 +464,6 @@
                   </xs:restriction>
                 </xs:simpleType>
               </xs:element>
-              <xs:element name="_LineTxnID" msprop:Generator_ColumnVarNameInTable="column_LineTxnID" msprop:Generator_ColumnPropNameInRow="_LineTxnID" msprop:Generator_ColumnPropNameInTable="_LineTxnIDColumn" msprop:Generator_UserColumnName="_LineTxnID" type="xs:string" minOccurs="0" />
             </xs:sequence>
           </xs:complexType>
         </xs:element>

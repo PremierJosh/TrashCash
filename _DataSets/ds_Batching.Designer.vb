@@ -369,12 +369,6 @@ Partial Public Class ds_Batching
         
         Private columnCustomerFullName As Global.System.Data.DataColumn
         
-        Private columnTxnID As Global.System.Data.DataColumn
-        
-        Private columnTxnNumber As Global.System.Data.DataColumn
-        
-        Private columnDateReceived As Global.System.Data.DataColumn
-        
         Private columnWorkingPaymentsType As Global.System.Data.DataColumn
         
         Private columnTIME_RECEIVED As Global.System.Data.DataColumn
@@ -486,30 +480,6 @@ Partial Public Class ds_Batching
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public ReadOnly Property TxnIDColumn() As Global.System.Data.DataColumn
-            Get
-                Return Me.columnTxnID
-            End Get
-        End Property
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public ReadOnly Property TxnNumberColumn() As Global.System.Data.DataColumn
-            Get
-                Return Me.columnTxnNumber
-            End Get
-        End Property
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public ReadOnly Property DateReceivedColumn() As Global.System.Data.DataColumn
-            Get
-                Return Me.columnDateReceived
-            End Get
-        End Property
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
         Public ReadOnly Property WorkingPaymentsTypeColumn() As Global.System.Data.DataColumn
             Get
                 Return Me.columnWorkingPaymentsType
@@ -585,9 +555,9 @@ Partial Public Class ds_Batching
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Overloads Function AddBATCH_WorkingPaymentsRow(ByVal CustomerNumber As Decimal, ByVal WorkingPaymentsAmount As Decimal, ByVal WorkingPaymentsCheckNum As String, ByVal WorkingPaymentsStatus As Byte, ByVal CustomerListID As String, ByVal QB_REFRENCE As String, ByVal CustomerFullName As String, ByVal TxnID As String, ByVal TxnNumber As String, ByVal DateReceived As Date, ByVal WorkingPaymentsType As Decimal, ByVal TIME_RECEIVED As Date, ByVal DATE_ON_CHECK As Date, ByVal InsertedByUser As String, ByVal EditSequence As String) As BATCH_WorkingPaymentsRow
+        Public Overloads Function AddBATCH_WorkingPaymentsRow(ByVal CustomerNumber As Decimal, ByVal WorkingPaymentsAmount As Decimal, ByVal WorkingPaymentsCheckNum As String, ByVal WorkingPaymentsStatus As Byte, ByVal CustomerListID As String, ByVal QB_REFRENCE As String, ByVal CustomerFullName As String, ByVal WorkingPaymentsType As Decimal, ByVal TIME_RECEIVED As Date, ByVal DATE_ON_CHECK As Date, ByVal InsertedByUser As String, ByVal EditSequence As String) As BATCH_WorkingPaymentsRow
             Dim rowBATCH_WorkingPaymentsRow As BATCH_WorkingPaymentsRow = CType(Me.NewRow,BATCH_WorkingPaymentsRow)
-            Dim columnValuesArray() As Object = New Object() {Nothing, CustomerNumber, WorkingPaymentsAmount, WorkingPaymentsCheckNum, WorkingPaymentsStatus, CustomerListID, QB_REFRENCE, CustomerFullName, TxnID, TxnNumber, DateReceived, WorkingPaymentsType, TIME_RECEIVED, DATE_ON_CHECK, InsertedByUser, EditSequence}
+            Dim columnValuesArray() As Object = New Object() {Nothing, CustomerNumber, WorkingPaymentsAmount, WorkingPaymentsCheckNum, WorkingPaymentsStatus, CustomerListID, QB_REFRENCE, CustomerFullName, WorkingPaymentsType, TIME_RECEIVED, DATE_ON_CHECK, InsertedByUser, EditSequence}
             rowBATCH_WorkingPaymentsRow.ItemArray = columnValuesArray
             Me.Rows.Add(rowBATCH_WorkingPaymentsRow)
             Return rowBATCH_WorkingPaymentsRow
@@ -624,9 +594,6 @@ Partial Public Class ds_Batching
             Me.columnCustomerListID = MyBase.Columns("CustomerListID")
             Me.columnQB_REFRENCE = MyBase.Columns("QB_REFRENCE")
             Me.columnCustomerFullName = MyBase.Columns("CustomerFullName")
-            Me.columnTxnID = MyBase.Columns("TxnID")
-            Me.columnTxnNumber = MyBase.Columns("TxnNumber")
-            Me.columnDateReceived = MyBase.Columns("DateReceived")
             Me.columnWorkingPaymentsType = MyBase.Columns("WorkingPaymentsType")
             Me.columnTIME_RECEIVED = MyBase.Columns("TIME_RECEIVED")
             Me.columnDATE_ON_CHECK = MyBase.Columns("DATE_ON_CHECK")
@@ -653,12 +620,6 @@ Partial Public Class ds_Batching
             MyBase.Columns.Add(Me.columnQB_REFRENCE)
             Me.columnCustomerFullName = New Global.System.Data.DataColumn("CustomerFullName", GetType(String), Nothing, Global.System.Data.MappingType.Element)
             MyBase.Columns.Add(Me.columnCustomerFullName)
-            Me.columnTxnID = New Global.System.Data.DataColumn("TxnID", GetType(String), Nothing, Global.System.Data.MappingType.Element)
-            MyBase.Columns.Add(Me.columnTxnID)
-            Me.columnTxnNumber = New Global.System.Data.DataColumn("TxnNumber", GetType(String), Nothing, Global.System.Data.MappingType.Element)
-            MyBase.Columns.Add(Me.columnTxnNumber)
-            Me.columnDateReceived = New Global.System.Data.DataColumn("DateReceived", GetType(Date), Nothing, Global.System.Data.MappingType.Element)
-            MyBase.Columns.Add(Me.columnDateReceived)
             Me.columnWorkingPaymentsType = New Global.System.Data.DataColumn("WorkingPaymentsType", GetType(Decimal), Nothing, Global.System.Data.MappingType.Element)
             MyBase.Columns.Add(Me.columnWorkingPaymentsType)
             Me.columnTIME_RECEIVED = New Global.System.Data.DataColumn("TIME_RECEIVED", GetType(Date), Nothing, Global.System.Data.MappingType.Element)
@@ -842,12 +803,6 @@ Partial Public Class ds_Batching
         
         Private columnCustomerListID As Global.System.Data.DataColumn
         
-        Private column_InvTxnID As Global.System.Data.DataColumn
-        
-        Private column_InvRefNum As Global.System.Data.DataColumn
-        
-        Private columnInvoiceBalance As Global.System.Data.DataColumn
-        
         Private columnCustomerFullName As Global.System.Data.DataColumn
         
         Private columnTotal As Global.System.Data.DataColumn
@@ -965,30 +920,6 @@ Partial Public Class ds_Batching
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public ReadOnly Property _InvTxnIDColumn() As Global.System.Data.DataColumn
-            Get
-                Return Me.column_InvTxnID
-            End Get
-        End Property
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public ReadOnly Property _InvRefNumColumn() As Global.System.Data.DataColumn
-            Get
-                Return Me.column_InvRefNum
-            End Get
-        End Property
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public ReadOnly Property InvoiceBalanceColumn() As Global.System.Data.DataColumn
-            Get
-                Return Me.columnInvoiceBalance
-            End Get
-        End Property
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
         Public ReadOnly Property CustomerFullNameColumn() As Global.System.Data.DataColumn
             Get
                 Return Me.columnCustomerFullName
@@ -1056,9 +987,9 @@ Partial Public Class ds_Batching
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Overloads Function AddBATCH_WorkingInvoiceRow(ByVal CustomerNumber As Decimal, ByVal InvoiceDueDate As Date, ByVal InvoicePostDate As Date, ByVal InvoiceToBePrinted As Boolean, ByVal InvoiceStatus As Byte, ByVal InvoiceMemo As String, ByVal IsRecurring As Boolean, ByVal CustomerListID As String, ByVal _InvTxnID As String, ByVal _InvRefNum As String, ByVal InvoiceBalance As Double, ByVal CustomerFullName As String, ByVal Total As Decimal, ByVal StartBillingDate As Date, ByVal EndBillingDate As Date) As BATCH_WorkingInvoiceRow
+        Public Overloads Function AddBATCH_WorkingInvoiceRow(ByVal CustomerNumber As Decimal, ByVal InvoiceDueDate As Date, ByVal InvoicePostDate As Date, ByVal InvoiceToBePrinted As Boolean, ByVal InvoiceStatus As Byte, ByVal InvoiceMemo As String, ByVal IsRecurring As Boolean, ByVal CustomerListID As String, ByVal CustomerFullName As String, ByVal Total As Decimal, ByVal StartBillingDate As Date, ByVal EndBillingDate As Date) As BATCH_WorkingInvoiceRow
             Dim rowBATCH_WorkingInvoiceRow As BATCH_WorkingInvoiceRow = CType(Me.NewRow,BATCH_WorkingInvoiceRow)
-            Dim columnValuesArray() As Object = New Object() {Nothing, CustomerNumber, InvoiceDueDate, InvoicePostDate, InvoiceToBePrinted, InvoiceStatus, InvoiceMemo, IsRecurring, CustomerListID, _InvTxnID, _InvRefNum, InvoiceBalance, CustomerFullName, Total, StartBillingDate, EndBillingDate}
+            Dim columnValuesArray() As Object = New Object() {Nothing, CustomerNumber, InvoiceDueDate, InvoicePostDate, InvoiceToBePrinted, InvoiceStatus, InvoiceMemo, IsRecurring, CustomerListID, CustomerFullName, Total, StartBillingDate, EndBillingDate}
             rowBATCH_WorkingInvoiceRow.ItemArray = columnValuesArray
             Me.Rows.Add(rowBATCH_WorkingInvoiceRow)
             Return rowBATCH_WorkingInvoiceRow
@@ -1096,9 +1027,6 @@ Partial Public Class ds_Batching
             Me.columnInvoiceMemo = MyBase.Columns("InvoiceMemo")
             Me.columnIsRecurring = MyBase.Columns("IsRecurring")
             Me.columnCustomerListID = MyBase.Columns("CustomerListID")
-            Me.column_InvTxnID = MyBase.Columns("_InvTxnID")
-            Me.column_InvRefNum = MyBase.Columns("_InvRefNum")
-            Me.columnInvoiceBalance = MyBase.Columns("InvoiceBalance")
             Me.columnCustomerFullName = MyBase.Columns("CustomerFullName")
             Me.columnTotal = MyBase.Columns("Total")
             Me.columnStartBillingDate = MyBase.Columns("StartBillingDate")
@@ -1126,12 +1054,6 @@ Partial Public Class ds_Batching
             MyBase.Columns.Add(Me.columnIsRecurring)
             Me.columnCustomerListID = New Global.System.Data.DataColumn("CustomerListID", GetType(String), Nothing, Global.System.Data.MappingType.Element)
             MyBase.Columns.Add(Me.columnCustomerListID)
-            Me.column_InvTxnID = New Global.System.Data.DataColumn("_InvTxnID", GetType(String), Nothing, Global.System.Data.MappingType.Element)
-            MyBase.Columns.Add(Me.column_InvTxnID)
-            Me.column_InvRefNum = New Global.System.Data.DataColumn("_InvRefNum", GetType(String), Nothing, Global.System.Data.MappingType.Element)
-            MyBase.Columns.Add(Me.column_InvRefNum)
-            Me.columnInvoiceBalance = New Global.System.Data.DataColumn("InvoiceBalance", GetType(Double), Nothing, Global.System.Data.MappingType.Element)
-            MyBase.Columns.Add(Me.columnInvoiceBalance)
             Me.columnCustomerFullName = New Global.System.Data.DataColumn("CustomerFullName", GetType(String), Nothing, Global.System.Data.MappingType.Element)
             MyBase.Columns.Add(Me.columnCustomerFullName)
             Me.columnTotal = New Global.System.Data.DataColumn("Total", GetType(Decimal), Nothing, Global.System.Data.MappingType.Element)
@@ -1310,8 +1232,6 @@ Partial Public Class ds_Batching
         
         Private columnDescription As Global.System.Data.DataColumn
         
-        Private column_LineTxnID As Global.System.Data.DataColumn
-        
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
         Public Sub New()
@@ -1412,14 +1332,6 @@ Partial Public Class ds_Batching
         End Property
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public ReadOnly Property _LineTxnIDColumn() As Global.System.Data.DataColumn
-            Get
-                Return Me.column_LineTxnID
-            End Get
-        End Property
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0"),  _
          Global.System.ComponentModel.Browsable(false)>  _
         Public ReadOnly Property Count() As Integer
@@ -1456,9 +1368,9 @@ Partial Public Class ds_Batching
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Overloads Function AddBATCH_LineItemsRow(ByVal LineItemRate As Decimal, ByVal LineItemQuantity As Byte, ByVal RecurringServiceID As Decimal, ByVal StartBillingDate As Date, ByVal EndBillingDate As Date, ByVal ServiceListID As String, ByVal Description As String, ByVal _LineTxnID As String) As BATCH_LineItemsRow
+        Public Overloads Function AddBATCH_LineItemsRow(ByVal LineItemRate As Decimal, ByVal LineItemQuantity As Byte, ByVal RecurringServiceID As Decimal, ByVal StartBillingDate As Date, ByVal EndBillingDate As Date, ByVal ServiceListID As String, ByVal Description As String) As BATCH_LineItemsRow
             Dim rowBATCH_LineItemsRow As BATCH_LineItemsRow = CType(Me.NewRow,BATCH_LineItemsRow)
-            Dim columnValuesArray() As Object = New Object() {Nothing, LineItemRate, LineItemQuantity, RecurringServiceID, StartBillingDate, EndBillingDate, ServiceListID, Description, _LineTxnID}
+            Dim columnValuesArray() As Object = New Object() {Nothing, LineItemRate, LineItemQuantity, RecurringServiceID, StartBillingDate, EndBillingDate, ServiceListID, Description}
             rowBATCH_LineItemsRow.ItemArray = columnValuesArray
             Me.Rows.Add(rowBATCH_LineItemsRow)
             Return rowBATCH_LineItemsRow
@@ -1495,7 +1407,6 @@ Partial Public Class ds_Batching
             Me.columnEndBillingDate = MyBase.Columns("EndBillingDate")
             Me.columnServiceListID = MyBase.Columns("ServiceListID")
             Me.columnDescription = MyBase.Columns("Description")
-            Me.column_LineTxnID = MyBase.Columns("_LineTxnID")
         End Sub
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
@@ -1517,8 +1428,6 @@ Partial Public Class ds_Batching
             MyBase.Columns.Add(Me.columnServiceListID)
             Me.columnDescription = New Global.System.Data.DataColumn("Description", GetType(String), Nothing, Global.System.Data.MappingType.Element)
             MyBase.Columns.Add(Me.columnDescription)
-            Me.column_LineTxnID = New Global.System.Data.DataColumn("_LineTxnID", GetType(String), Nothing, Global.System.Data.MappingType.Element)
-            MyBase.Columns.Add(Me.column_LineTxnID)
             Me.Constraints.Add(New Global.System.Data.UniqueConstraint("Constraint1", New Global.System.Data.DataColumn() {Me.columnLineItemID}, true))
             Me.columnLineItemID.AutoIncrement = true
             Me.columnLineItemID.AutoIncrementSeed = -1
@@ -1780,51 +1689,6 @@ Partial Public Class ds_Batching
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Property TxnID() As String
-            Get
-                Try 
-                    Return CType(Me(Me.tableBATCH_WorkingPayments.TxnIDColumn),String)
-                Catch e As Global.System.InvalidCastException
-                    Throw New Global.System.Data.StrongTypingException("The value for column 'TxnID' in table 'BATCH_WorkingPayments' is DBNull.", e)
-                End Try
-            End Get
-            Set
-                Me(Me.tableBATCH_WorkingPayments.TxnIDColumn) = value
-            End Set
-        End Property
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Property TxnNumber() As String
-            Get
-                If Me.IsTxnNumberNull Then
-                    Return Nothing
-                Else
-                    Return CType(Me(Me.tableBATCH_WorkingPayments.TxnNumberColumn),String)
-                End If
-            End Get
-            Set
-                Me(Me.tableBATCH_WorkingPayments.TxnNumberColumn) = value
-            End Set
-        End Property
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Property DateReceived() As Date
-            Get
-                Try 
-                    Return CType(Me(Me.tableBATCH_WorkingPayments.DateReceivedColumn),Date)
-                Catch e As Global.System.InvalidCastException
-                    Throw New Global.System.Data.StrongTypingException("The value for column 'DateReceived' in table 'BATCH_WorkingPayments' is DBNull.", e)
-                End Try
-            End Get
-            Set
-                Me(Me.tableBATCH_WorkingPayments.DateReceivedColumn) = value
-            End Set
-        End Property
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
         Public Property WorkingPaymentsType() As Decimal
             Get
                 Return CType(Me(Me.tableBATCH_WorkingPayments.WorkingPaymentsTypeColumn),Decimal)
@@ -1925,42 +1789,6 @@ Partial Public Class ds_Batching
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
         Public Sub SetCustomerFullNameNull()
             Me(Me.tableBATCH_WorkingPayments.CustomerFullNameColumn) = Global.System.Convert.DBNull
-        End Sub
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Function IsTxnIDNull() As Boolean
-            Return Me.IsNull(Me.tableBATCH_WorkingPayments.TxnIDColumn)
-        End Function
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Sub SetTxnIDNull()
-            Me(Me.tableBATCH_WorkingPayments.TxnIDColumn) = Global.System.Convert.DBNull
-        End Sub
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Function IsTxnNumberNull() As Boolean
-            Return Me.IsNull(Me.tableBATCH_WorkingPayments.TxnNumberColumn)
-        End Function
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Sub SetTxnNumberNull()
-            Me(Me.tableBATCH_WorkingPayments.TxnNumberColumn) = Global.System.Convert.DBNull
-        End Sub
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Function IsDateReceivedNull() As Boolean
-            Return Me.IsNull(Me.tableBATCH_WorkingPayments.DateReceivedColumn)
-        End Function
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Sub SetDateReceivedNull()
-            Me(Me.tableBATCH_WorkingPayments.DateReceivedColumn) = Global.System.Convert.DBNull
         End Sub
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
@@ -2133,51 +1961,6 @@ Partial Public Class ds_Batching
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Property _InvTxnID() As String
-            Get
-                Try 
-                    Return CType(Me(Me.tableBATCH_WorkingInvoice._InvTxnIDColumn),String)
-                Catch e As Global.System.InvalidCastException
-                    Throw New Global.System.Data.StrongTypingException("The value for column '_InvTxnID' in table 'BATCH_WorkingInvoice' is DBNull.", e)
-                End Try
-            End Get
-            Set
-                Me(Me.tableBATCH_WorkingInvoice._InvTxnIDColumn) = value
-            End Set
-        End Property
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Property _InvRefNum() As String
-            Get
-                Try 
-                    Return CType(Me(Me.tableBATCH_WorkingInvoice._InvRefNumColumn),String)
-                Catch e As Global.System.InvalidCastException
-                    Throw New Global.System.Data.StrongTypingException("The value for column '_InvRefNum' in table 'BATCH_WorkingInvoice' is DBNull.", e)
-                End Try
-            End Get
-            Set
-                Me(Me.tableBATCH_WorkingInvoice._InvRefNumColumn) = value
-            End Set
-        End Property
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Property InvoiceBalance() As Double
-            Get
-                Try 
-                    Return CType(Me(Me.tableBATCH_WorkingInvoice.InvoiceBalanceColumn),Double)
-                Catch e As Global.System.InvalidCastException
-                    Throw New Global.System.Data.StrongTypingException("The value for column 'InvoiceBalance' in table 'BATCH_WorkingInvoice' is DBNull.", e)
-                End Try
-            End Get
-            Set
-                Me(Me.tableBATCH_WorkingInvoice.InvoiceBalanceColumn) = value
-            End Set
-        End Property
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
         Public Property CustomerFullName() As String
             Get
                 Try 
@@ -2284,42 +2067,6 @@ Partial Public Class ds_Batching
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
         Public Sub SetCustomerListIDNull()
             Me(Me.tableBATCH_WorkingInvoice.CustomerListIDColumn) = Global.System.Convert.DBNull
-        End Sub
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Function Is_InvTxnIDNull() As Boolean
-            Return Me.IsNull(Me.tableBATCH_WorkingInvoice._InvTxnIDColumn)
-        End Function
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Sub Set_InvTxnIDNull()
-            Me(Me.tableBATCH_WorkingInvoice._InvTxnIDColumn) = Global.System.Convert.DBNull
-        End Sub
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Function Is_InvRefNumNull() As Boolean
-            Return Me.IsNull(Me.tableBATCH_WorkingInvoice._InvRefNumColumn)
-        End Function
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Sub Set_InvRefNumNull()
-            Me(Me.tableBATCH_WorkingInvoice._InvRefNumColumn) = Global.System.Convert.DBNull
-        End Sub
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Function IsInvoiceBalanceNull() As Boolean
-            Return Me.IsNull(Me.tableBATCH_WorkingInvoice.InvoiceBalanceColumn)
-        End Function
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Sub SetInvoiceBalanceNull()
-            Me(Me.tableBATCH_WorkingInvoice.InvoiceBalanceColumn) = Global.System.Convert.DBNull
         End Sub
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
@@ -2496,21 +2243,6 @@ Partial Public Class ds_Batching
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Property _LineTxnID() As String
-            Get
-                Try 
-                    Return CType(Me(Me.tableBATCH_LineItems._LineTxnIDColumn),String)
-                Catch e As Global.System.InvalidCastException
-                    Throw New Global.System.Data.StrongTypingException("The value for column '_LineTxnID' in table 'BATCH_LineItems' is DBNull.", e)
-                End Try
-            End Get
-            Set
-                Me(Me.tableBATCH_LineItems._LineTxnIDColumn) = value
-            End Set
-        End Property
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
         Public Function IsRecurringServiceIDNull() As Boolean
             Return Me.IsNull(Me.tableBATCH_LineItems.RecurringServiceIDColumn)
         End Function
@@ -2567,18 +2299,6 @@ Partial Public Class ds_Batching
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
         Public Sub SetDescriptionNull()
             Me(Me.tableBATCH_LineItems.DescriptionColumn) = Global.System.Convert.DBNull
-        End Sub
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Function Is_LineTxnIDNull() As Boolean
-            Return Me.IsNull(Me.tableBATCH_LineItems._LineTxnIDColumn)
-        End Function
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Sub Set_LineTxnIDNull()
-            Me(Me.tableBATCH_LineItems._LineTxnIDColumn) = Global.System.Convert.DBNull
         End Sub
     End Class
     
