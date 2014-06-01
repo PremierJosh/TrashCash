@@ -724,20 +724,16 @@ Namespace QBStuff
         Public Shared Function ConvertToCreditObjs(ByRef resp As IResponse, Optional ByVal newestFirst As Boolean = False) As List(Of QBCreditObj)
             ' return list
             Dim creditObjList As New List(Of QBCreditObj)
-
-            Dim creditRetList As ICreditMemoRetList = resp.Detail
-            For i = 0 To creditRetList.Count - 1
-                Dim creditRet As ICreditMemoRet = creditRetList.GetAt(i)
-                Dim creditObj As New QBCreditObj
-                With creditObj
-                    .TxnID = creditRet.TxnID.GetValue
-                    .EditSequence = creditRet.EditSequence.GetValue
-                    .TotalAmount = creditRet.TotalAmount.GetValue
-                    .CreditRemaining = creditRet.CreditRemaining.GetValue
-                End With
+            If (resp.Type.GetValue = ENResponseType.rtCreditMemoQueryRs) Then
+                Dim creditRetList As ICreditMemoRetList = resp.Detail
+                For i = 0 To creditRetList.Count - 1
+                    ' add to ret list
+                    creditObjList.Add(ConvertToCreditObj(creditRetList.GetAt(i)))
+                Next
+            ElseIf (resp.Type.GetValue = ENResponseType.rtCreditMemoAddRs) Then
                 ' add to ret list
-                creditObjList.Add(creditObj)
-            Next
+                creditObjList.Add(ConvertToCreditObj(resp.Detail))
+            End If
 
             If (newestFirst) Then
                 creditObjList.Reverse()
@@ -745,7 +741,19 @@ Namespace QBStuff
             Return creditObjList
         End Function
 
-        Public Shared Function UseCredit(ByRef invObj As QBInvoiceObj, ByRef creditObj As QBCreditObj, Optional ByRef qbConMgr As QBConMgr = Nothing) As IResponse
+        Public Shared Function ConvertToCreditObj(ByRef creditRet As ICreditMemoRet) As QBCreditObj
+            Dim creditObj As New QBCreditObj
+            With creditObj
+                .TxnID = creditRet.TxnID.GetValue
+                .EditSequence = creditRet.EditSequence.GetValue
+                .TotalAmount = creditRet.TotalAmount.GetValue
+                .CreditRemaining = creditRet.CreditRemaining.GetValue
+                .CustomerListID = creditRet.CustomerRef.ListID.GetValue
+            End With
+            Return creditObj
+        End Function
+
+        Public Shared Function UseCredit(ByRef creditObj As QBCreditObj, ByRef invObj As QBInvoiceObj, Optional ByRef qbConMgr As QBConMgr = Nothing) As IResponse
             ' creating payment to apply
             Dim payObj As New QBRecievePaymentObj
             ' setting to customer thats on the invoice
@@ -841,6 +849,25 @@ Namespace QBStuff
                 End If
             End If
         End Sub
+
+        Public Shared Sub UseCredit_Auto(ByRef creditObj As QBCreditObj, Optional ByVal newestFirst As Boolean = False, Optional ByRef qbConMgr As QBConMgr = Nothing)
+            ' getting list of unpaid invoices
+            Dim qResp As IResponse = QBRequests.InvoiceQuery(listID:=creditObj.CustomerListID, paidStatus:=ENPaidStatus.psNotPaidOnly, qbConMgr:=ConCheck(qbConMgr))
+            Dim invObjList As List(Of QBInvoiceObj) = QBMethods.ConvertToInvObjs(qResp, newestFirst:=newestFirst)
+            If (invObjList.Count > 0) Then
+                For i = 0 To invObjList.Count - 1
+                    If (creditObj.CreditRemaining > 0) Then
+                        Dim resp As IResponse = QBMethods.UseCredit(creditObj, invObjList.Item(i), ConCheck(qbConMgr))
+                        If (resp.StatusCode <> 0) Then
+                            ResponseErr_Misc(resp)
+                        End If
+                    Else
+                        Exit For
+                    End If
+                Next
+            End If
+        End Sub
+
 
         ' these will take a query and turn it into a combo box pair of name/listid
         Public Overloads Shared Function GetComboBoxPair(ByRef retList As IItemServiceRetList) As List(Of ComboBoxPair)

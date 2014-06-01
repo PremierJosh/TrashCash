@@ -112,7 +112,7 @@ Namespace Customer
         End Sub
 
         Private Sub btn_Credit_Click(sender As System.Object, e As System.EventArgs) Handles btn_Credit.Click
-            _creditForm = New CustomerCredit(_home, CurrentCustomer)
+            _creditForm = New CustomerCredit(CurrentCustomer)
             _creditForm.ShowDialog()
         End Sub
 

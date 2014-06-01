@@ -26,11 +26,7 @@ Namespace Classes
             MessageSetRequest = SessionManager.CreateMsgSetRequest("US", 11, 0)
         End Sub
 
-        Public Sub New()
-            _ta = New ds_CustomerTableAdapters.CustomerTableAdapter
-         End Sub
-
-        Private Sub StartQBFCServices()
+      Private Sub StartQBFCServices()
             Dim s As New List(Of String)
             s.Add("QBCFMonitorService")
             s.Add("QBIDPService")
@@ -65,11 +61,6 @@ Namespace Classes
                 MsgBox("Close connection error: " & ex.Message)
             End Try
         End Sub
-
-        Private ReadOnly _ta As ds_CustomerTableAdapters.CustomerTableAdapter
-        Public Function GetCustomerListID(ByVal customerNumber As Integer) As String
-            Return _ta.GetListID(customerNumber)
-        End Function
 
        ' going to put customer balance sub here for quick access
         Public Function GetCustomerBalance(ByVal customerListID As String) As Double

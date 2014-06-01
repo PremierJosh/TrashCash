@@ -139,198 +139,198 @@ Namespace Classes
         '            Return addOk
         '        End Function
 
-        Public Sub Customer_Update(ByRef custRow As ds_Customer.CustomerRow, ByVal err As Integer)
-retry:
-            Dim customerMod As ICustomerMod = MsgSetReq.AppendCustomerModRq
+        '        Public Sub Customer_Update(ByRef custRow As ds_Customer.CustomerRow, ByVal err As Integer)
+        'retry:
+        '            Dim customerMod As ICustomerMod = MsgSetReq.AppendCustomerModRq
 
-            customerMod.ListID.SetValue(custRow.CustomerListID)
-            customerMod.EditSequence.SetValue(custRow.CustomerEditSeq)
+        '            customerMod.ListID.SetValue(custRow.CustomerListID)
+        '            customerMod.EditSequence.SetValue(custRow.CustomerEditSeq)
 
-            '''' customer information ''''
-            customerMod.Name.SetValue(custRow.CustomerFullName)
-            If (custRow.IsCustomerCompanyNameNull = False) Then
-                customerMod.CompanyName.SetValue(custRow.CustomerCompanyName)
-            End If
-            If (custRow.IsCustomerFirstNameNull = False) Then
-                customerMod.FirstName.SetValue(custRow.CustomerFirstName)
-            End If
-            If (custRow.IsCustomerLastNameNull = False) Then
-                customerMod.LastName.SetValue(custRow.CustomerLastName)
-            End If
-            customerMod.Phone.SetValue(custRow.CustomerPhone)
+        '            '''' customer information ''''
+        '            customerMod.Name.SetValue(custRow.CustomerFullName)
+        '            If (custRow.IsCustomerCompanyNameNull = False) Then
+        '                customerMod.CompanyName.SetValue(custRow.CustomerCompanyName)
+        '            End If
+        '            If (custRow.IsCustomerFirstNameNull = False) Then
+        '                customerMod.FirstName.SetValue(custRow.CustomerFirstName)
+        '            End If
+        '            If (custRow.IsCustomerLastNameNull = False) Then
+        '                customerMod.LastName.SetValue(custRow.CustomerLastName)
+        '            End If
+        '            customerMod.Phone.SetValue(custRow.CustomerPhone)
 
-            ' checking possibly blank alt phone
-            If (custRow.IsCustomerAltPhoneNull = False) Then
-                customerMod.AltPhone.SetValue(custRow.CustomerAltPhone)
-            End If
-            ' checking possibly blank contact field
-            If (custRow.IsCustomerContactNull = False) Then
-                customerMod.Contact.SetValue(custRow.CustomerContact)
-            End If
+        '            ' checking possibly blank alt phone
+        '            If (custRow.IsCustomerAltPhoneNull = False) Then
+        '                customerMod.AltPhone.SetValue(custRow.CustomerAltPhone)
+        '            End If
+        '            ' checking possibly blank contact field
+        '            If (custRow.IsCustomerContactNull = False) Then
+        '                customerMod.Contact.SetValue(custRow.CustomerContact)
+        '            End If
 
-            '''' billing information ''''
-            ' required billAddr1
-            customerMod.BillAddress.Addr1.SetValue(custRow.CustomerBillingAddr1)
-            ' checking billAddr2
-            If (custRow.IsCustomerBillingAddr2Null = False) Then
-                customerMod.BillAddress.Addr2.SetValue(custRow.CustomerBillingAddr2)
-            End If
-            ' checking billAddr3
-            If (custRow.IsCustomerBillingAddr3Null = False) Then
-                customerMod.BillAddress.Addr3.SetValue(custRow.CustomerBillingAddr3)
-            End If
-            customerMod.BillAddress.City.SetValue(custRow.CustomerBillingCity)
-            customerMod.BillAddress.State.SetValue(custRow.CustomerBillingState)
-            customerMod.BillAddress.PostalCode.SetValue(custRow.CustomerBillingZip)
+        '            '''' billing information ''''
+        '            ' required billAddr1
+        '            customerMod.BillAddress.Addr1.SetValue(custRow.CustomerBillingAddr1)
+        '            ' checking billAddr2
+        '            If (custRow.IsCustomerBillingAddr2Null = False) Then
+        '                customerMod.BillAddress.Addr2.SetValue(custRow.CustomerBillingAddr2)
+        '            End If
+        '            ' checking billAddr3
+        '            If (custRow.IsCustomerBillingAddr3Null = False) Then
+        '                customerMod.BillAddress.Addr3.SetValue(custRow.CustomerBillingAddr3)
+        '            End If
+        '            customerMod.BillAddress.City.SetValue(custRow.CustomerBillingCity)
+        '            customerMod.BillAddress.State.SetValue(custRow.CustomerBillingState)
+        '            customerMod.BillAddress.PostalCode.SetValue(custRow.CustomerBillingZip)
 
-            ' if cell = true, then customer is deactive
-            If (custRow.CustomerIsDeactive = True) Then
-                customerMod.IsActive.SetValue(False)
-            Else
-                customerMod.IsActive.SetValue(True)
-            End If
+        '            ' if cell = true, then customer is deactive
+        '            If (custRow.CustomerIsDeactive = True) Then
+        '                customerMod.IsActive.SetValue(False)
+        '            Else
+        '                customerMod.IsActive.SetValue(True)
+        '            End If
 
-            ' doing request and catching in msgSetResp
-            Dim msgSetResp As IMsgSetResponse = SessMgr.DoRequests(MsgSetReq)
-            Dim respList As IResponseList = msgSetResp.ResponseList
+        '            ' doing request and catching in msgSetResp
+        '            Dim msgSetResp As IMsgSetResponse = SessMgr.DoRequests(MsgSetReq)
+        '            Dim respList As IResponseList = msgSetResp.ResponseList
 
-            ' clear requests
-            MsgSetReq.ClearRequests()
+        '            ' clear requests
+        '            MsgSetReq.ClearRequests()
 
-            ' looping through response for errors and writing to error log
-            For i = 0 To respList.Count - 1
-                Dim resp As IResponse = respList.GetAt(i)
-                If (resp.StatusCode = 0) Then
-                    Dim customerRet As ICustomerRet = resp.Detail
+        '            ' looping through response for errors and writing to error log
+        '            For i = 0 To respList.Count - 1
+        '                Dim resp As IResponse = respList.GetAt(i)
+        '                If (resp.StatusCode = 0) Then
+        '                    Dim customerRet As ICustomerRet = resp.Detail
 
-                    ' updating EditSeq in the DB
-                    custRow.BeginEdit()
-                    custRow.CustomerEditSeq = customerRet.EditSequence.GetValue()
-                    custRow.EndEdit()
+        '                    ' updating EditSeq in the DB
+        '                    custRow.BeginEdit()
+        '                    custRow.CustomerEditSeq = customerRet.EditSequence.GetValue()
+        '                    custRow.EndEdit()
 
-                    Try
-                        ' update table
-                        _cta.Update(custRow)
-                    Catch ex As Exception
-                        MsgBox(ex.Message)
-                    End Try
+        '                    Try
+        '                        ' update table
+        '                        _cta.Update(custRow)
+        '                    Catch ex As Exception
+        '                        MsgBox(ex.Message)
+        '                    End Try
 
-                    MsgBox("Changes Complete")
-                ElseIf (resp.StatusCode = 3200) Then
-                    ' edit sequence missmatch
-                    Dim q As New QB_Queries(SessMgr, MsgSetReq)
-                    custRow.BeginEdit()
-                    custRow.CustomerEditSeq = q.Customer_EditSequence(custRow.CustomerListID)
-                    custRow.EndEdit()
+        '                    MsgBox("Changes Complete")
+        '                ElseIf (resp.StatusCode = 3200) Then
+        '                    ' edit sequence missmatch
+        '                    Dim q As New QB_Queries(SessMgr, MsgSetReq)
+        '                    custRow.BeginEdit()
+        '                    custRow.CustomerEditSeq = q.Customer_EditSequence(custRow.CustomerListID)
+        '                    custRow.EndEdit()
 
-                    Try
-                        ' update table then retry
-                        _cta.Update(custRow)
-                        GoTo retry
-                    Catch ex As Exception
-                        MsgBox(ex.Message)
-                    End Try
+        '                    Try
+        '                        ' update table then retry
+        '                        _cta.Update(custRow)
+        '                        GoTo retry
+        '                    Catch ex As Exception
+        '                        MsgBox(ex.Message)
+        '                    End Try
 
-                Else
-                    custRow.RejectChanges()
-                    GlobalConMgr.ResponseErr_Misc(resp)
-                End If
-            Next i
-        End Sub
+        '                Else
+        '                    custRow.RejectChanges()
+        '                    GlobalConMgr.ResponseErr_Misc(resp)
+        '                End If
+        '            Next i
+        '        End Sub
 
         ' customer credit create - optional auto apply and sort mode
-        Public Sub Customer_Credit(ByVal customerNumber As Integer, ByVal creditAmount As Double, ByVal reason As String, ByVal itemListID As String, ByVal print As Boolean,
-                                   ByVal autoApply As Boolean, Optional ByVal applyOrder As String = "Desc")
+        'Public Sub Customer_Credit(ByVal customerNumber As Integer, ByVal creditAmount As Double, ByVal reason As String, ByVal itemListID As String, ByVal print As Boolean,
+        '                           ByVal autoApply As Boolean, Optional ByVal applyOrder As String = "Desc")
 
-            ' getting cuystomer listid
-            Dim custListID As String = _cta.GetListID(customerNumber)
+        '    ' getting cuystomer listid
+        '    Dim custListID As String = _cta.GetListID(customerNumber)
 
-            Dim creditAdd As ICreditMemoAdd = MsgSetReq.AppendCreditMemoAddRq
-            creditAdd.CustomerRef.ListID.SetValue(custListID)
-            creditAdd.IsToBePrinted.SetValue(print)
+        '    Dim creditAdd As ICreditMemoAdd = MsgSetReq.AppendCreditMemoAddRq
+        '    creditAdd.CustomerRef.ListID.SetValue(custListID)
+        '    creditAdd.IsToBePrinted.SetValue(print)
 
-            ' creating credit line
-            Dim creditLine As IORCreditMemoLineAdd = creditAdd.ORCreditMemoLineAddList.Append
-            creditLine.CreditMemoLineAdd.ItemRef.ListID.SetValue(itemListID)
-            creditLine.CreditMemoLineAdd.ORRatePriceLevel.Rate.SetValue(creditAmount)
+        '    ' creating credit line
+        '    Dim creditLine As IORCreditMemoLineAdd = creditAdd.ORCreditMemoLineAddList.Append
+        '    creditLine.CreditMemoLineAdd.ItemRef.ListID.SetValue(itemListID)
+        '    creditLine.CreditMemoLineAdd.ORRatePriceLevel.Rate.SetValue(creditAmount)
 
-            ' desc line
-            Dim descLine As IORCreditMemoLineAdd = creditAdd.ORCreditMemoLineAddList.Append()
-            descLine.CreditMemoLineAdd.ItemRef.ListID.Unset()
-            descLine.CreditMemoLineAdd.ItemRef.FullName.Unset()
-            descLine.CreditMemoLineAdd.Desc.SetValue(reason)
-            descLine.CreditMemoLineAdd.Amount.Unset()
-            descLine.CreditMemoLineAdd.Quantity.Unset()
+        '    ' desc line
+        '    Dim descLine As IORCreditMemoLineAdd = creditAdd.ORCreditMemoLineAddList.Append()
+        '    descLine.CreditMemoLineAdd.ItemRef.ListID.Unset()
+        '    descLine.CreditMemoLineAdd.ItemRef.FullName.Unset()
+        '    descLine.CreditMemoLineAdd.Desc.SetValue(reason)
+        '    descLine.CreditMemoLineAdd.Amount.Unset()
+        '    descLine.CreditMemoLineAdd.Quantity.Unset()
 
-            ' go
-            Dim msgSetResp As IMsgSetResponse = SessMgr.DoRequests(MsgSetReq)
-            Dim respList As IResponseList = msgSetResp.ResponseList
+        '    ' go
+        '    Dim msgSetResp As IMsgSetResponse = SessMgr.DoRequests(MsgSetReq)
+        '    Dim respList As IResponseList = msgSetResp.ResponseList
 
-            MsgSetReq.ClearRequests()
+        '    MsgSetReq.ClearRequests()
 
-            For i = 0 To respList.Count - 1
-                Dim resp As IResponse = respList.GetAt(i)
+        '    For i = 0 To respList.Count - 1
+        '        Dim resp As IResponse = respList.GetAt(i)
 
-                If (resp.StatusCode = 0) Then
-                    Dim creditRet As ICreditMemoRet = resp.Detail
+        '        If (resp.StatusCode = 0) Then
+        '            Dim creditRet As ICreditMemoRet = resp.Detail
 
-                    ' insert record
-                    Using ta As New ds_CustomerTableAdapters.Customer_CreditsTableAdapter
-                        ta.Insert(customerNumber, creditRet.TxnID.GetValue, creditRet.TotalAmount.GetValue, creditRet.TimeCreated.GetValue,
-                                  reason, HomeForm.CurrentUserRow.USER_NAME, False, Nothing, Nothing, Nothing)
-                    End Using
+        '            ' insert record
+        '            Using ta As New ds_CustomerTableAdapters.Customer_CreditsTableAdapter
+        '                ta.Insert(customerNumber, creditRet.TxnID.GetValue, creditRet.TotalAmount.GetValue, creditRet.TimeCreated.GetValue,
+        '                          reason, HomeForm.CurrentUserRow.USER_NAME, False, Nothing, Nothing, Nothing)
+        '            End Using
 
-                    ' check if were going to use
-                    If (autoApply) Then
-                        ' get table of unpaid invoices
-                        Dim dt As ds_Display.QBUnpaidInvoicesDataTable = Invoicing_GetUnpaidTable(custListID)
-                        If (dt.Rows.Count > 0) Then
-                            ' apply credit
-                            Credits_PayOpenInvoices(custListID, creditRet.TxnID.GetValue, creditRet.CreditRemaining.GetValue, dt, applyOrder)
-                        End If
-                    End If
-                Else
-                    GlobalConMgr.ResponseErr_Misc(resp)
-                End If
-            Next
+        '            ' check if were going to use
+        '            If (autoApply) Then
+        '                ' get table of unpaid invoices
+        '                Dim dt As ds_Display.QBUnpaidInvoicesDataTable = Invoicing_GetUnpaidTable(custListID)
+        '                If (dt.Rows.Count > 0) Then
+        '                    ' apply credit
+        '                    Credits_PayOpenInvoices(custListID, creditRet.TxnID.GetValue, creditRet.CreditRemaining.GetValue, dt, applyOrder)
+        '                End If
+        '            End If
+        '        Else
+        '            GlobalConMgr.ResponseErr_Misc(resp)
+        '        End If
+        '    Next
 
-        End Sub
+        'End Sub
 
         ' customer credit void
-        Public Sub Customer_Credit_Void(ByRef row As ds_Customer.Customer_CreditsRow, ByVal voidReason As String)
-            Dim voidTxn As ITxnVoid = MsgSetReq.AppendTxnVoidRq
-            voidTxn.TxnVoidType.SetValue(ENTxnVoidType.tvtCreditMemo)
-            voidTxn.TxnID.SetValue(row.CreditTxnID)
+        'Public Sub Customer_Credit_Void(ByRef row As ds_Customer.Customer_CreditsRow, ByVal voidReason As String)
+        '    Dim voidTxn As ITxnVoid = MsgSetReq.AppendTxnVoidRq
+        '    voidTxn.TxnVoidType.SetValue(ENTxnVoidType.tvtCreditMemo)
+        '    voidTxn.TxnID.SetValue(row.CreditTxnID)
 
-            ' go
-            Dim msgSetResp As IMsgSetResponse = SessMgr.DoRequests(MsgSetReq)
-            Dim respList As IResponseList = msgSetResp.ResponseList
+        '    ' go
+        '    Dim msgSetResp As IMsgSetResponse = SessMgr.DoRequests(MsgSetReq)
+        '    Dim respList As IResponseList = msgSetResp.ResponseList
 
-            MsgSetReq.ClearRequests()
+        '    MsgSetReq.ClearRequests()
 
-            For i = 0 To respList.Count - 1
-                Dim resp As IResponse = respList.GetAt(i)
+        '    For i = 0 To respList.Count - 1
+        '        Dim resp As IResponse = respList.GetAt(i)
 
-                If (resp.StatusCode = 0) Then
-                    ' update row
-                    row.Voided = True
-                    row.VoidReason = voidReason
-                    row.VoidTime = Date.Now
-                    row.VoidUser = HomeForm.CurrentUserRow.USER_NAME
+        '        If (resp.StatusCode = 0) Then
+        '            ' update row
+        '            row.Voided = True
+        '            row.VoidReason = voidReason
+        '            row.VoidTime = Date.Now
+        '            row.VoidUser = HomeForm.CurrentUserRow.USER_NAME
 
-                    Using ta As New ds_CustomerTableAdapters.Customer_CreditsTableAdapter
-                        Try
-                            ta.Update(row)
-                        Catch ex As Exception
-                            MessageBox.Show("Error Credit Void Update: " & ex.Message, "Sql Update Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
-                        End Try
-                    End Using
-                Else
-                    GlobalConMgr.ResponseErr_Misc(resp)
-                End If
-            Next
+        '            Using ta As New ds_CustomerTableAdapters.Customer_CreditsTableAdapter
+        '                Try
+        '                    ta.Update(row)
+        '                Catch ex As Exception
+        '                    MessageBox.Show("Error Credit Void Update: " & ex.Message, "Sql Update Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        '                End Try
+        '            End Using
+        '        Else
+        '            GlobalConMgr.ResponseErr_Misc(resp)
+        '        End If
+        '    Next
 
-        End Sub
+        'End Sub
 
         Public Sub RecurringService_EndDateCredit(ByRef row As ds_RecurringService.RecurringServiceRow, ByVal creditAmount As Double,
                                                   ByVal newEndDate As Date, ByVal billThruDate As Date)

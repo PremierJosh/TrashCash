@@ -17,6 +17,7 @@ Namespace QBStuff
             Public TxnDate As Date
             Public EditSequence As String
             Public TotalAmount As Double
+            Public CustomerListID As String
 
             ' this is used when a credit is applied through ISetCredit
             Public AppliedAmount As Double

@@ -45,7 +45,7 @@ Namespace Classes.CustomerToolstrip
             Dim queueAmount As Double = _ta.Customer_PaymentTotalInQueue(CurrentCustomer)
 
             ' getting quickbooks balance
-            Dim qbBalance As Double = GlobalConMgr.GetCustomerBalance(GlobalConMgr.GetCustomerListID(CurrentCustomer))
+            Dim qbBalance As Double = GlobalConMgr.GetCustomerBalance(GetCustomerListID(CurrentCustomer))
             If (returnVal <> Nothing) Then
                 returnVal = qbBalance
             End If

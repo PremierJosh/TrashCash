@@ -23,7 +23,7 @@ Namespace Invoicing
             ' creating invObj
             Dim invObj As New QBInvoiceObj
             With invObj
-                .CustomerListID = GlobalConMgr.GetCustomerListID(invRow.CustomerNumber)
+                .CustomerListID = GetCustomerListID(invRow.CustomerNumber)
                 .DueDate = invRow.DueDate
                 .TxnDate = invRow.PostDate
                 .IsToBePrinted = print
