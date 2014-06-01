@@ -90,7 +90,7 @@ Namespace Classes
             Return b
         End Function
         ' copy kept here
-        Public Shared Sub ResponseErr_Misc(ByVal resp As IResponse)
+        Public Sub ResponseErr_Misc(ByVal resp As IResponse)
             If (resp.StatusCode = 1) Then
                 MsgBox("No matching results from Quickbooks")
             Else

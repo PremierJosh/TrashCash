@@ -1,7 +1,4 @@
-﻿Imports QBFC12Lib
-Imports TrashCash.Utilities.ErrHandling
-
-Public Class f_AllCustBalances
+﻿Public Class f_AllCustBalances
 
     Private Sub btn_BuildRpt_Click(sender As System.Object, e As System.EventArgs) Handles btn_BuildRpt.Click
         Me.Cursor = Cursors.WaitCursor

@@ -139,7 +139,7 @@ Namespace Classes
                             End If
                         Else
                             ' error logging
-                            Utilities.ErrHandling.ResponseErr_Misc(response)
+                            GlobalConMgr.ResponseErr_Misc(response)
 
                             ' bail out
                             Exit Sub
@@ -256,7 +256,7 @@ retry:
                     addOk = False
 
                     ' error logging
-                    Utilities.ErrHandling.ResponseErr_Misc(resp)
+                    GlobalConMgr.ResponseErr_Misc(resp)
 
                     ' delete row
                     Using qta As New ds_CustomerTableAdapters.QueriesTableAdapter
@@ -367,7 +367,7 @@ retry:
 
                 Else
                     custRow.RejectChanges()
-                    Utilities.ErrHandling.ResponseErr_Misc(resp)
+                    GlobalConMgr.ResponseErr_Misc(resp)
                 End If
             Next i
         End Sub
@@ -424,7 +424,7 @@ retry:
                         End If
                     End If
                 Else
-                    Utilities.ErrHandling.ResponseErr_Misc(resp)
+                    GlobalConMgr.ResponseErr_Misc(resp)
                 End If
             Next
 
@@ -460,7 +460,7 @@ retry:
                         End Try
                     End Using
                 Else
-                    Utilities.ErrHandling.ResponseErr_Misc(resp)
+                    GlobalConMgr.ResponseErr_Misc(resp)
                 End If
             Next
 
@@ -537,7 +537,7 @@ retry:
                     ' use new credit to pay newest invoices first
                     Credits_PayOpenInvoices(customerListID, creditMemoRet.TxnID.GetValue, creditMemoRet.CreditRemaining.GetValue, openInvDt, "Desc")
                 Else
-                    Utilities.ErrHandling.ResponseErr_Misc(resp)
+                    GlobalConMgr.ResponseErr_Misc(resp)
                 End If
             Next i
         End Sub
@@ -570,7 +570,7 @@ retry:
                         ta.Update(row)
                     End Using
                 Else
-                    Utilities.ErrHandling.ResponseErr_Misc(resp)
+                    GlobalConMgr.ResponseErr_Misc(resp)
                 End If
             Next
         End Sub
@@ -639,7 +639,7 @@ retry:
                     ' use new credit for these
                     Credits_PayOpenInvoices(custListID, creditRet.TxnID.GetValue, creditRet.CreditRemaining.GetValue, openInvDT, "Asc")
                 Else
-                    Utilities.ErrHandling.ResponseErr_Misc(resp)
+                    GlobalConMgr.ResponseErr_Misc(resp)
                 End If
             Next
 
@@ -696,7 +696,7 @@ retry:
 
                     ' resp wont = 1 since not a query
                     If (resp.StatusCode <> 0) Then
-                        Utilities.ErrHandling.ResponseErr_Misc(resp)
+                        GlobalConMgr.ResponseErr_Misc(resp)
                     End If
                 Next
             End If
@@ -736,7 +736,7 @@ retry:
                             MsgBox("Credit Row Update SQL Error: " & ex.Message)
                         End Try
                     Else
-                        Utilities.ErrHandling.ResponseErr_Misc(resp)
+                        GlobalConMgr.ResponseErr_Misc(resp)
                     End If
                 Next
             End If
@@ -800,7 +800,7 @@ retry:
                         MsgBox(ex.Message)
                     End Try
                 Else
-                    Utilities.ErrHandling.ResponseErr_Misc(resp)
+                    GlobalConMgr.ResponseErr_Misc(resp)
                     Return bounced
                 End If
             Next
@@ -833,7 +833,7 @@ retry:
                 If (resp.StatusCode = 0) Then
                     bounced = True
                 Else
-                    Utilities.ErrHandling.ResponseErr_Misc(resp)
+                    GlobalConMgr.ResponseErr_Misc(resp)
                 End If
             Next
 
@@ -922,7 +922,7 @@ retry:
                     End Try
 
                 Else
-                    Utilities.ErrHandling.ResponseErr_Misc(resp)
+                    GlobalConMgr.ResponseErr_Misc(resp)
                 End If
             Next
 
@@ -968,7 +968,7 @@ retry:
                         End If
                     Next
                 Else
-                    Utilities.ErrHandling.ResponseErr_Misc(resp)
+                    GlobalConMgr.ResponseErr_Misc(resp)
                 End If
             Next
 
@@ -1100,7 +1100,7 @@ retry:
                         End If
                     Next
                 ElseIf (resp.StatusCode <> 1) Then
-                    Utilities.ErrHandling.ResponseErr_Misc(resp)
+                    GlobalConMgr.ResponseErr_Misc(resp)
                 End If
             Next
 
@@ -1147,7 +1147,7 @@ retry:
                         row.AcceptChanges()
                     Next
                 Else
-                    Utilities.ErrHandling.ResponseErr_Misc(resp)
+                    GlobalConMgr.ResponseErr_Misc(resp)
                 End If
             Next
 
@@ -1191,7 +1191,7 @@ retry:
                         unappliedDT.AcceptChanges()
                     Next
                 ElseIf (resp.StatusCode <> 1) Then
-                    Utilities.ErrHandling.ResponseErr_Misc(resp)
+                    GlobalConMgr.ResponseErr_Misc(resp)
                 End If
             Next
 
@@ -1247,7 +1247,7 @@ retry:
                     ' commit changes
                     row.AcceptChanges()
                 Else
-                    Utilities.ErrHandling.ResponseErr_Misc(resp)
+                    GlobalConMgr.ResponseErr_Misc(resp)
                 End If
             Next
         End Sub
@@ -1287,7 +1287,7 @@ retry:
                         openInvDT.AcceptChanges()
                     Next
                 ElseIf (resp.StatusCode <> 1) Then
-                    Utilities.ErrHandling.ResponseErr_Misc(resp)
+                    GlobalConMgr.ResponseErr_Misc(resp)
                 End If
             Next
 
@@ -1360,7 +1360,7 @@ retry:
                             payRow.Pay_EditSeq = payRet.EditSequence.GetValue
 
                         Else
-                            Utilities.ErrHandling.ResponseErr_Misc(resp)
+                            GlobalConMgr.ResponseErr_Misc(resp)
                         End If
                     Next
 
@@ -1540,7 +1540,7 @@ retry:
                     ' no payments = exit sub
                     Exit Sub
                 ElseIf (resp.StatusCode > 1) Then
-                    Utilities.ErrHandling.ResponseErr_Misc(resp)
+                    GlobalConMgr.ResponseErr_Misc(resp)
                 End If
             Next i
         End Sub
@@ -1605,7 +1605,7 @@ retry:
             For i = 0 To responseList.Count - 1
                 Dim resp As IResponse = responseList.GetAt(i)
                 If (resp.StatusCode > 0) Then
-                    Utilities.ErrHandling.ResponseErr_Misc(resp)
+                    GlobalConMgr.ResponseErr_Misc(resp)
                 End If
             Next i
 
@@ -1656,7 +1656,7 @@ retry:
                     'no credits = exit sub
                     Exit Sub
                 ElseIf (resp.StatusCode > 1) Then
-                    Utilities.ErrHandling.ResponseErr_Misc(resp)
+                    GlobalConMgr.ResponseErr_Misc(resp)
                 End If
             Next i
 
@@ -1705,7 +1705,7 @@ retry:
             For i = 0 To responseList.Count - 1
                 Dim resp As IResponse = responseList.GetAt(i)
                 If (resp.StatusCode > 0) Then
-                    Utilities.ErrHandling.ResponseErr_Misc(resp)
+                    GlobalConMgr.ResponseErr_Misc(resp)
                 End If
             Next i
 
@@ -1755,7 +1755,7 @@ retry:
                         MsgBox(ex.Message)
                     End Try
                 Else
-                    Utilities.ErrHandling.ResponseErr_Misc(resp)
+                    GlobalConMgr.ResponseErr_Misc(resp)
                     ta.DeleteByID(serviceTypeID)
                 End If
             Next i
@@ -1805,7 +1805,7 @@ retry:
                     ' update edit sequence in db
                     Items_UpdateEditSeq(serviceTypeID)
                 Else
-                    Utilities.ErrHandling.ResponseErr_Misc(resp)
+                    GlobalConMgr.ResponseErr_Misc(resp)
                 End If
             Next i
         End Sub
@@ -1891,7 +1891,7 @@ retry:
                                 MsgBox(ex.Message)
                             End Try
                         Else
-                            Utilities.ErrHandling.ResponseErr_Misc(resp)
+                            GlobalConMgr.ResponseErr_Misc(resp)
                             'ta.DeleteByID(row.ServiceTypeID)
                         End If
                     Next i

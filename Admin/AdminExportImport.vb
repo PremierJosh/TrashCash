@@ -27,29 +27,20 @@ Namespace Admin
 
         ' form global tas
         Dim _qta As DataSetTableAdapters.QueriesTableAdapter
-        Dim _ata As ds_ApplicationTableAdapters.APP_SETTINGSTableAdapter
         Dim _cita As ds_ApplicationTableAdapters.Initial_CustomInvoiceTableAdapter
         Dim _cidt As ds_Application.Initial_CustomInvoiceDataTable
+        Dim _cqta As ds_CustomerTableAdapters.QueriesTableAdapter
 
 
         Private Sub ImportWork_Load(sender As Object, e As System.EventArgs) Handles Me.Load
             _qta = New DataSetTableAdapters.QueriesTableAdapter
-            _ata = New ds_ApplicationTableAdapters.APP_SETTINGSTableAdapter
+            _cqta = New ds_CustomerTableAdapters.QueriesTableAdapter
             _cita = New ds_ApplicationTableAdapters.Initial_CustomInvoiceTableAdapter
             _cidt = _cita.GetData
             tb_CustInvCount.Text = _cidt.Rows.Count
 
-            Dim customInvItem As String
-            ' setting custom inv item var value
-            customInvItem = _qta.APP_GetCustomInvItem
-            ' checking if already set
-            If (customInvItem IsNot Nothing) Then
-                cmb_ItemList.SelectedValue = customInvItem
-            End If
-
-
-            ' update missing list id count
-            MissingCustomerCount = _qta.Customer_MissingListIDCount
+         ' update missing list id count
+            MissingCustomerCount = _cqta.Customer_MissingListIDCount
             ' bind account cmb for adding items
             _homeForm.Queries.CMB_BindIncomeAccount(cmb_IncomeAcc)
             ' binding cmb for picking custom inv item
@@ -72,7 +63,7 @@ Namespace Admin
                 pb_AllCustAdd.Visible = False
                 lbl_AllCustAddCount.Visible = False
 
-                MissingCustomerCount = _qta.Customer_MissingListIDCount
+                MissingCustomerCount = _cqta.Customer_MissingListIDCount
             End If
         End Sub
 
@@ -95,7 +86,7 @@ Namespace Admin
       
         Private Sub btn_AddCustInv_Click(sender As System.Object, e As System.EventArgs) Handles btn_AddCustInv.Click
             ' getting custom inv item
-            Dim itemID As String = _qta.APP_GetCustomInvItem
+            Dim itemID As String = ""
 
             For Each row As ds_Application.Initial_CustomInvoiceRow In _cidt
                 Dim invoiceAdd As IInvoiceAdd = _homeForm.MsgSetRequest.AppendInvoiceAddRq
@@ -128,7 +119,7 @@ Namespace Admin
                     If (resp.StatusCode <> 0) Then
 
                         Try
-                            Utilities.ErrHandling.ResponseErr_Misc(resp)
+                            GlobalConMgr.ResponseErr_Misc(resp)
                             Exit Sub
                         Catch ex As Exception
                             MsgBox("Err_Invoice_Insert: " & ex.Message)
@@ -139,12 +130,7 @@ Namespace Admin
 
                         ' custom invoice history insert
                         Try
-                            _qta.CustomInvoiceHistory_Insert(row.CustomerNumber,
-                                                             invRet.TxnID.GetValue,
-                                                             invRet.RefNumber.GetValue,
-                                                             invRet.TimeCreated.GetValue,
-                                                             row.PostAndDueDate,
-                                                             invRet.Subtotal.GetValue)
+                            
                         Catch ex As Exception
                             MsgBox(ex.Message)
                         End Try

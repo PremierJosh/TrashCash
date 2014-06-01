@@ -46,30 +46,7 @@ Public Class Utilities
             Return exists
         End Function
     End Class
-    Public Class ErrHandling
-        'Protected qta As DataSetTableAdapters.QueriesTableAdapter
-
-        Public Shared Sub ResponseErr_Misc(ByVal resp As IResponse)
-            If (resp.StatusCode = 1) Then
-                MsgBox("No matching results from Quickbooks")
-            Else
-                If (QtaUtil Is Nothing) Then
-                    QtaUtil = New DataSetTableAdapters.QueriesTableAdapter
-                End If
-                Try
-                    QtaUtil.ERR_MISC_Insert(resp.Type.GetValue.ToString,
-                                        resp.StatusCode.ToString,
-                                        resp.StatusMessage,
-                                        Date.Now)
-                    MsgBox("Error Encounterd with Quickbooks. Contact Premier.", MsgBoxStyle.Critical)
-                Catch ex As Exception
-                    MsgBox("ERR_MISC_Insert: " & ex.Message)
-                End Try
-            End If
-
-        End Sub
     End Class
-End Class
 
 Namespace Database_ComboBoxes
 

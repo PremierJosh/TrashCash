@@ -29,7 +29,7 @@ Namespace Classes
         End Function
         Private Sub GetAllCustomerBalances(ByVal minDaysPastDue As Integer, ByRef includeInactive As Boolean)
             Dim custQuery As ICustomerQuery = MsgSetReq.AppendCustomerQueryRq
-            Dim badQta As New DataSetTableAdapters.QueriesTableAdapter
+            Dim badQta As New ds_CustomerTableAdapters.CustomerTableAdapter
 
             'checking for includeinactive
             If (includeInactive = True) Then
@@ -92,7 +92,7 @@ Namespace Classes
                         custRow.Zip = custRet.BillAddress.PostalCode.GetValue
 
                         ' grabbing customer number
-                        custRow.CustomerNumber = badQta.Customer_GetNumberFromListID(custRet.ListID.GetValue)
+                        custRow.CustomerNumber = badQta.GetNumber(custRet.ListID.GetValue)
                         ' TODO: check if balance is > than 50% of running service rate(s)
                         'If (CBool(qta.Report_IsCustomerBalanceEnough(custRow.CustomerNumber, custRow.CustomerBalance)) = True) Then
                         ' add row to table
@@ -103,7 +103,7 @@ Namespace Classes
 
                     Next c
                 Else
-                    Utilities.ErrHandling.ResponseErr_Misc(response)
+                    GlobalConMgr.ResponseErr_Misc(response)
                 End If
             Next r
 
@@ -151,7 +151,7 @@ Namespace Classes
                         End If
                     Next j
                 Else
-                    Utilities.ErrHandling.ResponseErr_Misc(response)
+                    GlobalConMgr.ResponseErr_Misc(response)
                 End If
             Next i
         End Sub
@@ -243,7 +243,7 @@ Namespace Classes
 skip:
                     Next c
                 Else
-                    Utilities.ErrHandling.ResponseErr_Misc(response)
+                    GlobalConMgr.ResponseErr_Misc(response)
                 End If
             Next r
 

@@ -56,7 +56,7 @@ Namespace Classes
                 ElseIf (resp.StatusCode = 1) Then
                     MsgBox("No Invoices match search criteria in QuickBooks")
                 Else
-                    Utilities.ErrHandling.ResponseErr_Misc(resp)
+                    GlobalConMgr.ResponseErr_Misc(resp)
 
                 End If
             Next i
@@ -133,7 +133,7 @@ Namespace Classes
                 ElseIf (resp.StatusCode = 1) Then
                     'MsgBox("No Invoices match search criteria in QuickBooks")
                 ElseIf (resp.StatusCode > 1) Then
-                    Utilities.ErrHandling.ResponseErr_Misc(resp)
+                    GlobalConMgr.ResponseErr_Misc(resp)
                 End If
             Next i
 
@@ -199,7 +199,7 @@ Namespace Classes
                 ElseIf (resp.StatusCode = 1) Then
                     'MsgBox("No Recieved Payments match search criteria in Quickbooks.")
                 ElseIf (resp.StatusCode > 1) Then
-                    Utilities.ErrHandling.ResponseErr_Misc(resp)
+                    GlobalConMgr.ResponseErr_Misc(resp)
                 End If
             Next i
         End Sub
@@ -215,19 +215,19 @@ Namespace Classes
         Public Overloads Function Customer_Balance(ByVal decNumber As Decimal) As Double
             ' cust number coming in
             Dim qta As New DataSetTableAdapters.QueriesTableAdapter
-            Dim custListID As String = qta.Customer_GetListID(decNumber)
+            'Dim custListID As String = qta.Customer_GetListID(decNumber)
 
             Dim balance As Double
-            balance = Customer_GetBalance(custListID)
+            'balance = Customer_GetBalance(custListID)
             Return balance
         End Function
         Public Overloads Function Customer_Balance(ByVal intNumber As Integer) As Double
             ' cust number coming in
             Dim qta As New DataSetTableAdapters.QueriesTableAdapter
-            Dim custListID As String = qta.Customer_GetListID(intNumber)
+            'Dim custListID As String = qta.Customer_GetListID(intNumber)
 
             Dim balance As Double
-            balance = Customer_GetBalance(custListID)
+            ' balance = Customer_GetBalance(custListID)
             Return balance
         End Function
         Private Function Customer_GetBalance(ByRef custListID As String) As Double
@@ -255,7 +255,7 @@ Namespace Classes
                         returnVar = custRet.TotalBalance.GetValue
                     Next
                 Else
-                    Utilities.ErrHandling.ResponseErr_Misc(resp)
+                    GlobalConMgr.ResponseErr_Misc(resp)
                 End If
             Next i
 
@@ -271,19 +271,19 @@ Namespace Classes
         Public Overloads Function Customer_EditSequence(ByVal decNumber As Decimal) As Double
             ' cust number coming in
             Dim qta As New DataSetTableAdapters.QueriesTableAdapter
-            Dim listID As String = qta.Customer_GetListID(decNumber)
+            'Dim listID As String = qta.Customer_GetListID(decNumber)
 
             Dim editSeq As String
-            editSeq = Customer_GetEditSequence(listID)
+            'editSeq = Customer_GetEditSequence(listID)
             Return editSeq
         End Function
         Public Overloads Function Customer_EditSequence(ByVal intNumber As Integer) As Double
             ' cust number coming in
             Dim qta As New DataSetTableAdapters.QueriesTableAdapter
-            Dim listID As String = qta.Customer_GetListID(intNumber)
+            ' Dim listID As String = qta.Customer_GetListID(intNumber)
 
             Dim editSeq As String
-            editSeq = Customer_GetEditSequence(listID)
+            'editSeq = Customer_GetEditSequence(listID)
             Return editSeq
         End Function
         Private Function Customer_GetEditSequence(ByVal custListID As String) As String
@@ -315,7 +315,7 @@ Namespace Classes
                     End If
                 Else
                     ' error logging
-                    Utilities.ErrHandling.ResponseErr_Misc(response)
+                    GlobalConMgr.ResponseErr_Misc(response)
                 End If
             Next i
 
@@ -370,7 +370,7 @@ Namespace Classes
                         itemList.Add(item)
                     Next
                 Else
-                    Utilities.ErrHandling.ResponseErr_Misc(response)
+                    GlobalConMgr.ResponseErr_Misc(response)
                 End If
             Next
 
@@ -418,7 +418,7 @@ Namespace Classes
                         itemList.Add(item)
                     Next
                 Else
-                    Utilities.ErrHandling.ResponseErr_Misc(response)
+                    GlobalConMgr.ResponseErr_Misc(response)
                 End If
             Next
 
@@ -464,7 +464,7 @@ Namespace Classes
                         vendorList.Add(item)
                     Next
                 Else
-                    Utilities.ErrHandling.ResponseErr_Misc(response)
+                    GlobalConMgr.ResponseErr_Misc(response)
                 End If
             Next
 
@@ -524,7 +524,7 @@ Namespace Classes
                         Next l
                     End If
                 Else
-                    Utilities.ErrHandling.ResponseErr_Misc(response)
+                    GlobalConMgr.ResponseErr_Misc(response)
                 End If
             Next i
 
