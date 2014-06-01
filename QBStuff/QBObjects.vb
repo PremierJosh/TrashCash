@@ -106,6 +106,18 @@ Namespace QBStuff
             Public IncomeAccountListID As String
         End Structure
 
+        ' this is only used for bounced checks
+        Public Structure QBCheckAddObj
+            Public AccountListID As String
+            Public PayeeListID As String
+            Public RefNumber As String
+            Public IsToBePrinted As Boolean
+
+            ' line items list that goes onto this check
+            ' (qb item that comes from the account that matches the bank)
+            Dim LineList As List(Of QBLineItemObj)
+        End Structure
+
     End Module
 
 End Namespace

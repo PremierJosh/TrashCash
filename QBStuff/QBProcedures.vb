@@ -16,6 +16,27 @@ Namespace QBStuff
             Return ConCheck(qbConMgr).GetRespList.GetAt(0)
         End Function
 
+        ' check add
+        Public Shared Function CheckAdd(ByRef checkObj As QBCheckAddObj) As IResponse
+            Dim addRq As ICheckAdd = GlobalConMgr.MessageSetRequest.AppendCheckAddRq
+            'account ref is bank paying from
+            addRq.AccountRef.ListID.SetValue(checkObj.AccountListID)
+            ' payee is vendor
+            addRq.PayeeEntityRef.ListID.SetValue(checkObj.PayeeListID)
+            ' ref number is returncheck
+            addRq.RefNumber.SetValue(checkObj.RefNumber)
+            ' not printing
+            addRq.IsToBePrinted.SetValue(checkObj.IsToBePrinted)
+            For Each item As QBLineItemObj In checkObj.LineList
+                Dim line As IORItemLineAdd = addRq.ORItemLineAddList.Append
+                line.ItemLineAdd.ItemRef.ListID.SetValue(item.ItemListID)
+                line.ItemLineAdd.Amount.SetValue(item.Rate)
+                line.ItemLineAdd.Quantity.SetValue(1)
+            Next
+
+            Return GlobalConMgr.GetRespList.GetAt(0)
+        End Function
+
         ' service item
         Public Shared Function ServiceItemAdd(ByRef item As QBObjects.QBItemObj, Optional ByRef qbConMgr As QBConMgr = Nothing) As IResponse
             Dim newItem As IItemServiceAdd = ConCheck(qbConMgr).MessageSetRequest.AppendItemServiceAddRq
@@ -520,60 +541,7 @@ Namespace QBStuff
             If (resp.Type.GetValue = ENResponseType.rtInvoiceQueryRs) Then
                 Dim invRetList As IInvoiceRetList = resp.Detail
                 For i = 0 To invRetList.Count - 1
-                    Dim invRet As IInvoiceRet = invRetList.GetAt(i)
-                    Dim invObj As New QBInvoiceObj
-                    invObj.TxnID = invRet.TxnID.GetValue
-                    If (invRet.BalanceRemaining IsNot Nothing) Then
-                        invObj.BalanceRemaining = invRet.BalanceRemaining.GetValue
-                    End If
-                    If (invRet.DueDate IsNot Nothing) Then
-                        invObj.DueDate = invRet.DueDate.GetValue
-                    End If
-                    If (invRet.TxnDate IsNot Nothing) Then
-                        invObj.TxnDate = invRet.TxnDate.GetValue
-                    End If
-                    If (invRet.EditSequence IsNot Nothing) Then
-                        invObj.EditSequence = invRet.EditSequence.GetValue
-                    End If
-                    If (invRet.Other IsNot Nothing) Then
-                        invObj.Other = invRet.Other.GetValue
-                    End If
-                    ' checking for line items
-                    If (invRet.ORInvoiceLineRetList IsNot Nothing) Then
-                        For i2 = 0 To invRet.ORInvoiceLineRetList.Count - 1
-                            Dim lineRet As IORInvoiceLineRet = invRet.ORInvoiceLineRetList.GetAt(i2)
-                            Dim line As New QBLineItemObj
-                            With lineRet.InvoiceLineRet
-                                line.Desc = lineRet.InvoiceLineRet.Desc.GetValue
-                                line.ItemListID = .ItemRef.ListID.GetValue
-                                line.Quantity = .Quantity.GetValue
-                                line.Rate = .ORRate.Rate.GetValue
-                                If (.Other1 IsNot Nothing) Then
-                                    line.Other1 = .Other1.GetValue
-                                End If
-                                If (.Other2 IsNot Nothing) Then
-                                    line.Other2 = .Other2.GetValue
-                                End If
-                            End With
-                            ' add to invObj
-                            invObj.LineList.Add(line)
-                        Next
-                    End If
-                    ' checking for linked txns
-                    If (invRet.LinkedTxnList IsNot Nothing) Then
-                        For i2 = 0 To invRet.LinkedTxnList.Count - 1
-                            Dim linkRet As ILinkedTxn = invRet.LinkedTxnList.GetAt(i2)
-                            Dim linkTxn As New QBLinkedTxnObj
-                            With linkRet
-                                linkTxn.TxnID = .TxnID.GetValue
-                                linkTxn.TxnType = .TxnType.GetValue
-                                linkTxn.RefNumber = .RefNumber.GetValue
-                                linkTxn.Amount = .Amount.GetValue
-                            End With
-                            ' add to invOBj
-                            invObj.LinkTxnList.Add(linkTxn)
-                        Next
-                    End If
+                    Dim invObj As QBInvoiceObj = ConvertToInvObj(invRetList.GetAt(i))
                     ' adding to return list
                     invObjList.Add(invObj)
                 Next
@@ -584,6 +552,64 @@ Namespace QBStuff
                 invObjList.Reverse()
             End If
             Return invObjList
+        End Function
+
+        Public Shared Function ConvertToInvObj(ByRef invRet As IInvoiceRet) As QBInvoiceObj
+            Dim invObj As New QBInvoiceObj
+            With invObj
+                .TxnID = invRet.TxnID.GetValue
+                If (invRet.BalanceRemaining IsNot Nothing) Then
+                    .BalanceRemaining = invRet.BalanceRemaining.GetValue
+                End If
+                If (invRet.DueDate IsNot Nothing) Then
+                    .DueDate = invRet.DueDate.GetValue
+                End If
+                If (invRet.TxnDate IsNot Nothing) Then
+                    .TxnDate = invRet.TxnDate.GetValue
+                End If
+                If (invRet.EditSequence IsNot Nothing) Then
+                    .EditSequence = invRet.EditSequence.GetValue
+                End If
+                If (invRet.Other IsNot Nothing) Then
+                    .Other = invRet.Other.GetValue
+                End If
+                If (invRet.ORInvoiceLineRetList IsNot Nothing) Then
+                    For i2 = 0 To invRet.ORInvoiceLineRetList.Count - 1
+                        Dim lineRet As IORInvoiceLineRet = invRet.ORInvoiceLineRetList.GetAt(i2)
+                        Dim line As New QBLineItemObj
+                        With lineRet.InvoiceLineRet
+                            line.Desc = lineRet.InvoiceLineRet.Desc.GetValue
+                            line.ItemListID = .ItemRef.ListID.GetValue
+                            line.Quantity = .Quantity.GetValue
+                            line.Rate = .ORRate.Rate.GetValue
+                            If (.Other1 IsNot Nothing) Then
+                                line.Other1 = .Other1.GetValue
+                            End If
+                            If (.Other2 IsNot Nothing) Then
+                                line.Other2 = .Other2.GetValue
+                            End If
+                        End With
+                        ' add to invObj
+                        .LineList.Add(line)
+                    Next
+                End If
+                If (invRet.LinkedTxnList IsNot Nothing) Then
+                    For i2 = 0 To invRet.LinkedTxnList.Count - 1
+                        Dim linkRet As ILinkedTxn = invRet.LinkedTxnList.GetAt(i2)
+                        Dim linkTxn As New QBLinkedTxnObj
+                        With linkRet
+                            linkTxn.TxnID = .TxnID.GetValue
+                            linkTxn.TxnType = .TxnType.GetValue
+                            linkTxn.RefNumber = .RefNumber.GetValue
+                            linkTxn.Amount = .Amount.GetValue
+                        End With
+                        ' add to invOBj
+                        .LinkTxnList.Add(linkTxn)
+                    Next
+                End If
+            End With
+
+            Return invObj
         End Function
 
         ''' <summary>

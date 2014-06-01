@@ -608,112 +608,112 @@ Namespace Classes
         '    End If
         'End Sub
 
-        Public Function Customer_BounceCheck(ByVal checkRow As ds_Payments.PaymentHistory_DBRow, ByVal bankRow As ds_Payments.BAD_CHECK_BANKSRow, ByVal fee As Double) As Boolean
-            ' return bool
-            Dim bounced As Boolean
+        'Public Function Customer_BounceCheck(ByVal checkRow As ds_Payments.PaymentHistory_DBRow, ByVal bankRow As ds_Payments.BAD_CHECK_BANKSRow, ByVal fee As Double) As Boolean
+        '    ' return bool
+        '    Dim bounced As Boolean
 
-            ' getting customer listid
-            Dim custListID As String = _cta.GetListID(checkRow.CustomerNumber)
+        '    ' getting customer listid
+        '    Dim custListID As String = _cta.GetListID(checkRow.CustomerNumber)
 
-            ' need to do 2 things:
-            ' 1. invoice customer for bounced check amount and our fee
-            ' 2. checkadd for bank
+        '    ' need to do 2 things:
+        '    ' 1. invoice customer for bounced check amount and our fee
+        '    ' 2. checkadd for bank
 
-            ' 1. invoice first
-            Dim invoiceAdd As IInvoiceAdd = MsgSetReq.AppendInvoiceAddRq
+        '    ' 1. invoice first
+        '    Dim invoiceAdd As IInvoiceAdd = MsgSetReq.AppendInvoiceAddRq
 
-            ' going to need app defaults row for items
-            Dim appRow As ds_Application.APP_SETTINGSRow
-            Dim appTA As New ds_ApplicationTableAdapters.APP_SETTINGSTableAdapter
-            appRow = appTA.GetData().Rows(0)
+        '    ' going to need app defaults row for items
+        '    Dim appRow As ds_Application.APP_SETTINGSRow
+        '    Dim appTA As New ds_ApplicationTableAdapters.APP_SETTINGSTableAdapter
+        '    appRow = appTA.GetData().Rows(0)
 
-            invoiceAdd.CustomerRef.ListID.SetValue(custListID)
-            invoiceAdd.IsToBePrinted.SetValue(True)
+        '    invoiceAdd.CustomerRef.ListID.SetValue(custListID)
+        '    invoiceAdd.IsToBePrinted.SetValue(True)
 
-            ' var to hold line items
-            Dim lineList As IORInvoiceLineAddList = invoiceAdd.ORInvoiceLineAddList
+        '    ' var to hold line items
+        '    Dim lineList As IORInvoiceLineAddList = invoiceAdd.ORInvoiceLineAddList
 
-            ' first line item will be for the bounced check amount
-            Dim checkLine As IORInvoiceLineAdd = lineList.Append
-            checkLine.InvoiceLineAdd.ItemRef.ListID.SetValue(bankRow.QB_BANK_INV_ITEM_LISTID)
-            checkLine.InvoiceLineAdd.ORRatePriceLevel.Rate.SetValue(checkRow.Amount)
-            checkLine.InvoiceLineAdd.Quantity.SetValue(1)
-            ' setting description
-            checkLine.InvoiceLineAdd.Desc.SetValue("Bounced Check #: " & checkRow.RefNumber & ". Received on " & checkRow.DateReceived.Date & " in the amount of " & FormatCurrency(checkRow.Amount) & ".")
+        '    ' first line item will be for the bounced check amount
+        '    Dim checkLine As IORInvoiceLineAdd = lineList.Append
+        '    checkLine.InvoiceLineAdd.ItemRef.ListID.SetValue(bankRow.QB_BANK_INV_ITEM_LISTID)
+        '    checkLine.InvoiceLineAdd.ORRatePriceLevel.Rate.SetValue(checkRow.Amount)
+        '    checkLine.InvoiceLineAdd.Quantity.SetValue(1)
+        '    ' setting description
+        '    checkLine.InvoiceLineAdd.Desc.SetValue("Bounced Check #: " & checkRow.RefNumber & ". Received on " & checkRow.DateReceived.Date & " in the amount of " & FormatCurrency(checkRow.Amount) & ".")
 
-            ' 2nd line till be for the fee we are charging the customer
-            Dim feeLine As IORInvoiceLineAdd = lineList.Append
-            feeLine.InvoiceLineAdd.ItemRef.ListID.SetValue(appRow.BAD_CHECK_CUSTITEM_LISTID)
-            feeLine.InvoiceLineAdd.ORRatePriceLevel.Rate.SetValue(fee)
-            feeLine.InvoiceLineAdd.Quantity.SetValue(1)
+        '    ' 2nd line till be for the fee we are charging the customer
+        '    Dim feeLine As IORInvoiceLineAdd = lineList.Append
+        '    feeLine.InvoiceLineAdd.ItemRef.ListID.SetValue(appRow.BAD_CHECK_CUSTITEM_LISTID)
+        '    feeLine.InvoiceLineAdd.ORRatePriceLevel.Rate.SetValue(fee)
+        '    feeLine.InvoiceLineAdd.Quantity.SetValue(1)
 
-            Dim msgSetResp As IMsgSetResponse = SessMgr.DoRequests(MsgSetReq)
-            Dim respList As IResponseList = msgSetResp.ResponseList
+        '    Dim msgSetResp As IMsgSetResponse = SessMgr.DoRequests(MsgSetReq)
+        '    Dim respList As IResponseList = msgSetResp.ResponseList
 
-            ' clear msgSetReq
-            MsgSetReq.ClearRequests()
+        '    ' clear msgSetReq
+        '    MsgSetReq.ClearRequests()
 
-            For i = 0 To respList.Count - 1
-                Dim resp As IResponse = respList.GetAt(i)
-                If (resp.StatusCode = 0) Then
-                    ' update pay history table and set assoc row to bounced
-                    Try
-                        Using qta As New ds_PaymentsTableAdapters.QueriesTableAdapter
-                            qta.PaymentHistory_SetBounced(checkRow.PaymentID, HomeForm.CurrentUserRow.USER_NAME)
-                        End Using
+        '    For i = 0 To respList.Count - 1
+        '        Dim resp As IResponse = respList.GetAt(i)
+        '        If (resp.StatusCode = 0) Then
+        '            ' update pay history table and set assoc row to bounced
+        '            Try
+        '                Using qta As New ds_PaymentsTableAdapters.QueriesTableAdapter
+        '                    qta.PaymentHistory_SetBounced(checkRow.PaymentID, HomeForm.CurrentUserRow.USER_NAME)
+        '                End Using
 
-                    Catch ex As Exception
-                        MsgBox(ex.Message)
-                    End Try
-                Else
-                    GlobalConMgr.ResponseErr_Misc(resp)
-                    Return bounced
-                End If
-            Next
+        '            Catch ex As Exception
+        '                MsgBox(ex.Message)
+        '            End Try
+        '        Else
+        '            GlobalConMgr.ResponseErr_Misc(resp)
+        '            Return bounced
+        '        End If
+        '    Next
 
-            ' doing checkadd to pay bank fee
-            Dim checkAdd As ICheckAdd = MsgSetReq.AppendCheckAddRq
+        '    ' doing checkadd to pay bank fee
+        '    Dim checkAdd As ICheckAdd = MsgSetReq.AppendCheckAddRq
 
-            'account ref is bank paying from
-            checkAdd.AccountRef.ListID.SetValue(bankRow.QB_BANK_LISTID)
-            ' payee is vendor
-            checkAdd.PayeeEntityRef.ListID.SetValue(bankRow.QB_VENDOR_LISTID)
-            ' ref number is returncheck
-            checkAdd.RefNumber.SetValue("ReturnCheck")
-            ' not printing
-            checkAdd.IsToBePrinted.SetValue(False)
+        '    'account ref is bank paying from
+        '    checkAdd.AccountRef.ListID.SetValue(bankRow.QB_BANK_LISTID)
+        '    ' payee is vendor
+        '    checkAdd.PayeeEntityRef.ListID.SetValue(bankRow.QB_VENDOR_LISTID)
+        '    ' ref number is returncheck
+        '    checkAdd.RefNumber.SetValue("ReturnCheck")
+        '    ' not printing
+        '    checkAdd.IsToBePrinted.SetValue(False)
 
-            Dim bankFeeLineList As IORItemLineAddList = checkAdd.ORItemLineAddList
+        '    Dim bankFeeLineList As IORItemLineAddList = checkAdd.ORItemLineAddList
 
-            ' this is the check item from app defaults
-            Dim bankFeeLine As IORItemLineAdd = bankFeeLineList.Append
-            bankFeeLine.ItemLineAdd.ItemRef.ListID.SetValue(appRow.BAD_CHECK_CHECKITEM_LISTID)
-            bankFeeLine.ItemLineAdd.Amount.SetValue(bankRow.BANK_FEE_DEFAULT)
-            bankFeeLine.ItemLineAdd.Quantity.SetValue(1)
+        '    ' this is the check item from app defaults
+        '    Dim bankFeeLine As IORItemLineAdd = bankFeeLineList.Append
+        '    bankFeeLine.ItemLineAdd.ItemRef.ListID.SetValue(appRow.BAD_CHECK_CHECKITEM_LISTID)
+        '    bankFeeLine.ItemLineAdd.Amount.SetValue(bankRow.BANK_FEE_DEFAULT)
+        '    bankFeeLine.ItemLineAdd.Quantity.SetValue(1)
 
-            msgSetResp = SessMgr.DoRequests(MsgSetReq)
-            respList = msgSetResp.ResponseList
+        '    msgSetResp = SessMgr.DoRequests(MsgSetReq)
+        '    respList = msgSetResp.ResponseList
 
-            For i = 0 To respList.Count - 1
-                Dim resp As IResponse = respList.GetAt(i)
-                If (resp.StatusCode = 0) Then
-                    bounced = True
-                Else
-                    GlobalConMgr.ResponseErr_Misc(resp)
-                End If
-            Next
+        '    For i = 0 To respList.Count - 1
+        '        Dim resp As IResponse = respList.GetAt(i)
+        '        If (resp.StatusCode = 0) Then
+        '            bounced = True
+        '        Else
+        '            GlobalConMgr.ResponseErr_Misc(resp)
+        '        End If
+        '    Next
 
-            ' inserting note for customer that check bounced
-            Try
-                Using ta As New ds_CustomerTableAdapters.CustomerNotesTableAdapter
-                    ta.CustomerNotes_Insert(checkRow.CustomerNumber, "Bounced Check Ref #: " & checkRow.RefNumber & ". Bank Fee of " & FormatCurrency(bankRow.BANK_FEE_DEFAULT) & ". Customer charged " & FormatCurrency(fee) & ".")
-                End Using
-            Catch ex As Exception
-                MsgBox("NoteInsert Err: " & ex.Message)
-            End Try
+        '    ' inserting note for customer that check bounced
+        '    Try
+        '        Using ta As New ds_CustomerTableAdapters.CustomerNotesTableAdapter
+        '            ta.CustomerNotes_Insert(checkRow.CustomerNumber, "Bounced Check Ref #: " & checkRow.RefNumber & ". Bank Fee of " & FormatCurrency(bankRow.BANK_FEE_DEFAULT) & ". Customer charged " & FormatCurrency(fee) & ".")
+        '        End Using
+        '    Catch ex As Exception
+        '        MsgBox("NoteInsert Err: " & ex.Message)
+        '    End Try
 
-            Return bounced
-        End Function
+        '    Return bounced
+        'End Function
 
         Public Class NewInvObj
             Public CustomerListID

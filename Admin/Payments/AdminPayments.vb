@@ -1,4 +1,6 @@
-﻿Namespace Admin
+﻿Imports TrashCash.Admin.Payments
+
+Namespace Admin
 
     Public Class AdminPayments
         ' home form ref var
@@ -77,7 +79,7 @@
 
             ' setting initial customer to screen isnt blank
             CurrentCustomer = CustomerToolstrip1.CurrentCustomer
-           End Sub
+        End Sub
 
         Private Sub CustomerCatch(ByVal custNum As Integer) Handles CustomerToolstrip1.CustomerChanging
             CurrentCustomer = custNum
@@ -116,9 +118,9 @@
 
                 If (row.PaymentTypeID = 2) Then
                     If (Not row.Bounced) Then
-                        Dim bounceForm As New BouncedBankSelection(_home, Me)
-                        bounceForm.PayHistoryID = row.PaymentID
+                        Dim bounceForm As New BouncedBankSelection(row.PaymentID)
                         bounceForm.ShowDialog()
+                        Fetch_History()
                     Else
                         MsgBox("Check has already been set to bounced.")
                     End If
@@ -143,7 +145,7 @@
 
             ' Add any initialization after the InitializeComponent() call.
             _home = HomeForm
-           End Sub
+        End Sub
 
         Private Sub cm_i_MovePayment_Click(sender As System.Object, e As System.EventArgs) Handles cm_i_MovePayment.Click
             If (dg_PaymentHistory.SelectedRows.Count = 1) Then

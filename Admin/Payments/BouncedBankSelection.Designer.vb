@@ -1,6 +1,6 @@
 ﻿Imports TrashCash.Classes
 
-Namespace Admin
+Namespace Admin.Payments
     <Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
     Partial Class BouncedBankSelection
         Inherits System.Windows.Forms.Form
