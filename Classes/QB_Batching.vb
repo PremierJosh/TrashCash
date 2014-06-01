@@ -44,92 +44,114 @@ Namespace Classes
             End Sub
 
             Public Sub Batch(ByVal worker As System.ComponentModel.BackgroundWorker,
-                             ByVal e As System.ComponentModel.DoWorkEventArgs)
-             ' this will keep track of this batches progress
+                                ByVal e As System.ComponentModel.DoWorkEventArgs)
+                ' this will keep track of this batches progress
                 Dim progress As New ProgressObj
                 ' this is passed to the worker
-                    Dim progPercent As Integer
+                Dim progPercent As Integer
                 ' this will keep track of time reporting so its not insane
-                    Dim lastReportTime As DateTime = Now
-                    ' this is how many milliseconds between progress reporting
-                    Const elapsedTime As Double = 100
-                
+                Dim lastReportTime As DateTime = Now
+                ' this is how many milliseconds between progress reporting
+                Const elapsedTime As Double = 100
 
-                    If (_dt.Rows.Count > 0) Then
-                        ' setting maximum on progress class
-                        progress.MaximumValue = _dt.Rows.Count
 
-                        ' err counter
-                        Dim err As Integer
-                        Try
-                            ' batch history insert
-                            _batchID = _qta.BATCH_HISTORY_INV_Insert(Date.Now, _dt.Rows.Count)
-                        Catch ex as SqlException
-                            MessageBox.Show("Message: " & ex.Message & vbCrLf & "LineNumber: " & ex.LineNumber,
-                                            "Sql Error: " & ex.Procedure, MessageBoxButtons.OK, MessageBoxIcon.Error)
-                        End Try
+                If (_dt.Rows.Count > 0) Then
+                    ' setting maximum on progress class
+                    progress.MaximumValue = _dt.Rows.Count
 
-                        ' start looping through rows
-                        For Each row As ds_Batching.BATCH_WorkingInvoiceRow In _dt.Rows
-                            ' updating progress counter and customer
-                            progress.CurrentValue += 1
-                            progress.CurrentCustomer = row.CustomerFullName
+                    ' err counter
+                    Dim err As Integer
+                    Try
+                        ' batch history insert
+                        _batchID = _qta.BATCH_HISTORY_INV_Insert(Date.Now, _dt.Rows.Count)
+                    Catch ex As SqlException
+                        MessageBox.Show("Message: " & ex.Message & vbCrLf & "LineNumber: " & ex.LineNumber,
+                                        "Sql Error: " & ex.Procedure, MessageBoxButtons.OK, MessageBoxIcon.Error)
+                    End Try
 
-                            ' getting percent
-                            progPercent = CInt(progress.CurrentValue / progress.MaximumValue * 100)
+                    ' start looping through rows
+                    For Each row As ds_Batching.BATCH_WorkingInvoiceRow In _dt.Rows
+                        ' updating progress counter and customer
+                        progress.CurrentValue += 1
+                        progress.CurrentCustomer = row.CustomerFullName
 
-                            ' report if enough time has passed
-                            If (Now > lastReportTime.AddMilliseconds(elapsedTime)) Then
-                                worker.ReportProgress(progPercent, progress)
-                            End If
+                        ' getting percent
+                        progPercent = CInt(progress.CurrentValue / progress.MaximumValue * 100)
 
-                            ' checking balance of customer
+                        ' report if enough time has passed
+                        If (Now > lastReportTime.AddMilliseconds(elapsedTime)) Then
+                            worker.ReportProgress(progPercent, progress)
+                        End If
+
+                        ' checking balance of customer
                         Dim custBalance As Double = ConMgr.GetCustomerBalance(row.CustomerListID)
 
 
                         ' send row
-                        Dim invObj As QBInvoiceObj
-                            Invoice(row)
-
-                           ' check status
-                            If (row.InvoiceStatus = 6) Then
-                                ' update err count
-                                err += 1
-                            ElseIf (row.InvoiceStatus = 7) Then
-                            If (invObj.BalanceRemaining > 0) Then
+                        Dim invObj As QBInvoiceObj = Invoice(row)
+                        ' check status
+                        If (row.InvoiceStatus = 6) Then
+                            ' update err count
+                            err += 1
+                        ElseIf (row.InvoiceStatus = 7) Then
+                            While invObj.BalanceRemaining > 0
                                 If (custBalance < 0) Then
                                     ' get list of creditObjs avail for use
-                                    Dim resp As IResponse = QBRequests.CreditMemoQuery(listID:=invObj.CustomerListID, qbConMgr:=ConMgr)
-                                    Dim creditObjList As List(Of QBCreditObj) = QBMethods.
-                                    ' check for credits
-                                    _procedures.Customer_CheckCredits(invObj)
-                                    If (invObj.BalanceRemaining > 0) Then
-                                        ' if balance remain after credits, check for overpayments
-                                        _procedures.Customer_CheckOverpayments(invObj)
+                                    Dim creditResp As IResponse = QBRequests.CreditMemoQuery(listID:=invObj.CustomerListID, qbConMgr:=ConMgr)
+                                    Dim creditObjList As List(Of QBCreditObj) = QBMethods.ConvertToCreditObjs(creditResp)
+                                    If (creditObjList.Count > 0) Then
+                                        Dim i As Integer = 0
+                                        While invObj.BalanceRemaining > 0
+                                            Dim credit As QBCreditObj = creditObjList(i)
+                                            Dim resp As IResponse = QBMethods.UseCredit(invObj:=invObj, creditObj:=credit, qbConMgr:=ConMgr)
+                                            If (resp.StatusCode <> 0) Then
+                                                QBMethods.ResponseErr_Misc(resp)
+                                                err += 1
+                                            End If
+                                            i += 1
+                                        End While
                                     End If
+                                    ' checking for overpayments if invoice has balance
+                                    While invObj.BalanceRemaining > 0
+                                        Dim payResp As IResponse = QBRequests.PaymentQuery(listID:=invObj.CustomerListID, qbConMgr:=ConMgr)
+                                        Dim payObjList As List(Of QBRecievePaymentObj) = QBMethods.ConvertToPayObjs(payResp)
+                                        If (payObjList.Count > 0) Then
+                                            Dim i As Integer = 0
+                                            While invObj.BalanceRemaining > 0
+                                                Dim payObj As QBRecievePaymentObj = payObjList(i)
+                                                Dim resp As IResponse = QBMethods.UseOverpayment(payObj:=payObj, invObj:=invObj, qbConMgr:=ConMgr)
+                                                If (resp.StatusCode <> 0) Then
+                                                    QBMethods.ResponseErr_Misc(resp)
+                                                    err += 1
+                                                End If
+                                                i += 1
+                                            End While
+                                        End If
+                                    End While
                                 End If
-                            End If
-                            End If
+                            End While
+                        End If
+                        ' checking for cancel request
+                        If (worker.CancellationPending = True) Then
+                            e.Cancel = True
+                            Exit For
+                        End If
 
-                            ' checking for cancel request
-                            If (worker.CancellationPending = True) Then
-                                e.Cancel = True
-                                Exit For
-                            End If
-                        Next row
 
+                    Next row
+                    Try
                         ' update batch row for completion
                         ' and delete completed rows
-                        Try
-                            _qta.BATCH_HISTORY_INVOICE_UpdateForCompletion(_batchID, Date.Now, err)
-                            _ta.Update(_dt)
-                            _ta.DeleteComplete()
-                        Catch ex As Exception
-                            MsgBox("Batch History Invoice Complete Update: " & ex.Message)
-                        End Try
-                    End If
-              
-            Finalize()
+                        _qta.BATCH_HISTORY_INVOICE_UpdateForCompletion(_batchID, Date.Now, err)
+                        _ta.Update(_dt)
+                        _ta.DeleteComplete()
+                    Catch ex As SqlException
+                        MessageBox.Show("Message: " & ex.Message & vbCrLf & "LineNumber: " & ex.LineNumber,
+                                        "Sql Error: " & ex.Procedure, MessageBoxButtons.OK, MessageBoxIcon.Error)
+                    End Try
+                End If
+
+                Finalize()
             End Sub
 
             Private Function Invoice(ByRef row As ds_Batching.BATCH_WorkingInvoiceRow) As QBInvoiceObj

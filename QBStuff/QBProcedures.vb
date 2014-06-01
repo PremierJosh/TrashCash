@@ -702,37 +702,61 @@ Namespace QBStuff
                     Next
                 End If
             Next
-
+            
             Return linkObjList
         End Function
 
-        Public Shared Function UseCredit(ByVal customerListID As String, ByRef invObj As QBInvoiceObj, ByRef creditObj As QBCreditObj,
-                                         Optional ByRef qbConMgr As QBConMgr = Nothing) As IResponse
+        Public Shared Function ConvertToCreditObjs(ByRef resp As IResponse, Optional ByVal newestFirst As Boolean = False) As List(Of QBCreditObj)
+            ' return list
+            Dim creditObjList As New List(Of QBCreditObj)
+
+            Dim creditRetList As ICreditMemoRetList = resp.Detail
+            For i = 0 To creditRetList.Count - 1
+                Dim creditRet As ICreditMemoRet = creditRetList.GetAt(i)
+                Dim creditObj As New QBCreditObj
+                With creditObj
+                    .TxnID = creditRet.TxnID.GetValue
+                    .EditSequence = creditRet.EditSequence.GetValue
+                    .TotalAmount = creditRet.TotalAmount.GetValue
+                    .CreditRemaining = creditRet.CreditRemaining.GetValue
+                End With
+                ' add to ret list
+                creditObjList.Add(creditObj)
+            Next
+
+            If (newestFirst) Then
+                creditObjList.Reverse()
+            End If
+            Return creditObjList
+        End Function
+
+        Public Shared Function UseCredit(ByRef invObj As QBInvoiceObj, ByRef creditObj As QBCreditObj, Optional ByRef qbConMgr As QBConMgr = Nothing) As IResponse
             ' creating payment to apply
             Dim payObj As New QBRecievePaymentObj
-            ' setting to customer
-            payObj.CustomerListID = customerListID
+            ' setting to customer thats on the invoice
+            payObj.CustomerListID = invObj.CustomerListID
+            ' adding applied txn
+            Dim appInv As New QBInvoiceObj
+            appInv.TxnID = invObj.TxnID
 
-            While creditObj.CreditRemaining > 0
-                ' adding applied txn
-                Dim appInv As New QBInvoiceObj
-                appInv.TxnID = invObj.TxnID
-                ' creating applied inv item from the row
-                Dim appCredit As QBCreditObj = New QBCreditObj
-                appCredit.TxnID = creditObj.TxnID
-                If (creditObj.CreditRemaining >= invObj.BalanceRemaining) Then
-                    ' if remaining credit is greater than balance, apply balance
-                    appCredit.AppliedAmount = invObj.BalanceRemaining
-                    creditObj.CreditRemaining = invObj.BalanceRemaining
-                Else
-                    appCredit.AppliedAmount = creditObj.CreditRemaining
-                    creditObj.CreditRemaining = 0
-                End If
-                ' adding credit
-                appInv.SetCreditList.Add(appCredit)
-                payObj.AppliedInvList.Add(appInv)
-            End While
+            ' creating applied inv item from the row
+            Dim appCredit As QBCreditObj = New QBCreditObj
+            appCredit.TxnID = creditObj.TxnID
+            If (creditObj.CreditRemaining >= invObj.BalanceRemaining) Then
+                ' if remaining credit is greater than balance, apply balance
+                appCredit.AppliedAmount = invObj.BalanceRemaining
+                creditObj.CreditRemaining = invObj.BalanceRemaining
+            Else
+                appCredit.AppliedAmount = creditObj.CreditRemaining
+                creditObj.CreditRemaining = 0
+            End If
 
+            ' adding credit and applied invoice
+            appInv.SetCreditList.Add(appCredit)
+            payObj.AppliedInvList.Add(appInv)
+
+            ' update remaining on invoiceObj
+            invObj.BalanceRemaining = appCredit.AppliedAmount
             Return QBRequests.PaymentAdd(payObj, qbConMgr:=ConCheck(qbConMgr), autoApply:=False)
         End Function
 
