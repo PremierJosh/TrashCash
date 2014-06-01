@@ -1,4 +1,5 @@
-﻿Imports TrashCash.Classes
+﻿Imports TrashCash.Customer
+Imports TrashCash.Classes
 
 <Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
 Partial Class PaymentsForm
@@ -46,7 +47,7 @@ Partial Class PaymentsForm
         Me.tc_p_CustNotes = New System.Windows.Forms.TabPage()
         Me.UC_CustomerNotes = New TrashCash.UC_CustomerNotes()
         Me.tc_p_CustInfo = New System.Windows.Forms.TabPage()
-        Me.UC_CustomerInfoBoxes = New TrashCash.UC_CustomerInfoBoxes()
+        Me.UC_CustomerInfoBoxes = New UC_CustomerInfoBoxes()
         Me.WorkingPaymentsTableAdapter = New TrashCash.ds_PaymentsTableAdapters.WorkingPaymentsTableAdapter()
         Me.Panel1 = New System.Windows.Forms.Panel()
         Me.pnl_TopContent = New System.Windows.Forms.Panel()
@@ -335,7 +336,7 @@ Partial Class PaymentsForm
     Friend WithEvents tc_p_CustNotes As System.Windows.Forms.TabPage
     Friend WithEvents UC_CustomerNotes As TrashCash.UC_CustomerNotes
     Friend WithEvents tc_p_CustInfo As System.Windows.Forms.TabPage
-    Friend WithEvents UC_CustomerInfoBoxes As TrashCash.UC_CustomerInfoBoxes
+    Friend WithEvents UC_CustomerInfoBoxes As UC_CustomerInfoBoxes
     Friend WithEvents ds_Payments As TrashCash.ds_Payments
     Friend WithEvents WorkingPaymentsBindingSource As System.Windows.Forms.BindingSource
     Friend WithEvents WorkingPaymentsTableAdapter As TrashCash.ds_PaymentsTableAdapters.WorkingPaymentsTableAdapter

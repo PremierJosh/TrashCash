@@ -26,6 +26,18 @@ Module AppModule
         Return paramConMgr
     End Function
 
+    Public Function PhoneFormat(ByVal strPhoneNumber As String) As String
+        ' Remove any style characters from the user input
+        strPhoneNumber = Replace(strPhoneNumber, ")", "")
+        strPhoneNumber = Replace(strPhoneNumber, "(", "")
+        strPhoneNumber = Replace(strPhoneNumber, "-", "")
+        strPhoneNumber = Replace(strPhoneNumber, ".", "")
+        strPhoneNumber = Replace(strPhoneNumber, Space(1), "")
+
+        Dim strFormatedNumber As String = CLng(strPhoneNumber).ToString("(###) ###-####")
+        Return strFormatedNumber
+    End Function
+
     ' enumerated item status from database
     Enum ENItemStatus As Int32
         Ready = 5

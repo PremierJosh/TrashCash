@@ -43,7 +43,7 @@ Namespace Customer
             Me.btn_Payments = New System.Windows.Forms.ToolStripButton()
             Me.btn_NewCust = New System.Windows.Forms.ToolStripButton()
             Me.btn_Credit = New System.Windows.Forms.ToolStripButton()
-            Me.UC_CustomerInfoBoxes = New TrashCash.UC_CustomerInfoBoxes()
+            Me.UC_CustomerInfoBoxes = New UC_CustomerInfoBoxes()
             Me.CustomerToolstrip1 = New TrashCash.Classes.CustomerToolstrip.CustomerToolstrip()
             Me.tc_Master.SuspendLayout()
             Me.tc_p_Notes.SuspendLayout()
@@ -263,7 +263,7 @@ Namespace Customer
             Me.PerformLayout()
 
         End Sub
-        Friend WithEvents UC_CustomerInfoBoxes As TrashCash.UC_CustomerInfoBoxes
+        Friend WithEvents UC_CustomerInfoBoxes As UC_CustomerInfoBoxes
         Friend WithEvents tc_Master As System.Windows.Forms.TabControl
         Friend WithEvents tc_p_Notes As System.Windows.Forms.TabPage
         Friend WithEvents UC_CustomerNotes As TrashCash.UC_CustomerNotes

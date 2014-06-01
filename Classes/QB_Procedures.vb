@@ -27,253 +27,119 @@ Namespace Classes
             _rsta = New ds_RecurringServiceTableAdapters.RecurringServiceTableAdapter
         End Sub
 
-        Public Sub Customer_AddMissingListID(ByRef form As AdminExportImport)
-            Dim missingCount As Integer
-            Dim qta As New ds_CustomerTableAdapters.QueriesTableAdapter
+        '    Public Function Customer_New(ByRef custRow As ds_Customer.CustomerRow) As Boolean
+        '            ' return bool for success
+        '            Dim addOk As Boolean
 
-            missingCount = qta.Customer_MissingListIDCount
+        '            ' build full name
+        '            If (custRow.IsCustomerCompanyNameNull = False) Then
+        '                custRow.CustomerFullName = custRow.CustomerCompanyName & " - " & custRow.CustomerNumber
+        '            Else
+        '                custRow.CustomerFullName = custRow.CustomerLastName & ", " & custRow.CustomerFirstName & " - " & custRow.CustomerNumber
+        '            End If
 
+        'retry:
+        '            Dim customerAdd As ICustomerAdd = MsgSetReq.AppendCustomerAddRq
 
-            ' fill table
-            If (missingCount > 0) Then
-                Dim dt As ds_Customer.CustomerDataTable = _cta.GetDataByMissingListID
+        '            ' General Customer Information
+        '            customerAdd.Name.SetValue(custRow.CustomerFullName)
+        '            If (custRow.IsCustomerCompanyNameNull = False) Then
+        '                customerAdd.CompanyName.SetValue(custRow.CustomerCompanyName)
+        '            End If
+        '            If (custRow.IsCustomerFirstNameNull = False) Then
+        '                customerAdd.FirstName.SetValue(custRow.CustomerFirstName)
+        '            End If
+        '            If (custRow.IsCustomerLastNameNull = False) Then
+        '                customerAdd.LastName.SetValue(custRow.CustomerLastName)
+        '            End If
+        '            customerAdd.Phone.SetValue(custRow.CustomerPhone)
 
-                ' pb init stuff
-                Dim progCounter As Integer = 0
-                form.pb_AllCustAdd.Maximum = dt.Rows.Count
-                form.lbl_AllCustAddCount.Text = progCounter & "/" & dt.Rows.Count
+        '            If (custRow.IsCustomerAltPhoneNull = False) Then
+        '                customerAdd.AltPhone.SetValue(custRow.CustomerAltPhone)
+        '            End If
+        '            If (custRow.IsCustomerContactNull = False) Then
+        '                customerAdd.Contact.SetValue(custRow.CustomerContact)
+        '            End If
 
-                ' loop through table
-                For Each custRow As ds_Customer.CustomerRow In dt
+        '            ' Billing Address Information
+        '            customerAdd.BillAddress.Addr1.SetValue(custRow.CustomerBillingAddr1)
+        '            If (custRow.IsCustomerBillingAddr2Null = False) Then
+        '                customerAdd.BillAddress.Addr2.SetValue(custRow.CustomerBillingAddr2)
+        '            End If
+        '            If (custRow.IsCustomerBillingAddr3Null = False) Then
+        '                customerAdd.BillAddress.Addr3.SetValue(custRow.CustomerBillingAddr3)
+        '            End If
+        '            If (custRow.IsCustomerBillingAddr4Null = False) Then
+        '                customerAdd.BillAddress.Addr4.SetValue(custRow.CustomerBillingAddr4)
+        '            End If
+        '            customerAdd.BillAddress.City.SetValue(custRow.CustomerBillingCity)
+        '            customerAdd.BillAddress.State.SetValue(custRow.CustomerBillingState)
+        '            customerAdd.BillAddress.PostalCode.SetValue(custRow.CustomerBillingZip)
 
-                    ' pb update stuff
-                    progCounter += 1
-                    form.pb_AllCustAdd.Value = progCounter
-                    form.lbl_AllCustAddCount.Text = progCounter & "/" & dt.Rows.Count
+        '            ' sending request
+        '            Dim msgSetResp As IMsgSetResponse = SessMgr.DoRequests(MsgSetReq)
+        '            Dim respList As IResponseList = msgSetResp.ResponseList
 
-                    Dim customerAdd As ICustomerAdd = MsgSetReq.AppendCustomerAddRq
+        '            ' clear requests
+        '            MsgSetReq.ClearRequests()
 
-                    ' General Customer Information
-                    customerAdd.Name.SetValue(custRow.CustomerFullName)
-                    If (custRow.IsCustomerCompanyNameNull = False) Then
-                        customerAdd.CompanyName.SetValue(custRow.CustomerCompanyName)
-                    End If
-                    If (custRow.IsCustomerFirstNameNull = False) Then
-                        customerAdd.FirstName.SetValue(custRow.CustomerFirstName)
-                    End If
-                    If (custRow.IsCustomerLastNameNull = False) Then
-                        customerAdd.LastName.SetValue(custRow.CustomerLastName)
-                    End If
-                    customerAdd.Phone.SetValue(custRow.CustomerPhone)
-                    If (custRow.IsCustomerAltPhoneNull = False) Then
-                        customerAdd.AltPhone.SetValue(custRow.CustomerAltPhone)
-                    End If
-                    If (custRow.IsCustomerContactNull = False) Then
-                        customerAdd.Contact.SetValue(custRow.CustomerContact)
-                    End If
-                    ' setting active status
-                    If (custRow.CustomerIsDeactive = True) Then
-                        customerAdd.IsActive.SetValue(False)
-                    Else
-                        customerAdd.IsActive.SetValue(True)
-                    End If
+        '            ' looping through response with error checking
+        '            For i = 0 To respList.Count - 1
+        '                Dim resp As IResponse = respList.GetAt(i)
+        '                If (resp.StatusCode = 0) Then
+        '                    ' updating return var
+        '                    addOk = True
 
-                    ' Billing Address Information
-                    ' addr1 is first name + last name if first name is present, otherwise company name
-                    customerAdd.BillAddress.Addr1.SetValue(custRow.CustomerBillingAddr1)
-                    If (custRow.IsCustomerBillingAddr2Null = False) Then
-                        customerAdd.BillAddress.Addr2.SetValue(custRow.CustomerBillingAddr2)
-                    End If
-                    If (custRow.IsCustomerBillingAddr3Null = False) Then
-                        customerAdd.BillAddress.Addr3.SetValue(custRow.CustomerBillingAddr3)
-                    End If
-                    If (custRow.IsCustomerBillingAddr4Null = False) Then
-                        customerAdd.BillAddress.Addr4.SetValue(custRow.CustomerBillingAddr4)
-                    End If
-                    customerAdd.BillAddress.City.SetValue(custRow.CustomerBillingCity)
-                    customerAdd.BillAddress.State.SetValue(custRow.CustomerBillingState)
-                    customerAdd.BillAddress.PostalCode.SetValue(custRow.CustomerBillingZip)
+        '                    Dim customerRet As ICustomerRet = resp.Detail
+        '                    ' updating the custRow with ListID and EditSeq
+        '                    custRow.CustomerListID = customerRet.ListID.GetValue
+        '                    custRow.CustomerEditSeq = customerRet.EditSequence.GetValue
 
-                    ' sending request
-                    Dim msgSetResp As IMsgSetResponse = SessMgr.DoRequests(MsgSetReq)
-                    Dim responseList As IResponseList = msgSetResp.ResponseList
+        '                    Try
+        '                        ' commiting to DB
+        '                        _cta.Update(custRow)
+        '                    Catch ex As Exception
+        '                        MsgBox(ex.Message)
+        '                    End Try
+        '                ElseIf (resp.StatusCode = 3100) Then
 
-                    'clear msgSetREq
-                    MsgSetReq.ClearRequests()
+        '                    ' customer already exists with that name
+        '                    Dim input As String = InputBox("A Customer already exists with the Name " & custRow.CustomerFullName & ". Please chose a different name.")
+        '                    If (input.Length > 0) Then
+        '                        custRow.CustomerFullName = input
 
-                    ' looping through response with error checking
-                    For i = 0 To responseList.Count - 1
-                        Dim response As IResponse = responseList.GetAt(i)
-                        If (response.StatusCode = 0) Then
-                            Dim responseType As ENResponseType
-                            responseType = CType(response.Type.GetValue(), ENResponseType)
-                            If (responseType = QBFC12Lib.ENResponseType.rtCustomerAddRs) Then
-                                Dim customerRet As ICustomerRet = response.Detail
-                                ' updating the custRow with ListID and EditSeq
-                                custRow.CustomerListID = customerRet.ListID.GetValue
-                                custRow.CustomerEditSeq = customerRet.EditSequence.GetValue
+        '                        Try
+        '                            ' commiting to DB
+        '                            _cta.Update(custRow)
+        '                            GoTo retry
+        '                            'Exit Function
+        '                        Catch ex As Exception
+        '                            MsgBox(ex.Message)
+        '                        End Try
+        '                    End If
+        '                Else
+        '                    ' updating return var
+        '                    addOk = False
 
-                                Try
-                                    ' commiting to DB
-                                    _cta.Update(custRow)
-                                Catch ex As Exception
-                                    MsgBox(ex.Message)
-                                End Try
-                            End If
+        '                    ' error logging
+        '                    GlobalConMgr.ResponseErr_Misc(resp)
 
-                        ElseIf (response.StatusCode = 3100) Then
-                            ' customer name already exists
-                            Dim input As String = InputBox("A Customer already exists with the Name " & custRow.CustomerFullName & ". Please choose a different name.")
-                            If (input.Length > 0) Then
-                                custRow.CustomerFullName = input
+        '                    ' delete row
+        '                    Using qta As New ds_CustomerTableAdapters.QueriesTableAdapter
+        '                        qta.Customer_DeleteByNum(custRow.CustomerNumber)
+        '                    End Using
 
-                                Try
-                                    ' commiting to DB
-                                    _cta.Update(custRow)
-                                Catch ex As Exception
-                                    MsgBox(ex.Message)
-                                End Try
+        '                    ' bail out
+        '                    Return addOk
+        '                End If
+        '            Next i
 
-                                ' moving to next customer
-                                GoTo skipCustomer
-                            End If
-                        Else
-                            ' error logging
-                            GlobalConMgr.ResponseErr_Misc(response)
+        '            MsgBox("Customer: '" & custRow.CustomerFullName & "' added successfully.")
 
-                            ' bail out
-                            Exit Sub
+        '            Return addOk
+        '        End Function
 
-                        End If
-
-                    Next i
-
-skipCustomer:
-                Next custRow
-
-                ' checking if customers still missing listids. most likely from having to rename
-                missingCount = qta.Customer_MissingListIDCount
-                If (missingCount > 0) Then
-                    Customer_AddMissingListID(form)
-                End If
-
-            End If
-            MsgBox("All Customers Added. If this is the initially load, be sure to import services!")
-        End Sub
-
-        Public Function Customer_New(ByRef custRow As ds_Customer.CustomerRow) As Boolean
-            ' return bool for success
-            Dim addOk As Boolean
-
-            ' build full name
-            If (custRow.IsCustomerCompanyNameNull = False) Then
-                custRow.CustomerFullName = custRow.CustomerCompanyName & " - " & custRow.CustomerNumber
-            Else
-                custRow.CustomerFullName = custRow.CustomerLastName & ", " & custRow.CustomerFirstName & " - " & custRow.CustomerNumber
-            End If
-
-retry:
-            Dim customerAdd As ICustomerAdd = MsgSetReq.AppendCustomerAddRq
-
-            ' General Customer Information
-            customerAdd.Name.SetValue(custRow.CustomerFullName)
-            If (custRow.IsCustomerCompanyNameNull = False) Then
-                customerAdd.CompanyName.SetValue(custRow.CustomerCompanyName)
-            End If
-            If (custRow.IsCustomerFirstNameNull = False) Then
-                customerAdd.FirstName.SetValue(custRow.CustomerFirstName)
-            End If
-            If (custRow.IsCustomerLastNameNull = False) Then
-                customerAdd.LastName.SetValue(custRow.CustomerLastName)
-            End If
-            customerAdd.Phone.SetValue(custRow.CustomerPhone)
-
-            If (custRow.IsCustomerAltPhoneNull = False) Then
-                customerAdd.AltPhone.SetValue(custRow.CustomerAltPhone)
-            End If
-            If (custRow.IsCustomerContactNull = False) Then
-                customerAdd.Contact.SetValue(custRow.CustomerContact)
-            End If
-
-            ' Billing Address Information
-            customerAdd.BillAddress.Addr1.SetValue(custRow.CustomerBillingAddr1)
-            If (custRow.IsCustomerBillingAddr2Null = False) Then
-                customerAdd.BillAddress.Addr2.SetValue(custRow.CustomerBillingAddr2)
-            End If
-            If (custRow.IsCustomerBillingAddr3Null = False) Then
-                customerAdd.BillAddress.Addr3.SetValue(custRow.CustomerBillingAddr3)
-            End If
-            If (custRow.IsCustomerBillingAddr4Null = False) Then
-                customerAdd.BillAddress.Addr4.SetValue(custRow.CustomerBillingAddr4)
-            End If
-            customerAdd.BillAddress.City.SetValue(custRow.CustomerBillingCity)
-            customerAdd.BillAddress.State.SetValue(custRow.CustomerBillingState)
-            customerAdd.BillAddress.PostalCode.SetValue(custRow.CustomerBillingZip)
-
-            ' sending request
-            Dim msgSetResp As IMsgSetResponse = SessMgr.DoRequests(MsgSetReq)
-            Dim respList As IResponseList = msgSetResp.ResponseList
-
-            ' clear requests
-            MsgSetReq.ClearRequests()
-
-            ' looping through response with error checking
-            For i = 0 To respList.Count - 1
-                Dim resp As IResponse = respList.GetAt(i)
-                If (resp.StatusCode = 0) Then
-                    ' updating return var
-                    addOk = True
-
-                    Dim customerRet As ICustomerRet = resp.Detail
-                    ' updating the custRow with ListID and EditSeq
-                    custRow.CustomerListID = customerRet.ListID.GetValue
-                    custRow.CustomerEditSeq = customerRet.EditSequence.GetValue
-
-                    Try
-                        ' commiting to DB
-                        _cta.Update(custRow)
-                    Catch ex As Exception
-                        MsgBox(ex.Message)
-                    End Try
-                ElseIf (resp.StatusCode = 3100) Then
-
-                    ' customer already exists with that name
-                    Dim input As String = InputBox("A Customer already exists with the Name " & custRow.CustomerFullName & ". Please chose a different name.")
-                    If (input.Length > 0) Then
-                        custRow.CustomerFullName = input
-
-                        Try
-                            ' commiting to DB
-                            _cta.Update(custRow)
-                            GoTo retry
-                            'Exit Function
-                        Catch ex As Exception
-                            MsgBox(ex.Message)
-                        End Try
-                    End If
-                Else
-                    ' updating return var
-                    addOk = False
-
-                    ' error logging
-                    GlobalConMgr.ResponseErr_Misc(resp)
-
-                    ' delete row
-                    Using qta As New ds_CustomerTableAdapters.QueriesTableAdapter
-                        qta.Customer_DeleteByNum(custRow.CustomerNumber)
-                    End Using
-
-                    ' bail out
-                    Return addOk
-                End If
-            Next i
-
-            MsgBox("Customer: '" & custRow.CustomerFullName & "' added successfully.")
-
-            Return addOk
-        End Function
-
-        Public Sub Customer_Update(ByRef custRow As ds_Customer.CustomerRow)
+        Public Sub Customer_Update(ByRef custRow As ds_Customer.CustomerRow, ByVal err As Integer)
 retry:
             Dim customerMod As ICustomerMod = MsgSetReq.AppendCustomerModRq
 

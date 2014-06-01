@@ -1,4 +1,5 @@
 ﻿Imports QBFC12Lib
+Imports TrashCash.Classes
 
 Namespace Admin
 
@@ -30,6 +31,7 @@ Namespace Admin
         Dim _cita As ds_ApplicationTableAdapters.Initial_CustomInvoiceTableAdapter
         Dim _cidt As ds_Application.Initial_CustomInvoiceDataTable
         Dim _cqta As ds_CustomerTableAdapters.QueriesTableAdapter
+        Private _cta As ds_CustomerTableAdapters.CustomerTableAdapter
 
 
         Private Sub ImportWork_Load(sender As Object, e As System.EventArgs) Handles Me.Load
@@ -38,6 +40,7 @@ Namespace Admin
             _cita = New ds_ApplicationTableAdapters.Initial_CustomInvoiceTableAdapter
             _cidt = _cita.GetData
             tb_CustInvCount.Text = _cidt.Rows.Count
+            _cta = New ds_CustomerTableAdapters.CustomerTableAdapter
 
          ' update missing list id count
             MissingCustomerCount = _cqta.Customer_MissingListIDCount
@@ -55,14 +58,38 @@ Namespace Admin
                 ' make pb visible
                 pb_AllCustAdd.Visible = True
                 lbl_AllCustAddCount.Visible = True
+                pb_AllCustAdd.Maximum = MissingCustomerCount
+                pb_AllCustAdd.Value = 0
 
-                _homeForm.Procedures.Customer_AddMissingListID(Me)
+                Dim dt As ds_Customer.CustomerDataTable = _cta.GetDataByMissingListID()
+                For Each row As ds_Customer.CustomerRow In dt
+                    Dim resp As IResponse = QBRequests.CustomerAdd(row)
+                    If (resp.StatusCode = 0) Then
+
+                        Dim customerRet As ICustomerRet = resp.Detail
+                        ' updating the custRow with ListID and EditSeq
+                        row.CustomerListID = customerRet.ListID.GetValue
+                        row.CustomerEditSeq = customerRet.EditSequence.GetValue
+                        Try
+                            _cta.Update(row)
+                        Catch ex As SqlException
+                            MessageBox.Show("Message: " & ex.Message & vbCrLf & "LineNumber: " & ex.LineNumber,
+                                            "Sql Error: " & ex.Procedure, MessageBoxButtons.OK, MessageBoxIcon.Error)
+                        End Try
+                        ' move progress bar
+                        pb_AllCustAdd.Value += 1
+                        lbl_AllCustAddCount.Text = pb_AllCustAdd.Value & "/" & MissingCustomerCount
+                    Else
+                        QBMethods.ResponseErr_Misc(resp)
+                        MsgBox("Add fail")
+                        Exit Sub
+                    End If
+                Next
                 Cursor = Cursors.Default
 
                 ' hide pb
                 pb_AllCustAdd.Visible = False
                 lbl_AllCustAddCount.Visible = False
-
                 MissingCustomerCount = _cqta.Customer_MissingListIDCount
             End If
         End Sub

@@ -77,12 +77,14 @@ Namespace Customer
         End Sub
 
         ' event handle for completed updating
-        Private Sub CustomerInfoUpdated(ByVal CustomerNumber As Decimal) Handles UC_CustomerInfoBoxes.UpdateComplete
-            CustomerToolstrip1.RefreshCustomerList()
+        Private Sub CustomerInfoUpdated(ByVal bool As Boolean) Handles UC_CustomerInfoBoxes.Updating
+            If (bool = False) Then
+                CustomerToolstrip1.RefreshCustomerList()
+            End If
         End Sub
 
         Private Sub btn_NewCust_Click(sender As System.Object, e As System.EventArgs) Handles btn_NewCust.Click
-            _newCust = New NewCustomer(_home)
+            _newCust = New NewCustomer()
             _newCust.ShowDialog()
         End Sub
 
@@ -101,8 +103,7 @@ Namespace Customer
             ' Add any initialization after the InitializeComponent() call.
             _home = HomeForm
             UC_Quickbooks._HomeForm = HomeForm
-            UC_CustomerInfoBoxes.HomeForm = HomeForm
-            UC_RecurringService.HomeForm = HomeForm
+           UC_RecurringService.HomeForm = HomeForm
             CustomerToolstrip1.GetCustomerBalance()
         End Sub
 
