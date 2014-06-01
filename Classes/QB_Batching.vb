@@ -1,50 +1,22 @@
-﻿Imports QBFC12Lib
+﻿Imports TrashCash.QBStuff
+Imports QBFC12Lib
 
 Namespace Classes
 
 
     ' ReSharper disable once InconsistentNaming
     Public MustInherit Class QB_Batching
-        Protected MsgSetReq As IMsgSetRequest
-        Private ReadOnly Property MsgSetRequest As IMsgSetRequest
-            Get
-                Return MsgSetReq
-            End Get
-        End Property
-        Protected SessMgr As QBSessionManager
-        Private ReadOnly Property SessionManager As QBSessionManager
-            Get
-                Return SessMgr
-            End Get
-        End Property
-
-        ' connection status bool
-        Protected Connected As Boolean
-        ' session status bool
-        Protected InSession As Boolean
-        ' class vars
-        Private ReadOnly _queries As QB_Queries
-        Private ReadOnly _procedures As QB_Procedures
+        Protected Friend ConMgr As QBConMgr
+        
         ' qta
         Private ReadOnly _qta As ds_BatchingTableAdapters.QueriesTableAdapter
 
-        Public Sub New()
-            SessMgr = New QBSessionManager
-
-            If (Not Connected) Then
-                SessionManager.OpenConnection2("V1", "TrashCash", ENConnectionType.ctLocalQBD)
-                Connected = True
-            End If
-            If (Not InSession) Then
-                SessionManager.BeginSession(My.Settings.QB_FILE_LOCATION.ToString, ENOpenMode.omSingleUser)
-                InSession = True
+        Protected Friend Sub New()
+            If (ConMgr Is Nothing) Then
+                ConMgr = New QBConMgr
+                ConMgr.InitCon()
             End If
 
-            MsgSetReq = SessionManager.CreateMsgSetRequest("US", 11, 0)
-
-            ' instantiate 
-            _queries = New QB_Queries(SessionManager, MsgSetRequest)
-            _procedures = New QB_Procedures(SessionManager, MsgSetRequest)
             _qta = New ds_BatchingTableAdapters.QueriesTableAdapter
         End Sub
 
@@ -52,56 +24,53 @@ Namespace Classes
             Inherits QB_Batching
 
             ' dt for line items
-            Protected Linedt As ds_Batching.BATCH_LineItemsDataTable
+            Private _lineDT As ds_Batching.BATCH_LineItemsDataTable
             ' dt for invoices
-            Protected Widt As ds_Batching.BATCH_WorkingInvoiceDataTable
+            Private ReadOnly _dt As ds_Batching.BATCH_WorkingInvoiceDataTable
             ' current batch id
-            Protected BatchID As Integer
+            Private _batchID As Integer
 
             ' tas
-            Protected Wita As ds_BatchingTableAdapters.BATCH_WorkingInvoiceTableAdapter
-            Protected Lita As ds_BatchingTableAdapters.BATCH_LineItemsTableAdapter
+            Private ReadOnly _ta As ds_BatchingTableAdapters.BATCH_WorkingInvoiceTableAdapter
+            Private ReadOnly _lineTA As ds_BatchingTableAdapters.BATCH_LineItemsTableAdapter
 
             Public Sub New(ByVal invoiceDt As ds_Batching.BATCH_WorkingInvoiceDataTable)
-                MyBase.new()
+                MyBase.New()
                 ' instantiating tas
-                Wita = New ds_BatchingTableAdapters.BATCH_WorkingInvoiceTableAdapter
-                Lita = New ds_BatchingTableAdapters.BATCH_LineItemsTableAdapter
+                _ta = New ds_BatchingTableAdapters.BATCH_WorkingInvoiceTableAdapter
+                _lineTA = New ds_BatchingTableAdapters.BATCH_LineItemsTableAdapter
 
-                Widt = invoiceDt
+                _dt = invoiceDt
             End Sub
 
             Public Sub Batch(ByVal worker As System.ComponentModel.BackgroundWorker,
                              ByVal e As System.ComponentModel.DoWorkEventArgs)
-                If (InSession) Then
-                    ' this will keep track of this batches progress
-                    Dim progress As New Utilities.ProgressObj
-
-                    ' this is passed to the worker
+             ' this will keep track of this batches progress
+                Dim progress As New ProgressObj
+                ' this is passed to the worker
                     Dim progPercent As Integer
-
-                    ' this will keep track of time reporting so its not insane
+                ' this will keep track of time reporting so its not insane
                     Dim lastReportTime As DateTime = Now
                     ' this is how many milliseconds between progress reporting
                     Const elapsedTime As Double = 100
+                
 
-
-                    If (Widt.Rows.Count > 0) Then
+                    If (_dt.Rows.Count > 0) Then
                         ' setting maximum on progress class
-                        progress.MaximumValue = Widt.Rows.Count
+                        progress.MaximumValue = _dt.Rows.Count
 
                         ' err counter
                         Dim err As Integer
-
-                        ' batch history insert
                         Try
-                            BatchID = _qta.BATCH_HISTORY_INV_Insert(Date.Now, Widt.Rows.Count)
-                        Catch ex As SqlClient.SqlException
-                            MsgBox("Batch History Insert: " & ex.Message)
+                            ' batch history insert
+                            _batchID = _qta.BATCH_HISTORY_INV_Insert(Date.Now, _dt.Rows.Count)
+                        Catch ex as SqlException
+                            MessageBox.Show("Message: " & ex.Message & vbCrLf & "LineNumber: " & ex.LineNumber,
+                                            "Sql Error: " & ex.Procedure, MessageBoxButtons.OK, MessageBoxIcon.Error)
                         End Try
 
                         ' start looping through rows
-                        For Each row As ds_Batching.BATCH_WorkingInvoiceRow In Widt.Rows
+                        For Each row As ds_Batching.BATCH_WorkingInvoiceRow In _dt.Rows
                             ' updating progress counter and customer
                             progress.CurrentValue += 1
                             progress.CurrentCustomer = row.CustomerFullName
@@ -115,59 +84,31 @@ Namespace Classes
                             End If
 
                             ' checking balance of customer
-                            Dim custBalance As Double = _queries.Customer_Balance(row.CustomerListID)
+                        Dim custBalance As Double = ConMgr.GetCustomerBalance(row.CustomerListID)
 
-                            ' send row
+
+                        ' send row
+                        Dim invObj As QBInvoiceObj
                             Invoice(row)
 
-                            ' update row in db
-                            Try
-                                Wita.Update(row)
-                            Catch ex As Exception
-                                MsgBox("WorkingInvoice Update Err: " & ex.Message)
-                            End Try
-
-                            ' check status
+                           ' check status
                             If (row.InvoiceStatus = 6) Then
                                 ' update err count
                                 err += 1
                             ElseIf (row.InvoiceStatus = 7) Then
-                                ' update billed services table if inv is recurring
-                                If (row.IsRecurring) Then
-                                    For Each lineRow As ds_Batching.BATCH_LineItemsRow In Linedt.Rows
-                                        ' get total of line row
-                                        Dim lineTotal As Double = (lineRow.LineItemRate * lineRow.LineItemQuantity)
-
-                                        Try
-                                            _qta.BilledServices_InsertByLineItemID(lineRow.LineItemID,
-                                                                                  row._InvTxnID,
-                                                                                  row._InvRefNum,
-                                                                                  lineRow._LineTxnID,
-                                                                                  BatchID,
-                                                                                  lineTotal)
-                                        Catch ex As Exception
-                                            MsgBox("BilledServices Insert: " & ex.Message)
-                                        End Try
-
-                                    Next
-                                End If
-
-                                If (row.InvoiceBalance > 0) Then
-                                    If (custBalance < 0) Then
-                                        ' class to keep track of this
-                                        Dim invObj As New QB_Procedures.NewInvObj
-                                        invObj.CustomerListID = row.CustomerListID
-                                        invObj.TxnID = row._InvTxnID
-                                        invObj.BalanceRemaining = row.InvoiceBalance
-
-                                        ' check for credits
-                                        _procedures.Customer_CheckCredits(invObj)
-                                        If (invObj.BalanceRemaining > 0) Then
-                                            ' if balance remain after credits, check for overpayments
-                                            _procedures.Customer_CheckOverpayments(invObj)
-                                        End If
+                            If (invObj.BalanceRemaining > 0) Then
+                                If (custBalance < 0) Then
+                                    ' get list of creditObjs avail for use
+                                    Dim resp As IResponse = QBRequests.CreditMemoQuery(listID:=invObj.CustomerListID, qbConMgr:=ConMgr)
+                                    Dim creditObjList As List(Of QBCreditObj) = QBMethods.
+                                    ' check for credits
+                                    _procedures.Customer_CheckCredits(invObj)
+                                    If (invObj.BalanceRemaining > 0) Then
+                                        ' if balance remain after credits, check for overpayments
+                                        _procedures.Customer_CheckOverpayments(invObj)
                                     End If
                                 End If
+                            End If
                             End If
 
                             ' checking for cancel request
@@ -180,127 +121,100 @@ Namespace Classes
                         ' update batch row for completion
                         ' and delete completed rows
                         Try
-                            _qta.BATCH_HISTORY_INVOICE_UpdateForCompletion(BatchID, Date.Now, err)
-                            Wita.Update(Widt)
-                            Wita.DeleteComplete()
+                            _qta.BATCH_HISTORY_INVOICE_UpdateForCompletion(_batchID, Date.Now, err)
+                            _ta.Update(_dt)
+                            _ta.DeleteComplete()
                         Catch ex As Exception
                             MsgBox("Batch History Invoice Complete Update: " & ex.Message)
                         End Try
                     End If
-                End If
-
-                MsgSetRequest.ClearRequests()
-                Finalize()
+              
+            Finalize()
             End Sub
 
-            Private Sub Invoice(ByRef invRow As ds_Batching.BATCH_WorkingInvoiceRow)
-
-                If (InSession) Then
-                    ' fill line table
-                    Linedt = Lita.GetData(invRow.WorkingInvoiceID)
-
-                    ' interfaces needed for InvoicingForm and line items
-                    Dim invoiceAdd As IInvoiceAdd = MsgSetRequest.AppendInvoiceAddRq
-                    ' not going to limit response. i want a lot of data back
-                    'invoiceAdd.IncludeRetElementList.Add("TxnID")
-                    'invoiceAdd.IncludeRetElementList.Add("RefNumber")
-                    'invoiceAdd.IncludeRetElementList.Add("BalanceRemaining")
-                    'invoiceAdd.IncludeRetElementList.Add("ORInvoiceLineRetList")
-
-                    ' build request
-                    invoiceAdd.CustomerRef.ListID.SetValue(invRow.CustomerListID)
-                    invoiceAdd.TxnDate.SetValue(invRow.InvoicePostDate)
-                    invoiceAdd.DueDate.SetValue(invRow.InvoiceDueDate)
-                    invoiceAdd.IsToBePrinted.SetValue(invRow.InvoiceToBePrinted)
-
-                    ' checking if memo provided
-                    If (invRow.IsInvoiceMemoNull = False) Then
-                        invoiceAdd.Memo.SetValue(invRow.InvoiceMemo)
+            Private Function Invoice(ByRef row As ds_Batching.BATCH_WorkingInvoiceRow) As QBInvoiceObj
+                ' create invObj
+                Dim invObj As New QBInvoiceObj
+                With invObj
+                    .CustomerListID = row.CustomerListID
+                    .DueDate = row.InvoiceDueDate
+                    .TxnDate = row.InvoicePostDate
+                    .IsToBePrinted = row.InvoiceToBePrinted
+                    ' checking memo
+                    If (Not row.IsInvoiceMemoNull) Then
+                        .Memo = row.InvoiceMemo
                     End If
-
-                    ' line list
-                    Dim lineList As IORInvoiceLineAddList = invoiceAdd.ORInvoiceLineAddList
-                    ' line item to reuse
-                    Dim lineItem As IORInvoiceLineAdd
-
-                    ' loop through line items
-                    For Each lineRow As ds_Batching.BATCH_LineItemsRow In Linedt.Rows
-                        lineItem = lineList.Append
-
-                        lineItem.InvoiceLineAdd.ItemRef.ListID.SetValue(lineRow.ServiceListID)
-                        lineItem.InvoiceLineAdd.ORRatePriceLevel.Rate.SetValue(lineRow.LineItemRate)
-                        lineItem.InvoiceLineAdd.Quantity.SetValue(lineRow.LineItemQuantity)
-                        lineItem.InvoiceLineAdd.Desc.SetValue(lineRow.Description)
-
+                    .LineList = New List(Of QBLineItemObj)
+                End With
+                ' fill line table
+                _lineDT = _lineTA.GetData(row.WorkingInvoiceID)
+                ' loop through line items
+                For Each lineRow As ds_Batching.BATCH_LineItemsRow In _lineDT.Rows
+                    Dim line As New QBLineItemObj
+                    With line
+                        .ItemListID = lineRow.ServiceListID
+                        .Rate = lineRow.LineItemRate
+                        .Quantity = lineRow.LineItemQuantity
+                        .Desc = lineRow.Description
                         ' writing table id to other1 so i can catch and update billed services with better detail
-                        lineItem.InvoiceLineAdd.Other1.SetValue(lineRow.LineItemID)
+                        .Other1 = lineRow.LineItemID
+                    End With
+                    ' add line
+                    invObj.LineList.Add(line)
+                Next
+
+                Dim resp As IResponse = QBRequests.InvoiceAdd(invObj:=invObj, qbConMgr:=ConMgr)
+                If (resp.StatusCode = 0) Then
+                    row.InvoiceStatus = ENItemStatus.Complete
+                    ' grabbing ret and lineRetList
+                    Dim invRet As IInvoiceRet = resp.Detail
+                    ' updating invObj
+                    With invObj
+                        .TxnID = invRet.TxnID.GetValue
+                        .RefNumber = invRet.RefNumber.GetValue
+                        .BalanceRemaining = invRet.BalanceRemaining.GetValue
+                    End With
+
+                    ' looping through line rows to update their fields for billed history writing
+                    Dim retLineList As IORInvoiceLineRetList = invRet.ORInvoiceLineRetList
+                    For i = 0 To retLineList.Count - 1
+                        Dim lineRet As IORInvoiceLineRet = retLineList.GetAt(i)
+                        Dim lineID As String = lineRet.InvoiceLineRet.Other1.GetValue
+                        Try
+                            ' this should work for inserting history right here
+                            _qta.BilledServices_InsertByLineItemID(Integer.Parse(lineID),
+                                                                    invObj.TxnID,
+                                                                    invObj.RefNumber,
+                                                                    lineRet.InvoiceLineRet.TxnLineID.GetValue,
+                                                                    _batchID,
+                                                                    lineRet.InvoiceLineRet.Amount.GetValue)
+                        Catch ex As SqlException
+                            MessageBox.Show("Message: " & ex.Message & vbCrLf & "LineNumber: " & ex.LineNumber,
+                                            "Sql Error: " & ex.Procedure, MessageBoxButtons.OK, MessageBoxIcon.Error)
+                        End Try
                     Next
-
-                    Dim msgSetResp As IMsgSetResponse = SessionManager.DoRequests(MsgSetRequest)
-                    Dim respList As IResponseList = msgSetResp.ResponseList
-                    Dim resp As IResponse
-                    Dim invRet As IInvoiceRet
-                    Dim invLineRetList As IORInvoiceLineRetList
-                    Dim invLineRet As IORInvoiceLineRet
-
-                    For i = 0 To respList.Count - 1
-                        resp = respList.GetAt(i)
-                        If (resp.StatusCode <> 0) Then
-                            invRow.InvoiceStatus = 6
-
-                            Try
-                                ' insert err row
-                                Wita.ERR_INVOICE_Insert(invRow.WorkingInvoiceID,
-                                                        resp.StatusCode,
-                                                        resp.StatusMessage)
-                            Catch ex As Exception
-                                MsgBox("Err_Invoice_Insert: " & ex.Message)
-                            End Try
-
-                        Else
-                            ' delay update till billed services written
-                            invRow.InvoiceStatus = 7
-
-                            ' grabbing ret and lineRetList
-                            invRet = resp.Detail
-                            invLineRetList = invRet.ORInvoiceLineRetList
-
-                            Dim lineID As String
-                            Dim id As Integer
-                            Dim row As ds_Batching.BATCH_LineItemsRow
-                            ' looping through line rows to update their fields for billed history writing
-                            For l = 0 To invLineRetList.Count - 1
-                                invLineRet = invLineRetList.GetAt(l)
-                                lineID = invLineRet.InvoiceLineRet.Other1.GetValue
-                                id = Integer.Parse(lineID)
-
-                                ' see if this works... going to grab row by dts key search feature
-                                ' then update its linerow
-                                row = Linedt.FindByLineItemID(id)
-                                row._LineTxnID = invLineRet.InvoiceLineRet.TxnLineID.GetValue
-                            Next
-
-                            ' updating invrow
-                            invRow._InvTxnID = invRet.TxnID.GetValue
-                            invRow._InvRefNum = invRet.RefNumber.GetValue
-                            invRow.InvoiceBalance = invRet.BalanceRemaining.GetValue
-                        End If
-                    Next
-
-                    MsgSetRequest.ClearRequests()
+                    Try
+                        ' update row
+                        _ta.Update(row)
+                    Catch ex As SqlException
+                        MessageBox.Show("Message: " & ex.Message & vbCrLf & "LineNumber: " & ex.LineNumber,
+                                        "Sql Error: " & ex.Procedure, MessageBoxButtons.OK, MessageBoxIcon.Error)
+                    End Try
+                Else
+                    row.InvoiceStatus = ENItemStatus.Err
+                    Try
+                        ' insert error record
+                        _ta.ERR_INVOICE_Insert(row.WorkingInvoiceID, resp.StatusCode, resp.StatusMessage)
+                    Catch ex As SqlException
+                        MessageBox.Show("Message: " & ex.Message & vbCrLf & "LineNumber: " & ex.LineNumber,
+                                        "Sql Error: " & ex.Procedure, MessageBoxButtons.OK, MessageBoxIcon.Error)
+                    End Try
                 End If
-            End Sub
+
+                Return invObj
+            End Function
 
             Protected Overrides Sub Finalize()
-                If (Connected) Then
-                    If (InSession) Then
-                        SessionManager.EndSession()
-                        InSession = False
-                    End If
-                    SessionManager.CloseConnection()
-                    Connected = False
-                End If
-
                 MyBase.Finalize()
             End Sub
         End Class
@@ -531,22 +445,7 @@ Namespace Classes
 
 
         Protected Overrides Sub Finalize()
-            If (Connected) Then
-                If (InSession) Then
-                    SessionManager.EndSession()
-                    InSession = False
-                End If
-                SessionManager.CloseConnection()
-                Connected = False
-            End If
-
-            'clear vars
-            SessMgr = Nothing
-            MsgSetReq = Nothing
-            Connected = Nothing
-            InSession = Nothing
-
-            MyBase.Finalize()
+            ConMgr.CloseCon()
         End Sub
     End Class
 End Namespace

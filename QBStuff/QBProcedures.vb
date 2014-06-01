@@ -1,7 +1,8 @@
-﻿Imports TrashCash.Modules
+﻿Imports TrashCash.Classes
 Imports QBFC12Lib
 
-Namespace Classes
+
+Namespace QBStuff
     Friend Class QBRequests
 
         ' misc
@@ -16,7 +17,7 @@ Namespace Classes
         End Function
 
         ' service item
-        Public Shared Function ServiceItemAdd(ByRef item As QBItemObj, Optional ByRef qbConMgr As QBConMgr = Nothing) As IResponse
+        Public Shared Function ServiceItemAdd(ByRef item As QBObjects.QBItemObj, Optional ByRef qbConMgr As QBConMgr = Nothing) As IResponse
             Dim newItem As IItemServiceAdd = ConCheck(qbConMgr).MessageSetRequest.AppendItemServiceAddRq
             newItem.Name.SetValue(item.ItemName)
             With newItem.ORSalesPurchase.SalesOrPurchase

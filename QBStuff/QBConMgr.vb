@@ -1,5 +1,6 @@
 ﻿Imports QBFC12Lib
 Imports System.ServiceProcess
+Imports TrashCash.QBStuff
 
 Namespace Classes
     Public Class QBConMgr
@@ -107,8 +108,8 @@ Namespace Classes
                 End Try
             End If
         End Sub
-        
 
+       
         '    Private Sub KillQBProcess()
         '        ' QBW32.exe killing
         '        For Each p As Process In Process.GetProcessesByName("QBW32.exe")

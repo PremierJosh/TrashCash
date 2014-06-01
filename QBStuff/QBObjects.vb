@@ -1,6 +1,6 @@
 ﻿
 
-Namespace Modules
+Namespace QBStuff
     Public Module QBObjects
 
         Public Structure QBAddCreditObj
@@ -29,6 +29,7 @@ Namespace Modules
             Public TxnDate As Date
             Public DueDate As Date
             Public IsToBePrinted As Boolean
+            Public RefNumber As String
 
             ' this can be used to track balance after applying credits or payments
             Public BalanceRemaining As Double

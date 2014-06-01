@@ -1,5 +1,4 @@
 ﻿Imports QBFC12Lib
-Imports TrashCash.Modules
 
 Namespace Classes
 
@@ -26,210 +25,184 @@ Namespace Classes
         End Class
 
 
-        Public Function Invoice_GetBalance(ByVal txnID As String) As InvoiceTotalBalance
-            Dim invObj As New InvoiceTotalBalance
+        'Public Function Invoice_GetBalance(ByVal txnID As String) As InvoiceTotalBalance
+        '    Dim invObj As New InvoiceTotalBalance
 
-            Dim invoiceQuery As IInvoiceQuery = MsgSetReq.AppendInvoiceQueryRq
+        '    Dim invoiceQuery As IInvoiceQuery = MsgSetReq.AppendInvoiceQueryRq
 
-            ' passing inv txn id property
-            invoiceQuery.ORInvoiceQuery.TxnIDList.Add(TxnID)
-            ' just getting balance
-            invoiceQuery.IncludeRetElementList.Add("BalanceRemaining")
-            invoiceQuery.IncludeRetElementList.Add("Subtotal")
+        '    ' passing inv txn id property
+        '    invoiceQuery.ORInvoiceQuery.TxnIDList.Add(TxnID)
+        '    ' just getting balance
+        '    invoiceQuery.IncludeRetElementList.Add("BalanceRemaining")
+        '    invoiceQuery.IncludeRetElementList.Add("Subtotal")
 
-            Dim msgSetResp As IMsgSetResponse = SessMgr.DoRequests(MsgSetReq)
-            Dim respList As IResponseList = msgSetResp.ResponseList
+        '    Dim msgSetResp As IMsgSetResponse = SessMgr.DoRequests(MsgSetReq)
+        '    Dim respList As IResponseList = msgSetResp.ResponseList
 
-            MsgSetReq.ClearRequests()
+        '    MsgSetReq.ClearRequests()
 
-            For i = 0 To respList.Count - 1
-                Dim resp As IResponse = respList.GetAt(i)
-                If (resp.StatusCode = 0) Then
-                    Dim invoiceRetList As IInvoiceRetList = resp.Detail
-                    For j = 0 To invoiceRetList.Count - 1
-                        Dim invoiceRet As IInvoiceRet = invoiceRetList.GetAt(j)
+        '    For i = 0 To respList.Count - 1
+        '        Dim resp As IResponse = respList.GetAt(i)
+        '        If (resp.StatusCode = 0) Then
+        '            Dim invoiceRetList As IInvoiceRetList = resp.Detail
+        '            For j = 0 To invoiceRetList.Count - 1
+        '                Dim invoiceRet As IInvoiceRet = invoiceRetList.GetAt(j)
 
-                        invObj.Balance = invoiceRet.BalanceRemaining.GetValue
-                        invObj.Subtotal = invoiceRet.Subtotal.GetValue
+        '                invObj.Balance = invoiceRet.BalanceRemaining.GetValue
+        '                invObj.Subtotal = invoiceRet.Subtotal.GetValue
 
-                    Next j
-                ElseIf (resp.StatusCode = 1) Then
-                    MsgBox("No Invoices match search criteria in QuickBooks")
-                Else
-                    GlobalConMgr.ResponseErr_Misc(resp)
+        '            Next j
+        '        ElseIf (resp.StatusCode = 1) Then
+        '            MsgBox("No Invoices match search criteria in QuickBooks")
+        '        Else
+        '            GlobalConMgr.ResponseErr_Misc(resp)
 
-                End If
-            Next i
+        '        End If
+        '    Next i
 
-            Return invObj
-        End Function
-        Public Sub Invoice_ForDisplay(ByRef paidStatus As QBFC12Lib.ENPaidStatus, ByRef dgDT As ds_Display.QB_InvoiceDisplayDataTable,
-                                      Optional ByRef custListID As String = Nothing,
-                                      Optional ByRef fromDate As Date = Nothing, Optional ByRef toDate As Date = Nothing)
+        '    Return invObj
+        'End Function
+        'Public Sub Invoice_ForDisplay(ByRef paidStatus As QBFC12Lib.ENPaidStatus, ByRef dgDT As ds_Display.QB_InvoiceDisplayDataTable,
+        '                              Optional ByRef custListID As String = Nothing,
+        '                              Optional ByRef fromDate As Date = Nothing, Optional ByRef toDate As Date = Nothing)
 
-            Dim invQuery As IInvoiceQuery = MsgSetReq.AppendInvoiceQueryRq
+        '    Dim invQuery As IInvoiceQuery = MsgSetReq.AppendInvoiceQueryRq
 
-            ' limiting response
-            invQuery.IncludeRetElementList.Add("RefNumber")
-            invQuery.IncludeRetElementList.Add("TxnDate")
-            invQuery.IncludeRetElementList.Add("TimeCreated")
-            invQuery.IncludeRetElementList.Add("CustomerRef")
-            invQuery.IncludeRetElementList.Add("Subtotal")
-            invQuery.IncludeRetElementList.Add("BalanceRemaining")
-            invQuery.IncludeRetElementList.Add("DueDate")
+        '    ' limiting response
+        '    invQuery.IncludeRetElementList.Add("RefNumber")
+        '    invQuery.IncludeRetElementList.Add("TxnDate")
+        '    invQuery.IncludeRetElementList.Add("TimeCreated")
+        '    invQuery.IncludeRetElementList.Add("CustomerRef")
+        '    invQuery.IncludeRetElementList.Add("Subtotal")
+        '    invQuery.IncludeRetElementList.Add("BalanceRemaining")
+        '    invQuery.IncludeRetElementList.Add("DueDate")
 
-            ' using custListID param here if provided
-            If (custListID.Length > 1) Then
-                invQuery.ORInvoiceQuery.InvoiceFilter.EntityFilter.OREntityFilter.ListIDList.Add(custListID)
-            End If
-            ' using From Date param here
-            If (fromDate <> Nothing) Then
-                invQuery.ORInvoiceQuery.InvoiceFilter.ORDateRangeFilter.TxnDateRangeFilter.ORTxnDateRangeFilter.TxnDateFilter.FromTxnDate.SetValue(fromDate)
-            End If
-            ' using To Date param here
-            If (toDate <> Nothing) Then
-                invQuery.ORInvoiceQuery.InvoiceFilter.ORDateRangeFilter.TxnDateRangeFilter.ORTxnDateRangeFilter.TxnDateFilter.ToTxnDate.SetValue(toDate)
-            End If
+        '    ' using custListID param here if provided
+        '    If (custListID.Length > 1) Then
+        '        invQuery.ORInvoiceQuery.InvoiceFilter.EntityFilter.OREntityFilter.ListIDList.Add(custListID)
+        '    End If
+        '    ' using From Date param here
+        '    If (fromDate <> Nothing) Then
+        '        invQuery.ORInvoiceQuery.InvoiceFilter.ORDateRangeFilter.TxnDateRangeFilter.ORTxnDateRangeFilter.TxnDateFilter.FromTxnDate.SetValue(fromDate)
+        '    End If
+        '    ' using To Date param here
+        '    If (toDate <> Nothing) Then
+        '        invQuery.ORInvoiceQuery.InvoiceFilter.ORDateRangeFilter.TxnDateRangeFilter.ORTxnDateRangeFilter.TxnDateFilter.ToTxnDate.SetValue(toDate)
+        '    End If
 
-            ' if no date filter is passed, limiting results
-            If ((toDate = Nothing) And (fromDate = Nothing)) Then
-                invQuery.ORInvoiceQuery.InvoiceFilter.MaxReturned.SetValue(50)
-            End If
+        '    ' if no date filter is passed, limiting results
+        '    If ((toDate = Nothing) And (fromDate = Nothing)) Then
+        '        invQuery.ORInvoiceQuery.InvoiceFilter.MaxReturned.SetValue(50)
+        '    End If
 
-            ' paid status is always passed
-            invQuery.ORInvoiceQuery.InvoiceFilter.PaidStatus.SetValue(paidStatus)
+        '    ' paid status is always passed
+        '    invQuery.ORInvoiceQuery.InvoiceFilter.PaidStatus.SetValue(paidStatus)
 
-            ' sending request
-            Dim msgSetResp As IMsgSetResponse = SessMgr.DoRequests(MsgSetReq)
-            Dim respList As IResponseList = msgSetResp.ResponseList
+        '    ' sending request
+        '    Dim msgSetResp As IMsgSetResponse = SessMgr.DoRequests(MsgSetReq)
+        '    Dim respList As IResponseList = msgSetResp.ResponseList
 
-            ' clear msgSetReq
-            MsgSetReq.ClearRequests()
+        '    ' clear msgSetReq
+        '    MsgSetReq.ClearRequests()
 
-            ' looping through response list
-            For i = 0 To respList.Count - 1
-                Dim resp As IResponse = respList.GetAt(i)
-                If (resp.StatusCode = 0) Then
-                    ' if response is good then clear table for incoming rows
-                    dgDT.Clear()
+        '    ' looping through response list
+        '    For i = 0 To respList.Count - 1
+        '        Dim resp As IResponse = respList.GetAt(i)
+        '        If (resp.StatusCode = 0) Then
+        '            ' if response is good then clear table for incoming rows
+        '            dgDT.Clear()
 
-                    Dim invRetList As IInvoiceRetList = resp.Detail
-                    ' looping through invoice ret list
-                    For j = 0 To invRetList.Count - 1
-                        Dim invRet As IInvoiceRet = invRetList.GetAt(j)
-                        ' building new row
-                        Dim newRow As ds_Display.QB_InvoiceDisplayRow = dgDT.NewQB_InvoiceDisplayRow
-                        newRow.InvoiceNumber = invRet.RefNumber.GetValue
-                        newRow.InvoicePostDate = invRet.TxnDate.GetValue.Date
-                        newRow.InvoiceCreationDate = invRet.TimeCreated.GetValue.Date
-                        newRow.CustomerName = invRet.CustomerRef.FullName.GetValue
-
-
-                        newRow.InvoiceTotal = invRet.Subtotal.GetValue
-                        newRow.InvoiceBalance = invRet.BalanceRemaining.GetValue
-                        newRow.InvoiceDueDate = invRet.DueDate.GetValue.Date
-                        dgDT.AddQB_InvoiceDisplayRow(newRow)
-                    Next j
-                ElseIf (resp.StatusCode = 1) Then
-                    'MsgBox("No Invoices match search criteria in QuickBooks")
-                ElseIf (resp.StatusCode > 1) Then
-                    GlobalConMgr.ResponseErr_Misc(resp)
-                End If
-            Next i
-
-        End Sub
+        '            Dim invRetList As IInvoiceRetList = resp.Detail
+        '            ' looping through invoice ret list
+        '            For j = 0 To invRetList.Count - 1
+        '                Dim invRet As IInvoiceRet = invRetList.GetAt(j)
+        '                ' building new row
+        '                Dim newRow As ds_Display.QB_InvoiceDisplayRow = dgDT.NewQB_InvoiceDisplayRow
+        '                newRow.InvoiceNumber = invRet.RefNumber.GetValue
+        '                newRow.InvoicePostDate = invRet.TxnDate.GetValue.Date
+        '                newRow.InvoiceCreationDate = invRet.TimeCreated.GetValue.Date
+        '                newRow.CustomerName = invRet.CustomerRef.FullName.GetValue
 
 
-        Public Sub Payments_ForDisplay(ByRef dgDT As ds_Display.QB_PaymentsDisplayDataTable, ByRef custListID As String, _
-                                       Optional ByRef fromDate As Date = Nothing, Optional ByRef toDate As Date = Nothing)
+        '                newRow.InvoiceTotal = invRet.Subtotal.GetValue
+        '                newRow.InvoiceBalance = invRet.BalanceRemaining.GetValue
+        '                newRow.InvoiceDueDate = invRet.DueDate.GetValue.Date
+        '                dgDT.AddQB_InvoiceDisplayRow(newRow)
+        '            Next j
+        '        ElseIf (resp.StatusCode = 1) Then
+        '            'MsgBox("No Invoices match search criteria in QuickBooks")
+        '        ElseIf (resp.StatusCode > 1) Then
+        '            GlobalConMgr.ResponseErr_Misc(resp)
+        '        End If
+        '    Next i
 
-            Dim payQuery As IReceivePaymentQuery = MsgSetReq.AppendReceivePaymentQueryRq
-
-            payQuery.ORTxnQuery.TxnFilter.EntityFilter.OREntityFilter.ListIDList.Add(custListID)
-
-            ' checking if a fromDate was passed
-            If (fromDate <> Nothing) Then
-                payQuery.ORTxnQuery.TxnFilter.ORDateRangeFilter.TxnDateRangeFilter.ORTxnDateRangeFilter.TxnDateFilter.FromTxnDate.SetValue(fromDate)
-            End If
-            ' checking if a toDate was passed
-            If (toDate <> Nothing) Then
-                payQuery.ORTxnQuery.TxnFilter.ORDateRangeFilter.TxnDateRangeFilter.ORTxnDateRangeFilter.TxnDateFilter.ToTxnDate.SetValue(toDate)
-            End If
-
-            ' if no date filter is passed, limiting results
-            If ((toDate = Nothing) And (fromDate = Nothing)) Then
-                payQuery.ORTxnQuery.TxnFilter.MaxReturned.SetValue(50)
-            End If
-
-            ' making sure I get the response information i want
-            payQuery.IncludeRetElementList.Add("TxnNumber")
-            payQuery.IncludeRetElementList.Add("TxnDate")
-            payQuery.IncludeRetElementList.Add("TotalAmount")
-            payQuery.IncludeRetElementList.Add("RefNumber")
-            payQuery.IncludeRetElementList.Add("PaymentMethodRef")
-
-            ' sending response
-            Dim msgSetResp As IMsgSetResponse = SessMgr.DoRequests(MsgSetReq)
-            Dim respList As IResponseList = msgSetResp.ResponseList
-
-            ' clear msgSetReq
-            MsgSetReq.ClearRequests()
-
-            ' looping through response with error checking
-            For i = 0 To respList.Count - 1
-                Dim resp As IResponse = respList.GetAt(i)
-                If (resp.StatusCode = 0) Then
-                    ' if good clear table for new rows clear table
-                    dgDT.Clear()
-
-                    Dim paymentRetList As IReceivePaymentRetList = resp.Detail
-                    For l = 0 To paymentRetList.Count - 1
-                        Dim paymentRet As IReceivePaymentRet = paymentRetList.GetAt(l)
-                        ' building new paymentList row
-                        Dim newRow As ds_Display.QB_PaymentsDisplayRow = dgDT.NewQB_PaymentsDisplayRow
-                        newRow.PaymentTxnNumber = paymentRet.TxnNumber.GetValue
-                        newRow.PaymentDate = paymentRet.TxnDate.GetValue
-                        newRow.PaymentAmount = paymentRet.TotalAmount.GetValue
-                        newRow.PaymentMethod = paymentRet.PaymentMethodRef.FullName.GetValue
-                        If (paymentRet.RefNumber IsNot Nothing) Then
-                            newRow.PaymentCheckNum = paymentRet.RefNumber.GetValue
-                        End If
-                        dgDT.AddQB_PaymentsDisplayRow(newRow)
-                    Next l
-                ElseIf (resp.StatusCode = 1) Then
-                    'MsgBox("No Recieved Payments match search criteria in Quickbooks.")
-                ElseIf (resp.StatusCode > 1) Then
-                    GlobalConMgr.ResponseErr_Misc(resp)
-                End If
-            Next i
-        End Sub
+        'End Sub
 
 
-        Public Overloads Function Customer_Balance(ByVal listID As String) As Double
-            ' customer listID var im sending
-            Dim balance As Double
-            balance = Customer_GetBalance(listID)
-            Return balance
+        'Public Sub Payments_ForDisplay(ByRef dgDT As ds_Display.QB_PaymentsDisplayDataTable, ByRef custListID As String, _
+        '                               Optional ByRef fromDate As Date = Nothing, Optional ByRef toDate As Date = Nothing)
 
-        End Function
-        Public Overloads Function Customer_Balance(ByVal decNumber As Decimal) As Double
-            ' cust number coming in
-            Dim qta As New DataSetTableAdapters.QueriesTableAdapter
-            'Dim custListID As String = qta.Customer_GetListID(decNumber)
+        '    Dim payQuery As IReceivePaymentQuery = MsgSetReq.AppendReceivePaymentQueryRq
 
-            Dim balance As Double
-            'balance = Customer_GetBalance(custListID)
-            Return balance
-        End Function
-        Public Overloads Function Customer_Balance(ByVal intNumber As Integer) As Double
-            ' cust number coming in
-            Dim qta As New DataSetTableAdapters.QueriesTableAdapter
-            'Dim custListID As String = qta.Customer_GetListID(intNumber)
+        '    payQuery.ORTxnQuery.TxnFilter.EntityFilter.OREntityFilter.ListIDList.Add(custListID)
 
-            Dim balance As Double
-            ' balance = Customer_GetBalance(custListID)
-            Return balance
-        End Function
+        '    ' checking if a fromDate was passed
+        '    If (fromDate <> Nothing) Then
+        '        payQuery.ORTxnQuery.TxnFilter.ORDateRangeFilter.TxnDateRangeFilter.ORTxnDateRangeFilter.TxnDateFilter.FromTxnDate.SetValue(fromDate)
+        '    End If
+        '    ' checking if a toDate was passed
+        '    If (toDate <> Nothing) Then
+        '        payQuery.ORTxnQuery.TxnFilter.ORDateRangeFilter.TxnDateRangeFilter.ORTxnDateRangeFilter.TxnDateFilter.ToTxnDate.SetValue(toDate)
+        '    End If
+
+        '    ' if no date filter is passed, limiting results
+        '    If ((toDate = Nothing) And (fromDate = Nothing)) Then
+        '        payQuery.ORTxnQuery.TxnFilter.MaxReturned.SetValue(50)
+        '    End If
+
+        '    ' making sure I get the response information i want
+        '    payQuery.IncludeRetElementList.Add("TxnNumber")
+        '    payQuery.IncludeRetElementList.Add("TxnDate")
+        '    payQuery.IncludeRetElementList.Add("TotalAmount")
+        '    payQuery.IncludeRetElementList.Add("RefNumber")
+        '    payQuery.IncludeRetElementList.Add("PaymentMethodRef")
+
+        '    ' sending response
+        '    Dim msgSetResp As IMsgSetResponse = SessMgr.DoRequests(MsgSetReq)
+        '    Dim respList As IResponseList = msgSetResp.ResponseList
+
+        '    ' clear msgSetReq
+        '    MsgSetReq.ClearRequests()
+
+        '    ' looping through response with error checking
+        '    For i = 0 To respList.Count - 1
+        '        Dim resp As IResponse = respList.GetAt(i)
+        '        If (resp.StatusCode = 0) Then
+        '            ' if good clear table for new rows clear table
+        '            dgDT.Clear()
+
+        '            Dim paymentRetList As IReceivePaymentRetList = resp.Detail
+        '            For l = 0 To paymentRetList.Count - 1
+        '                Dim paymentRet As IReceivePaymentRet = paymentRetList.GetAt(l)
+        '                ' building new paymentList row
+        '                Dim newRow As ds_Display.QB_PaymentsDisplayRow = dgDT.NewQB_PaymentsDisplayRow
+        '                newRow.PaymentTxnNumber = paymentRet.TxnNumber.GetValue
+        '                newRow.PaymentDate = paymentRet.TxnDate.GetValue
+        '                newRow.PaymentAmount = paymentRet.TotalAmount.GetValue
+        '                newRow.PaymentMethod = paymentRet.PaymentMethodRef.FullName.GetValue
+        '                If (paymentRet.RefNumber IsNot Nothing) Then
+        '                    newRow.PaymentCheckNum = paymentRet.RefNumber.GetValue
+        '                End If
+        '                dgDT.AddQB_PaymentsDisplayRow(newRow)
+        '            Next l
+        '        ElseIf (resp.StatusCode = 1) Then
+        '            'MsgBox("No Recieved Payments match search criteria in Quickbooks.")
+        '        ElseIf (resp.StatusCode > 1) Then
+        '            GlobalConMgr.ResponseErr_Misc(resp)
+        '        End If
+        '    Next i
+        'End Sub
+
         Private Function Customer_GetBalance(ByRef custListID As String) As Double
             Dim returnVar As Double
 

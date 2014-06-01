@@ -1,6 +1,6 @@
 ﻿Imports QBFC12Lib
-Imports TrashCash.Modules
 Imports TrashCash.Classes
+Imports TrashCash.QBStuff
 
 Namespace Admin
     Public Class AdminInvoiceTypes

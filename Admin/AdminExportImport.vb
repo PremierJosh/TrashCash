@@ -1,4 +1,5 @@
 ﻿Imports QBFC12Lib
+Imports TrashCash.QBStuff
 Imports TrashCash.Classes
 
 Namespace Admin

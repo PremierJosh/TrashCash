@@ -139,6 +139,13 @@ Module AppModule
         End Property
     End Class
 
+    ' structure for background worker passing information back
+    Public Structure ProgressObj
+        Public Property MaximumValue As Integer
+        Public Property CurrentValue As Integer
+        Public Property CurrentCustomer As String
+    End Structure
+
     ' structure for combo box pair
     Public Structure ComboBoxPair
         Public Property ValueMember

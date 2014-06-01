@@ -1,5 +1,4 @@
 ﻿Imports System.Text
-Imports TrashCash.Modules
 
 Namespace Invoicing
     Public Class CustomInvoicingForm

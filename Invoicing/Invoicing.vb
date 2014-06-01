@@ -1,4 +1,5 @@
-﻿Imports TrashCash.Modules
+﻿
+Imports TrashCash.QBStuff
 Imports TrashCash.Classes
 Imports QBFC12Lib
 
