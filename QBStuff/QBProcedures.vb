@@ -794,6 +794,53 @@ Namespace QBStuff
             Return QBRequests.PaymentMod(payObj, qbConMgr:=ConCheck(qbConMgr))
         End Function
 
+        ''' <summary>
+        ''' This sub will take a QBInvoiceObj and attempt to pay it using unused credits first, and then unused payments.
+        ''' </summary>
+        ''' <param name="invObj"></param>
+        ''' <param name="newestFirst"></param>
+        ''' <param name="qbConMgr"></param>
+        ''' <remarks></remarks>
+        Public Shared Sub PayInvoice_WithExcessFunds(ByRef invObj As QBInvoiceObj, Optional ByVal newestFirst As Boolean = False, Optional ByRef qbConMgr As QBConMgr = Nothing)
+            ' get list of creditObjs avail for use
+            Dim creditResp As IResponse = QBRequests.CreditMemoQuery(listID:=invObj.CustomerListID, qbConMgr:=ConCheck(qbConMgr))
+            Dim creditObjList As List(Of QBCreditObj) = ConvertToCreditObjs(creditResp, newestFirst:=newestFirst)
+            If (creditObjList.Count > 0) Then
+                For i = 0 To creditObjList.Count - 1
+                    If (invObj.BalanceRemaining > 0) Then
+                        Dim credit As QBCreditObj = creditObjList(i)
+                        If (credit.CreditRemaining > 0) Then
+                            Dim resp As IResponse = UseCredit(invObj:=invObj, creditObj:=credit, qbConMgr:=ConCheck(qbConMgr))
+                            If (resp.StatusCode <> 0) Then
+                                ResponseErr_Misc(resp)
+                            End If
+                        End If
+                    Else
+                        Exit For
+                    End If
+                Next
+            End If
+            ' checking for overpayments if invoice has balance
+            If (invObj.BalanceRemaining > 0) Then
+                Dim payResp As IResponse = QBRequests.PaymentQuery(listID:=invObj.CustomerListID, incLinkTxn:=True, qbConMgr:=ConCheck(qbConMgr))
+                Dim payObjList As List(Of QBRecievePaymentObj) = ConvertToPayObjs(payResp, newestFirst:=newestFirst)
+                If (payObjList.Count > 0) Then
+                    For i = 0 To payObjList.Count - 1
+                        If (invObj.BalanceRemaining > 0) Then
+                            Dim payObj As QBRecievePaymentObj = payObjList(i)
+                            If (payObj.UnusedPayment > 0) Then
+                                Dim resp As IResponse = UseOverpayment(payObj:=payObj, invObj:=invObj, qbConMgr:=ConCheck(qbConMgr))
+                                If (resp.StatusCode <> 0) Then
+                                    ResponseErr_Misc(resp)
+                                End If
+                            End If
+                        Else
+                            Exit For
+                        End If
+                    Next
+                End If
+            End If
+        End Sub
 
         ' these will take a query and turn it into a combo box pair of name/listid
         Public Overloads Shared Function GetComboBoxPair(ByRef retList As IItemServiceRetList) As List(Of ComboBoxPair)

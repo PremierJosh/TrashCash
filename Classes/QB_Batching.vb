@@ -77,52 +77,21 @@ Namespace Classes
                         If (Now > lastReportTime.AddMilliseconds(elapsedTime)) Then
                             worker.ReportProgress(progPercent, progress)
                         End If
-
                         ' checking balance of customer
                         Dim custBalance As Double = ConMgr.GetCustomerBalance(row.CustomerListID)
-
-
-                        ' send row
+                        
+                        ' send invoice through row
                         Dim invObj As QBInvoiceObj = Invoice(row)
+
                         ' check status
-                        If (row.InvoiceStatus = 6) Then
+                        If (row.InvoiceStatus = ENItemStatus.Err) Then
                             ' update err count
                             err += 1
-                        ElseIf (row.InvoiceStatus = 7) Then
+                        ElseIf (row.InvoiceStatus = ENItemStatus.Complete) Then
                             While invObj.BalanceRemaining > 0
                                 If (custBalance < 0) Then
-                                    ' get list of creditObjs avail for use
-                                    Dim creditResp As IResponse = QBRequests.CreditMemoQuery(listID:=invObj.CustomerListID, qbConMgr:=ConMgr)
-                                    Dim creditObjList As List(Of QBCreditObj) = QBMethods.ConvertToCreditObjs(creditResp)
-                                    If (creditObjList.Count > 0) Then
-                                        Dim i As Integer = 0
-                                        While invObj.BalanceRemaining > 0
-                                            Dim credit As QBCreditObj = creditObjList(i)
-                                            Dim resp As IResponse = QBMethods.UseCredit(invObj:=invObj, creditObj:=credit, qbConMgr:=ConMgr)
-                                            If (resp.StatusCode <> 0) Then
-                                                QBMethods.ResponseErr_Misc(resp)
-                                                err += 1
-                                            End If
-                                            i += 1
-                                        End While
-                                    End If
-                                    ' checking for overpayments if invoice has balance
-                                    While invObj.BalanceRemaining > 0
-                                        Dim payResp As IResponse = QBRequests.PaymentQuery(listID:=invObj.CustomerListID, incLinkTxn:=True, qbConMgr:=ConMgr)
-                                        Dim payObjList As List(Of QBRecievePaymentObj) = QBMethods.ConvertToPayObjs(payResp)
-                                        If (payObjList.Count > 0) Then
-                                            Dim i As Integer = 0
-                                            While invObj.BalanceRemaining > 0
-                                                Dim payObj As QBRecievePaymentObj = payObjList(i)
-                                                Dim resp As IResponse = QBMethods.UseOverpayment(payObj:=payObj, invObj:=invObj, qbConMgr:=ConMgr)
-                                                If (resp.StatusCode <> 0) Then
-                                                    QBMethods.ResponseErr_Misc(resp)
-                                                    err += 1
-                                                End If
-                                                i += 1
-                                            End While
-                                        End If
-                                    End While
+                                    ' attempt to pay invoice
+                                    QBMethods.PayInvoice_WithExcessFunds(invObj, qbConMgr:=ConMgr)
                                 End If
                             End While
                         End If
@@ -131,8 +100,6 @@ Namespace Classes
                             e.Cancel = True
                             Exit For
                         End If
-
-
                     Next row
                     Try
                         ' update batch row for completion
