@@ -91,7 +91,7 @@ Namespace Classes
                             While invObj.BalanceRemaining > 0
                                 If (custBalance < 0) Then
                                     ' attempt to pay invoice
-                                    QBMethods.PayInvoice_WithExcessFunds(invObj, qbConMgr:=ConMgr)
+                                    QBMethods.PayInvoice(invObj, qbConMgr:=ConMgr)
                                 End If
                             End While
                         End If

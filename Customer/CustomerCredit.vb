@@ -122,7 +122,7 @@ Namespace Customer
                         Dim resp As IResponse = QBRequests.CreditMemoAdd(addCreditObj)
                         If (resp.StatusCode = 0) Then
                             Dim creditObj As QBCreditObj = QBMethods.ConvertToCreditObj(resp.Detail)
-                            QBMethods.UseCredit_Auto(creditObj, rb_Newest.Checked)
+                            QBMethods.UseNewCredit(creditObj, rb_Newest.Checked)
                         Else
                             QBMethods.ResponseErr_Misc(resp)
                         End If
