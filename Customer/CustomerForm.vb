@@ -50,9 +50,7 @@ Namespace Customer
             If (CustomerToolstrip1.CurrentCustomer <> Nothing) Then
                 CurrentCustomer = CustomerToolstrip1.CurrentCustomer
             End If
-            UC_Quickbooks._HomeForm = _home
-
-        End Sub
+          End Sub
 
         Private Sub CustomerChanged(ByVal CustomerNumber As Integer) Handles CustomerToolstrip1.CustomerChanging
             CurrentCustomer = CustomerNumber
@@ -102,7 +100,6 @@ Namespace Customer
 
             ' Add any initialization after the InitializeComponent() call.
             _home = HomeForm
-            UC_Quickbooks._HomeForm = HomeForm
            UC_RecurringService.HomeForm = HomeForm
             CustomerToolstrip1.GetCustomerBalance()
         End Sub

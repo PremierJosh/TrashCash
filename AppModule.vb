@@ -100,27 +100,29 @@ Module AppModule
         Public Shared Sub ColorGrid(ByRef grid As DataGridView, ByVal greenRedColName As String, Optional ByVal yellowColName As String = Nothing)
             Dim row As DataRow
             For i = 0 To grid.RowCount - 1
-                row = CType(grid.Rows(i).DataBoundItem, DataRowView).Row
-                If (row.Item(greenRedColName) = True) Then
-                    grid.Rows(i).DefaultCellStyle.BackColor = GridRed
-                    grid.Rows(i).DefaultCellStyle.SelectionBackColor = GridRedSel
-                    ' setting sel text color white
-                    grid.Rows(i).DefaultCellStyle.SelectionForeColor = GridDefTextSel
-                ElseIf (row.Item(greenRedColName) = False) Then
-                    grid.Rows(i).DefaultCellStyle.BackColor = GridGreen
-                    grid.Rows(i).DefaultCellStyle.SelectionBackColor = GridGreenSel
-                    ' setting sel text color white
-                    grid.Rows(i).DefaultCellStyle.SelectionForeColor = GridDefTextSel
-                End If
-                ' checking yellow
-                If (yellowColName IsNot Nothing) Then
-                    If (row.Item(yellowColName) = True) Then
-                        grid.Rows(i).DefaultCellStyle.BackColor = GridYellow
-                        grid.Rows(i).DefaultCellStyle.SelectionBackColor = GridYellowSel
-                        ' setting sel text color to black
-                        grid.Rows(i).DefaultCellStyle.SelectionForeColor = GridDefText
+                With grid.Rows(i).DefaultCellStyle
+                    row = CType(grid.Rows(i).DataBoundItem, DataRowView).Row
+                    If (row.Item(greenRedColName) = True) Then
+                        .BackColor = GridRed
+                        .SelectionBackColor = GridRedSel
+                        ' setting sel text color white
+                        .SelectionForeColor = GridDefTextSel
+                    ElseIf (row.Item(greenRedColName) = False) Then
+                        .BackColor = GridGreen
+                        .SelectionBackColor = GridGreenSel
+                        ' setting sel text color white
+                        .SelectionForeColor = GridDefTextSel
                     End If
-                End If
+                    If (yellowColName IsNot Nothing) Then
+                        If (row.Item(yellowColName) = True) Then
+                            .BackColor = GridYellow
+                            .SelectionBackColor = GridYellowSel
+                            ' setting sel text color to black
+                            .SelectionForeColor = GridDefText
+                        End If
+                    End If
+                End With
+                ' checking yellow
             Next
         End Sub
 

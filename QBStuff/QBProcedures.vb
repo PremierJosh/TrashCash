@@ -369,9 +369,9 @@ Namespace Classes
 
         Public Shared Function PaymentQuery(Optional ByVal listID As String = Nothing, Optional ByVal txnID As String = Nothing,
                                             Optional ByVal fromDate As Date = Nothing, Optional ByVal toDate As Date = Nothing,
-                                            Optional ByVal paidStatus As ENPaidStatus = Nothing, Optional ByRef qbConMgr As QBConMgr = Nothing,
-                                            Optional ByVal responseLimit As Integer = 100, Optional ByVal retEleList As List(Of String) = Nothing,
-                                            Optional ByVal incLinkTxn As Boolean = False, Optional ByVal incLineItems As Boolean = False) As IResponse
+                                            Optional ByRef qbConMgr As QBConMgr = Nothing, Optional ByVal responseLimit As Integer = 100,
+                                            Optional ByVal retEleList As List(Of String) = Nothing, Optional ByVal incLinkTxn As Boolean = False,
+                                            Optional ByVal incLineItems As Boolean = False) As IResponse
             Dim query As IReceivePaymentQuery = ConCheck(qbConMgr).MessageSetRequest.AppendReceivePaymentQueryRq
             ' setting high level filters
             With query

@@ -1,4 +1,5 @@
-﻿Imports TrashCash.Classes
+﻿Imports TrashCash.QBStuff
+Imports TrashCash.Classes
 
 Namespace Customer
 
@@ -33,7 +34,7 @@ Namespace Customer
             Me.tc_p_RecSrvcs = New System.Windows.Forms.TabPage()
             Me.UC_RecurringService = New TrashCash.UC_RecurringService()
             Me.tc_p_QBItems = New System.Windows.Forms.TabPage()
-            Me.UC_Quickbooks = New TrashCash.UC_Quickbooks()
+            Me.UC_Quickbooks = New UC_Quickbooks()
             Me.tc_p_PrepItems = New System.Windows.Forms.TabPage()
             Me.UC_PreparedItems = New TrashCash.UC_PreparedItems()
             Me.pnl_Top = New System.Windows.Forms.Panel()
@@ -124,7 +125,6 @@ Namespace Customer
             Me.UC_Quickbooks.CurrentCustomer = New Decimal(New Integer() {0, 0, 0, 0})
             Me.UC_Quickbooks.CustomerListID = Nothing
             Me.UC_Quickbooks.Dock = System.Windows.Forms.DockStyle.Fill
-            Me.UC_Quickbooks.FetchPossible = False
             Me.UC_Quickbooks.Location = New System.Drawing.Point(3, 3)
             Me.UC_Quickbooks.Name = "UC_Quickbooks"
             Me.UC_Quickbooks.Size = New System.Drawing.Size(888, 264)
@@ -278,7 +278,7 @@ Namespace Customer
         Friend WithEvents btn_Payments As System.Windows.Forms.ToolStripButton
         Friend WithEvents btn_NewCust As System.Windows.Forms.ToolStripButton
         Friend WithEvents tc_p_QBItems As System.Windows.Forms.TabPage
-        Friend WithEvents UC_Quickbooks As TrashCash.UC_Quickbooks
+        Friend WithEvents UC_Quickbooks As UC_Quickbooks
         Friend WithEvents btn_Credit As System.Windows.Forms.ToolStripButton
         Friend WithEvents CustomerToolstrip1 As TrashCash.Classes.CustomerToolstrip.CustomerToolstrip
     End Class
