@@ -188,25 +188,17 @@ Namespace Customer
             ElseIf (resp.StatusCode = 3200) Then
                 MessageBox.Show("EditSequence missmatch - updating now... Any changed made in Quickbooks will be overwritten.")
                 ' edit sequence missmatch
-                Dim s As New List(Of String)
-                s.Add("EditSequence")
-                Dim resp2 As IResponse = QBRequests.CustomerQuery(_custRow.CustomerListID, s)
-                If (resp2.StatusCode = 0) Then
-                    Dim retList As ICustomerRetList = resp2.Detail
-                    Dim ret As ICustomerRet = retList.GetAt(1)
-                    _custRow.CustomerEditSeq = ret.EditSequence.GetValue
-                    Try
-                        CustomerTableAdapter.Update(_custRow)
-                        ' re update
-                        Customer_Update()
-                    Catch ex As SqlException
-                        MessageBox.Show("Message: " & ex.Message & vbCrLf & "LineNumber: " & ex.LineNumber,
-                                        "Sql Error: " & ex.Procedure, MessageBoxButtons.OK,
-                                        MessageBoxIcon.Error)
-                    End Try
-                Else
-                    QBMethods.ResponseErr_Misc(resp2)
-                End If
+                _custRow.CustomerEditSeq = QBRequests.Customer_GetEditSequence(_custRow.CustomerListID)
+                Try
+                    CustomerTableAdapter.Update(_custRow)
+                    ' re update
+                    Customer_Update()
+                Catch ex As SqlException
+                    MessageBox.Show("Message: " & ex.Message & vbCrLf & "LineNumber: " & ex.LineNumber,
+                                    "Sql Error: " & ex.Procedure, MessageBoxButtons.OK,
+                                    MessageBoxIcon.Error)
+                End Try
+
             Else
                 QBMethods.ResponseErr_Misc(resp)
             End If

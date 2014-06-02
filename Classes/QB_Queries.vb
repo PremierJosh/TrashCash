@@ -204,65 +204,60 @@ Namespace Classes
         'End Sub
 
 
-        Public Overloads Function Customer_EditSequence(ByVal listID As String) As String
-            ' customer listID var im sending
-            Dim editSeq As String
-            editSeq = Customer_GetEditSequence(listID)
-            Return editSeq
-        End Function
-        Public Overloads Function Customer_EditSequence(ByVal decNumber As Decimal) As Double
-            ' cust number coming in
-            Dim qta As New DataSetTableAdapters.QueriesTableAdapter
-            'Dim listID As String = qta.Customer_GetListID(decNumber)
+        'Public Overloads Function Customer_EditSequence(ByVal listID As String) As String
+        '    ' customer listID var im sending
+        '    Dim editSeq As String
+        '    editSeq = Customer_GetEditSequence(listID)
+        '    Return editSeq
+        'End Function
+        'Public Overloads Function Customer_EditSequence(ByVal decNumber As Decimal) As Double
+        '    ' cust number coming in
+        '    Dim qta As New DataSetTableAdapters.QueriesTableAdapter
+        '    'Dim listID As String = qta.Customer_GetListID(decNumber)
 
-            Dim editSeq As String
-            'editSeq = Customer_GetEditSequence(listID)
-            Return editSeq
-        End Function
-        Public Overloads Function Customer_EditSequence(ByVal intNumber As Integer) As Double
-            ' cust number coming in
-            Dim qta As New DataSetTableAdapters.QueriesTableAdapter
-            ' Dim listID As String = qta.Customer_GetListID(intNumber)
+        '    Dim editSeq As String
+        '    'editSeq = Customer_GetEditSequence(listID)
+        '    Return editSeq
+        'End Function
+        'Public Overloads Function Customer_EditSequence(ByVal intNumber As Integer) As Double
+        '    ' cust number coming in
+        '    Dim qta As New DataSetTableAdapters.QueriesTableAdapter
+        '    ' Dim listID As String = qta.Customer_GetListID(intNumber)
 
-            Dim editSeq As String
-            'editSeq = Customer_GetEditSequence(listID)
-            Return editSeq
-        End Function
-        Private Function Customer_GetEditSequence(ByVal custListID As String) As String
-            Dim editSeq As String = Nothing
+        '    Dim editSeq As String
+        '    'editSeq = Customer_GetEditSequence(listID)
+        '    Return editSeq
+        'End Function
+        'Private Function Customer_GetEditSequence(ByVal custListID As String) As String
+        '    Dim custQuery As ICustomerQuery = MsgSetReq.AppendCustomerQueryRq
 
-            Dim custQuery As ICustomerQuery = MsgSetReq.AppendCustomerQueryRq
+        '    custQuery.ORCustomerListQuery.ListIDList.Add(custListID)
+        '    custQuery.IncludeRetElementList.Add("EditSequence")
 
-            custQuery.ORCustomerListQuery.ListIDList.Add(custListID)
-            custQuery.IncludeRetElementList.Add("EditSequence")
+        '    Dim msgSetResp As IMsgSetResponse = SessMgr.DoRequests(MsgSetReq)
+        '    Dim respList As IResponseList = msgSetResp.ResponseList
 
-            Dim msgSetResp As IMsgSetResponse = SessMgr.DoRequests(MsgSetReq)
-            Dim respList As IResponseList = msgSetResp.ResponseList
+        '    'clear msgSetReq
+        '    MsgSetReq.ClearRequests()
 
-            'clear msgSetReq
-            MsgSetReq.ClearRequests()
+        '    For i = 0 To respList.Count - 1
+        '        Dim response As IResponse = respList.GetAt(i)
+        '        If (response.StatusCode = 0) Then
+        '            If (response.Detail IsNot Nothing) Then
+        '                Dim custRetList As ICustomerRetList = response.Detail
+        '                For j = 0 To custRetList.Count - 1
+        '                    Dim custRet As ICustomerRet = custRetList.GetAt(j)
+        '                    Return custRet.EditSequence.GetValue()
+        '                Next j
+        '            End If
+        '        Else
+        '            ' error logging
+        '            GlobalConMgr.ResponseErr_Misc(response)
+        '        End If
+        '    Next i
 
-            For i = 0 To respList.Count - 1
-                Dim response As IResponse = respList.GetAt(i)
-                If (response.StatusCode = 0) Then
-                    If (response.Detail IsNot Nothing) Then
-                        Dim custRetList As ICustomerRetList = response.Detail
-                        For j = 0 To custRetList.Count - 1
-                            Dim custRet As ICustomerRet = custRetList.GetAt(j)
-
-                            ' update row
-                            editSeq = custRet.EditSequence.GetValue
-                            Return editSeq
-                        Next j
-                    End If
-                Else
-                    ' error logging
-                    GlobalConMgr.ResponseErr_Misc(response)
-                End If
-            Next i
-
-            Return editSeq
-        End Function
+        '    Return Nothing
+        'End Function
 
 
         Public Class OldComboBoxPair

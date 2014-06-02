@@ -15,7 +15,7 @@ Namespace QBStuff
 
             Return ConCheck(qbConMgr).GetRespList.GetAt(0)
         End Function
-
+        
         ' check add
         Public Shared Function CheckAdd(ByRef checkObj As QBCheckAddObj) As IResponse
             Dim addRq As ICheckAdd = GlobalConMgr.MessageSetRequest.AppendCheckAddRq
@@ -163,6 +163,28 @@ Namespace QBStuff
             End With
 
             Return ConCheck(qbConMgr).GetRespList.GetAt(0)
+        End Function
+
+        Public Shared Function Customer_GetEditSequence(ByVal custListID As String) As String
+            Dim custQuery As ICustomerQuery = GlobalConMgr.MessageSetRequest.AppendCustomerQueryRq
+            custQuery.ORCustomerListQuery.ListIDList.Add(custListID)
+            custQuery.IncludeRetElementList.Add("EditSequence")
+
+            Dim respList As IResponseList = GlobalConMgr.GetRespList
+            Dim response As IResponse = respList.GetAt(0)
+            If (response.StatusCode = 0) Then
+                If (response.Detail IsNot Nothing) Then
+                    Dim custRetList As ICustomerRetList = response.Detail
+                    For j = 0 To custRetList.Count - 1
+                        Dim custRet As ICustomerRet = custRetList.GetAt(j)
+                        Return custRet.EditSequence.GetValue()
+                    Next j
+                End If
+            Else
+                ' error logging
+                QBMethods.ResponseErr_Misc(response)
+            End If
+            Return Nothing
         End Function
 
         ' invoicing
@@ -516,7 +538,28 @@ Namespace QBStuff
             End If
         End Function
 
-        Public Shared Function VendorQuery(Optional ByVal listID As String = Nothing, Optional ByRef retEleList As List(Of String) = Nothing, Optional ByRef qbConMgr As QBConMgr = Nothing) As IResponse
+        Public Shared Function OtherChargeItemQuery(Optional ByVal listID As String = Nothing, Optional ByRef retEleList As List(Of String) = Nothing) As IItemOtherChargeRetList
+            Dim itemQuery As IItemOtherChargeQuery = GlobalConMgr.MessageSetRequest.AppendItemOtherChargeQueryRq
+            ' active items only
+            itemQuery.ORListQueryWithOwnerIDAndClass.ListWithClassFilter.ActiveStatus.SetValue(ENActiveStatus.asActiveOnly)
+            ' limit response for combo box
+            itemQuery.IncludeRetElementList.Add("ListID")
+            itemQuery.IncludeRetElementList.Add("FullName")
+
+            Dim respList As IResponseList = GlobalConMgr.GetRespList
+           For i = 0 To respList.Count - 1
+                Dim resp As IResponse = respList.GetAt(i) '
+                If (resp.StatusCode = 0) Then
+                    Return resp.Detail
+                Else
+                    GlobalConMgr.ResponseErr_Misc(resp)
+                End If
+            Next
+
+            Return Nothing
+        End Function
+
+        Public Shared Function VendorQuery(Optional ByVal listID As String = Nothing, Optional ByRef retEleList As List(Of String) = Nothing, Optional ByRef qbConMgr As QBConMgr = Nothing) As IVendorRetList
             Dim vendQ As IVendorQuery = ConCheck(qbConMgr).MessageSetRequest.AppendVendorQueryRq
             If (listID IsNot Nothing) Then
                 vendQ.ORVendorListQuery.ListIDList.Add(listID)
@@ -526,16 +569,28 @@ Namespace QBStuff
                     vendQ.IncludeRetElementList.Add(s)
                 Next
             End If
+            Dim resp As IResponse = ConCheck(qbConMgr).GetRespList.GetAt(0)
+            If (resp.StatusCode = 0) Then
+                Return resp.Detail
+            Else
+                QBMethods.ResponseErr_Misc(resp)
+            End If
 
-            Return ConCheck(qbConMgr).GetRespList.GetAt(0)
+            Return Nothing
         End Function
 
-        Public Shared Function AccountQuery(ByVal accType As ENAccountType, Optional ByRef qbConMgr As QBConMgr = Nothing) As IResponse
+        Public Shared Function AccountQuery(ByVal accType As ENAccountType, Optional ByRef qbConMgr As QBConMgr = Nothing) As IAccountRetList
             Dim accQ As IAccountQuery = ConCheck(qbConMgr).MessageSetRequest.AppendAccountQueryRq
             accQ.ORAccountListQuery.AccountListFilter.AccountTypeList.Add(accType)
 
+            Dim resp As IResponse = ConCheck(qbConMgr).GetRespList.GetAt(0)
+            If (resp.StatusCode = 0) Then
+                Return resp.Detail
+            Else
+                QBMethods.ResponseErr_Misc(resp)
+            End If
 
-            Return ConCheck(qbConMgr).GetRespList.GetAt(0)
+            Return Nothing
         End Function
     End Class
 
