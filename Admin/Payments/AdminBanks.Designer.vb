@@ -1,4 +1,6 @@
-﻿Namespace Admin
+﻿Imports TrashCash.Admin.Payments
+
+Namespace Admin
     <Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
     Partial Class AdminBanks
         Inherits System.Windows.Forms.Form

@@ -175,7 +175,7 @@ Public Class TrashCash_Admin
             End If
 
             If (open) Then
-                f_AdminDefaults = New AdminDefaults(HomeForm)
+                f_AdminDefaults = New AdminDefaults()
                 f_AdminDefaults.MdiParent = Me
                 f_AdminDefaults.Show()
             End If
@@ -189,7 +189,7 @@ Public Class TrashCash_Admin
         Else
             ' checking if auth level can bypass logins
             If (UserRow.USER_AUTHLVL = 1) Then
-                f_AdminExportImport = New AdminExportImport(HomeForm)
+                f_AdminExportImport = New AdminExportImport()
                 f_AdminExportImport.MdiParent = Me
                 f_AdminExportImport.Show()
             End If

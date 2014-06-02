@@ -1,4 +1,6 @@
-﻿Namespace Admin
+﻿Imports TrashCash.QBStuff
+
+Namespace Admin.Payments
     ' ReSharper disable once InconsistentNaming
     Public Class UC_BankMaint
         ' property to hold home form ref
@@ -121,9 +123,20 @@
         End Sub
 
         Private Sub BindCmbs()
-            HomeForm.Queries.CMB_BindBankAccount(cmb_BankAccs)
-            HomeForm.Queries.CMB_BindOtherChargeItems(cmb_BanksInvItem)
-            HomeForm.Queries.CMB_BindVendorAccount(cmb_VendorAcc)
+            Dim banks As List(Of ComboBoxPair) = QBMethods.GetComboBoxPair(QBRequests.AccountQuery(QBFC12Lib.ENAccountType.atBank))
+            cmb_BankAccs.DisplayMember = "DisplayMember"
+            cmb_BankAccs.ValueMember = "ValueMember"
+            cmb_BankAccs.DataSource = banks
+
+            Dim other As List(Of ComboBoxPair) = QBMethods.GetComboBoxPair(QBRequests.OtherChargeItemQuery)
+            cmb_BanksInvItem.DisplayMember = "DisplayMember"
+            cmb_BanksInvItem.ValueMember = "ValueMember"
+            cmb_BanksInvItem.DataSource = other
+
+            Dim vendors As List(Of ComboBoxPair) = QBMethods.GetComboBoxPair(QBRequests.VendorQuery)
+            cmb_VendorAcc.DisplayMember = "DisplayMember"
+            cmb_VendorAcc.ValueMember = "ValueMember"
+            cmb_VendorAcc.DataSource = vendors
         End Sub
 
         'Private Sub SetUCBoxes()

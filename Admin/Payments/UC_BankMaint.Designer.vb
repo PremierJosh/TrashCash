@@ -1,6 +1,6 @@
 ﻿Imports TrashCash.Classes
 
-Namespace Admin
+Namespace Admin.Payments
     <Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
     Partial Class UC_BankMaint
         Inherits System.Windows.Forms.UserControl
@@ -28,7 +28,7 @@ Namespace Admin
             Dim BankBounceFeeLabel As System.Windows.Forms.Label
             Dim lbl_vendorSelInfo As System.Windows.Forms.Label
             Dim lbl_BankInvItem As System.Windows.Forms.Label
-      Me.BAD_CHECK_BANKSTableAdapter = New TrashCash.ds_PaymentsTableAdapters.BAD_CHECK_BANKSTableAdapter()
+            Me.BAD_CHECK_BANKSTableAdapter = New TrashCash.ds_PaymentsTableAdapters.BAD_CHECK_BANKSTableAdapter()
             Me.pnl_BankSelection = New System.Windows.Forms.Panel()
             Me.tb_BankFee = New CurrencyTextBox()
             Me.cmb_BankAccs = New System.Windows.Forms.ComboBox()
@@ -41,7 +41,7 @@ Namespace Admin
             BankBounceFeeLabel = New System.Windows.Forms.Label()
             lbl_vendorSelInfo = New System.Windows.Forms.Label()
             lbl_BankInvItem = New System.Windows.Forms.Label()
-          Me.pnl_BankSelection.SuspendLayout()
+            Me.pnl_BankSelection.SuspendLayout()
             CType(Me.ds_Application, System.ComponentModel.ISupportInitialize).BeginInit()
             Me.SuspendLayout()
             '
@@ -163,7 +163,7 @@ Namespace Admin
             Me.Controls.Add(Me.pnl_BankSelection)
             Me.Name = "UC_BankMaint"
             Me.Size = New System.Drawing.Size(574, 154)
-           Me.pnl_BankSelection.ResumeLayout(False)
+            Me.pnl_BankSelection.ResumeLayout(False)
             Me.pnl_BankSelection.PerformLayout()
             CType(Me.ds_Application, System.ComponentModel.ISupportInitialize).EndInit()
             Me.ResumeLayout(False)

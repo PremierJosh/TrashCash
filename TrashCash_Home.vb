@@ -73,13 +73,7 @@ Public Class TrashCashHome
     Private _batchRunning As Boolean
 
     ' var for class files
-    Protected QBQueries As QB_Queries
-    Public ReadOnly Property Queries As QB_Queries
-        Get
-            Return QBQueries
-        End Get
-    End Property
-   Protected CReporting As Reporting
+    Protected CReporting As Reporting
     Public ReadOnly Property Reporting As Reporting
         Get
             Return CReporting
@@ -263,7 +257,7 @@ Public Class TrashCashHome
 
 
     Private Sub CreateAllClasses()
-        QBQueries = New QB_Queries()
+
   CReporting = New Reporting(SessionManager, MsgSetRequest)
     End Sub
 

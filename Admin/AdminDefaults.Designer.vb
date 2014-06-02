@@ -29,21 +29,16 @@ Namespace Admin
             Dim lbl_CheckItem As System.Windows.Forms.Label
             Dim CustomerChargeRateLabel As System.Windows.Forms.Label
             Me.FlowLayoutPanel = New System.Windows.Forms.FlowLayoutPanel()
-            Me.Label1 = New System.Windows.Forms.Label()
-            Me.pnl_InvDefItem = New System.Windows.Forms.Panel()
-            Me.cmb_CustomInvItem = New System.Windows.Forms.ComboBox()
-            Me.lbl_DefItemInfo = New System.Windows.Forms.Label()
             Me.hdr_BadCheck = New System.Windows.Forms.Label()
             Me.Panel1 = New System.Windows.Forms.Panel()
-            Me.tb_BadCheckCustFee = New CurrencyTextBox()
+            Me.tb_BadCheckCustFee = New TrashCash.Classes.CurrencyTextBox()
             Me.cmb_BadCheckItem = New System.Windows.Forms.ComboBox()
             Me.cmb_BadCheckCustInvItem = New System.Windows.Forms.ComboBox()
-          Me.btn_Save = New System.Windows.Forms.Button()
+            Me.btn_Save = New System.Windows.Forms.Button()
             lbl_CustInfoDesc = New System.Windows.Forms.Label()
             lbl_CheckItem = New System.Windows.Forms.Label()
             CustomerChargeRateLabel = New System.Windows.Forms.Label()
             Me.FlowLayoutPanel.SuspendLayout()
-            Me.pnl_InvDefItem.SuspendLayout()
             Me.Panel1.SuspendLayout()
             Me.SuspendLayout()
             '
@@ -74,8 +69,6 @@ Namespace Admin
             '
             'FlowLayoutPanel
             '
-            Me.FlowLayoutPanel.Controls.Add(Me.Label1)
-            Me.FlowLayoutPanel.Controls.Add(Me.pnl_InvDefItem)
             Me.FlowLayoutPanel.Controls.Add(Me.hdr_BadCheck)
             Me.FlowLayoutPanel.Controls.Add(Me.Panel1)
             Me.FlowLayoutPanel.Dock = System.Windows.Forms.DockStyle.Top
@@ -85,48 +78,11 @@ Namespace Admin
             Me.FlowLayoutPanel.Size = New System.Drawing.Size(593, 249)
             Me.FlowLayoutPanel.TabIndex = 1
             '
-            'Label1
-            '
-            Me.Label1.AutoSize = True
-            Me.Label1.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-            Me.Label1.Location = New System.Drawing.Point(3, 0)
-            Me.Label1.Name = "Label1"
-            Me.Label1.Size = New System.Drawing.Size(70, 16)
-            Me.Label1.TabIndex = 6
-            Me.Label1.Text = "InvoicingForm"
-            '
-            'pnl_InvDefItem
-            '
-            Me.pnl_InvDefItem.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-            Me.pnl_InvDefItem.Controls.Add(Me.cmb_CustomInvItem)
-            Me.pnl_InvDefItem.Controls.Add(Me.lbl_DefItemInfo)
-            Me.pnl_InvDefItem.Location = New System.Drawing.Point(3, 19)
-            Me.pnl_InvDefItem.Name = "pnl_InvDefItem"
-            Me.pnl_InvDefItem.Size = New System.Drawing.Size(578, 47)
-            Me.pnl_InvDefItem.TabIndex = 0
-            '
-            'cmb_CustomInvItem
-            '
-            Me.cmb_CustomInvItem.FormattingEnabled = True
-            Me.cmb_CustomInvItem.Location = New System.Drawing.Point(376, 5)
-            Me.cmb_CustomInvItem.Name = "cmb_CustomInvItem"
-            Me.cmb_CustomInvItem.Size = New System.Drawing.Size(197, 21)
-            Me.cmb_CustomInvItem.TabIndex = 3
-            '
-            'lbl_DefItemInfo
-            '
-            Me.lbl_DefItemInfo.Location = New System.Drawing.Point(3, 5)
-            Me.lbl_DefItemInfo.Name = "lbl_DefItemInfo"
-            Me.lbl_DefItemInfo.Size = New System.Drawing.Size(367, 29)
-            Me.lbl_DefItemInfo.TabIndex = 2
-            Me.lbl_DefItemInfo.Text = "This is the Item in Quickbooks that will be used for ALL line items on a custom i" & _
-                                      "nvoice." & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10)
-            '
             'hdr_BadCheck
             '
             Me.hdr_BadCheck.AutoSize = True
             Me.hdr_BadCheck.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-            Me.hdr_BadCheck.Location = New System.Drawing.Point(3, 69)
+            Me.hdr_BadCheck.Location = New System.Drawing.Point(3, 0)
             Me.hdr_BadCheck.Name = "hdr_BadCheck"
             Me.hdr_BadCheck.Size = New System.Drawing.Size(143, 16)
             Me.hdr_BadCheck.TabIndex = 5
@@ -141,7 +97,7 @@ Namespace Admin
             Me.Panel1.Controls.Add(lbl_CustInfoDesc)
             Me.Panel1.Controls.Add(lbl_CheckItem)
             Me.Panel1.Controls.Add(CustomerChargeRateLabel)
-            Me.Panel1.Location = New System.Drawing.Point(3, 88)
+            Me.Panel1.Location = New System.Drawing.Point(3, 19)
             Me.Panel1.Name = "Panel1"
             Me.Panel1.Size = New System.Drawing.Size(578, 90)
             Me.Panel1.TabIndex = 4
@@ -169,7 +125,6 @@ Namespace Admin
             Me.cmb_BadCheckCustInvItem.Size = New System.Drawing.Size(187, 21)
             Me.cmb_BadCheckCustInvItem.TabIndex = 59
             '
-         '
             'btn_Save
             '
             Me.btn_Save.Location = New System.Drawing.Point(264, 264)
@@ -179,7 +134,7 @@ Namespace Admin
             Me.btn_Save.Text = "Save"
             Me.btn_Save.UseVisualStyleBackColor = True
             '
-            'App_Defaults
+            'AdminDefaults
             '
             Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
             Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
@@ -188,25 +143,20 @@ Namespace Admin
             Me.Controls.Add(Me.FlowLayoutPanel)
             Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
             Me.MaximizeBox = False
-            Me.Name = "App_Defaults"
+            Me.Name = "AdminDefaults"
             Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent
             Me.Text = "TrashCash Defaults"
             Me.FlowLayoutPanel.ResumeLayout(False)
             Me.FlowLayoutPanel.PerformLayout()
-            Me.pnl_InvDefItem.ResumeLayout(False)
             Me.Panel1.ResumeLayout(False)
             Me.Panel1.PerformLayout()
             Me.ResumeLayout(False)
 
         End Sub
         Friend WithEvents FlowLayoutPanel As System.Windows.Forms.FlowLayoutPanel
-        Friend WithEvents pnl_InvDefItem As System.Windows.Forms.Panel
-        Friend WithEvents lbl_DefItemInfo As System.Windows.Forms.Label
-        Friend WithEvents cmb_CustomInvItem As System.Windows.Forms.ComboBox
         Friend WithEvents Panel1 As System.Windows.Forms.Panel
         Friend WithEvents cmb_BadCheckItem As System.Windows.Forms.ComboBox
         Friend WithEvents cmb_BadCheckCustInvItem As System.Windows.Forms.ComboBox
-        Friend WithEvents Label1 As System.Windows.Forms.Label
         Friend WithEvents hdr_BadCheck As System.Windows.Forms.Label
         Friend WithEvents tb_BadCheckCustFee As CurrencyTextBox
       Friend WithEvents btn_Save As System.Windows.Forms.Button

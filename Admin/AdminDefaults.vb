@@ -1,42 +1,43 @@
-﻿
+﻿Imports TrashCash.QBStuff
+
 Namespace Admin
     Public Class AdminDefaults
-        Private ReadOnly _home As TrashCashHome
-
-        Private _ta As ds_ApplicationTableAdapters.APP_SETTINGSTableAdapter
+        Private ReadOnly _ta As ds_ApplicationTableAdapters.APP_SETTINGSTableAdapter
 
         ' refrences
         Private _dt As ds_Application.APP_SETTINGSDataTable
         Private _row As ds_Application.APP_SETTINGSRow
 
 
-        Public Sub New(ByRef homeForm As TrashCashHome)
+        Public Sub New()
 
             ' This call is required by the designer.
             InitializeComponent()
 
             ' Add any initialization after the InitializeComponent() call.
             _ta = New ds_ApplicationTableAdapters.APP_SETTINGSTableAdapter
-            _home = homeForm
         End Sub
         Private Sub App_Defaults_Load(sender As Object, e As System.EventArgs) Handles Me.Load
-            _home.Queries.CMB_BindServiceItem(cmb_CustomInvItem)
-            _home.Queries.CMB_BindOtherChargeItems(cmb_BadCheckCustInvItem)
-            _home.Queries.CMB_BindOtherChargeItems(cmb_BadCheckItem)
+            ' both combo boxes for items are other charge items and can use the same DS
+            Dim list As List(Of ComboBoxPair) = QBMethods.GetComboBoxPair(QBRequests.OtherChargeItemQuery)
+            ' bind cmb for invoice item representing the check
+            cmb_BadCheckCustInvItem.DisplayMember = "DisplayMember"
+            cmb_BadCheckCustInvItem.ValueMember = "ValueMember"
+            cmb_BadCheckCustInvItem.DataSource = list
+            ' bind cmb for inv item representing our fee
+            cmb_BadCheckItem.DisplayMember = "DisplayMember"
+            cmb_BadCheckItem.ValueMember = "ValueMember"
+            cmb_BadCheckItem.DataSource = list
 
             ' fill table
             _dt = _ta.GetData
             _row = _dt.Rows(0)
 
             SetControls()
-
-        End Sub
+            End Sub
 
         Private Sub SetControls()
-            ' InvoicingForm
-            ' cmb_CustomInvItem.SelectedValue = _row.DEFAULT_INV_ITEM_LISTID
-
-            ' bad check
+            ' set bad check defaults
             cmb_BadCheckCustInvItem.SelectedValue = _row.BAD_CHECK_CUSTITEM_LISTID
             cmb_BadCheckItem.SelectedValue = _row.BAD_CHECK_CHECKITEM_LISTID
             tb_BadCheckCustFee.Text = _row.BAD_CHECK_CUST_FEE
@@ -44,23 +45,20 @@ Namespace Admin
         End Sub
 
         Private Sub btn_Save_Click(sender As System.Object, e As System.EventArgs) Handles btn_Save.Click
-            ' InvoicingForm
-            '_row.DEFAULT_INV_ITEM_LISTID = cmb_CustomInvItem.SelectedValue
-
-            ' bad check
+            ' bad check updating defaults
             _row.BAD_CHECK_CUSTITEM_LISTID = cmb_BadCheckCustInvItem.SelectedValue
             _row.BAD_CHECK_CHECKITEM_LISTID = cmb_BadCheckItem.SelectedValue
             _row.BAD_CHECK_CUST_FEE = tb_BadCheckCustFee.Text
-
             _row.EndEdit()
             If (_row.RowState = DataRowState.Modified) Then
                 Try
                     _ta.Update(_row)
-                    MsgBox("Settings Saved.")
-                    Close()
-                Catch ex As Exception
-                    MsgBox(ex.Message)
+                Catch ex as SqlException
+                    MessageBox.Show("Message: " & ex.Message & vbCrLf & "LineNumber: " & ex.LineNumber,
+                                    "Sql Error: " & ex.Procedure, MessageBoxButtons.OK, MessageBoxIcon.Error)
                 End Try
+                MsgBox("Settings Saved.")
+                Close()
             End If
         End Sub
     End Class
