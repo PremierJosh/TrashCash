@@ -495,19 +495,25 @@ Namespace QBStuff
         End Function
 
 
-        Public Shared Function ItemQuery(Optional ByVal listID As String = Nothing, Optional ByRef retEleList As List(Of String) = Nothing,
-                                         Optional ByRef qbConMgr As QBConMgr = Nothing) As IResponse
-            Dim iQuery As IItemQuery = ConCheck(qbConMgr).MessageSetRequest.AppendItemQueryRq
+        Public Shared Function ServiceItemQuery(Optional ByVal listID As String = Nothing, Optional ByRef retEleList As List(Of String) = Nothing,
+                                         Optional ByRef qbConMgr As QBConMgr = Nothing) As IItemServiceRetList
+            Dim iQuery As IItemServiceQuery = ConCheck(qbConMgr).MessageSetRequest.AppendItemServiceQueryRq
 
             If (listID IsNot Nothing) Then
-                iQuery.ORListQuery.ListIDList.Add(listID)
+                iQuery.ORListQueryWithOwnerIDAndClass.ListIDList.Add(listID)
             End If
             If (retEleList IsNot Nothing) Then
                 For Each s As String In retEleList
                     iQuery.IncludeRetElementList.Add(s)
                 Next
             End If
-            Return ConCheck(qbConMgr).GetRespList.GetAt(0)
+            Dim resp As IResponse = ConCheck(qbConMgr).GetRespList.GetAt(0)
+            If (resp.StatusCode = 0) Then
+                Return resp.Detail
+            Else
+                QBMethods.ResponseErr_Misc(resp)
+                Return Nothing
+            End If
         End Function
 
         Public Shared Function VendorQuery(Optional ByVal listID As String = Nothing, Optional ByRef retEleList As List(Of String) = Nothing, Optional ByRef qbConMgr As QBConMgr = Nothing) As IResponse

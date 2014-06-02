@@ -154,10 +154,10 @@
     <Compile Include="Admin\Payments\AdminBanks.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Admin\AdminInvoiceTypes.Designer.vb">
+    <Compile Include="Types\AdminInvoiceTypes.Designer.vb">
       <DependentUpon>AdminInvoiceTypes.vb</DependentUpon>
     </Compile>
-    <Compile Include="Admin\AdminInvoiceTypes.vb">
+    <Compile Include="Types\AdminInvoiceTypes.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Admin\TrashCash_Admin.Designer.vb">
@@ -219,23 +219,23 @@
     <Compile Include="QBStuff\QBProcedures.vb" />
     <Compile Include="AppModule.vb" />
     <Compile Include="QBStuff\QBObjects.vb" />
-    <Compile Include="Classes\Reporting.vb" />
+    <Compile Include="Reports\Reporting.vb" />
     <Compile Include="Classes\QB_Procedures.vb" />
     <Compile Include="Classes\QB_Queries.vb" />
     <Compile Include="Classes\Utilities.vb">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Classes\QB_Batching.vb" />
+    <Compile Include="Batching\QB_Batching.vb" />
     <Compile Include="Connection.Designer.vb">
       <DependentUpon>Connection.vb</DependentUpon>
     </Compile>
     <Compile Include="Connection.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\BatchingPrep.Designer.vb">
+    <Compile Include="Batching\BatchingPrep.Designer.vb">
       <DependentUpon>BatchingPrep.vb</DependentUpon>
     </Compile>
-    <Compile Include="Forms\BatchingPrep.vb">
+    <Compile Include="Batching\BatchingPrep.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Forms\CalendarView.Designer.vb">
@@ -250,10 +250,10 @@
     <Compile Include="Customer\CustomerCredit.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Admin\AdminServiceTypes.Designer.vb">
+    <Compile Include="Types\AdminServiceTypes.Designer.vb">
       <DependentUpon>AdminServiceTypes.vb</DependentUpon>
     </Compile>
-    <Compile Include="Admin\AdminServiceTypes.vb">
+    <Compile Include="Types\AdminServiceTypes.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Payments\PaymentsForm.Designer.vb">
@@ -268,10 +268,10 @@
     <Compile Include="Customer\CustomerForm.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\PendingApprovals.Designer.vb">
+    <Compile Include="RecurringService\PendingApprovals.Designer.vb">
       <DependentUpon>PendingApprovals.vb</DependentUpon>
     </Compile>
-    <Compile Include="Forms\PendingApprovals.vb">
+    <Compile Include="RecurringService\PendingApprovals.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="RecurringService\RecurringServiceModule.vb" />
@@ -401,12 +401,6 @@
     <Compile Include="RecurringService\UC_RecurringService.vb">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Admin\UC_ServiceTypesDetails.Designer.vb">
-      <DependentUpon>UC_ServiceTypesDetails.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Admin\UC_ServiceTypesDetails.vb">
-      <SubType>UserControl</SubType>
-    </Compile>
     <Compile Include="_DataSets\DataSet.Designer.vb">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -431,7 +425,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ds_Application.xsd</DependentUpon>
     </Compile>
-    <Compile Include="_DataSets\ds_Batching.Designer.vb">
+    <Compile Include="Batching\ds_Batching.Designer.vb">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>ds_Batching.xsd</DependentUpon>
@@ -491,7 +485,7 @@
     <EmbeddedResource Include="Admin\Payments\AdminBanks.resx">
       <DependentUpon>AdminBanks.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Admin\AdminInvoiceTypes.resx">
+    <EmbeddedResource Include="Types\AdminInvoiceTypes.resx">
       <DependentUpon>AdminInvoiceTypes.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Admin\TrashCash_Admin.resx">
@@ -521,7 +515,7 @@
     <EmbeddedResource Include="Connection.resx">
       <DependentUpon>Connection.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\BatchingPrep.resx">
+    <EmbeddedResource Include="Batching\BatchingPrep.resx">
       <DependentUpon>BatchingPrep.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\CalendarView.resx">
@@ -530,7 +524,7 @@
     <EmbeddedResource Include="Customer\CustomerCredit.resx">
       <DependentUpon>CustomerCredit.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Admin\AdminServiceTypes.resx">
+    <EmbeddedResource Include="Types\AdminServiceTypes.resx">
       <DependentUpon>AdminServiceTypes.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Payments\PaymentsForm.resx">
@@ -540,7 +534,7 @@
       <DependentUpon>CustomerForm.vb</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\PendingApprovals.resx">
+    <EmbeddedResource Include="RecurringService\PendingApprovals.resx">
       <DependentUpon>PendingApprovals.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Customer\NewCustomer.resx">
@@ -616,9 +610,6 @@
     <EmbeddedResource Include="RecurringService\UC_RecurringService.resx">
       <DependentUpon>UC_RecurringService.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Admin\UC_ServiceTypesDetails.resx">
-      <DependentUpon>UC_ServiceTypesDetails.vb</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config">
@@ -656,15 +647,15 @@
     <None Include="_DataSets\ds_Application.xss">
       <DependentUpon>ds_Application.xsd</DependentUpon>
     </None>
-    <None Include="_DataSets\ds_Batching.xsc">
+    <None Include="Batching\ds_Batching.xsc">
       <DependentUpon>ds_Batching.xsd</DependentUpon>
     </None>
-    <None Include="_DataSets\ds_Batching.xsd">
+    <None Include="Batching\ds_Batching.xsd">
       <SubType>Designer</SubType>
       <Generator>MSDataSetGenerator</Generator>
       <LastGenOutput>ds_Batching.Designer.vb</LastGenOutput>
     </None>
-    <None Include="_DataSets\ds_Batching.xss">
+    <None Include="Batching\ds_Batching.xss">
       <DependentUpon>ds_Batching.xsd</DependentUpon>
     </None>
     <None Include="Customer\ds_Customer.xsc">

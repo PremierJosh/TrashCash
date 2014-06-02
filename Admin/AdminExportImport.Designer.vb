@@ -34,10 +34,6 @@
             Me.btn_AddSrvcs = New System.Windows.Forms.Button()
             Me.cmb_IncomeAcc = New System.Windows.Forms.ComboBox()
             Me.lbl_ServiceAdd = New System.Windows.Forms.Label()
-            Me.Panel2 = New System.Windows.Forms.Panel()
-            Me.btn_SetCustInvItem = New System.Windows.Forms.Button()
-            Me.cmb_ItemList = New System.Windows.Forms.ComboBox()
-            Me.lbl_CustInvItem = New System.Windows.Forms.Label()
             Me.Panel3 = New System.Windows.Forms.Panel()
             Me.btn_AddCustInv = New System.Windows.Forms.Button()
             Me.tb_CustInvCount = New System.Windows.Forms.TextBox()
@@ -45,7 +41,6 @@
             Me.FlowLayoutPanel1.SuspendLayout()
             Me.pnl_CustAdd.SuspendLayout()
             Me.Panel1.SuspendLayout()
-            Me.Panel2.SuspendLayout()
             Me.Panel3.SuspendLayout()
             Me.SuspendLayout()
             '
@@ -53,7 +48,6 @@
             '
             Me.FlowLayoutPanel1.Controls.Add(Me.pnl_CustAdd)
             Me.FlowLayoutPanel1.Controls.Add(Me.Panel1)
-            Me.FlowLayoutPanel1.Controls.Add(Me.Panel2)
             Me.FlowLayoutPanel1.Controls.Add(Me.Panel3)
             Me.FlowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill
             Me.FlowLayoutPanel1.Location = New System.Drawing.Point(0, 0)
@@ -117,7 +111,7 @@
             Me.lbl_AddCustInfo.Size = New System.Drawing.Size(409, 28)
             Me.lbl_AddCustInfo.TabIndex = 0
             Me.lbl_AddCustInfo.Text = "This will import all Customers into Quickbooks. If there is a duplicate Customer " & _
-                                      "Name, you will be prompted to chose a new name."
+        "Name, you will be prompted to chose a new name."
             '
             'Panel1
             '
@@ -157,50 +151,13 @@
             Me.lbl_ServiceAdd.TabIndex = 0
             Me.lbl_ServiceAdd.Text = "This will add all services to the following account in Quickbooks."
             '
-            'Panel2
-            '
-            Me.Panel2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-            Me.Panel2.Controls.Add(Me.btn_SetCustInvItem)
-            Me.Panel2.Controls.Add(Me.cmb_ItemList)
-            Me.Panel2.Controls.Add(Me.lbl_CustInvItem)
-            Me.Panel2.Location = New System.Drawing.Point(3, 145)
-            Me.Panel2.Name = "Panel2"
-            Me.Panel2.Size = New System.Drawing.Size(585, 67)
-            Me.Panel2.TabIndex = 3
-            '
-            'btn_SetCustInvItem
-            '
-            Me.btn_SetCustInvItem.Location = New System.Drawing.Point(480, 15)
-            Me.btn_SetCustInvItem.Name = "btn_SetCustInvItem"
-            Me.btn_SetCustInvItem.Size = New System.Drawing.Size(75, 23)
-            Me.btn_SetCustInvItem.TabIndex = 2
-            Me.btn_SetCustInvItem.Text = "Set Item"
-            Me.btn_SetCustInvItem.UseVisualStyleBackColor = True
-            '
-            'cmb_ItemList
-            '
-            Me.cmb_ItemList.FormattingEnabled = True
-            Me.cmb_ItemList.Location = New System.Drawing.Point(324, 17)
-            Me.cmb_ItemList.Name = "cmb_ItemList"
-            Me.cmb_ItemList.Size = New System.Drawing.Size(150, 21)
-            Me.cmb_ItemList.TabIndex = 1
-            '
-            'lbl_CustInvItem
-            '
-            Me.lbl_CustInvItem.AutoSize = True
-            Me.lbl_CustInvItem.Location = New System.Drawing.Point(11, 20)
-            Me.lbl_CustInvItem.Name = "lbl_CustInvItem"
-            Me.lbl_CustInvItem.Size = New System.Drawing.Size(307, 13)
-            Me.lbl_CustInvItem.TabIndex = 0
-            Me.lbl_CustInvItem.Text = "This is the Quickbooks item that will appear on Custom Invoices"
-            '
             'Panel3
             '
             Me.Panel3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
             Me.Panel3.Controls.Add(Me.btn_AddCustInv)
             Me.Panel3.Controls.Add(Me.tb_CustInvCount)
             Me.Panel3.Controls.Add(Me.lbl_CustInvAdd)
-            Me.Panel3.Location = New System.Drawing.Point(3, 218)
+            Me.Panel3.Location = New System.Drawing.Point(3, 145)
             Me.Panel3.Name = "Panel3"
             Me.Panel3.Size = New System.Drawing.Size(585, 78)
             Me.Panel3.TabIndex = 4
@@ -231,21 +188,19 @@
             Me.lbl_CustInvAdd.TabIndex = 0
             Me.lbl_CustInvAdd.Text = "This will make custom invoices for each row in the Import_CustInv table."
             '
-            'ImportWork
+            'AdminExportImport
             '
             Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
             Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
             Me.ClientSize = New System.Drawing.Size(611, 503)
             Me.Controls.Add(Me.FlowLayoutPanel1)
-            Me.Name = "ImportWork"
+            Me.Name = "AdminExportImport"
             Me.Text = "ImportWork"
             Me.FlowLayoutPanel1.ResumeLayout(False)
             Me.pnl_CustAdd.ResumeLayout(False)
             Me.pnl_CustAdd.PerformLayout()
             Me.Panel1.ResumeLayout(False)
             Me.Panel1.PerformLayout()
-            Me.Panel2.ResumeLayout(False)
-            Me.Panel2.PerformLayout()
             Me.Panel3.ResumeLayout(False)
             Me.Panel3.PerformLayout()
             Me.ResumeLayout(False)
@@ -262,10 +217,6 @@
         Friend WithEvents lbl_ServiceAdd As System.Windows.Forms.Label
         Friend WithEvents cmb_IncomeAcc As System.Windows.Forms.ComboBox
         Friend WithEvents btn_AddSrvcs As System.Windows.Forms.Button
-        Friend WithEvents Panel2 As System.Windows.Forms.Panel
-        Friend WithEvents btn_SetCustInvItem As System.Windows.Forms.Button
-        Friend WithEvents cmb_ItemList As System.Windows.Forms.ComboBox
-        Friend WithEvents lbl_CustInvItem As System.Windows.Forms.Label
         Friend WithEvents Panel3 As System.Windows.Forms.Panel
         Friend WithEvents lbl_CustInvAdd As System.Windows.Forms.Label
         Friend WithEvents btn_AddCustInv As System.Windows.Forms.Button

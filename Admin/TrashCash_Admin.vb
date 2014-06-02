@@ -1,5 +1,6 @@
 ﻿Imports System.Windows.Forms
 Imports TrashCash.Admin
+Imports TrashCash.Types
 
 Public Class TrashCash_Admin
     ' home form ref
@@ -120,7 +121,7 @@ Public Class TrashCash_Admin
             End If
 
             If (open) Then
-                f_AdminServiceTypes = New AdminServiceTypes(HomeForm)
+                f_AdminServiceTypes = New AdminServiceTypes()
                 f_AdminServiceTypes.MdiParent = Me
                 f_AdminServiceTypes.Show()
             End If

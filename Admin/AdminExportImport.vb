@@ -47,9 +47,7 @@ Namespace Admin
             MissingCustomerCount = _cqta.Customer_MissingListIDCount
             ' bind account cmb for adding items
             _homeForm.Queries.CMB_BindIncomeAccount(cmb_IncomeAcc)
-            ' binding cmb for picking custom inv item
-            _homeForm.Queries.CMB_BindServiceItem(cmb_ItemList)
-        End Sub
+         End Sub
 
         Private Sub btn_AddCustomers_Click(sender As System.Object, e As System.EventArgs) Handles btn_AddCustomers.Click
             If (MissingCustomerCount > 0) Then

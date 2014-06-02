@@ -715,12 +715,6 @@ Namespace Classes
         '    Return bounced
         'End Function
 
-        Public Class NewInvObj
-            Public CustomerListID
-            Public TxnID
-            Public BalanceRemaining
-        End Class
-
 
         'Public Sub Payment_MoveToCustomer(ByVal paymentHistoryRow As ds_Payments.PaymentHistory_DBRow, ByVal newCustomerNumber As Integer)
         '    ' need to get current edit sequence first (which function updates row by ref) and list of applied txns
@@ -1622,7 +1616,7 @@ Namespace Classes
                     End Try
                 Else
                     GlobalConMgr.ResponseErr_Misc(resp)
-                    ta.DeleteByID(serviceTypeID)
+
                 End If
             Next i
         End Sub

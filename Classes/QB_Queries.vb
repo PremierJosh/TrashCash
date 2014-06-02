@@ -203,37 +203,6 @@ Namespace Classes
         '    Next i
         'End Sub
 
-        Private Function Customer_GetBalance(ByRef custListID As String) As Double
-            Dim returnVar As Double
-
-            Dim custQuery As ICustomerQuery = MsgSetReq.AppendCustomerQueryRq
-
-            custQuery.ORCustomerListQuery.ListIDList.Add(custListID)
-            custQuery.IncludeRetElementList.Add("TotalBalance")
-
-            Dim msgSetResp As IMsgSetResponse = SessMgr.DoRequests(MsgSetReq)
-            Dim respList As IResponseList = msgSetResp.ResponseList
-
-            ' clear msgSetReq
-            MsgSetReq.ClearRequests()
-
-            For i As Integer = 0 To respList.Count - 1
-                Dim resp As IResponse = respList.GetAt(i)
-                ' response check and logging
-                If (resp.StatusCode = 0) Then
-
-                    Dim custRetList As ICustomerRetList = resp.Detail
-                    For j = 0 To custRetList.Count - 1
-                        Dim custRet As ICustomerRet = custRetList.GetAt(j)
-                        returnVar = custRet.TotalBalance.GetValue
-                    Next
-                Else
-                    GlobalConMgr.ResponseErr_Misc(resp)
-                End If
-            Next i
-
-            Return returnVar
-        End Function
 
         Public Overloads Function Customer_EditSequence(ByVal listID As String) As String
             ' customer listID var im sending

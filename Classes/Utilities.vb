@@ -266,7 +266,7 @@ End Namespace
 
 'Public Sub QB_GetAllItems(ByRef dt As DataSet.ServiceTypesDataTable)
 '    Dim msgSetReq As IMsgSetRequest = sessMgr.CreateMsgSetRequest("US", 11, 0)
-'    Dim itemQuery As IItemQuery = msgSetReq.AppendItemQueryRq
+'    Dim ServiceItemQuery As IItemQuery = msgSetReq.AppendItemQueryRq
 
 '    Dim msgSetResp As IMsgSetResponse = sessMgr.DoRequests(msgSetReq)
 '    Dim respList As IResponseList = msgSetResp.ResponseList
