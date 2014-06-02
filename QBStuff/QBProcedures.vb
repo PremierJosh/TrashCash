@@ -901,7 +901,20 @@ Namespace QBStuff
             End If
             ' checking for overpayments if invoice has balance
             If (invObj.BalanceRemaining > 0) Then
-                Dim payResp As IResponse = QBRequests.PaymentQuery(listID:=invObj.CustomerListID, qbConMgr:=ConCheck(qbConMgr))
+                ' make sure i get already attached txns
+                Dim s As New List(Of String)
+                With s
+                    .Add("TxnID")
+                    .Add("TxnDate")
+                    .Add("EditSequence")
+                    .Add("TotalAmount")
+                    .Add("RefNumber")
+                    .Add("CustomerRef")
+                    .Add("PaymentMethodRef")
+                    .Add("UnusedPayment")
+                    .Add("AppliedToTxnRetList")
+                End With
+                Dim payResp As IResponse = QBRequests.PaymentQuery(listID:=invObj.CustomerListID, retEleList:=s, qbConMgr:=ConCheck(qbConMgr))
                 Dim payObjList As List(Of QBRecievePaymentObj) = ConvertToPayObjs(payResp, newestFirst:=newestFundsFirst)
                 ' putting invoice into a list for overpayment sub
                 Dim invList As New List(Of QBInvoiceObj)
