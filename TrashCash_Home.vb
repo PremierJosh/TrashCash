@@ -79,13 +79,7 @@ Public Class TrashCashHome
             Return QBQueries
         End Get
     End Property
-    Protected QBProcedures As QB_Procedures
-    Public ReadOnly Property Procedures As QB_Procedures
-        Get
-            Return QBProcedures
-        End Get
-    End Property
-    Protected CReporting As Reporting
+   Protected CReporting As Reporting
     Public ReadOnly Property Reporting As Reporting
         Get
             Return CReporting
@@ -270,8 +264,7 @@ Public Class TrashCashHome
 
     Private Sub CreateAllClasses()
         QBQueries = New QB_Queries()
-        QBProcedures = New QB_Procedures(SessionManager, MsgSetRequest, Me)
-        CReporting = New Reporting(SessionManager, MsgSetRequest)
+  CReporting = New Reporting(SessionManager, MsgSetRequest)
     End Sub
 
     Private Sub GetQBFileLocation()

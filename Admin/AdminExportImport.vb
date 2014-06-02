@@ -28,15 +28,13 @@ Namespace Admin
         Private ReadOnly _homeForm As TrashCashHome
 
         ' form global tas
-        Dim _qta As DataSetTableAdapters.QueriesTableAdapter
-        Dim _cita As ds_ApplicationTableAdapters.Initial_CustomInvoiceTableAdapter
+       Dim _cita As ds_ApplicationTableAdapters.Initial_CustomInvoiceTableAdapter
         Dim _cidt As ds_Application.Initial_CustomInvoiceDataTable
         Dim _cqta As ds_CustomerTableAdapters.QueriesTableAdapter
         Private _cta As ds_CustomerTableAdapters.CustomerTableAdapter
 
 
         Private Sub ImportWork_Load(sender As Object, e As System.EventArgs) Handles Me.Load
-            _qta = New DataSetTableAdapters.QueriesTableAdapter
             _cqta = New ds_CustomerTableAdapters.QueriesTableAdapter
             _cita = New ds_ApplicationTableAdapters.Initial_CustomInvoiceTableAdapter
             _cidt = _cita.GetData
@@ -105,7 +103,7 @@ Namespace Admin
         Private Sub btn_AddSrvcs_Click(sender As System.Object, e As System.EventArgs) Handles btn_AddSrvcs.Click
             Dim result As MsgBoxResult = MsgBox("Please make sure the correct Account is selected above.", MsgBoxStyle.YesNo)
             If (result = MsgBoxResult.Yes) Then
-                _homeForm.Procedures.Items_ImportAllMissingListID(cmb_IncomeAcc.SelectedValue)
+                Items_ImportAllMissingListID(cmb_IncomeAcc.SelectedValue)
             End If
         End Sub
 
@@ -170,5 +168,42 @@ Namespace Admin
             MsgBox("Invoices added. Be sure to delete rows before next import.")
         End Sub
 
+        Public Sub Items_ImportAllMissingListID(ByVal qbAccount As String)
+            Dim ta As New ds_TypesTableAdapters.ServiceTypesTableAdapter
+            Dim dt As ds_Types.ServiceTypesDataTable = ta.GetData
+
+            For Each row As ds_Types.ServiceTypesRow In dt.Rows
+                If (row.IsServiceListIDNull = True) Then
+                    Dim item As New QBItemObj
+                    With item
+                        .ItemName = row.ServiceName
+                        .Price = row.ServiceRate
+                        .Desc = row.ServiceDescription
+                        .IncomeAccountListID = qbAccount
+                    End With
+
+                    Dim resp As IResponse = QBRequests.ServiceItemAdd(item)
+                    If (resp.StatusCode = 0) Then
+                        Dim itemRet As IItemServiceRet = resp.Detail
+                        ' update db information with edit sequence and list id
+                        row.ServiceListID = itemRet.ListID.GetValue
+                        row.ServiceEditSequence = itemRet.EditSequence.GetValue
+
+                        Try
+                            ' commit to db
+                            ta.Update(row)
+                        Catch ex as SqlException
+                            MessageBox.Show("Message: " & ex.Message & vbCrLf & "LineNumber: " & ex.LineNumber,
+                                            "Sql Error: " & ex.Procedure, MessageBoxButtons.OK, MessageBoxIcon.Error)
+                        End Try
+                       Else
+                        QBMethods.ResponseErr_Misc(resp)
+
+                    End If
+
+                End If
+            Next row
+
+        End Sub
     End Class
 End Namespace

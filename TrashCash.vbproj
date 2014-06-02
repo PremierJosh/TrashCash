@@ -220,7 +220,6 @@
     <Compile Include="AppModule.vb" />
     <Compile Include="QBStuff\QBObjects.vb" />
     <Compile Include="Reports\Reporting.vb" />
-    <Compile Include="Classes\QB_Procedures.vb" />
     <Compile Include="Classes\QB_Queries.vb" />
     <Compile Include="Classes\Utilities.vb">
       <SubType>Component</SubType>
