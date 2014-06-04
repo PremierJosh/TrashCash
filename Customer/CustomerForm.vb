@@ -1,4 +1,6 @@
 ﻿
+Imports TrashCash.Payments
+
 Namespace Customer
     Public Class CustomerForm
         ' new cust var so can switch form when new cust added
@@ -50,7 +52,7 @@ Namespace Customer
             If (CustomerToolstrip1.CurrentCustomer <> Nothing) Then
                 CurrentCustomer = CustomerToolstrip1.CurrentCustomer
             End If
-          End Sub
+        End Sub
 
         Private Sub CustomerChanged(ByVal CustomerNumber As Integer) Handles CustomerToolstrip1.CustomerChanging
             CurrentCustomer = CustomerNumber
@@ -100,13 +102,13 @@ Namespace Customer
 
             ' Add any initialization after the InitializeComponent() call.
             _home = HomeForm
-           UC_RecurringService.HomeForm = HomeForm
+            UC_RecurringService.HomeForm = HomeForm
             CustomerToolstrip1.GetCustomerBalance()
         End Sub
 
 
         Private Sub btn_Payments_Click(sender As System.Object, e As System.EventArgs) Handles btn_Payments.Click
-            _payForm = New PaymentsForm(_home, _customerNumber:=CurrentCustomer)
+            _payForm = New PaymentsForm(_home, customerNumber:=CurrentCustomer)
             ' when opened from customer screen, showdialog
             _payForm.ShowDialog()
         End Sub

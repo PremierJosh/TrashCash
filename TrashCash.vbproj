@@ -178,12 +178,6 @@
     <Compile Include="Admin\Payments\MovePaymentForm.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Admin\Payments\UC_BankMaint.Designer.vb">
-      <DependentUpon>UC_BankMaint.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Admin\Payments\UC_BankMaint.vb">
-      <SubType>UserControl</SubType>
-    </Compile>
     <Compile Include="Admin\UserSelection.Designer.vb">
       <DependentUpon>UserSelection.vb</DependentUpon>
     </Compile>
@@ -220,9 +214,7 @@
     <Compile Include="AppModule.vb" />
     <Compile Include="QBStuff\QBObjects.vb" />
     <Compile Include="Reports\Reporting.vb" />
-    <Compile Include="Classes\Utilities.vb">
-      <SubType>Component</SubType>
-    </Compile>
+    <Compile Include="Classes\Utilities.vb" />
     <Compile Include="Batching\QB_Batching.vb" />
     <Compile Include="Connection.Designer.vb">
       <DependentUpon>Connection.vb</DependentUpon>
@@ -399,14 +391,6 @@
     <Compile Include="RecurringService\UC_RecurringService.vb">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="_DataSets\DataSet.Designer.vb">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>DataSet.xsd</DependentUpon>
-    </Compile>
-    <Compile Include="_DataSets\DataSet.vb">
-      <DependentUpon>DataSet.xsd</DependentUpon>
-    </Compile>
     <Compile Include="Customer\NewCustomer.Designer.vb">
       <DependentUpon>NewCustomer.vb</DependentUpon>
     </Compile>
@@ -502,9 +486,6 @@
     <EmbeddedResource Include="Admin\Payments\AdminPayments.resx">
       <DependentUpon>AdminPayments.vb</DependentUpon>
       <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Admin\Payments\UC_BankMaint.resx">
-      <DependentUpon>UC_BankMaint.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Admin\UserSelection.resx">
       <DependentUpon>UserSelection.vb</DependentUpon>
@@ -617,17 +598,6 @@
       <CustomToolNamespace>My</CustomToolNamespace>
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.vb</LastGenOutput>
-    </None>
-    <None Include="_DataSets\DataSet.xsc">
-      <DependentUpon>DataSet.xsd</DependentUpon>
-    </None>
-    <None Include="_DataSets\DataSet.xsd">
-      <SubType>Designer</SubType>
-      <Generator>MSDataSetGenerator</Generator>
-      <LastGenOutput>DataSet.Designer.vb</LastGenOutput>
-    </None>
-    <None Include="_DataSets\DataSet.xss">
-      <DependentUpon>DataSet.xsd</DependentUpon>
     </None>
     <None Include="My Project\app.manifest" />
     <None Include="My Project\Application.myapp">

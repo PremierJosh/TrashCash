@@ -1,4 +1,5 @@
 ﻿Imports System.Windows.Forms
+Imports TrashCash.Admin.Payments
 Imports TrashCash.Admin
 Imports TrashCash.Types
 
@@ -148,7 +149,7 @@ Public Class TrashCash_Admin
             End If
 
             If (open) Then
-                f_AdminBanks = New AdminBanks(HomeForm)
+                f_AdminBanks = New AdminBanks()
                 f_AdminBanks.MdiParent = Me
                 f_AdminBanks.Show()
             End If

@@ -43,7 +43,6 @@ Namespace Admin
             Me.PaymentHistoryDisplayBindingSource = New System.Windows.Forms.BindingSource(Me.components)
             Me.Ds_Payments = New TrashCash.ds_Payments()
             Me.pnl_Filter = New System.Windows.Forms.Panel()
-            Me.Cmb_PaymentTypes = New TrashCash.Database_ComboBoxes.cmb_PaymentTypes()
             Me.ck_All = New System.Windows.Forms.CheckBox()
             Me.Label2 = New System.Windows.Forms.Label()
             Me.dtp_EndDate = New System.Windows.Forms.DateTimePicker()
@@ -170,7 +169,6 @@ Namespace Admin
             '
             'pnl_Filter
             '
-            Me.pnl_Filter.Controls.Add(Me.Cmb_PaymentTypes)
             Me.pnl_Filter.Controls.Add(Me.ck_All)
             Me.pnl_Filter.Controls.Add(Me.Label2)
             Me.pnl_Filter.Controls.Add(Me.dtp_EndDate)
@@ -183,17 +181,7 @@ Namespace Admin
             Me.pnl_Filter.Size = New System.Drawing.Size(869, 64)
             Me.pnl_Filter.TabIndex = 17
             '
-            'Cmb_PaymentTypes
-            '
-            Me.Cmb_PaymentTypes.DisplayMember = "PaymentTypeName"
-            Me.Cmb_PaymentTypes.FormattingEnabled = True
-            Me.Cmb_PaymentTypes.Location = New System.Drawing.Point(384, 29)
-            Me.Cmb_PaymentTypes.Name = "Cmb_PaymentTypes"
-            Me.Cmb_PaymentTypes.Size = New System.Drawing.Size(121, 21)
-            Me.Cmb_PaymentTypes.TabIndex = 10
-            Me.Cmb_PaymentTypes.ValueMember = "PaymentTypeID"
-            '
-            'ck_All
+         'ck_All
             '
             Me.ck_All.AutoSize = True
             Me.ck_All.Location = New System.Drawing.Point(513, 31)
@@ -305,7 +293,6 @@ Namespace Admin
         Friend WithEvents PaymentHistoryDisplayBindingSource As System.Windows.Forms.BindingSource
         Friend WithEvents Ds_Payments As TrashCash.ds_Payments
         Friend WithEvents PaymentHistory_DisplayTableAdapter As TrashCash.ds_PaymentsTableAdapters.PaymentHistory_DisplayTableAdapter
-        Friend WithEvents Cmb_PaymentTypes As TrashCash.Database_ComboBoxes.cmb_PaymentTypes
-        Friend WithEvents CustomerToolstrip1 As TrashCash.Classes.CustomerToolstrip.CustomerToolstrip
+ Friend WithEvents CustomerToolstrip1 As TrashCash.Classes.CustomerToolstrip.CustomerToolstrip
     End Class
 End Namespace

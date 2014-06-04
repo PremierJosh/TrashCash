@@ -27,23 +27,18 @@ Namespace Admin.Payments
             Set(value As ds_Payments.BAD_CHECK_BANKSRow)
                 _bankRow = value
                 ' set fee
-                tb_BankFee.Text = FormatCurrency(value.BANK_FEE_DEFAULT)
+                tb_BankFee.Text = FormatCurrency(value.Bank_Fee)
             End Set
         End Property
 
         ' vars to hold refrence
-        Private ReadOnly _banks As ds_Payments.BAD_CHECK_BANKSDataTable
-        Private ReadOnly _bta As ds_PaymentsTableAdapters.BAD_CHECK_BANKSTableAdapter
         Private ReadOnly _appRow As ds_Application.APP_SETTINGSRow
         Public Sub New(ByVal payHistoryID As Integer)
             ' This call is required by the designer.
             InitializeComponent()
 
             ' Add any initialization after the InitializeComponent() call.
-            _banks = New ds_Payments.BAD_CHECK_BANKSDataTable
-            _bta = New ds_PaymentsTableAdapters.BAD_CHECK_BANKSTableAdapter
-            
-            Using ta As New ds_ApplicationTableAdapters.APP_SETTINGSTableAdapter
+           Using ta As New ds_ApplicationTableAdapters.APP_SETTINGSTableAdapter
                 _appRow = ta.GetData().Rows(0)
                 tb_CustFee.Text = FormatCurrency(_appRow.BAD_CHECK_CUST_FEE)
             End Using
@@ -51,14 +46,13 @@ Namespace Admin.Payments
                 CheckRow = ta.GetData(payHistoryID).Rows(0)
             End Using
         End Sub
-
-
+        
         Private Sub btn_Submit_Click(sender As Object, e As EventArgs) Handles btn_Submit.Click
             Dim result As MsgBoxResult =
                     MsgBox(
                         "Confirm: Bouncing Check Ref Number: " & CheckRow.RefNumber & " - " &
                         FormatCurrency(CheckRow.Amount) & "." & vbCrLf _
-                        & "Bank Fee: " & FormatCurrency(BankRow.BANK_FEE_DEFAULT) & ". Our Fee: " &
+                        & "Bank Fee: " & FormatCurrency(BankRow.Bank_Fee) & ". Our Fee: " &
                         FormatCurrency(tb_CustFee.Text) & ".", MsgBoxStyle.YesNo)
             If (result = MsgBoxResult.Yes) Then
                 BounceCheck()
@@ -68,14 +62,15 @@ Namespace Admin.Payments
         End Sub
 
      
-        Private Sub BouncedBankSelection_Load(sender As Object, e As EventArgs) Handles Me.Load
-            ' filling dt with possible bad check banks
-            _bta.Fill(_banks)
+        Private Sub BouncedBankSelection_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+            ' fill banks list
+            Bad_Check_BanksTableAdapter.Fill(Ds_Payments.Bad_Check_Banks)
+           
             ' grabbing default bank selection
-            If (Cmb_BadCheckBanks.SelectedValue IsNot Nothing) Then
-                BankRow = _banks.FindByBC_BANK_ID(Cmb_BadCheckBanks.SelectedValue)
+            If (cmb_Banks.SelectedValue IsNot Nothing) Then
+                BankRow = DirectCast(cmb_Banks.SelectedItem, ds_Payments.Bad_Check_BanksRow)
             End If
-            ' hiding ts_m controls
+            ' hiding locking customer toolstrip
             CustomerToolstrip1.Enabled = False
             CustomerToolstrip1.HideQuickSearch()
         End Sub
@@ -84,15 +79,16 @@ Namespace Admin.Payments
             Close()
         End Sub
 
-        Private Sub Cmb_BadCheckBanks_SelectionChangeCommitted(sender As ComboBox, e As EventArgs) _
-            Handles Cmb_BadCheckBanks.SelectionChangeCommitted
-            BankRow = _banks.FindByBC_BANK_ID(sender.SelectedValue)
+        Private Sub Cmb_Banks_SelectionChangeCommitted(sender As ComboBox, e As EventArgs) Handles cmb_Banks.SelectionChangeCommitted
+            If (cmb_Banks.SelectedValue IsNot Nothing) Then
+                BankRow = DirectCast(cmb_Banks.SelectedItem, ds_Payments.Bad_Check_BanksRow)
+            End If
         End Sub
 
         Private Sub BounceCheck()
             ' need to get invTxnId and checkAddTxnID for setting a check bounced
             Dim invTxnID As String
-            
+
             ' make invoice
             Dim custInvObj As New QBInvoiceObj
             With custInvObj
@@ -104,7 +100,7 @@ Namespace Admin.Payments
             ' item attached to bank and amount of bounced check
             Dim badCheckLine As New QBLineItemObj
             With badCheckLine
-                .ItemListID = BankRow.QB_BANK_INV_ITEM_LISTID
+                .ItemListID = BankRow.QB_Bank_Inv_Item_ListID
                 .Rate = CheckRow.Amount
                 .Quantity = 1
                 .Desc = "Bounced Check #: " & CheckRow.RefNumber & ". Received on " & CheckRow.DateReceived.Date & " in the amount of " &
@@ -135,8 +131,8 @@ Namespace Admin.Payments
             ' doing checkadd to pay bank fee
             Dim checkObj As New QBCheckAddObj
             With checkObj
-                .AccountListID = BankRow.QB_BANK_LISTID
-                .PayeeListID = BankRow.QB_VENDOR_LISTID
+                .AccountListID = BankRow.QB_Bank_ListID
+                .PayeeListID = BankRow.QB_Vendor_ListID
                 .RefNumber = "ReturnCheck"
                 .IsToBePrinted = False
                 .LineList = New List(Of QBLineItemObj)
@@ -145,7 +141,7 @@ Namespace Admin.Payments
             Dim checkLine As New QBLineItemObj
             With checkLine
                 .ItemListID = _appRow.BAD_CHECK_CHECKITEM_LISTID
-                .Rate = BankRow.BANK_FEE_DEFAULT
+                .Rate = BankRow.Bank_Fee
                 .Quantity = 1
             End With
             checkObj.LineList.Add(checkLine)
@@ -160,7 +156,7 @@ Namespace Admin.Payments
                     End Using
                     ' inserting note for customer that check bounced
                     Using ta As New ds_CustomerTableAdapters.CustomerNotesTableAdapter
-                        ta.CustomerNotes_Insert(CheckRow.CustomerNumber, "Bounced Check Ref #: " & CheckRow.RefNumber & ". Bank Fee of " & FormatCurrency(BankRow.BANK_FEE_DEFAULT) & ". Customer charged " & FormatCurrency(_appRow.BAD_CHECK_CUST_FEE) & ".")
+                        ta.CustomerNotes_Insert(CheckRow.CustomerNumber, "Bounced Check Ref #: " & CheckRow.RefNumber & ". Bank Fee of " & FormatCurrency(BankRow.Bank_Fee) & ". Customer charged " & FormatCurrency(_appRow.BAD_CHECK_CUST_FEE) & ".")
                     End Using
                 Catch ex As SqlException
                     MessageBox.Show("Message: " & ex.Message & vbCrLf & "LineNumber: " & ex.LineNumber,
@@ -170,5 +166,6 @@ Namespace Admin.Payments
                 QBMethods.ResponseErr_Misc(checkResp)
             End If
         End Sub
+
     End Class
 End Namespace

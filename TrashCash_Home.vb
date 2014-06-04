@@ -1,4 +1,6 @@
 ﻿Imports System.Windows.Forms
+Imports TrashCash.Payments
+Imports TrashCash.Batching
 Imports TrashCash.Customer
 Imports TrashCash.Invoicing
 Imports TrashCash.Classes

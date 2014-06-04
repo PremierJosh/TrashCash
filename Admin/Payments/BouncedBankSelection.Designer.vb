@@ -25,32 +25,35 @@ Namespace Admin.Payments
         'Do not modify it using the code editor.
         <System.Diagnostics.DebuggerStepThrough()> _
         Private Sub InitializeComponent()
+            Me.components = New System.ComponentModel.Container()
             Dim BankBounceFeeLabel As System.Windows.Forms.Label
             Dim CustomerChargeRateLabel As System.Windows.Forms.Label
             Dim lbl_checkAmount As System.Windows.Forms.Label
             Dim lbl_RefNum As System.Windows.Forms.Label
-            Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(BouncedBankSelection))
-            Me.DataSet = New TrashCash.DataSet()
             Me.tb_BankFee = New System.Windows.Forms.TextBox()
             Me.lbl_BankFee = New System.Windows.Forms.Label()
             Me.lbl_CustFee = New System.Windows.Forms.Label()
             Me.Label1 = New System.Windows.Forms.Label()
             Me.pnl_Bot = New System.Windows.Forms.Panel()
             Me.btn_Cancel = New System.Windows.Forms.Button()
-            Me.tb_CustFee = New CurrencyTextBox()
+            Me.tb_CustFee = New TrashCash.Classes.CurrencyTextBox()
             Me.btn_Submit = New System.Windows.Forms.Button()
             Me.tb_CheckAmount = New System.Windows.Forms.TextBox()
-            Me.Cmb_BadCheckBanks = New TrashCash.Database_ComboBoxes.cmb_BadCheckBanks()
             Me.tb_RefNum = New System.Windows.Forms.TextBox()
             Me.Panel1 = New System.Windows.Forms.Panel()
             Me.CustomerToolstrip1 = New TrashCash.Classes.CustomerToolstrip.CustomerToolstrip()
+            Me.cmb_Banks = New System.Windows.Forms.ComboBox()
+            Me.Ds_Payments = New TrashCash.ds_Payments()
+            Me.BadCheckBanksBindingSource = New System.Windows.Forms.BindingSource(Me.components)
+            Me.Bad_Check_BanksTableAdapter = New TrashCash.ds_PaymentsTableAdapters.Bad_Check_BanksTableAdapter()
             BankBounceFeeLabel = New System.Windows.Forms.Label()
             CustomerChargeRateLabel = New System.Windows.Forms.Label()
             lbl_checkAmount = New System.Windows.Forms.Label()
             lbl_RefNum = New System.Windows.Forms.Label()
-            CType(Me.DataSet, System.ComponentModel.ISupportInitialize).BeginInit()
             Me.pnl_Bot.SuspendLayout()
             Me.Panel1.SuspendLayout()
+            CType(Me.Ds_Payments, System.ComponentModel.ISupportInitialize).BeginInit()
+            CType(Me.BadCheckBanksBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
             Me.SuspendLayout()
             '
             'BankBounceFeeLabel
@@ -90,11 +93,6 @@ Namespace Admin.Payments
             lbl_RefNum.Size = New System.Drawing.Size(104, 13)
             lbl_RefNum.TabIndex = 37
             lbl_RefNum.Text = "Check Reference #:"
-            '
-            'DataSet
-            '
-            Me.DataSet.DataSetName = "DataSet"
-            Me.DataSet.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema
             '
             'tb_BankFee
             '
@@ -183,16 +181,6 @@ Namespace Admin.Payments
             Me.tb_CheckAmount.Size = New System.Drawing.Size(59, 20)
             Me.tb_CheckAmount.TabIndex = 31
             '
-            'Cmb_BadCheckBanks
-            '
-            Me.Cmb_BadCheckBanks.DisplayMember = "BANK_NAME"
-            Me.Cmb_BadCheckBanks.FormattingEnabled = True
-            Me.Cmb_BadCheckBanks.Location = New System.Drawing.Point(286, 71)
-            Me.Cmb_BadCheckBanks.Name = "Cmb_BadCheckBanks"
-            Me.Cmb_BadCheckBanks.Size = New System.Drawing.Size(121, 21)
-            Me.Cmb_BadCheckBanks.TabIndex = 35
-            Me.Cmb_BadCheckBanks.ValueMember = "BC_BANK_ID"
-            '
             'tb_RefNum
             '
             Me.tb_RefNum.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
@@ -221,15 +209,40 @@ Namespace Admin.Payments
             Me.CustomerToolstrip1.TabIndex = 0
             Me.CustomerToolstrip1.Text = "CustomerToolstrip1"
             '
+            'cmb_Banks
+            '
+            Me.cmb_Banks.DataSource = Me.BadCheckBanksBindingSource
+            Me.cmb_Banks.DisplayMember = "Bank_Name"
+            Me.cmb_Banks.FormattingEnabled = True
+            Me.cmb_Banks.Location = New System.Drawing.Point(286, 70)
+            Me.cmb_Banks.Name = "cmb_Banks"
+            Me.cmb_Banks.Size = New System.Drawing.Size(136, 21)
+            Me.cmb_Banks.TabIndex = 39
+            Me.cmb_Banks.ValueMember = "Bank_ID"
+            '
+            'Ds_Payments
+            '
+            Me.Ds_Payments.DataSetName = "ds_Payments"
+            Me.Ds_Payments.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema
+            '
+            'BadCheckBanksBindingSource
+            '
+            Me.BadCheckBanksBindingSource.DataMember = "Bad_Check_Banks"
+            Me.BadCheckBanksBindingSource.DataSource = Me.Ds_Payments
+            '
+            'Bad_Check_BanksTableAdapter
+            '
+            Me.Bad_Check_BanksTableAdapter.ClearBeforeFill = True
+            '
             'BouncedBankSelection
             '
             Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
             Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
             Me.ClientSize = New System.Drawing.Size(545, 242)
+            Me.Controls.Add(Me.cmb_Banks)
             Me.Controls.Add(Me.Panel1)
             Me.Controls.Add(Me.tb_RefNum)
             Me.Controls.Add(lbl_RefNum)
-            Me.Controls.Add(Me.Cmb_BadCheckBanks)
             Me.Controls.Add(Me.tb_CheckAmount)
             Me.Controls.Add(Me.pnl_Bot)
             Me.Controls.Add(Me.Label1)
@@ -240,17 +253,16 @@ Namespace Admin.Payments
             Me.Name = "BouncedBankSelection"
             Me.Padding = New System.Windows.Forms.Padding(5)
             Me.Text = "Bounced Check"
-            CType(Me.DataSet, System.ComponentModel.ISupportInitialize).EndInit()
             Me.pnl_Bot.ResumeLayout(False)
             Me.pnl_Bot.PerformLayout()
             Me.Panel1.ResumeLayout(False)
             Me.Panel1.PerformLayout()
+            CType(Me.Ds_Payments, System.ComponentModel.ISupportInitialize).EndInit()
+            CType(Me.BadCheckBanksBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
             Me.ResumeLayout(False)
             Me.PerformLayout()
 
         End Sub
-        Friend WithEvents DataSet As TrashCash.DataSet
-
         Friend WithEvents tb_BankFee As System.Windows.Forms.TextBox
         Friend WithEvents lbl_BankFee As System.Windows.Forms.Label
         Friend WithEvents lbl_CustFee As System.Windows.Forms.Label
@@ -259,10 +271,13 @@ Namespace Admin.Payments
         Friend WithEvents tb_CheckAmount As System.Windows.Forms.TextBox
         Friend WithEvents btn_Submit As System.Windows.Forms.Button
         Friend WithEvents tb_CustFee As CurrencyTextBox
-        Friend WithEvents Cmb_BadCheckBanks As TrashCash.Database_ComboBoxes.cmb_BadCheckBanks
         Friend WithEvents btn_Cancel As System.Windows.Forms.Button
         Friend WithEvents tb_RefNum As System.Windows.Forms.TextBox
         Friend WithEvents Panel1 As System.Windows.Forms.Panel
         Friend WithEvents CustomerToolstrip1 As TrashCash.Classes.CustomerToolstrip.CustomerToolstrip
+        Friend WithEvents cmb_Banks As System.Windows.Forms.ComboBox
+        Friend WithEvents Ds_Payments As TrashCash.ds_Payments
+        Friend WithEvents BadCheckBanksBindingSource As System.Windows.Forms.BindingSource
+        Friend WithEvents Bad_Check_BanksTableAdapter As TrashCash.ds_PaymentsTableAdapters.Bad_Check_BanksTableAdapter
     End Class
 End Namespace

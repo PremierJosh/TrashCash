@@ -38,7 +38,6 @@ Partial Class f_PaymentsReceived
         Me.dtp_SingleDate = New System.Windows.Forms.DateTimePicker()
         Me.rdo_Batch = New System.Windows.Forms.RadioButton()
         Me.Report_DataSet = New TrashCash.Report_DataSet()
-        Me.Cmb_BatchPaymentHistory = New TrashCash.Database_ComboBoxes.cmb_BatchPaymentHistory()
         Me.tc_Report.SuspendLayout()
         Me.tp_RepView.SuspendLayout()
         CType(Me.Report_DataSet, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -189,23 +188,12 @@ Partial Class f_PaymentsReceived
         Me.Report_DataSet.DataSetName = "Report_DataSet"
         Me.Report_DataSet.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema
         '
-        'Cmb_BatchPaymentHistory
-        '
-        Me.Cmb_BatchPaymentHistory.DisplayMember = "BatchPaymentInfoText"
-        Me.Cmb_BatchPaymentHistory.Enabled = False
-        Me.Cmb_BatchPaymentHistory.FormattingEnabled = True
-        Me.Cmb_BatchPaymentHistory.Location = New System.Drawing.Point(539, 56)
-        Me.Cmb_BatchPaymentHistory.Name = "Cmb_BatchPaymentHistory"
-        Me.Cmb_BatchPaymentHistory.Size = New System.Drawing.Size(264, 21)
-        Me.Cmb_BatchPaymentHistory.TabIndex = 19
-        Me.Cmb_BatchPaymentHistory.ValueMember = "BATCH_PAY_ID"
         '
         'f_PaymentsReceived
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(831, 600)
-        Me.Controls.Add(Me.Cmb_BatchPaymentHistory)
         Me.Controls.Add(Me.rdo_Batch)
         Me.Controls.Add(Me.dtp_SingleDate)
         Me.Controls.Add(Me.rdo_OnDate)
@@ -241,5 +229,4 @@ Partial Class f_PaymentsReceived
     Friend WithEvents rdo_OnDate As System.Windows.Forms.RadioButton
     Friend WithEvents dtp_SingleDate As System.Windows.Forms.DateTimePicker
     Friend WithEvents rdo_Batch As System.Windows.Forms.RadioButton
-    Friend WithEvents Cmb_BatchPaymentHistory As TrashCash.Database_ComboBoxes.cmb_BatchPaymentHistory
 End Class

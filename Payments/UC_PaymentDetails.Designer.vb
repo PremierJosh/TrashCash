@@ -27,7 +27,6 @@ Partial Class UC_PaymentDetails
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(UC_PaymentDetails))
         Me.btn_AddPayment = New System.Windows.Forms.Button()
         Me.grp_PayInfo = New System.Windows.Forms.GroupBox()
-        Me.Cmb_PaymentTypes = New TrashCash.Database_ComboBoxes.cmb_PaymentTypes()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.lbl_RefNumber = New System.Windows.Forms.Label()
         Me.tb_RefNum = New System.Windows.Forms.TextBox()
@@ -52,7 +51,6 @@ Partial Class UC_PaymentDetails
         '
         'grp_PayInfo
         '
-        Me.grp_PayInfo.Controls.Add(Me.Cmb_PaymentTypes)
         Me.grp_PayInfo.Location = New System.Drawing.Point(12, 9)
         Me.grp_PayInfo.Name = "grp_PayInfo"
         Me.grp_PayInfo.Size = New System.Drawing.Size(187, 45)
@@ -60,15 +58,7 @@ Partial Class UC_PaymentDetails
         Me.grp_PayInfo.TabStop = False
         Me.grp_PayInfo.Text = "Payment Method"
         '
-        'Cmb_PaymentTypes
-        '
-        Me.Cmb_PaymentTypes.DisplayMember = "PaymentTypeName"
-        Me.Cmb_PaymentTypes.FormattingEnabled = True
-        Me.Cmb_PaymentTypes.Location = New System.Drawing.Point(15, 18)
-        Me.Cmb_PaymentTypes.Name = "Cmb_PaymentTypes"
-        Me.Cmb_PaymentTypes.Size = New System.Drawing.Size(158, 21)
-        Me.Cmb_PaymentTypes.TabIndex = 0
-        Me.Cmb_PaymentTypes.ValueMember = "PaymentTypeID"
+       
         '
         'Label1
         '
@@ -181,7 +171,6 @@ Partial Class UC_PaymentDetails
     Friend WithEvents lbl_RefNumber As System.Windows.Forms.Label
     Friend WithEvents tb_RefNum As System.Windows.Forms.TextBox
     Friend WithEvents tb_Amount As CurrencyTextBox
-    Friend WithEvents Cmb_PaymentTypes As TrashCash.Database_ComboBoxes.cmb_PaymentTypes
     Friend WithEvents lbl_DateOnCheck As System.Windows.Forms.Label
     Friend WithEvents dtp_DateOnCheck As System.Windows.Forms.DateTimePicker
     Friend WithEvents ck_Override As System.Windows.Forms.CheckBox

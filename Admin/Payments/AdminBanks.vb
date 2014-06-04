@@ -1,85 +1,151 @@
-﻿Namespace Admin
+﻿Imports TrashCash.QBStuff
+
+Namespace Admin.Payments
     Public Class AdminBanks
-        Private Sub BankMaint_Load(sender As Object, e As System.EventArgs) Handles Me.Load
-            'If (ts_cb_BankList.Items.Count > 0) Then
-            '    UC_BankMaint.BankID = ts_cb_BankList.ComboBox.SelectedValue
-            'End If
+
+        ' property for row we are working with
+        Private _bankRow As ds_Payments.Bad_Check_BanksRow
+        Private Property BankRow As ds_Payments.Bad_Check_BanksRow
+            Get
+                Return _bankRow
+            End Get
+            Set(value As ds_Payments.Bad_Check_BanksRow)
+                _bankRow = value
+                If (value IsNot Nothing) Then
+                    ' make bottom panel visible
+                    pnl_Bottom.Visible = True
+                    ' hide modify button and show save changes button
+                    btn_ModBank.Visible = False
+                    btn_SaveChanges.Visible = True
+                    ' disable bank changing and adding
+                    cmb_BankList.Enabled = False
+                    btn_AddBank.Enabled = False
+                    '' check if this is a new row
+                    'If (value.RowState = DataRowState.Detached) Then
+
+                    'Else
+
+                    'End If
+                Else
+                    ' hide bottom panel
+                    pnl_Bottom.Visible = False
+                  ' show modify button and hide save changes button
+                    btn_ModBank.Visible = True
+                    btn_SaveChanges.Visible = False
+                    ' enable bank changing and adding
+                    cmb_BankList.Enabled = True
+                    btn_AddBank.Enabled = True
+                    ' refresh list
+                    Bad_Check_BanksTableAdapter.Fill(Ds_Payments.Bad_Check_Banks)
+                End If
+            End Set
+        End Property
+
+        Private Sub BankMaint_Load(sender As Object, e As System.EventArgs) Handles MyBase.Load
+            ' bind combo boxes to qb items
+            BindCmbs()
+            ' bind banks list on toolstrip
+            Bad_Check_BanksTableAdapter.Fill(Ds_Payments.Bad_Check_Banks)
+            cmb_BankList.ComboBox.DisplayMember = "Bank_Name"
+            cmb_BankList.ComboBox.ValueMember = "Bank_ID"
+            cmb_BankList.ComboBox.DataSource = (Ds_Payments.Bad_Check_Banks)
+        End Sub
+
+        Private Sub BindCmbs()
+            Dim banks As List(Of ComboBoxPair) = QBMethods.GetComboBoxPair(QBRequests.AccountQuery(QBFC12Lib.ENAccountType.atBank))
+            cmb_BankAccs.DisplayMember = "DisplayMember"
+            cmb_BankAccs.ValueMember = "ValueMember"
+            cmb_BankAccs.DataSource = banks
+
+            Dim other As List(Of ComboBoxPair) = QBMethods.GetComboBoxPair(QBRequests.OtherChargeItemQuery)
+            cmb_BanksInvItem.DisplayMember = "DisplayMember"
+            cmb_BanksInvItem.ValueMember = "ValueMember"
+            cmb_BanksInvItem.DataSource = other
+
+            Dim vendors As List(Of ComboBoxPair) = QBMethods.GetComboBoxPair(QBRequests.VendorQuery)
+            cmb_VendorAcc.DisplayMember = "DisplayMember"
+            cmb_VendorAcc.ValueMember = "ValueMember"
+            cmb_VendorAcc.DataSource = vendors
         End Sub
 
         Private Sub btn_ModBank_Click(sender As System.Object, e As EventArgs) Handles btn_ModBank.Click
-            If (Ts_cmb_BadCheckBanks.ComboBox.SelectedValue IsNot Nothing) Then
-                UC_BankMaint.CurrentBankID = Ts_cmb_BadCheckBanks.ComboBox.SelectedValue
-
-                ' hide modify button and show save changes button
-                btn_ModBank.Visible = False
-                btn_SaveChanges.Visible = True
-                btn_DeleteBank.Visible = True
-
-                ' disable bank changing and adding
-                Ts_cmb_BadCheckBanks.Enabled = False
-                btn_AddBank.Enabled = False
+            If (cmb_BankList.ComboBox.SelectedValue IsNot Nothing) Then
+                BankRow = DirectCast(cmb_BankList.ComboBox.SelectedItem, ds_Payments.Bad_Check_BanksRow)
             End If
         End Sub
 
         Private Sub btn_SaveChanges_Click(sender As System.Object, e As System.EventArgs) Handles btn_SaveChanges.Click
-            UC_BankMaint.SaveBank()
-        End Sub
-
-        Private Sub BankSaved() Handles UC_BankMaint.BankSaved
-            ' show modify button and hide save changes button
-            btn_ModBank.Visible = True
-            btn_SaveChanges.Visible = False
-            btn_DeleteBank.Visible = False
-
-            ' enable bank changing and adding
-            Ts_cmb_BadCheckBanks.Enabled = True
-            btn_AddBank.Enabled = True
-
-            ' refresh list
-            Ts_cmb_BadCheckBanks.RefreshForChanges()
-        End Sub
-
-        Private Sub btn_DeleteBank_Click(sender As System.Object, e As System.EventArgs) Handles btn_DeleteBank.Click
-            Dim result As MsgBoxResult = MsgBox("Are you sure you want to mark this Bank setting deleted? All accounts and items will still remain in Quickbooks.", MsgBoxStyle.YesNo)
-            If (result = MsgBoxResult.Yes) Then
-                UC_BankMaint.DeleteBank()
+            If (ValidForEntry()) Then
+                If (BankRow IsNot Nothing) Then
+                    ' update row
+                    With BankRow
+                        .Bank_Name = tb_BankName.Text
+                        .QB_Bank_ListID = cmb_BankAccs.SelectedValue
+                        .QB_Bank_Inv_Item_ListID = cmb_BanksInvItem.SelectedValue
+                        .QB_Vendor_ListID = cmb_VendorAcc.SelectedValue
+                        .Bank_Fee = tb_BankFee.Text
+                        .Deactive = ck_Deactive.Checked
+                    End With
+                    ' adding bank if its new
+                    If (BankRow.RowState = DataRowState.Detached) Then
+                        Ds_Payments.Bad_Check_Banks.AddBad_Check_BanksRow(BankRow)
+                    End If
+                    Try
+                        ' save to db
+                        Bad_Check_BanksTableAdapter.Update(Ds_Payments.Bad_Check_Banks)
+                    Catch ex As SqlException
+                        MessageBox.Show("Message: " & ex.Message & vbCrLf & "LineNumber: " & ex.LineNumber,
+                                        "Sql Error: " & ex.Procedure, MessageBoxButtons.OK, MessageBoxIcon.Error)
+                    End Try
+                    ' reset form through property
+                    BankRow = Nothing
+                End If
             End If
         End Sub
 
-        Private Sub BankDeleted() Handles UC_BankMaint.BankDeleted
-            ' show modify button and hide save changes button
-            btn_ModBank.Visible = True
-            btn_SaveChanges.Visible = False
-            btn_DeleteBank.Visible = False
-
-            ' enable bank changing and adding
-            Ts_cmb_BadCheckBanks.Enabled = True
-            btn_AddBank.Enabled = True
-
-            ' refresh list
-            Ts_cmb_BadCheckBanks.RefreshForChanges()
-        End Sub
-
         Private Sub btn_AddBank_Click(sender As System.Object, e As System.EventArgs) Handles btn_AddBank.Click
-            UC_BankMaint.NewBank()
-
-            ' hide modify button and show save changes button
-            btn_ModBank.Visible = False
-            btn_SaveChanges.Visible = True
-            btn_DeleteBank.Visible = True
-
-            ' disable bank changing and adding
-            Ts_cmb_BadCheckBanks.Enabled = False
-            btn_AddBank.Enabled = False
+            BankRow = Ds_Payments.Bad_Check_Banks.NewBad_Check_BanksRow
         End Sub
 
-        Public Sub New(ByRef homeForm As TrashCashHome)
+        Private Function ValidForEntry() As Boolean
+            Dim err As Integer = 0
+            Dim s As New System.Text.StringBuilder
 
-            ' This call is required by the designer.
-            InitializeComponent()
+            ' checking name
+            If (Trim(tb_BankName.Text) = "") Then
+                err += 1
+                s.Append(" -BankName is blank").AppendLine()
+                tb_BankName.BackColor = AppColors.TextBoxErr
+            Else
+                tb_BankName.BackColor = AppColors.TextBoxDef
+            End If
 
-            ' Add any initialization after the InitializeComponent() call.
-            UC_BankMaint.HomeForm = homeForm
-        End Sub
+            'combo boxes
+            If (cmb_BankAccs.SelectedValue Is Nothing) Then
+                err += 1
+            End If
+            If (cmb_BanksInvItem.SelectedValue Is Nothing) Then
+                err += 1
+            End If
+            If (cmb_VendorAcc.SelectedValue Is Nothing) Then
+                err += 1
+            End If
+
+            ' default fee
+            If (Trim(tb_BankFee.Text) = "") Then
+                err += 1
+                s.Append(" -BankFee is invalid")
+                tb_BankFee.BackColor = AppColors.TextBoxErr
+            Else
+                tb_BankFee.BackColor = AppColors.TextBoxDef
+            End If
+
+            If (err = 0) Then
+                Return True
+            Else
+                MessageBox.Show("Errors: " & vbCrLf & s.ToString, "Errors with Input", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                Return False
+            End If
+        End Function
     End Class
 End Namespace

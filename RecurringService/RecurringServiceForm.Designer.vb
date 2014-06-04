@@ -52,7 +52,6 @@ Namespace RecurringService
             Me.lbl_CustName = New System.Windows.Forms.Label()
             Me.grp_BasicInfo = New System.Windows.Forms.GroupBox()
             Me.nud_BillLength = New System.Windows.Forms.NumericUpDown()
-            Me.Cmb_ServiceTypes = New TrashCash.Database_ComboBoxes.cmb_ServiceTypes()
             Me.lbl_DefPriceValue = New System.Windows.Forms.Label()
             Me.Label3 = New System.Windows.Forms.Label()
             Me.lbl_DefPriceHeader = New System.Windows.Forms.Label()
@@ -319,7 +318,6 @@ Namespace RecurringService
             'grp_BasicInfo
             '
             Me.grp_BasicInfo.Controls.Add(Me.nud_BillLength)
-            Me.grp_BasicInfo.Controls.Add(Me.Cmb_ServiceTypes)
             Me.grp_BasicInfo.Controls.Add(Me.lbl_DefPriceValue)
             Me.grp_BasicInfo.Controls.Add(Me.Label3)
             Me.grp_BasicInfo.Controls.Add(Me.lbl_DefPriceHeader)
@@ -344,16 +342,6 @@ Namespace RecurringService
             Me.nud_BillLength.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
             Me.tt_BillLength.SetToolTip(Me.nud_BillLength, "Bill Length is the number of months this Recurring Service will bill for.")
             '
-            'Cmb_ServiceTypes
-            '
-            Me.Cmb_ServiceTypes.DataBindings.Add(New System.Windows.Forms.Binding("SelectedValue", Me.RecurringServiceBindingSource, "ServiceTypeID", True))
-            Me.Cmb_ServiceTypes.DisplayMember = "ServiceName"
-            Me.Cmb_ServiceTypes.FormattingEnabled = True
-            Me.Cmb_ServiceTypes.Location = New System.Drawing.Point(9, 18)
-            Me.Cmb_ServiceTypes.Name = "Cmb_ServiceTypes"
-            Me.Cmb_ServiceTypes.Size = New System.Drawing.Size(240, 21)
-            Me.Cmb_ServiceTypes.TabIndex = 0
-            Me.Cmb_ServiceTypes.ValueMember = "ServiceTypeID"
             '
             'lbl_DefPriceValue
             '
@@ -1042,7 +1030,6 @@ Namespace RecurringService
         Friend WithEvents tp_Notes As System.Windows.Forms.TabPage
         Friend WithEvents dg_SrvcBillHistory As System.Windows.Forms.DataGridView
         Friend WithEvents dg_ServiceNotes As System.Windows.Forms.DataGridView
-        Friend WithEvents Cmb_ServiceTypes As TrashCash.Database_ComboBoxes.cmb_ServiceTypes
         Friend WithEvents lbl_RecStatus As System.Windows.Forms.Label
         Friend WithEvents lbl_CreditMsg As System.Windows.Forms.Label
         Friend WithEvents tt_BillLength As System.Windows.Forms.ToolTip
