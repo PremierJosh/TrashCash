@@ -26,7 +26,7 @@
               <Mapping SourceColumn="USER_AUTHLVL" DataSetColumn="USER_AUTHLVL" />
             </Mappings>
             <Sources>
-              <DbSource ConnectionRef="QBDBConnectionString (MySettings)" DbObjectName="QuickbooksV2.dbo.USERS_Authenticate" DbObjectType="StoredProcedure" GenerateShortCommands="true" GeneratorSourceName="Authenticate" Modifier="Public" Name="Authenticate" QueryType="Scalar" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetDataBy1" UserSourceName="Authenticate">
+              <DbSource ConnectionRef="QBDBConnectionString (MySettings)" DbObjectName="QuickbooksV2.dbo.USERS_Authenticate" DbObjectType="StoredProcedure" GenerateShortCommands="true" GeneratorSourceName="Authenticate" Modifier="Public" Name="Authenticate" QueryType="Scalar" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetDataBy" UserSourceName="Authenticate">
                 <SelectCommand>
                   <DbCommand CommandType="StoredProcedure" ModifiedByUser="false">
                     <CommandText>dbo.USERS_Authenticate</CommandText>
@@ -38,7 +38,7 @@
                   </DbCommand>
                 </SelectCommand>
               </DbSource>
-              <DbSource ConnectionRef="QBDBConnectionString (MySettings)" DbObjectName="QuickbooksV2.dbo.USERS_ChangePassword" DbObjectType="StoredProcedure" GenerateShortCommands="true" GeneratorSourceName="ChangePassword" Modifier="Public" Name="ChangePassword" QueryType="Scalar" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetDataBy" UserSourceName="ChangePassword">
+              <DbSource ConnectionRef="QBDBConnectionString (MySettings)" DbObjectName="QuickbooksV2.dbo.USERS_ChangePassword" DbObjectType="StoredProcedure" GenerateShortCommands="true" GeneratorSourceName="ChangePassword" Modifier="Public" Name="ChangePassword" QueryType="Scalar" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetDataBy1" UserSourceName="ChangePassword">
                 <SelectCommand>
                   <DbCommand CommandType="StoredProcedure" ModifiedByUser="false">
                     <CommandText>dbo.USERS_ChangePassword</CommandText>
@@ -167,7 +167,7 @@
   <xs:element name="ds_Application" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="ds_Application" msprop:Generator_UserDSName="ds_Application">
     <xs:complexType>
       <xs:choice minOccurs="0" maxOccurs="unbounded">
-        <xs:element name="Users" msprop:Generator_TableClassName="USERSDataTable" msprop:Generator_TableVarName="tableUSERS" msprop:Generator_TablePropName="USERS" msprop:Generator_RowDeletingName="USERSRowDeleting" msprop:Generator_RowChangingName="USERSRowChanging" msprop:Generator_RowEvHandlerName="USERSRowChangeEventHandler" msprop:Generator_RowDeletedName="USERSRowDeleted" msprop:Generator_UserTableName="Users" msprop:Generator_RowChangedName="USERSRowChanged" msprop:Generator_RowEvArgName="USERSRowChangeEvent" msprop:Generator_RowClassName="USERSRow">
+        <xs:element name="Users" msprop:Generator_TableClassName="USERSDataTable" msprop:Generator_TableVarName="tableUSERS" msprop:Generator_RowChangedName="USERSRowChanged" msprop:Generator_TablePropName="USERS" msprop:Generator_RowDeletingName="USERSRowDeleting" msprop:Generator_RowChangingName="USERSRowChanging" msprop:Generator_RowEvHandlerName="USERSRowChangeEventHandler" msprop:Generator_RowDeletedName="USERSRowDeleted" msprop:Generator_RowClassName="USERSRow" msprop:Generator_UserTableName="Users" msprop:Generator_RowEvArgName="USERSRowChangeEvent">
           <xs:complexType>
             <xs:sequence>
               <xs:element name="USER_ID" msprop:Generator_ColumnVarNameInTable="columnUSER_ID" msprop:Generator_ColumnPropNameInRow="USER_ID" msprop:Generator_ColumnPropNameInTable="USER_IDColumn" msprop:Generator_UserColumnName="USER_ID" type="xs:int" />
@@ -182,7 +182,7 @@
             </xs:sequence>
           </xs:complexType>
         </xs:element>
-        <xs:element name="App_Settings" msprop:Generator_TableClassName="APP_SETTINGSDataTable" msprop:Generator_TableVarName="tableAPP_SETTINGS" msprop:Generator_TablePropName="APP_SETTINGS" msprop:Generator_RowDeletingName="APP_SETTINGSRowDeleting" msprop:Generator_RowChangingName="APP_SETTINGSRowChanging" msprop:Generator_RowEvHandlerName="APP_SETTINGSRowChangeEventHandler" msprop:Generator_RowDeletedName="APP_SETTINGSRowDeleted" msprop:Generator_UserTableName="App_Settings" msprop:Generator_RowChangedName="APP_SETTINGSRowChanged" msprop:Generator_RowEvArgName="APP_SETTINGSRowChangeEvent" msprop:Generator_RowClassName="APP_SETTINGSRow">
+        <xs:element name="App_Settings" msprop:Generator_TableClassName="APP_SETTINGSDataTable" msprop:Generator_TableVarName="tableAPP_SETTINGS" msprop:Generator_RowChangedName="APP_SETTINGSRowChanged" msprop:Generator_TablePropName="APP_SETTINGS" msprop:Generator_RowDeletingName="APP_SETTINGSRowDeleting" msprop:Generator_RowChangingName="APP_SETTINGSRowChanging" msprop:Generator_RowEvHandlerName="APP_SETTINGSRowChangeEventHandler" msprop:Generator_RowDeletedName="APP_SETTINGSRowDeleted" msprop:Generator_RowClassName="APP_SETTINGSRow" msprop:Generator_UserTableName="App_Settings" msprop:Generator_RowEvArgName="APP_SETTINGSRowChangeEvent">
           <xs:complexType>
             <xs:sequence>
               <xs:element name="ID" msdata:ReadOnly="true" msdata:AutoIncrement="true" msdata:AutoIncrementSeed="-1" msdata:AutoIncrementStep="-1" msprop:Generator_ColumnVarNameInTable="columnID" msprop:Generator_ColumnPropNameInRow="ID" msprop:Generator_ColumnPropNameInTable="IDColumn" msprop:Generator_UserColumnName="ID" type="xs:int" />
@@ -212,7 +212,7 @@
             </xs:sequence>
           </xs:complexType>
         </xs:element>
-        <xs:element name="Initial_CustomInvoice" msprop:Generator_TableClassName="Initial_CustomInvoiceDataTable" msprop:Generator_TableVarName="tableInitial_CustomInvoice" msprop:Generator_TablePropName="Initial_CustomInvoice" msprop:Generator_RowDeletingName="Initial_CustomInvoiceRowDeleting" msprop:Generator_RowChangingName="Initial_CustomInvoiceRowChanging" msprop:Generator_RowEvHandlerName="Initial_CustomInvoiceRowChangeEventHandler" msprop:Generator_RowDeletedName="Initial_CustomInvoiceRowDeleted" msprop:Generator_UserTableName="Initial_CustomInvoice" msprop:Generator_RowChangedName="Initial_CustomInvoiceRowChanged" msprop:Generator_RowEvArgName="Initial_CustomInvoiceRowChangeEvent" msprop:Generator_RowClassName="Initial_CustomInvoiceRow">
+        <xs:element name="Initial_CustomInvoice" msprop:Generator_TableClassName="Initial_CustomInvoiceDataTable" msprop:Generator_TableVarName="tableInitial_CustomInvoice" msprop:Generator_RowChangedName="Initial_CustomInvoiceRowChanged" msprop:Generator_TablePropName="Initial_CustomInvoice" msprop:Generator_RowDeletingName="Initial_CustomInvoiceRowDeleting" msprop:Generator_RowChangingName="Initial_CustomInvoiceRowChanging" msprop:Generator_RowEvHandlerName="Initial_CustomInvoiceRowChangeEventHandler" msprop:Generator_RowDeletedName="Initial_CustomInvoiceRowDeleted" msprop:Generator_RowClassName="Initial_CustomInvoiceRow" msprop:Generator_UserTableName="Initial_CustomInvoice" msprop:Generator_RowEvArgName="Initial_CustomInvoiceRowChangeEvent">
           <xs:complexType>
             <xs:sequence>
               <xs:element name="Import_ID" msdata:ReadOnly="true" msdata:AutoIncrement="true" msdata:AutoIncrementSeed="-1" msdata:AutoIncrementStep="-1" msprop:Generator_ColumnVarNameInTable="columnImport_ID" msprop:Generator_ColumnPropNameInRow="Import_ID" msprop:Generator_ColumnPropNameInTable="Import_IDColumn" msprop:Generator_UserColumnName="Import_ID" type="xs:int" />

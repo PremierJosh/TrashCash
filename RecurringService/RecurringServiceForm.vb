@@ -3,15 +3,15 @@ Namespace RecurringService
     Public Class RecurringServiceForm
 
         ' dataview for checking if new end date will overlap with existing credits
-        Dim dv_EndDateOverlap As DataView
-        Private WriteOnly Property dv_RowFilter As Date
+        ReadOnly _dvEndDateOverlap As DataView
+        Private WriteOnly Property DvRowFilter As Date
             Set(value As Date)
                 ' making sure this is a time value not double
                 If (IsDate(value)) Then
-                    If (dv_EndDateOverlap IsNot Nothing) Then
-                        dv_EndDateOverlap.RowFilter = "Voided = 0 AND DateOfCredit >= '" & value & "'"
+                    If (_dvEndDateOverlap IsNot Nothing) Then
+                        _dvEndDateOverlap.RowFilter = "Voided = 0 AND DateOfCredit >= '" & value & "'"
                         ' update status text if rows filter
-                        CreditOverlapCheck(value)
+                        CreditOverlapCheck()
                     End If
                 End If
             End Set
@@ -34,7 +34,7 @@ Namespace RecurringService
 
         ' customer number property
         Private _custNum As Integer
-        Private custRow As ds_Customer.CustomerRow
+        Private _custRow As ds_Customer.CustomerRow
         Friend Property CustomerNumber As Integer
             Get
                 Return _custNum
@@ -44,7 +44,7 @@ Namespace RecurringService
 
                 ' fetching customer row
                 Using ta As New ds_CustomerTableAdapters.CustomerTableAdapter
-                    custRow = ta.GetData(CustomerNumber).Rows(0)
+                    _custRow = ta.GetData(CustomerNumber).Rows(0)
                 End Using
             End Set
         End Property
@@ -74,10 +74,10 @@ Namespace RecurringService
                     _recID = value
 
                     ' fetch row
-                    RsTA.FillByID(Me.Ds_RecurringService.RecurringService, value)
+                    RsTA.FillByID(Ds_RecurringService.RecurringService, value)
                     ' update row reference
-                    If (Me.Ds_RecurringService.RecurringService.Rows.Count = 1) Then
-                        RecurringServiceRow = Me.Ds_RecurringService.RecurringService.Rows(0)
+                    If (Ds_RecurringService.RecurringService.Rows.Count = 1) Then
+                        RecurringServiceRow = Ds_RecurringService.RecurringService.Rows(0)
                         ' set isNew to false
                         IsNew = False
                     Else
@@ -111,11 +111,11 @@ Namespace RecurringService
                     _recRow = value
 
                     ' fill billed services display
-                    HistoryTA.FillByRecurringID(Me.Ds_RecurringService.RecurringService_BillHistory, value.RecurringServiceID)
+                    HistoryTA.FillByRecurringID(Ds_RecurringService.RecurringService_BillHistory, value.RecurringServiceID)
                     ' fill service notes display
-                    NotesTA.FillByID(Me.Ds_RecurringService.ServiceNotes, value.RecurringServiceID)
+                    NotesTA.FillByID(Ds_RecurringService.ServiceNotes, value.RecurringServiceID)
                     ' fill credit history
-                    RsCreditTA.FillByRecID(Me.Ds_RecurringService.RecurringService_Credits, value.RecurringServiceID)
+                    RsCreditTA.FillByRecID(Ds_RecurringService.RecurringService_Credits, value.RecurringServiceID)
 
                     ' checking if service is approved
                     Approved = value.Approved
@@ -152,17 +152,15 @@ Namespace RecurringService
                 _isNew = value
                 If (value = False) Then
                     ' check if service has been invoiced
-                    If (Me.Ds_RecurringService.RecurringService_BillHistory.Rows.Count > 0) Then
+                    If (Ds_RecurringService.RecurringService_BillHistory.Rows.Count > 0) Then
                         Invoiced = True
                     End If
                 Else
                     ' creating new row with dummy values
-                    Dim row As ds_RecurringService.RecurringServiceRow = Me.Ds_RecurringService.RecurringService.NewRecurringServiceRow
+                    Dim row As ds_RecurringService.RecurringServiceRow = Ds_RecurringService.RecurringService.NewRecurringServiceRow
                     row.CustomerNumber = CustomerNumber
-                    ' test: resumelayout of cmb service types
-                    Me.Cmb_ServiceTypes.ResumeLayout()
-                    row.ServiceTypeID = Cmb_ServiceTypes.SelectedValue
-                    row.RecurringServiceRate = Cmb_ServiceTypes.SelectedServiceRate
+                    row.ServiceTypeID = cmb_ServiceTypes.SelectedValue
+                    row.RecurringServiceRate = DirectCast(cmb_ServiceTypes.SelectedItem, ds_Types.ServiceTypesRow).ServiceRate
                     row.RecurringServiceQuantity = 1
                     row.RecurringServiceStartDate = Date.Now
                     row.RecurringServiceBillLength = 1
@@ -174,7 +172,7 @@ Namespace RecurringService
                     row.Credited = False
 
                     ' add dummy row
-                    Me.Ds_RecurringService.RecurringService.AddRecurringServiceRow(row)
+                    Ds_RecurringService.RecurringService.AddRecurringServiceRow(row)
                     RecurringServiceRow = row
 
                     ' hide status text
@@ -192,20 +190,15 @@ Namespace RecurringService
         End Property
 
         ' event for approval
-        Friend Event e_Approved()
+        Friend Event ServiceApproved()
 
         ' bool property for service approval
-        Private _approved As Boolean = False
-        Private Property Approved As Boolean
-            Get
-                Return _approved
-            End Get
+        Private WriteOnly Property Approved As Boolean
             Set(value As Boolean)
-                _approved = value
                 If (value = False) Then
                     btn_Approve.Visible = True
                     ' update status text
-                    StatusText = "This Recurring Service has not been Approved for InvoicingForm. You can still change anything related to this service."
+                    StatusText = "This Recurring Service has not been Approved for Invoicing. You can still change anything related to this service."
                 Else
                     btn_Approve.Visible = False
                 End If
@@ -213,14 +206,9 @@ Namespace RecurringService
         End Property
 
         ' bool property for whether or not service has been invoiced
-        Private _invoiced As Boolean = False
         Private _billThruDate As Date = Nothing
-        Private Property Invoiced As Boolean
-            Get
-                Return _invoiced
-            End Get
+        Private WriteOnly Property Invoiced As Boolean
             Set(value As Boolean)
-                _invoiced = value
 
                 ' if true, lock controls and display billed thru
                 If (value = True) Then
@@ -277,18 +265,18 @@ Namespace RecurringService
             End Set
         End Property
         ' home form ref var
-        Private HomeForm As TrashCashHome
+        Private ReadOnly _homeForm As TrashCashHome
 
-        Private Sub CreditOverlapCheck(ByVal newDate As Date)
+        Private Sub CreditOverlapCheck()
             Dim s As String = Nothing
 
             ' making sure we have rows first
-            If (dv_EndDateOverlap.Count > 0) Then
+            If (_dvEndDateOverlap.Count > 0) Then
                 ' keeping track of total and count
                 Dim voidTotal As Double = 0.0
                 Dim c As Integer = 0
 
-                For Each row As ds_RecurringService.RecurringService_CreditsRow In dv_EndDateOverlap.Table.Rows
+                For Each row As ds_RecurringService.RecurringService_CreditsRow In _dvEndDateOverlap.Table.Rows
                     voidTotal = voidTotal + row.CreditAmount
                     c = c + 1
                 Next
@@ -322,13 +310,13 @@ Namespace RecurringService
         End Sub
 
         ' form bool vars to track whats been updated so parent form can refresh where needed
-        Private _BalanceChanged As Boolean = False
-        Friend Event RefreshBalance(ByVal CustomerNumber As Integer)
-        Private _ServiceUpdated As Boolean = False
-        Friend Event RefreshService(ByVal CustomerNumber As Integer, ByVal RecurringServiceID As Integer)
+        Private _balanceChanged As Boolean = False
+        Friend Event RefreshBalance(ByVal uCustomerNumber As Integer)
+        Private _serviceUpdated As Boolean = False
+        Friend Event RefreshService(ByVal uCustomerNumber As Integer, ByVal uRecurringServiceID As Integer)
 
 
-        Public Sub New(ByVal _HomeForm As TrashCashHome, ByVal _CustomerName As String, ByVal _CustomerNumber As Integer, Optional ByVal _RecurringServiceID As Integer = 0)
+        Public Sub New(ByVal homeForm As TrashCashHome, ByVal customerName As String, ByVal customerNumber As Integer, Optional ByVal recurringServiceID As Integer = 0)
 
             ' This call is required by the designer.
             InitializeComponent()
@@ -336,13 +324,13 @@ Namespace RecurringService
             ' Add any initialization after the InitializeComponent() call.
 
             ' property refs
-            HomeForm = _HomeForm
-            CustomerNumber = _CustomerNumber
-            RecurringServiceID = _RecurringServiceID
-            CustomerName = _CustomerName
+            _homeForm = homeForm
+            Me.CustomerNumber = customerNumber
+            Me.RecurringServiceID = RecurringServiceID
+            Me.CustomerName = customerName
 
             ' creating dv for credit overlap checking
-            dv_EndDateOverlap = New DataView(Me.Ds_RecurringService.RecurringService_Credits, "Voided = 0", "", DataViewRowState.CurrentRows)
+            _dvEndDateOverlap = New DataView(Ds_RecurringService.RecurringService_Credits, "Voided = 0", "", DataViewRowState.CurrentRows)
         End Sub
 
         Private Sub ck_EndDate_Click(sender As System.Object, e As System.EventArgs) Handles ck_EndDate.Click
@@ -369,7 +357,7 @@ Namespace RecurringService
         End Sub
 
         Private Sub btn_Save_Click(sender As System.Object, e As System.EventArgs) Handles btn_Save.Click
-            If (TBsValidated()) Then
+            If (VaidForEntry()) Then
 
                 ' bool to keep ack of needing to void old enddate credit
                 Dim voidOldCreditReason As String = Nothing
@@ -382,15 +370,15 @@ Namespace RecurringService
                     If (dtp_EndDate.Value.Date > RecurringServiceRow.RecurringServiceStartDate) Then
 
                         ' first checking if something needs to be voided
-                        If (dv_EndDateOverlap.Count > 0) Then
-                            Dim overlapPrompt As DialogResult = MessageBox.Show("Keeping this End Date will Void " & dv_EndDateOverlap.Count & " Credit(s) for a total of " &
-                                                                                FormatCurrency(dv_EndDateOverlap.Table.Compute("SUM(CreditAmount)", "")) &
-                                                                                ". Do you wish to keep this End Date?", "Void " & dv_EndDateOverlap.Count & " Credit(s)",
+                        If (_dvEndDateOverlap.Count > 0) Then
+                            Dim overlapPrompt As DialogResult = MessageBox.Show("Keeping this End Date will Void " & _dvEndDateOverlap.Count & " Credit(s) for a total of " &
+                                                                                FormatCurrency(_dvEndDateOverlap.Table.Compute("SUM(CreditAmount)", "")) &
+                                                                                ". Do you wish to keep this End Date?", "Void " & _dvEndDateOverlap.Count & " Credit(s)",
                                                                                 MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation)
 
                             If (overlapPrompt = Windows.Forms.DialogResult.Yes) Then
                                 ' void all credits in table
-                                For Each row As ds_RecurringService.RecurringService_CreditsRow In dv_EndDateOverlap.Table.Rows
+                                For Each row As ds_RecurringService.RecurringService_CreditsRow In _dvEndDateOverlap.Table.Rows
                                     RecurringService_Credit_Void(row, "Credit for Date overlaped with End Date. New End Date: " & dtp_EndDate.Value.Date & " | Billed Through: " & _billThruDate.Date)
                                 Next
                             Else
@@ -453,18 +441,18 @@ Namespace RecurringService
                 If (voidOldCreditReason IsNot Nothing) Then
                     If (EndDateCreditRow.Voided = False) Then
                         RecurringService_EndDateCredit_Void(EndDateCreditRow, voidOldCreditReason)
-                        _BalanceChanged = True
+                        _balanceChanged = True
                     End If
                 End If
 
                 ' checking if new credit needs to be issued
                 If (creditResult = Windows.Forms.DialogResult.Yes) Then
                     ' getting service item listid
-                    Dim srvcRow As ds_Types.ServiceTypesRow = CType(Cmb_ServiceTypes.SelectedItem, ds_Types.ServiceTypesRow)
+                    Dim srvcRow As ds_Types.ServiceTypesRow = CType(cmb_ServiceTypes.SelectedItem, ds_Types.ServiceTypesRow)
                     RecurringService_EndDateCredit(RecurringServiceRow, srvcRow.ServiceListID, Crediting, dtp_EndDate.Value.Date, _billThruDate)
                     ' setting balance change
-                    _BalanceChanged = True
-                    _ServiceUpdated = True
+                    _balanceChanged = True
+                    _serviceUpdated = True
                 Else
                     RecurringServiceRow.SetRecurringServiceEndDateNull()
                 End If
@@ -473,31 +461,29 @@ Namespace RecurringService
 
                 ' checking if anything changed
                 If (RecurringServiceRow.RowState <> DataRowState.Unchanged) Then
-                    _ServiceUpdated = True
+                    _serviceUpdated = True
                 End If
 
                 ' testing submit
                 Try
-                    Me.Cursor = Cursors.WaitCursor
+                    Cursor = Cursors.WaitCursor
                     RsTA.Update(RecurringServiceRow)
 
                     ' checking if service is new to refresh pending approval count on home form
                     If (IsNew) Then
-                        HomeForm.RefreshApprovCount()
+                        _homeForm.RefreshApprovCount()
                     End If
                 Catch ex As Exception
                     MessageBox.Show("Error updating Recurring Service row: " & ex.Message, "Sql Update RecurringServiceRow Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
                 End Try
 
-                Me.Cursor = Cursors.Default
-                Me.Close()
+                Cursor = Cursors.Default
+                Close()
             End If
 
         End Sub
-
-       
-        ' validation sub
-        Private Function TBsValidated() As Boolean
+        
+        Private Function VaidForEntry() As Boolean
             ' return var
             Dim validated As Boolean = True
 
@@ -543,14 +529,7 @@ Namespace RecurringService
             End If
 
             ' pickup day
-            Dim c As Integer = 0
-            For Each control As Control In grp_PickupDay.Controls
-                If (TypeOf control Is CheckBox) Then
-                    If (CType(control, CheckBox).Checked = True) Then
-                        c += 1
-                    End If
-                End If
-            Next
+            Dim c As Integer = grp_PickupDay.Controls.OfType (Of CheckBox)().Count(Function(control) (control.Checked = True))
 
             If (c = 0) Then
                 validated = False
@@ -576,25 +555,25 @@ Namespace RecurringService
 
                 ' updating addr tbs
                 ' checking for null values for addr2-4
-                If (custRow.IsCustomerBillingAddr2Null = False) Then
+                If (_custRow.IsCustomerBillingAddr2Null = False) Then
                     ' tb_SrvcAddr1.Text = custRow.CustomerBillingAddr1
-                    RecurringServiceRow.RecurringServiceAddr1 = custRow.CustomerBillingAddr2
+                    RecurringServiceRow.RecurringServiceAddr1 = _custRow.CustomerBillingAddr2
                 End If
-                If (custRow.IsCustomerBillingAddr3Null = False) Then
+                If (_custRow.IsCustomerBillingAddr3Null = False) Then
                     'tb_SrvcAddr2.Text = custRow.CustomerBillingAddr2
-                    RecurringServiceRow.RecurringServiceAddr2 = custRow.CustomerBillingAddr3
+                    RecurringServiceRow.RecurringServiceAddr2 = _custRow.CustomerBillingAddr3
                 End If
-                If (custRow.IsCustomerBillingAddr4Null = False) Then
+                If (_custRow.IsCustomerBillingAddr4Null = False) Then
                     'tb_SrvcAddr3.Text = custRow.CustomerBillingAddr3
-                    RecurringServiceRow.RecurringServiceAddr3 = custRow.CustomerBillingAddr4
+                    RecurringServiceRow.RecurringServiceAddr3 = _custRow.CustomerBillingAddr4
                 End If
 
                 'tb_SrvcCity.Text = custRow.CustomerBillingCity
-                RecurringServiceRow.RecurringServiceCity = custRow.CustomerBillingCity
+                RecurringServiceRow.RecurringServiceCity = _custRow.CustomerBillingCity
                 'tb_SrvcState.Text = custRow.CustomerBillingState
-                RecurringServiceRow.RecurringServiceState = custRow.CustomerBillingState
+                RecurringServiceRow.RecurringServiceState = _custRow.CustomerBillingState
                 'tb_SrvcZip.Text = custRow.CustomerBillingZip
-                RecurringServiceRow.RecurringServiceZip = custRow.CustomerBillingZip
+                RecurringServiceRow.RecurringServiceZip = _custRow.CustomerBillingZip
 
                 ' refresh binding source to tbs have new text
                 RecurringServiceBindingSource.ResetCurrentItem()
@@ -606,26 +585,15 @@ Namespace RecurringService
             ' update recid outside property
             _recID = RecurringServiceRow.RecurringServiceID
             ' checking for updates so can throw events
-            If (_BalanceChanged = True) Then
+            If (_balanceChanged = True) Then
                 RaiseEvent RefreshBalance(CustomerNumber)
             End If
-            If (_ServiceUpdated = True) Then
+            If (_serviceUpdated = True) Then
                 RaiseEvent RefreshService(CustomerNumber, RecurringServiceID)
             End If
         End Sub
 
-        Private Sub Cmb_ServiceTypes_ServiceChanged(ServiceID As System.Int32, Rate As System.Double, BillLength As System.Int32) Handles Cmb_ServiceTypes.ServiceChanged
-            ' update default price lbl
-            lbl_DefPriceValue.Text = FormatCurrency(Rate)
-            ' adjust rate box to default
-            tb_Rate.Text = CDec(Rate)
-            ' update bill length
-            RecurringServiceRow.RecurringServiceBillLength = BillLength
-            ' update row service id
-            RecurringServiceRow.ServiceTypeID = ServiceID
-            ' also going to reset quantity to 1
-            RecurringServiceRow.RecurringServiceQuantity = 1
-        End Sub
+      
 
         Private Sub btn_Approve_Click(sender As System.Object, e As System.EventArgs) Handles btn_Approve.Click
             Dim result As DialogResult = MessageBox.Show("Confirm the following details are accurate to Approve this Recurring Service for billing:" & vbCrLf & vbCrLf & _
@@ -643,7 +611,7 @@ Namespace RecurringService
                                     "Sql Error: " & ex.Procedure, MessageBoxButtons.OK, MessageBoxIcon.Error)
                 End Try
                 ' raise approval event so approval form can refresh
-                RaiseEvent e_Approved()
+                RaiseEvent ServiceApproved()
                 _ServiceUpdated = True
                 Close()
             End If
@@ -653,7 +621,7 @@ Namespace RecurringService
         Private Sub dtp_EndDate_ValueChanged(sender As System.Object, e As System.EventArgs) Handles dtp_EndDate.ValueChanged
             If (ck_EndDate.Checked = True) Then
                 ' checking if this will overlap with a credit
-                dv_RowFilter = dtp_EndDate.Value.Date
+                DvRowFilter = dtp_EndDate.Value.Date
 
                 ' checking if service bill thru date is greater than the new end date
                 If (_billThruDate > dtp_EndDate.Value.Date) Then
@@ -677,12 +645,14 @@ Namespace RecurringService
         End Sub
 
         Private Sub RecurringService_Load(sender As Object, e As System.EventArgs) Handles Me.Load
+            ' fill service table
+            ServiceTypesTableAdapter.Fill(Ds_Types.ServiceTypes)
             'going to reset service id based on cmb selected value since trying to get selected value on new returns -1
-            RecurringServiceRow.ServiceTypeID = Cmb_ServiceTypes.SelectedValue
+            'RecurringServiceRow.ServiceTypeID = Cmb_ServiceTypes.SelectedValue
             ' throwing message if customer is single inv
-            If (custRow.CustomerReceiveOneInvoice = True) Then
-                MessageBox.Show("This Customer is marked to receive 1 invoice. All Recurring Services for this Customer will go onto a single invoice, with a due day date of " & DatePart(DateInterval.Day, custRow.CustomerStartDate) & ", " & vbCrLf & _
-                                "and they will be billed every " & custRow.CustomerBillInterval & " month(s) - REGARDLESS of the Bill Length set for their Recurring Services.", "Single Invoice Customer", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
+            If (_custRow.CustomerReceiveOneInvoice = True) Then
+                MessageBox.Show("This Customer is marked to receive 1 invoice. All Recurring Services for this Customer will go onto a single invoice, with a due day date of " & DatePart(DateInterval.Day, _custRow.CustomerStartDate) & ", " & vbCrLf & _
+                                "and they will be billed every " & _custRow.CustomerBillInterval & " month(s) - REGARDLESS of the Bill Length set for their Recurring Services.", "Single Invoice Customer", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
             End If
         End Sub
 
@@ -789,11 +759,11 @@ Namespace RecurringService
 
                     If (row.Voided) Then
                         ' credit is voided
-                        dg_CreditHistory.Rows(i).DefaultCellStyle.BackColor = Color.Red
-                        dg_CreditHistory.Rows(i).DefaultCellStyle.SelectionBackColor = Color.IndianRed
+                        dg_CreditHistory.Rows(i).DefaultCellStyle.BackColor = AppColors.GridRed
+                        dg_CreditHistory.Rows(i).DefaultCellStyle.SelectionBackColor = AppColors.GridRedSel
                     Else
-                        dg_CreditHistory.Rows(i).DefaultCellStyle.BackColor = Color.SpringGreen
-                        dg_CreditHistory.Rows(i).DefaultCellStyle.SelectionBackColor = Color.MediumSeaGreen
+                        dg_CreditHistory.Rows(i).DefaultCellStyle.BackColor = AppColors.GridGreen
+                        dg_CreditHistory.Rows(i).DefaultCellStyle.SelectionBackColor = AppColors.GridGreenSel
                     End If
                 Next
             End If
@@ -815,6 +785,19 @@ Namespace RecurringService
                 Next
                 dg_CreditHistory.Rows(e.RowIndex).Selected = True
             End If
+        End Sub
+
+        Private Sub cmb_ServiceTypes_SelectionChangeCommitted(sender As System.Object, e As System.EventArgs) Handles cmb_ServiceTypes.SelectionChangeCommitted
+            ' getting row
+            Dim row As ds_Types.ServiceTypesRow = DirectCast(cmb_ServiceTypes.SelectedItem, ds_Types.ServiceTypesRow)
+            ' update default price lbl
+            lbl_DefPriceValue.Text = FormatCurrency(row.ServiceRate)
+            ' adjust rate box to default
+            tb_Rate.Text = CDec(row.ServiceRate)
+            ' update bill length
+            RecurringServiceRow.RecurringServiceBillLength = row.ServiceBillLength
+            ' also going to reset quantity to 1
+            RecurringServiceRow.RecurringServiceQuantity = 1
         End Sub
     End Class
 End Namespace

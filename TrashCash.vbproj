@@ -214,7 +214,6 @@
     <Compile Include="AppModule.vb" />
     <Compile Include="QBStuff\QBObjects.vb" />
     <Compile Include="Reports\Reporting.vb" />
-    <Compile Include="Classes\Utilities.vb" />
     <Compile Include="Batching\QB_Batching.vb" />
     <Compile Include="Connection.Designer.vb">
       <DependentUpon>Connection.vb</DependentUpon>
@@ -300,10 +299,10 @@
     <Compile Include="Reports\f_DaysEvents.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Reports\f_PaymentsReceived.Designer.vb">
-      <DependentUpon>f_PaymentsReceived.vb</DependentUpon>
+    <Compile Include="Reports\Report_PaymentsReceived.Designer.vb">
+      <DependentUpon>Report_PaymentsReceived.vb</DependentUpon>
     </Compile>
-    <Compile Include="Reports\f_PaymentsReceived.vb">
+    <Compile Include="Reports\Report_PaymentsReceived.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Reports\f_UnderOverEven.Designer.vb">
@@ -359,12 +358,6 @@
       <DependentUpon>UC_CustomerInfoBoxes.vb</DependentUpon>
     </Compile>
     <Compile Include="Customer\UC_CustomerInfoBoxes.vb">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Payments\UC_PaymentDetails.Designer.vb">
-      <DependentUpon>UC_PaymentDetails.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Payments\UC_PaymentDetails.vb">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="QBStuff\UC_Quickbooks.Designer.vb">
@@ -541,8 +534,8 @@
     <EmbeddedResource Include="Reports\f_DaysEvents.resx">
       <DependentUpon>f_DaysEvents.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Reports\f_PaymentsReceived.resx">
-      <DependentUpon>f_PaymentsReceived.vb</DependentUpon>
+    <EmbeddedResource Include="Reports\Report_PaymentsReceived.resx">
+      <DependentUpon>Report_PaymentsReceived.vb</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Reports\f_UnderOverEven.resx">
@@ -572,10 +565,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Customer\UC_CustomerInfoBoxes.resx">
       <DependentUpon>UC_CustomerInfoBoxes.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Payments\UC_PaymentDetails.resx">
-      <DependentUpon>UC_PaymentDetails.vb</DependentUpon>
-      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="QBStuff\UC_Quickbooks.resx">
       <DependentUpon>UC_Quickbooks.vb</DependentUpon>
@@ -807,7 +796,7 @@
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties BuildVersion_StartDate="2014/3/2" BuildVersion_BuildVersioningStyle="None.None.None.Increment" BuildVersion_UpdateFileVersion="True" BuildVersion_UpdateAssemblyVersion="True" BuildVersion_AssemblyInfoFilename="My Project\AssemblyInfo.vb" />
+      <UserProperties BuildVersion_AssemblyInfoFilename="My Project\AssemblyInfo.vb" BuildVersion_UpdateAssemblyVersion="True" BuildVersion_UpdateFileVersion="True" BuildVersion_BuildVersioningStyle="None.None.None.Increment" BuildVersion_StartDate="2014/3/2" />
     </VisualStudio>
   </ProjectExtensions>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

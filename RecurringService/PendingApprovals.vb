@@ -136,7 +136,7 @@ Public Class PendingApprovals
     End Sub
 
     ' handling approval
-    Friend Sub RefreshApprovalList() Handles _RecurringServiceForm.e_Approved
+    Friend Sub RefreshApprovalList() Handles _RecurringServiceForm.ServiceApproved
         Me.RecurringService_PendingApprovalsTableAdapter.Fill(Me.Ds_RecurringService.RecurringService_PendingApprovals)
         ' reset counts lbl
         UnapprovedCount = Me.Ds_RecurringService.RecurringService_PendingApprovals.Rows.Count

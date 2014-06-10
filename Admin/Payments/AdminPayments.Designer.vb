@@ -1,6 +1,6 @@
-﻿Imports TrashCash.Classes
+﻿
 
-Namespace Admin
+Namespace Admin.Payments
     <Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
     Partial Class AdminPayments
         Inherits System.Windows.Forms.Form
@@ -28,9 +28,9 @@ Namespace Admin
             Me.components = New System.ComponentModel.Container()
             Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
             Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-            Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(AdminPayments))
             Me.pnl_Top = New System.Windows.Forms.Panel()
             Me.pnl_TopContent = New System.Windows.Forms.Panel()
+            Me.CustomerToolstrip1 = New TrashCash.Classes.CustomerToolstrip.CustomerToolstrip()
             Me.dg_PaymentHistory = New System.Windows.Forms.DataGridView()
             Me.PaymentTypeNameDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
             Me.RefNumberDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
@@ -50,7 +50,7 @@ Namespace Admin
             Me.dtp_StartDate = New System.Windows.Forms.DateTimePicker()
             Me.lbl_DateFilter = New System.Windows.Forms.Label()
             Me.PaymentHistory_DisplayTableAdapter = New TrashCash.ds_PaymentsTableAdapters.PaymentHistory_DisplayTableAdapter()
-            Me.CustomerToolstrip1 = New TrashCash.Classes.CustomerToolstrip.CustomerToolstrip()
+            Me.cmb_PayTypes = New System.Windows.Forms.ComboBox()
             Me.pnl_Top.SuspendLayout()
             Me.pnl_TopContent.SuspendLayout()
             CType(Me.dg_PaymentHistory, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -79,6 +79,16 @@ Namespace Admin
             Me.pnl_TopContent.Name = "pnl_TopContent"
             Me.pnl_TopContent.Size = New System.Drawing.Size(829, 33)
             Me.pnl_TopContent.TabIndex = 14
+            '
+            'CustomerToolstrip1
+            '
+            Me.CustomerToolstrip1.Dock = System.Windows.Forms.DockStyle.Fill
+            Me.CustomerToolstrip1.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden
+            Me.CustomerToolstrip1.Location = New System.Drawing.Point(0, 0)
+            Me.CustomerToolstrip1.Name = "CustomerToolstrip1"
+            Me.CustomerToolstrip1.Size = New System.Drawing.Size(827, 31)
+            Me.CustomerToolstrip1.TabIndex = 0
+            Me.CustomerToolstrip1.Text = "CustomerToolstrip1"
             '
             'dg_PaymentHistory
             '
@@ -169,6 +179,7 @@ Namespace Admin
             '
             'pnl_Filter
             '
+            Me.pnl_Filter.Controls.Add(Me.cmb_PayTypes)
             Me.pnl_Filter.Controls.Add(Me.ck_All)
             Me.pnl_Filter.Controls.Add(Me.Label2)
             Me.pnl_Filter.Controls.Add(Me.dtp_EndDate)
@@ -181,7 +192,7 @@ Namespace Admin
             Me.pnl_Filter.Size = New System.Drawing.Size(869, 64)
             Me.pnl_Filter.TabIndex = 17
             '
-         'ck_All
+            'ck_All
             '
             Me.ck_All.AutoSize = True
             Me.ck_All.Location = New System.Drawing.Point(513, 31)
@@ -236,15 +247,13 @@ Namespace Admin
             '
             Me.PaymentHistory_DisplayTableAdapter.ClearBeforeFill = True
             '
-            'CustomerToolstrip1
+            'cmb_PayTypes
             '
-            Me.CustomerToolstrip1.Dock = System.Windows.Forms.DockStyle.Fill
-            Me.CustomerToolstrip1.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden
-            Me.CustomerToolstrip1.Location = New System.Drawing.Point(0, 0)
-            Me.CustomerToolstrip1.Name = "CustomerToolstrip1"
-            Me.CustomerToolstrip1.Size = New System.Drawing.Size(827, 31)
-            Me.CustomerToolstrip1.TabIndex = 0
-            Me.CustomerToolstrip1.Text = "CustomerToolstrip1"
+            Me.cmb_PayTypes.FormattingEnabled = True
+            Me.cmb_PayTypes.Location = New System.Drawing.Point(386, 27)
+            Me.cmb_PayTypes.Name = "cmb_PayTypes"
+            Me.cmb_PayTypes.Size = New System.Drawing.Size(121, 21)
+            Me.cmb_PayTypes.TabIndex = 10
             '
             'AdminPayments
             '
@@ -293,6 +302,7 @@ Namespace Admin
         Friend WithEvents PaymentHistoryDisplayBindingSource As System.Windows.Forms.BindingSource
         Friend WithEvents Ds_Payments As TrashCash.ds_Payments
         Friend WithEvents PaymentHistory_DisplayTableAdapter As TrashCash.ds_PaymentsTableAdapters.PaymentHistory_DisplayTableAdapter
- Friend WithEvents CustomerToolstrip1 As TrashCash.Classes.CustomerToolstrip.CustomerToolstrip
+        Friend WithEvents CustomerToolstrip1 As TrashCash.Classes.CustomerToolstrip.CustomerToolstrip
+        Friend WithEvents cmb_PayTypes As System.Windows.Forms.ComboBox
     End Class
 End Namespace

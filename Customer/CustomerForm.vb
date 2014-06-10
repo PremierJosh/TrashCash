@@ -108,7 +108,7 @@ Namespace Customer
 
 
         Private Sub btn_Payments_Click(sender As System.Object, e As System.EventArgs) Handles btn_Payments.Click
-            _payForm = New PaymentsForm(_home, customerNumber:=CurrentCustomer)
+            _payForm = New PaymentsForm(CBool(AppQTA.APP_GetDebugMode), customerNumber:=CurrentCustomer)
             ' when opened from customer screen, showdialog
             _payForm.ShowDialog()
         End Sub

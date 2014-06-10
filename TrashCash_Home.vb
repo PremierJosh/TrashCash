@@ -1,4 +1,5 @@
 ﻿Imports System.Windows.Forms
+Imports TrashCash.Reports
 Imports TrashCash.Payments
 Imports TrashCash.Batching
 Imports TrashCash.Customer
@@ -152,7 +153,7 @@ Public Class TrashCashHome
         End If
 
         If (needNew) Then
-            PayForm = New PaymentsForm(Me)
+            PayForm = New PaymentsForm(CBool(AppQTA.APP_GetDebugMode))
             PayForm.MdiParent = Me
         End If
 
@@ -296,7 +297,7 @@ Public Class TrashCashHome
     End Sub
 
     Private Sub btn_Rpt_PayReceived_Click(sender As Object, e As EventArgs) Handles btn_Rpt_PayReceived.Click
-        Dim rf As New f_PaymentsReceived
+        Dim rf As New Report_PaymentsReceived
         rf.Show()
     End Sub
 

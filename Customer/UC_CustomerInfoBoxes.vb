@@ -1,6 +1,5 @@
 ﻿Imports QBFC12Lib
 Imports TrashCash.QBStuff
-Imports TrashCash.Classes
 
 Namespace Customer
 
@@ -243,10 +242,19 @@ Namespace Customer
             End If
         End Sub
         ' public sub to disable updating for other forms
-        Public Sub AllowUpdate(ByVal bool As Boolean)
-            cm_Update.Enabled = bool
-            cm_Update.Visible = bool
-        End Sub
+        Private _allowUpdate As Boolean
+        Public Property AllowUpdate As Boolean
+            Get
+                Return _allowUpdate
+            End Get
+            Set(value As Boolean)
+                _allowUpdate = value
+                ' set visibility of context menu buttons
+                cm_Update.Enabled = value
+                cm_Update.Visible = value
+            End Set
+        End Property
+    
         Private Sub btn_UpdateUnlock_Click(sender As System.Object, e As System.EventArgs) Handles btn_UpdateInfo.Click
             If (Not _batchInProgress) Then
                 IsUpdating = True
@@ -278,7 +286,7 @@ Namespace Customer
                 Customer_Update()
             End If
         End Sub
-        
+
         Private Sub ck_SingleInv_Click(sender As System.Object, e As System.EventArgs) Handles ck_SingleInv.Click
             If (ck_SingleInv.Checked = True) Then
                 Dim result As MsgBoxResult = MsgBox("Marking this Customer as Single Invoice will cause all Recurring Services to bill within that Customers bill interval - no matter the service." & vbCrLf & _

@@ -95,7 +95,7 @@ Public Class TrashCash_Admin
             End If
 
             If (open) Then
-                f_AdminPay = New AdminPayments(HomeForm)
+                f_AdminPay = New AdminPayments()
                 f_AdminPay.MdiParent = Me
                 f_AdminPay.Show()
             End If

@@ -1,10 +1,5 @@
-﻿Imports TrashCash.Admin.Payments
-
-Namespace Admin
-
+﻿Namespace Admin.Payments
     Public Class AdminPayments
-        ' home form ref var
-        Private _home As TrashCashHome
 
         ' move payment form ref
         Friend WithEvents MovePaymentForm As MovePaymentForm
@@ -13,11 +8,11 @@ Namespace Admin
         Private _currentCustomer As Integer
         Public Property CurrentCustomer As Integer
             Get
-                Return _CurrentCustomer
+                Return _currentCustomer
             End Get
             Set(value As Integer)
-                If (_CurrentCustomer <> value) Then
-                    _CurrentCustomer = value
+                If (_currentCustomer <> value) Then
+                    _currentCustomer = value
                     Fetch_History()
                 End If
             End Set
@@ -26,10 +21,10 @@ Namespace Admin
         Private _paymentType As Integer
         Public Property PaymentType
             Get
-                Return _PaymentType
+                Return _paymentType
             End Get
             Set(value)
-                _PaymentType = value
+                _paymentType = value
 
                 ' set dv filter
                 If (value <> 0) Then
@@ -52,14 +47,14 @@ Namespace Admin
         Private Sub ck_All_Click(sender As System.Object, e As System.EventArgs) Handles ck_All.Click
             If (ck_All.Checked = True) Then
                 ' disable payment types combo box
-                Cmb_PaymentTypes.Enabled = False
+                cmb_PayTypes.Enabled = False
                 ' reset payment type
                 PaymentType = 0
             Else
                 ' enable payment types combo box
-                Cmb_PaymentTypes.Enabled = True
+                cmb_PayTypes.Enabled = True
                 ' reset paymenttype
-                PaymentType = Cmb_PaymentTypes.SelectedValue
+                PaymentType = cmb_PayTypes.SelectedValue
             End If
         End Sub
 
@@ -75,7 +70,7 @@ Namespace Admin
             dtp_EndDate.Value = DateAdd(DateInterval.Month, 1, Date.Today)
 
             ' set payment type
-            PaymentType = Cmb_PaymentTypes.SelectedValue
+            PaymentType = cmb_PayTypes.SelectedValue
 
             ' setting initial customer to screen isnt blank
             CurrentCustomer = CustomerToolstrip1.CurrentCustomer
@@ -104,8 +99,8 @@ Namespace Admin
                 Dim row As DataRowView = grid.Rows(i).DataBoundItem
                 ' checking if bounced
                 If (CBool(row.Item("Bounced")) = True) Then
-                    grid.Rows(i).DefaultCellStyle.BackColor = Color.Red
-                    grid.Rows(i).DefaultCellStyle.SelectionBackColor = Color.Red
+                    grid.Rows(i).DefaultCellStyle.BackColor = AppColors.GridRed
+                    grid.Rows(i).DefaultCellStyle.SelectionBackColor = AppColors.GridRedSel
                 End If
             Next
         End Sub
@@ -113,9 +108,7 @@ Namespace Admin
         Private Sub cm_i_BouncedCheck_Click(sender As System.Object, e As System.EventArgs) Handles cm_i_BounceCheck.Click
             If (dg_PaymentHistory.SelectedRows.Count = 1) Then
                 ' easier refrence
-                Dim dvRow As DataRowView = dg_PaymentHistory.SelectedRows(0).DataBoundItem
-                Dim row As ds_Payments.PaymentHistory_DisplayRow = dvRow.Row
-
+                Dim row As ds_Payments.PaymentHistory_DisplayRow = CType(dg_PaymentHistory.SelectedRows(0).DataBoundItem, DataRowView).Row
                 If (row.PaymentTypeID = 2) Then
                     If (Not row.Bounced) Then
                         Dim bounceForm As New BouncedBankSelection(row.PaymentID)
@@ -132,30 +125,18 @@ Namespace Admin
             End If
         End Sub
 
-        Private Sub Cmb_PaymentTypes_SelectionChangeCommitted(sender As Database_ComboBoxes.cmb_PaymentTypes, e As System.EventArgs) Handles Cmb_PaymentTypes.SelectionChangeCommitted
+        Private Sub Cmb_PaymentTypes_SelectionChangeCommitted(sender As System.Object, e As System.EventArgs) Handles cmb_PayTypes.SelectionChangeCommitted
             If (PaymentType <> sender.SelectedValue) Then
                 PaymentType = sender.SelectedValue
             End If
         End Sub
 
-        Public Sub New(ByRef homeForm As TrashCashHome)
-
-            ' This call is required by the designer.
-            InitializeComponent()
-
-            ' Add any initialization after the InitializeComponent() call.
-            _home = HomeForm
-        End Sub
-
         Private Sub cm_i_MovePayment_Click(sender As System.Object, e As System.EventArgs) Handles cm_i_MovePayment.Click
             If (dg_PaymentHistory.SelectedRows.Count = 1) Then
                 ' easier refrence
-                Dim dvRow As DataRowView = dg_PaymentHistory.SelectedRows(0).DataBoundItem
-                Dim row As ds_Payments.PaymentHistory_DisplayRow = dvRow.Row
-
+              Dim row As ds_Payments.PaymentHistory_DisplayRow = CType(dg_PaymentHistory.SelectedRows(0).DataBoundItem, DataRowView).Row
                 ' result ref
                 Dim result As DialogResult
-
                 If (Not row.Bounced) Then
                     ' check if payment crosses year boundaries
                     If (row.DateReceived.Year = Date.Now.Year) Then
