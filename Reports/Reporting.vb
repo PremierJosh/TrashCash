@@ -1,11 +1,11 @@
 ﻿Imports QBFC12Lib
 
-Namespace Classes
+Namespace Reports
 
     Public Class Reporting
         ' ds is refrenced easier here
-        Protected DS As Report_DataSet
-        Protected Qta As Report_DataSetTableAdapters.QueriesTableAdapter
+        Protected DS As DS_Reports
+        Protected Qta As QueriesTableAdapter
 
         Protected MsgSetReq As IMsgSetRequest
         Protected SessMgr As QBSessionManager
@@ -13,19 +13,19 @@ Namespace Classes
         Public Sub New(ByRef sessionManager As QBSessionManager, ByRef msgSetRequest As IMsgSetRequest)
             ' setting sess mgr and msgsetreq
             SessMgr = sessionManager
-            MsgSetReq = MsgSetRequest
+            MsgSetReq = msgSetRequest
 
             ' init 
-            qta = New Report_DataSetTableAdapters.QueriesTableAdapter
+            Qta = New QueriesTableAdapter
         End Sub
 
-        Public Function Report_AllCustomerBalances(ByVal minDaysPastDue As Integer, ByRef includeInactive As Boolean) As Report_DataSet
+        Public Function Report_AllCustomerBalances(ByVal minDaysPastDue As Integer, ByRef includeInactive As Boolean) As DS_Reports
             ' clear
-            ds = New Report_DataSet
+            DS = New DS_Reports
             ' fill ds
-            GetAllCustomerBalances(MinDaysPastDue, includeInactive)
+            GetAllCustomerBalances(minDaysPastDue, includeInactive)
 
-            Return ds
+            Return DS
         End Function
         Private Sub GetAllCustomerBalances(ByVal minDaysPastDue As Integer, ByRef includeInactive As Boolean)
             Dim custQuery As ICustomerQuery = MsgSetReq.AppendCustomerQueryRq
@@ -72,7 +72,7 @@ Namespace Classes
                         Dim custRet As ICustomerRet = custRetList.GetAt(c)
 
                         ' create new row for cust balances
-                        Dim custRow As Report_DataSet.CustomerBalancesRow = ds.CustomerBalances.NewCustomerBalancesRow
+                        Dim custRow As DS_Reports.CustomerBalancesRow = DS.CustomerBalances.NewCustomerBalancesRow
                         custRow.CustomerName = custRet.FullName.GetValue
                         custRow.CustomerBalance = FormatCurrency(custRet.TotalBalance.GetValue)
                         custRow.ListID = custRet.ListID.GetValue
@@ -96,9 +96,9 @@ Namespace Classes
                         ' TODO: check if balance is > than 50% of running service rate(s)
                         'If (CBool(qta.Report_IsCustomerBalanceEnough(custRow.CustomerNumber, custRow.CustomerBalance)) = True) Then
                         ' add row to table
-                        ds.CustomerBalances.AddCustomerBalancesRow(custRow)
+                        DS.CustomerBalances.AddCustomerBalancesRow(custRow)
                         ' get invoices for customer
-                        QB_InvoiceQueryForReport(custRow, MinDaysPastDue)
+                        QB_InvoiceQueryForReport(custRow, minDaysPastDue)
                         'End If
 
                     Next c
@@ -108,7 +108,7 @@ Namespace Classes
             Next r
 
         End Sub
-        Private Sub QB_InvoiceQueryForReport(ByRef custRow As Report_DataSet.CustomerBalancesRow, ByVal minDaysPastDue As Integer)
+        Private Sub QB_InvoiceQueryForReport(ByRef custRow As DS_Reports.CustomerBalancesRow, ByVal minDaysPastDue As Integer)
             Dim invoiceQuery As IInvoiceQuery = MsgSetReq.AppendInvoiceQueryRq
 
             ' getting cust listid from row
@@ -132,7 +132,7 @@ Namespace Classes
                     For j = 0 To invoiceRetList.Count - 1
                         Dim invRet As IInvoiceRet = invoiceRetList.GetAt(j)
                         ' create row
-                        Dim invRow As Report_DataSet.InvoiceBalancesRow = ds.InvoiceBalances.NewInvoiceBalancesRow
+                        Dim invRow As DS_Reports.InvoiceBalancesRow = DS.InvoiceBalances.NewInvoiceBalancesRow
                         ' passing cust num here for relationship
                         invRow.CustomerListID = custRow.ListID
                         invRow.CustomerNumber = custRow.CustomerNumber
@@ -145,9 +145,9 @@ Namespace Classes
                         invRow.DaysPastDue = DateDiff(DateInterval.Day, invRet.DueDate.GetValue, Date.Now.Date)
 
                         ' checking if days are enough to add to ds
-                        If (invRow.DaysPastDue >= MinDaysPastDue) Then
+                        If (invRow.DaysPastDue >= minDaysPastDue) Then
                             ' add to table
-                            ds.InvoiceBalances.AddInvoiceBalancesRow(invRow)
+                            DS.InvoiceBalances.AddInvoiceBalancesRow(invRow)
                         End If
                     Next j
                 Else
@@ -156,9 +156,9 @@ Namespace Classes
             Next i
         End Sub
 
-        Public Function Report_UnderOverEven(ByRef includeInactive As Boolean) As Report_DataSet
+        Public Function Report_UnderOverEven(ByRef includeInactive As Boolean) As DS_Reports
             ' clear ds
-            ds = New Report_DataSet
+            DS = New DS_Reports
             ' fill ds
             Dim custQuery As ICustomerQuery = MsgSetReq.AppendCustomerQueryRq
 
@@ -202,7 +202,7 @@ Namespace Classes
                         Dim custRet As ICustomerRet = custRetList.GetAt(c)
 
                         ' create new row for cust balances
-                        Dim custRow As Report_DataSet.UnderOverEvenRow = ds.UnderOverEven.NewUnderOverEvenRow
+                        Dim custRow As DS_Reports.UnderOverEvenRow = DS.UnderOverEven.NewUnderOverEvenRow
                         custRow.CustomerFullName = custRet.FullName.GetValue
 
                         ' balance stuff
@@ -239,7 +239,7 @@ Namespace Classes
                         custRow.Zip = custRet.BillAddress.PostalCode.GetValue
 
                         ' add row to ds
-                        ds.UnderOverEven.AddUnderOverEvenRow(custRow)
+                        DS.UnderOverEven.AddUnderOverEvenRow(custRow)
 skip:
                     Next c
                 Else
@@ -247,7 +247,7 @@ skip:
                 End If
             Next r
 
-            Return ds
+            Return DS
         End Function
 
 

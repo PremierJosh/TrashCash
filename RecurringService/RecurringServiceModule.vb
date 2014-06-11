@@ -1,6 +1,7 @@
 ﻿
 Imports TrashCash.QBStuff
 Imports QBFC12Lib
+Imports TrashCash._DataSets
 
 Namespace RecurringService
     Friend Module RecurringServiceModule
@@ -10,38 +11,38 @@ Namespace RecurringService
         Friend RsCreditTA As New ds_RecurringServiceTableAdapters.RecurringService_CreditsTableAdapter
         Friend RsEndCreditTA As New ds_RecurringServiceTableAdapters.RecurringService_EndDateCreditsTableAdapter
        
-        Private Function GetUnpaidTable(ByVal customerListID As String) As ds_Display.QBUnpaidInvoicesDataTable
-            ' return table of open invoices and their info
-            Dim openInvDT As New ds_Display.QBUnpaidInvoicesDataTable
-
-            ' building retEleList so my query only returns stuff I need
-            Dim retEleList As New List(Of String)
-
-            ' only need a couple values back
-            retEleList.Add("TxnID")
-            retEleList.Add("TxnDate")
-            retEleList.Add("BalanceRemaining")
-
-            Dim resp As IResponse = QBRequests.InvoiceQuery(listID:=customerListID, paidStatus:=ENPaidStatus.psNotPaidOnly, retEleList:=retEleList)
-
-            ' status check
-            If (resp.StatusCode = 0) Then
-                Dim invRetList As IInvoiceRetList = resp.Detail
-
-                For l = 0 To invRetList.Count - 1
-                    Dim invRet As IInvoiceRet = invRetList.GetAt(l)
-
-                    ' adding to table
-                    openInvDT.AddQBUnpaidInvoicesRow(invRet.TxnID.GetValue, invRet.TxnDate.GetValue, invRet.BalanceRemaining.GetValue,
-                                                             invRet.BalanceRemaining.GetValue)
-                    openInvDT.AcceptChanges()
-                Next
-            ElseIf (resp.StatusCode <> 1) Then
-                QBMethods.ResponseErr_Misc(resp)
-            End If
-
-            Return openInvDT
-        End Function
+        '        Private Function GetUnpaidTable(ByVal customerListID As String) As ds_Display.QBUnpaidInvoicesDataTable
+        '            ' return table of open invoices and their info
+        '            Dim openInvDT As New ds_Display.QBUnpaidInvoicesDataTable
+        '
+        '            ' building retEleList so my query only returns stuff I need
+        '            Dim retEleList As New List(Of String)
+        '
+        '            ' only need a couple values back
+        '            retEleList.Add("TxnID")
+        '            retEleList.Add("TxnDate")
+        '            retEleList.Add("BalanceRemaining")
+        '
+        '            Dim resp As IResponse = QBRequests.InvoiceQuery(listID:=customerListID, paidStatus:=ENPaidStatus.psNotPaidOnly, retEleList:=retEleList)
+        '
+        '            ' status check
+        '            If (resp.StatusCode = 0) Then
+        '                Dim invRetList As IInvoiceRetList = resp.Detail
+        '
+        '                For l = 0 To invRetList.Count - 1
+        '                    Dim invRet As IInvoiceRet = invRetList.GetAt(l)
+        '
+        '                    ' adding to table
+        '                    openInvDT.AddQBUnpaidInvoicesRow(invRet.TxnID.GetValue, invRet.TxnDate.GetValue, invRet.BalanceRemaining.GetValue,
+        '                                                             invRet.BalanceRemaining.GetValue)
+        '                    openInvDT.AcceptChanges()
+        '                Next
+        '            ElseIf (resp.StatusCode <> 1) Then
+        '                QBMethods.ResponseErr_Misc(resp)
+        '            End If
+        '
+        '            Return openInvDT
+        '        End Function
 
         Friend Sub RecurringService_EndDateCredit(ByRef row As ds_RecurringService.RecurringServiceRow, ByVal itemListID As String, ByVal creditAmount As Double,
                                                   ByVal newEndDate As Date, ByVal billThruDate As Date)             'return credit

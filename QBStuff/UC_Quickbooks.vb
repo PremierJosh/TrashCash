@@ -1,5 +1,6 @@
-﻿Imports TrashCash.Classes
+﻿
 Imports QBFC12Lib
+Imports TrashCash._DataSets
 
 Namespace QBStuff
 
@@ -41,7 +42,7 @@ Namespace QBStuff
                     ' refrence
                     _currentCustomer = value
                     'clear dts
-                    Ds_Display.Clear()
+                    Display.Clear()
                 End If
             End Set
         End Property
@@ -69,7 +70,7 @@ Namespace QBStuff
                 For i = 0 To invRetList.Count - 1
                     Dim invRet As IInvoiceRet = invRetList.GetAt(i)
                     ' building new row
-                    Dim newRow As ds_Display.QB_InvoiceDisplayRow = Ds_Display.QB_InvoiceDisplay.NewQB_InvoiceDisplayRow
+                    Dim newRow As ds_Display.QB_InvoiceDisplayRow = Display.QB_InvoiceDisplay.NewQB_InvoiceDisplayRow
                     With newRow
                         .InvoiceNumber = invRet.RefNumber.GetValue
                         .InvoicePostDate = invRet.TxnDate.GetValue.Date
@@ -80,7 +81,7 @@ Namespace QBStuff
                         .InvoiceDueDate = invRet.DueDate.GetValue.Date
                     End With
                     ' adding
-                    Ds_Display.QB_InvoiceDisplay.AddQB_InvoiceDisplayRow(newRow)
+                    Display.QB_InvoiceDisplay.AddQB_InvoiceDisplayRow(newRow)
                 Next i
             ElseIf (resp.StatusCode > 1) Then
                 QBMethods.ResponseErr_Misc(resp)
@@ -107,7 +108,7 @@ Namespace QBStuff
                 For i = 0 To paymentRetList.Count - 1
                     Dim paymentRet As IReceivePaymentRet = paymentRetList.GetAt(i)
                     ' building new paymentList row
-                    Dim newRow As ds_Display.QB_PaymentsDisplayRow = Ds_Display.QB_PaymentsDisplay.NewQB_PaymentsDisplayRow
+                    Dim newRow As ds_Display.QB_PaymentsDisplayRow = Display.QB_PaymentsDisplay.NewQB_PaymentsDisplayRow
                     With newRow
                         .PaymentTxnNumber = paymentRet.TxnNumber.GetValue
                         .PaymentDate = paymentRet.TxnDate.GetValue
@@ -118,7 +119,7 @@ Namespace QBStuff
                         End If
                     End With
                     ' adding
-                    Ds_Display.QB_PaymentsDisplay.AddQB_PaymentsDisplayRow(newRow)
+                    Display.QB_PaymentsDisplay.AddQB_PaymentsDisplayRow(newRow)
                 Next i
             ElseIf (resp.StatusCode > 1) Then
                 QBMethods.ResponseErr_Misc(resp)

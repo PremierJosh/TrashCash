@@ -1,15 +1,13 @@
-﻿
-Imports TrashCash.QBStuff
-Imports TrashCash.Classes
+﻿Imports TrashCash.QBStuff
 Imports QBFC12Lib
 
 Namespace Invoicing
     Friend Module Invoicing
 
-        Friend ReadOnly _ciTA As New ds_InvoicingTableAdapters.CustomInvoicesTableAdapter
-        Friend ReadOnly _liTA As New ds_InvoicingTableAdapters.CustomInvoice_LineItemsTableAdapter
-        Friend ReadOnly _ltTA As New ds_InvoicingTableAdapters.CustomInvoice_LineTypesTableAdapter
-        Friend ReadOnly _raTA As New ds_InvoicingTableAdapters.Customer_RecentAddrsTableAdapter
+        Friend ReadOnly CiTA As New CustomInvoicesTableAdapter
+        Friend ReadOnly LiTA As New CustomInvoice_LineItemsTableAdapter
+        Friend ReadOnly LtTA As New CustomInvoice_LineTypesTableAdapter
+        Friend ReadOnly RaTA As New Customer_RecentAddrsTableAdapter
 
         Public Function CustomInvoice_Create(ByRef ds As ds_Invoicing, ByVal print As Boolean) As Boolean
             ' return succeed or fail
@@ -56,7 +54,7 @@ Namespace Invoicing
             invRow.Time_Submitted = Date.Now
             invRow.StatusID = ENItemStatus.Submitted
             Try
-                _ciTA.Update(invRow)
+                CiTA.Update(invRow)
             Catch ex As SqlException
                 MessageBox.Show("Message: " & ex.Message & vbCrLf & "LineNumber: " & ex.LineNumber,
                                 "Sql Error: " & ex.Procedure, MessageBoxButtons.OK, MessageBoxIcon.Error)
@@ -74,7 +72,7 @@ Namespace Invoicing
                 End With
 
                 Try
-                    _ciTA.Update(invRow)
+                    CiTA.Update(invRow)
                     pass = True
                 Catch ex As SqlException
                     MessageBox.Show("Message: " & ex.Message & vbCrLf & "LineNumber: " & ex.LineNumber,
@@ -86,7 +84,7 @@ Namespace Invoicing
                 invRow.StatusID = ENItemStatus.Err
 
                 Try
-                    _ciTA.Update(invRow)
+                    CiTA.Update(invRow)
                 Catch ex As SqlException
                     MessageBox.Show("Message: " & ex.Message & vbCrLf & "LineNumber: " & ex.LineNumber,
                                     "Sql Error: " & ex.Procedure, MessageBoxButtons.OK, MessageBoxIcon.Error)
@@ -114,7 +112,7 @@ Namespace Invoicing
                 End With
 
                 Try
-                    _ciTA.Update(row)
+                    CiTA.Update(row)
                     pass = True
                 Catch ex As SqlException
                     MessageBox.Show("Message: " & ex.Message & vbCrLf & "LineNumber: " & ex.LineNumber, "Sql Error: " & ex.Procedure,

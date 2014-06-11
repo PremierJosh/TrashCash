@@ -1,7 +1,7 @@
 ﻿Public Class Login
     
     Private Sub btn_Login_Click(sender As System.Object, e As System.EventArgs) Handles btn_Login.Click
-        Me.Cursor = Cursors.WaitCursor
+        Cursor = Cursors.WaitCursor
 
         Dim userID As Integer
         userID = UserTA.Authenticate(tb_Username.Text, mtb_Password.Text)
@@ -12,15 +12,15 @@
 
             Dim splash As New SplashScreen
             splash.Show()
-            Me.Hide()
+            Hide()
             Dim home As New TrashCashHome(splash, userID)
             home.Show()
-            Me.Close()
+            Close()
         Else
             MsgBox("Username and/or Password is incorrect.")
         End If
 
-        Me.Cursor = Cursors.Default
+        Cursor = Cursors.Default
     End Sub
 
     Private Sub Login_Load(sender As Object, e As System.EventArgs) Handles Me.Load
@@ -33,8 +33,8 @@
         End If
     End Sub
 
-    Private _conForm As Connection
-    Public Sub New(ByRef ConForm As Connection)
+    Private ReadOnly _conForm As Connection
+    Public Sub New(ByRef conForm As Connection)
 
         ' This call is required by the designer.
         InitializeComponent()

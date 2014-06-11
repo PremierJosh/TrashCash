@@ -33,7 +33,7 @@
             Me.pnl_Left = New System.Windows.Forms.Panel()
             Me.dg_PrepInv = New System.Windows.Forms.DataGridView()
             Me.BATCHWorkingInvoiceBindingSource = New System.Windows.Forms.BindingSource(Me.components)
-            Me.Ds_Batching = New TrashCash.ds_Batching()
+            Me.Ds_Batching = New ds_Batching()
             Me.pnl_LeftBot = New System.Windows.Forms.Panel()
             Me.lbl_InvBatchCust = New System.Windows.Forms.Label()
             Me.Label1 = New System.Windows.Forms.Label()
@@ -66,8 +66,8 @@
             Me.Label2 = New System.Windows.Forms.Label()
             Me.dtp_GenInvTo = New System.Windows.Forms.DateTimePicker()
             Me.BatchWorker = New System.ComponentModel.BackgroundWorker()
-            Me.BATCH_WorkingPaymentsTableAdapter = New TrashCash.ds_BatchingTableAdapters.BATCH_WorkingPaymentsTableAdapter()
-            Me.BATCH_WorkingInvoiceTableAdapter = New TrashCash.ds_BatchingTableAdapters.BATCH_WorkingInvoiceTableAdapter()
+            Me.BATCH_WorkingPaymentsTableAdapter = New BATCH_WorkingPaymentsTableAdapter()
+            Me.BATCH_WorkingInvoiceTableAdapter = New BATCH_WorkingInvoiceTableAdapter()
             Me.CustomerFullNameDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
             Me.WorkingPaymentsAmountDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
             Me.WorkingPaymentsCheckNum = New System.Windows.Forms.DataGridViewTextBoxColumn()
@@ -624,11 +624,11 @@
         Friend WithEvents btn_DeleteAllWrkInv As System.Windows.Forms.Button
         Friend WithEvents cm_PayGrid As System.Windows.Forms.ContextMenuStrip
         Friend WithEvents DeleteToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
-        Friend WithEvents Ds_Batching As TrashCash.ds_Batching
+        Friend WithEvents DS_Batching As ds_Batching
         Friend WithEvents BATCHWorkingPaymentsBindingSource As System.Windows.Forms.BindingSource
-        Friend WithEvents BATCH_WorkingPaymentsTableAdapter As TrashCash.ds_BatchingTableAdapters.BATCH_WorkingPaymentsTableAdapter
+        Friend WithEvents BATCH_WorkingPaymentsTableAdapter As BATCH_WorkingPaymentsTableAdapter
         Friend WithEvents BATCHWorkingInvoiceBindingSource As System.Windows.Forms.BindingSource
-        Friend WithEvents BATCH_WorkingInvoiceTableAdapter As TrashCash.ds_BatchingTableAdapters.BATCH_WorkingInvoiceTableAdapter
+        Friend WithEvents BATCH_WorkingInvoiceTableAdapter As BATCH_WorkingInvoiceTableAdapter
         Friend WithEvents CustomerFullNameDataGridViewTextBoxColumn As System.Windows.Forms.DataGridViewTextBoxColumn
         Friend WithEvents WorkingPaymentsAmountDataGridViewTextBoxColumn As System.Windows.Forms.DataGridViewTextBoxColumn
         Friend WithEvents WorkingPaymentsCheckNum As System.Windows.Forms.DataGridViewTextBoxColumn

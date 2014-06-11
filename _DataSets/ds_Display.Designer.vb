@@ -10,2418 +10,2419 @@
 
 Option Strict Off
 Option Explicit On
+Namespace _DataSets
 
 
+    '''<summary>
+    '''Represents a strongly typed in-memory cache of data.
+    '''</summary>
+    <Global.System.Serializable(), _
+        Global.System.ComponentModel.DesignerCategoryAttribute("code"), _
+        Global.System.ComponentModel.ToolboxItem(True), _
+        Global.System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedDataSetSchema"), _
+        Global.System.Xml.Serialization.XmlRootAttribute("ds_Display"), _
+        Global.System.ComponentModel.Design.HelpKeywordAttribute("vs.data.DataSet")> _
+    Partial Public Class DS_Display
+        Inherits Global.System.Data.DataSet
 
-'''<summary>
-'''Represents a strongly typed in-memory cache of data.
-'''</summary>
-<Global.System.Serializable(),  _
- Global.System.ComponentModel.DesignerCategoryAttribute("code"),  _
- Global.System.ComponentModel.ToolboxItem(true),  _
- Global.System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedDataSetSchema"),  _
- Global.System.Xml.Serialization.XmlRootAttribute("ds_Display"),  _
- Global.System.ComponentModel.Design.HelpKeywordAttribute("vs.data.DataSet")>  _
-Partial Public Class ds_Display
-    Inherits Global.System.Data.DataSet
-    
-    Private tableQB_InvoiceDisplay As QB_InvoiceDisplayDataTable
-    
-    Private tableQB_PaymentsDisplay As QB_PaymentsDisplayDataTable
-    
-    Private tableQBUnpaidInvoices As QBUnpaidInvoicesDataTable
-    
-    Private tableQBUnappliedPayments As QBUnappliedPaymentsDataTable
-    
-    Private _schemaSerializationMode As Global.System.Data.SchemaSerializationMode = Global.System.Data.SchemaSerializationMode.IncludeSchema
-    
-    <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-     Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-    Public Sub New()
-        MyBase.New
-        Me.BeginInit
-        Me.InitClass
-        Dim schemaChangedHandler As Global.System.ComponentModel.CollectionChangeEventHandler = AddressOf Me.SchemaChanged
-        AddHandler MyBase.Tables.CollectionChanged, schemaChangedHandler
-        AddHandler MyBase.Relations.CollectionChanged, schemaChangedHandler
-        Me.EndInit
-    End Sub
-    
-    <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-     Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-    Protected Sub New(ByVal info As Global.System.Runtime.Serialization.SerializationInfo, ByVal context As Global.System.Runtime.Serialization.StreamingContext)
-        MyBase.New(info, context, false)
-        If (Me.IsBinarySerialized(info, context) = true) Then
-            Me.InitVars(false)
-            Dim schemaChangedHandler1 As Global.System.ComponentModel.CollectionChangeEventHandler = AddressOf Me.SchemaChanged
-            AddHandler Me.Tables.CollectionChanged, schemaChangedHandler1
-            AddHandler Me.Relations.CollectionChanged, schemaChangedHandler1
-            Return
-        End If
-        Dim strSchema As String = CType(info.GetValue("XmlSchema", GetType(String)),String)
-        If (Me.DetermineSchemaSerializationMode(info, context) = Global.System.Data.SchemaSerializationMode.IncludeSchema) Then
-            Dim ds As Global.System.Data.DataSet = New Global.System.Data.DataSet()
-            ds.ReadXmlSchema(New Global.System.Xml.XmlTextReader(New Global.System.IO.StringReader(strSchema)))
-            If (Not (ds.Tables("QB_InvoiceDisplay")) Is Nothing) Then
-                MyBase.Tables.Add(New QB_InvoiceDisplayDataTable(ds.Tables("QB_InvoiceDisplay")))
-            End If
-            If (Not (ds.Tables("QB_PaymentsDisplay")) Is Nothing) Then
-                MyBase.Tables.Add(New QB_PaymentsDisplayDataTable(ds.Tables("QB_PaymentsDisplay")))
-            End If
-            If (Not (ds.Tables("QBUnpaidInvoices")) Is Nothing) Then
-                MyBase.Tables.Add(New QBUnpaidInvoicesDataTable(ds.Tables("QBUnpaidInvoices")))
-            End If
-            If (Not (ds.Tables("QBUnappliedPayments")) Is Nothing) Then
-                MyBase.Tables.Add(New QBUnappliedPaymentsDataTable(ds.Tables("QBUnappliedPayments")))
-            End If
-            Me.DataSetName = ds.DataSetName
-            Me.Prefix = ds.Prefix
-            Me.Namespace = ds.Namespace
-            Me.Locale = ds.Locale
-            Me.CaseSensitive = ds.CaseSensitive
-            Me.EnforceConstraints = ds.EnforceConstraints
-            Me.Merge(ds, false, Global.System.Data.MissingSchemaAction.Add)
-            Me.InitVars
-        Else
-            Me.ReadXmlSchema(New Global.System.Xml.XmlTextReader(New Global.System.IO.StringReader(strSchema)))
-        End If
-        Me.GetSerializationData(info, context)
-        Dim schemaChangedHandler As Global.System.ComponentModel.CollectionChangeEventHandler = AddressOf Me.SchemaChanged
-        AddHandler MyBase.Tables.CollectionChanged, schemaChangedHandler
-        AddHandler Me.Relations.CollectionChanged, schemaChangedHandler
-    End Sub
-    
-    <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-     Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0"),  _
-     Global.System.ComponentModel.Browsable(false),  _
-     Global.System.ComponentModel.DesignerSerializationVisibility(Global.System.ComponentModel.DesignerSerializationVisibility.Content)>  _
-    Public ReadOnly Property QB_InvoiceDisplay() As QB_InvoiceDisplayDataTable
-        Get
-            Return Me.tableQB_InvoiceDisplay
-        End Get
-    End Property
-    
-    <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-     Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0"),  _
-     Global.System.ComponentModel.Browsable(false),  _
-     Global.System.ComponentModel.DesignerSerializationVisibility(Global.System.ComponentModel.DesignerSerializationVisibility.Content)>  _
-    Public ReadOnly Property QB_PaymentsDisplay() As QB_PaymentsDisplayDataTable
-        Get
-            Return Me.tableQB_PaymentsDisplay
-        End Get
-    End Property
-    
-    <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-     Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0"),  _
-     Global.System.ComponentModel.Browsable(false),  _
-     Global.System.ComponentModel.DesignerSerializationVisibility(Global.System.ComponentModel.DesignerSerializationVisibility.Content)>  _
-    Public ReadOnly Property QBUnpaidInvoices() As QBUnpaidInvoicesDataTable
-        Get
-            Return Me.tableQBUnpaidInvoices
-        End Get
-    End Property
-    
-    <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-     Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0"),  _
-     Global.System.ComponentModel.Browsable(false),  _
-     Global.System.ComponentModel.DesignerSerializationVisibility(Global.System.ComponentModel.DesignerSerializationVisibility.Content)>  _
-    Public ReadOnly Property QBUnappliedPayments() As QBUnappliedPaymentsDataTable
-        Get
-            Return Me.tableQBUnappliedPayments
-        End Get
-    End Property
-    
-    <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-     Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0"),  _
-     Global.System.ComponentModel.BrowsableAttribute(true),  _
-     Global.System.ComponentModel.DesignerSerializationVisibilityAttribute(Global.System.ComponentModel.DesignerSerializationVisibility.Visible)>  _
-    Public Overrides Property SchemaSerializationMode() As Global.System.Data.SchemaSerializationMode
-        Get
-            Return Me._schemaSerializationMode
-        End Get
-        Set
-            Me._schemaSerializationMode = value
-        End Set
-    End Property
-    
-    <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-     Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0"),  _
-     Global.System.ComponentModel.DesignerSerializationVisibilityAttribute(Global.System.ComponentModel.DesignerSerializationVisibility.Hidden)>  _
-    Public Shadows ReadOnly Property Tables() As Global.System.Data.DataTableCollection
-        Get
-            Return MyBase.Tables
-        End Get
-    End Property
-    
-    <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-     Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0"),  _
-     Global.System.ComponentModel.DesignerSerializationVisibilityAttribute(Global.System.ComponentModel.DesignerSerializationVisibility.Hidden)>  _
-    Public Shadows ReadOnly Property Relations() As Global.System.Data.DataRelationCollection
-        Get
-            Return MyBase.Relations
-        End Get
-    End Property
-    
-    <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-     Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-    Protected Overrides Sub InitializeDerivedDataSet()
-        Me.BeginInit
-        Me.InitClass
-        Me.EndInit
-    End Sub
-    
-    <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-     Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-    Public Overrides Function Clone() As Global.System.Data.DataSet
-        Dim cln As ds_Display = CType(MyBase.Clone,ds_Display)
-        cln.InitVars
-        cln.SchemaSerializationMode = Me.SchemaSerializationMode
-        Return cln
-    End Function
-    
-    <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-     Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-    Protected Overrides Function ShouldSerializeTables() As Boolean
-        Return false
-    End Function
-    
-    <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-     Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-    Protected Overrides Function ShouldSerializeRelations() As Boolean
-        Return false
-    End Function
-    
-    <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-     Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-    Protected Overrides Sub ReadXmlSerializable(ByVal reader As Global.System.Xml.XmlReader)
-        If (Me.DetermineSchemaSerializationMode(reader) = Global.System.Data.SchemaSerializationMode.IncludeSchema) Then
-            Me.Reset
-            Dim ds As Global.System.Data.DataSet = New Global.System.Data.DataSet()
-            ds.ReadXml(reader)
-            If (Not (ds.Tables("QB_InvoiceDisplay")) Is Nothing) Then
-                MyBase.Tables.Add(New QB_InvoiceDisplayDataTable(ds.Tables("QB_InvoiceDisplay")))
-            End If
-            If (Not (ds.Tables("QB_PaymentsDisplay")) Is Nothing) Then
-                MyBase.Tables.Add(New QB_PaymentsDisplayDataTable(ds.Tables("QB_PaymentsDisplay")))
-            End If
-            If (Not (ds.Tables("QBUnpaidInvoices")) Is Nothing) Then
-                MyBase.Tables.Add(New QBUnpaidInvoicesDataTable(ds.Tables("QBUnpaidInvoices")))
-            End If
-            If (Not (ds.Tables("QBUnappliedPayments")) Is Nothing) Then
-                MyBase.Tables.Add(New QBUnappliedPaymentsDataTable(ds.Tables("QBUnappliedPayments")))
-            End If
-            Me.DataSetName = ds.DataSetName
-            Me.Prefix = ds.Prefix
-            Me.Namespace = ds.Namespace
-            Me.Locale = ds.Locale
-            Me.CaseSensitive = ds.CaseSensitive
-            Me.EnforceConstraints = ds.EnforceConstraints
-            Me.Merge(ds, false, Global.System.Data.MissingSchemaAction.Add)
-            Me.InitVars
-        Else
-            Me.ReadXml(reader)
-            Me.InitVars
-        End If
-    End Sub
-    
-    <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-     Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-    Protected Overrides Function GetSchemaSerializable() As Global.System.Xml.Schema.XmlSchema
-        Dim stream As Global.System.IO.MemoryStream = New Global.System.IO.MemoryStream()
-        Me.WriteXmlSchema(New Global.System.Xml.XmlTextWriter(stream, Nothing))
-        stream.Position = 0
-        Return Global.System.Xml.Schema.XmlSchema.Read(New Global.System.Xml.XmlTextReader(stream), Nothing)
-    End Function
-    
-    <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-     Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-    Friend Overloads Sub InitVars()
-        Me.InitVars(true)
-    End Sub
-    
-    <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-     Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-    Friend Overloads Sub InitVars(ByVal initTable As Boolean)
-        Me.tableQB_InvoiceDisplay = CType(MyBase.Tables("QB_InvoiceDisplay"),QB_InvoiceDisplayDataTable)
-        If (initTable = true) Then
-            If (Not (Me.tableQB_InvoiceDisplay) Is Nothing) Then
-                Me.tableQB_InvoiceDisplay.InitVars
-            End If
-        End If
-        Me.tableQB_PaymentsDisplay = CType(MyBase.Tables("QB_PaymentsDisplay"),QB_PaymentsDisplayDataTable)
-        If (initTable = true) Then
-            If (Not (Me.tableQB_PaymentsDisplay) Is Nothing) Then
-                Me.tableQB_PaymentsDisplay.InitVars
-            End If
-        End If
-        Me.tableQBUnpaidInvoices = CType(MyBase.Tables("QBUnpaidInvoices"),QBUnpaidInvoicesDataTable)
-        If (initTable = true) Then
-            If (Not (Me.tableQBUnpaidInvoices) Is Nothing) Then
-                Me.tableQBUnpaidInvoices.InitVars
-            End If
-        End If
-        Me.tableQBUnappliedPayments = CType(MyBase.Tables("QBUnappliedPayments"),QBUnappliedPaymentsDataTable)
-        If (initTable = true) Then
-            If (Not (Me.tableQBUnappliedPayments) Is Nothing) Then
-                Me.tableQBUnappliedPayments.InitVars
-            End If
-        End If
-    End Sub
-    
-    <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-     Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-    Private Sub InitClass()
-        Me.DataSetName = "ds_Display"
-        Me.Prefix = ""
-        Me.Namespace = "http://tempuri.org/ds_Display.xsd"
-        Me.EnforceConstraints = true
-        Me.SchemaSerializationMode = Global.System.Data.SchemaSerializationMode.IncludeSchema
-        Me.tableQB_InvoiceDisplay = New QB_InvoiceDisplayDataTable()
-        MyBase.Tables.Add(Me.tableQB_InvoiceDisplay)
-        Me.tableQB_PaymentsDisplay = New QB_PaymentsDisplayDataTable()
-        MyBase.Tables.Add(Me.tableQB_PaymentsDisplay)
-        Me.tableQBUnpaidInvoices = New QBUnpaidInvoicesDataTable()
-        MyBase.Tables.Add(Me.tableQBUnpaidInvoices)
-        Me.tableQBUnappliedPayments = New QBUnappliedPaymentsDataTable()
-        MyBase.Tables.Add(Me.tableQBUnappliedPayments)
-    End Sub
-    
-    <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-     Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-    Private Function ShouldSerializeQB_InvoiceDisplay() As Boolean
-        Return false
-    End Function
-    
-    <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-     Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-    Private Function ShouldSerializeQB_PaymentsDisplay() As Boolean
-        Return false
-    End Function
-    
-    <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-     Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-    Private Function ShouldSerializeQBUnpaidInvoices() As Boolean
-        Return false
-    End Function
-    
-    <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-     Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-    Private Function ShouldSerializeQBUnappliedPayments() As Boolean
-        Return false
-    End Function
-    
-    <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-     Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-    Private Sub SchemaChanged(ByVal sender As Object, ByVal e As Global.System.ComponentModel.CollectionChangeEventArgs)
-        If (e.Action = Global.System.ComponentModel.CollectionChangeAction.Remove) Then
-            Me.InitVars
-        End If
-    End Sub
-    
-    <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-     Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-    Public Shared Function GetTypedDataSetSchema(ByVal xs As Global.System.Xml.Schema.XmlSchemaSet) As Global.System.Xml.Schema.XmlSchemaComplexType
-        Dim ds As ds_Display = New ds_Display()
-        Dim type As Global.System.Xml.Schema.XmlSchemaComplexType = New Global.System.Xml.Schema.XmlSchemaComplexType()
-        Dim sequence As Global.System.Xml.Schema.XmlSchemaSequence = New Global.System.Xml.Schema.XmlSchemaSequence()
-        Dim any As Global.System.Xml.Schema.XmlSchemaAny = New Global.System.Xml.Schema.XmlSchemaAny()
-        any.Namespace = ds.Namespace
-        sequence.Items.Add(any)
-        type.Particle = sequence
-        Dim dsSchema As Global.System.Xml.Schema.XmlSchema = ds.GetSchemaSerializable
-        If xs.Contains(dsSchema.TargetNamespace) Then
-            Dim s1 As Global.System.IO.MemoryStream = New Global.System.IO.MemoryStream()
-            Dim s2 As Global.System.IO.MemoryStream = New Global.System.IO.MemoryStream()
-            Try 
-                Dim schema As Global.System.Xml.Schema.XmlSchema = Nothing
-                dsSchema.Write(s1)
-                Dim schemas As Global.System.Collections.IEnumerator = xs.Schemas(dsSchema.TargetNamespace).GetEnumerator
-                Do While schemas.MoveNext
-                    schema = CType(schemas.Current,Global.System.Xml.Schema.XmlSchema)
-                    s2.SetLength(0)
-                    schema.Write(s2)
-                    If (s1.Length = s2.Length) Then
-                        s1.Position = 0
-                        s2.Position = 0
-                        
-                        Do While ((s1.Position <> s1.Length)  _
-                                    AndAlso (s1.ReadByte = s2.ReadByte))
-                            
-                            
-                        Loop
-                        If (s1.Position = s1.Length) Then
-                            Return type
-                        End If
-                    End If
-                    
-                Loop
-            Finally
-                If (Not (s1) Is Nothing) Then
-                    s1.Close
-                End If
-                If (Not (s2) Is Nothing) Then
-                    s2.Close
-                End If
-            End Try
-        End If
-        xs.Add(dsSchema)
-        Return type
-    End Function
-    
-    <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-    Public Delegate Sub QB_InvoiceDisplayRowChangeEventHandler(ByVal sender As Object, ByVal e As QB_InvoiceDisplayRowChangeEvent)
-    
-    <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-    Public Delegate Sub QB_PaymentsDisplayRowChangeEventHandler(ByVal sender As Object, ByVal e As QB_PaymentsDisplayRowChangeEvent)
-    
-    <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-    Public Delegate Sub QBUnpaidInvoicesRowChangeEventHandler(ByVal sender As Object, ByVal e As QBUnpaidInvoicesRowChangeEvent)
-    
-    <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-    Public Delegate Sub QBUnappliedPaymentsRowChangeEventHandler(ByVal sender As Object, ByVal e As QBUnappliedPaymentsRowChangeEvent)
-    
-    '''<summary>
-    '''Represents the strongly named DataTable class.
-    '''</summary>
-    <Global.System.Serializable(),  _
-     Global.System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedTableSchema")>  _
-    Partial Public Class QB_InvoiceDisplayDataTable
-        Inherits Global.System.Data.TypedTableBase(Of QB_InvoiceDisplayRow)
-        
-        Private columnInvoiceNumber As Global.System.Data.DataColumn
-        
-        Private columnCustomerNumber As Global.System.Data.DataColumn
-        
-        Private columnCustomerName As Global.System.Data.DataColumn
-        
-        Private columnInvoicePostDate As Global.System.Data.DataColumn
-        
-        Private columnInvoiceDueDate As Global.System.Data.DataColumn
-        
-        Private columnInvoiceTotal As Global.System.Data.DataColumn
-        
-        Private columnInvoiceBalance As Global.System.Data.DataColumn
-        
-        Private columnInvoiceCreationDate As Global.System.Data.DataColumn
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Sub New()
-            MyBase.New
-            Me.TableName = "QB_InvoiceDisplay"
-            Me.BeginInit
-            Me.InitClass
-            Me.EndInit
-        End Sub
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Friend Sub New(ByVal table As Global.System.Data.DataTable)
-            MyBase.New
-            Me.TableName = table.TableName
-            If (table.CaseSensitive <> table.DataSet.CaseSensitive) Then
-                Me.CaseSensitive = table.CaseSensitive
-            End If
-            If (table.Locale.ToString <> table.DataSet.Locale.ToString) Then
-                Me.Locale = table.Locale
-            End If
-            If (table.Namespace <> table.DataSet.Namespace) Then
-                Me.Namespace = table.Namespace
-            End If
-            Me.Prefix = table.Prefix
-            Me.MinimumCapacity = table.MinimumCapacity
-        End Sub
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Protected Sub New(ByVal info As Global.System.Runtime.Serialization.SerializationInfo, ByVal context As Global.System.Runtime.Serialization.StreamingContext)
-            MyBase.New(info, context)
-            Me.InitVars
-        End Sub
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public ReadOnly Property InvoiceNumberColumn() As Global.System.Data.DataColumn
-            Get
-                Return Me.columnInvoiceNumber
-            End Get
-        End Property
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public ReadOnly Property CustomerNumberColumn() As Global.System.Data.DataColumn
-            Get
-                Return Me.columnCustomerNumber
-            End Get
-        End Property
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public ReadOnly Property CustomerNameColumn() As Global.System.Data.DataColumn
-            Get
-                Return Me.columnCustomerName
-            End Get
-        End Property
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public ReadOnly Property InvoicePostDateColumn() As Global.System.Data.DataColumn
-            Get
-                Return Me.columnInvoicePostDate
-            End Get
-        End Property
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public ReadOnly Property InvoiceDueDateColumn() As Global.System.Data.DataColumn
-            Get
-                Return Me.columnInvoiceDueDate
-            End Get
-        End Property
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public ReadOnly Property InvoiceTotalColumn() As Global.System.Data.DataColumn
-            Get
-                Return Me.columnInvoiceTotal
-            End Get
-        End Property
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public ReadOnly Property InvoiceBalanceColumn() As Global.System.Data.DataColumn
-            Get
-                Return Me.columnInvoiceBalance
-            End Get
-        End Property
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public ReadOnly Property InvoiceCreationDateColumn() As Global.System.Data.DataColumn
-            Get
-                Return Me.columnInvoiceCreationDate
-            End Get
-        End Property
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0"),  _
-         Global.System.ComponentModel.Browsable(false)>  _
-        Public ReadOnly Property Count() As Integer
-            Get
-                Return Me.Rows.Count
-            End Get
-        End Property
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Default ReadOnly Property Item(ByVal index As Integer) As QB_InvoiceDisplayRow
-            Get
-                Return CType(Me.Rows(index),QB_InvoiceDisplayRow)
-            End Get
-        End Property
-        
-        <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Event QB_InvoiceDisplayRowChanging As QB_InvoiceDisplayRowChangeEventHandler
-        
-        <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Event QB_InvoiceDisplayRowChanged As QB_InvoiceDisplayRowChangeEventHandler
-        
-        <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Event QB_InvoiceDisplayRowDeleting As QB_InvoiceDisplayRowChangeEventHandler
-        
-        <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Event QB_InvoiceDisplayRowDeleted As QB_InvoiceDisplayRowChangeEventHandler
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Overloads Sub AddQB_InvoiceDisplayRow(ByVal row As QB_InvoiceDisplayRow)
-            Me.Rows.Add(row)
-        End Sub
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Overloads Function AddQB_InvoiceDisplayRow(ByVal InvoiceNumber As String, ByVal CustomerNumber As String, ByVal CustomerName As String, ByVal InvoicePostDate As Date, ByVal InvoiceDueDate As Date, ByVal InvoiceTotal As Double, ByVal InvoiceBalance As Double, ByVal InvoiceCreationDate As String) As QB_InvoiceDisplayRow
-            Dim rowQB_InvoiceDisplayRow As QB_InvoiceDisplayRow = CType(Me.NewRow,QB_InvoiceDisplayRow)
-            Dim columnValuesArray() As Object = New Object() {InvoiceNumber, CustomerNumber, CustomerName, InvoicePostDate, InvoiceDueDate, InvoiceTotal, InvoiceBalance, InvoiceCreationDate}
-            rowQB_InvoiceDisplayRow.ItemArray = columnValuesArray
-            Me.Rows.Add(rowQB_InvoiceDisplayRow)
-            Return rowQB_InvoiceDisplayRow
-        End Function
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Overrides Function Clone() As Global.System.Data.DataTable
-            Dim cln As QB_InvoiceDisplayDataTable = CType(MyBase.Clone,QB_InvoiceDisplayDataTable)
-            cln.InitVars
-            Return cln
-        End Function
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Protected Overrides Function CreateInstance() As Global.System.Data.DataTable
-            Return New QB_InvoiceDisplayDataTable()
-        End Function
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Friend Sub InitVars()
-            Me.columnInvoiceNumber = MyBase.Columns("InvoiceNumber")
-            Me.columnCustomerNumber = MyBase.Columns("CustomerNumber")
-            Me.columnCustomerName = MyBase.Columns("CustomerName")
-            Me.columnInvoicePostDate = MyBase.Columns("InvoicePostDate")
-            Me.columnInvoiceDueDate = MyBase.Columns("InvoiceDueDate")
-            Me.columnInvoiceTotal = MyBase.Columns("InvoiceTotal")
-            Me.columnInvoiceBalance = MyBase.Columns("InvoiceBalance")
-            Me.columnInvoiceCreationDate = MyBase.Columns("InvoiceCreationDate")
-        End Sub
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Private Sub InitClass()
-            Me.columnInvoiceNumber = New Global.System.Data.DataColumn("InvoiceNumber", GetType(String), Nothing, Global.System.Data.MappingType.Element)
-            MyBase.Columns.Add(Me.columnInvoiceNumber)
-            Me.columnCustomerNumber = New Global.System.Data.DataColumn("CustomerNumber", GetType(String), Nothing, Global.System.Data.MappingType.Element)
-            MyBase.Columns.Add(Me.columnCustomerNumber)
-            Me.columnCustomerName = New Global.System.Data.DataColumn("CustomerName", GetType(String), Nothing, Global.System.Data.MappingType.Element)
-            MyBase.Columns.Add(Me.columnCustomerName)
-            Me.columnInvoicePostDate = New Global.System.Data.DataColumn("InvoicePostDate", GetType(Date), Nothing, Global.System.Data.MappingType.Element)
-            MyBase.Columns.Add(Me.columnInvoicePostDate)
-            Me.columnInvoiceDueDate = New Global.System.Data.DataColumn("InvoiceDueDate", GetType(Date), Nothing, Global.System.Data.MappingType.Element)
-            MyBase.Columns.Add(Me.columnInvoiceDueDate)
-            Me.columnInvoiceTotal = New Global.System.Data.DataColumn("InvoiceTotal", GetType(Double), Nothing, Global.System.Data.MappingType.Element)
-            MyBase.Columns.Add(Me.columnInvoiceTotal)
-            Me.columnInvoiceBalance = New Global.System.Data.DataColumn("InvoiceBalance", GetType(Double), Nothing, Global.System.Data.MappingType.Element)
-            MyBase.Columns.Add(Me.columnInvoiceBalance)
-            Me.columnInvoiceCreationDate = New Global.System.Data.DataColumn("InvoiceCreationDate", GetType(String), Nothing, Global.System.Data.MappingType.Element)
-            MyBase.Columns.Add(Me.columnInvoiceCreationDate)
-        End Sub
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Function NewQB_InvoiceDisplayRow() As QB_InvoiceDisplayRow
-            Return CType(Me.NewRow,QB_InvoiceDisplayRow)
-        End Function
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Protected Overrides Function NewRowFromBuilder(ByVal builder As Global.System.Data.DataRowBuilder) As Global.System.Data.DataRow
-            Return New QB_InvoiceDisplayRow(builder)
-        End Function
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Protected Overrides Function GetRowType() As Global.System.Type
-            Return GetType(QB_InvoiceDisplayRow)
-        End Function
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Protected Overrides Sub OnRowChanged(ByVal e As Global.System.Data.DataRowChangeEventArgs)
-            MyBase.OnRowChanged(e)
-            If (Not (Me.QB_InvoiceDisplayRowChangedEvent) Is Nothing) Then
-                RaiseEvent QB_InvoiceDisplayRowChanged(Me, New QB_InvoiceDisplayRowChangeEvent(CType(e.Row,QB_InvoiceDisplayRow), e.Action))
-            End If
-        End Sub
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Protected Overrides Sub OnRowChanging(ByVal e As Global.System.Data.DataRowChangeEventArgs)
-            MyBase.OnRowChanging(e)
-            If (Not (Me.QB_InvoiceDisplayRowChangingEvent) Is Nothing) Then
-                RaiseEvent QB_InvoiceDisplayRowChanging(Me, New QB_InvoiceDisplayRowChangeEvent(CType(e.Row,QB_InvoiceDisplayRow), e.Action))
-            End If
-        End Sub
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Protected Overrides Sub OnRowDeleted(ByVal e As Global.System.Data.DataRowChangeEventArgs)
-            MyBase.OnRowDeleted(e)
-            If (Not (Me.QB_InvoiceDisplayRowDeletedEvent) Is Nothing) Then
-                RaiseEvent QB_InvoiceDisplayRowDeleted(Me, New QB_InvoiceDisplayRowChangeEvent(CType(e.Row,QB_InvoiceDisplayRow), e.Action))
-            End If
-        End Sub
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Protected Overrides Sub OnRowDeleting(ByVal e As Global.System.Data.DataRowChangeEventArgs)
-            MyBase.OnRowDeleting(e)
-            If (Not (Me.QB_InvoiceDisplayRowDeletingEvent) Is Nothing) Then
-                RaiseEvent QB_InvoiceDisplayRowDeleting(Me, New QB_InvoiceDisplayRowChangeEvent(CType(e.Row,QB_InvoiceDisplayRow), e.Action))
-            End If
-        End Sub
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Sub RemoveQB_InvoiceDisplayRow(ByVal row As QB_InvoiceDisplayRow)
-            Me.Rows.Remove(row)
-        End Sub
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Shared Function GetTypedTableSchema(ByVal xs As Global.System.Xml.Schema.XmlSchemaSet) As Global.System.Xml.Schema.XmlSchemaComplexType
-            Dim type As Global.System.Xml.Schema.XmlSchemaComplexType = New Global.System.Xml.Schema.XmlSchemaComplexType()
-            Dim sequence As Global.System.Xml.Schema.XmlSchemaSequence = New Global.System.Xml.Schema.XmlSchemaSequence()
-            Dim ds As ds_Display = New ds_Display()
-            Dim any1 As Global.System.Xml.Schema.XmlSchemaAny = New Global.System.Xml.Schema.XmlSchemaAny()
-            any1.Namespace = "http://www.w3.org/2001/XMLSchema"
-            any1.MinOccurs = New Decimal(0)
-            any1.MaxOccurs = Decimal.MaxValue
-            any1.ProcessContents = Global.System.Xml.Schema.XmlSchemaContentProcessing.Lax
-            sequence.Items.Add(any1)
-            Dim any2 As Global.System.Xml.Schema.XmlSchemaAny = New Global.System.Xml.Schema.XmlSchemaAny()
-            any2.Namespace = "urn:schemas-microsoft-com:xml-diffgram-v1"
-            any2.MinOccurs = New Decimal(1)
-            any2.ProcessContents = Global.System.Xml.Schema.XmlSchemaContentProcessing.Lax
-            sequence.Items.Add(any2)
-            Dim attribute1 As Global.System.Xml.Schema.XmlSchemaAttribute = New Global.System.Xml.Schema.XmlSchemaAttribute()
-            attribute1.Name = "namespace"
-            attribute1.FixedValue = ds.Namespace
-            type.Attributes.Add(attribute1)
-            Dim attribute2 As Global.System.Xml.Schema.XmlSchemaAttribute = New Global.System.Xml.Schema.XmlSchemaAttribute()
-            attribute2.Name = "tableTypeName"
-            attribute2.FixedValue = "QB_InvoiceDisplayDataTable"
-            type.Attributes.Add(attribute2)
-            type.Particle = sequence
-            Dim dsSchema As Global.System.Xml.Schema.XmlSchema = ds.GetSchemaSerializable
-            If xs.Contains(dsSchema.TargetNamespace) Then
-                Dim s1 As Global.System.IO.MemoryStream = New Global.System.IO.MemoryStream()
-                Dim s2 As Global.System.IO.MemoryStream = New Global.System.IO.MemoryStream()
-                Try 
-                    Dim schema As Global.System.Xml.Schema.XmlSchema = Nothing
-                    dsSchema.Write(s1)
-                    Dim schemas As Global.System.Collections.IEnumerator = xs.Schemas(dsSchema.TargetNamespace).GetEnumerator
-                    Do While schemas.MoveNext
-                        schema = CType(schemas.Current,Global.System.Xml.Schema.XmlSchema)
-                        s2.SetLength(0)
-                        schema.Write(s2)
-                        If (s1.Length = s2.Length) Then
-                            s1.Position = 0
-                            s2.Position = 0
-                            
-                            Do While ((s1.Position <> s1.Length)  _
-                                        AndAlso (s1.ReadByte = s2.ReadByte))
-                                
-                                
-                            Loop
-                            If (s1.Position = s1.Length) Then
-                                Return type
-                            End If
-                        End If
-                        
-                    Loop
-                Finally
-                    If (Not (s1) Is Nothing) Then
-                        s1.Close
-                    End If
-                    If (Not (s2) Is Nothing) Then
-                        s2.Close
-                    End If
-                End Try
-            End If
-            xs.Add(dsSchema)
-            Return type
-        End Function
-    End Class
-    
-    '''<summary>
-    '''Represents the strongly named DataTable class.
-    '''</summary>
-    <Global.System.Serializable(),  _
-     Global.System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedTableSchema")>  _
-    Partial Public Class QB_PaymentsDisplayDataTable
-        Inherits Global.System.Data.TypedTableBase(Of QB_PaymentsDisplayRow)
-        
-        Private columnPaymentTxnNumber As Global.System.Data.DataColumn
-        
-        Private columnPaymentDate As Global.System.Data.DataColumn
-        
-        Private columnPaymentAmount As Global.System.Data.DataColumn
-        
-        Private columnPaymentMethod As Global.System.Data.DataColumn
-        
-        Private columnPaymentCheckNum As Global.System.Data.DataColumn
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Sub New()
-            MyBase.New
-            Me.TableName = "QB_PaymentsDisplay"
-            Me.BeginInit
-            Me.InitClass
-            Me.EndInit
-        End Sub
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Friend Sub New(ByVal table As Global.System.Data.DataTable)
-            MyBase.New
-            Me.TableName = table.TableName
-            If (table.CaseSensitive <> table.DataSet.CaseSensitive) Then
-                Me.CaseSensitive = table.CaseSensitive
-            End If
-            If (table.Locale.ToString <> table.DataSet.Locale.ToString) Then
-                Me.Locale = table.Locale
-            End If
-            If (table.Namespace <> table.DataSet.Namespace) Then
-                Me.Namespace = table.Namespace
-            End If
-            Me.Prefix = table.Prefix
-            Me.MinimumCapacity = table.MinimumCapacity
-        End Sub
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Protected Sub New(ByVal info As Global.System.Runtime.Serialization.SerializationInfo, ByVal context As Global.System.Runtime.Serialization.StreamingContext)
-            MyBase.New(info, context)
-            Me.InitVars
-        End Sub
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public ReadOnly Property PaymentTxnNumberColumn() As Global.System.Data.DataColumn
-            Get
-                Return Me.columnPaymentTxnNumber
-            End Get
-        End Property
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public ReadOnly Property PaymentDateColumn() As Global.System.Data.DataColumn
-            Get
-                Return Me.columnPaymentDate
-            End Get
-        End Property
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public ReadOnly Property PaymentAmountColumn() As Global.System.Data.DataColumn
-            Get
-                Return Me.columnPaymentAmount
-            End Get
-        End Property
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public ReadOnly Property PaymentMethodColumn() As Global.System.Data.DataColumn
-            Get
-                Return Me.columnPaymentMethod
-            End Get
-        End Property
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public ReadOnly Property PaymentCheckNumColumn() As Global.System.Data.DataColumn
-            Get
-                Return Me.columnPaymentCheckNum
-            End Get
-        End Property
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0"),  _
-         Global.System.ComponentModel.Browsable(false)>  _
-        Public ReadOnly Property Count() As Integer
-            Get
-                Return Me.Rows.Count
-            End Get
-        End Property
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Default ReadOnly Property Item(ByVal index As Integer) As QB_PaymentsDisplayRow
-            Get
-                Return CType(Me.Rows(index),QB_PaymentsDisplayRow)
-            End Get
-        End Property
-        
-        <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Event QB_PaymentsDisplayRowChanging As QB_PaymentsDisplayRowChangeEventHandler
-        
-        <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Event QB_PaymentsDisplayRowChanged As QB_PaymentsDisplayRowChangeEventHandler
-        
-        <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Event QB_PaymentsDisplayRowDeleting As QB_PaymentsDisplayRowChangeEventHandler
-        
-        <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Event QB_PaymentsDisplayRowDeleted As QB_PaymentsDisplayRowChangeEventHandler
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Overloads Sub AddQB_PaymentsDisplayRow(ByVal row As QB_PaymentsDisplayRow)
-            Me.Rows.Add(row)
-        End Sub
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Overloads Function AddQB_PaymentsDisplayRow(ByVal PaymentTxnNumber As String, ByVal PaymentDate As Date, ByVal PaymentAmount As Double, ByVal PaymentMethod As String, ByVal PaymentCheckNum As String) As QB_PaymentsDisplayRow
-            Dim rowQB_PaymentsDisplayRow As QB_PaymentsDisplayRow = CType(Me.NewRow,QB_PaymentsDisplayRow)
-            Dim columnValuesArray() As Object = New Object() {PaymentTxnNumber, PaymentDate, PaymentAmount, PaymentMethod, PaymentCheckNum}
-            rowQB_PaymentsDisplayRow.ItemArray = columnValuesArray
-            Me.Rows.Add(rowQB_PaymentsDisplayRow)
-            Return rowQB_PaymentsDisplayRow
-        End Function
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Overrides Function Clone() As Global.System.Data.DataTable
-            Dim cln As QB_PaymentsDisplayDataTable = CType(MyBase.Clone,QB_PaymentsDisplayDataTable)
-            cln.InitVars
-            Return cln
-        End Function
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Protected Overrides Function CreateInstance() As Global.System.Data.DataTable
-            Return New QB_PaymentsDisplayDataTable()
-        End Function
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Friend Sub InitVars()
-            Me.columnPaymentTxnNumber = MyBase.Columns("PaymentTxnNumber")
-            Me.columnPaymentDate = MyBase.Columns("PaymentDate")
-            Me.columnPaymentAmount = MyBase.Columns("PaymentAmount")
-            Me.columnPaymentMethod = MyBase.Columns("PaymentMethod")
-            Me.columnPaymentCheckNum = MyBase.Columns("PaymentCheckNum")
-        End Sub
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Private Sub InitClass()
-            Me.columnPaymentTxnNumber = New Global.System.Data.DataColumn("PaymentTxnNumber", GetType(String), Nothing, Global.System.Data.MappingType.Element)
-            MyBase.Columns.Add(Me.columnPaymentTxnNumber)
-            Me.columnPaymentDate = New Global.System.Data.DataColumn("PaymentDate", GetType(Date), Nothing, Global.System.Data.MappingType.Element)
-            MyBase.Columns.Add(Me.columnPaymentDate)
-            Me.columnPaymentAmount = New Global.System.Data.DataColumn("PaymentAmount", GetType(Double), Nothing, Global.System.Data.MappingType.Element)
-            MyBase.Columns.Add(Me.columnPaymentAmount)
-            Me.columnPaymentMethod = New Global.System.Data.DataColumn("PaymentMethod", GetType(String), Nothing, Global.System.Data.MappingType.Element)
-            MyBase.Columns.Add(Me.columnPaymentMethod)
-            Me.columnPaymentCheckNum = New Global.System.Data.DataColumn("PaymentCheckNum", GetType(String), Nothing, Global.System.Data.MappingType.Element)
-            MyBase.Columns.Add(Me.columnPaymentCheckNum)
-        End Sub
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Function NewQB_PaymentsDisplayRow() As QB_PaymentsDisplayRow
-            Return CType(Me.NewRow,QB_PaymentsDisplayRow)
-        End Function
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Protected Overrides Function NewRowFromBuilder(ByVal builder As Global.System.Data.DataRowBuilder) As Global.System.Data.DataRow
-            Return New QB_PaymentsDisplayRow(builder)
-        End Function
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Protected Overrides Function GetRowType() As Global.System.Type
-            Return GetType(QB_PaymentsDisplayRow)
-        End Function
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Protected Overrides Sub OnRowChanged(ByVal e As Global.System.Data.DataRowChangeEventArgs)
-            MyBase.OnRowChanged(e)
-            If (Not (Me.QB_PaymentsDisplayRowChangedEvent) Is Nothing) Then
-                RaiseEvent QB_PaymentsDisplayRowChanged(Me, New QB_PaymentsDisplayRowChangeEvent(CType(e.Row,QB_PaymentsDisplayRow), e.Action))
-            End If
-        End Sub
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Protected Overrides Sub OnRowChanging(ByVal e As Global.System.Data.DataRowChangeEventArgs)
-            MyBase.OnRowChanging(e)
-            If (Not (Me.QB_PaymentsDisplayRowChangingEvent) Is Nothing) Then
-                RaiseEvent QB_PaymentsDisplayRowChanging(Me, New QB_PaymentsDisplayRowChangeEvent(CType(e.Row,QB_PaymentsDisplayRow), e.Action))
-            End If
-        End Sub
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Protected Overrides Sub OnRowDeleted(ByVal e As Global.System.Data.DataRowChangeEventArgs)
-            MyBase.OnRowDeleted(e)
-            If (Not (Me.QB_PaymentsDisplayRowDeletedEvent) Is Nothing) Then
-                RaiseEvent QB_PaymentsDisplayRowDeleted(Me, New QB_PaymentsDisplayRowChangeEvent(CType(e.Row,QB_PaymentsDisplayRow), e.Action))
-            End If
-        End Sub
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Protected Overrides Sub OnRowDeleting(ByVal e As Global.System.Data.DataRowChangeEventArgs)
-            MyBase.OnRowDeleting(e)
-            If (Not (Me.QB_PaymentsDisplayRowDeletingEvent) Is Nothing) Then
-                RaiseEvent QB_PaymentsDisplayRowDeleting(Me, New QB_PaymentsDisplayRowChangeEvent(CType(e.Row,QB_PaymentsDisplayRow), e.Action))
-            End If
-        End Sub
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Sub RemoveQB_PaymentsDisplayRow(ByVal row As QB_PaymentsDisplayRow)
-            Me.Rows.Remove(row)
-        End Sub
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Shared Function GetTypedTableSchema(ByVal xs As Global.System.Xml.Schema.XmlSchemaSet) As Global.System.Xml.Schema.XmlSchemaComplexType
-            Dim type As Global.System.Xml.Schema.XmlSchemaComplexType = New Global.System.Xml.Schema.XmlSchemaComplexType()
-            Dim sequence As Global.System.Xml.Schema.XmlSchemaSequence = New Global.System.Xml.Schema.XmlSchemaSequence()
-            Dim ds As ds_Display = New ds_Display()
-            Dim any1 As Global.System.Xml.Schema.XmlSchemaAny = New Global.System.Xml.Schema.XmlSchemaAny()
-            any1.Namespace = "http://www.w3.org/2001/XMLSchema"
-            any1.MinOccurs = New Decimal(0)
-            any1.MaxOccurs = Decimal.MaxValue
-            any1.ProcessContents = Global.System.Xml.Schema.XmlSchemaContentProcessing.Lax
-            sequence.Items.Add(any1)
-            Dim any2 As Global.System.Xml.Schema.XmlSchemaAny = New Global.System.Xml.Schema.XmlSchemaAny()
-            any2.Namespace = "urn:schemas-microsoft-com:xml-diffgram-v1"
-            any2.MinOccurs = New Decimal(1)
-            any2.ProcessContents = Global.System.Xml.Schema.XmlSchemaContentProcessing.Lax
-            sequence.Items.Add(any2)
-            Dim attribute1 As Global.System.Xml.Schema.XmlSchemaAttribute = New Global.System.Xml.Schema.XmlSchemaAttribute()
-            attribute1.Name = "namespace"
-            attribute1.FixedValue = ds.Namespace
-            type.Attributes.Add(attribute1)
-            Dim attribute2 As Global.System.Xml.Schema.XmlSchemaAttribute = New Global.System.Xml.Schema.XmlSchemaAttribute()
-            attribute2.Name = "tableTypeName"
-            attribute2.FixedValue = "QB_PaymentsDisplayDataTable"
-            type.Attributes.Add(attribute2)
-            type.Particle = sequence
-            Dim dsSchema As Global.System.Xml.Schema.XmlSchema = ds.GetSchemaSerializable
-            If xs.Contains(dsSchema.TargetNamespace) Then
-                Dim s1 As Global.System.IO.MemoryStream = New Global.System.IO.MemoryStream()
-                Dim s2 As Global.System.IO.MemoryStream = New Global.System.IO.MemoryStream()
-                Try 
-                    Dim schema As Global.System.Xml.Schema.XmlSchema = Nothing
-                    dsSchema.Write(s1)
-                    Dim schemas As Global.System.Collections.IEnumerator = xs.Schemas(dsSchema.TargetNamespace).GetEnumerator
-                    Do While schemas.MoveNext
-                        schema = CType(schemas.Current,Global.System.Xml.Schema.XmlSchema)
-                        s2.SetLength(0)
-                        schema.Write(s2)
-                        If (s1.Length = s2.Length) Then
-                            s1.Position = 0
-                            s2.Position = 0
-                            
-                            Do While ((s1.Position <> s1.Length)  _
-                                        AndAlso (s1.ReadByte = s2.ReadByte))
-                                
-                                
-                            Loop
-                            If (s1.Position = s1.Length) Then
-                                Return type
-                            End If
-                        End If
-                        
-                    Loop
-                Finally
-                    If (Not (s1) Is Nothing) Then
-                        s1.Close
-                    End If
-                    If (Not (s2) Is Nothing) Then
-                        s2.Close
-                    End If
-                End Try
-            End If
-            xs.Add(dsSchema)
-            Return type
-        End Function
-    End Class
-    
-    '''<summary>
-    '''Represents the strongly named DataTable class.
-    '''</summary>
-    <Global.System.Serializable(),  _
-     Global.System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedTableSchema")>  _
-    Partial Public Class QBUnpaidInvoicesDataTable
-        Inherits Global.System.Data.TypedTableBase(Of QBUnpaidInvoicesRow)
-        
-        Private columnInv_TxnID As Global.System.Data.DataColumn
-        
-        Private columnInv_TxnDate As Global.System.Data.DataColumn
-        
-        Private columnInv_Balance As Global.System.Data.DataColumn
-        
-        Private columnRemaining As Global.System.Data.DataColumn
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Sub New()
-            MyBase.New
-            Me.TableName = "QBUnpaidInvoices"
-            Me.BeginInit
-            Me.InitClass
-            Me.EndInit
-        End Sub
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Friend Sub New(ByVal table As Global.System.Data.DataTable)
-            MyBase.New
-            Me.TableName = table.TableName
-            If (table.CaseSensitive <> table.DataSet.CaseSensitive) Then
-                Me.CaseSensitive = table.CaseSensitive
-            End If
-            If (table.Locale.ToString <> table.DataSet.Locale.ToString) Then
-                Me.Locale = table.Locale
-            End If
-            If (table.Namespace <> table.DataSet.Namespace) Then
-                Me.Namespace = table.Namespace
-            End If
-            Me.Prefix = table.Prefix
-            Me.MinimumCapacity = table.MinimumCapacity
-        End Sub
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Protected Sub New(ByVal info As Global.System.Runtime.Serialization.SerializationInfo, ByVal context As Global.System.Runtime.Serialization.StreamingContext)
-            MyBase.New(info, context)
-            Me.InitVars
-        End Sub
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public ReadOnly Property Inv_TxnIDColumn() As Global.System.Data.DataColumn
-            Get
-                Return Me.columnInv_TxnID
-            End Get
-        End Property
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public ReadOnly Property Inv_TxnDateColumn() As Global.System.Data.DataColumn
-            Get
-                Return Me.columnInv_TxnDate
-            End Get
-        End Property
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public ReadOnly Property Inv_BalanceColumn() As Global.System.Data.DataColumn
-            Get
-                Return Me.columnInv_Balance
-            End Get
-        End Property
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public ReadOnly Property RemainingColumn() As Global.System.Data.DataColumn
-            Get
-                Return Me.columnRemaining
-            End Get
-        End Property
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0"),  _
-         Global.System.ComponentModel.Browsable(false)>  _
-        Public ReadOnly Property Count() As Integer
-            Get
-                Return Me.Rows.Count
-            End Get
-        End Property
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Default ReadOnly Property Item(ByVal index As Integer) As QBUnpaidInvoicesRow
-            Get
-                Return CType(Me.Rows(index),QBUnpaidInvoicesRow)
-            End Get
-        End Property
-        
-        <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Event QBUnpaidInvoicesRowChanging As QBUnpaidInvoicesRowChangeEventHandler
-        
-        <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Event QBUnpaidInvoicesRowChanged As QBUnpaidInvoicesRowChangeEventHandler
-        
-        <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Event QBUnpaidInvoicesRowDeleting As QBUnpaidInvoicesRowChangeEventHandler
-        
-        <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Event QBUnpaidInvoicesRowDeleted As QBUnpaidInvoicesRowChangeEventHandler
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Overloads Sub AddQBUnpaidInvoicesRow(ByVal row As QBUnpaidInvoicesRow)
-            Me.Rows.Add(row)
-        End Sub
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Overloads Function AddQBUnpaidInvoicesRow(ByVal Inv_TxnID As String, ByVal Inv_TxnDate As Date, ByVal Inv_Balance As Double, ByVal Remaining As Double) As QBUnpaidInvoicesRow
-            Dim rowQBUnpaidInvoicesRow As QBUnpaidInvoicesRow = CType(Me.NewRow,QBUnpaidInvoicesRow)
-            Dim columnValuesArray() As Object = New Object() {Inv_TxnID, Inv_TxnDate, Inv_Balance, Remaining}
-            rowQBUnpaidInvoicesRow.ItemArray = columnValuesArray
-            Me.Rows.Add(rowQBUnpaidInvoicesRow)
-            Return rowQBUnpaidInvoicesRow
-        End Function
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Overrides Function Clone() As Global.System.Data.DataTable
-            Dim cln As QBUnpaidInvoicesDataTable = CType(MyBase.Clone,QBUnpaidInvoicesDataTable)
-            cln.InitVars
-            Return cln
-        End Function
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Protected Overrides Function CreateInstance() As Global.System.Data.DataTable
-            Return New QBUnpaidInvoicesDataTable()
-        End Function
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Friend Sub InitVars()
-            Me.columnInv_TxnID = MyBase.Columns("Inv_TxnID")
-            Me.columnInv_TxnDate = MyBase.Columns("Inv_TxnDate")
-            Me.columnInv_Balance = MyBase.Columns("Inv_Balance")
-            Me.columnRemaining = MyBase.Columns("Remaining")
-        End Sub
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Private Sub InitClass()
-            Me.columnInv_TxnID = New Global.System.Data.DataColumn("Inv_TxnID", GetType(String), Nothing, Global.System.Data.MappingType.Element)
-            MyBase.Columns.Add(Me.columnInv_TxnID)
-            Me.columnInv_TxnDate = New Global.System.Data.DataColumn("Inv_TxnDate", GetType(Date), Nothing, Global.System.Data.MappingType.Element)
-            MyBase.Columns.Add(Me.columnInv_TxnDate)
-            Me.columnInv_Balance = New Global.System.Data.DataColumn("Inv_Balance", GetType(Double), Nothing, Global.System.Data.MappingType.Element)
-            MyBase.Columns.Add(Me.columnInv_Balance)
-            Me.columnRemaining = New Global.System.Data.DataColumn("Remaining", GetType(Double), Nothing, Global.System.Data.MappingType.Element)
-            MyBase.Columns.Add(Me.columnRemaining)
-        End Sub
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Function NewQBUnpaidInvoicesRow() As QBUnpaidInvoicesRow
-            Return CType(Me.NewRow,QBUnpaidInvoicesRow)
-        End Function
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Protected Overrides Function NewRowFromBuilder(ByVal builder As Global.System.Data.DataRowBuilder) As Global.System.Data.DataRow
-            Return New QBUnpaidInvoicesRow(builder)
-        End Function
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Protected Overrides Function GetRowType() As Global.System.Type
-            Return GetType(QBUnpaidInvoicesRow)
-        End Function
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Protected Overrides Sub OnRowChanged(ByVal e As Global.System.Data.DataRowChangeEventArgs)
-            MyBase.OnRowChanged(e)
-            If (Not (Me.QBUnpaidInvoicesRowChangedEvent) Is Nothing) Then
-                RaiseEvent QBUnpaidInvoicesRowChanged(Me, New QBUnpaidInvoicesRowChangeEvent(CType(e.Row,QBUnpaidInvoicesRow), e.Action))
-            End If
-        End Sub
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Protected Overrides Sub OnRowChanging(ByVal e As Global.System.Data.DataRowChangeEventArgs)
-            MyBase.OnRowChanging(e)
-            If (Not (Me.QBUnpaidInvoicesRowChangingEvent) Is Nothing) Then
-                RaiseEvent QBUnpaidInvoicesRowChanging(Me, New QBUnpaidInvoicesRowChangeEvent(CType(e.Row,QBUnpaidInvoicesRow), e.Action))
-            End If
-        End Sub
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Protected Overrides Sub OnRowDeleted(ByVal e As Global.System.Data.DataRowChangeEventArgs)
-            MyBase.OnRowDeleted(e)
-            If (Not (Me.QBUnpaidInvoicesRowDeletedEvent) Is Nothing) Then
-                RaiseEvent QBUnpaidInvoicesRowDeleted(Me, New QBUnpaidInvoicesRowChangeEvent(CType(e.Row,QBUnpaidInvoicesRow), e.Action))
-            End If
-        End Sub
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Protected Overrides Sub OnRowDeleting(ByVal e As Global.System.Data.DataRowChangeEventArgs)
-            MyBase.OnRowDeleting(e)
-            If (Not (Me.QBUnpaidInvoicesRowDeletingEvent) Is Nothing) Then
-                RaiseEvent QBUnpaidInvoicesRowDeleting(Me, New QBUnpaidInvoicesRowChangeEvent(CType(e.Row,QBUnpaidInvoicesRow), e.Action))
-            End If
-        End Sub
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Sub RemoveQBUnpaidInvoicesRow(ByVal row As QBUnpaidInvoicesRow)
-            Me.Rows.Remove(row)
-        End Sub
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Shared Function GetTypedTableSchema(ByVal xs As Global.System.Xml.Schema.XmlSchemaSet) As Global.System.Xml.Schema.XmlSchemaComplexType
-            Dim type As Global.System.Xml.Schema.XmlSchemaComplexType = New Global.System.Xml.Schema.XmlSchemaComplexType()
-            Dim sequence As Global.System.Xml.Schema.XmlSchemaSequence = New Global.System.Xml.Schema.XmlSchemaSequence()
-            Dim ds As ds_Display = New ds_Display()
-            Dim any1 As Global.System.Xml.Schema.XmlSchemaAny = New Global.System.Xml.Schema.XmlSchemaAny()
-            any1.Namespace = "http://www.w3.org/2001/XMLSchema"
-            any1.MinOccurs = New Decimal(0)
-            any1.MaxOccurs = Decimal.MaxValue
-            any1.ProcessContents = Global.System.Xml.Schema.XmlSchemaContentProcessing.Lax
-            sequence.Items.Add(any1)
-            Dim any2 As Global.System.Xml.Schema.XmlSchemaAny = New Global.System.Xml.Schema.XmlSchemaAny()
-            any2.Namespace = "urn:schemas-microsoft-com:xml-diffgram-v1"
-            any2.MinOccurs = New Decimal(1)
-            any2.ProcessContents = Global.System.Xml.Schema.XmlSchemaContentProcessing.Lax
-            sequence.Items.Add(any2)
-            Dim attribute1 As Global.System.Xml.Schema.XmlSchemaAttribute = New Global.System.Xml.Schema.XmlSchemaAttribute()
-            attribute1.Name = "namespace"
-            attribute1.FixedValue = ds.Namespace
-            type.Attributes.Add(attribute1)
-            Dim attribute2 As Global.System.Xml.Schema.XmlSchemaAttribute = New Global.System.Xml.Schema.XmlSchemaAttribute()
-            attribute2.Name = "tableTypeName"
-            attribute2.FixedValue = "QBUnpaidInvoicesDataTable"
-            type.Attributes.Add(attribute2)
-            type.Particle = sequence
-            Dim dsSchema As Global.System.Xml.Schema.XmlSchema = ds.GetSchemaSerializable
-            If xs.Contains(dsSchema.TargetNamespace) Then
-                Dim s1 As Global.System.IO.MemoryStream = New Global.System.IO.MemoryStream()
-                Dim s2 As Global.System.IO.MemoryStream = New Global.System.IO.MemoryStream()
-                Try 
-                    Dim schema As Global.System.Xml.Schema.XmlSchema = Nothing
-                    dsSchema.Write(s1)
-                    Dim schemas As Global.System.Collections.IEnumerator = xs.Schemas(dsSchema.TargetNamespace).GetEnumerator
-                    Do While schemas.MoveNext
-                        schema = CType(schemas.Current,Global.System.Xml.Schema.XmlSchema)
-                        s2.SetLength(0)
-                        schema.Write(s2)
-                        If (s1.Length = s2.Length) Then
-                            s1.Position = 0
-                            s2.Position = 0
-                            
-                            Do While ((s1.Position <> s1.Length)  _
-                                        AndAlso (s1.ReadByte = s2.ReadByte))
-                                
-                                
-                            Loop
-                            If (s1.Position = s1.Length) Then
-                                Return type
-                            End If
-                        End If
-                        
-                    Loop
-                Finally
-                    If (Not (s1) Is Nothing) Then
-                        s1.Close
-                    End If
-                    If (Not (s2) Is Nothing) Then
-                        s2.Close
-                    End If
-                End Try
-            End If
-            xs.Add(dsSchema)
-            Return type
-        End Function
-    End Class
-    
-    '''<summary>
-    '''Represents the strongly named DataTable class.
-    '''</summary>
-    <Global.System.Serializable(),  _
-     Global.System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedTableSchema")>  _
-    Partial Public Class QBUnappliedPaymentsDataTable
-        Inherits Global.System.Data.TypedTableBase(Of QBUnappliedPaymentsRow)
-        
-        Private columnPay_TxnID As Global.System.Data.DataColumn
-        
-        Private columnPay_EditSeq As Global.System.Data.DataColumn
-        
-        Private columnPay_TxnDate As Global.System.Data.DataColumn
-        
-        Private columnPay_Amount As Global.System.Data.DataColumn
-        
-        Private columnRemaining As Global.System.Data.DataColumn
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Sub New()
-            MyBase.New
-            Me.TableName = "QBUnappliedPayments"
-            Me.BeginInit
-            Me.InitClass
-            Me.EndInit
-        End Sub
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Friend Sub New(ByVal table As Global.System.Data.DataTable)
-            MyBase.New
-            Me.TableName = table.TableName
-            If (table.CaseSensitive <> table.DataSet.CaseSensitive) Then
-                Me.CaseSensitive = table.CaseSensitive
-            End If
-            If (table.Locale.ToString <> table.DataSet.Locale.ToString) Then
-                Me.Locale = table.Locale
-            End If
-            If (table.Namespace <> table.DataSet.Namespace) Then
-                Me.Namespace = table.Namespace
-            End If
-            Me.Prefix = table.Prefix
-            Me.MinimumCapacity = table.MinimumCapacity
-        End Sub
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Protected Sub New(ByVal info As Global.System.Runtime.Serialization.SerializationInfo, ByVal context As Global.System.Runtime.Serialization.StreamingContext)
-            MyBase.New(info, context)
-            Me.InitVars
-        End Sub
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public ReadOnly Property Pay_TxnIDColumn() As Global.System.Data.DataColumn
-            Get
-                Return Me.columnPay_TxnID
-            End Get
-        End Property
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public ReadOnly Property Pay_EditSeqColumn() As Global.System.Data.DataColumn
-            Get
-                Return Me.columnPay_EditSeq
-            End Get
-        End Property
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public ReadOnly Property Pay_TxnDateColumn() As Global.System.Data.DataColumn
-            Get
-                Return Me.columnPay_TxnDate
-            End Get
-        End Property
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public ReadOnly Property Pay_AmountColumn() As Global.System.Data.DataColumn
-            Get
-                Return Me.columnPay_Amount
-            End Get
-        End Property
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public ReadOnly Property RemainingColumn() As Global.System.Data.DataColumn
-            Get
-                Return Me.columnRemaining
-            End Get
-        End Property
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0"),  _
-         Global.System.ComponentModel.Browsable(false)>  _
-        Public ReadOnly Property Count() As Integer
-            Get
-                Return Me.Rows.Count
-            End Get
-        End Property
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Default ReadOnly Property Item(ByVal index As Integer) As QBUnappliedPaymentsRow
-            Get
-                Return CType(Me.Rows(index),QBUnappliedPaymentsRow)
-            End Get
-        End Property
-        
-        <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Event QBUnappliedPaymentsRowChanging As QBUnappliedPaymentsRowChangeEventHandler
-        
-        <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Event QBUnappliedPaymentsRowChanged As QBUnappliedPaymentsRowChangeEventHandler
-        
-        <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Event QBUnappliedPaymentsRowDeleting As QBUnappliedPaymentsRowChangeEventHandler
-        
-        <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Event QBUnappliedPaymentsRowDeleted As QBUnappliedPaymentsRowChangeEventHandler
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Overloads Sub AddQBUnappliedPaymentsRow(ByVal row As QBUnappliedPaymentsRow)
-            Me.Rows.Add(row)
-        End Sub
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Overloads Function AddQBUnappliedPaymentsRow(ByVal Pay_TxnID As String, ByVal Pay_EditSeq As String, ByVal Pay_TxnDate As Date, ByVal Pay_Amount As Double, ByVal Remaining As Double) As QBUnappliedPaymentsRow
-            Dim rowQBUnappliedPaymentsRow As QBUnappliedPaymentsRow = CType(Me.NewRow,QBUnappliedPaymentsRow)
-            Dim columnValuesArray() As Object = New Object() {Pay_TxnID, Pay_EditSeq, Pay_TxnDate, Pay_Amount, Remaining}
-            rowQBUnappliedPaymentsRow.ItemArray = columnValuesArray
-            Me.Rows.Add(rowQBUnappliedPaymentsRow)
-            Return rowQBUnappliedPaymentsRow
-        End Function
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Overrides Function Clone() As Global.System.Data.DataTable
-            Dim cln As QBUnappliedPaymentsDataTable = CType(MyBase.Clone,QBUnappliedPaymentsDataTable)
-            cln.InitVars
-            Return cln
-        End Function
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Protected Overrides Function CreateInstance() As Global.System.Data.DataTable
-            Return New QBUnappliedPaymentsDataTable()
-        End Function
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Friend Sub InitVars()
-            Me.columnPay_TxnID = MyBase.Columns("Pay_TxnID")
-            Me.columnPay_EditSeq = MyBase.Columns("Pay_EditSeq")
-            Me.columnPay_TxnDate = MyBase.Columns("Pay_TxnDate")
-            Me.columnPay_Amount = MyBase.Columns("Pay_Amount")
-            Me.columnRemaining = MyBase.Columns("Remaining")
-        End Sub
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Private Sub InitClass()
-            Me.columnPay_TxnID = New Global.System.Data.DataColumn("Pay_TxnID", GetType(String), Nothing, Global.System.Data.MappingType.Element)
-            MyBase.Columns.Add(Me.columnPay_TxnID)
-            Me.columnPay_EditSeq = New Global.System.Data.DataColumn("Pay_EditSeq", GetType(String), Nothing, Global.System.Data.MappingType.Element)
-            MyBase.Columns.Add(Me.columnPay_EditSeq)
-            Me.columnPay_TxnDate = New Global.System.Data.DataColumn("Pay_TxnDate", GetType(Date), Nothing, Global.System.Data.MappingType.Element)
-            MyBase.Columns.Add(Me.columnPay_TxnDate)
-            Me.columnPay_Amount = New Global.System.Data.DataColumn("Pay_Amount", GetType(Double), Nothing, Global.System.Data.MappingType.Element)
-            MyBase.Columns.Add(Me.columnPay_Amount)
-            Me.columnRemaining = New Global.System.Data.DataColumn("Remaining", GetType(Double), Nothing, Global.System.Data.MappingType.Element)
-            MyBase.Columns.Add(Me.columnRemaining)
-        End Sub
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Function NewQBUnappliedPaymentsRow() As QBUnappliedPaymentsRow
-            Return CType(Me.NewRow,QBUnappliedPaymentsRow)
-        End Function
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Protected Overrides Function NewRowFromBuilder(ByVal builder As Global.System.Data.DataRowBuilder) As Global.System.Data.DataRow
-            Return New QBUnappliedPaymentsRow(builder)
-        End Function
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Protected Overrides Function GetRowType() As Global.System.Type
-            Return GetType(QBUnappliedPaymentsRow)
-        End Function
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Protected Overrides Sub OnRowChanged(ByVal e As Global.System.Data.DataRowChangeEventArgs)
-            MyBase.OnRowChanged(e)
-            If (Not (Me.QBUnappliedPaymentsRowChangedEvent) Is Nothing) Then
-                RaiseEvent QBUnappliedPaymentsRowChanged(Me, New QBUnappliedPaymentsRowChangeEvent(CType(e.Row,QBUnappliedPaymentsRow), e.Action))
-            End If
-        End Sub
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Protected Overrides Sub OnRowChanging(ByVal e As Global.System.Data.DataRowChangeEventArgs)
-            MyBase.OnRowChanging(e)
-            If (Not (Me.QBUnappliedPaymentsRowChangingEvent) Is Nothing) Then
-                RaiseEvent QBUnappliedPaymentsRowChanging(Me, New QBUnappliedPaymentsRowChangeEvent(CType(e.Row,QBUnappliedPaymentsRow), e.Action))
-            End If
-        End Sub
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Protected Overrides Sub OnRowDeleted(ByVal e As Global.System.Data.DataRowChangeEventArgs)
-            MyBase.OnRowDeleted(e)
-            If (Not (Me.QBUnappliedPaymentsRowDeletedEvent) Is Nothing) Then
-                RaiseEvent QBUnappliedPaymentsRowDeleted(Me, New QBUnappliedPaymentsRowChangeEvent(CType(e.Row,QBUnappliedPaymentsRow), e.Action))
-            End If
-        End Sub
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Protected Overrides Sub OnRowDeleting(ByVal e As Global.System.Data.DataRowChangeEventArgs)
-            MyBase.OnRowDeleting(e)
-            If (Not (Me.QBUnappliedPaymentsRowDeletingEvent) Is Nothing) Then
-                RaiseEvent QBUnappliedPaymentsRowDeleting(Me, New QBUnappliedPaymentsRowChangeEvent(CType(e.Row,QBUnappliedPaymentsRow), e.Action))
-            End If
-        End Sub
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Sub RemoveQBUnappliedPaymentsRow(ByVal row As QBUnappliedPaymentsRow)
-            Me.Rows.Remove(row)
-        End Sub
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Shared Function GetTypedTableSchema(ByVal xs As Global.System.Xml.Schema.XmlSchemaSet) As Global.System.Xml.Schema.XmlSchemaComplexType
-            Dim type As Global.System.Xml.Schema.XmlSchemaComplexType = New Global.System.Xml.Schema.XmlSchemaComplexType()
-            Dim sequence As Global.System.Xml.Schema.XmlSchemaSequence = New Global.System.Xml.Schema.XmlSchemaSequence()
-            Dim ds As ds_Display = New ds_Display()
-            Dim any1 As Global.System.Xml.Schema.XmlSchemaAny = New Global.System.Xml.Schema.XmlSchemaAny()
-            any1.Namespace = "http://www.w3.org/2001/XMLSchema"
-            any1.MinOccurs = New Decimal(0)
-            any1.MaxOccurs = Decimal.MaxValue
-            any1.ProcessContents = Global.System.Xml.Schema.XmlSchemaContentProcessing.Lax
-            sequence.Items.Add(any1)
-            Dim any2 As Global.System.Xml.Schema.XmlSchemaAny = New Global.System.Xml.Schema.XmlSchemaAny()
-            any2.Namespace = "urn:schemas-microsoft-com:xml-diffgram-v1"
-            any2.MinOccurs = New Decimal(1)
-            any2.ProcessContents = Global.System.Xml.Schema.XmlSchemaContentProcessing.Lax
-            sequence.Items.Add(any2)
-            Dim attribute1 As Global.System.Xml.Schema.XmlSchemaAttribute = New Global.System.Xml.Schema.XmlSchemaAttribute()
-            attribute1.Name = "namespace"
-            attribute1.FixedValue = ds.Namespace
-            type.Attributes.Add(attribute1)
-            Dim attribute2 As Global.System.Xml.Schema.XmlSchemaAttribute = New Global.System.Xml.Schema.XmlSchemaAttribute()
-            attribute2.Name = "tableTypeName"
-            attribute2.FixedValue = "QBUnappliedPaymentsDataTable"
-            type.Attributes.Add(attribute2)
-            type.Particle = sequence
-            Dim dsSchema As Global.System.Xml.Schema.XmlSchema = ds.GetSchemaSerializable
-            If xs.Contains(dsSchema.TargetNamespace) Then
-                Dim s1 As Global.System.IO.MemoryStream = New Global.System.IO.MemoryStream()
-                Dim s2 As Global.System.IO.MemoryStream = New Global.System.IO.MemoryStream()
-                Try 
-                    Dim schema As Global.System.Xml.Schema.XmlSchema = Nothing
-                    dsSchema.Write(s1)
-                    Dim schemas As Global.System.Collections.IEnumerator = xs.Schemas(dsSchema.TargetNamespace).GetEnumerator
-                    Do While schemas.MoveNext
-                        schema = CType(schemas.Current,Global.System.Xml.Schema.XmlSchema)
-                        s2.SetLength(0)
-                        schema.Write(s2)
-                        If (s1.Length = s2.Length) Then
-                            s1.Position = 0
-                            s2.Position = 0
-                            
-                            Do While ((s1.Position <> s1.Length)  _
-                                        AndAlso (s1.ReadByte = s2.ReadByte))
-                                
-                                
-                            Loop
-                            If (s1.Position = s1.Length) Then
-                                Return type
-                            End If
-                        End If
-                        
-                    Loop
-                Finally
-                    If (Not (s1) Is Nothing) Then
-                        s1.Close
-                    End If
-                    If (Not (s2) Is Nothing) Then
-                        s2.Close
-                    End If
-                End Try
-            End If
-            xs.Add(dsSchema)
-            Return type
-        End Function
-    End Class
-    
-    '''<summary>
-    '''Represents strongly named DataRow class.
-    '''</summary>
-    Partial Public Class QB_InvoiceDisplayRow
-        Inherits Global.System.Data.DataRow
-        
         Private tableQB_InvoiceDisplay As QB_InvoiceDisplayDataTable
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Friend Sub New(ByVal rb As Global.System.Data.DataRowBuilder)
-            MyBase.New(rb)
-            Me.tableQB_InvoiceDisplay = CType(Me.Table,QB_InvoiceDisplayDataTable)
-        End Sub
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Property InvoiceNumber() As String
-            Get
-                Try 
-                    Return CType(Me(Me.tableQB_InvoiceDisplay.InvoiceNumberColumn),String)
-                Catch e As Global.System.InvalidCastException
-                    Throw New Global.System.Data.StrongTypingException("The value for column 'InvoiceNumber' in table 'QB_InvoiceDisplay' is DBNull.", e)
-                End Try
-            End Get
-            Set
-                Me(Me.tableQB_InvoiceDisplay.InvoiceNumberColumn) = value
-            End Set
-        End Property
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Property CustomerNumber() As String
-            Get
-                Try 
-                    Return CType(Me(Me.tableQB_InvoiceDisplay.CustomerNumberColumn),String)
-                Catch e As Global.System.InvalidCastException
-                    Throw New Global.System.Data.StrongTypingException("The value for column 'CustomerNumber' in table 'QB_InvoiceDisplay' is DBNull.", e)
-                End Try
-            End Get
-            Set
-                Me(Me.tableQB_InvoiceDisplay.CustomerNumberColumn) = value
-            End Set
-        End Property
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Property CustomerName() As String
-            Get
-                Try 
-                    Return CType(Me(Me.tableQB_InvoiceDisplay.CustomerNameColumn),String)
-                Catch e As Global.System.InvalidCastException
-                    Throw New Global.System.Data.StrongTypingException("The value for column 'CustomerName' in table 'QB_InvoiceDisplay' is DBNull.", e)
-                End Try
-            End Get
-            Set
-                Me(Me.tableQB_InvoiceDisplay.CustomerNameColumn) = value
-            End Set
-        End Property
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Property InvoicePostDate() As Date
-            Get
-                Try 
-                    Return CType(Me(Me.tableQB_InvoiceDisplay.InvoicePostDateColumn),Date)
-                Catch e As Global.System.InvalidCastException
-                    Throw New Global.System.Data.StrongTypingException("The value for column 'InvoicePostDate' in table 'QB_InvoiceDisplay' is DBNull.", e)
-                End Try
-            End Get
-            Set
-                Me(Me.tableQB_InvoiceDisplay.InvoicePostDateColumn) = value
-            End Set
-        End Property
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Property InvoiceDueDate() As Date
-            Get
-                Try 
-                    Return CType(Me(Me.tableQB_InvoiceDisplay.InvoiceDueDateColumn),Date)
-                Catch e As Global.System.InvalidCastException
-                    Throw New Global.System.Data.StrongTypingException("The value for column 'InvoiceDueDate' in table 'QB_InvoiceDisplay' is DBNull.", e)
-                End Try
-            End Get
-            Set
-                Me(Me.tableQB_InvoiceDisplay.InvoiceDueDateColumn) = value
-            End Set
-        End Property
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Property InvoiceTotal() As Double
-            Get
-                Try 
-                    Return CType(Me(Me.tableQB_InvoiceDisplay.InvoiceTotalColumn),Double)
-                Catch e As Global.System.InvalidCastException
-                    Throw New Global.System.Data.StrongTypingException("The value for column 'InvoiceTotal' in table 'QB_InvoiceDisplay' is DBNull.", e)
-                End Try
-            End Get
-            Set
-                Me(Me.tableQB_InvoiceDisplay.InvoiceTotalColumn) = value
-            End Set
-        End Property
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Property InvoiceBalance() As Double
-            Get
-                Try 
-                    Return CType(Me(Me.tableQB_InvoiceDisplay.InvoiceBalanceColumn),Double)
-                Catch e As Global.System.InvalidCastException
-                    Throw New Global.System.Data.StrongTypingException("The value for column 'InvoiceBalance' in table 'QB_InvoiceDisplay' is DBNull.", e)
-                End Try
-            End Get
-            Set
-                Me(Me.tableQB_InvoiceDisplay.InvoiceBalanceColumn) = value
-            End Set
-        End Property
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Property InvoiceCreationDate() As String
-            Get
-                Try 
-                    Return CType(Me(Me.tableQB_InvoiceDisplay.InvoiceCreationDateColumn),String)
-                Catch e As Global.System.InvalidCastException
-                    Throw New Global.System.Data.StrongTypingException("The value for column 'InvoiceCreationDate' in table 'QB_InvoiceDisplay' is DBNull"& _ 
-                            ".", e)
-                End Try
-            End Get
-            Set
-                Me(Me.tableQB_InvoiceDisplay.InvoiceCreationDateColumn) = value
-            End Set
-        End Property
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Function IsInvoiceNumberNull() As Boolean
-            Return Me.IsNull(Me.tableQB_InvoiceDisplay.InvoiceNumberColumn)
-        End Function
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Sub SetInvoiceNumberNull()
-            Me(Me.tableQB_InvoiceDisplay.InvoiceNumberColumn) = Global.System.Convert.DBNull
-        End Sub
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Function IsCustomerNumberNull() As Boolean
-            Return Me.IsNull(Me.tableQB_InvoiceDisplay.CustomerNumberColumn)
-        End Function
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Sub SetCustomerNumberNull()
-            Me(Me.tableQB_InvoiceDisplay.CustomerNumberColumn) = Global.System.Convert.DBNull
-        End Sub
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Function IsCustomerNameNull() As Boolean
-            Return Me.IsNull(Me.tableQB_InvoiceDisplay.CustomerNameColumn)
-        End Function
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Sub SetCustomerNameNull()
-            Me(Me.tableQB_InvoiceDisplay.CustomerNameColumn) = Global.System.Convert.DBNull
-        End Sub
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Function IsInvoicePostDateNull() As Boolean
-            Return Me.IsNull(Me.tableQB_InvoiceDisplay.InvoicePostDateColumn)
-        End Function
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Sub SetInvoicePostDateNull()
-            Me(Me.tableQB_InvoiceDisplay.InvoicePostDateColumn) = Global.System.Convert.DBNull
-        End Sub
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Function IsInvoiceDueDateNull() As Boolean
-            Return Me.IsNull(Me.tableQB_InvoiceDisplay.InvoiceDueDateColumn)
-        End Function
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Sub SetInvoiceDueDateNull()
-            Me(Me.tableQB_InvoiceDisplay.InvoiceDueDateColumn) = Global.System.Convert.DBNull
-        End Sub
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Function IsInvoiceTotalNull() As Boolean
-            Return Me.IsNull(Me.tableQB_InvoiceDisplay.InvoiceTotalColumn)
-        End Function
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Sub SetInvoiceTotalNull()
-            Me(Me.tableQB_InvoiceDisplay.InvoiceTotalColumn) = Global.System.Convert.DBNull
-        End Sub
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Function IsInvoiceBalanceNull() As Boolean
-            Return Me.IsNull(Me.tableQB_InvoiceDisplay.InvoiceBalanceColumn)
-        End Function
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Sub SetInvoiceBalanceNull()
-            Me(Me.tableQB_InvoiceDisplay.InvoiceBalanceColumn) = Global.System.Convert.DBNull
-        End Sub
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Function IsInvoiceCreationDateNull() As Boolean
-            Return Me.IsNull(Me.tableQB_InvoiceDisplay.InvoiceCreationDateColumn)
-        End Function
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Sub SetInvoiceCreationDateNull()
-            Me(Me.tableQB_InvoiceDisplay.InvoiceCreationDateColumn) = Global.System.Convert.DBNull
-        End Sub
-    End Class
-    
-    '''<summary>
-    '''Represents strongly named DataRow class.
-    '''</summary>
-    Partial Public Class QB_PaymentsDisplayRow
-        Inherits Global.System.Data.DataRow
-        
+
         Private tableQB_PaymentsDisplay As QB_PaymentsDisplayDataTable
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Friend Sub New(ByVal rb As Global.System.Data.DataRowBuilder)
-            MyBase.New(rb)
-            Me.tableQB_PaymentsDisplay = CType(Me.Table,QB_PaymentsDisplayDataTable)
-        End Sub
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Property PaymentTxnNumber() As String
-            Get
-                Try 
-                    Return CType(Me(Me.tableQB_PaymentsDisplay.PaymentTxnNumberColumn),String)
-                Catch e As Global.System.InvalidCastException
-                    Throw New Global.System.Data.StrongTypingException("The value for column 'PaymentTxnNumber' in table 'QB_PaymentsDisplay' is DBNull.", e)
-                End Try
-            End Get
-            Set
-                Me(Me.tableQB_PaymentsDisplay.PaymentTxnNumberColumn) = value
-            End Set
-        End Property
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Property PaymentDate() As Date
-            Get
-                Try 
-                    Return CType(Me(Me.tableQB_PaymentsDisplay.PaymentDateColumn),Date)
-                Catch e As Global.System.InvalidCastException
-                    Throw New Global.System.Data.StrongTypingException("The value for column 'PaymentDate' in table 'QB_PaymentsDisplay' is DBNull.", e)
-                End Try
-            End Get
-            Set
-                Me(Me.tableQB_PaymentsDisplay.PaymentDateColumn) = value
-            End Set
-        End Property
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Property PaymentAmount() As Double
-            Get
-                Try 
-                    Return CType(Me(Me.tableQB_PaymentsDisplay.PaymentAmountColumn),Double)
-                Catch e As Global.System.InvalidCastException
-                    Throw New Global.System.Data.StrongTypingException("The value for column 'PaymentAmount' in table 'QB_PaymentsDisplay' is DBNull.", e)
-                End Try
-            End Get
-            Set
-                Me(Me.tableQB_PaymentsDisplay.PaymentAmountColumn) = value
-            End Set
-        End Property
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Property PaymentMethod() As String
-            Get
-                Try 
-                    Return CType(Me(Me.tableQB_PaymentsDisplay.PaymentMethodColumn),String)
-                Catch e As Global.System.InvalidCastException
-                    Throw New Global.System.Data.StrongTypingException("The value for column 'PaymentMethod' in table 'QB_PaymentsDisplay' is DBNull.", e)
-                End Try
-            End Get
-            Set
-                Me(Me.tableQB_PaymentsDisplay.PaymentMethodColumn) = value
-            End Set
-        End Property
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Property PaymentCheckNum() As String
-            Get
-                Try 
-                    Return CType(Me(Me.tableQB_PaymentsDisplay.PaymentCheckNumColumn),String)
-                Catch e As Global.System.InvalidCastException
-                    Throw New Global.System.Data.StrongTypingException("The value for column 'PaymentCheckNum' in table 'QB_PaymentsDisplay' is DBNull.", e)
-                End Try
-            End Get
-            Set
-                Me(Me.tableQB_PaymentsDisplay.PaymentCheckNumColumn) = value
-            End Set
-        End Property
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Function IsPaymentTxnNumberNull() As Boolean
-            Return Me.IsNull(Me.tableQB_PaymentsDisplay.PaymentTxnNumberColumn)
-        End Function
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Sub SetPaymentTxnNumberNull()
-            Me(Me.tableQB_PaymentsDisplay.PaymentTxnNumberColumn) = Global.System.Convert.DBNull
-        End Sub
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Function IsPaymentDateNull() As Boolean
-            Return Me.IsNull(Me.tableQB_PaymentsDisplay.PaymentDateColumn)
-        End Function
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Sub SetPaymentDateNull()
-            Me(Me.tableQB_PaymentsDisplay.PaymentDateColumn) = Global.System.Convert.DBNull
-        End Sub
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Function IsPaymentAmountNull() As Boolean
-            Return Me.IsNull(Me.tableQB_PaymentsDisplay.PaymentAmountColumn)
-        End Function
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Sub SetPaymentAmountNull()
-            Me(Me.tableQB_PaymentsDisplay.PaymentAmountColumn) = Global.System.Convert.DBNull
-        End Sub
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Function IsPaymentMethodNull() As Boolean
-            Return Me.IsNull(Me.tableQB_PaymentsDisplay.PaymentMethodColumn)
-        End Function
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Sub SetPaymentMethodNull()
-            Me(Me.tableQB_PaymentsDisplay.PaymentMethodColumn) = Global.System.Convert.DBNull
-        End Sub
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Function IsPaymentCheckNumNull() As Boolean
-            Return Me.IsNull(Me.tableQB_PaymentsDisplay.PaymentCheckNumColumn)
-        End Function
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Sub SetPaymentCheckNumNull()
-            Me(Me.tableQB_PaymentsDisplay.PaymentCheckNumColumn) = Global.System.Convert.DBNull
-        End Sub
-    End Class
-    
-    '''<summary>
-    '''Represents strongly named DataRow class.
-    '''</summary>
-    Partial Public Class QBUnpaidInvoicesRow
-        Inherits Global.System.Data.DataRow
-        
+
         Private tableQBUnpaidInvoices As QBUnpaidInvoicesDataTable
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Friend Sub New(ByVal rb As Global.System.Data.DataRowBuilder)
-            MyBase.New(rb)
-            Me.tableQBUnpaidInvoices = CType(Me.Table,QBUnpaidInvoicesDataTable)
-        End Sub
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Property Inv_TxnID() As String
-            Get
-                Try 
-                    Return CType(Me(Me.tableQBUnpaidInvoices.Inv_TxnIDColumn),String)
-                Catch e As Global.System.InvalidCastException
-                    Throw New Global.System.Data.StrongTypingException("The value for column 'Inv_TxnID' in table 'QBUnpaidInvoices' is DBNull.", e)
-                End Try
-            End Get
-            Set
-                Me(Me.tableQBUnpaidInvoices.Inv_TxnIDColumn) = value
-            End Set
-        End Property
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Property Inv_TxnDate() As Date
-            Get
-                Try 
-                    Return CType(Me(Me.tableQBUnpaidInvoices.Inv_TxnDateColumn),Date)
-                Catch e As Global.System.InvalidCastException
-                    Throw New Global.System.Data.StrongTypingException("The value for column 'Inv_TxnDate' in table 'QBUnpaidInvoices' is DBNull.", e)
-                End Try
-            End Get
-            Set
-                Me(Me.tableQBUnpaidInvoices.Inv_TxnDateColumn) = value
-            End Set
-        End Property
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Property Inv_Balance() As Double
-            Get
-                Try 
-                    Return CType(Me(Me.tableQBUnpaidInvoices.Inv_BalanceColumn),Double)
-                Catch e As Global.System.InvalidCastException
-                    Throw New Global.System.Data.StrongTypingException("The value for column 'Inv_Balance' in table 'QBUnpaidInvoices' is DBNull.", e)
-                End Try
-            End Get
-            Set
-                Me(Me.tableQBUnpaidInvoices.Inv_BalanceColumn) = value
-            End Set
-        End Property
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Property Remaining() As Double
-            Get
-                Try 
-                    Return CType(Me(Me.tableQBUnpaidInvoices.RemainingColumn),Double)
-                Catch e As Global.System.InvalidCastException
-                    Throw New Global.System.Data.StrongTypingException("The value for column 'Remaining' in table 'QBUnpaidInvoices' is DBNull.", e)
-                End Try
-            End Get
-            Set
-                Me(Me.tableQBUnpaidInvoices.RemainingColumn) = value
-            End Set
-        End Property
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Function IsInv_TxnIDNull() As Boolean
-            Return Me.IsNull(Me.tableQBUnpaidInvoices.Inv_TxnIDColumn)
-        End Function
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Sub SetInv_TxnIDNull()
-            Me(Me.tableQBUnpaidInvoices.Inv_TxnIDColumn) = Global.System.Convert.DBNull
-        End Sub
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Function IsInv_TxnDateNull() As Boolean
-            Return Me.IsNull(Me.tableQBUnpaidInvoices.Inv_TxnDateColumn)
-        End Function
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Sub SetInv_TxnDateNull()
-            Me(Me.tableQBUnpaidInvoices.Inv_TxnDateColumn) = Global.System.Convert.DBNull
-        End Sub
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Function IsInv_BalanceNull() As Boolean
-            Return Me.IsNull(Me.tableQBUnpaidInvoices.Inv_BalanceColumn)
-        End Function
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Sub SetInv_BalanceNull()
-            Me(Me.tableQBUnpaidInvoices.Inv_BalanceColumn) = Global.System.Convert.DBNull
-        End Sub
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Function IsRemainingNull() As Boolean
-            Return Me.IsNull(Me.tableQBUnpaidInvoices.RemainingColumn)
-        End Function
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Sub SetRemainingNull()
-            Me(Me.tableQBUnpaidInvoices.RemainingColumn) = Global.System.Convert.DBNull
-        End Sub
-    End Class
-    
-    '''<summary>
-    '''Represents strongly named DataRow class.
-    '''</summary>
-    Partial Public Class QBUnappliedPaymentsRow
-        Inherits Global.System.Data.DataRow
-        
+
         Private tableQBUnappliedPayments As QBUnappliedPaymentsDataTable
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Friend Sub New(ByVal rb As Global.System.Data.DataRowBuilder)
-            MyBase.New(rb)
-            Me.tableQBUnappliedPayments = CType(Me.Table,QBUnappliedPaymentsDataTable)
+
+        Private _schemaSerializationMode As Global.System.Data.SchemaSerializationMode = Global.System.Data.SchemaSerializationMode.IncludeSchema
+
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+            Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
+        Public Sub New()
+            MyBase.New()
+            Me.BeginInit()
+            Me.InitClass()
+            Dim schemaChangedHandler As Global.System.ComponentModel.CollectionChangeEventHandler = AddressOf Me.SchemaChanged
+            AddHandler MyBase.Tables.CollectionChanged, schemaChangedHandler
+            AddHandler MyBase.Relations.CollectionChanged, schemaChangedHandler
+            Me.EndInit()
         End Sub
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Property Pay_TxnID() As String
+
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+            Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
+        Protected Sub New(ByVal info As Global.System.Runtime.Serialization.SerializationInfo, ByVal context As Global.System.Runtime.Serialization.StreamingContext)
+            MyBase.New(info, context, False)
+            If (Me.IsBinarySerialized(info, context) = True) Then
+                Me.InitVars(False)
+                Dim schemaChangedHandler1 As Global.System.ComponentModel.CollectionChangeEventHandler = AddressOf Me.SchemaChanged
+                AddHandler Me.Tables.CollectionChanged, schemaChangedHandler1
+                AddHandler Me.Relations.CollectionChanged, schemaChangedHandler1
+                Return
+            End If
+            Dim strSchema As String = CType(info.GetValue("XmlSchema", GetType(String)), String)
+            If (Me.DetermineSchemaSerializationMode(info, context) = Global.System.Data.SchemaSerializationMode.IncludeSchema) Then
+                Dim ds As Global.System.Data.DataSet = New Global.System.Data.DataSet()
+                ds.ReadXmlSchema(New Global.System.Xml.XmlTextReader(New Global.System.IO.StringReader(strSchema)))
+                If (Not (ds.Tables("QB_InvoiceDisplay")) Is Nothing) Then
+                    MyBase.Tables.Add(New QB_InvoiceDisplayDataTable(ds.Tables("QB_InvoiceDisplay")))
+                End If
+                If (Not (ds.Tables("QB_PaymentsDisplay")) Is Nothing) Then
+                    MyBase.Tables.Add(New QB_PaymentsDisplayDataTable(ds.Tables("QB_PaymentsDisplay")))
+                End If
+                If (Not (ds.Tables("QBUnpaidInvoices")) Is Nothing) Then
+                    MyBase.Tables.Add(New QBUnpaidInvoicesDataTable(ds.Tables("QBUnpaidInvoices")))
+                End If
+                If (Not (ds.Tables("QBUnappliedPayments")) Is Nothing) Then
+                    MyBase.Tables.Add(New QBUnappliedPaymentsDataTable(ds.Tables("QBUnappliedPayments")))
+                End If
+                Me.DataSetName = ds.DataSetName
+                Me.Prefix = ds.Prefix
+                Me.Namespace = ds.Namespace
+                Me.Locale = ds.Locale
+                Me.CaseSensitive = ds.CaseSensitive
+                Me.EnforceConstraints = ds.EnforceConstraints
+                Me.Merge(ds, False, Global.System.Data.MissingSchemaAction.Add)
+                Me.InitVars()
+            Else
+                Me.ReadXmlSchema(New Global.System.Xml.XmlTextReader(New Global.System.IO.StringReader(strSchema)))
+            End If
+            Me.GetSerializationData(info, context)
+            Dim schemaChangedHandler As Global.System.ComponentModel.CollectionChangeEventHandler = AddressOf Me.SchemaChanged
+            AddHandler MyBase.Tables.CollectionChanged, schemaChangedHandler
+            AddHandler Me.Relations.CollectionChanged, schemaChangedHandler
+        End Sub
+
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+            Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0"), _
+            Global.System.ComponentModel.Browsable(False), _
+            Global.System.ComponentModel.DesignerSerializationVisibility(Global.System.ComponentModel.DesignerSerializationVisibility.Content)> _
+        Public ReadOnly Property QB_InvoiceDisplay() As QB_InvoiceDisplayDataTable
             Get
-                Try 
-                    Return CType(Me(Me.tableQBUnappliedPayments.Pay_TxnIDColumn),String)
-                Catch e As Global.System.InvalidCastException
-                    Throw New Global.System.Data.StrongTypingException("The value for column 'Pay_TxnID' in table 'QBUnappliedPayments' is DBNull.", e)
-                End Try
+                Return Me.tableQB_InvoiceDisplay
             End Get
-            Set
-                Me(Me.tableQBUnappliedPayments.Pay_TxnIDColumn) = value
+        End Property
+
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+            Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0"), _
+            Global.System.ComponentModel.Browsable(False), _
+            Global.System.ComponentModel.DesignerSerializationVisibility(Global.System.ComponentModel.DesignerSerializationVisibility.Content)> _
+        Public ReadOnly Property QB_PaymentsDisplay() As QB_PaymentsDisplayDataTable
+            Get
+                Return Me.tableQB_PaymentsDisplay
+            End Get
+        End Property
+
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+            Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0"), _
+            Global.System.ComponentModel.Browsable(False), _
+            Global.System.ComponentModel.DesignerSerializationVisibility(Global.System.ComponentModel.DesignerSerializationVisibility.Content)> _
+        Public ReadOnly Property QBUnpaidInvoices() As QBUnpaidInvoicesDataTable
+            Get
+                Return Me.tableQBUnpaidInvoices
+            End Get
+        End Property
+
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+            Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0"), _
+            Global.System.ComponentModel.Browsable(False), _
+            Global.System.ComponentModel.DesignerSerializationVisibility(Global.System.ComponentModel.DesignerSerializationVisibility.Content)> _
+        Public ReadOnly Property QBUnappliedPayments() As QBUnappliedPaymentsDataTable
+            Get
+                Return Me.tableQBUnappliedPayments
+            End Get
+        End Property
+
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+            Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0"), _
+            Global.System.ComponentModel.BrowsableAttribute(True), _
+            Global.System.ComponentModel.DesignerSerializationVisibilityAttribute(Global.System.ComponentModel.DesignerSerializationVisibility.Visible)> _
+        Public Overrides Property SchemaSerializationMode() As Global.System.Data.SchemaSerializationMode
+            Get
+                Return Me._schemaSerializationMode
+            End Get
+            Set(value As Global.System.Data.SchemaSerializationMode)
+                Me._schemaSerializationMode = Value
             End Set
         End Property
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Property Pay_EditSeq() As String
+
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+            Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0"), _
+            Global.System.ComponentModel.DesignerSerializationVisibilityAttribute(Global.System.ComponentModel.DesignerSerializationVisibility.Hidden)> _
+        Public Shadows ReadOnly Property Tables() As Global.System.Data.DataTableCollection
             Get
-                Try 
-                    Return CType(Me(Me.tableQBUnappliedPayments.Pay_EditSeqColumn),String)
-                Catch e As Global.System.InvalidCastException
-                    Throw New Global.System.Data.StrongTypingException("The value for column 'Pay_EditSeq' in table 'QBUnappliedPayments' is DBNull.", e)
+                Return MyBase.Tables
+            End Get
+        End Property
+
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+            Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0"), _
+            Global.System.ComponentModel.DesignerSerializationVisibilityAttribute(Global.System.ComponentModel.DesignerSerializationVisibility.Hidden)> _
+        Public Shadows ReadOnly Property Relations() As Global.System.Data.DataRelationCollection
+            Get
+                Return MyBase.Relations
+            End Get
+        End Property
+
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+            Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
+        Protected Overrides Sub InitializeDerivedDataSet()
+            Me.BeginInit()
+            Me.InitClass()
+            Me.EndInit()
+        End Sub
+
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+            Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
+        Public Overrides Function Clone() As Global.System.Data.DataSet
+            Dim cln As ds_Display = CType(MyBase.Clone, ds_Display)
+            cln.InitVars()
+            cln.SchemaSerializationMode = Me.SchemaSerializationMode
+            Return cln
+        End Function
+
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+            Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
+        Protected Overrides Function ShouldSerializeTables() As Boolean
+            Return False
+        End Function
+
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+            Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
+        Protected Overrides Function ShouldSerializeRelations() As Boolean
+            Return False
+        End Function
+
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+            Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
+        Protected Overrides Sub ReadXmlSerializable(ByVal reader As Global.System.Xml.XmlReader)
+            If (Me.DetermineSchemaSerializationMode(reader) = Global.System.Data.SchemaSerializationMode.IncludeSchema) Then
+                Me.Reset()
+                Dim ds As Global.System.Data.DataSet = New Global.System.Data.DataSet()
+                ds.ReadXml(reader)
+                If (Not (ds.Tables("QB_InvoiceDisplay")) Is Nothing) Then
+                    MyBase.Tables.Add(New QB_InvoiceDisplayDataTable(ds.Tables("QB_InvoiceDisplay")))
+                End If
+                If (Not (ds.Tables("QB_PaymentsDisplay")) Is Nothing) Then
+                    MyBase.Tables.Add(New QB_PaymentsDisplayDataTable(ds.Tables("QB_PaymentsDisplay")))
+                End If
+                If (Not (ds.Tables("QBUnpaidInvoices")) Is Nothing) Then
+                    MyBase.Tables.Add(New QBUnpaidInvoicesDataTable(ds.Tables("QBUnpaidInvoices")))
+                End If
+                If (Not (ds.Tables("QBUnappliedPayments")) Is Nothing) Then
+                    MyBase.Tables.Add(New QBUnappliedPaymentsDataTable(ds.Tables("QBUnappliedPayments")))
+                End If
+                Me.DataSetName = ds.DataSetName
+                Me.Prefix = ds.Prefix
+                Me.Namespace = ds.Namespace
+                Me.Locale = ds.Locale
+                Me.CaseSensitive = ds.CaseSensitive
+                Me.EnforceConstraints = ds.EnforceConstraints
+                Me.Merge(ds, False, Global.System.Data.MissingSchemaAction.Add)
+                Me.InitVars()
+            Else
+                Me.ReadXml(reader)
+                Me.InitVars()
+            End If
+        End Sub
+
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+            Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
+        Protected Overrides Function GetSchemaSerializable() As Global.System.Xml.Schema.XmlSchema
+            Dim stream As Global.System.IO.MemoryStream = New Global.System.IO.MemoryStream()
+            Me.WriteXmlSchema(New Global.System.Xml.XmlTextWriter(stream, Nothing))
+            stream.Position = 0
+            Return Global.System.Xml.Schema.XmlSchema.Read(New Global.System.Xml.XmlTextReader(stream), Nothing)
+        End Function
+
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+            Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
+        Friend Overloads Sub InitVars()
+            Me.InitVars(True)
+        End Sub
+
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+            Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
+        Friend Overloads Sub InitVars(ByVal initTable As Boolean)
+            Me.tableQB_InvoiceDisplay = CType(MyBase.Tables("QB_InvoiceDisplay"), QB_InvoiceDisplayDataTable)
+            If (initTable = True) Then
+                If (Not (Me.tableQB_InvoiceDisplay) Is Nothing) Then
+                    Me.tableQB_InvoiceDisplay.InitVars()
+                End If
+            End If
+            Me.tableQB_PaymentsDisplay = CType(MyBase.Tables("QB_PaymentsDisplay"), QB_PaymentsDisplayDataTable)
+            If (initTable = True) Then
+                If (Not (Me.tableQB_PaymentsDisplay) Is Nothing) Then
+                    Me.tableQB_PaymentsDisplay.InitVars()
+                End If
+            End If
+            Me.tableQBUnpaidInvoices = CType(MyBase.Tables("QBUnpaidInvoices"), QBUnpaidInvoicesDataTable)
+            If (initTable = True) Then
+                If (Not (Me.tableQBUnpaidInvoices) Is Nothing) Then
+                    Me.tableQBUnpaidInvoices.InitVars()
+                End If
+            End If
+            Me.tableQBUnappliedPayments = CType(MyBase.Tables("QBUnappliedPayments"), QBUnappliedPaymentsDataTable)
+            If (initTable = True) Then
+                If (Not (Me.tableQBUnappliedPayments) Is Nothing) Then
+                    Me.tableQBUnappliedPayments.InitVars()
+                End If
+            End If
+        End Sub
+
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+            Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
+        Private Sub InitClass()
+            Me.DataSetName = "ds_Display"
+            Me.Prefix = ""
+            Me.Namespace = "http://tempuri.org/ds_Display.xsd"
+            Me.EnforceConstraints = True
+            Me.SchemaSerializationMode = Global.System.Data.SchemaSerializationMode.IncludeSchema
+            Me.tableQB_InvoiceDisplay = New QB_InvoiceDisplayDataTable()
+            MyBase.Tables.Add(Me.tableQB_InvoiceDisplay)
+            Me.tableQB_PaymentsDisplay = New QB_PaymentsDisplayDataTable()
+            MyBase.Tables.Add(Me.tableQB_PaymentsDisplay)
+            Me.tableQBUnpaidInvoices = New QBUnpaidInvoicesDataTable()
+            MyBase.Tables.Add(Me.tableQBUnpaidInvoices)
+            Me.tableQBUnappliedPayments = New QBUnappliedPaymentsDataTable()
+            MyBase.Tables.Add(Me.tableQBUnappliedPayments)
+        End Sub
+
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+            Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
+        Private Function ShouldSerializeQB_InvoiceDisplay() As Boolean
+            Return False
+        End Function
+
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+            Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
+        Private Function ShouldSerializeQB_PaymentsDisplay() As Boolean
+            Return False
+        End Function
+
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+            Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
+        Private Function ShouldSerializeQBUnpaidInvoices() As Boolean
+            Return False
+        End Function
+
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+            Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
+        Private Function ShouldSerializeQBUnappliedPayments() As Boolean
+            Return False
+        End Function
+
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+            Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
+        Private Sub SchemaChanged(ByVal sender As Object, ByVal e As Global.System.ComponentModel.CollectionChangeEventArgs)
+            If (e.Action = Global.System.ComponentModel.CollectionChangeAction.Remove) Then
+                Me.InitVars()
+            End If
+        End Sub
+
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+            Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
+        Public Shared Function GetTypedDataSetSchema(ByVal xs As Global.System.Xml.Schema.XmlSchemaSet) As Global.System.Xml.Schema.XmlSchemaComplexType
+            Dim ds As ds_Display = New ds_Display()
+            Dim type As Global.System.Xml.Schema.XmlSchemaComplexType = New Global.System.Xml.Schema.XmlSchemaComplexType()
+            Dim sequence As Global.System.Xml.Schema.XmlSchemaSequence = New Global.System.Xml.Schema.XmlSchemaSequence()
+            Dim any As Global.System.Xml.Schema.XmlSchemaAny = New Global.System.Xml.Schema.XmlSchemaAny()
+            any.Namespace = ds.Namespace
+            sequence.Items.Add(any)
+            type.Particle = sequence
+            Dim dsSchema As Global.System.Xml.Schema.XmlSchema = ds.GetSchemaSerializable
+            If xs.Contains(dsSchema.TargetNamespace) Then
+                Dim s1 As Global.System.IO.MemoryStream = New Global.System.IO.MemoryStream()
+                Dim s2 As Global.System.IO.MemoryStream = New Global.System.IO.MemoryStream()
+                Try
+                    Dim schema As Global.System.Xml.Schema.XmlSchema = Nothing
+                    dsSchema.Write(s1)
+                    Dim schemas As Global.System.Collections.IEnumerator = xs.Schemas(dsSchema.TargetNamespace).GetEnumerator
+                    Do While schemas.MoveNext
+                        schema = CType(schemas.Current, Global.System.Xml.Schema.XmlSchema)
+                        s2.SetLength(0)
+                        schema.Write(s2)
+                        If (s1.Length = s2.Length) Then
+                            s1.Position = 0
+                            s2.Position = 0
+
+                            Do While ((s1.Position <> s1.Length) _
+                                      AndAlso (s1.ReadByte = s2.ReadByte))
+
+
+                            Loop
+                            If (s1.Position = s1.Length) Then
+                                Return type
+                            End If
+                        End If
+
+                    Loop
+                Finally
+                    If (Not (s1) Is Nothing) Then
+                        s1.Close()
+                    End If
+                    If (Not (s2) Is Nothing) Then
+                        s2.Close()
+                    End If
                 End Try
-            End Get
-            Set
-                Me(Me.tableQBUnappliedPayments.Pay_EditSeqColumn) = value
-            End Set
-        End Property
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Property Pay_TxnDate() As Date
-            Get
-                Try 
-                    Return CType(Me(Me.tableQBUnappliedPayments.Pay_TxnDateColumn),Date)
-                Catch e As Global.System.InvalidCastException
-                    Throw New Global.System.Data.StrongTypingException("The value for column 'Pay_TxnDate' in table 'QBUnappliedPayments' is DBNull.", e)
-                End Try
-            End Get
-            Set
-                Me(Me.tableQBUnappliedPayments.Pay_TxnDateColumn) = value
-            End Set
-        End Property
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Property Pay_Amount() As Double
-            Get
-                Try 
-                    Return CType(Me(Me.tableQBUnappliedPayments.Pay_AmountColumn),Double)
-                Catch e As Global.System.InvalidCastException
-                    Throw New Global.System.Data.StrongTypingException("The value for column 'Pay_Amount' in table 'QBUnappliedPayments' is DBNull.", e)
-                End Try
-            End Get
-            Set
-                Me(Me.tableQBUnappliedPayments.Pay_AmountColumn) = value
-            End Set
-        End Property
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Property Remaining() As Double
-            Get
-                Try 
-                    Return CType(Me(Me.tableQBUnappliedPayments.RemainingColumn),Double)
-                Catch e As Global.System.InvalidCastException
-                    Throw New Global.System.Data.StrongTypingException("The value for column 'Remaining' in table 'QBUnappliedPayments' is DBNull.", e)
-                End Try
-            End Get
-            Set
-                Me(Me.tableQBUnappliedPayments.RemainingColumn) = value
-            End Set
-        End Property
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Function IsPay_TxnIDNull() As Boolean
-            Return Me.IsNull(Me.tableQBUnappliedPayments.Pay_TxnIDColumn)
+            End If
+            xs.Add(dsSchema)
+            Return type
         End Function
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Sub SetPay_TxnIDNull()
-            Me(Me.tableQBUnappliedPayments.Pay_TxnIDColumn) = Global.System.Convert.DBNull
-        End Sub
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Function IsPay_EditSeqNull() As Boolean
-            Return Me.IsNull(Me.tableQBUnappliedPayments.Pay_EditSeqColumn)
-        End Function
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Sub SetPay_EditSeqNull()
-            Me(Me.tableQBUnappliedPayments.Pay_EditSeqColumn) = Global.System.Convert.DBNull
-        End Sub
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Function IsPay_TxnDateNull() As Boolean
-            Return Me.IsNull(Me.tableQBUnappliedPayments.Pay_TxnDateColumn)
-        End Function
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Sub SetPay_TxnDateNull()
-            Me(Me.tableQBUnappliedPayments.Pay_TxnDateColumn) = Global.System.Convert.DBNull
-        End Sub
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Function IsPay_AmountNull() As Boolean
-            Return Me.IsNull(Me.tableQBUnappliedPayments.Pay_AmountColumn)
-        End Function
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Sub SetPay_AmountNull()
-            Me(Me.tableQBUnappliedPayments.Pay_AmountColumn) = Global.System.Convert.DBNull
-        End Sub
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Function IsRemainingNull() As Boolean
-            Return Me.IsNull(Me.tableQBUnappliedPayments.RemainingColumn)
-        End Function
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Sub SetRemainingNull()
-            Me(Me.tableQBUnappliedPayments.RemainingColumn) = Global.System.Convert.DBNull
-        End Sub
+
+        <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
+        Public Delegate Sub QB_InvoiceDisplayRowChangeEventHandler(ByVal sender As Object, ByVal e As QB_InvoiceDisplayRowChangeEvent)
+
+        <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
+        Public Delegate Sub QB_PaymentsDisplayRowChangeEventHandler(ByVal sender As Object, ByVal e As QB_PaymentsDisplayRowChangeEvent)
+
+        <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
+        Public Delegate Sub QBUnpaidInvoicesRowChangeEventHandler(ByVal sender As Object, ByVal e As QBUnpaidInvoicesRowChangeEvent)
+
+        <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
+        Public Delegate Sub QBUnappliedPaymentsRowChangeEventHandler(ByVal sender As Object, ByVal e As QBUnappliedPaymentsRowChangeEvent)
+
+        '''<summary>
+        '''Represents the strongly named DataTable class.
+        '''</summary>
+        <Global.System.Serializable(), _
+            Global.System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedTableSchema")> _
+        Partial Public Class QB_InvoiceDisplayDataTable
+            Inherits Global.System.Data.TypedTableBase(Of QB_InvoiceDisplayRow)
+
+            Private columnInvoiceNumber As Global.System.Data.DataColumn
+
+            Private columnCustomerNumber As Global.System.Data.DataColumn
+
+            Private columnCustomerName As Global.System.Data.DataColumn
+
+            Private columnInvoicePostDate As Global.System.Data.DataColumn
+
+            Private columnInvoiceDueDate As Global.System.Data.DataColumn
+
+            Private columnInvoiceTotal As Global.System.Data.DataColumn
+
+            Private columnInvoiceBalance As Global.System.Data.DataColumn
+
+            Private columnInvoiceCreationDate As Global.System.Data.DataColumn
+
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+                Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
+            Public Sub New()
+                MyBase.New()
+                Me.TableName = "QB_InvoiceDisplay"
+                Me.BeginInit()
+                Me.InitClass()
+                Me.EndInit()
+            End Sub
+
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+                Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
+            Friend Sub New(ByVal table As Global.System.Data.DataTable)
+                MyBase.New()
+                Me.TableName = table.TableName
+                If (table.CaseSensitive <> table.DataSet.CaseSensitive) Then
+                    Me.CaseSensitive = table.CaseSensitive
+                End If
+                If (table.Locale.ToString <> table.DataSet.Locale.ToString) Then
+                    Me.Locale = table.Locale
+                End If
+                If (table.Namespace <> table.DataSet.Namespace) Then
+                    Me.Namespace = table.Namespace
+                End If
+                Me.Prefix = table.Prefix
+                Me.MinimumCapacity = table.MinimumCapacity
+            End Sub
+
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+                Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
+            Protected Sub New(ByVal info As Global.System.Runtime.Serialization.SerializationInfo, ByVal context As Global.System.Runtime.Serialization.StreamingContext)
+                MyBase.New(info, context)
+                Me.InitVars()
+            End Sub
+
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+                Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
+            Public ReadOnly Property InvoiceNumberColumn() As Global.System.Data.DataColumn
+                Get
+                    Return Me.columnInvoiceNumber
+                End Get
+            End Property
+
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+                Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
+            Public ReadOnly Property CustomerNumberColumn() As Global.System.Data.DataColumn
+                Get
+                    Return Me.columnCustomerNumber
+                End Get
+            End Property
+
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+                Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
+            Public ReadOnly Property CustomerNameColumn() As Global.System.Data.DataColumn
+                Get
+                    Return Me.columnCustomerName
+                End Get
+            End Property
+
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+                Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
+            Public ReadOnly Property InvoicePostDateColumn() As Global.System.Data.DataColumn
+                Get
+                    Return Me.columnInvoicePostDate
+                End Get
+            End Property
+
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+                Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
+            Public ReadOnly Property InvoiceDueDateColumn() As Global.System.Data.DataColumn
+                Get
+                    Return Me.columnInvoiceDueDate
+                End Get
+            End Property
+
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+                Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
+            Public ReadOnly Property InvoiceTotalColumn() As Global.System.Data.DataColumn
+                Get
+                    Return Me.columnInvoiceTotal
+                End Get
+            End Property
+
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+                Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
+            Public ReadOnly Property InvoiceBalanceColumn() As Global.System.Data.DataColumn
+                Get
+                    Return Me.columnInvoiceBalance
+                End Get
+            End Property
+
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+                Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
+            Public ReadOnly Property InvoiceCreationDateColumn() As Global.System.Data.DataColumn
+                Get
+                    Return Me.columnInvoiceCreationDate
+                End Get
+            End Property
+
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+                Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0"), _
+                Global.System.ComponentModel.Browsable(False)> _
+            Public ReadOnly Property Count() As Integer
+                Get
+                    Return Me.Rows.Count
+                End Get
+            End Property
+
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+                Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
+            Default Public ReadOnly Property Item(ByVal index As Integer) As QB_InvoiceDisplayRow
+                Get
+                    Return CType(Me.Rows(index), QB_InvoiceDisplayRow)
+                End Get
+            End Property
+
+            <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
+            Public Event QB_InvoiceDisplayRowChanging As QB_InvoiceDisplayRowChangeEventHandler
+
+            <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
+            Public Event QB_InvoiceDisplayRowChanged As QB_InvoiceDisplayRowChangeEventHandler
+
+            <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
+            Public Event QB_InvoiceDisplayRowDeleting As QB_InvoiceDisplayRowChangeEventHandler
+
+            <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
+            Public Event QB_InvoiceDisplayRowDeleted As QB_InvoiceDisplayRowChangeEventHandler
+
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+                Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
+            Public Overloads Sub AddQB_InvoiceDisplayRow(ByVal row As QB_InvoiceDisplayRow)
+                Me.Rows.Add(row)
+            End Sub
+
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+                Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
+            Public Overloads Function AddQB_InvoiceDisplayRow(ByVal InvoiceNumber As String, ByVal CustomerNumber As String, ByVal CustomerName As String, ByVal InvoicePostDate As Date, ByVal InvoiceDueDate As Date, ByVal InvoiceTotal As Double, ByVal InvoiceBalance As Double, ByVal InvoiceCreationDate As String) As QB_InvoiceDisplayRow
+                Dim rowQB_InvoiceDisplayRow As QB_InvoiceDisplayRow = CType(Me.NewRow, QB_InvoiceDisplayRow)
+                Dim columnValuesArray() As Object = New Object() {InvoiceNumber, CustomerNumber, CustomerName, InvoicePostDate, InvoiceDueDate, InvoiceTotal, InvoiceBalance, InvoiceCreationDate}
+                rowQB_InvoiceDisplayRow.ItemArray = columnValuesArray
+                Me.Rows.Add(rowQB_InvoiceDisplayRow)
+                Return rowQB_InvoiceDisplayRow
+            End Function
+
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+                Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
+            Public Overrides Function Clone() As Global.System.Data.DataTable
+                Dim cln As QB_InvoiceDisplayDataTable = CType(MyBase.Clone, QB_InvoiceDisplayDataTable)
+                cln.InitVars()
+                Return cln
+            End Function
+
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+                Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
+            Protected Overrides Function CreateInstance() As Global.System.Data.DataTable
+                Return New QB_InvoiceDisplayDataTable()
+            End Function
+
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+                Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
+            Friend Sub InitVars()
+                Me.columnInvoiceNumber = MyBase.Columns("InvoiceNumber")
+                Me.columnCustomerNumber = MyBase.Columns("CustomerNumber")
+                Me.columnCustomerName = MyBase.Columns("CustomerName")
+                Me.columnInvoicePostDate = MyBase.Columns("InvoicePostDate")
+                Me.columnInvoiceDueDate = MyBase.Columns("InvoiceDueDate")
+                Me.columnInvoiceTotal = MyBase.Columns("InvoiceTotal")
+                Me.columnInvoiceBalance = MyBase.Columns("InvoiceBalance")
+                Me.columnInvoiceCreationDate = MyBase.Columns("InvoiceCreationDate")
+            End Sub
+
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+                Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
+            Private Sub InitClass()
+                Me.columnInvoiceNumber = New Global.System.Data.DataColumn("InvoiceNumber", GetType(String), Nothing, Global.System.Data.MappingType.Element)
+                MyBase.Columns.Add(Me.columnInvoiceNumber)
+                Me.columnCustomerNumber = New Global.System.Data.DataColumn("CustomerNumber", GetType(String), Nothing, Global.System.Data.MappingType.Element)
+                MyBase.Columns.Add(Me.columnCustomerNumber)
+                Me.columnCustomerName = New Global.System.Data.DataColumn("CustomerName", GetType(String), Nothing, Global.System.Data.MappingType.Element)
+                MyBase.Columns.Add(Me.columnCustomerName)
+                Me.columnInvoicePostDate = New Global.System.Data.DataColumn("InvoicePostDate", GetType(Date), Nothing, Global.System.Data.MappingType.Element)
+                MyBase.Columns.Add(Me.columnInvoicePostDate)
+                Me.columnInvoiceDueDate = New Global.System.Data.DataColumn("InvoiceDueDate", GetType(Date), Nothing, Global.System.Data.MappingType.Element)
+                MyBase.Columns.Add(Me.columnInvoiceDueDate)
+                Me.columnInvoiceTotal = New Global.System.Data.DataColumn("InvoiceTotal", GetType(Double), Nothing, Global.System.Data.MappingType.Element)
+                MyBase.Columns.Add(Me.columnInvoiceTotal)
+                Me.columnInvoiceBalance = New Global.System.Data.DataColumn("InvoiceBalance", GetType(Double), Nothing, Global.System.Data.MappingType.Element)
+                MyBase.Columns.Add(Me.columnInvoiceBalance)
+                Me.columnInvoiceCreationDate = New Global.System.Data.DataColumn("InvoiceCreationDate", GetType(String), Nothing, Global.System.Data.MappingType.Element)
+                MyBase.Columns.Add(Me.columnInvoiceCreationDate)
+            End Sub
+
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+                Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
+            Public Function NewQB_InvoiceDisplayRow() As QB_InvoiceDisplayRow
+                Return CType(Me.NewRow, QB_InvoiceDisplayRow)
+            End Function
+
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+                Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
+            Protected Overrides Function NewRowFromBuilder(ByVal builder As Global.System.Data.DataRowBuilder) As Global.System.Data.DataRow
+                Return New QB_InvoiceDisplayRow(builder)
+            End Function
+
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+                Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
+            Protected Overrides Function GetRowType() As Global.System.Type
+                Return GetType(QB_InvoiceDisplayRow)
+            End Function
+
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+                Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
+            Protected Overrides Sub OnRowChanged(ByVal e As Global.System.Data.DataRowChangeEventArgs)
+                MyBase.OnRowChanged(e)
+                If (Not (Me.QB_InvoiceDisplayRowChangedEvent) Is Nothing) Then
+                    RaiseEvent QB_InvoiceDisplayRowChanged(Me, New QB_InvoiceDisplayRowChangeEvent(CType(e.Row, QB_InvoiceDisplayRow), e.Action))
+                End If
+            End Sub
+
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+                Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
+            Protected Overrides Sub OnRowChanging(ByVal e As Global.System.Data.DataRowChangeEventArgs)
+                MyBase.OnRowChanging(e)
+                If (Not (Me.QB_InvoiceDisplayRowChangingEvent) Is Nothing) Then
+                    RaiseEvent QB_InvoiceDisplayRowChanging(Me, New QB_InvoiceDisplayRowChangeEvent(CType(e.Row, QB_InvoiceDisplayRow), e.Action))
+                End If
+            End Sub
+
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+                Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
+            Protected Overrides Sub OnRowDeleted(ByVal e As Global.System.Data.DataRowChangeEventArgs)
+                MyBase.OnRowDeleted(e)
+                If (Not (Me.QB_InvoiceDisplayRowDeletedEvent) Is Nothing) Then
+                    RaiseEvent QB_InvoiceDisplayRowDeleted(Me, New QB_InvoiceDisplayRowChangeEvent(CType(e.Row, QB_InvoiceDisplayRow), e.Action))
+                End If
+            End Sub
+
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+                Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
+            Protected Overrides Sub OnRowDeleting(ByVal e As Global.System.Data.DataRowChangeEventArgs)
+                MyBase.OnRowDeleting(e)
+                If (Not (Me.QB_InvoiceDisplayRowDeletingEvent) Is Nothing) Then
+                    RaiseEvent QB_InvoiceDisplayRowDeleting(Me, New QB_InvoiceDisplayRowChangeEvent(CType(e.Row, QB_InvoiceDisplayRow), e.Action))
+                End If
+            End Sub
+
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+                Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
+            Public Sub RemoveQB_InvoiceDisplayRow(ByVal row As QB_InvoiceDisplayRow)
+                Me.Rows.Remove(row)
+            End Sub
+
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+                Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
+            Public Shared Function GetTypedTableSchema(ByVal xs As Global.System.Xml.Schema.XmlSchemaSet) As Global.System.Xml.Schema.XmlSchemaComplexType
+                Dim type As Global.System.Xml.Schema.XmlSchemaComplexType = New Global.System.Xml.Schema.XmlSchemaComplexType()
+                Dim sequence As Global.System.Xml.Schema.XmlSchemaSequence = New Global.System.Xml.Schema.XmlSchemaSequence()
+                Dim ds As ds_Display = New ds_Display()
+                Dim any1 As Global.System.Xml.Schema.XmlSchemaAny = New Global.System.Xml.Schema.XmlSchemaAny()
+                any1.Namespace = "http://www.w3.org/2001/XMLSchema"
+                any1.MinOccurs = New Decimal(0)
+                any1.MaxOccurs = Decimal.MaxValue
+                any1.ProcessContents = Global.System.Xml.Schema.XmlSchemaContentProcessing.Lax
+                sequence.Items.Add(any1)
+                Dim any2 As Global.System.Xml.Schema.XmlSchemaAny = New Global.System.Xml.Schema.XmlSchemaAny()
+                any2.Namespace = "urn:schemas-microsoft-com:xml-diffgram-v1"
+                any2.MinOccurs = New Decimal(1)
+                any2.ProcessContents = Global.System.Xml.Schema.XmlSchemaContentProcessing.Lax
+                sequence.Items.Add(any2)
+                Dim attribute1 As Global.System.Xml.Schema.XmlSchemaAttribute = New Global.System.Xml.Schema.XmlSchemaAttribute()
+                attribute1.Name = "namespace"
+                attribute1.FixedValue = ds.Namespace
+                type.Attributes.Add(attribute1)
+                Dim attribute2 As Global.System.Xml.Schema.XmlSchemaAttribute = New Global.System.Xml.Schema.XmlSchemaAttribute()
+                attribute2.Name = "tableTypeName"
+                attribute2.FixedValue = "QB_InvoiceDisplayDataTable"
+                type.Attributes.Add(attribute2)
+                type.Particle = sequence
+                Dim dsSchema As Global.System.Xml.Schema.XmlSchema = ds.GetSchemaSerializable
+                If xs.Contains(dsSchema.TargetNamespace) Then
+                    Dim s1 As Global.System.IO.MemoryStream = New Global.System.IO.MemoryStream()
+                    Dim s2 As Global.System.IO.MemoryStream = New Global.System.IO.MemoryStream()
+                    Try
+                        Dim schema As Global.System.Xml.Schema.XmlSchema = Nothing
+                        dsSchema.Write(s1)
+                        Dim schemas As Global.System.Collections.IEnumerator = xs.Schemas(dsSchema.TargetNamespace).GetEnumerator
+                        Do While schemas.MoveNext
+                            schema = CType(schemas.Current, Global.System.Xml.Schema.XmlSchema)
+                            s2.SetLength(0)
+                            schema.Write(s2)
+                            If (s1.Length = s2.Length) Then
+                                s1.Position = 0
+                                s2.Position = 0
+
+                                Do While ((s1.Position <> s1.Length) _
+                                          AndAlso (s1.ReadByte = s2.ReadByte))
+
+
+                                Loop
+                                If (s1.Position = s1.Length) Then
+                                    Return type
+                                End If
+                            End If
+
+                        Loop
+                    Finally
+                        If (Not (s1) Is Nothing) Then
+                            s1.Close()
+                        End If
+                        If (Not (s2) Is Nothing) Then
+                            s2.Close()
+                        End If
+                    End Try
+                End If
+                xs.Add(dsSchema)
+                Return type
+            End Function
+        End Class
+
+        '''<summary>
+        '''Represents the strongly named DataTable class.
+        '''</summary>
+        <Global.System.Serializable(), _
+            Global.System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedTableSchema")> _
+        Partial Public Class QB_PaymentsDisplayDataTable
+            Inherits Global.System.Data.TypedTableBase(Of QB_PaymentsDisplayRow)
+
+            Private columnPaymentTxnNumber As Global.System.Data.DataColumn
+
+            Private columnPaymentDate As Global.System.Data.DataColumn
+
+            Private columnPaymentAmount As Global.System.Data.DataColumn
+
+            Private columnPaymentMethod As Global.System.Data.DataColumn
+
+            Private columnPaymentCheckNum As Global.System.Data.DataColumn
+
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+                Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
+            Public Sub New()
+                MyBase.New()
+                Me.TableName = "QB_PaymentsDisplay"
+                Me.BeginInit()
+                Me.InitClass()
+                Me.EndInit()
+            End Sub
+
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+                Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
+            Friend Sub New(ByVal table As Global.System.Data.DataTable)
+                MyBase.New()
+                Me.TableName = table.TableName
+                If (table.CaseSensitive <> table.DataSet.CaseSensitive) Then
+                    Me.CaseSensitive = table.CaseSensitive
+                End If
+                If (table.Locale.ToString <> table.DataSet.Locale.ToString) Then
+                    Me.Locale = table.Locale
+                End If
+                If (table.Namespace <> table.DataSet.Namespace) Then
+                    Me.Namespace = table.Namespace
+                End If
+                Me.Prefix = table.Prefix
+                Me.MinimumCapacity = table.MinimumCapacity
+            End Sub
+
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+                Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
+            Protected Sub New(ByVal info As Global.System.Runtime.Serialization.SerializationInfo, ByVal context As Global.System.Runtime.Serialization.StreamingContext)
+                MyBase.New(info, context)
+                Me.InitVars()
+            End Sub
+
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+                Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
+            Public ReadOnly Property PaymentTxnNumberColumn() As Global.System.Data.DataColumn
+                Get
+                    Return Me.columnPaymentTxnNumber
+                End Get
+            End Property
+
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+                Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
+            Public ReadOnly Property PaymentDateColumn() As Global.System.Data.DataColumn
+                Get
+                    Return Me.columnPaymentDate
+                End Get
+            End Property
+
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+                Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
+            Public ReadOnly Property PaymentAmountColumn() As Global.System.Data.DataColumn
+                Get
+                    Return Me.columnPaymentAmount
+                End Get
+            End Property
+
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+                Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
+            Public ReadOnly Property PaymentMethodColumn() As Global.System.Data.DataColumn
+                Get
+                    Return Me.columnPaymentMethod
+                End Get
+            End Property
+
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+                Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
+            Public ReadOnly Property PaymentCheckNumColumn() As Global.System.Data.DataColumn
+                Get
+                    Return Me.columnPaymentCheckNum
+                End Get
+            End Property
+
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+                Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0"), _
+                Global.System.ComponentModel.Browsable(False)> _
+            Public ReadOnly Property Count() As Integer
+                Get
+                    Return Me.Rows.Count
+                End Get
+            End Property
+
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+                Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
+            Default Public ReadOnly Property Item(ByVal index As Integer) As QB_PaymentsDisplayRow
+                Get
+                    Return CType(Me.Rows(index), QB_PaymentsDisplayRow)
+                End Get
+            End Property
+
+            <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
+            Public Event QB_PaymentsDisplayRowChanging As QB_PaymentsDisplayRowChangeEventHandler
+
+            <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
+            Public Event QB_PaymentsDisplayRowChanged As QB_PaymentsDisplayRowChangeEventHandler
+
+            <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
+            Public Event QB_PaymentsDisplayRowDeleting As QB_PaymentsDisplayRowChangeEventHandler
+
+            <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
+            Public Event QB_PaymentsDisplayRowDeleted As QB_PaymentsDisplayRowChangeEventHandler
+
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+                Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
+            Public Overloads Sub AddQB_PaymentsDisplayRow(ByVal row As QB_PaymentsDisplayRow)
+                Me.Rows.Add(row)
+            End Sub
+
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+                Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
+            Public Overloads Function AddQB_PaymentsDisplayRow(ByVal PaymentTxnNumber As String, ByVal PaymentDate As Date, ByVal PaymentAmount As Double, ByVal PaymentMethod As String, ByVal PaymentCheckNum As String) As QB_PaymentsDisplayRow
+                Dim rowQB_PaymentsDisplayRow As QB_PaymentsDisplayRow = CType(Me.NewRow, QB_PaymentsDisplayRow)
+                Dim columnValuesArray() As Object = New Object() {PaymentTxnNumber, PaymentDate, PaymentAmount, PaymentMethod, PaymentCheckNum}
+                rowQB_PaymentsDisplayRow.ItemArray = columnValuesArray
+                Me.Rows.Add(rowQB_PaymentsDisplayRow)
+                Return rowQB_PaymentsDisplayRow
+            End Function
+
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+                Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
+            Public Overrides Function Clone() As Global.System.Data.DataTable
+                Dim cln As QB_PaymentsDisplayDataTable = CType(MyBase.Clone, QB_PaymentsDisplayDataTable)
+                cln.InitVars()
+                Return cln
+            End Function
+
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+                Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
+            Protected Overrides Function CreateInstance() As Global.System.Data.DataTable
+                Return New QB_PaymentsDisplayDataTable()
+            End Function
+
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+                Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
+            Friend Sub InitVars()
+                Me.columnPaymentTxnNumber = MyBase.Columns("PaymentTxnNumber")
+                Me.columnPaymentDate = MyBase.Columns("PaymentDate")
+                Me.columnPaymentAmount = MyBase.Columns("PaymentAmount")
+                Me.columnPaymentMethod = MyBase.Columns("PaymentMethod")
+                Me.columnPaymentCheckNum = MyBase.Columns("PaymentCheckNum")
+            End Sub
+
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+                Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
+            Private Sub InitClass()
+                Me.columnPaymentTxnNumber = New Global.System.Data.DataColumn("PaymentTxnNumber", GetType(String), Nothing, Global.System.Data.MappingType.Element)
+                MyBase.Columns.Add(Me.columnPaymentTxnNumber)
+                Me.columnPaymentDate = New Global.System.Data.DataColumn("PaymentDate", GetType(Date), Nothing, Global.System.Data.MappingType.Element)
+                MyBase.Columns.Add(Me.columnPaymentDate)
+                Me.columnPaymentAmount = New Global.System.Data.DataColumn("PaymentAmount", GetType(Double), Nothing, Global.System.Data.MappingType.Element)
+                MyBase.Columns.Add(Me.columnPaymentAmount)
+                Me.columnPaymentMethod = New Global.System.Data.DataColumn("PaymentMethod", GetType(String), Nothing, Global.System.Data.MappingType.Element)
+                MyBase.Columns.Add(Me.columnPaymentMethod)
+                Me.columnPaymentCheckNum = New Global.System.Data.DataColumn("PaymentCheckNum", GetType(String), Nothing, Global.System.Data.MappingType.Element)
+                MyBase.Columns.Add(Me.columnPaymentCheckNum)
+            End Sub
+
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+                Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
+            Public Function NewQB_PaymentsDisplayRow() As QB_PaymentsDisplayRow
+                Return CType(Me.NewRow, QB_PaymentsDisplayRow)
+            End Function
+
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+                Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
+            Protected Overrides Function NewRowFromBuilder(ByVal builder As Global.System.Data.DataRowBuilder) As Global.System.Data.DataRow
+                Return New QB_PaymentsDisplayRow(builder)
+            End Function
+
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+                Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
+            Protected Overrides Function GetRowType() As Global.System.Type
+                Return GetType(QB_PaymentsDisplayRow)
+            End Function
+
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+                Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
+            Protected Overrides Sub OnRowChanged(ByVal e As Global.System.Data.DataRowChangeEventArgs)
+                MyBase.OnRowChanged(e)
+                If (Not (Me.QB_PaymentsDisplayRowChangedEvent) Is Nothing) Then
+                    RaiseEvent QB_PaymentsDisplayRowChanged(Me, New QB_PaymentsDisplayRowChangeEvent(CType(e.Row, QB_PaymentsDisplayRow), e.Action))
+                End If
+            End Sub
+
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+                Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
+            Protected Overrides Sub OnRowChanging(ByVal e As Global.System.Data.DataRowChangeEventArgs)
+                MyBase.OnRowChanging(e)
+                If (Not (Me.QB_PaymentsDisplayRowChangingEvent) Is Nothing) Then
+                    RaiseEvent QB_PaymentsDisplayRowChanging(Me, New QB_PaymentsDisplayRowChangeEvent(CType(e.Row, QB_PaymentsDisplayRow), e.Action))
+                End If
+            End Sub
+
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+                Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
+            Protected Overrides Sub OnRowDeleted(ByVal e As Global.System.Data.DataRowChangeEventArgs)
+                MyBase.OnRowDeleted(e)
+                If (Not (Me.QB_PaymentsDisplayRowDeletedEvent) Is Nothing) Then
+                    RaiseEvent QB_PaymentsDisplayRowDeleted(Me, New QB_PaymentsDisplayRowChangeEvent(CType(e.Row, QB_PaymentsDisplayRow), e.Action))
+                End If
+            End Sub
+
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+                Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
+            Protected Overrides Sub OnRowDeleting(ByVal e As Global.System.Data.DataRowChangeEventArgs)
+                MyBase.OnRowDeleting(e)
+                If (Not (Me.QB_PaymentsDisplayRowDeletingEvent) Is Nothing) Then
+                    RaiseEvent QB_PaymentsDisplayRowDeleting(Me, New QB_PaymentsDisplayRowChangeEvent(CType(e.Row, QB_PaymentsDisplayRow), e.Action))
+                End If
+            End Sub
+
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+                Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
+            Public Sub RemoveQB_PaymentsDisplayRow(ByVal row As QB_PaymentsDisplayRow)
+                Me.Rows.Remove(row)
+            End Sub
+
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+                Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
+            Public Shared Function GetTypedTableSchema(ByVal xs As Global.System.Xml.Schema.XmlSchemaSet) As Global.System.Xml.Schema.XmlSchemaComplexType
+                Dim type As Global.System.Xml.Schema.XmlSchemaComplexType = New Global.System.Xml.Schema.XmlSchemaComplexType()
+                Dim sequence As Global.System.Xml.Schema.XmlSchemaSequence = New Global.System.Xml.Schema.XmlSchemaSequence()
+                Dim ds As ds_Display = New ds_Display()
+                Dim any1 As Global.System.Xml.Schema.XmlSchemaAny = New Global.System.Xml.Schema.XmlSchemaAny()
+                any1.Namespace = "http://www.w3.org/2001/XMLSchema"
+                any1.MinOccurs = New Decimal(0)
+                any1.MaxOccurs = Decimal.MaxValue
+                any1.ProcessContents = Global.System.Xml.Schema.XmlSchemaContentProcessing.Lax
+                sequence.Items.Add(any1)
+                Dim any2 As Global.System.Xml.Schema.XmlSchemaAny = New Global.System.Xml.Schema.XmlSchemaAny()
+                any2.Namespace = "urn:schemas-microsoft-com:xml-diffgram-v1"
+                any2.MinOccurs = New Decimal(1)
+                any2.ProcessContents = Global.System.Xml.Schema.XmlSchemaContentProcessing.Lax
+                sequence.Items.Add(any2)
+                Dim attribute1 As Global.System.Xml.Schema.XmlSchemaAttribute = New Global.System.Xml.Schema.XmlSchemaAttribute()
+                attribute1.Name = "namespace"
+                attribute1.FixedValue = ds.Namespace
+                type.Attributes.Add(attribute1)
+                Dim attribute2 As Global.System.Xml.Schema.XmlSchemaAttribute = New Global.System.Xml.Schema.XmlSchemaAttribute()
+                attribute2.Name = "tableTypeName"
+                attribute2.FixedValue = "QB_PaymentsDisplayDataTable"
+                type.Attributes.Add(attribute2)
+                type.Particle = sequence
+                Dim dsSchema As Global.System.Xml.Schema.XmlSchema = ds.GetSchemaSerializable
+                If xs.Contains(dsSchema.TargetNamespace) Then
+                    Dim s1 As Global.System.IO.MemoryStream = New Global.System.IO.MemoryStream()
+                    Dim s2 As Global.System.IO.MemoryStream = New Global.System.IO.MemoryStream()
+                    Try
+                        Dim schema As Global.System.Xml.Schema.XmlSchema = Nothing
+                        dsSchema.Write(s1)
+                        Dim schemas As Global.System.Collections.IEnumerator = xs.Schemas(dsSchema.TargetNamespace).GetEnumerator
+                        Do While schemas.MoveNext
+                            schema = CType(schemas.Current, Global.System.Xml.Schema.XmlSchema)
+                            s2.SetLength(0)
+                            schema.Write(s2)
+                            If (s1.Length = s2.Length) Then
+                                s1.Position = 0
+                                s2.Position = 0
+
+                                Do While ((s1.Position <> s1.Length) _
+                                          AndAlso (s1.ReadByte = s2.ReadByte))
+
+
+                                Loop
+                                If (s1.Position = s1.Length) Then
+                                    Return type
+                                End If
+                            End If
+
+                        Loop
+                    Finally
+                        If (Not (s1) Is Nothing) Then
+                            s1.Close()
+                        End If
+                        If (Not (s2) Is Nothing) Then
+                            s2.Close()
+                        End If
+                    End Try
+                End If
+                xs.Add(dsSchema)
+                Return type
+            End Function
+        End Class
+
+        '''<summary>
+        '''Represents the strongly named DataTable class.
+        '''</summary>
+        <Global.System.Serializable(), _
+            Global.System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedTableSchema")> _
+        Partial Public Class QBUnpaidInvoicesDataTable
+            Inherits Global.System.Data.TypedTableBase(Of QBUnpaidInvoicesRow)
+
+            Private columnInv_TxnID As Global.System.Data.DataColumn
+
+            Private columnInv_TxnDate As Global.System.Data.DataColumn
+
+            Private columnInv_Balance As Global.System.Data.DataColumn
+
+            Private columnRemaining As Global.System.Data.DataColumn
+
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+                Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
+            Public Sub New()
+                MyBase.New()
+                Me.TableName = "QBUnpaidInvoices"
+                Me.BeginInit()
+                Me.InitClass()
+                Me.EndInit()
+            End Sub
+
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+                Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
+            Friend Sub New(ByVal table As Global.System.Data.DataTable)
+                MyBase.New()
+                Me.TableName = table.TableName
+                If (table.CaseSensitive <> table.DataSet.CaseSensitive) Then
+                    Me.CaseSensitive = table.CaseSensitive
+                End If
+                If (table.Locale.ToString <> table.DataSet.Locale.ToString) Then
+                    Me.Locale = table.Locale
+                End If
+                If (table.Namespace <> table.DataSet.Namespace) Then
+                    Me.Namespace = table.Namespace
+                End If
+                Me.Prefix = table.Prefix
+                Me.MinimumCapacity = table.MinimumCapacity
+            End Sub
+
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+                Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
+            Protected Sub New(ByVal info As Global.System.Runtime.Serialization.SerializationInfo, ByVal context As Global.System.Runtime.Serialization.StreamingContext)
+                MyBase.New(info, context)
+                Me.InitVars()
+            End Sub
+
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+                Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
+            Public ReadOnly Property Inv_TxnIDColumn() As Global.System.Data.DataColumn
+                Get
+                    Return Me.columnInv_TxnID
+                End Get
+            End Property
+
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+                Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
+            Public ReadOnly Property Inv_TxnDateColumn() As Global.System.Data.DataColumn
+                Get
+                    Return Me.columnInv_TxnDate
+                End Get
+            End Property
+
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+                Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
+            Public ReadOnly Property Inv_BalanceColumn() As Global.System.Data.DataColumn
+                Get
+                    Return Me.columnInv_Balance
+                End Get
+            End Property
+
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+                Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
+            Public ReadOnly Property RemainingColumn() As Global.System.Data.DataColumn
+                Get
+                    Return Me.columnRemaining
+                End Get
+            End Property
+
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+                Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0"), _
+                Global.System.ComponentModel.Browsable(False)> _
+            Public ReadOnly Property Count() As Integer
+                Get
+                    Return Me.Rows.Count
+                End Get
+            End Property
+
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+                Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
+            Default Public ReadOnly Property Item(ByVal index As Integer) As QBUnpaidInvoicesRow
+                Get
+                    Return CType(Me.Rows(index), QBUnpaidInvoicesRow)
+                End Get
+            End Property
+
+            <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
+            Public Event QBUnpaidInvoicesRowChanging As QBUnpaidInvoicesRowChangeEventHandler
+
+            <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
+            Public Event QBUnpaidInvoicesRowChanged As QBUnpaidInvoicesRowChangeEventHandler
+
+            <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
+            Public Event QBUnpaidInvoicesRowDeleting As QBUnpaidInvoicesRowChangeEventHandler
+
+            <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
+            Public Event QBUnpaidInvoicesRowDeleted As QBUnpaidInvoicesRowChangeEventHandler
+
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+                Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
+            Public Overloads Sub AddQBUnpaidInvoicesRow(ByVal row As QBUnpaidInvoicesRow)
+                Me.Rows.Add(row)
+            End Sub
+
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+                Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
+            Public Overloads Function AddQBUnpaidInvoicesRow(ByVal Inv_TxnID As String, ByVal Inv_TxnDate As Date, ByVal Inv_Balance As Double, ByVal Remaining As Double) As QBUnpaidInvoicesRow
+                Dim rowQBUnpaidInvoicesRow As QBUnpaidInvoicesRow = CType(Me.NewRow, QBUnpaidInvoicesRow)
+                Dim columnValuesArray() As Object = New Object() {Inv_TxnID, Inv_TxnDate, Inv_Balance, Remaining}
+                rowQBUnpaidInvoicesRow.ItemArray = columnValuesArray
+                Me.Rows.Add(rowQBUnpaidInvoicesRow)
+                Return rowQBUnpaidInvoicesRow
+            End Function
+
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+                Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
+            Public Overrides Function Clone() As Global.System.Data.DataTable
+                Dim cln As QBUnpaidInvoicesDataTable = CType(MyBase.Clone, QBUnpaidInvoicesDataTable)
+                cln.InitVars()
+                Return cln
+            End Function
+
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+                Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
+            Protected Overrides Function CreateInstance() As Global.System.Data.DataTable
+                Return New QBUnpaidInvoicesDataTable()
+            End Function
+
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+                Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
+            Friend Sub InitVars()
+                Me.columnInv_TxnID = MyBase.Columns("Inv_TxnID")
+                Me.columnInv_TxnDate = MyBase.Columns("Inv_TxnDate")
+                Me.columnInv_Balance = MyBase.Columns("Inv_Balance")
+                Me.columnRemaining = MyBase.Columns("Remaining")
+            End Sub
+
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+                Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
+            Private Sub InitClass()
+                Me.columnInv_TxnID = New Global.System.Data.DataColumn("Inv_TxnID", GetType(String), Nothing, Global.System.Data.MappingType.Element)
+                MyBase.Columns.Add(Me.columnInv_TxnID)
+                Me.columnInv_TxnDate = New Global.System.Data.DataColumn("Inv_TxnDate", GetType(Date), Nothing, Global.System.Data.MappingType.Element)
+                MyBase.Columns.Add(Me.columnInv_TxnDate)
+                Me.columnInv_Balance = New Global.System.Data.DataColumn("Inv_Balance", GetType(Double), Nothing, Global.System.Data.MappingType.Element)
+                MyBase.Columns.Add(Me.columnInv_Balance)
+                Me.columnRemaining = New Global.System.Data.DataColumn("Remaining", GetType(Double), Nothing, Global.System.Data.MappingType.Element)
+                MyBase.Columns.Add(Me.columnRemaining)
+            End Sub
+
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+                Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
+            Public Function NewQBUnpaidInvoicesRow() As QBUnpaidInvoicesRow
+                Return CType(Me.NewRow, QBUnpaidInvoicesRow)
+            End Function
+
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+                Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
+            Protected Overrides Function NewRowFromBuilder(ByVal builder As Global.System.Data.DataRowBuilder) As Global.System.Data.DataRow
+                Return New QBUnpaidInvoicesRow(builder)
+            End Function
+
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+                Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
+            Protected Overrides Function GetRowType() As Global.System.Type
+                Return GetType(QBUnpaidInvoicesRow)
+            End Function
+
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+                Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
+            Protected Overrides Sub OnRowChanged(ByVal e As Global.System.Data.DataRowChangeEventArgs)
+                MyBase.OnRowChanged(e)
+                If (Not (Me.QBUnpaidInvoicesRowChangedEvent) Is Nothing) Then
+                    RaiseEvent QBUnpaidInvoicesRowChanged(Me, New QBUnpaidInvoicesRowChangeEvent(CType(e.Row, QBUnpaidInvoicesRow), e.Action))
+                End If
+            End Sub
+
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+                Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
+            Protected Overrides Sub OnRowChanging(ByVal e As Global.System.Data.DataRowChangeEventArgs)
+                MyBase.OnRowChanging(e)
+                If (Not (Me.QBUnpaidInvoicesRowChangingEvent) Is Nothing) Then
+                    RaiseEvent QBUnpaidInvoicesRowChanging(Me, New QBUnpaidInvoicesRowChangeEvent(CType(e.Row, QBUnpaidInvoicesRow), e.Action))
+                End If
+            End Sub
+
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+                Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
+            Protected Overrides Sub OnRowDeleted(ByVal e As Global.System.Data.DataRowChangeEventArgs)
+                MyBase.OnRowDeleted(e)
+                If (Not (Me.QBUnpaidInvoicesRowDeletedEvent) Is Nothing) Then
+                    RaiseEvent QBUnpaidInvoicesRowDeleted(Me, New QBUnpaidInvoicesRowChangeEvent(CType(e.Row, QBUnpaidInvoicesRow), e.Action))
+                End If
+            End Sub
+
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+                Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
+            Protected Overrides Sub OnRowDeleting(ByVal e As Global.System.Data.DataRowChangeEventArgs)
+                MyBase.OnRowDeleting(e)
+                If (Not (Me.QBUnpaidInvoicesRowDeletingEvent) Is Nothing) Then
+                    RaiseEvent QBUnpaidInvoicesRowDeleting(Me, New QBUnpaidInvoicesRowChangeEvent(CType(e.Row, QBUnpaidInvoicesRow), e.Action))
+                End If
+            End Sub
+
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+                Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
+            Public Sub RemoveQBUnpaidInvoicesRow(ByVal row As QBUnpaidInvoicesRow)
+                Me.Rows.Remove(row)
+            End Sub
+
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+                Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
+            Public Shared Function GetTypedTableSchema(ByVal xs As Global.System.Xml.Schema.XmlSchemaSet) As Global.System.Xml.Schema.XmlSchemaComplexType
+                Dim type As Global.System.Xml.Schema.XmlSchemaComplexType = New Global.System.Xml.Schema.XmlSchemaComplexType()
+                Dim sequence As Global.System.Xml.Schema.XmlSchemaSequence = New Global.System.Xml.Schema.XmlSchemaSequence()
+                Dim ds As ds_Display = New ds_Display()
+                Dim any1 As Global.System.Xml.Schema.XmlSchemaAny = New Global.System.Xml.Schema.XmlSchemaAny()
+                any1.Namespace = "http://www.w3.org/2001/XMLSchema"
+                any1.MinOccurs = New Decimal(0)
+                any1.MaxOccurs = Decimal.MaxValue
+                any1.ProcessContents = Global.System.Xml.Schema.XmlSchemaContentProcessing.Lax
+                sequence.Items.Add(any1)
+                Dim any2 As Global.System.Xml.Schema.XmlSchemaAny = New Global.System.Xml.Schema.XmlSchemaAny()
+                any2.Namespace = "urn:schemas-microsoft-com:xml-diffgram-v1"
+                any2.MinOccurs = New Decimal(1)
+                any2.ProcessContents = Global.System.Xml.Schema.XmlSchemaContentProcessing.Lax
+                sequence.Items.Add(any2)
+                Dim attribute1 As Global.System.Xml.Schema.XmlSchemaAttribute = New Global.System.Xml.Schema.XmlSchemaAttribute()
+                attribute1.Name = "namespace"
+                attribute1.FixedValue = ds.Namespace
+                type.Attributes.Add(attribute1)
+                Dim attribute2 As Global.System.Xml.Schema.XmlSchemaAttribute = New Global.System.Xml.Schema.XmlSchemaAttribute()
+                attribute2.Name = "tableTypeName"
+                attribute2.FixedValue = "QBUnpaidInvoicesDataTable"
+                type.Attributes.Add(attribute2)
+                type.Particle = sequence
+                Dim dsSchema As Global.System.Xml.Schema.XmlSchema = ds.GetSchemaSerializable
+                If xs.Contains(dsSchema.TargetNamespace) Then
+                    Dim s1 As Global.System.IO.MemoryStream = New Global.System.IO.MemoryStream()
+                    Dim s2 As Global.System.IO.MemoryStream = New Global.System.IO.MemoryStream()
+                    Try
+                        Dim schema As Global.System.Xml.Schema.XmlSchema = Nothing
+                        dsSchema.Write(s1)
+                        Dim schemas As Global.System.Collections.IEnumerator = xs.Schemas(dsSchema.TargetNamespace).GetEnumerator
+                        Do While schemas.MoveNext
+                            schema = CType(schemas.Current, Global.System.Xml.Schema.XmlSchema)
+                            s2.SetLength(0)
+                            schema.Write(s2)
+                            If (s1.Length = s2.Length) Then
+                                s1.Position = 0
+                                s2.Position = 0
+
+                                Do While ((s1.Position <> s1.Length) _
+                                          AndAlso (s1.ReadByte = s2.ReadByte))
+
+
+                                Loop
+                                If (s1.Position = s1.Length) Then
+                                    Return type
+                                End If
+                            End If
+
+                        Loop
+                    Finally
+                        If (Not (s1) Is Nothing) Then
+                            s1.Close()
+                        End If
+                        If (Not (s2) Is Nothing) Then
+                            s2.Close()
+                        End If
+                    End Try
+                End If
+                xs.Add(dsSchema)
+                Return type
+            End Function
+        End Class
+
+        '''<summary>
+        '''Represents the strongly named DataTable class.
+        '''</summary>
+        <Global.System.Serializable(), _
+            Global.System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedTableSchema")> _
+        Partial Public Class QBUnappliedPaymentsDataTable
+            Inherits Global.System.Data.TypedTableBase(Of QBUnappliedPaymentsRow)
+
+            Private columnPay_TxnID As Global.System.Data.DataColumn
+
+            Private columnPay_EditSeq As Global.System.Data.DataColumn
+
+            Private columnPay_TxnDate As Global.System.Data.DataColumn
+
+            Private columnPay_Amount As Global.System.Data.DataColumn
+
+            Private columnRemaining As Global.System.Data.DataColumn
+
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+                Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
+            Public Sub New()
+                MyBase.New()
+                Me.TableName = "QBUnappliedPayments"
+                Me.BeginInit()
+                Me.InitClass()
+                Me.EndInit()
+            End Sub
+
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+                Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
+            Friend Sub New(ByVal table As Global.System.Data.DataTable)
+                MyBase.New()
+                Me.TableName = table.TableName
+                If (table.CaseSensitive <> table.DataSet.CaseSensitive) Then
+                    Me.CaseSensitive = table.CaseSensitive
+                End If
+                If (table.Locale.ToString <> table.DataSet.Locale.ToString) Then
+                    Me.Locale = table.Locale
+                End If
+                If (table.Namespace <> table.DataSet.Namespace) Then
+                    Me.Namespace = table.Namespace
+                End If
+                Me.Prefix = table.Prefix
+                Me.MinimumCapacity = table.MinimumCapacity
+            End Sub
+
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+                Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
+            Protected Sub New(ByVal info As Global.System.Runtime.Serialization.SerializationInfo, ByVal context As Global.System.Runtime.Serialization.StreamingContext)
+                MyBase.New(info, context)
+                Me.InitVars()
+            End Sub
+
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+                Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
+            Public ReadOnly Property Pay_TxnIDColumn() As Global.System.Data.DataColumn
+                Get
+                    Return Me.columnPay_TxnID
+                End Get
+            End Property
+
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+                Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
+            Public ReadOnly Property Pay_EditSeqColumn() As Global.System.Data.DataColumn
+                Get
+                    Return Me.columnPay_EditSeq
+                End Get
+            End Property
+
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+                Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
+            Public ReadOnly Property Pay_TxnDateColumn() As Global.System.Data.DataColumn
+                Get
+                    Return Me.columnPay_TxnDate
+                End Get
+            End Property
+
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+                Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
+            Public ReadOnly Property Pay_AmountColumn() As Global.System.Data.DataColumn
+                Get
+                    Return Me.columnPay_Amount
+                End Get
+            End Property
+
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+                Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
+            Public ReadOnly Property RemainingColumn() As Global.System.Data.DataColumn
+                Get
+                    Return Me.columnRemaining
+                End Get
+            End Property
+
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+                Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0"), _
+                Global.System.ComponentModel.Browsable(False)> _
+            Public ReadOnly Property Count() As Integer
+                Get
+                    Return Me.Rows.Count
+                End Get
+            End Property
+
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+                Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
+            Default Public ReadOnly Property Item(ByVal index As Integer) As QBUnappliedPaymentsRow
+                Get
+                    Return CType(Me.Rows(index), QBUnappliedPaymentsRow)
+                End Get
+            End Property
+
+            <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
+            Public Event QBUnappliedPaymentsRowChanging As QBUnappliedPaymentsRowChangeEventHandler
+
+            <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
+            Public Event QBUnappliedPaymentsRowChanged As QBUnappliedPaymentsRowChangeEventHandler
+
+            <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
+            Public Event QBUnappliedPaymentsRowDeleting As QBUnappliedPaymentsRowChangeEventHandler
+
+            <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
+            Public Event QBUnappliedPaymentsRowDeleted As QBUnappliedPaymentsRowChangeEventHandler
+
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+                Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
+            Public Overloads Sub AddQBUnappliedPaymentsRow(ByVal row As QBUnappliedPaymentsRow)
+                Me.Rows.Add(row)
+            End Sub
+
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+                Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
+            Public Overloads Function AddQBUnappliedPaymentsRow(ByVal Pay_TxnID As String, ByVal Pay_EditSeq As String, ByVal Pay_TxnDate As Date, ByVal Pay_Amount As Double, ByVal Remaining As Double) As QBUnappliedPaymentsRow
+                Dim rowQBUnappliedPaymentsRow As QBUnappliedPaymentsRow = CType(Me.NewRow, QBUnappliedPaymentsRow)
+                Dim columnValuesArray() As Object = New Object() {Pay_TxnID, Pay_EditSeq, Pay_TxnDate, Pay_Amount, Remaining}
+                rowQBUnappliedPaymentsRow.ItemArray = columnValuesArray
+                Me.Rows.Add(rowQBUnappliedPaymentsRow)
+                Return rowQBUnappliedPaymentsRow
+            End Function
+
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+                Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
+            Public Overrides Function Clone() As Global.System.Data.DataTable
+                Dim cln As QBUnappliedPaymentsDataTable = CType(MyBase.Clone, QBUnappliedPaymentsDataTable)
+                cln.InitVars()
+                Return cln
+            End Function
+
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+                Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
+            Protected Overrides Function CreateInstance() As Global.System.Data.DataTable
+                Return New QBUnappliedPaymentsDataTable()
+            End Function
+
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+                Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
+            Friend Sub InitVars()
+                Me.columnPay_TxnID = MyBase.Columns("Pay_TxnID")
+                Me.columnPay_EditSeq = MyBase.Columns("Pay_EditSeq")
+                Me.columnPay_TxnDate = MyBase.Columns("Pay_TxnDate")
+                Me.columnPay_Amount = MyBase.Columns("Pay_Amount")
+                Me.columnRemaining = MyBase.Columns("Remaining")
+            End Sub
+
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+                Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
+            Private Sub InitClass()
+                Me.columnPay_TxnID = New Global.System.Data.DataColumn("Pay_TxnID", GetType(String), Nothing, Global.System.Data.MappingType.Element)
+                MyBase.Columns.Add(Me.columnPay_TxnID)
+                Me.columnPay_EditSeq = New Global.System.Data.DataColumn("Pay_EditSeq", GetType(String), Nothing, Global.System.Data.MappingType.Element)
+                MyBase.Columns.Add(Me.columnPay_EditSeq)
+                Me.columnPay_TxnDate = New Global.System.Data.DataColumn("Pay_TxnDate", GetType(Date), Nothing, Global.System.Data.MappingType.Element)
+                MyBase.Columns.Add(Me.columnPay_TxnDate)
+                Me.columnPay_Amount = New Global.System.Data.DataColumn("Pay_Amount", GetType(Double), Nothing, Global.System.Data.MappingType.Element)
+                MyBase.Columns.Add(Me.columnPay_Amount)
+                Me.columnRemaining = New Global.System.Data.DataColumn("Remaining", GetType(Double), Nothing, Global.System.Data.MappingType.Element)
+                MyBase.Columns.Add(Me.columnRemaining)
+            End Sub
+
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+                Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
+            Public Function NewQBUnappliedPaymentsRow() As QBUnappliedPaymentsRow
+                Return CType(Me.NewRow, QBUnappliedPaymentsRow)
+            End Function
+
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+                Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
+            Protected Overrides Function NewRowFromBuilder(ByVal builder As Global.System.Data.DataRowBuilder) As Global.System.Data.DataRow
+                Return New QBUnappliedPaymentsRow(builder)
+            End Function
+
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+                Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
+            Protected Overrides Function GetRowType() As Global.System.Type
+                Return GetType(QBUnappliedPaymentsRow)
+            End Function
+
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+                Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
+            Protected Overrides Sub OnRowChanged(ByVal e As Global.System.Data.DataRowChangeEventArgs)
+                MyBase.OnRowChanged(e)
+                If (Not (Me.QBUnappliedPaymentsRowChangedEvent) Is Nothing) Then
+                    RaiseEvent QBUnappliedPaymentsRowChanged(Me, New QBUnappliedPaymentsRowChangeEvent(CType(e.Row, QBUnappliedPaymentsRow), e.Action))
+                End If
+            End Sub
+
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+                Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
+            Protected Overrides Sub OnRowChanging(ByVal e As Global.System.Data.DataRowChangeEventArgs)
+                MyBase.OnRowChanging(e)
+                If (Not (Me.QBUnappliedPaymentsRowChangingEvent) Is Nothing) Then
+                    RaiseEvent QBUnappliedPaymentsRowChanging(Me, New QBUnappliedPaymentsRowChangeEvent(CType(e.Row, QBUnappliedPaymentsRow), e.Action))
+                End If
+            End Sub
+
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+                Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
+            Protected Overrides Sub OnRowDeleted(ByVal e As Global.System.Data.DataRowChangeEventArgs)
+                MyBase.OnRowDeleted(e)
+                If (Not (Me.QBUnappliedPaymentsRowDeletedEvent) Is Nothing) Then
+                    RaiseEvent QBUnappliedPaymentsRowDeleted(Me, New QBUnappliedPaymentsRowChangeEvent(CType(e.Row, QBUnappliedPaymentsRow), e.Action))
+                End If
+            End Sub
+
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+                Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
+            Protected Overrides Sub OnRowDeleting(ByVal e As Global.System.Data.DataRowChangeEventArgs)
+                MyBase.OnRowDeleting(e)
+                If (Not (Me.QBUnappliedPaymentsRowDeletingEvent) Is Nothing) Then
+                    RaiseEvent QBUnappliedPaymentsRowDeleting(Me, New QBUnappliedPaymentsRowChangeEvent(CType(e.Row, QBUnappliedPaymentsRow), e.Action))
+                End If
+            End Sub
+
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+                Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
+            Public Sub RemoveQBUnappliedPaymentsRow(ByVal row As QBUnappliedPaymentsRow)
+                Me.Rows.Remove(row)
+            End Sub
+
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+                Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
+            Public Shared Function GetTypedTableSchema(ByVal xs As Global.System.Xml.Schema.XmlSchemaSet) As Global.System.Xml.Schema.XmlSchemaComplexType
+                Dim type As Global.System.Xml.Schema.XmlSchemaComplexType = New Global.System.Xml.Schema.XmlSchemaComplexType()
+                Dim sequence As Global.System.Xml.Schema.XmlSchemaSequence = New Global.System.Xml.Schema.XmlSchemaSequence()
+                Dim ds As ds_Display = New ds_Display()
+                Dim any1 As Global.System.Xml.Schema.XmlSchemaAny = New Global.System.Xml.Schema.XmlSchemaAny()
+                any1.Namespace = "http://www.w3.org/2001/XMLSchema"
+                any1.MinOccurs = New Decimal(0)
+                any1.MaxOccurs = Decimal.MaxValue
+                any1.ProcessContents = Global.System.Xml.Schema.XmlSchemaContentProcessing.Lax
+                sequence.Items.Add(any1)
+                Dim any2 As Global.System.Xml.Schema.XmlSchemaAny = New Global.System.Xml.Schema.XmlSchemaAny()
+                any2.Namespace = "urn:schemas-microsoft-com:xml-diffgram-v1"
+                any2.MinOccurs = New Decimal(1)
+                any2.ProcessContents = Global.System.Xml.Schema.XmlSchemaContentProcessing.Lax
+                sequence.Items.Add(any2)
+                Dim attribute1 As Global.System.Xml.Schema.XmlSchemaAttribute = New Global.System.Xml.Schema.XmlSchemaAttribute()
+                attribute1.Name = "namespace"
+                attribute1.FixedValue = ds.Namespace
+                type.Attributes.Add(attribute1)
+                Dim attribute2 As Global.System.Xml.Schema.XmlSchemaAttribute = New Global.System.Xml.Schema.XmlSchemaAttribute()
+                attribute2.Name = "tableTypeName"
+                attribute2.FixedValue = "QBUnappliedPaymentsDataTable"
+                type.Attributes.Add(attribute2)
+                type.Particle = sequence
+                Dim dsSchema As Global.System.Xml.Schema.XmlSchema = ds.GetSchemaSerializable
+                If xs.Contains(dsSchema.TargetNamespace) Then
+                    Dim s1 As Global.System.IO.MemoryStream = New Global.System.IO.MemoryStream()
+                    Dim s2 As Global.System.IO.MemoryStream = New Global.System.IO.MemoryStream()
+                    Try
+                        Dim schema As Global.System.Xml.Schema.XmlSchema = Nothing
+                        dsSchema.Write(s1)
+                        Dim schemas As Global.System.Collections.IEnumerator = xs.Schemas(dsSchema.TargetNamespace).GetEnumerator
+                        Do While schemas.MoveNext
+                            schema = CType(schemas.Current, Global.System.Xml.Schema.XmlSchema)
+                            s2.SetLength(0)
+                            schema.Write(s2)
+                            If (s1.Length = s2.Length) Then
+                                s1.Position = 0
+                                s2.Position = 0
+
+                                Do While ((s1.Position <> s1.Length) _
+                                          AndAlso (s1.ReadByte = s2.ReadByte))
+
+
+                                Loop
+                                If (s1.Position = s1.Length) Then
+                                    Return type
+                                End If
+                            End If
+
+                        Loop
+                    Finally
+                        If (Not (s1) Is Nothing) Then
+                            s1.Close()
+                        End If
+                        If (Not (s2) Is Nothing) Then
+                            s2.Close()
+                        End If
+                    End Try
+                End If
+                xs.Add(dsSchema)
+                Return type
+            End Function
+        End Class
+
+        '''<summary>
+        '''Represents strongly named DataRow class.
+        '''</summary>
+        Partial Public Class QB_InvoiceDisplayRow
+            Inherits Global.System.Data.DataRow
+
+            Private tableQB_InvoiceDisplay As QB_InvoiceDisplayDataTable
+
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+                Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
+            Friend Sub New(ByVal rb As Global.System.Data.DataRowBuilder)
+                MyBase.New(rb)
+                Me.tableQB_InvoiceDisplay = CType(Me.Table, QB_InvoiceDisplayDataTable)
+            End Sub
+
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+                Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
+            Public Property InvoiceNumber() As String
+                Get
+                    Try
+                        Return CType(Me(Me.tableQB_InvoiceDisplay.InvoiceNumberColumn), String)
+                    Catch e As Global.System.InvalidCastException
+                        Throw New Global.System.Data.StrongTypingException("The value for column 'InvoiceNumber' in table 'QB_InvoiceDisplay' is DBNull.", e)
+                    End Try
+                End Get
+                Set(value As String)
+                    Me(Me.tableQB_InvoiceDisplay.InvoiceNumberColumn) = Value
+                End Set
+            End Property
+
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+                Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
+            Public Property CustomerNumber() As String
+                Get
+                    Try
+                        Return CType(Me(Me.tableQB_InvoiceDisplay.CustomerNumberColumn), String)
+                    Catch e As Global.System.InvalidCastException
+                        Throw New Global.System.Data.StrongTypingException("The value for column 'CustomerNumber' in table 'QB_InvoiceDisplay' is DBNull.", e)
+                    End Try
+                End Get
+                Set(value As String)
+                    Me(Me.tableQB_InvoiceDisplay.CustomerNumberColumn) = Value
+                End Set
+            End Property
+
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+                Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
+            Public Property CustomerName() As String
+                Get
+                    Try
+                        Return CType(Me(Me.tableQB_InvoiceDisplay.CustomerNameColumn), String)
+                    Catch e As Global.System.InvalidCastException
+                        Throw New Global.System.Data.StrongTypingException("The value for column 'CustomerName' in table 'QB_InvoiceDisplay' is DBNull.", e)
+                    End Try
+                End Get
+                Set(value As String)
+                    Me(Me.tableQB_InvoiceDisplay.CustomerNameColumn) = Value
+                End Set
+            End Property
+
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+                Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
+            Public Property InvoicePostDate() As Date
+                Get
+                    Try
+                        Return CType(Me(Me.tableQB_InvoiceDisplay.InvoicePostDateColumn), Date)
+                    Catch e As Global.System.InvalidCastException
+                        Throw New Global.System.Data.StrongTypingException("The value for column 'InvoicePostDate' in table 'QB_InvoiceDisplay' is DBNull.", e)
+                    End Try
+                End Get
+                Set(value As Date)
+                    Me(Me.tableQB_InvoiceDisplay.InvoicePostDateColumn) = Value
+                End Set
+            End Property
+
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+                Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
+            Public Property InvoiceDueDate() As Date
+                Get
+                    Try
+                        Return CType(Me(Me.tableQB_InvoiceDisplay.InvoiceDueDateColumn), Date)
+                    Catch e As Global.System.InvalidCastException
+                        Throw New Global.System.Data.StrongTypingException("The value for column 'InvoiceDueDate' in table 'QB_InvoiceDisplay' is DBNull.", e)
+                    End Try
+                End Get
+                Set(value As Date)
+                    Me(Me.tableQB_InvoiceDisplay.InvoiceDueDateColumn) = Value
+                End Set
+            End Property
+
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+                Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
+            Public Property InvoiceTotal() As Double
+                Get
+                    Try
+                        Return CType(Me(Me.tableQB_InvoiceDisplay.InvoiceTotalColumn), Double)
+                    Catch e As Global.System.InvalidCastException
+                        Throw New Global.System.Data.StrongTypingException("The value for column 'InvoiceTotal' in table 'QB_InvoiceDisplay' is DBNull.", e)
+                    End Try
+                End Get
+                Set(value As Double)
+                    Me(Me.tableQB_InvoiceDisplay.InvoiceTotalColumn) = Value
+                End Set
+            End Property
+
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+                Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
+            Public Property InvoiceBalance() As Double
+                Get
+                    Try
+                        Return CType(Me(Me.tableQB_InvoiceDisplay.InvoiceBalanceColumn), Double)
+                    Catch e As Global.System.InvalidCastException
+                        Throw New Global.System.Data.StrongTypingException("The value for column 'InvoiceBalance' in table 'QB_InvoiceDisplay' is DBNull.", e)
+                    End Try
+                End Get
+                Set(value As Double)
+                    Me(Me.tableQB_InvoiceDisplay.InvoiceBalanceColumn) = Value
+                End Set
+            End Property
+
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+                Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
+            Public Property InvoiceCreationDate() As String
+                Get
+                    Try
+                        Return CType(Me(Me.tableQB_InvoiceDisplay.InvoiceCreationDateColumn), String)
+                    Catch e As Global.System.InvalidCastException
+                        Throw New Global.System.Data.StrongTypingException("The value for column 'InvoiceCreationDate' in table 'QB_InvoiceDisplay' is DBNull" & _
+                                                                           ".", e)
+                    End Try
+                End Get
+                Set(value As String)
+                    Me(Me.tableQB_InvoiceDisplay.InvoiceCreationDateColumn) = Value
+                End Set
+            End Property
+
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+                Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
+            Public Function IsInvoiceNumberNull() As Boolean
+                Return Me.IsNull(Me.tableQB_InvoiceDisplay.InvoiceNumberColumn)
+            End Function
+
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+                Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
+            Public Sub SetInvoiceNumberNull()
+                Me(Me.tableQB_InvoiceDisplay.InvoiceNumberColumn) = Global.System.Convert.DBNull
+            End Sub
+
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+                Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
+            Public Function IsCustomerNumberNull() As Boolean
+                Return Me.IsNull(Me.tableQB_InvoiceDisplay.CustomerNumberColumn)
+            End Function
+
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+                Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
+            Public Sub SetCustomerNumberNull()
+                Me(Me.tableQB_InvoiceDisplay.CustomerNumberColumn) = Global.System.Convert.DBNull
+            End Sub
+
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+                Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
+            Public Function IsCustomerNameNull() As Boolean
+                Return Me.IsNull(Me.tableQB_InvoiceDisplay.CustomerNameColumn)
+            End Function
+
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+                Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
+            Public Sub SetCustomerNameNull()
+                Me(Me.tableQB_InvoiceDisplay.CustomerNameColumn) = Global.System.Convert.DBNull
+            End Sub
+
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+                Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
+            Public Function IsInvoicePostDateNull() As Boolean
+                Return Me.IsNull(Me.tableQB_InvoiceDisplay.InvoicePostDateColumn)
+            End Function
+
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+                Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
+            Public Sub SetInvoicePostDateNull()
+                Me(Me.tableQB_InvoiceDisplay.InvoicePostDateColumn) = Global.System.Convert.DBNull
+            End Sub
+
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+                Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
+            Public Function IsInvoiceDueDateNull() As Boolean
+                Return Me.IsNull(Me.tableQB_InvoiceDisplay.InvoiceDueDateColumn)
+            End Function
+
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+                Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
+            Public Sub SetInvoiceDueDateNull()
+                Me(Me.tableQB_InvoiceDisplay.InvoiceDueDateColumn) = Global.System.Convert.DBNull
+            End Sub
+
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+                Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
+            Public Function IsInvoiceTotalNull() As Boolean
+                Return Me.IsNull(Me.tableQB_InvoiceDisplay.InvoiceTotalColumn)
+            End Function
+
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+                Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
+            Public Sub SetInvoiceTotalNull()
+                Me(Me.tableQB_InvoiceDisplay.InvoiceTotalColumn) = Global.System.Convert.DBNull
+            End Sub
+
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+                Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
+            Public Function IsInvoiceBalanceNull() As Boolean
+                Return Me.IsNull(Me.tableQB_InvoiceDisplay.InvoiceBalanceColumn)
+            End Function
+
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+                Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
+            Public Sub SetInvoiceBalanceNull()
+                Me(Me.tableQB_InvoiceDisplay.InvoiceBalanceColumn) = Global.System.Convert.DBNull
+            End Sub
+
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+                Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
+            Public Function IsInvoiceCreationDateNull() As Boolean
+                Return Me.IsNull(Me.tableQB_InvoiceDisplay.InvoiceCreationDateColumn)
+            End Function
+
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+                Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
+            Public Sub SetInvoiceCreationDateNull()
+                Me(Me.tableQB_InvoiceDisplay.InvoiceCreationDateColumn) = Global.System.Convert.DBNull
+            End Sub
+        End Class
+
+        '''<summary>
+        '''Represents strongly named DataRow class.
+        '''</summary>
+        Partial Public Class QB_PaymentsDisplayRow
+            Inherits Global.System.Data.DataRow
+
+            Private tableQB_PaymentsDisplay As QB_PaymentsDisplayDataTable
+
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+                Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
+            Friend Sub New(ByVal rb As Global.System.Data.DataRowBuilder)
+                MyBase.New(rb)
+                Me.tableQB_PaymentsDisplay = CType(Me.Table, QB_PaymentsDisplayDataTable)
+            End Sub
+
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+                Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
+            Public Property PaymentTxnNumber() As String
+                Get
+                    Try
+                        Return CType(Me(Me.tableQB_PaymentsDisplay.PaymentTxnNumberColumn), String)
+                    Catch e As Global.System.InvalidCastException
+                        Throw New Global.System.Data.StrongTypingException("The value for column 'PaymentTxnNumber' in table 'QB_PaymentsDisplay' is DBNull.", e)
+                    End Try
+                End Get
+                Set(value As String)
+                    Me(Me.tableQB_PaymentsDisplay.PaymentTxnNumberColumn) = Value
+                End Set
+            End Property
+
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+                Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
+            Public Property PaymentDate() As Date
+                Get
+                    Try
+                        Return CType(Me(Me.tableQB_PaymentsDisplay.PaymentDateColumn), Date)
+                    Catch e As Global.System.InvalidCastException
+                        Throw New Global.System.Data.StrongTypingException("The value for column 'PaymentDate' in table 'QB_PaymentsDisplay' is DBNull.", e)
+                    End Try
+                End Get
+                Set(value As Date)
+                    Me(Me.tableQB_PaymentsDisplay.PaymentDateColumn) = Value
+                End Set
+            End Property
+
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+                Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
+            Public Property PaymentAmount() As Double
+                Get
+                    Try
+                        Return CType(Me(Me.tableQB_PaymentsDisplay.PaymentAmountColumn), Double)
+                    Catch e As Global.System.InvalidCastException
+                        Throw New Global.System.Data.StrongTypingException("The value for column 'PaymentAmount' in table 'QB_PaymentsDisplay' is DBNull.", e)
+                    End Try
+                End Get
+                Set(value As Double)
+                    Me(Me.tableQB_PaymentsDisplay.PaymentAmountColumn) = Value
+                End Set
+            End Property
+
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+                Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
+            Public Property PaymentMethod() As String
+                Get
+                    Try
+                        Return CType(Me(Me.tableQB_PaymentsDisplay.PaymentMethodColumn), String)
+                    Catch e As Global.System.InvalidCastException
+                        Throw New Global.System.Data.StrongTypingException("The value for column 'PaymentMethod' in table 'QB_PaymentsDisplay' is DBNull.", e)
+                    End Try
+                End Get
+                Set(value As String)
+                    Me(Me.tableQB_PaymentsDisplay.PaymentMethodColumn) = Value
+                End Set
+            End Property
+
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+                Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
+            Public Property PaymentCheckNum() As String
+                Get
+                    Try
+                        Return CType(Me(Me.tableQB_PaymentsDisplay.PaymentCheckNumColumn), String)
+                    Catch e As Global.System.InvalidCastException
+                        Throw New Global.System.Data.StrongTypingException("The value for column 'PaymentCheckNum' in table 'QB_PaymentsDisplay' is DBNull.", e)
+                    End Try
+                End Get
+                Set(value As String)
+                    Me(Me.tableQB_PaymentsDisplay.PaymentCheckNumColumn) = Value
+                End Set
+            End Property
+
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+                Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
+            Public Function IsPaymentTxnNumberNull() As Boolean
+                Return Me.IsNull(Me.tableQB_PaymentsDisplay.PaymentTxnNumberColumn)
+            End Function
+
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+                Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
+            Public Sub SetPaymentTxnNumberNull()
+                Me(Me.tableQB_PaymentsDisplay.PaymentTxnNumberColumn) = Global.System.Convert.DBNull
+            End Sub
+
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+                Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
+            Public Function IsPaymentDateNull() As Boolean
+                Return Me.IsNull(Me.tableQB_PaymentsDisplay.PaymentDateColumn)
+            End Function
+
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+                Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
+            Public Sub SetPaymentDateNull()
+                Me(Me.tableQB_PaymentsDisplay.PaymentDateColumn) = Global.System.Convert.DBNull
+            End Sub
+
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+                Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
+            Public Function IsPaymentAmountNull() As Boolean
+                Return Me.IsNull(Me.tableQB_PaymentsDisplay.PaymentAmountColumn)
+            End Function
+
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+                Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
+            Public Sub SetPaymentAmountNull()
+                Me(Me.tableQB_PaymentsDisplay.PaymentAmountColumn) = Global.System.Convert.DBNull
+            End Sub
+
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+                Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
+            Public Function IsPaymentMethodNull() As Boolean
+                Return Me.IsNull(Me.tableQB_PaymentsDisplay.PaymentMethodColumn)
+            End Function
+
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+                Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
+            Public Sub SetPaymentMethodNull()
+                Me(Me.tableQB_PaymentsDisplay.PaymentMethodColumn) = Global.System.Convert.DBNull
+            End Sub
+
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+                Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
+            Public Function IsPaymentCheckNumNull() As Boolean
+                Return Me.IsNull(Me.tableQB_PaymentsDisplay.PaymentCheckNumColumn)
+            End Function
+
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+                Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
+            Public Sub SetPaymentCheckNumNull()
+                Me(Me.tableQB_PaymentsDisplay.PaymentCheckNumColumn) = Global.System.Convert.DBNull
+            End Sub
+        End Class
+
+        '''<summary>
+        '''Represents strongly named DataRow class.
+        '''</summary>
+        Partial Public Class QBUnpaidInvoicesRow
+            Inherits Global.System.Data.DataRow
+
+            Private tableQBUnpaidInvoices As QBUnpaidInvoicesDataTable
+
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+                Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
+            Friend Sub New(ByVal rb As Global.System.Data.DataRowBuilder)
+                MyBase.New(rb)
+                Me.tableQBUnpaidInvoices = CType(Me.Table, QBUnpaidInvoicesDataTable)
+            End Sub
+
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+                Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
+            Public Property Inv_TxnID() As String
+                Get
+                    Try
+                        Return CType(Me(Me.tableQBUnpaidInvoices.Inv_TxnIDColumn), String)
+                    Catch e As Global.System.InvalidCastException
+                        Throw New Global.System.Data.StrongTypingException("The value for column 'Inv_TxnID' in table 'QBUnpaidInvoices' is DBNull.", e)
+                    End Try
+                End Get
+                Set(value As String)
+                    Me(Me.tableQBUnpaidInvoices.Inv_TxnIDColumn) = Value
+                End Set
+            End Property
+
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+                Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
+            Public Property Inv_TxnDate() As Date
+                Get
+                    Try
+                        Return CType(Me(Me.tableQBUnpaidInvoices.Inv_TxnDateColumn), Date)
+                    Catch e As Global.System.InvalidCastException
+                        Throw New Global.System.Data.StrongTypingException("The value for column 'Inv_TxnDate' in table 'QBUnpaidInvoices' is DBNull.", e)
+                    End Try
+                End Get
+                Set(value As Date)
+                    Me(Me.tableQBUnpaidInvoices.Inv_TxnDateColumn) = Value
+                End Set
+            End Property
+
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+                Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
+            Public Property Inv_Balance() As Double
+                Get
+                    Try
+                        Return CType(Me(Me.tableQBUnpaidInvoices.Inv_BalanceColumn), Double)
+                    Catch e As Global.System.InvalidCastException
+                        Throw New Global.System.Data.StrongTypingException("The value for column 'Inv_Balance' in table 'QBUnpaidInvoices' is DBNull.", e)
+                    End Try
+                End Get
+                Set(value As Double)
+                    Me(Me.tableQBUnpaidInvoices.Inv_BalanceColumn) = Value
+                End Set
+            End Property
+
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+                Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
+            Public Property Remaining() As Double
+                Get
+                    Try
+                        Return CType(Me(Me.tableQBUnpaidInvoices.RemainingColumn), Double)
+                    Catch e As Global.System.InvalidCastException
+                        Throw New Global.System.Data.StrongTypingException("The value for column 'Remaining' in table 'QBUnpaidInvoices' is DBNull.", e)
+                    End Try
+                End Get
+                Set(value As Double)
+                    Me(Me.tableQBUnpaidInvoices.RemainingColumn) = Value
+                End Set
+            End Property
+
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+                Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
+            Public Function IsInv_TxnIDNull() As Boolean
+                Return Me.IsNull(Me.tableQBUnpaidInvoices.Inv_TxnIDColumn)
+            End Function
+
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+                Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
+            Public Sub SetInv_TxnIDNull()
+                Me(Me.tableQBUnpaidInvoices.Inv_TxnIDColumn) = Global.System.Convert.DBNull
+            End Sub
+
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+                Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
+            Public Function IsInv_TxnDateNull() As Boolean
+                Return Me.IsNull(Me.tableQBUnpaidInvoices.Inv_TxnDateColumn)
+            End Function
+
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+                Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
+            Public Sub SetInv_TxnDateNull()
+                Me(Me.tableQBUnpaidInvoices.Inv_TxnDateColumn) = Global.System.Convert.DBNull
+            End Sub
+
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+                Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
+            Public Function IsInv_BalanceNull() As Boolean
+                Return Me.IsNull(Me.tableQBUnpaidInvoices.Inv_BalanceColumn)
+            End Function
+
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+                Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
+            Public Sub SetInv_BalanceNull()
+                Me(Me.tableQBUnpaidInvoices.Inv_BalanceColumn) = Global.System.Convert.DBNull
+            End Sub
+
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+                Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
+            Public Function IsRemainingNull() As Boolean
+                Return Me.IsNull(Me.tableQBUnpaidInvoices.RemainingColumn)
+            End Function
+
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+                Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
+            Public Sub SetRemainingNull()
+                Me(Me.tableQBUnpaidInvoices.RemainingColumn) = Global.System.Convert.DBNull
+            End Sub
+        End Class
+
+        '''<summary>
+        '''Represents strongly named DataRow class.
+        '''</summary>
+        Partial Public Class QBUnappliedPaymentsRow
+            Inherits Global.System.Data.DataRow
+
+            Private tableQBUnappliedPayments As QBUnappliedPaymentsDataTable
+
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+                Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
+            Friend Sub New(ByVal rb As Global.System.Data.DataRowBuilder)
+                MyBase.New(rb)
+                Me.tableQBUnappliedPayments = CType(Me.Table, QBUnappliedPaymentsDataTable)
+            End Sub
+
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+                Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
+            Public Property Pay_TxnID() As String
+                Get
+                    Try
+                        Return CType(Me(Me.tableQBUnappliedPayments.Pay_TxnIDColumn), String)
+                    Catch e As Global.System.InvalidCastException
+                        Throw New Global.System.Data.StrongTypingException("The value for column 'Pay_TxnID' in table 'QBUnappliedPayments' is DBNull.", e)
+                    End Try
+                End Get
+                Set(value As String)
+                    Me(Me.tableQBUnappliedPayments.Pay_TxnIDColumn) = Value
+                End Set
+            End Property
+
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+                Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
+            Public Property Pay_EditSeq() As String
+                Get
+                    Try
+                        Return CType(Me(Me.tableQBUnappliedPayments.Pay_EditSeqColumn), String)
+                    Catch e As Global.System.InvalidCastException
+                        Throw New Global.System.Data.StrongTypingException("The value for column 'Pay_EditSeq' in table 'QBUnappliedPayments' is DBNull.", e)
+                    End Try
+                End Get
+                Set(value As String)
+                    Me(Me.tableQBUnappliedPayments.Pay_EditSeqColumn) = Value
+                End Set
+            End Property
+
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+                Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
+            Public Property Pay_TxnDate() As Date
+                Get
+                    Try
+                        Return CType(Me(Me.tableQBUnappliedPayments.Pay_TxnDateColumn), Date)
+                    Catch e As Global.System.InvalidCastException
+                        Throw New Global.System.Data.StrongTypingException("The value for column 'Pay_TxnDate' in table 'QBUnappliedPayments' is DBNull.", e)
+                    End Try
+                End Get
+                Set(value As Date)
+                    Me(Me.tableQBUnappliedPayments.Pay_TxnDateColumn) = Value
+                End Set
+            End Property
+
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+                Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
+            Public Property Pay_Amount() As Double
+                Get
+                    Try
+                        Return CType(Me(Me.tableQBUnappliedPayments.Pay_AmountColumn), Double)
+                    Catch e As Global.System.InvalidCastException
+                        Throw New Global.System.Data.StrongTypingException("The value for column 'Pay_Amount' in table 'QBUnappliedPayments' is DBNull.", e)
+                    End Try
+                End Get
+                Set(value As Double)
+                    Me(Me.tableQBUnappliedPayments.Pay_AmountColumn) = Value
+                End Set
+            End Property
+
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+                Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
+            Public Property Remaining() As Double
+                Get
+                    Try
+                        Return CType(Me(Me.tableQBUnappliedPayments.RemainingColumn), Double)
+                    Catch e As Global.System.InvalidCastException
+                        Throw New Global.System.Data.StrongTypingException("The value for column 'Remaining' in table 'QBUnappliedPayments' is DBNull.", e)
+                    End Try
+                End Get
+                Set(value As Double)
+                    Me(Me.tableQBUnappliedPayments.RemainingColumn) = Value
+                End Set
+            End Property
+
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+                Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
+            Public Function IsPay_TxnIDNull() As Boolean
+                Return Me.IsNull(Me.tableQBUnappliedPayments.Pay_TxnIDColumn)
+            End Function
+
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+                Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
+            Public Sub SetPay_TxnIDNull()
+                Me(Me.tableQBUnappliedPayments.Pay_TxnIDColumn) = Global.System.Convert.DBNull
+            End Sub
+
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+                Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
+            Public Function IsPay_EditSeqNull() As Boolean
+                Return Me.IsNull(Me.tableQBUnappliedPayments.Pay_EditSeqColumn)
+            End Function
+
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+                Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
+            Public Sub SetPay_EditSeqNull()
+                Me(Me.tableQBUnappliedPayments.Pay_EditSeqColumn) = Global.System.Convert.DBNull
+            End Sub
+
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+                Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
+            Public Function IsPay_TxnDateNull() As Boolean
+                Return Me.IsNull(Me.tableQBUnappliedPayments.Pay_TxnDateColumn)
+            End Function
+
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+                Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
+            Public Sub SetPay_TxnDateNull()
+                Me(Me.tableQBUnappliedPayments.Pay_TxnDateColumn) = Global.System.Convert.DBNull
+            End Sub
+
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+                Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
+            Public Function IsPay_AmountNull() As Boolean
+                Return Me.IsNull(Me.tableQBUnappliedPayments.Pay_AmountColumn)
+            End Function
+
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+                Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
+            Public Sub SetPay_AmountNull()
+                Me(Me.tableQBUnappliedPayments.Pay_AmountColumn) = Global.System.Convert.DBNull
+            End Sub
+
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+                Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
+            Public Function IsRemainingNull() As Boolean
+                Return Me.IsNull(Me.tableQBUnappliedPayments.RemainingColumn)
+            End Function
+
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+                Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
+            Public Sub SetRemainingNull()
+                Me(Me.tableQBUnappliedPayments.RemainingColumn) = Global.System.Convert.DBNull
+            End Sub
+        End Class
+
+        '''<summary>
+        '''Row event argument class
+        '''</summary>
+        <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
+        Public Class QB_InvoiceDisplayRowChangeEvent
+            Inherits Global.System.EventArgs
+
+            Private eventRow As QB_InvoiceDisplayRow
+
+            Private eventAction As Global.System.Data.DataRowAction
+
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+                Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
+            Public Sub New(ByVal row As QB_InvoiceDisplayRow, ByVal action As Global.System.Data.DataRowAction)
+                MyBase.New()
+                Me.eventRow = row
+                Me.eventAction = action
+            End Sub
+
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+                Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
+            Public ReadOnly Property Row() As QB_InvoiceDisplayRow
+                Get
+                    Return Me.eventRow
+                End Get
+            End Property
+
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+                Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
+            Public ReadOnly Property Action() As Global.System.Data.DataRowAction
+                Get
+                    Return Me.eventAction
+                End Get
+            End Property
+        End Class
+
+        '''<summary>
+        '''Row event argument class
+        '''</summary>
+        <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
+        Public Class QB_PaymentsDisplayRowChangeEvent
+            Inherits Global.System.EventArgs
+
+            Private eventRow As QB_PaymentsDisplayRow
+
+            Private eventAction As Global.System.Data.DataRowAction
+
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+                Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
+            Public Sub New(ByVal row As QB_PaymentsDisplayRow, ByVal action As Global.System.Data.DataRowAction)
+                MyBase.New()
+                Me.eventRow = row
+                Me.eventAction = action
+            End Sub
+
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+                Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
+            Public ReadOnly Property Row() As QB_PaymentsDisplayRow
+                Get
+                    Return Me.eventRow
+                End Get
+            End Property
+
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+                Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
+            Public ReadOnly Property Action() As Global.System.Data.DataRowAction
+                Get
+                    Return Me.eventAction
+                End Get
+            End Property
+        End Class
+
+        '''<summary>
+        '''Row event argument class
+        '''</summary>
+        <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
+        Public Class QBUnpaidInvoicesRowChangeEvent
+            Inherits Global.System.EventArgs
+
+            Private eventRow As QBUnpaidInvoicesRow
+
+            Private eventAction As Global.System.Data.DataRowAction
+
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+                Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
+            Public Sub New(ByVal row As QBUnpaidInvoicesRow, ByVal action As Global.System.Data.DataRowAction)
+                MyBase.New()
+                Me.eventRow = row
+                Me.eventAction = action
+            End Sub
+
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+                Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
+            Public ReadOnly Property Row() As QBUnpaidInvoicesRow
+                Get
+                    Return Me.eventRow
+                End Get
+            End Property
+
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+                Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
+            Public ReadOnly Property Action() As Global.System.Data.DataRowAction
+                Get
+                    Return Me.eventAction
+                End Get
+            End Property
+        End Class
+
+        '''<summary>
+        '''Row event argument class
+        '''</summary>
+        <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
+        Public Class QBUnappliedPaymentsRowChangeEvent
+            Inherits Global.System.EventArgs
+
+            Private eventRow As QBUnappliedPaymentsRow
+
+            Private eventAction As Global.System.Data.DataRowAction
+
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+                Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
+            Public Sub New(ByVal row As QBUnappliedPaymentsRow, ByVal action As Global.System.Data.DataRowAction)
+                MyBase.New()
+                Me.eventRow = row
+                Me.eventAction = action
+            End Sub
+
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+                Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
+            Public ReadOnly Property Row() As QBUnappliedPaymentsRow
+                Get
+                    Return Me.eventRow
+                End Get
+            End Property
+
+            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+                Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
+            Public ReadOnly Property Action() As Global.System.Data.DataRowAction
+                Get
+                    Return Me.eventAction
+                End Get
+            End Property
+        End Class
     End Class
-    
-    '''<summary>
-    '''Row event argument class
-    '''</summary>
-    <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-    Public Class QB_InvoiceDisplayRowChangeEvent
-        Inherits Global.System.EventArgs
-        
-        Private eventRow As QB_InvoiceDisplayRow
-        
-        Private eventAction As Global.System.Data.DataRowAction
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Sub New(ByVal row As QB_InvoiceDisplayRow, ByVal action As Global.System.Data.DataRowAction)
-            MyBase.New
-            Me.eventRow = row
-            Me.eventAction = action
-        End Sub
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public ReadOnly Property Row() As QB_InvoiceDisplayRow
-            Get
-                Return Me.eventRow
-            End Get
-        End Property
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public ReadOnly Property Action() As Global.System.Data.DataRowAction
-            Get
-                Return Me.eventAction
-            End Get
-        End Property
-    End Class
-    
-    '''<summary>
-    '''Row event argument class
-    '''</summary>
-    <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-    Public Class QB_PaymentsDisplayRowChangeEvent
-        Inherits Global.System.EventArgs
-        
-        Private eventRow As QB_PaymentsDisplayRow
-        
-        Private eventAction As Global.System.Data.DataRowAction
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Sub New(ByVal row As QB_PaymentsDisplayRow, ByVal action As Global.System.Data.DataRowAction)
-            MyBase.New
-            Me.eventRow = row
-            Me.eventAction = action
-        End Sub
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public ReadOnly Property Row() As QB_PaymentsDisplayRow
-            Get
-                Return Me.eventRow
-            End Get
-        End Property
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public ReadOnly Property Action() As Global.System.Data.DataRowAction
-            Get
-                Return Me.eventAction
-            End Get
-        End Property
-    End Class
-    
-    '''<summary>
-    '''Row event argument class
-    '''</summary>
-    <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-    Public Class QBUnpaidInvoicesRowChangeEvent
-        Inherits Global.System.EventArgs
-        
-        Private eventRow As QBUnpaidInvoicesRow
-        
-        Private eventAction As Global.System.Data.DataRowAction
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Sub New(ByVal row As QBUnpaidInvoicesRow, ByVal action As Global.System.Data.DataRowAction)
-            MyBase.New
-            Me.eventRow = row
-            Me.eventAction = action
-        End Sub
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public ReadOnly Property Row() As QBUnpaidInvoicesRow
-            Get
-                Return Me.eventRow
-            End Get
-        End Property
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public ReadOnly Property Action() As Global.System.Data.DataRowAction
-            Get
-                Return Me.eventAction
-            End Get
-        End Property
-    End Class
-    
-    '''<summary>
-    '''Row event argument class
-    '''</summary>
-    <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-    Public Class QBUnappliedPaymentsRowChangeEvent
-        Inherits Global.System.EventArgs
-        
-        Private eventRow As QBUnappliedPaymentsRow
-        
-        Private eventAction As Global.System.Data.DataRowAction
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Sub New(ByVal row As QBUnappliedPaymentsRow, ByVal action As Global.System.Data.DataRowAction)
-            MyBase.New
-            Me.eventRow = row
-            Me.eventAction = action
-        End Sub
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public ReadOnly Property Row() As QBUnappliedPaymentsRow
-            Get
-                Return Me.eventRow
-            End Get
-        End Property
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public ReadOnly Property Action() As Global.System.Data.DataRowAction
-            Get
-                Return Me.eventAction
-            End Get
-        End Property
-    End Class
-End Class
+End Namespace

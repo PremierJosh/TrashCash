@@ -1,4 +1,5 @@
 ﻿
+Imports TrashCash.Payments
 
 Namespace Admin.Payments
     <Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
@@ -41,7 +42,7 @@ Namespace Admin.Payments
             Me.cm_i_BounceCheck = New System.Windows.Forms.ToolStripMenuItem()
             Me.cm_i_MovePayment = New System.Windows.Forms.ToolStripMenuItem()
             Me.PaymentHistoryDisplayBindingSource = New System.Windows.Forms.BindingSource(Me.components)
-            Me.Ds_Payments = New TrashCash.ds_Payments()
+            Me.Payments = New DS_Payments()
             Me.pnl_Filter = New System.Windows.Forms.Panel()
             Me.ck_All = New System.Windows.Forms.CheckBox()
             Me.Label2 = New System.Windows.Forms.Label()
@@ -49,14 +50,14 @@ Namespace Admin.Payments
             Me.Label1 = New System.Windows.Forms.Label()
             Me.dtp_StartDate = New System.Windows.Forms.DateTimePicker()
             Me.lbl_DateFilter = New System.Windows.Forms.Label()
-            Me.PaymentHistory_DisplayTableAdapter = New TrashCash.ds_PaymentsTableAdapters.PaymentHistory_DisplayTableAdapter()
+            Me.PaymentHistory_DisplayTableAdapter = New PaymentHistory_DisplayTableAdapter()
             Me.cmb_PayTypes = New System.Windows.Forms.ComboBox()
             Me.pnl_Top.SuspendLayout()
             Me.pnl_TopContent.SuspendLayout()
             CType(Me.dg_PaymentHistory, System.ComponentModel.ISupportInitialize).BeginInit()
             Me.cm_AlterPayment.SuspendLayout()
             CType(Me.PaymentHistoryDisplayBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
-            CType(Me.Ds_Payments, System.ComponentModel.ISupportInitialize).BeginInit()
+            CType(Me.Payments, System.ComponentModel.ISupportInitialize).BeginInit()
             Me.pnl_Filter.SuspendLayout()
             Me.SuspendLayout()
             '
@@ -170,12 +171,12 @@ Namespace Admin.Payments
             'PaymentHistoryDisplayBindingSource
             '
             Me.PaymentHistoryDisplayBindingSource.DataMember = "PaymentHistory_Display"
-            Me.PaymentHistoryDisplayBindingSource.DataSource = Me.Ds_Payments
+            Me.PaymentHistoryDisplayBindingSource.DataSource = Me.Payments
             '
             'Ds_Payments
             '
-            Me.Ds_Payments.DataSetName = "ds_Payments"
-            Me.Ds_Payments.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema
+            Me.Payments.DataSetName = "ds_Payments"
+            Me.Payments.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema
             '
             'pnl_Filter
             '
@@ -275,7 +276,7 @@ Namespace Admin.Payments
             CType(Me.dg_PaymentHistory, System.ComponentModel.ISupportInitialize).EndInit()
             Me.cm_AlterPayment.ResumeLayout(False)
             CType(Me.PaymentHistoryDisplayBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
-            CType(Me.Ds_Payments, System.ComponentModel.ISupportInitialize).EndInit()
+            CType(Me.Payments, System.ComponentModel.ISupportInitialize).EndInit()
             Me.pnl_Filter.ResumeLayout(False)
             Me.pnl_Filter.PerformLayout()
             Me.ResumeLayout(False)
@@ -300,8 +301,8 @@ Namespace Admin.Payments
         Friend WithEvents DateReceivedDataGridViewTextBoxColumn As System.Windows.Forms.DataGridViewTextBoxColumn
         Friend WithEvents InsertedByUserDataGridViewTextBoxColumn As System.Windows.Forms.DataGridViewTextBoxColumn
         Friend WithEvents PaymentHistoryDisplayBindingSource As System.Windows.Forms.BindingSource
-        Friend WithEvents Ds_Payments As TrashCash.ds_Payments
-        Friend WithEvents PaymentHistory_DisplayTableAdapter As TrashCash.ds_PaymentsTableAdapters.PaymentHistory_DisplayTableAdapter
+        Friend WithEvents Payments As DS_Payments
+        Friend WithEvents PaymentHistory_DisplayTableAdapter As PaymentHistory_DisplayTableAdapter
         Friend WithEvents CustomerToolstrip1 As TrashCash.Classes.CustomerToolstrip.CustomerToolstrip
         Friend WithEvents cmb_PayTypes As System.Windows.Forms.ComboBox
     End Class

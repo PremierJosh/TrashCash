@@ -1,4 +1,6 @@
-﻿Namespace QBStuff
+﻿Imports TrashCash._DataSets
+
+Namespace QBStuff
     <Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
     Partial Class UC_Quickbooks
         Inherits System.Windows.Forms.UserControl
@@ -46,7 +48,7 @@
             Me.InvoiceBalanceDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
             Me.InvoiceCreationDateDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
             Me.QBInvoiceDisplayBindingSource = New System.Windows.Forms.BindingSource(Me.components)
-            Me.Ds_Display = New TrashCash.ds_Display()
+            Me.Display = New DS_Display()
             Me.tc_qb_p_Payments = New System.Windows.Forms.TabPage()
             Me.dg_QBPayments = New System.Windows.Forms.DataGridView()
             Me.PaymentDateDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
@@ -62,7 +64,7 @@
             Me.tc_qb_p_Invoices.SuspendLayout()
             CType(Me.dg_QBInvoices, System.ComponentModel.ISupportInitialize).BeginInit()
             CType(Me.QBInvoiceDisplayBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
-            CType(Me.Ds_Display, System.ComponentModel.ISupportInitialize).BeginInit()
+            CType(Me.Display, System.ComponentModel.ISupportInitialize).BeginInit()
             Me.tc_qb_p_Payments.SuspendLayout()
             CType(Me.dg_QBPayments, System.ComponentModel.ISupportInitialize).BeginInit()
             CType(Me.QBPaymentsDisplayBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -225,12 +227,12 @@
             'QBInvoiceDisplayBindingSource
             '
             Me.QBInvoiceDisplayBindingSource.DataMember = "QB_InvoiceDisplay"
-            Me.QBInvoiceDisplayBindingSource.DataSource = Me.Ds_Display
+            Me.QBInvoiceDisplayBindingSource.DataSource = Me.Display
             '
             'Ds_Display
             '
-            Me.Ds_Display.DataSetName = "ds_Display"
-            Me.Ds_Display.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema
+            Me.Display.DataSetName = "ds_Display"
+            Me.Display.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema
             '
             'tc_qb_p_Payments
             '
@@ -301,7 +303,7 @@
             'QBPaymentsDisplayBindingSource
             '
             Me.QBPaymentsDisplayBindingSource.DataMember = "QB_PaymentsDisplay"
-            Me.QBPaymentsDisplayBindingSource.DataSource = Me.Ds_Display
+            Me.QBPaymentsDisplayBindingSource.DataSource = Me.Display
             '
             'btn_ViewUnpaidInv
             '
@@ -350,7 +352,7 @@
             Me.tc_qb_p_Invoices.ResumeLayout(False)
             CType(Me.dg_QBInvoices, System.ComponentModel.ISupportInitialize).EndInit()
             CType(Me.QBInvoiceDisplayBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
-            CType(Me.Ds_Display, System.ComponentModel.ISupportInitialize).EndInit()
+            CType(Me.Display, System.ComponentModel.ISupportInitialize).EndInit()
             Me.tc_qb_p_Payments.ResumeLayout(False)
             CType(Me.dg_QBPayments, System.ComponentModel.ISupportInitialize).EndInit()
             CType(Me.QBPaymentsDisplayBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
@@ -375,7 +377,7 @@
         Friend WithEvents InvoiceBalanceDataGridViewTextBoxColumn As System.Windows.Forms.DataGridViewTextBoxColumn
         Friend WithEvents InvoiceCreationDateDataGridViewTextBoxColumn As System.Windows.Forms.DataGridViewTextBoxColumn
         Friend WithEvents QBInvoiceDisplayBindingSource As System.Windows.Forms.BindingSource
-        Friend WithEvents Ds_Display As TrashCash.ds_Display
+        Friend WithEvents Display As DS_Display
         Friend WithEvents PaymentDateDataGridViewTextBoxColumn As System.Windows.Forms.DataGridViewTextBoxColumn
         Friend WithEvents PaymentAmountDataGridViewTextBoxColumn As System.Windows.Forms.DataGridViewTextBoxColumn
         Friend WithEvents PaymentMethodDataGridViewTextBoxColumn As System.Windows.Forms.DataGridViewTextBoxColumn

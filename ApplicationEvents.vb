@@ -1,5 +1,6 @@
 ﻿
 
+' ReSharper disable once CheckNamespace
 Namespace My
 
     ' The following events are available for MyApplication:

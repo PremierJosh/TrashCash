@@ -1,8 +1,4 @@
-﻿
-
-Partial Public Class ds_Payments
-End Class
-
-
-Partial Public Class ds_Payments
-End Class
+﻿Namespace Payments
+    Partial Public Class DS_Payments
+    End Class
+End Namespace

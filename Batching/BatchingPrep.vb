@@ -1,5 +1,4 @@
-﻿'Imports TrashCash.QBSubs
-Imports TrashCash.Classes
+﻿Imports TrashCash.Payments
 Imports TrashCash.Customer
 
 Namespace Batching
@@ -9,7 +8,7 @@ Namespace Batching
         Private _batching As Boolean
 
         ' event to update progress % on home mdi parent
-        Friend Event e_BatchProgPerc(ByVal batchPercent As Integer)
+        Friend Event BatchProgPerc(ByVal batchPercent As Integer)
 
         Friend Event BatchRunning(ByVal running As Boolean)
         Public Property Batching As Boolean
@@ -32,11 +31,11 @@ Namespace Batching
                         ' reset cursor
                         UseWaitCursor = False
                         ' reset pb max var
-                        PB_MaximumValue = Nothing
-                        PB_CurrentValue = 1
-                        PB_Customer = Nothing
-                        lastPercent = -1
-                        PB_Percent = 0
+                        PbMaximumValue = Nothing
+                        PbCurrentValue = 1
+                        PbCustomer = Nothing
+                        _lastPercent = -1
+                        PbPercent = 0
 
                         ' hide both panels again
                         pnl_LeftBot.Visible = False
@@ -55,29 +54,29 @@ Namespace Batching
             End Set
         End Property
 
-        Protected _pb_max As Integer
-        Private Property PB_MaximumValue As Integer
+        Private _pbMax As Integer
+        Private Property PbMaximumValue As Integer
             Get
-                Return _pb_max
+                Return _pbMax
             End Get
             Set(value As Integer)
-                If (_pb_max <> value) Then
-                    _pb_max = value
+                If (_pbMax <> value) Then
+                    _pbMax = value
                 End If
             End Set
         End Property
         ' this gets updated from the batch worker and updates the count labels
-        Private WriteOnly Property PB_CurrentValue As Integer
+        Private WriteOnly Property PbCurrentValue As Integer
             Set(value As Integer)
                 If (pnl_LeftBot.Visible = True) Then
-                    lbl_InvBatchCount.Text = value & "/" & PB_MaximumValue
+                    lbl_InvBatchCount.Text = value & "/" & PbMaximumValue
                 ElseIf (pnl_RightBot.Visible = True) Then
-                    lbl_PayBatchCount.Text = value & "/" & PB_MaximumValue
+                    lbl_PayBatchCount.Text = value & "/" & PbMaximumValue
                 End If
             End Set
         End Property
         ' this gets updated from the batch worker and sets the associated customer label
-        Private WriteOnly Property PB_Customer As String
+        Private WriteOnly Property PbCustomer As String
             Set(value As String)
                 If (pnl_LeftBot.Visible = True) Then
                     lbl_InvBatchCust.Text = value
@@ -89,13 +88,13 @@ Namespace Batching
         End Property
         ' this gets updated from the batch worker and updates the assoc pb
         ' the var is to prevent setting excessively with the other events
-        Protected lastPercent As Integer
-        Private WriteOnly Property PB_Percent
+        Private _lastPercent As Integer
+        Private WriteOnly Property PbPercent
             Set(value)
-                If (value > lastPercent) Then
+                If (value > _lastPercent) Then
 
                     ' raise event for home status bar update
-                    RaiseEvent e_BatchProgPerc(value)
+                    RaiseEvent BatchProgPerc(value)
 
                     If (pnl_LeftBot.Visible) Then
                         ' invoices
@@ -109,7 +108,7 @@ Namespace Batching
         End Property
 
         Public Property MasterForm As CustomerForm
-        Protected qta As ds_BatchingTableAdapters.QueriesTableAdapter
+        Protected QTA As QueriesTableAdapter
 
         Private Sub BatchingPrep_FormClosed(sender As Object, e As System.Windows.Forms.FormClosingEventArgs) Handles Me.FormClosing
             If (e.CloseReason <> CloseReason.ApplicationExitCall) Then
@@ -117,7 +116,7 @@ Namespace Batching
                 If (Batching) Then
                     MsgBox("You cannot close this screen with Batching is in progress.")
                 Else
-                    Me.Hide()
+                    Hide()
                 End If
             End If
         End Sub
@@ -142,7 +141,7 @@ Namespace Batching
             ' payments
             errCount = qta.WorkingPayments_ErrCount
             If (errCount = 0) Then
-                Me.BATCH_WorkingPaymentsTableAdapter.Fill(Me.Ds_Batching.BATCH_WorkingPayments)
+                BATCH_WorkingPaymentsTableAdapter.Fill(Ds_Batching.BATCH_WorkingPayments)
             Else
                 'btn_PayBatch.Visible = False
                 MessageBox.Show("There are Payments with errors. You will be unable to batch payments till the errors are cleared.", "Payments with errors", MessageBoxButtons.OK, MessageBoxIcon.Error)
@@ -153,7 +152,7 @@ Namespace Batching
             If (errCount = 0) Then
                 Dim recCount As Integer = qta.WorkingInvoice_ErrCount
                 If (recCount = 0) Then
-                    Me.BATCH_WorkingInvoiceTableAdapter.Fill(Me.Ds_Batching.BATCH_WorkingInvoice)
+                    BATCH_WorkingInvoiceTableAdapter.Fill(Ds_Batching.BATCH_WorkingInvoice)
                 End If
             Else
                 'btn_GenerateInv.Visible = False
@@ -180,9 +179,9 @@ Namespace Batching
                     btn_CancelPayBatch.Visible = True
                     btn_CancelPayBatch.Enabled = True
                     ' init the object that the worker calls
-                    Dim Payment As New QB_Batching.Payments(Me.Ds_Batching.BATCH_WorkingPayments)
+                    Dim payment As New QB_Batching.Payments(Ds_Batching.BATCH_WorkingPayments)
                     ' start the worker
-                    BatchWorker.RunWorkerAsync(Payment)
+                    BatchWorker.RunWorkerAsync(payment)
                 End If
             ElseIf (sender.Name = btn_InvBatch.Name) Then
                 ' inv click
@@ -198,9 +197,9 @@ Namespace Batching
                     btn_CancelInvBatch.Visible = True
                     btn_CancelInvBatch.Enabled = True
                     ' init the object that the worker calls
-                    Dim Invoice As New QB_Batching.Invoicing(Me.Ds_Batching.BATCH_WorkingInvoice)
+                    Dim invoice As New QB_Batching.Invoicing(Ds_Batching.BATCH_WorkingInvoice)
                     ' start the work
-                    BatchWorker.RunWorkerAsync(Invoice)
+                    BatchWorker.RunWorkerAsync(invoice)
                 End If
             End If
 
@@ -217,10 +216,10 @@ Namespace Batching
                 If (dtp_GenInvTo.Value.Date > futureDate) Then
                     MsgBox("You cannot generate Invoices more than 30 days ahead of time.")
                 Else
-                    Me.Cursor = Cursors.WaitCursor
+                    Cursor = Cursors.WaitCursor
                     qta.GenerateRecurringInvoices(dtp_GenInvTo.Value.Date)
-                    Me.BATCH_WorkingInvoiceTableAdapter.Fill(Me.Ds_Batching.BATCH_WorkingInvoice)
-                    Me.Cursor = Cursors.Default
+                    BATCH_WorkingInvoiceTableAdapter.Fill(Ds_Batching.BATCH_WorkingInvoice)
+                    Cursor = Cursors.Default
                 End If
             Else
                 MsgBox("You cannot Generate Recurring Service Invoices while there are other Recurring Service Invoices prepared. You must first Batch or Delete them.", MsgBoxStyle.Exclamation)
@@ -259,12 +258,12 @@ Namespace Batching
         Private Sub BatchWorker_ProgressChanged(sender As Object, e As System.ComponentModel.ProgressChangedEventArgs) Handles BatchWorker.ProgressChanged
             Dim progress As ProgressObj = CType(e.UserState, ProgressObj)
 
-            PB_MaximumValue = progress.MaximumValue
-            PB_CurrentValue = progress.CurrentValue
-            PB_Customer = progress.CurrentCustomer
+            PbMaximumValue = progress.MaximumValue
+            PbCurrentValue = progress.CurrentValue
+            PbCustomer = progress.CurrentCustomer
 
             ' progress
-            PB_Percent = e.ProgressPercentage
+            PbPercent = e.ProgressPercentage
 
             ' checking cursor state
             If (UseWaitCursor = False) Then
@@ -304,7 +303,7 @@ Namespace Batching
             InitializeComponent()
 
             ' Add any initialization after the InitializeComponent() call.
-            qta = New ds_BatchingTableAdapters.QueriesTableAdapter
+            qta = New QueriesTableAdapter
         End Sub
 
 
@@ -347,7 +346,7 @@ Namespace Batching
             Dim result As MsgBoxResult = MsgBox("Are you sure you want to delete all Prepared Invoices?", MsgBoxStyle.YesNo)
             If (result = MsgBoxResult.Yes) Then
                 Try
-                    Me.BATCH_WorkingInvoiceTableAdapter.DeleteAll()
+                    BATCH_WorkingInvoiceTableAdapter.DeleteAll()
                     RefreshBatchQueue()
                 Catch ex As Exception
                     MsgBox(ex.Message)
@@ -361,7 +360,7 @@ Namespace Batching
                 Dim row As ds_Payments.WorkingPaymentsRow = drv.Row
                 Dim result As MsgBoxResult = MsgBox("Delete this Prepared Payment?", MsgBoxStyle.YesNo)
                 If (result = MsgBoxResult.Yes) Then
-                    Me.BATCH_WorkingPaymentsTableAdapter.DeleteByID(row.WorkingPaymentsID)
+                    BATCH_WorkingPaymentsTableAdapter.DeleteByID(row.WorkingPaymentsID)
                     dg_PrepPay.Rows.RemoveAt(dg_PrepPay.SelectedRows.Item(0).Index)
                 End If
             Else

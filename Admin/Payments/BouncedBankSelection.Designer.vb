@@ -1,4 +1,5 @@
-﻿Imports TrashCash.Classes
+﻿Imports TrashCash.Payments
+Imports TrashCash.Classes
 
 Namespace Admin.Payments
     <Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
@@ -43,16 +44,16 @@ Namespace Admin.Payments
             Me.Panel1 = New System.Windows.Forms.Panel()
             Me.CustomerToolstrip1 = New TrashCash.Classes.CustomerToolstrip.CustomerToolstrip()
             Me.cmb_Banks = New System.Windows.Forms.ComboBox()
-            Me.Ds_Payments = New TrashCash.ds_Payments()
+            Me.Payments = New DS_Payments()
             Me.BadCheckBanksBindingSource = New System.Windows.Forms.BindingSource(Me.components)
-            Me.Bad_Check_BanksTableAdapter = New TrashCash.ds_PaymentsTableAdapters.Bad_Check_BanksTableAdapter()
+            Me.Bad_Check_BanksTableAdapter = New Bad_Check_BanksTableAdapter()
             BankBounceFeeLabel = New System.Windows.Forms.Label()
             CustomerChargeRateLabel = New System.Windows.Forms.Label()
             lbl_checkAmount = New System.Windows.Forms.Label()
             lbl_RefNum = New System.Windows.Forms.Label()
             Me.pnl_Bot.SuspendLayout()
             Me.Panel1.SuspendLayout()
-            CType(Me.Ds_Payments, System.ComponentModel.ISupportInitialize).BeginInit()
+            CType(Me.Payments, System.ComponentModel.ISupportInitialize).BeginInit()
             CType(Me.BadCheckBanksBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
             Me.SuspendLayout()
             '
@@ -222,13 +223,13 @@ Namespace Admin.Payments
             '
             'Ds_Payments
             '
-            Me.Ds_Payments.DataSetName = "ds_Payments"
-            Me.Ds_Payments.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema
+            Me.Payments.DataSetName = "ds_Payments"
+            Me.Payments.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema
             '
             'BadCheckBanksBindingSource
             '
             Me.BadCheckBanksBindingSource.DataMember = "Bad_Check_Banks"
-            Me.BadCheckBanksBindingSource.DataSource = Me.Ds_Payments
+            Me.BadCheckBanksBindingSource.DataSource = Me.Payments
             '
             'Bad_Check_BanksTableAdapter
             '
@@ -257,7 +258,7 @@ Namespace Admin.Payments
             Me.pnl_Bot.PerformLayout()
             Me.Panel1.ResumeLayout(False)
             Me.Panel1.PerformLayout()
-            CType(Me.Ds_Payments, System.ComponentModel.ISupportInitialize).EndInit()
+            CType(Me.Payments, System.ComponentModel.ISupportInitialize).EndInit()
             CType(Me.BadCheckBanksBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
             Me.ResumeLayout(False)
             Me.PerformLayout()
@@ -276,8 +277,8 @@ Namespace Admin.Payments
         Friend WithEvents Panel1 As System.Windows.Forms.Panel
         Friend WithEvents CustomerToolstrip1 As TrashCash.Classes.CustomerToolstrip.CustomerToolstrip
         Friend WithEvents cmb_Banks As System.Windows.Forms.ComboBox
-        Friend WithEvents Ds_Payments As TrashCash.ds_Payments
+        Friend WithEvents Payments As DS_Payments
         Friend WithEvents BadCheckBanksBindingSource As System.Windows.Forms.BindingSource
-        Friend WithEvents Bad_Check_BanksTableAdapter As TrashCash.ds_PaymentsTableAdapters.Bad_Check_BanksTableAdapter
+        Friend WithEvents Bad_Check_BanksTableAdapter As Bad_Check_BanksTableAdapter
     End Class
 End Namespace

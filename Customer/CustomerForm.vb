@@ -4,15 +4,12 @@ Imports TrashCash.Payments
 Namespace Customer
     Public Class CustomerForm
         ' new cust var so can switch form when new cust added
-        Friend WithEvents _newCust As NewCustomer
-        Friend WithEvents _payForm As PaymentsForm
-        Friend WithEvents _creditForm As CustomerCredit
-        Friend WithEvents _invForm As Invoicing.CustomInvoicingForm
+        Private WithEvents _newCust As NewCustomer
+        Private WithEvents _payForm As PaymentsForm
+        Private WithEvents _creditForm As CustomerCredit
+        Private WithEvents _invForm As Invoicing.CustomInvoicingForm
 
-        ' home form ref var
-        Private _home As TrashCashHome
-
-        Protected _currentCustomer As Integer
+        Private _currentCustomer As Integer
         Public Property CurrentCustomer As Integer
             Get
                 Return _currentCustomer
@@ -26,8 +23,7 @@ Namespace Customer
                     UC_RecurringService.CurrentCustomer = value
                     UC_Quickbooks.CurrentCustomer = value
                     UC_Quickbooks.CustomerListID = UC_CustomerInfoBoxes.CustomerListID
-                    UC_PreparedItems.CurrentCustomer = value
-
+                 
                     ' update window title
                     Text = CustomerToolstrip1.ToString
                     ' send name to uc_recsrvc
@@ -54,7 +50,7 @@ Namespace Customer
             End If
         End Sub
 
-        Private Sub CustomerChanged(ByVal CustomerNumber As Integer) Handles CustomerToolstrip1.CustomerChanging
+        Private Sub CustomerChanged(ByVal customerNumber As Integer) Handles CustomerToolstrip1.CustomerChanging
             CurrentCustomer = CustomerNumber
         End Sub
 
@@ -96,12 +92,11 @@ Namespace Customer
             _newCust = Nothing
         End Sub
 
-        Public Sub New(ByRef HomeForm As TrashCashHome)
+        Public Sub New(ByRef homeForm As TrashCashHome)
             ' This call is required by the designer.
             InitializeComponent()
 
             ' Add any initialization after the InitializeComponent() call.
-            _home = HomeForm
             UC_RecurringService.HomeForm = HomeForm
             CustomerToolstrip1.GetCustomerBalance()
         End Sub

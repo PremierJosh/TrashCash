@@ -38,10 +38,10 @@
             Me.rdo_OnDate = New System.Windows.Forms.RadioButton()
             Me.dtp_SingleDate = New System.Windows.Forms.DateTimePicker()
             Me.rdo_Batch = New System.Windows.Forms.RadioButton()
-            Me.Report_DataSet = New TrashCash.Report_DataSet()
+            Me.Report_DataSet = New DS_Reports()
             Me.cmb_BatchHistory = New System.Windows.Forms.ComboBox()
             Me.BatchPaymentsListBindingSource = New System.Windows.Forms.BindingSource(Me.components)
-            Me.BatchPayments_ListTableAdapter = New TrashCash.Report_DataSetTableAdapters.BatchPayments_ListTableAdapter()
+            Me.BatchPayments_ListTableAdapter = New BatchPayments_ListTableAdapter()
             Me.tc_Report.SuspendLayout()
             Me.tp_RepView.SuspendLayout()
             CType(Me.Report_DataSet, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -250,13 +250,13 @@
         Friend WithEvents tp_RepView As System.Windows.Forms.TabPage
         Friend WithEvents CrystalReportViewer As CrystalDecisions.Windows.Forms.CrystalReportViewer
         Friend WithEvents tp_GridView As System.Windows.Forms.TabPage
-        Friend WithEvents Report_DataSet As TrashCash.Report_DataSet
+        Friend WithEvents Report_DataSet As DS_Reports
         Friend WithEvents rdo_BetweenDates As System.Windows.Forms.RadioButton
         Friend WithEvents rdo_OnDate As System.Windows.Forms.RadioButton
         Friend WithEvents dtp_SingleDate As System.Windows.Forms.DateTimePicker
         Friend WithEvents rdo_Batch As System.Windows.Forms.RadioButton
         Friend WithEvents cmb_BatchHistory As System.Windows.Forms.ComboBox
         Friend WithEvents BatchPaymentsListBindingSource As System.Windows.Forms.BindingSource
-        Friend WithEvents BatchPayments_ListTableAdapter As TrashCash.Report_DataSetTableAdapters.BatchPayments_ListTableAdapter
+        Friend WithEvents BatchPayments_ListTableAdapter As BatchPayments_ListTableAdapter
     End Class
 End Namespace

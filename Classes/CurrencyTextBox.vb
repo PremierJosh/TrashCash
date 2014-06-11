@@ -5,7 +5,7 @@ Namespace Classes
 
         Private Sub Currency_TextBox_Validating(sender As Object, e As System.ComponentModel.CancelEventArgs) Handles Me.Validating
             If (sender.textlength > 0) Then
-                If Not Decimal.TryParse(Me.Text, _
+                If Not Decimal.TryParse(Text, _
                                         Globalization.NumberStyles.Currency) Then
                     'Don't let the user leave the field if the value is invalid.
                     With Me

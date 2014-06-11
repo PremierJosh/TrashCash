@@ -1,12 +1,13 @@
-﻿Imports QBFC12Lib
+﻿Imports TrashCash.Payments
+Imports QBFC12Lib
 Imports TrashCash.QBStuff
 
 Namespace Admin.Payments
     Public Class MovePaymentForm
-      ' event to let pay history form refresh
+        ' event to let pay history form refresh
         Friend Event PaymentMoveComplete()
 
-        Private ReadOnly _payTA As ds_PaymentsTableAdapters.PaymentHistory_DBTableAdapter
+        Private ReadOnly _payTA As PaymentHistory_DBTableAdapter
 
         ' var for actual pay history row
         Private _payHisRow As ds_Payments.PaymentHistory_DBRow
@@ -48,7 +49,7 @@ Namespace Admin.Payments
         Private WriteOnly Property PaymentID As Integer
             Set(value As Integer)
                 ' getting db row
-                Using ta As New ds_PaymentsTableAdapters.PaymentHistory_DBTableAdapter
+                Using ta As New PaymentHistory_DBTableAdapter
                     PaymentHistoryRow = ta.GetData(value).Rows(0)
                 End Using
             End Set
@@ -66,7 +67,7 @@ Namespace Admin.Payments
 
             ' set various vars qb will need in mod request
             Me.PaymentID = paymentID
-            _payTA = New ds_PaymentsTableAdapters.PaymentHistory_DBTableAdapter
+            _payTA = New PaymentHistory_DBTableAdapter
         End Sub
 
         Private Sub btn_MovePay_Click(sender As Object, e As EventArgs) Handles btn_MovePay.Click

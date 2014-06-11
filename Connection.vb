@@ -16,13 +16,13 @@ Public Class Connection
     End Sub
 
 
-    Private Shared Sub getSqlServers(ByVal sqlCombo As ComboBox)
-        Dim servers As DataTable = SqlDataSourceEnumerator.Instance.GetDataSources()
+    'Private Shared Sub GetSqlServers(ByVal sqlCombo As ComboBox)
+    '    Dim servers As DataTable = SqlDataSourceEnumerator.Instance.GetDataSources()
 
-        For Each dr As DataRow In servers.Rows
-            sqlCombo.Items.Add(dr.Item(0).ToString & "\" & dr.Item(1).ToString)
-        Next
-    End Sub
+    '    For Each dr As DataRow In servers.Rows
+    '        sqlCombo.Items.Add(dr.Item(0).ToString & "\" & dr.Item(1).ToString)
+    '    Next
+    'End Sub
 
     Private Sub Connection_Load(sender As Object, e As System.EventArgs) Handles Me.Load
         Dim con(,) As String
@@ -39,19 +39,19 @@ Public Class Connection
         End If
     End Sub
     Private Sub cmb_Server_Click(sender As System.Object, e As System.EventArgs) Handles cmb_Server.Click
-        Me.Cursor = Cursors.WaitCursor
+        Cursor = Cursors.WaitCursor
 
         ' Check if datatable is empty
-        If tableServers.Rows.Count = 0 Then
+        If _tableServers.Rows.Count = 0 Then
 
             ' Get a datatable with info about SQL Server 2000 and 2005 instances
-            tableServers = servers.GetDataSources()
+            _tableServers = _servers.GetDataSources()
 
             ' List that will be combobox’s datasource   
             Dim listServers As List(Of String) = New List(Of String)
 
             ' For each element in the datatable add a new element in the list
-            For Each rowServer As DataRow In tableServers.Rows
+            For Each rowServer As DataRow In _tableServers.Rows
 
                 ' SQL Server instance could have instace name or only server name,
                 ' check this for show the name
@@ -63,20 +63,20 @@ Public Class Connection
             Next
 
             'Set servers list to combobox’s datasource
-            Me.cmb_Server.DataSource = listServers
+            cmb_Server.DataSource = listServers
         End If
 
-        Me.Cursor = Cursors.Default
+        Cursor = Cursors.Default
     End Sub
-    Private servers As SqlDataSourceEnumerator
-    Private tableServers As DataTable
-    Private server As String
+    Private _servers As SqlDataSourceEnumerator
+    Private _tableServers As DataTable
+    Private _server As String
 
     Public Sub New()
         InitializeComponent()
 
-        servers = SqlDataSourceEnumerator.Instance
-        tableServers = New DataTable()
+        _servers = SqlDataSourceEnumerator.Instance
+        _tableServers = New DataTable()
 
 
     End Sub
@@ -84,27 +84,27 @@ Public Class Connection
     Private Sub cmb_DB_Click(sender As System.Object, e As System.EventArgs) Handles cmb_DB.Click
         Dim listDataBases As List(Of String) = New List(Of String)
         Dim connectString As String
-        Dim selectSQL As String
+        Dim selectSql As String
 
         ' Check if user was selected a server to connect
-        If Me.cmb_Server.Text = "" Then
+        If cmb_Server.Text = "" Then
             MsgBox("Must select a server")
             Return
         End If
 
-        server = Me.cmb_Server.Text
+        _server = cmb_Server.Text
 
         'Set connection string with selected server and integrated security
-        connectString = "Data Source=" & server & " ;Integrated Security=True;Initial Catalog=master"
+        connectString = "Data Source=" & _server & " ;Integrated Security=True;Initial Catalog=master"
 
         Using con As New SqlConnection(connectString)
             ' Open connection
             con.Open()
 
             'Get databases names in server in a datareader
-            selectSQL = "select name from sys.databases;"
+            selectSql = "select name from sys.databases;"
 
-            Dim com As SqlCommand = New SqlCommand(selectSQL, con)
+            Dim com As SqlCommand = New SqlCommand(selectSql, con)
             Dim dr As SqlDataReader = com.ExecuteReader()
 
             While (dr.Read())
@@ -112,13 +112,9 @@ Public Class Connection
             End While
 
             'Set databases list as combobox’s datasource
-            Me.cmb_DB.DataSource = listDataBases
+            cmb_DB.DataSource = listDataBases
 
             con.Close()
-            com = Nothing
-            dr = Nothing
-            'con = Nothing
-
         End Using
     End Sub
 
@@ -181,8 +177,8 @@ Public Class Connection
 
     Protected Overrides Sub Finalize()
         MyBase.Finalize()
-        server = Nothing
-        servers = Nothing
+        _server = Nothing
+        _servers = Nothing
 
     End Sub
 End Class

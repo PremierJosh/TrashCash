@@ -39,7 +39,7 @@ Namespace Invoicing
             Dim DataGridViewCellStyle13 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
             Dim DataGridViewCellStyle14 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
             Me.CustomInvoiceLineTypesBindingSource = New System.Windows.Forms.BindingSource(Me.components)
-            Me.Ds_Invoicing = New TrashCash.ds_Invoicing()
+            Me.Invoicing = New ds_Invoicing()
             Me.CustomerRecentAddrsBindingSource = New System.Windows.Forms.BindingSource(Me.components)
             Me.CustomInvoiceLineItemsBindingSource = New System.Windows.Forms.BindingSource(Me.components)
             Me.pnl_1 = New System.Windows.Forms.Panel()
@@ -94,7 +94,7 @@ Namespace Invoicing
             Me.RenderedOnDateDataGridViewTextBoxColumn1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
             Me.DescTextDataGridViewTextBoxColumn1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
             Me.Addr1DataGridViewTextBoxColumn1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-            Me.Ds_HistoryInv = New TrashCash.ds_Invoicing()
+            Me.HistoryInv = New ds_Invoicing()
             Me.lbl_HistoryLines = New System.Windows.Forms.Label()
             Me.lbl_VoidReason = New System.Windows.Forms.Label()
             Me.tb_VoidReason = New System.Windows.Forms.TextBox()
@@ -115,7 +115,7 @@ Namespace Invoicing
             lbl_CityState = New System.Windows.Forms.Label()
             ZipLabel = New System.Windows.Forms.Label()
             CType(Me.CustomInvoiceLineTypesBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
-            CType(Me.Ds_Invoicing, System.ComponentModel.ISupportInitialize).BeginInit()
+            CType(Me.Invoicing, System.ComponentModel.ISupportInitialize).BeginInit()
             CType(Me.CustomerRecentAddrsBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
             CType(Me.CustomInvoiceLineItemsBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
             Me.pnl_1.SuspendLayout()
@@ -131,7 +131,7 @@ Namespace Invoicing
             Me.grp_InvDets.SuspendLayout()
             Me.tp_History.SuspendLayout()
             CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).BeginInit()
-            CType(Me.Ds_HistoryInv, System.ComponentModel.ISupportInitialize).BeginInit()
+            CType(Me.HistoryInv, System.ComponentModel.ISupportInitialize).BeginInit()
             CType(Me.dg_InvHistory, System.ComponentModel.ISupportInitialize).BeginInit()
             CType(Me.CustomInvoicesBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
             CType(Me.InvoiceHistoryBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -185,21 +185,21 @@ Namespace Invoicing
             'CustomInvoiceLineTypesBindingSource
             '
             Me.CustomInvoiceLineTypesBindingSource.DataMember = "CustomInvoice_LineTypes"
-            Me.CustomInvoiceLineTypesBindingSource.DataSource = Me.Ds_Invoicing
+            Me.CustomInvoiceLineTypesBindingSource.DataSource = Me.Invoicing
             '
             'Ds_Invoicing
             '
-            Me.Ds_Invoicing.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema
+            Me.Invoicing.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema
             '
             'CustomerRecentAddrsBindingSource
             '
             Me.CustomerRecentAddrsBindingSource.DataMember = "Customer_RecentAddrs"
-            Me.CustomerRecentAddrsBindingSource.DataSource = Me.Ds_Invoicing
+            Me.CustomerRecentAddrsBindingSource.DataSource = Me.Invoicing
             '
             'CustomInvoiceLineItemsBindingSource
             '
             Me.CustomInvoiceLineItemsBindingSource.DataMember = "CustomInvoice_LineItems"
-            Me.CustomInvoiceLineItemsBindingSource.DataSource = Me.Ds_Invoicing
+            Me.CustomInvoiceLineItemsBindingSource.DataSource = Me.Invoicing
             '
             'pnl_1
             '
@@ -688,7 +688,7 @@ Namespace Invoicing
             Me.DataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
             Me.DataGridView1.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.CITypeIDDataGridViewTextBoxColumn1, Me.RateDataGridViewTextBoxColumn1, Me.RenderedOnDateDataGridViewTextBoxColumn1, Me.DescTextDataGridViewTextBoxColumn1, Me.Addr1DataGridViewTextBoxColumn1})
             Me.DataGridView1.DataMember = "CustomInvoice_LineItems"
-            Me.DataGridView1.DataSource = Me.Ds_HistoryInv
+            Me.DataGridView1.DataSource = Me.HistoryInv
             Me.DataGridView1.Dock = System.Windows.Forms.DockStyle.Top
             Me.DataGridView1.Location = New System.Drawing.Point(3, 193)
             Me.DataGridView1.Name = "DataGridView1"
@@ -744,7 +744,7 @@ Namespace Invoicing
             '
             'Ds_HistoryInv
             '
-            Me.Ds_HistoryInv.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema
+            Me.HistoryInv.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema
             '
             'lbl_HistoryLines
             '
@@ -793,7 +793,7 @@ Namespace Invoicing
             Me.dg_InvHistory.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
             Me.dg_InvHistory.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.InvoiceRefNumDataGridViewTextBoxColumn, Me.TimeCreatedDataGridViewTextBoxColumn, Me.DueDateDataGridViewTextBoxColumn, Me.PostDateDataGridViewTextBoxColumn, Me.InsertedUserDataGridViewTextBoxColumn})
             Me.dg_InvHistory.DataMember = "CustomInvoices"
-            Me.dg_InvHistory.DataSource = Me.Ds_HistoryInv
+            Me.dg_InvHistory.DataSource = Me.HistoryInv
             Me.dg_InvHistory.Dock = System.Windows.Forms.DockStyle.Top
             Me.dg_InvHistory.Location = New System.Drawing.Point(3, 23)
             Me.dg_InvHistory.MultiSelect = False
@@ -858,12 +858,12 @@ Namespace Invoicing
             'CustomInvoicesBindingSource
             '
             Me.CustomInvoicesBindingSource.DataMember = "CustomInvoices"
-            Me.CustomInvoicesBindingSource.DataSource = Me.Ds_Invoicing
+            Me.CustomInvoicesBindingSource.DataSource = Me.Invoicing
             '
             'InvoiceHistoryBindingSource
             '
             Me.InvoiceHistoryBindingSource.DataMember = "CustomInvoices"
-            Me.InvoiceHistoryBindingSource.DataSource = Me.Ds_HistoryInv
+            Me.InvoiceHistoryBindingSource.DataSource = Me.HistoryInv
             Me.InvoiceHistoryBindingSource.Filter = "StatusID = 7"
             '
             'ToolTip1
@@ -881,7 +881,7 @@ Namespace Invoicing
             Me.Name = "CustomInvoicingForm"
             Me.Text = "Custom Invoicing"
             CType(Me.CustomInvoiceLineTypesBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
-            CType(Me.Ds_Invoicing, System.ComponentModel.ISupportInitialize).EndInit()
+            CType(Me.Invoicing, System.ComponentModel.ISupportInitialize).EndInit()
             CType(Me.CustomerRecentAddrsBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
             CType(Me.CustomInvoiceLineItemsBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
             Me.pnl_1.ResumeLayout(False)
@@ -903,7 +903,7 @@ Namespace Invoicing
             Me.tp_History.ResumeLayout(False)
             Me.tp_History.PerformLayout()
             CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).EndInit()
-            CType(Me.Ds_HistoryInv, System.ComponentModel.ISupportInitialize).EndInit()
+            CType(Me.HistoryInv, System.ComponentModel.ISupportInitialize).EndInit()
             CType(Me.dg_InvHistory, System.ComponentModel.ISupportInitialize).EndInit()
             CType(Me.CustomInvoicesBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
             CType(Me.InvoiceHistoryBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
@@ -911,7 +911,7 @@ Namespace Invoicing
 
         End Sub
         Friend WithEvents CustomInvoiceLineTypesBindingSource As System.Windows.Forms.BindingSource
-        Friend WithEvents Ds_Invoicing As TrashCash.ds_Invoicing
+        Friend WithEvents Invoicing As ds_Invoicing
         Friend WithEvents CustomerRecentAddrsBindingSource As System.Windows.Forms.BindingSource
         Friend WithEvents CustomInvoiceLineItemsBindingSource As System.Windows.Forms.BindingSource
         Friend WithEvents pnl_1 As System.Windows.Forms.Panel
@@ -957,7 +957,7 @@ Namespace Invoicing
         Friend WithEvents dg_InvHistory As System.Windows.Forms.DataGridView
         Friend WithEvents CustomInvoicesBindingSource As System.Windows.Forms.BindingSource
         Friend WithEvents DataGridView1 As System.Windows.Forms.DataGridView
-        Friend WithEvents Ds_HistoryInv As TrashCash.ds_Invoicing
+        Friend WithEvents HistoryInv As ds_Invoicing
         Friend WithEvents InvoiceHistoryBindingSource As System.Windows.Forms.BindingSource
         Friend WithEvents lbl_VoidReason As System.Windows.Forms.Label
         Friend WithEvents tb_VoidReason As System.Windows.Forms.TextBox

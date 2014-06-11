@@ -1,4 +1,5 @@
-﻿Imports TrashCash.QBStuff
+﻿Imports TrashCash.RecurringService
+Imports TrashCash.QBStuff
 Imports TrashCash.Classes
 
 Namespace Customer
@@ -30,27 +31,22 @@ Namespace Customer
             Me.components = New System.ComponentModel.Container()
             Me.tc_Master = New System.Windows.Forms.TabControl()
             Me.tc_p_Notes = New System.Windows.Forms.TabPage()
-            Me.UC_CustomerNotes = New TrashCash.UC_CustomerNotes()
             Me.tc_p_RecSrvcs = New System.Windows.Forms.TabPage()
-            Me.UC_RecurringService = New TrashCash.UC_RecurringService()
+            Me.UC_RecurringService = New UC_RecurringService()
             Me.tc_p_QBItems = New System.Windows.Forms.TabPage()
-            Me.UC_Quickbooks = New UC_Quickbooks()
-            Me.tc_p_PrepItems = New System.Windows.Forms.TabPage()
-            Me.UC_PreparedItems = New TrashCash.UC_PreparedItems()
+            Me.UC_Quickbooks = New TrashCash.QBStuff.UC_Quickbooks()
             Me.pnl_Top = New System.Windows.Forms.Panel()
             Me.pnl_TopContent = New System.Windows.Forms.Panel()
+            Me.CustomerToolstrip1 = New TrashCash.Classes.CustomerToolstrip.CustomerToolstrip()
             Me.ts_Top = New System.Windows.Forms.ToolStrip()
             Me.btn_Inv = New System.Windows.Forms.ToolStripButton()
             Me.btn_Payments = New System.Windows.Forms.ToolStripButton()
             Me.btn_NewCust = New System.Windows.Forms.ToolStripButton()
             Me.btn_Credit = New System.Windows.Forms.ToolStripButton()
-            Me.UC_CustomerInfoBoxes = New UC_CustomerInfoBoxes()
-            Me.CustomerToolstrip1 = New TrashCash.Classes.CustomerToolstrip.CustomerToolstrip()
+            Me.UC_CustomerInfoBoxes = New TrashCash.Customer.UC_CustomerInfoBoxes()
             Me.tc_Master.SuspendLayout()
-            Me.tc_p_Notes.SuspendLayout()
             Me.tc_p_RecSrvcs.SuspendLayout()
             Me.tc_p_QBItems.SuspendLayout()
-            Me.tc_p_PrepItems.SuspendLayout()
             Me.pnl_Top.SuspendLayout()
             Me.pnl_TopContent.SuspendLayout()
             Me.ts_Top.SuspendLayout()
@@ -61,7 +57,6 @@ Namespace Customer
             Me.tc_Master.Controls.Add(Me.tc_p_Notes)
             Me.tc_Master.Controls.Add(Me.tc_p_RecSrvcs)
             Me.tc_Master.Controls.Add(Me.tc_p_QBItems)
-            Me.tc_Master.Controls.Add(Me.tc_p_PrepItems)
             Me.tc_Master.Dock = System.Windows.Forms.DockStyle.Bottom
             Me.tc_Master.Location = New System.Drawing.Point(0, 252)
             Me.tc_Master.Name = "tc_Master"
@@ -72,22 +67,12 @@ Namespace Customer
             'tc_p_Notes
             '
             Me.tc_p_Notes.BackColor = System.Drawing.SystemColors.Control
-            Me.tc_p_Notes.Controls.Add(Me.UC_CustomerNotes)
             Me.tc_p_Notes.Location = New System.Drawing.Point(4, 22)
             Me.tc_p_Notes.Name = "tc_p_Notes"
             Me.tc_p_Notes.Padding = New System.Windows.Forms.Padding(3)
             Me.tc_p_Notes.Size = New System.Drawing.Size(894, 270)
             Me.tc_p_Notes.TabIndex = 0
             Me.tc_p_Notes.Text = "Notes"
-            '
-            'UC_CustomerNotes
-            '
-            Me.UC_CustomerNotes.CurrentCustomer = New Decimal(New Integer() {0, 0, 0, 0})
-            Me.UC_CustomerNotes.Dock = System.Windows.Forms.DockStyle.Fill
-            Me.UC_CustomerNotes.Location = New System.Drawing.Point(3, 3)
-            Me.UC_CustomerNotes.Name = "UC_CustomerNotes"
-            Me.UC_CustomerNotes.Size = New System.Drawing.Size(888, 264)
-            Me.UC_CustomerNotes.TabIndex = 0
             '
             'tc_p_RecSrvcs
             '
@@ -130,26 +115,6 @@ Namespace Customer
             Me.UC_Quickbooks.Size = New System.Drawing.Size(888, 264)
             Me.UC_Quickbooks.TabIndex = 0
             '
-            'tc_p_PrepItems
-            '
-            Me.tc_p_PrepItems.BackColor = System.Drawing.SystemColors.Control
-            Me.tc_p_PrepItems.Controls.Add(Me.UC_PreparedItems)
-            Me.tc_p_PrepItems.Location = New System.Drawing.Point(4, 22)
-            Me.tc_p_PrepItems.Name = "tc_p_PrepItems"
-            Me.tc_p_PrepItems.Padding = New System.Windows.Forms.Padding(3)
-            Me.tc_p_PrepItems.Size = New System.Drawing.Size(894, 270)
-            Me.tc_p_PrepItems.TabIndex = 3
-            Me.tc_p_PrepItems.Text = "Prepared Items"
-            '
-            'UC_PreparedItems
-            '
-            Me.UC_PreparedItems.CurrentCustomer = New Decimal(New Integer() {0, 0, 0, 0})
-            Me.UC_PreparedItems.Dock = System.Windows.Forms.DockStyle.Fill
-            Me.UC_PreparedItems.Location = New System.Drawing.Point(3, 3)
-            Me.UC_PreparedItems.Name = "UC_PreparedItems"
-            Me.UC_PreparedItems.Size = New System.Drawing.Size(888, 264)
-            Me.UC_PreparedItems.TabIndex = 0
-            '
             'pnl_Top
             '
             Me.pnl_Top.Controls.Add(Me.pnl_TopContent)
@@ -169,6 +134,16 @@ Namespace Customer
             Me.pnl_TopContent.Name = "pnl_TopContent"
             Me.pnl_TopContent.Size = New System.Drawing.Size(862, 33)
             Me.pnl_TopContent.TabIndex = 14
+            '
+            'CustomerToolstrip1
+            '
+            Me.CustomerToolstrip1.Dock = System.Windows.Forms.DockStyle.Fill
+            Me.CustomerToolstrip1.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden
+            Me.CustomerToolstrip1.Location = New System.Drawing.Point(0, 0)
+            Me.CustomerToolstrip1.Name = "CustomerToolstrip1"
+            Me.CustomerToolstrip1.Size = New System.Drawing.Size(860, 31)
+            Me.CustomerToolstrip1.TabIndex = 0
+            Me.CustomerToolstrip1.Text = "CustomerToolstrip1"
             '
             'ts_Top
             '
@@ -219,21 +194,11 @@ Namespace Customer
             Me.UC_CustomerInfoBoxes.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
             Me.UC_CustomerInfoBoxes.CurrentCustomer = 0
             Me.UC_CustomerInfoBoxes.Dock = System.Windows.Forms.DockStyle.Top
-            Me.UC_CustomerInfoBoxes.isUpdating = False
+            Me.UC_CustomerInfoBoxes.IsUpdating = False
             Me.UC_CustomerInfoBoxes.Location = New System.Drawing.Point(0, 78)
             Me.UC_CustomerInfoBoxes.Name = "UC_CustomerInfoBoxes"
             Me.UC_CustomerInfoBoxes.Size = New System.Drawing.Size(902, 172)
             Me.UC_CustomerInfoBoxes.TabIndex = 9
-            '
-            'CustomerToolstrip1
-            '
-            Me.CustomerToolstrip1.Dock = System.Windows.Forms.DockStyle.Fill
-            Me.CustomerToolstrip1.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden
-            Me.CustomerToolstrip1.Location = New System.Drawing.Point(0, 0)
-            Me.CustomerToolstrip1.Name = "CustomerToolstrip1"
-            Me.CustomerToolstrip1.Size = New System.Drawing.Size(860, 31)
-            Me.CustomerToolstrip1.TabIndex = 0
-            Me.CustomerToolstrip1.Text = "CustomerToolstrip1"
             '
             'CustomerForm
             '
@@ -250,10 +215,8 @@ Namespace Customer
             Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent
             Me.Text = "Current Customer: Fife Abby - 1000"
             Me.tc_Master.ResumeLayout(False)
-            Me.tc_p_Notes.ResumeLayout(False)
             Me.tc_p_RecSrvcs.ResumeLayout(False)
             Me.tc_p_QBItems.ResumeLayout(False)
-            Me.tc_p_PrepItems.ResumeLayout(False)
             Me.pnl_Top.ResumeLayout(False)
             Me.pnl_TopContent.ResumeLayout(False)
             Me.pnl_TopContent.PerformLayout()
@@ -266,11 +229,10 @@ Namespace Customer
         Friend WithEvents UC_CustomerInfoBoxes As UC_CustomerInfoBoxes
         Friend WithEvents tc_Master As System.Windows.Forms.TabControl
         Friend WithEvents tc_p_Notes As System.Windows.Forms.TabPage
-        Friend WithEvents UC_CustomerNotes As TrashCash.UC_CustomerNotes
+        Friend WithEvents UC_CustomerNotes As UC_CustomerNotes
         Friend WithEvents tc_p_RecSrvcs As System.Windows.Forms.TabPage
-        Friend WithEvents UC_RecurringService As TrashCash.UC_RecurringService
-        Friend WithEvents tc_p_PrepItems As System.Windows.Forms.TabPage
-        Friend WithEvents UC_PreparedItems As TrashCash.UC_PreparedItems
+        Friend WithEvents UC_RecurringService As UC_RecurringService
+        Friend WithEvents UC_PreparedItems As UC_PreparedItems
         Friend WithEvents pnl_Top As System.Windows.Forms.Panel
         Friend WithEvents pnl_TopContent As System.Windows.Forms.Panel
         Friend WithEvents ts_Top As System.Windows.Forms.ToolStrip

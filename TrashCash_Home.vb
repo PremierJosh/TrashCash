@@ -1,10 +1,11 @@
 ﻿Imports System.Windows.Forms
+Imports TrashCash.QBStuff
+Imports TrashCash.RecurringService
 Imports TrashCash.Reports
 Imports TrashCash.Payments
 Imports TrashCash.Batching
 Imports TrashCash.Customer
 Imports TrashCash.Invoicing
-Imports TrashCash.Classes
 Imports TrashCash.Admin
 Imports QBFC12Lib
 
@@ -94,7 +95,7 @@ Public Class TrashCashHome
 
     ' vars for admin forms'
     Friend WithEvents UserSelection As UserSelection
-    Friend WithEvents TrashCashAdmin As TrashCash_Admin
+    Friend WithEvents TrashCashAdmin As TrashCashAdmin
 
     ' qb session and msg set req
     Friend AppSessMgr As QBSessionManager
@@ -137,7 +138,7 @@ Public Class TrashCashHome
         pb_Batching.Visible = running
         lbl_BatchProg.Visible = running
     End Sub
-    Private Sub BatchProgPercUpdate(ByVal batchProg As Integer) Handles BatchForm.e_BatchProgPerc
+    Private Sub BatchProgPercUpdate(ByVal batchProg As Integer) Handles BatchForm.BatchProgPerc
         lbl_BatchProg.Text = batchProg & "%"
     End Sub
 
@@ -258,10 +259,8 @@ Public Class TrashCashHome
         End If
     End Sub
 
-
     Private Sub CreateAllClasses()
-
-  CReporting = New Reporting(SessionManager, MsgSetRequest)
+        CReporting = New Reporting(SessionManager, MsgSetRequest)
     End Sub
 
     Private Sub GetQBFileLocation()
@@ -292,7 +291,7 @@ Public Class TrashCashHome
     End Sub
 
     Private Sub btn_Rpt_AllCustomerBalances_Click(sender As Object, e As EventArgs) Handles btn_Rpt_AllCustomerBalances.Click
-        Dim rf As New f_AllCustBalances(Me)
+        Dim rf As New Report_AllCustBalances(Me)
         rf.Show()
     End Sub
 
@@ -303,7 +302,7 @@ Public Class TrashCashHome
 
 
     Private Sub btn_Rpt_DaysEvents_Click(sender As Object, e As EventArgs) Handles btn_Rpt_DaysEvents.Click
-        Dim rf As New f_DaysEvents
+        Dim rf As New Report_DaysEvents
         rf.Show()
     End Sub
 
@@ -318,11 +317,10 @@ Public Class TrashCashHome
 
         ' setting userid row
         CurrentUserRow = UserTA.GetDataByID(userID).Rows(0)
-
     End Sub
 
     Private Sub UnderOverEvenCustomerToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles UnderOverEvenCustomerToolStripMenuItem.Click
-        Dim rf As New f_UnderOverEven(Me)
+        Dim rf As New Report_UnderOverEven(Me)
         rf.Show()
     End Sub
 
@@ -385,7 +383,7 @@ Public Class TrashCashHome
             If (open) Then
                 ' making sure userrow is less than 3
                 If (userRow.USER_AUTHLVL < 3) Then
-                    TrashCashAdmin = New TrashCash_Admin(Me, userRow)
+                    TrashCashAdmin = New TrashCashAdmin(Me, userRow)
                     TrashCashAdmin.Show()
                 Else
                     MessageBox.Show("No administrator privledges.", "No privledges", MessageBoxButtons.OK, MessageBoxIcon.Error)

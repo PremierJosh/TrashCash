@@ -1,4 +1,6 @@
-﻿Namespace Admin.Payments
+﻿Imports TrashCash.Payments
+
+Namespace Admin.Payments
     Public Class AdminPayments
 
         ' move payment form ref
@@ -61,7 +63,7 @@
         Private Sub PaymentHistory_Load(sender As Object, e As System.EventArgs) Handles Me.Load
             ' new stuff
             _dv = New DataView
-            _dv.Table = Ds_Payments.PaymentHistory_Display
+            _dv.Table = Payments.PaymentHistory_Display
             _dv.Sort = "DateReceived DESC"
             dg_PaymentHistory.DataSource = _dv
 
@@ -84,7 +86,7 @@
             If (CurrentCustomer > 0) Then
                 ' making sure we have a customer
                 Try
-                    PaymentHistory_DisplayTableAdapter.Fill(Ds_Payments.PaymentHistory_Display, CurrentCustomer, dtp_StartDate.Value.Date, dtp_EndDate.Value.Date)
+                    PaymentHistory_DisplayTableAdapter.Fill(Payments.PaymentHistory_Display, CurrentCustomer, dtp_StartDate.Value.Date, dtp_EndDate.Value.Date)
                 Catch ex As Exception
                     MsgBox(ex.Message)
                 End Try
@@ -134,7 +136,7 @@
         Private Sub cm_i_MovePayment_Click(sender As System.Object, e As System.EventArgs) Handles cm_i_MovePayment.Click
             If (dg_PaymentHistory.SelectedRows.Count = 1) Then
                 ' easier refrence
-              Dim row As ds_Payments.PaymentHistory_DisplayRow = CType(dg_PaymentHistory.SelectedRows(0).DataBoundItem, DataRowView).Row
+                Dim row As ds_Payments.PaymentHistory_DisplayRow = CType(dg_PaymentHistory.SelectedRows(0).DataBoundItem, DataRowView).Row
                 ' result ref
                 Dim result As DialogResult
                 If (Not row.Bounced) Then

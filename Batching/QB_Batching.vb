@@ -1,15 +1,16 @@
-﻿Imports TrashCash.QBStuff
+﻿
 Imports QBFC12Lib
+Imports TrashCash.QBStuff
 
-Namespace Classes
+Namespace Batching
 
 
     ' ReSharper disable once InconsistentNaming
     Public MustInherit Class QB_Batching
         Protected Friend ConMgr As QBConMgr
-        
+
         ' qta
-        Private ReadOnly _qta As ds_BatchingTableAdapters.QueriesTableAdapter
+        Private ReadOnly _qta As QueriesTableAdapter
 
         Protected Friend Sub New()
             If (ConMgr Is Nothing) Then
@@ -17,7 +18,7 @@ Namespace Classes
                 ConMgr.InitCon()
             End If
 
-            _qta = New ds_BatchingTableAdapters.QueriesTableAdapter
+            _qta = New QueriesTableAdapter
         End Sub
 
         Public Class Invoicing
@@ -31,14 +32,14 @@ Namespace Classes
             Private _batchID As Integer
 
             ' tas
-            Private ReadOnly _ta As ds_BatchingTableAdapters.BATCH_WorkingInvoiceTableAdapter
-            Private ReadOnly _lineTA As ds_BatchingTableAdapters.BATCH_LineItemsTableAdapter
+            Private ReadOnly _ta As BATCH_WorkingInvoiceTableAdapter
+            Private ReadOnly _lineTA As BATCH_LineItemsTableAdapter
 
             Public Sub New(ByVal invoiceDt As ds_Batching.BATCH_WorkingInvoiceDataTable)
                 MyBase.New()
                 ' instantiating tas
-                _ta = New ds_BatchingTableAdapters.BATCH_WorkingInvoiceTableAdapter
-                _lineTA = New ds_BatchingTableAdapters.BATCH_LineItemsTableAdapter
+                _ta = New BATCH_WorkingInvoiceTableAdapter
+                _lineTA = New BATCH_LineItemsTableAdapter
                 _dt = invoiceDt
             End Sub
 
@@ -52,7 +53,7 @@ Namespace Classes
                 Dim lastReportTime As DateTime = Now
                 ' this is how many milliseconds between progress reporting
                 Const elapsedTime As Double = 100
-                
+
                 If (_dt.Rows.Count > 0) Then
                     ' setting maximum on progress class
                     progress.MaximumValue = _dt.Rows.Count
@@ -79,7 +80,7 @@ Namespace Classes
                         End If
                         ' checking balance of customer
                         Dim custBalance As Double = ConMgr.GetCustomerBalance(row.CustomerListID)
-                        
+
                         ' send invoice through row
                         Dim invObj As QBInvoiceObj = Invoice(row)
 
@@ -212,12 +213,12 @@ Namespace Classes
             ' current batch id
             Private _batchID As Integer
             ' ta
-            Private ReadOnly _ta As ds_BatchingTableAdapters.BATCH_WorkingPaymentsTableAdapter
+            Private ReadOnly _ta As BATCH_WorkingPaymentsTableAdapter
 
             Public Sub New(ByVal batchPayDt As ds_Batching.BATCH_WorkingPaymentsDataTable)
                 MyBase.New()
                 ' instantiating ta
-                _ta = New ds_BatchingTableAdapters.BATCH_WorkingPaymentsTableAdapter
+                _ta = New BATCH_WorkingPaymentsTableAdapter
                 _dt = batchPayDt
             End Sub
 
@@ -241,11 +242,11 @@ Namespace Classes
                     Try
                         ' batch history insert
                         _batchID = _qta.BATCH_HISTORY_PAY_Insert(Date.Now, _dt.Rows.Count)
-                    Catch ex as SqlException
+                    Catch ex As SqlException
                         MessageBox.Show("Message: " & ex.Message & vbCrLf & "LineNumber: " & ex.LineNumber,
                                         "Sql Error: " & ex.Procedure, MessageBoxButtons.OK, MessageBoxIcon.Error)
                     End Try
-                  
+
                     For Each row As ds_Batching.BATCH_WorkingPaymentsRow In _dt.Rows
                         ' updating progress counter and customer
                         progress.CurrentValue += 1
@@ -311,7 +312,7 @@ Namespace Classes
                         _qta.BATCH_HISTORY_PAY_UpdateForCompletion(_batchID, Date.Now, err)
                         _ta.Update(_dt)
                         _ta.DeleteComplete()
-                    Catch ex as SqlException
+                    Catch ex As SqlException
                         MessageBox.Show("Message: " & ex.Message & vbCrLf & "LineNumber: " & ex.LineNumber,
                                         "Sql Error: " & ex.Procedure, MessageBoxButtons.OK, MessageBoxIcon.Error)
                     End Try

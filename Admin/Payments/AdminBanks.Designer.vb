@@ -1,4 +1,5 @@
 ﻿
+Imports TrashCash.Payments
 
 Namespace Admin.Payments
     <Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
@@ -46,9 +47,9 @@ Namespace Admin.Payments
             Me.cmb_BanksInvItem = New System.Windows.Forms.ComboBox()
             Me.cmb_VendorAcc = New System.Windows.Forms.ComboBox()
             Me.lbl_BankSelecInfo = New System.Windows.Forms.Label()
-            Me.Ds_Payments = New TrashCash.ds_Payments()
+            Me.Payments = New DS_Payments()
             Me.BadCheckBanksBindingSource = New System.Windows.Forms.BindingSource(Me.components)
-            Me.Bad_Check_BanksTableAdapter = New TrashCash.ds_PaymentsTableAdapters.Bad_Check_BanksTableAdapter()
+            Me.Bad_Check_BanksTableAdapter = New Bad_Check_BanksTableAdapter()
             Me.ck_Deactive = New System.Windows.Forms.CheckBox()
             BankBounceFeeLabel = New System.Windows.Forms.Label()
             lbl_vendorSelInfo = New System.Windows.Forms.Label()
@@ -56,7 +57,7 @@ Namespace Admin.Payments
             Me.ts_Top.SuspendLayout()
             Me.pnl_Bottom.SuspendLayout()
             Me.pnl_BankSelection.SuspendLayout()
-            CType(Me.Ds_Payments, System.ComponentModel.ISupportInitialize).BeginInit()
+            CType(Me.Payments, System.ComponentModel.ISupportInitialize).BeginInit()
             CType(Me.BadCheckBanksBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
             Me.SuspendLayout()
             '
@@ -227,13 +228,13 @@ Namespace Admin.Payments
             '
             'Ds_Payments
             '
-            Me.Ds_Payments.DataSetName = "ds_Payments"
-            Me.Ds_Payments.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema
+            Me.Payments.DataSetName = "ds_Payments"
+            Me.Payments.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema
             '
             'BadCheckBanksBindingSource
             '
             Me.BadCheckBanksBindingSource.DataMember = "Bad_Check_Banks"
-            Me.BadCheckBanksBindingSource.DataSource = Me.Ds_Payments
+            Me.BadCheckBanksBindingSource.DataSource = Me.Payments
             '
             'Bad_Check_BanksTableAdapter
             '
@@ -268,7 +269,7 @@ Namespace Admin.Payments
             Me.pnl_Bottom.PerformLayout()
             Me.pnl_BankSelection.ResumeLayout(False)
             Me.pnl_BankSelection.PerformLayout()
-            CType(Me.Ds_Payments, System.ComponentModel.ISupportInitialize).EndInit()
+            CType(Me.Payments, System.ComponentModel.ISupportInitialize).EndInit()
             CType(Me.BadCheckBanksBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
             Me.ResumeLayout(False)
             Me.PerformLayout()
@@ -278,7 +279,7 @@ Namespace Admin.Payments
         Friend WithEvents btn_AddBank As System.Windows.Forms.ToolStripButton
         Friend WithEvents btn_ModBank As System.Windows.Forms.ToolStripButton
         Friend WithEvents btn_SaveChanges As System.Windows.Forms.ToolStripButton
-  Friend WithEvents pnl_Bottom As System.Windows.Forms.Panel
+        Friend WithEvents pnl_Bottom As System.Windows.Forms.Panel
         Friend WithEvents lbl_BankName As System.Windows.Forms.Label
         Friend WithEvents tb_BankName As System.Windows.Forms.TextBox
         Friend WithEvents pnl_BankSelection As System.Windows.Forms.Panel
@@ -290,9 +291,9 @@ Namespace Admin.Payments
         Friend WithEvents cmb_BankList As System.Windows.Forms.ToolStripComboBox
         Friend WithEvents ToolStripSeparator1 As System.Windows.Forms.ToolStripSeparator
         Friend WithEvents ToolStripSeparator2 As System.Windows.Forms.ToolStripSeparator
-        Friend WithEvents Ds_Payments As TrashCash.ds_Payments
+        Friend WithEvents Payments As DS_Payments
         Friend WithEvents BadCheckBanksBindingSource As System.Windows.Forms.BindingSource
-        Friend WithEvents Bad_Check_BanksTableAdapter As TrashCash.ds_PaymentsTableAdapters.Bad_Check_BanksTableAdapter
+        Friend WithEvents Bad_Check_BanksTableAdapter As Bad_Check_BanksTableAdapter
         Friend WithEvents ck_Deactive As System.Windows.Forms.CheckBox
     End Class
 End Namespace

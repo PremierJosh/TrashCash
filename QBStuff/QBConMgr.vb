@@ -1,14 +1,13 @@
-﻿Imports QBFC12Lib
-Imports System.ServiceProcess
-Imports TrashCash.QBStuff
+﻿Imports System.ServiceProcess
+Imports QBFC12Lib
 
-Namespace Classes
+Namespace QBStuff
     Public Class QBConMgr
 
         Public SessionManager As QBSessionManager
         Public MessageSetRequest As IMsgSetRequest
 
-       Public Sub InitCon()
+        Public Sub InitCon()
             SessionManager = New QBSessionManager()
             Try
                 ' attempt to start qbfc services
@@ -26,12 +25,12 @@ Namespace Classes
             MessageSetRequest = SessionManager.CreateMsgSetRequest("US", 11, 0)
         End Sub
 
-      Private Sub StartQBFCServices()
+        Private Sub StartQBFCServices()
             Dim s As New List(Of String)
             s.Add("QBCFMonitorService")
             s.Add("QBIDPService")
             s.Add("QuickbooksDB23")
-           
+
             For Each service As String In s
                 Dim sc As New ServiceController(service)
                 If (sc.Status <> ServiceControllerStatus.Running) Then
@@ -62,7 +61,7 @@ Namespace Classes
             End Try
         End Sub
 
-       ' going to put customer balance sub here for quick access
+        ' going to put customer balance sub here for quick access
         Public Function GetCustomerBalance(ByVal customerListID As String) As Double
             ' return var
             Dim b As Double
@@ -100,7 +99,7 @@ Namespace Classes
             End If
         End Sub
 
-       
+
         '    Private Sub KillQBProcess()
         '        ' QBW32.exe killing
         '        For Each p As Process In Process.GetProcessesByName("QBW32.exe")

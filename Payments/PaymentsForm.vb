@@ -48,7 +48,7 @@
 
             ' checking if newID is passed from a new payment
             If (newID <> Nothing) Then
-                WorkingPaymentsTableAdapter.FillByID(ds_Payments.WorkingPayments, newID)
+                WorkingPaymentsTableAdapter.FillByID(Payments.WorkingPayments, newID)
             End If
         End Sub
 

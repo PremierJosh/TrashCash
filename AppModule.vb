@@ -1,4 +1,4 @@
-﻿Imports TrashCash.Classes
+﻿Imports TrashCash.QBStuff
 
 
 Module AppModule

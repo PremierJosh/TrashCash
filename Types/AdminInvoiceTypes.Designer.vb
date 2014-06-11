@@ -1,4 +1,6 @@
-﻿Namespace Admin
+﻿Imports TrashCash.Invoicing
+
+Namespace Types
     <Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
     Partial Class AdminInvoiceTypes
         Inherits System.Windows.Forms.Form
@@ -32,8 +34,8 @@
             Me.InactiveDataGridViewCheckBoxColumn = New System.Windows.Forms.DataGridViewCheckBoxColumn()
             Me.NAMEDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
             Me.CustomInvoiceLineTypesBindingSource = New System.Windows.Forms.BindingSource(Me.components)
-            Me.Ds_Invoicing = New TrashCash.ds_Invoicing()
-            Me.CustomInvoice_LineTypesTableAdapter = New TrashCash.ds_InvoicingTableAdapters.CustomInvoice_LineTypesTableAdapter()
+            Me.Invoicing = New DS_Invoicing()
+            Me.CustomInvoice_LineTypesTableAdapter = New CustomInvoice_LineTypesTableAdapter()
             Me.tb_Name = New System.Windows.Forms.TextBox()
             Me.tb_Desc = New System.Windows.Forms.TextBox()
             Me.cmb_QBAccount = New System.Windows.Forms.ComboBox()
@@ -44,7 +46,7 @@
             Me.Label1 = New System.Windows.Forms.Label()
             CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).BeginInit()
             CType(Me.CustomInvoiceLineTypesBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
-            CType(Me.Ds_Invoicing, System.ComponentModel.ISupportInitialize).BeginInit()
+            CType(Me.Invoicing, System.ComponentModel.ISupportInitialize).BeginInit()
             Me.SuspendLayout()
             '
             'DataGridView1
@@ -109,12 +111,12 @@
             'CustomInvoiceLineTypesBindingSource
             '
             Me.CustomInvoiceLineTypesBindingSource.DataMember = "CustomInvoice_LineTypes"
-            Me.CustomInvoiceLineTypesBindingSource.DataSource = Me.Ds_Invoicing
+            Me.CustomInvoiceLineTypesBindingSource.DataSource = Me.Invoicing
             '
             'Ds_Invoicing
             '
-            Me.Ds_Invoicing.DataSetName = "ds_Invoicing"
-            Me.Ds_Invoicing.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema
+            Me.Invoicing.DataSetName = "ds_Invoicing"
+            Me.Invoicing.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema
             '
             'CustomInvoice_LineTypesTableAdapter
             '
@@ -206,15 +208,15 @@
             Me.Text = "Invoice Types"
             CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).EndInit()
             CType(Me.CustomInvoiceLineTypesBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
-            CType(Me.Ds_Invoicing, System.ComponentModel.ISupportInitialize).EndInit()
+            CType(Me.Invoicing, System.ComponentModel.ISupportInitialize).EndInit()
             Me.ResumeLayout(False)
             Me.PerformLayout()
 
         End Sub
         Friend WithEvents DataGridView1 As System.Windows.Forms.DataGridView
-        Friend WithEvents Ds_Invoicing As TrashCash.ds_Invoicing
+        Friend WithEvents Invoicing As DS_Invoicing
         Friend WithEvents CustomInvoiceLineTypesBindingSource As System.Windows.Forms.BindingSource
-        Friend WithEvents CustomInvoice_LineTypesTableAdapter As TrashCash.ds_InvoicingTableAdapters.CustomInvoice_LineTypesTableAdapter
+        Friend WithEvents CustomInvoice_LineTypesTableAdapter As CustomInvoice_LineTypesTableAdapter
         Friend WithEvents CITypeIDDataGridViewTextBoxColumn As System.Windows.Forms.DataGridViewTextBoxColumn
         Friend WithEvents QBListIDDataGridViewTextBoxColumn As System.Windows.Forms.DataGridViewTextBoxColumn
         Friend WithEvents QBEditSeqDataGridViewTextBoxColumn As System.Windows.Forms.DataGridViewTextBoxColumn

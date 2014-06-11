@@ -1,4 +1,4 @@
-﻿Imports TrashCash.Classes
+﻿Imports TrashCash.Payments
 Imports QBFC12Lib
 
 
@@ -15,7 +15,7 @@ Namespace QBStuff
 
             Return ConCheck(qbConMgr).GetRespList.GetAt(0)
         End Function
-        
+
         ' check add
         Public Shared Function CheckAdd(ByRef checkObj As QBCheckAddObj) As IResponse
             Dim addRq As ICheckAdd = GlobalConMgr.MessageSetRequest.AppendCheckAddRq
@@ -547,7 +547,7 @@ Namespace QBStuff
             itemQuery.IncludeRetElementList.Add("FullName")
 
             Dim respList As IResponseList = GlobalConMgr.GetRespList
-           For i = 0 To respList.Count - 1
+            For i = 0 To respList.Count - 1
                 Dim resp As IResponse = respList.GetAt(i) '
                 If (resp.StatusCode = 0) Then
                     Return resp.Detail
@@ -907,7 +907,7 @@ Namespace QBStuff
                                         Dim ret As IReceivePaymentRet = resp.Detail
                                         Try
                                             ' attempting to update history edit seq
-                                            Using ta As New ds_PaymentsTableAdapters.PaymentHistory_DBTableAdapter
+                                            Using ta As New PaymentHistory_DBTableAdapter
                                                 ta.UpdateEditSeq(ret.TxnID.GetValue, ret.EditSequence.GetValue)
                                             End Using
                                         Catch ex As SqlException

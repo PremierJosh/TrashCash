@@ -1,4 +1,5 @@
-﻿Imports TrashCash.QBStuff
+﻿Imports TrashCash.Payments
+Imports TrashCash.QBStuff
 
 Namespace Admin.Payments
     Public Class AdminBanks
@@ -36,7 +37,7 @@ Namespace Admin.Payments
                     cmb_BankList.Enabled = True
                     btn_AddBank.Enabled = True
                     ' refresh list
-                    Bad_Check_BanksTableAdapter.Fill(Ds_Payments.Bad_Check_Banks)
+                    Bad_Check_BanksTableAdapter.Fill(Payments.Bad_Check_Banks)
                 End If
             End Set
         End Property
@@ -45,10 +46,10 @@ Namespace Admin.Payments
             ' bind combo boxes to qb items
             BindCmbs()
             ' bind banks list on toolstrip
-            Bad_Check_BanksTableAdapter.Fill(Ds_Payments.Bad_Check_Banks)
+            Bad_Check_BanksTableAdapter.Fill(Payments.Bad_Check_Banks)
             cmb_BankList.ComboBox.DisplayMember = "Bank_Name"
             cmb_BankList.ComboBox.ValueMember = "Bank_ID"
-            cmb_BankList.ComboBox.DataSource = (Ds_Payments.Bad_Check_Banks)
+            cmb_BankList.ComboBox.DataSource = (Payments.Bad_Check_Banks)
         End Sub
 
         Private Sub BindCmbs()
@@ -88,11 +89,11 @@ Namespace Admin.Payments
                     End With
                     ' adding bank if its new
                     If (BankRow.RowState = DataRowState.Detached) Then
-                        Ds_Payments.Bad_Check_Banks.AddBad_Check_BanksRow(BankRow)
+                        Payments.Bad_Check_Banks.AddBad_Check_BanksRow(BankRow)
                     End If
                     Try
                         ' save to db
-                        Bad_Check_BanksTableAdapter.Update(Ds_Payments.Bad_Check_Banks)
+                        Bad_Check_BanksTableAdapter.Update(Payments.Bad_Check_Banks)
                     Catch ex As SqlException
                         MessageBox.Show("Message: " & ex.Message & vbCrLf & "LineNumber: " & ex.LineNumber,
                                         "Sql Error: " & ex.Procedure, MessageBoxButtons.OK, MessageBoxIcon.Error)
@@ -104,7 +105,7 @@ Namespace Admin.Payments
         End Sub
 
         Private Sub btn_AddBank_Click(sender As System.Object, e As System.EventArgs) Handles btn_AddBank.Click
-            BankRow = Ds_Payments.Bad_Check_Banks.NewBad_Check_BanksRow
+            BankRow = Payments.Bad_Check_Banks.NewBad_Check_BanksRow
         End Sub
 
         Private Function ValidForEntry() As Boolean

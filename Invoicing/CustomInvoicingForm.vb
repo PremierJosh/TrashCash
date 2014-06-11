@@ -12,9 +12,9 @@ Namespace Invoicing
             Set(value As Integer)
                 _currentCustomer = value
                 ' recent addr fill and select nothing
-                _raTA.Fill(Ds_Invoicing.Customer_RecentAddrs, CurrentCustomer)
+                RaTA.Fill(Invoicing.Customer_RecentAddrs, CurrentCustomer)
                 ' fill history tables
-                _ciTA.Fill(Ds_HistoryInv.CustomInvoices, CurrentCustomer)
+                CiTA.Fill(HistoryInv.CustomInvoices, CurrentCustomer)
             End Set
         End Property
 
@@ -23,7 +23,7 @@ Namespace Invoicing
 
         Private Sub CustomInvoicingForm_Load(sender As Object, e As System.EventArgs) Handles Me.Load
             ' line type fill
-            _ltTA.Fill(Ds_Invoicing.CustomInvoice_LineTypes)
+            LtTA.Fill(Invoicing.CustomInvoice_LineTypes)
             If (CurrentCustomer = Nothing) Then
                 CurrentCustomer = CustomerToolstrip1.CurrentCustomer
             End If
@@ -44,7 +44,7 @@ Namespace Invoicing
                 ' disable customer changing
                 CustomerToolstrip1.Enabled = False
                 ' build inv row
-                _invRow = Ds_Invoicing.CustomInvoices.NewCustomInvoicesRow
+                _invRow = Invoicing.CustomInvoices.NewCustomInvoicesRow
                 With _invRow
                     .CustomerNumber = CurrentCustomer
                     .StatusID = ENItemStatus.Ready
@@ -54,10 +54,10 @@ Namespace Invoicing
                     .PostDate = dtp_PostDate.Value
                     .Voided = False
                 End With
-                Ds_Invoicing.CustomInvoices.AddCustomInvoicesRow(_invRow)
+                Invoicing.CustomInvoices.AddCustomInvoicesRow(_invRow)
 
                 ' build line row
-                Dim line As ds_Invoicing.CustomInvoice_LineItemsRow = Ds_Invoicing.CustomInvoice_LineItems.NewCustomInvoice_LineItemsRow
+                Dim line As ds_Invoicing.CustomInvoice_LineItemsRow = Invoicing.CustomInvoice_LineItems.NewCustomInvoice_LineItemsRow
                 ' getting reference to type row
                 Dim type As ds_Invoicing.CustomInvoice_LineTypesRow = CType(DirectCast(cmb_LineTypes.SelectedItem, DataRowView).Row, ds_Invoicing.CustomInvoice_LineTypesRow)
                 With line
@@ -83,7 +83,7 @@ Namespace Invoicing
                         .Reminder = True
                     End If
                 End With
-                Ds_Invoicing.CustomInvoice_LineItems.AddCustomInvoice_LineItemsRow(line)
+                Invoicing.CustomInvoice_LineItems.AddCustomInvoice_LineItemsRow(line)
 
                 ' setting pnl3 visible
                 pnl_3.Visible = True
@@ -179,8 +179,8 @@ Namespace Invoicing
 
         Private Sub ResetInvoice()
             ' clear dataset
-            Ds_Invoicing.CustomInvoice_LineItems.Clear()
-            Ds_Invoicing.CustomInvoices.Clear()
+            Invoicing.CustomInvoice_LineItems.Clear()
+            Invoicing.CustomInvoices.Clear()
             ' reset post date
             dtp_PostDate.Value = Date.Now
             ck_Print.Checked = True
@@ -195,28 +195,28 @@ Namespace Invoicing
                 _invRow.Time_Inserted = Date.Now
                 ' submit invoice and line items
                 Try
-                    _ciTA.Update(Ds_Invoicing.CustomInvoices)
-                    _liTA.Update(Ds_Invoicing.CustomInvoice_LineItems)
+                    CiTA.Update(Invoicing.CustomInvoices)
+                    LiTA.Update(Invoicing.CustomInvoice_LineItems)
                 Catch ex As SqlException
                     MessageBox.Show("Message: " & ex.Message & vbCrLf & "LineNumber: " & ex.LineNumber,
                                     "Sql Error: " & ex.Procedure, MessageBoxButtons.OK, MessageBoxIcon.Error)
                 End Try
 
                 ' send to QB
-                Dim succeed As Boolean = CustomInvoice_Create(Ds_Invoicing, ck_Print.Checked)
+                Dim succeed As Boolean = CustomInvoice_Create(Invoicing, ck_Print.Checked)
                 If (Not succeed) Then
                     MessageBox.Show("Error - Invoice not created.", "QB Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
                 Else
                     ' creating reminders
-                    For Each row As ds_Invoicing.CustomInvoice_LineItemsRow In Ds_Invoicing.CustomInvoice_LineItems
+                    For Each row As ds_Invoicing.CustomInvoice_LineItemsRow In Invoicing.CustomInvoice_LineItems
                         If (row.Reminder) Then
-                            _liTA.Reminder_CustomInvoice_Insert(row.CI_ID, row.RenderedOnDate, row.CompiledDescText, CurrentUser.USER_NAME)
+                            LiTA.Reminder_CustomInvoice_Insert(row.CI_ID, row.RenderedOnDate, row.CompiledDescText, CurrentUser.USER_NAME)
                         End If
                     Next
 
                     ' refill history grid
-                    Ds_HistoryInv.Clear()
-                    _ciTA.Fill(Ds_HistoryInv.CustomInvoices, CurrentCustomer)
+                    HistoryInv.Clear()
+                    CiTA.Fill(HistoryInv.CustomInvoices, CurrentCustomer)
                     MessageBox.Show("Invoice Added.")
                     ResetInvoice()
                 End If
@@ -226,7 +226,7 @@ Namespace Invoicing
         Private Sub dg_InvHistory_CellMouseDown(sender As System.Object, e As System.Windows.Forms.DataGridViewCellMouseEventArgs) Handles dg_InvHistory.CellMouseDown
             ' left click = fill line table with history
             If (e.Button = Windows.Forms.MouseButtons.Left) Then
-                _liTA.Fill(Ds_HistoryInv.CustomInvoice_LineItems,
+                LiTA.Fill(HistoryInv.CustomInvoice_LineItems,
                                                          CType(CType(dg_InvHistory.SelectedRows(0).DataBoundItem, DataRowView).Row, ds_Invoicing.CustomInvoicesRow).CI_ID)
             End If
         End Sub
@@ -243,7 +243,7 @@ Namespace Invoicing
                 ' checking if row is voided
                 If (Not row.Voided) Then
                     ' getting total of invoice
-                    Dim total As Double = CDbl(Ds_HistoryInv.CustomInvoice_LineItems.Compute("Sum(Rate)", ""))
+                    Dim total As Double = CDbl(HistoryInv.CustomInvoice_LineItems.Compute("Sum(Rate)", ""))
                     Dim prompt As DialogResult = MessageBox.Show("Void Invoice in the amount of " & FormatCurrency(total) & " created on " & row.Time_Created, "Confirm Void", MessageBoxButtons.YesNo, MessageBoxIcon.Question)
                     If (prompt = Windows.Forms.DialogResult.Yes) Then
                         Dim succeed As Boolean = CustomInvoice_Void(row, tb_VoidReason.Text)
@@ -251,9 +251,9 @@ Namespace Invoicing
                             MessageBox.Show("Error - Invoice not voided.", "QB Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
                         Else
                             MessageBox.Show("Invoice Voided.")
-                            Ds_HistoryInv.Clear()
+                            HistoryInv.Clear()
                             tb_VoidReason.Text = ""
-                            _ciTA.Fill(Ds_HistoryInv.CustomInvoices, CurrentCustomer)
+                            CiTA.Fill(HistoryInv.CustomInvoices, CurrentCustomer)
                         End If
                     End If
                 Else

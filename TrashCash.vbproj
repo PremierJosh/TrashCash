@@ -154,6 +154,9 @@
     <Compile Include="Admin\Payments\AdminBanks.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Batching\ds_Batching.vb">
+      <DependentUpon>ds_Batching.xsd</DependentUpon>
+    </Compile>
     <Compile Include="Types\AdminInvoiceTypes.Designer.vb">
       <DependentUpon>AdminInvoiceTypes.vb</DependentUpon>
     </Compile>
@@ -227,12 +230,6 @@
     <Compile Include="Batching\BatchingPrep.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\CalendarView.Designer.vb">
-      <DependentUpon>CalendarView.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Forms\CalendarView.vb">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Include="Customer\CustomerCredit.Designer.vb">
       <DependentUpon>CustomerCredit.vb</DependentUpon>
     </Compile>
@@ -293,10 +290,10 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
-    <Compile Include="Reports\f_DaysEvents.Designer.vb">
-      <DependentUpon>f_DaysEvents.vb</DependentUpon>
+    <Compile Include="Reports\Report_DaysEvents.Designer.vb">
+      <DependentUpon>Report_DaysEvents.vb</DependentUpon>
     </Compile>
-    <Compile Include="Reports\f_DaysEvents.vb">
+    <Compile Include="Reports\Report_DaysEvents.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Reports\Report_PaymentsReceived.Designer.vb">
@@ -305,10 +302,10 @@
     <Compile Include="Reports\Report_PaymentsReceived.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Reports\f_UnderOverEven.Designer.vb">
-      <DependentUpon>f_UnderOverEven.vb</DependentUpon>
+    <Compile Include="Reports\Report_UnderOverEven.Designer.vb">
+      <DependentUpon>Report_UnderOverEven.vb</DependentUpon>
     </Compile>
-    <Compile Include="Reports\f_UnderOverEven.vb">
+    <Compile Include="Reports\Report_UnderOverEven.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Reports\r_AllCustBalances.vb">
@@ -317,10 +314,10 @@
       <DependentUpon>r_AllCustBalances.rpt</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Reports\f_AllCustBalances.Designer.vb">
-      <DependentUpon>f_AllCustBalances.vb</DependentUpon>
+    <Compile Include="Reports\Report_AllCustBalances.Designer.vb">
+      <DependentUpon>Report_AllCustBalances.vb</DependentUpon>
     </Compile>
-    <Compile Include="Reports\f_AllCustBalances.vb">
+    <Compile Include="Reports\Report_AllCustBalances.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Reports\r_DaysEvents.vb">
@@ -370,12 +367,6 @@
       <DependentUpon>UC_CustomerNotes.vb</DependentUpon>
     </Compile>
     <Compile Include="Customer\UC_CustomerNotes.vb">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Customer\UC_PreparedItems.Designer.vb">
-      <DependentUpon>UC_PreparedItems.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Customer\UC_PreparedItems.vb">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="RecurringService\UC_RecurringService.Designer.vb">
@@ -449,7 +440,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Report_DataSet.xsd</DependentUpon>
     </Compile>
-    <Compile Include="Reports\Report_DataSet.vb">
+    <Compile Include="Reports\DS_Reports.vb">
       <DependentUpon>Report_DataSet.xsd</DependentUpon>
     </Compile>
   </ItemGroup>
@@ -490,9 +481,6 @@
     <EmbeddedResource Include="Batching\BatchingPrep.resx">
       <DependentUpon>BatchingPrep.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\CalendarView.resx">
-      <DependentUpon>CalendarView.vb</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Customer\CustomerCredit.resx">
       <DependentUpon>CustomerCredit.vb</DependentUpon>
     </EmbeddedResource>
@@ -528,18 +516,18 @@
       <SubType>Designer</SubType>
       <LastGenOutput>Resources.Designer.vb</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Reports\f_AllCustBalances.resx">
-      <DependentUpon>f_AllCustBalances.vb</DependentUpon>
+    <EmbeddedResource Include="Reports\Report_AllCustBalances.resx">
+      <DependentUpon>Report_AllCustBalances.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Reports\f_DaysEvents.resx">
-      <DependentUpon>f_DaysEvents.vb</DependentUpon>
+    <EmbeddedResource Include="Reports\Report_DaysEvents.resx">
+      <DependentUpon>Report_DaysEvents.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Reports\Report_PaymentsReceived.resx">
       <DependentUpon>Report_PaymentsReceived.vb</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Reports\f_UnderOverEven.resx">
-      <DependentUpon>f_UnderOverEven.vb</DependentUpon>
+    <EmbeddedResource Include="Reports\Report_UnderOverEven.resx">
+      <DependentUpon>Report_UnderOverEven.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Reports\r_AllCustBalances.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
@@ -571,9 +559,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Customer\UC_CustomerNotes.resx">
       <DependentUpon>UC_CustomerNotes.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Customer\UC_PreparedItems.resx">
-      <DependentUpon>UC_PreparedItems.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="RecurringService\UC_RecurringService.resx">
       <DependentUpon>UC_RecurringService.vb</DependentUpon>

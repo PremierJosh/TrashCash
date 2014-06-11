@@ -31,13 +31,13 @@ Namespace Payments
             Me.cm_PayGrid = New System.Windows.Forms.ContextMenuStrip(Me.components)
             Me.DeleteToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
             Me.WorkingPaymentsBindingSource = New System.Windows.Forms.BindingSource(Me.components)
-            Me.ds_Payments = New TrashCash.ds_Payments()
+            Me.Payments = New DS_Payments()
             Me.tc_Master = New System.Windows.Forms.TabControl()
             Me.tc_p_CustNotes = New System.Windows.Forms.TabPage()
-            Me.UC_CustomerNotes = New TrashCash.UC_CustomerNotes()
+            Me.UC_CustomerNotes = New UC_CustomerNotes()
             Me.tc_p_CustInfo = New System.Windows.Forms.TabPage()
             Me.UC_CustomerInfoBoxes = New TrashCash.Customer.UC_CustomerInfoBoxes()
-            Me.WorkingPaymentsTableAdapter = New TrashCash.ds_PaymentsTableAdapters.WorkingPaymentsTableAdapter()
+            Me.WorkingPaymentsTableAdapter = New WorkingPaymentsTableAdapter()
             Me.Panel1 = New System.Windows.Forms.Panel()
             Me.pnl_TopContent = New System.Windows.Forms.Panel()
             Me.CustomerToolstrip1 = New TrashCash.Classes.CustomerToolstrip.CustomerToolstrip()
@@ -69,7 +69,7 @@ Namespace Payments
             Me.Label1 = New System.Windows.Forms.Label()
             Me.cm_PayGrid.SuspendLayout()
             CType(Me.WorkingPaymentsBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
-            CType(Me.ds_Payments, System.ComponentModel.ISupportInitialize).BeginInit()
+            CType(Me.Payments, System.ComponentModel.ISupportInitialize).BeginInit()
             Me.tc_Master.SuspendLayout()
             Me.tc_p_CustNotes.SuspendLayout()
             Me.tc_p_CustInfo.SuspendLayout()
@@ -96,12 +96,12 @@ Namespace Payments
             'WorkingPaymentsBindingSource
             '
             Me.WorkingPaymentsBindingSource.DataMember = "WorkingPayments"
-            Me.WorkingPaymentsBindingSource.DataSource = Me.ds_Payments
+            Me.WorkingPaymentsBindingSource.DataSource = Me.Payments
             '
             'ds_Payments
             '
-            Me.ds_Payments.DataSetName = "DataSet"
-            Me.ds_Payments.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema
+            Me.Payments.DataSetName = "DataSet"
+            Me.Payments.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema
             '
             'tc_Master
             '
@@ -430,7 +430,7 @@ Namespace Payments
             Me.Text = "Payments"
             Me.cm_PayGrid.ResumeLayout(False)
             CType(Me.WorkingPaymentsBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
-            CType(Me.ds_Payments, System.ComponentModel.ISupportInitialize).EndInit()
+            CType(Me.Payments, System.ComponentModel.ISupportInitialize).EndInit()
             Me.tc_Master.ResumeLayout(False)
             Me.tc_p_CustNotes.ResumeLayout(False)
             Me.tc_p_CustInfo.ResumeLayout(False)
@@ -447,12 +447,12 @@ Namespace Payments
         End Sub
         Friend WithEvents tc_Master As System.Windows.Forms.TabControl
         Friend WithEvents tc_p_CustNotes As System.Windows.Forms.TabPage
-        Friend WithEvents UC_CustomerNotes As TrashCash.UC_CustomerNotes
+        Friend WithEvents UC_CustomerNotes As UC_CustomerNotes
         Friend WithEvents tc_p_CustInfo As System.Windows.Forms.TabPage
         Friend WithEvents UC_CustomerInfoBoxes As UC_CustomerInfoBoxes
-        Friend WithEvents ds_Payments As TrashCash.ds_Payments
+        Friend WithEvents Payments As DS_Payments
         Friend WithEvents WorkingPaymentsBindingSource As System.Windows.Forms.BindingSource
-        Friend WithEvents WorkingPaymentsTableAdapter As TrashCash.ds_PaymentsTableAdapters.WorkingPaymentsTableAdapter
+        Friend WithEvents WorkingPaymentsTableAdapter As WorkingPaymentsTableAdapter
         Friend WithEvents CustomerFullNameDataGridViewTextBoxColumn As System.Windows.Forms.DataGridViewTextBoxColumn
         Friend WithEvents PaymentTypeNameDataGridViewTextBoxColumn As System.Windows.Forms.DataGridViewTextBoxColumn
         Friend WithEvents cm_PayGrid As System.Windows.Forms.ContextMenuStrip

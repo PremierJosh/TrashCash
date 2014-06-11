@@ -1,13 +1,12 @@
 ﻿Imports QBFC12Lib
-Imports TrashCash.Classes
 Imports TrashCash.QBStuff
 
-Namespace Admin
+Namespace Types
     Public Class AdminInvoiceTypes
 
         Private Sub AdminInvoiceTypes_Load(sender As System.Object, e As System.EventArgs) Handles MyBase.Load
             ' init fill
-            CustomInvoice_LineTypesTableAdapter.Fill(Ds_Invoicing.CustomInvoice_LineTypes)
+            CustomInvoice_LineTypesTableAdapter.Fill(Invoicing.CustomInvoice_LineTypes)
 
             ' bind account cmb for adding items
             BindComboBox()
@@ -28,13 +27,13 @@ Namespace Admin
 
         End Sub
 
-      Public Sub New()
+        Public Sub New()
 
             ' This call is required by the designer.
             InitializeComponent()
 
             ' Add any initialization after the InitializeComponent() call.
-           End Sub
+        End Sub
         Private Function ValidateItem() As Boolean
             Dim err As Integer = 0
 
@@ -74,7 +73,7 @@ Namespace Admin
                     End Try
                     MessageBox.Show("Item added.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information)
                     ' refil table
-                    CustomInvoice_LineTypesTableAdapter.Fill(Ds_Invoicing.CustomInvoice_LineTypes)
+                    CustomInvoice_LineTypesTableAdapter.Fill(Invoicing.CustomInvoice_LineTypes)
 
                 Else
                     QBMethods.ResponseErr_Misc(resp)

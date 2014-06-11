@@ -662,7 +662,7 @@ Namespace RecurringService
                 Try
                     NotesTA.ServiceNotes_Insert(RecurringServiceID, noteText)
                     ' refill grid
-                    NotesTA.FillByID(Me.Ds_RecurringService.ServiceNotes, RecurringServiceID)
+                    NotesTA.FillByID(Ds_RecurringService.ServiceNotes, RecurringServiceID)
                 Catch ex as SqlException
                     MessageBox.Show("Message: " & ex.Message & vbCrLf & "LineNumber: " & ex.LineNumber,
                                     "Sql Error: " & ex.Procedure, MessageBoxButtons.OK, MessageBoxIcon.Error)
@@ -736,7 +736,7 @@ Namespace RecurringService
                 _BalanceChanged = True
                 ' refresh grid
                 Try
-                    RsCreditTA.FillByRecID(Me.Ds_RecurringService.RecurringService_Credits, RecurringServiceID)
+                    RsCreditTA.FillByRecID(Ds_RecurringService.RecurringService_Credits, RecurringServiceID)
                 Catch ex As Exception
                     MsgBox(ex.Message & " - " & ex.InnerException.ToString)
                 End Try

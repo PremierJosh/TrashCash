@@ -1,4 +1,5 @@
-﻿Imports QBFC12Lib
+﻿Imports TrashCash.Payments
+Imports QBFC12Lib
 Imports TrashCash.QBStuff
 
 Namespace Admin.Payments
@@ -38,15 +39,15 @@ Namespace Admin.Payments
             InitializeComponent()
 
             ' Add any initialization after the InitializeComponent() call.
-           Using ta As New ds_ApplicationTableAdapters.APP_SETTINGSTableAdapter
+            Using ta As New ds_ApplicationTableAdapters.APP_SETTINGSTableAdapter
                 _appRow = ta.GetData().Rows(0)
                 tb_CustFee.Text = FormatCurrency(_appRow.BAD_CHECK_CUST_FEE)
             End Using
-            Using ta As New ds_PaymentsTableAdapters.PaymentHistory_DBTableAdapter
+            Using ta As New PaymentHistory_DBTableAdapter
                 CheckRow = ta.GetData(payHistoryID).Rows(0)
             End Using
         End Sub
-        
+
         Private Sub btn_Submit_Click(sender As Object, e As EventArgs) Handles btn_Submit.Click
             Dim result As MsgBoxResult =
                     MsgBox(
@@ -61,11 +62,11 @@ Namespace Admin.Payments
             End If
         End Sub
 
-     
+
         Private Sub BouncedBankSelection_Load(sender As Object, e As EventArgs) Handles MyBase.Load
             ' fill banks list
-            Bad_Check_BanksTableAdapter.Fill(Ds_Payments.Bad_Check_Banks)
-           
+            Bad_Check_BanksTableAdapter.Fill(Payments.Bad_Check_Banks)
+
             ' grabbing default bank selection
             If (cmb_Banks.SelectedValue IsNot Nothing) Then
                 BankRow = DirectCast(cmb_Banks.SelectedItem, ds_Payments.Bad_Check_BanksRow)
@@ -151,7 +152,7 @@ Namespace Admin.Payments
                 Dim ret As ICheckRet = checkResp.Detail
                 Try
                     'set payment bounced, using invTxnID and ret from checkAdd
-                    Using ta As New ds_PaymentsTableAdapters.PaymentHistory_DBTableAdapter
+                    Using ta As New PaymentHistory_DBTableAdapter
                         ta.SetBounced(CheckRow.PaymentID, CurrentUser.USER_NAME, invTxnID, ret.TxnID.GetValue)
                     End Using
                     ' inserting note for customer that check bounced

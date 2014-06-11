@@ -1,9 +1,10 @@
 ﻿Namespace Reports
+    ' ReSharper disable once InconsistentNaming
     Public Class Report_PaymentsReceived
 
         Private Sub btn_BuildRpt_Click(sender As System.Object, e As System.EventArgs) Handles btn_BuildRpt.Click
             Cursor = Cursors.WaitCursor
-            Dim ta As New Report_DataSetTableAdapters.ReceivedPaymentsOnDayTableAdapter
+            Dim ta As New ReceivedPaymentsOnDayTableAdapter
             Report_DataSet.Clear()
 
             ' seeing if its batch id
@@ -12,7 +13,7 @@
                 ' fill ds
                 ta.FillByBatchID(Report_DataSet.ReceivedPaymentsOnDay, cmb_BatchHistory.SelectedValue)
                 ' create header row for date range display
-                Dim hRow As Report_DataSet.ReportHeadersRow = Report_DataSet.ReportHeaders.NewReportHeadersRow
+                Dim hRow As DS_Reports.ReportHeadersRow = Report_DataSet.ReportHeaders.NewReportHeadersRow
                 hRow.HeaderText = "For Batch: " & cmb_BatchHistory.GetItemText(cmb_BatchHistory.SelectedItem).ToString
                 Report_DataSet.ReportHeaders.AddReportHeadersRow(hRow)
             End If
@@ -22,7 +23,7 @@
                 ta.FillByDateRec(Report_DataSet.ReceivedPaymentsOnDay, dtp_From.Value.Date, dtp_To.Value.Date)
 
                 ' create header row for date range display
-                Dim hRow As Report_DataSet.ReportHeadersRow = Report_DataSet.ReportHeaders.NewReportHeadersRow
+                Dim hRow As DS_Reports.ReportHeadersRow = Report_DataSet.ReportHeaders.NewReportHeadersRow
                 hRow.HeaderText = "Between: " & dtp_From.Value.Date & " and " & dtp_To.Value.Date
                 Report_DataSet.ReportHeaders.AddReportHeadersRow(hRow)
             End If
@@ -31,7 +32,7 @@
                 ta.FillBySingleDate(Report_DataSet.ReceivedPaymentsOnDay, dtp_SingleDate.Value.Date)
 
                 ' create header row for date range display
-                Dim hRow As Report_DataSet.ReportHeadersRow = Report_DataSet.ReportHeaders.NewReportHeadersRow
+                Dim hRow As DS_Reports.ReportHeadersRow = Report_DataSet.ReportHeaders.NewReportHeadersRow
                 hRow.HeaderText = "On Date: " & dtp_SingleDate.Value.Date
                 Report_DataSet.ReportHeaders.AddReportHeadersRow(hRow)
             End If
@@ -70,7 +71,7 @@
         End Sub
 
         Private Sub f_PaymentsReceived_Load(sender As System.Object, e As System.EventArgs) Handles MyBase.Load
-            BatchPayments_ListTableAdapter.Fill(Me.Report_DataSet.BatchPayments_List)
+            BatchPayments_ListTableAdapter.Fill(Report_DataSet.BatchPayments_List)
 
         End Sub
     End Class
