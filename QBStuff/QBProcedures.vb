@@ -250,6 +250,9 @@ Namespace QBStuff
             With credAdd
                 .CustomerRef.ListID.SetValue(creditAddObj.CustomerListID)
                 .IsToBePrinted.SetValue(creditAddObj.IsToBePrinted)
+                If (creditAddObj.DateOfCredit <> Nothing) Then
+                    .TxnDate.SetValue(creditAddObj.DateOfCredit)
+                End If
             End With
 
             Dim creditLine As IORCreditMemoLineAdd = credAdd.ORCreditMemoLineAddList.Append
@@ -276,9 +279,15 @@ Namespace QBStuff
             Dim payAdd As IReceivePaymentAdd = ConCheck(qbConMgr).MessageSetRequest.AppendReceivePaymentAddRq
             With payAdd
                 .CustomerRef.ListID.SetValue(payObj.CustomerListID)
-                .TotalAmount.SetValue(payObj.TotalAmount)
-                .PaymentMethodRef.FullName.SetValue(payObj.PayTypeName)
-                .TxnDate.SetValue(payObj.TxnDate)
+                If (payObj.TotalAmount <> Nothing) Then
+                    .TotalAmount.SetValue(payObj.TotalAmount)
+                End If
+                If (payObj.PayTypeName IsNot Nothing) Then
+                    .PaymentMethodRef.FullName.SetValue(payObj.PayTypeName)
+                End If
+                If (payObj.TxnDate <> Nothing) Then
+                    .TxnDate.SetValue(payObj.TxnDate)
+                End If
                 .ORApplyPayment.IsAutoApply.SetValue(autoApply)
                 ' optional check number
                 If (payObj.RefNumber IsNot Nothing) Then
@@ -286,9 +295,11 @@ Namespace QBStuff
                 End If
                 ' checking if appTxnList isnot nothing
                 If (payObj.AppliedInvList IsNot Nothing) Then
+                    ' unset auto apply
+                    .ORApplyPayment.IsAutoApply.Unset()
                     Dim appTxnList As IAppliedToTxnAddList = .ORApplyPayment.AppliedToTxnAddList
                     For Each invObj As QBInvoiceObj In payObj.AppliedInvList
-                        Dim appTxn As IAppliedToTxnMod = appTxnList.Append
+                        Dim appTxn As IAppliedToTxnAdd = appTxnList.Append
                         appTxn.TxnID.SetValue(invObj.TxnID)
                         ' checking if there is an applied amount
                         If (invObj.AppliedPaymentAmount <> Nothing) Then
@@ -618,7 +629,12 @@ Namespace QBStuff
         Public Shared Function ConvertToInvObj(ByRef invRet As IInvoiceRet) As QBInvoiceObj
             Dim invObj As New QBInvoiceObj
             With invObj
-                .TxnID = invRet.TxnID.GetValue
+                If (invRet.TxnID.GetValue IsNot Nothing) Then
+                    .TxnID = invRet.TxnID.GetValue
+                End If
+                If (invRet.CustomerRef.ListID.GetValue IsNot Nothing) Then
+                    .CustomerListID = invRet.CustomerRef.ListID.GetValue
+                End If
                 If (invRet.BalanceRemaining IsNot Nothing) Then
                     .BalanceRemaining = invRet.BalanceRemaining.GetValue
                 End If
@@ -865,7 +881,9 @@ Namespace QBStuff
             End If
 
             ' adding credit and applied invoice
+            appInv.SetCreditList = New List(Of QBCreditObj)
             appInv.SetCreditList.Add(appCredit)
+            payObj.AppliedInvList = New List(Of QBInvoiceObj)
             payObj.AppliedInvList.Add(appInv)
 
             ' update remaining on invoiceObj

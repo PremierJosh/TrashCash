@@ -276,12 +276,13 @@ Namespace RecurringService
                 Dim voidTotal As Double = 0.0
                 Dim c As Integer = 0
 
-                For Each row As ds_RecurringService.RecurringService_CreditsRow In _dvEndDateOverlap.Table.Rows
+                For i = 0 To _dvEndDateOverlap.Count - 1
+                    Dim row As ds_RecurringService.RecurringService_CreditsRow = CType(_dvEndDateOverlap.Item(i).Row, ds_RecurringService.RecurringService_CreditsRow)
                     voidTotal = voidTotal + row.CreditAmount
                     c = c + 1
                 Next
 
-                ' compiling string
+              ' compiling string
                 s = "Keeping this End Date will also Void " & c & " Recurring Service Credit(s) for a total of " & FormatCurrency(voidTotal) & "."
             End If
 
@@ -326,6 +327,8 @@ Namespace RecurringService
             ' property refs
             _homeForm = homeForm
             Me.CustomerNumber = customerNumber
+            ' fill service table
+            ServiceTypesTableAdapter.Fill(Ds_Types.ServiceTypes)
             Me.RecurringServiceID = RecurringServiceID
             Me.CustomerName = customerName
 
@@ -363,7 +366,7 @@ Namespace RecurringService
                 Dim voidOldCreditReason As String = Nothing
                 ' result var from 3 different credit outcomes
                 Dim creditResult As DialogResult
-
+                
                 ' bring over end date
                 If (ck_EndDate.Checked = True) Then
                     ' checking if end date before start date
@@ -372,16 +375,18 @@ Namespace RecurringService
                         ' first checking if something needs to be voided
                         If (_dvEndDateOverlap.Count > 0) Then
                             Dim overlapPrompt As DialogResult = MessageBox.Show("Keeping this End Date will Void " & _dvEndDateOverlap.Count & " Credit(s) for a total of " &
-                                                                                FormatCurrency(_dvEndDateOverlap.Table.Compute("SUM(CreditAmount)", "")) &
+                                                                                FormatCurrency(_dvEndDateOverlap.Table.Compute("SUM(CreditAmount)", "Voided = 0 AND DateOfCredit >= '" & dtp_EndDate.Value.Date & "'")) &
                                                                                 ". Do you wish to keep this End Date?", "Void " & _dvEndDateOverlap.Count & " Credit(s)",
                                                                                 MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation)
 
                             If (overlapPrompt = Windows.Forms.DialogResult.Yes) Then
                                 ' void all credits in table
-                                For Each row As ds_RecurringService.RecurringService_CreditsRow In _dvEndDateOverlap.Table.Rows
+                                For i = 0 To _dvEndDateOverlap.Count - 1
+                                    Dim row As ds_RecurringService.RecurringService_CreditsRow = CType(_dvEndDateOverlap.Item(i).Row, ds_RecurringService.RecurringService_CreditsRow)
                                     RecurringService_Credit_Void(row, "Credit for Date overlaped with End Date. New End Date: " & dtp_EndDate.Value.Date & " | Billed Through: " & _billThruDate.Date)
                                 Next
                             Else
+                                MessageBox.Show("Save Changes Canceled", "Cancel", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
                                 Exit Sub
                             End If
 
@@ -448,7 +453,7 @@ Namespace RecurringService
                 ' checking if new credit needs to be issued
                 If (creditResult = Windows.Forms.DialogResult.Yes) Then
                     ' getting service item listid
-                    Dim srvcRow As ds_Types.ServiceTypesRow = CType(cmb_ServiceTypes.SelectedItem, ds_Types.ServiceTypesRow)
+                    Dim srvcRow As ds_Types.ServiceTypesRow = CType(CType(cmb_ServiceTypes.SelectedItem, DataRowView).Row, ds_Types.ServiceTypesRow)
                     RecurringService_EndDateCredit(RecurringServiceRow, srvcRow.ServiceListID, Crediting, dtp_EndDate.Value.Date, _billThruDate)
                     ' setting balance change
                     _balanceChanged = True
@@ -501,10 +506,10 @@ Namespace RecurringService
                         If (Trim(control.Text) = "") Then
                             validated = False
                             ' adjust back color
-                            control.BackColor = Color.MistyRose
+                            control.BackColor = AppColors.TextBoxErr
                         Else
                             ' reset color
-                            control.BackColor = SystemColors.Window
+                            control.BackColor = AppColors.TextBoxDef
                         End If
                     End If
                 End If
@@ -617,43 +622,52 @@ Namespace RecurringService
             End If
         End Sub
 
-
+        ' this is the minimum date we can move the end date back. this will either be the service start, or the batch id of 99999 end billing date
+        Private _minEndDate As Date
         Private Sub dtp_EndDate_ValueChanged(sender As System.Object, e As System.EventArgs) Handles dtp_EndDate.ValueChanged
             If (ck_EndDate.Checked = True) Then
-                ' checking if this will overlap with a credit
-                DvRowFilter = dtp_EndDate.Value.Date
+                ' checking if its a valid date
+                If (_minEndDate <= dtp_EndDate.Value.Date) Then
+                    ' checking if this will overlap with a credit
+                    DvRowFilter = dtp_EndDate.Value.Date
 
-                ' checking if service bill thru date is greater than the new end date
-                If (_billThruDate > dtp_EndDate.Value.Date) Then
-                    ' display estimated credit
-                    Dim creditAmount As Decimal = CDec(RsEndCreditTA.EndDateCredit_Calc(RecurringServiceRow.RecurringServiceID, dtp_EndDate.Value.Date))
+                    ' checking if service bill thru date is greater than the new end date
+                    If (_billThruDate > dtp_EndDate.Value.Date) Then
+                        ' display estimated credit
+                        Dim creditAmount As Decimal = CDec(RsEndCreditTA.EndDateCredit_Calc(RecurringServiceRow.RecurringServiceID, dtp_EndDate.Value.Date))
 
-                    If (creditAmount > 0) Then
-                        ' update crediting property
-                        Crediting = creditAmount
-                        ' checking if previous credit exists and if it was voided
-                        If (EndDateCreditRow IsNot Nothing) Then
-                            If (Not EndDateCreditRow.Voided) Then
-                                lbl_CreditMsg.Text += vbCrLf & "This will also void the previous credit of " & FormatCurrency(EndDateCreditRow.CreditAmount) & "."
+                        If (creditAmount > 0) Then
+                            ' update crediting property
+                            Crediting = creditAmount
+                            ' checking if previous credit exists and if it was voided
+                            If (EndDateCreditRow IsNot Nothing) Then
+                                If (Not EndDateCreditRow.Voided) Then
+                                    lbl_CreditMsg.Text += vbCrLf & "This will also void the previous credit of " & FormatCurrency(EndDateCreditRow.CreditAmount) & "."
+                                End If
                             End If
+                        Else
+                            Crediting = 0
                         End If
                     Else
                         Crediting = 0
                     End If
+                Else
+                    MessageBox.Show("End Date cannot be before " & _minEndDate.Date & ".", "Invalid End Date", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                    dtp_EndDate.Value = _minEndDate
                 End If
+            Else
+                Crediting = 0
             End If
         End Sub
 
         Private Sub RecurringService_Load(sender As Object, e As System.EventArgs) Handles Me.Load
-            ' fill service table
-            ServiceTypesTableAdapter.Fill(Ds_Types.ServiceTypes)
-            'going to reset service id based on cmb selected value since trying to get selected value on new returns -1
-            'RecurringServiceRow.ServiceTypeID = Cmb_ServiceTypes.SelectedValue
-            ' throwing message if customer is single inv
+      ' throwing message if customer is single inv
             If (_custRow.CustomerReceiveOneInvoice = True) Then
                 MessageBox.Show("This Customer is marked to receive 1 invoice. All Recurring Services for this Customer will go onto a single invoice, with a due day date of " & DatePart(DateInterval.Day, _custRow.CustomerStartDate) & ", " & vbCrLf & _
                                 "and they will be billed every " & _custRow.CustomerBillInterval & " month(s) - REGARDLESS of the Bill Length set for their Recurring Services.", "Single Invoice Customer", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
             End If
+            ' getting min end date we can have, either service end date or batch inv id 99999 end billing date
+            _minEndDate = HistoryTA.MinStartBillingDate(RecurringServiceID)
         End Sub
 
         Private Sub dg_ServiceNotes_DoubleClick(sender As System.Object, e As System.EventArgs) Handles dg_ServiceNotes.DoubleClick
@@ -701,51 +715,68 @@ Namespace RecurringService
         End Sub
 
         Private Sub btn_CreateCredit_Click(sender As System.Object, e As System.EventArgs) Handles btn_CreateCredit.Click
-            ' refs
-            Dim creditForDate As Date = dtp_CreditForDate.Value.Date
-            Dim creditAlreadyOnDate As Boolean = RsCreditTA.Credit_OnDate(RecurringServiceID, creditForDate)
-            Dim okToCredit As Boolean = False
+            ' making sure we have valid information here
+            If (_minEndDate <= dtp_CreditForDate.Value.Date) Then
+                If (Trim(tb_CreditAmount.Text) <> "") Then
+                    tb_CreditAmount.BackColor = AppColors.TextBoxDef
+                    If (Trim(tb_CreditReason.Text) <> "") Then
+                        ' refs
+                        Dim creditForDate As Date = dtp_CreditForDate.Value.Date
+                        Dim creditAlreadyOnDate As Boolean = RsCreditTA.Credit_OnDate(RecurringServiceID, creditForDate)
+                        Dim okToCredit As Boolean = False
 
-            If (Not creditAlreadyOnDate) Then
-                ' making sure date is not before start of service
-                If (creditForDate > RecurringServiceRow.RecurringServiceStartDate) Then
-                    ' checking for end date..
-                    If (RecurringServiceRow.IsRecurringServiceEndDateNull = False) Then
-                        ' end date set
-                        If (creditForDate < RecurringServiceRow.RecurringServiceEndDate) Then
-                            okToCredit = True
+                        If (Not creditAlreadyOnDate) Then
+                            ' making sure date is not before start of service
+                            If (creditForDate > RecurringServiceRow.RecurringServiceStartDate) Then
+                                ' checking for end date..
+                                If (RecurringServiceRow.IsRecurringServiceEndDateNull = False) Then
+                                    ' end date set
+                                    If (creditForDate < RecurringServiceRow.RecurringServiceEndDate) Then
+                                        okToCredit = True
+                                    Else
+                                        MessageBox.Show("Credit cannot be after the Recurring Service end date.")
+                                    End If
+                                Else
+                                    ' no end date set
+                                    okToCredit = True
+                                End If
+                            Else
+                                MessageBox.Show("Credit Date cannot be before Recurring Service start date.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                            End If
                         Else
-                            MessageBox.Show("Credit cannot be after the Recurring Service end date.")
+                            MessageBox.Show("There is a Credit issued for this Date already.", "Error - Credit Already on Date", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                        End If
+
+                        ' creating credit if good
+                        If (okToCredit) Then
+                            Dim srvcRow As ds_Types.ServiceTypesRow = CType(CType(cmb_ServiceTypes.SelectedItem, DataRowView).Row, ds_Types.ServiceTypesRow)
+                            RecurringService_Credit(RecurringServiceRow, srvcRow.ServiceListID, tb_CreditAmount.Text, creditForDate, ck_PrintCredit.Checked, tb_CreditReason.Text)
+                            ' balance has changed now
+                            _balanceChanged = True
+                            ' refresh grid
+                            Try
+                                RsCreditTA.FillByRecID(Ds_RecurringService.RecurringService_Credits, RecurringServiceID)
+                            Catch ex As SqlException
+                                MessageBox.Show("Message: " & ex.Message & vbCrLf & "LineNumber: " & ex.LineNumber,
+                                                "Sql Error: " & ex.Procedure, MessageBoxButtons.OK, MessageBoxIcon.Error)
+                            End Try
+                            ' reset controls
+                            dtp_CreditForDate.Value = Date.Now
+                            tb_CreditAmount.Text = ""
+                            tb_CreditReason.Text = ""
                         End If
                     Else
-                        ' no end date set
-                        okToCredit = True
+                        MessageBox.Show("You must provide a reason to issue a credit.", "Invalid Credit Reason", MessageBoxButtons.OK, MessageBoxIcon.Error)
                     End If
                 Else
-                    MessageBox.Show("Credit Date cannot be before Recurring Service start date.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                    MessageBox.Show("Invalid Credit amount.", "Invalid Credit Amount", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                    tb_CreditAmount.BackColor = AppColors.TextBoxErr
                 End If
-            Else
-                MessageBox.Show("There is a Credit issued for this Date already.", "Error - Credit Already on Date", MessageBoxButtons.OK, MessageBoxIcon.Error)
-            End If
+                Else
+                    MessageBox.Show("Credit Date cannot be before " & _minEndDate.Date & ".", "Invalid Credit Date", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                    dtp_CreditForDate.Value = _minEndDate
 
-            ' creating credit if good
-            If (okToCredit) Then
-                Dim srvcRow As ds_Types.ServiceTypesRow = CType(Cmb_ServiceTypes.SelectedItem, ds_Types.ServiceTypesRow)
-                RecurringService_Credit(RecurringServiceRow, srvcRow.ServiceListID, tb_CreditAmount.Text, creditForDate, ck_PrintCredit.Checked, tb_CreditReason.Text)
-                ' balance has changed now
-                _BalanceChanged = True
-                ' refresh grid
-                Try
-                    RsCreditTA.FillByRecID(Ds_RecurringService.RecurringService_Credits, RecurringServiceID)
-                Catch ex As Exception
-                    MsgBox(ex.Message & " - " & ex.InnerException.ToString)
-                End Try
-
-                ' reset controls
-                dtp_CreditForDate.Value = Date.Now
-                tb_CreditAmount.Text = ""
-                tb_CreditReason.Text = ""
-            End If
+                End If
         End Sub
 
         Private Sub ColorCreditHistoryRows()
@@ -769,15 +800,6 @@ Namespace RecurringService
             End If
         End Sub
 
-        Private Sub dg_CreditHistory_RowsAdded(sender As System.Object, e As System.Windows.Forms.DataGridViewRowsAddedEventArgs) Handles dg_CreditHistory.RowsAdded
-            ColorCreditHistoryRows()
-        End Sub
-
-        Private Sub dg_CreditHistory_RowsRemoved(sender As System.Object, e As System.Windows.Forms.DataGridViewRowsRemovedEventArgs) Handles dg_CreditHistory.RowsRemoved
-            ColorCreditHistoryRows()
-        End Sub
-
-
         Private Sub dg_CreditHistory_CellMouseDown(sender As System.Object, e As System.Windows.Forms.DataGridViewCellMouseEventArgs) Handles dg_CreditHistory.CellMouseDown
             If (e.Button = Windows.Forms.MouseButtons.Right) Then
                 For Each row As DataGridViewRow In dg_CreditHistory.SelectedRows
@@ -798,6 +820,10 @@ Namespace RecurringService
             RecurringServiceRow.RecurringServiceBillLength = row.ServiceBillLength
             ' also going to reset quantity to 1
             RecurringServiceRow.RecurringServiceQuantity = 1
+        End Sub
+
+        Private Sub dg_CreditHistory_RowPrePaint(sender As System.Object, e As System.Windows.Forms.DataGridViewRowPrePaintEventArgs) Handles dg_CreditHistory.RowPrePaint
+            ColorCreditHistoryRows()
         End Sub
     End Class
 End Namespace

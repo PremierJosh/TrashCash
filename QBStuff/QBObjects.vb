@@ -9,6 +9,9 @@ Namespace QBStuff
             Public ItemListID As String
             Public CreditAmount As Double
             Public Desc As String
+
+            ' internal reference
+            Public DateOfCredit As Date
         End Structure
 
         Public Structure QBCreditObj

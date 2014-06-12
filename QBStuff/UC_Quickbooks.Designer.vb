@@ -26,13 +26,13 @@ Namespace QBStuff
         <System.Diagnostics.DebuggerStepThrough()> _
         Private Sub InitializeComponent()
             Me.components = New System.ComponentModel.Container()
-            Dim DataGridViewCellStyle22 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-            Dim DataGridViewCellStyle23 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-            Dim DataGridViewCellStyle24 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-            Dim DataGridViewCellStyle25 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-            Dim DataGridViewCellStyle26 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-            Dim DataGridViewCellStyle27 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-            Dim DataGridViewCellStyle28 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+            Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+            Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+            Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+            Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+            Dim DataGridViewCellStyle5 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+            Dim DataGridViewCellStyle6 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+            Dim DataGridViewCellStyle7 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
             Me.grp_DateFilter = New System.Windows.Forms.GroupBox()
             Me.dtp_ItemFrom = New System.Windows.Forms.DateTimePicker()
             Me.dtp_ItemTo = New System.Windows.Forms.DateTimePicker()
@@ -48,7 +48,7 @@ Namespace QBStuff
             Me.InvoiceBalanceDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
             Me.InvoiceCreationDateDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
             Me.QBInvoiceDisplayBindingSource = New System.Windows.Forms.BindingSource(Me.components)
-            Me.Display = New DS_Display()
+            Me.Display = New TrashCash._DataSets.DS_Display()
             Me.tc_qb_p_Payments = New System.Windows.Forms.TabPage()
             Me.dg_QBPayments = New System.Windows.Forms.DataGridView()
             Me.PaymentDateDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
@@ -177,8 +177,8 @@ Namespace QBStuff
             '
             Me.InvoicePostDateDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill
             Me.InvoicePostDateDataGridViewTextBoxColumn.DataPropertyName = "InvoicePostDate"
-            DataGridViewCellStyle22.Format = "d"
-            Me.InvoicePostDateDataGridViewTextBoxColumn.DefaultCellStyle = DataGridViewCellStyle22
+            DataGridViewCellStyle1.Format = "d"
+            Me.InvoicePostDateDataGridViewTextBoxColumn.DefaultCellStyle = DataGridViewCellStyle1
             Me.InvoicePostDateDataGridViewTextBoxColumn.HeaderText = "Post Date"
             Me.InvoicePostDateDataGridViewTextBoxColumn.Name = "InvoicePostDateDataGridViewTextBoxColumn"
             Me.InvoicePostDateDataGridViewTextBoxColumn.ReadOnly = True
@@ -187,8 +187,8 @@ Namespace QBStuff
             '
             Me.InvoiceDueDateDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill
             Me.InvoiceDueDateDataGridViewTextBoxColumn.DataPropertyName = "InvoiceDueDate"
-            DataGridViewCellStyle23.Format = "d"
-            Me.InvoiceDueDateDataGridViewTextBoxColumn.DefaultCellStyle = DataGridViewCellStyle23
+            DataGridViewCellStyle2.Format = "d"
+            Me.InvoiceDueDateDataGridViewTextBoxColumn.DefaultCellStyle = DataGridViewCellStyle2
             Me.InvoiceDueDateDataGridViewTextBoxColumn.HeaderText = "Due Date"
             Me.InvoiceDueDateDataGridViewTextBoxColumn.Name = "InvoiceDueDateDataGridViewTextBoxColumn"
             Me.InvoiceDueDateDataGridViewTextBoxColumn.ReadOnly = True
@@ -197,8 +197,8 @@ Namespace QBStuff
             '
             Me.InvoiceTotalDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill
             Me.InvoiceTotalDataGridViewTextBoxColumn.DataPropertyName = "InvoiceTotal"
-            DataGridViewCellStyle24.Format = "C2"
-            Me.InvoiceTotalDataGridViewTextBoxColumn.DefaultCellStyle = DataGridViewCellStyle24
+            DataGridViewCellStyle3.Format = "C2"
+            Me.InvoiceTotalDataGridViewTextBoxColumn.DefaultCellStyle = DataGridViewCellStyle3
             Me.InvoiceTotalDataGridViewTextBoxColumn.HeaderText = "Total"
             Me.InvoiceTotalDataGridViewTextBoxColumn.Name = "InvoiceTotalDataGridViewTextBoxColumn"
             Me.InvoiceTotalDataGridViewTextBoxColumn.ReadOnly = True
@@ -207,9 +207,9 @@ Namespace QBStuff
             '
             Me.InvoiceBalanceDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill
             Me.InvoiceBalanceDataGridViewTextBoxColumn.DataPropertyName = "InvoiceBalance"
-            DataGridViewCellStyle25.Format = "C2"
-            DataGridViewCellStyle25.NullValue = Nothing
-            Me.InvoiceBalanceDataGridViewTextBoxColumn.DefaultCellStyle = DataGridViewCellStyle25
+            DataGridViewCellStyle4.Format = "C2"
+            DataGridViewCellStyle4.NullValue = Nothing
+            Me.InvoiceBalanceDataGridViewTextBoxColumn.DefaultCellStyle = DataGridViewCellStyle4
             Me.InvoiceBalanceDataGridViewTextBoxColumn.HeaderText = "Balance"
             Me.InvoiceBalanceDataGridViewTextBoxColumn.Name = "InvoiceBalanceDataGridViewTextBoxColumn"
             Me.InvoiceBalanceDataGridViewTextBoxColumn.ReadOnly = True
@@ -218,8 +218,8 @@ Namespace QBStuff
             '
             Me.InvoiceCreationDateDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill
             Me.InvoiceCreationDateDataGridViewTextBoxColumn.DataPropertyName = "InvoiceCreationDate"
-            DataGridViewCellStyle26.Format = "d"
-            Me.InvoiceCreationDateDataGridViewTextBoxColumn.DefaultCellStyle = DataGridViewCellStyle26
+            DataGridViewCellStyle5.Format = "d"
+            Me.InvoiceCreationDateDataGridViewTextBoxColumn.DefaultCellStyle = DataGridViewCellStyle5
             Me.InvoiceCreationDateDataGridViewTextBoxColumn.HeaderText = "Creation Date"
             Me.InvoiceCreationDateDataGridViewTextBoxColumn.Name = "InvoiceCreationDateDataGridViewTextBoxColumn"
             Me.InvoiceCreationDateDataGridViewTextBoxColumn.ReadOnly = True
@@ -229,7 +229,7 @@ Namespace QBStuff
             Me.QBInvoiceDisplayBindingSource.DataMember = "QB_InvoiceDisplay"
             Me.QBInvoiceDisplayBindingSource.DataSource = Me.Display
             '
-            'Ds_Display
+            'Display
             '
             Me.Display.DataSetName = "ds_Display"
             Me.Display.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema
@@ -268,8 +268,8 @@ Namespace QBStuff
             '
             Me.PaymentDateDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill
             Me.PaymentDateDataGridViewTextBoxColumn.DataPropertyName = "PaymentDate"
-            DataGridViewCellStyle27.Format = "d"
-            Me.PaymentDateDataGridViewTextBoxColumn.DefaultCellStyle = DataGridViewCellStyle27
+            DataGridViewCellStyle6.Format = "d"
+            Me.PaymentDateDataGridViewTextBoxColumn.DefaultCellStyle = DataGridViewCellStyle6
             Me.PaymentDateDataGridViewTextBoxColumn.HeaderText = "Date"
             Me.PaymentDateDataGridViewTextBoxColumn.Name = "PaymentDateDataGridViewTextBoxColumn"
             Me.PaymentDateDataGridViewTextBoxColumn.ReadOnly = True
@@ -278,8 +278,8 @@ Namespace QBStuff
             '
             Me.PaymentAmountDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill
             Me.PaymentAmountDataGridViewTextBoxColumn.DataPropertyName = "PaymentAmount"
-            DataGridViewCellStyle28.Format = "C2"
-            Me.PaymentAmountDataGridViewTextBoxColumn.DefaultCellStyle = DataGridViewCellStyle28
+            DataGridViewCellStyle7.Format = "C2"
+            Me.PaymentAmountDataGridViewTextBoxColumn.DefaultCellStyle = DataGridViewCellStyle7
             Me.PaymentAmountDataGridViewTextBoxColumn.HeaderText = "Amount"
             Me.PaymentAmountDataGridViewTextBoxColumn.Name = "PaymentAmountDataGridViewTextBoxColumn"
             Me.PaymentAmountDataGridViewTextBoxColumn.ReadOnly = True

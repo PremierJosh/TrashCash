@@ -24,11 +24,11 @@
         <System.Diagnostics.DebuggerStepThrough()> _
         Private Sub InitializeComponent()
             Me.components = New System.ComponentModel.Container()
-            Dim DataGridViewCellStyle6 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-            Dim DataGridViewCellStyle7 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-            Dim DataGridViewCellStyle8 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-            Dim DataGridViewCellStyle9 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-            Dim DataGridViewCellStyle10 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+            Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+            Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+            Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+            Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+            Dim DataGridViewCellStyle5 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
             Me.sc_Master = New System.Windows.Forms.SplitContainer()
             Me.dg_RecSrvc = New System.Windows.Forms.DataGridView()
             Me.DataGridViewTextBoxColumn1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
@@ -118,8 +118,8 @@
             '
             Me.DataGridViewTextBoxColumn2.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
             Me.DataGridViewTextBoxColumn2.DataPropertyName = "RecurringServiceRate"
-            DataGridViewCellStyle6.Format = "C2"
-            Me.DataGridViewTextBoxColumn2.DefaultCellStyle = DataGridViewCellStyle6
+            DataGridViewCellStyle1.Format = "C2"
+            Me.DataGridViewTextBoxColumn2.DefaultCellStyle = DataGridViewCellStyle1
             Me.DataGridViewTextBoxColumn2.HeaderText = "Rate"
             Me.DataGridViewTextBoxColumn2.Name = "DataGridViewTextBoxColumn2"
             Me.DataGridViewTextBoxColumn2.ReadOnly = True
@@ -147,8 +147,8 @@
             '
             Me.DataGridViewTextBoxColumn3.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
             Me.DataGridViewTextBoxColumn3.DataPropertyName = "RecurringServiceStartDate"
-            DataGridViewCellStyle7.Format = "d"
-            Me.DataGridViewTextBoxColumn3.DefaultCellStyle = DataGridViewCellStyle7
+            DataGridViewCellStyle2.Format = "d"
+            Me.DataGridViewTextBoxColumn3.DefaultCellStyle = DataGridViewCellStyle2
             Me.DataGridViewTextBoxColumn3.HeaderText = "Start Date"
             Me.DataGridViewTextBoxColumn3.Name = "DataGridViewTextBoxColumn3"
             Me.DataGridViewTextBoxColumn3.ReadOnly = True
@@ -158,8 +158,8 @@
             '
             Me.DataGridViewTextBoxColumn4.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
             Me.DataGridViewTextBoxColumn4.DataPropertyName = "RecurringServiceEndDate"
-            DataGridViewCellStyle8.Format = "d"
-            Me.DataGridViewTextBoxColumn4.DefaultCellStyle = DataGridViewCellStyle8
+            DataGridViewCellStyle3.Format = "d"
+            Me.DataGridViewTextBoxColumn4.DefaultCellStyle = DataGridViewCellStyle3
             Me.DataGridViewTextBoxColumn4.HeaderText = "End Date"
             Me.DataGridViewTextBoxColumn4.Name = "DataGridViewTextBoxColumn4"
             Me.DataGridViewTextBoxColumn4.ReadOnly = True
@@ -169,8 +169,8 @@
             '
             Me.DataGridViewTextBoxColumn5.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
             Me.DataGridViewTextBoxColumn5.DataPropertyName = "MaxEndBillingDate"
-            DataGridViewCellStyle9.Format = "d"
-            Me.DataGridViewTextBoxColumn5.DefaultCellStyle = DataGridViewCellStyle9
+            DataGridViewCellStyle4.Format = "d"
+            Me.DataGridViewTextBoxColumn5.DefaultCellStyle = DataGridViewCellStyle4
             Me.DataGridViewTextBoxColumn5.HeaderText = "Billed Through"
             Me.DataGridViewTextBoxColumn5.Name = "DataGridViewTextBoxColumn5"
             Me.DataGridViewTextBoxColumn5.ReadOnly = True
@@ -193,6 +193,7 @@
             '
             'Ds_RecurringService
             '
+            Me.Ds_RecurringService.DataSetName = "ds_RecurringService"
             Me.Ds_RecurringService.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema
             '
             'Panel1
@@ -266,7 +267,7 @@
             Me.dg_Notes.AllowUserToDeleteRows = False
             Me.dg_Notes.AllowUserToResizeRows = False
             Me.dg_Notes.AutoGenerateColumns = False
-            Me.dg_Notes.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+            Me.dg_Notes.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing
             Me.dg_Notes.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.DataGridViewTextBoxColumn8, Me.DataGridViewTextBoxColumn9, Me.DataGridViewTextBoxColumn10})
             Me.dg_Notes.DataSource = Me.ServiceNotesBindingSource
             Me.dg_Notes.Dock = System.Windows.Forms.DockStyle.Fill
@@ -290,13 +291,13 @@
             '
             Me.DataGridViewTextBoxColumn9.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
             Me.DataGridViewTextBoxColumn9.DataPropertyName = "ServiceNoteDate"
-            DataGridViewCellStyle10.Format = "g"
-            DataGridViewCellStyle10.NullValue = Nothing
-            Me.DataGridViewTextBoxColumn9.DefaultCellStyle = DataGridViewCellStyle10
+            DataGridViewCellStyle5.Format = "g"
+            DataGridViewCellStyle5.NullValue = Nothing
+            Me.DataGridViewTextBoxColumn9.DefaultCellStyle = DataGridViewCellStyle5
             Me.DataGridViewTextBoxColumn9.HeaderText = "Note Date"
             Me.DataGridViewTextBoxColumn9.Name = "DataGridViewTextBoxColumn9"
             Me.DataGridViewTextBoxColumn9.ReadOnly = True
-            Me.DataGridViewTextBoxColumn9.Width = 75
+            Me.DataGridViewTextBoxColumn9.Width = 81
             '
             'DataGridViewTextBoxColumn10
             '
@@ -367,9 +368,6 @@
         Friend WithEvents ServiceNoteDateDataGridViewTextBoxColumn As System.Windows.Forms.DataGridViewTextBoxColumn
         Friend WithEvents InsertedByUserDataGridViewTextBoxColumn As System.Windows.Forms.DataGridViewTextBoxColumn
         Friend WithEvents ServiceNotesBindingSource As System.Windows.Forms.BindingSource
-        Friend WithEvents DataGridViewTextBoxColumn8 As System.Windows.Forms.DataGridViewTextBoxColumn
-        Friend WithEvents DataGridViewTextBoxColumn9 As System.Windows.Forms.DataGridViewTextBoxColumn
-        Friend WithEvents DataGridViewTextBoxColumn10 As System.Windows.Forms.DataGridViewTextBoxColumn
         Friend WithEvents RecurringService_DisplayByCustomerIDTableAdapter As TrashCash.ds_RecurringServiceTableAdapters.RecurringService_DisplayByCustomerIDTableAdapter
         Friend WithEvents ServiceNotesTableAdapter As TrashCash.ds_RecurringServiceTableAdapters.ServiceNotesTableAdapter
         Friend WithEvents RecurringServiceDisplayByCustomerIDBindingSource As System.Windows.Forms.BindingSource
@@ -381,6 +379,9 @@
         Friend WithEvents DataGridViewTextBoxColumn4 As System.Windows.Forms.DataGridViewTextBoxColumn
         Friend WithEvents DataGridViewTextBoxColumn5 As System.Windows.Forms.DataGridViewTextBoxColumn
         Friend WithEvents DataGridViewCheckBoxColumn1 As System.Windows.Forms.DataGridViewTextBoxColumn
+        Friend WithEvents DataGridViewTextBoxColumn8 As System.Windows.Forms.DataGridViewTextBoxColumn
+        Friend WithEvents DataGridViewTextBoxColumn9 As System.Windows.Forms.DataGridViewTextBoxColumn
+        Friend WithEvents DataGridViewTextBoxColumn10 As System.Windows.Forms.DataGridViewTextBoxColumn
 
 
     End Class

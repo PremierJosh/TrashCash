@@ -25,10 +25,11 @@
         Private Sub InitializeComponent()
             Me.components = New System.ComponentModel.Container()
             Me.grp_SrvcInvInfo = New System.Windows.Forms.GroupBox()
+            Me.lbl_BillInterval = New System.Windows.Forms.Label()
             Me.nud_BillInterval = New System.Windows.Forms.NumericUpDown()
             Me.CustomerBindingSource = New System.Windows.Forms.BindingSource(Me.components)
             Me.Ds_Customer = New TrashCash.ds_Customer()
-           Me.ck_SingleInv = New System.Windows.Forms.CheckBox()
+            Me.ck_SingleInv = New System.Windows.Forms.CheckBox()
             Me.Label10 = New System.Windows.Forms.Label()
             Me.dtp_StartDate = New System.Windows.Forms.DateTimePicker()
             Me.chk_CustPrintInv = New System.Windows.Forms.CheckBox()
@@ -70,7 +71,6 @@
             Me.Label4 = New System.Windows.Forms.Label()
             Me.tt_CustBillInterval = New System.Windows.Forms.ToolTip(Me.components)
             Me.CustomerTableAdapter = New TrashCash.ds_CustomerTableAdapters.CustomerTableAdapter()
-            Me.lbl_BillInterval = New System.Windows.Forms.Label()
             Me.grp_SrvcInvInfo.SuspendLayout()
             CType(Me.nud_BillInterval, System.ComponentModel.ISupportInitialize).BeginInit()
             CType(Me.CustomerBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -82,8 +82,9 @@
             '
             'grp_SrvcInvInfo
             '
+            Me.grp_SrvcInvInfo.Controls.Add(Me.lbl_BillInterval)
             Me.grp_SrvcInvInfo.Controls.Add(Me.nud_BillInterval)
-           Me.grp_SrvcInvInfo.Controls.Add(Me.ck_SingleInv)
+            Me.grp_SrvcInvInfo.Controls.Add(Me.ck_SingleInv)
             Me.grp_SrvcInvInfo.Controls.Add(Me.Label10)
             Me.grp_SrvcInvInfo.Controls.Add(Me.dtp_StartDate)
             Me.grp_SrvcInvInfo.Controls.Add(Me.chk_CustPrintInv)
@@ -94,6 +95,16 @@
             Me.grp_SrvcInvInfo.TabIndex = 2
             Me.grp_SrvcInvInfo.TabStop = False
             Me.grp_SrvcInvInfo.Text = "Service and Invoice Information"
+            '
+            'lbl_BillInterval
+            '
+            Me.lbl_BillInterval.AutoSize = True
+            Me.lbl_BillInterval.Location = New System.Drawing.Point(40, 144)
+            Me.lbl_BillInterval.Name = "lbl_BillInterval"
+            Me.lbl_BillInterval.Size = New System.Drawing.Size(61, 13)
+            Me.lbl_BillInterval.TabIndex = 76
+            Me.lbl_BillInterval.Text = "Bill Interval:"
+            Me.tt_CustBillInterval.SetToolTip(Me.lbl_BillInterval, "How many months between this customer recieving an invoice.")
             '
             'nud_BillInterval
             '
@@ -112,8 +123,8 @@
             '
             'Ds_Customer
             '
+            Me.Ds_Customer.DataSetName = "ds_Customer"
             Me.Ds_Customer.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema
-        
             '
             'ck_SingleInv
             '
@@ -519,16 +530,6 @@
             'CustomerTableAdapter
             '
             Me.CustomerTableAdapter.ClearBeforeFill = True
-            '
-            'lbl_BillInterval
-            '
-            Me.lbl_BillInterval.AutoSize = True
-            Me.lbl_BillInterval.Location = New System.Drawing.Point(40, 142)
-            Me.lbl_BillInterval.Name = "lbl_BillInterval"
-            Me.lbl_BillInterval.Size = New System.Drawing.Size(61, 13)
-            Me.lbl_BillInterval.TabIndex = 76
-            Me.lbl_BillInterval.Text = "Bill Interval:"
-            Me.tt_CustBillInterval.SetToolTip(Me.lbl_BillInterval, "How many months between this customer recieving an invoice.")
             '
             'UC_CustomerInfoBoxes
             '

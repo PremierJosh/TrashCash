@@ -1,7 +1,6 @@
 ﻿
 Imports TrashCash.QBStuff
 Imports QBFC12Lib
-Imports TrashCash._DataSets
 
 Namespace RecurringService
     Friend Module RecurringServiceModule
@@ -55,6 +54,11 @@ Namespace RecurringService
                 .CreditAmount = creditAmount
                 .Desc = "This service has been Invoiced upto " & billThruDate & ". The new End Date overlaps this Invoiced period. | New End Date: " & newEndDate.Date
             End With
+            ' capturing previous end date
+            Dim prevEndDate As Date
+            If (Not row.IsRecurringServiceEndDateNull) Then
+                prevEndDate = row.RecurringServiceEndDate
+            End If
 
             Dim resp As IResponse = QBRequests.CreditMemoAdd(creditAddObj)
             If (resp.StatusCode = 0) Then
@@ -70,22 +74,24 @@ Namespace RecurringService
                 End Try
                 Try
                     ' insert history
-                    If (row.IsRecurringServiceEndDateNull) Then
+                    If (prevEndDate = Nothing) Then
                         RsEndCreditTA.EndDateCredits_Insert(row.RecurringServiceID, Nothing, newEndDate, creditAmount,
                                                             creditObj.TxnID, creditObj.TxnDate, CurrentUser.USER_NAME)
                     Else
-                        RsEndCreditTA.EndDateCredits_Insert(row.RecurringServiceID, row.RecurringServiceEndDate, newEndDate, creditAmount,
+                        RsEndCreditTA.EndDateCredits_Insert(row.RecurringServiceID, prevEndDate, newEndDate, creditAmount,
                                                             creditObj.TxnID, creditObj.TxnDate, CurrentUser.USER_NAME)
                     End If
                 Catch ex As SqlException
                     MessageBox.Show("Message: " & ex.Message & vbCrLf & "LineNumber: " & ex.LineNumber,
                                     "Sql Error: " & ex.Procedure, MessageBoxButtons.OK, MessageBoxIcon.Error)
                 End Try
+                ' use credit
+                QBMethods.UseNewCredit(creditObj)
             Else
                 QBMethods.ResponseErr_Misc(resp)
             End If
 
-            End Sub
+        End Sub
 
         Friend Sub RecurringService_EndDateCredit_Void(ByRef row As ds_RecurringService.RecurringService_EndDateCreditsRow, ByVal voidReason As String)
             Dim resp As IResponse = QBRequests.TxnVoid(row.CreditMemoTxnID, ENTxnVoidType.tvtCreditMemo)
@@ -115,6 +121,7 @@ Namespace RecurringService
                 .IsToBePrinted = print
                 .ItemListID = itemListID
                 .CreditAmount = creditAmount
+                .DateOfCredit = dateOfCredit
                 .Desc = "Credit Issued for Service on " & dateOfCredit & ". Reason: " & reason
             End With
 

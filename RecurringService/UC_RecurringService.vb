@@ -116,7 +116,7 @@
             Next i
         End Sub
 
-        Private Sub rdo_EndedSrvc_Click(sender As System.Object, e As System.EventArgs) Handles rdo_EndedSrvc.Click, rdo_CurrentSrvc.Click, rdo_AllSrvc.Click
+        Private Sub rdo_EndedSrvc_Click(sender As System.Object, e As System.EventArgs) Handles rdo_EndedSrvc.Click
             Dim s As String
             If (rdo_CurrentSrvc.Checked = True) Then
                 s = "Current"
@@ -130,12 +130,12 @@
         End Sub
 
         ' event handle to refresh balance of customer
-        Private Sub _RefreshBalance(ByVal customerNumber As Integer) Handles _RecurringServiceForm.RefreshBalance
+        Private Sub _RefreshBalance(ByVal customerNumber As Integer) Handles _recurringServiceForm.RefreshBalance
             RaiseEvent RefreshBalance(customerNumber)
         End Sub
 
         ' event handle to refresh service and notes
-        Private Sub _RefreshService(ByVal customerNumber As Integer, ByVal recurringServiceID As Integer) Handles _RecurringServiceForm.RefreshService
+        Private Sub RefreshService(ByVal customerNumber As Integer, ByVal recurringServiceID As Integer) Handles _recurringServiceForm.RefreshService
             RecurringService_DisplayByCustomerIDTableAdapter.FillByID(Ds_RecurringService.RecurringService_DisplayByCustomerID, customerNumber)
 
             ' checking if selected service matches service that threw event so we can refresh notes
@@ -171,17 +171,20 @@
         End Sub
 
         Private Sub btn_NewSrvc_Click(sender As System.Object, e As System.EventArgs) Handles btn_NewSrvc.Click
-            '_serviceDetails = New RecurringServicesForm(CurrentCustomer, _custName, HomeForm)
-            '_serviceDetails.ShowDialog()
-            _RecurringServiceForm = New RecurringServiceForm(HomeForm, _custName, CurrentCustomer)
+    _RecurringServiceForm = New RecurringServiceForm(HomeForm, _custName, CurrentCustomer)
             _RecurringServiceForm.ShowDialog()
         End Sub
 
-        Private Sub dg_RecSrvc_RowsAdded(sender As System.Object, e As System.Windows.Forms.DataGridViewRowsAddedEventArgs) Handles dg_RecSrvc.RowsAdded
-            ColorRows()
-        End Sub
+        'Private Sub dg_RecSrvc_RowsAdded(sender As System.Object, e As System.Windows.Forms.DataGridViewRowsAddedEventArgs) Handles dg_RecSrvc.RowsAdded
+        '    ColorRows()
+        'End Sub
 
-        Private Sub dg_RecSrvc_RowsRemoved(sender As System.Object, e As System.Windows.Forms.DataGridViewRowsRemovedEventArgs) Handles dg_RecSrvc.RowsRemoved
+        'Private Sub dg_RecSrvc_RowsRemoved(sender As System.Object, e As System.Windows.Forms.DataGridViewRowsRemovedEventArgs) Handles dg_RecSrvc.RowsRemoved
+        '    ColorRows()
+        'End Sub
+
+
+        Private Sub dg_RecSrvc_RowPrePaint(sender As System.Object, e As System.Windows.Forms.DataGridViewRowPrePaintEventArgs) Handles dg_RecSrvc.RowPrePaint
             ColorRows()
         End Sub
     End Class

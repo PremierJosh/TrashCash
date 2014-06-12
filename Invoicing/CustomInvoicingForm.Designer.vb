@@ -31,26 +31,26 @@ Namespace Invoicing
             Dim lbl_Addr3 As System.Windows.Forms.Label
             Dim lbl_CityState As System.Windows.Forms.Label
             Dim ZipLabel As System.Windows.Forms.Label
-            Dim DataGridViewCellStyle8 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-            Dim DataGridViewCellStyle9 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-            Dim DataGridViewCellStyle10 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-            Dim DataGridViewCellStyle11 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-            Dim DataGridViewCellStyle12 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-            Dim DataGridViewCellStyle13 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-            Dim DataGridViewCellStyle14 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+            Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+            Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+            Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+            Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+            Dim DataGridViewCellStyle5 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+            Dim DataGridViewCellStyle6 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+            Dim DataGridViewCellStyle7 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
             Me.CustomInvoiceLineTypesBindingSource = New System.Windows.Forms.BindingSource(Me.components)
-            Me.Invoicing = New ds_Invoicing()
+            Me.Invoicing = New TrashCash.Invoicing.DS_Invoicing()
             Me.CustomerRecentAddrsBindingSource = New System.Windows.Forms.BindingSource(Me.components)
             Me.CustomInvoiceLineItemsBindingSource = New System.Windows.Forms.BindingSource(Me.components)
             Me.pnl_1 = New System.Windows.Forms.Panel()
             Me.pnl_TopContent = New System.Windows.Forms.Panel()
-            Me.CustomerToolstrip1 = New TrashCash.Classes.CustomerToolstrip.CustomerToolstrip
+            Me.CustomerToolstrip1 = New TrashCash.Classes.CustomerToolstrip.CustomerToolstrip()
             Me.TabControl1 = New System.Windows.Forms.TabControl()
             Me.tp_NewInv = New System.Windows.Forms.TabPage()
             Me.FlowLayoutPanel = New System.Windows.Forms.FlowLayoutPanel()
             Me.pnl_2 = New System.Windows.Forms.Panel()
             Me.lbl_Rate = New System.Windows.Forms.Label()
-            Me.tb_Rate = New CurrencyTextBox()
+            Me.tb_Rate = New TrashCash.Classes.CurrencyTextBox()
             Me.lbl_LineType = New System.Windows.Forms.Label()
             Me.btn_AddLine = New System.Windows.Forms.Button()
             Me.cmb_LineTypes = New System.Windows.Forms.ComboBox()
@@ -94,7 +94,7 @@ Namespace Invoicing
             Me.RenderedOnDateDataGridViewTextBoxColumn1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
             Me.DescTextDataGridViewTextBoxColumn1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
             Me.Addr1DataGridViewTextBoxColumn1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-            Me.HistoryInv = New ds_Invoicing()
+            Me.HistoryInv = New TrashCash.Invoicing.DS_Invoicing()
             Me.lbl_HistoryLines = New System.Windows.Forms.Label()
             Me.lbl_VoidReason = New System.Windows.Forms.Label()
             Me.tb_VoidReason = New System.Windows.Forms.TextBox()
@@ -187,8 +187,9 @@ Namespace Invoicing
             Me.CustomInvoiceLineTypesBindingSource.DataMember = "CustomInvoice_LineTypes"
             Me.CustomInvoiceLineTypesBindingSource.DataSource = Me.Invoicing
             '
-            'Ds_Invoicing
+            'Invoicing
             '
+            Me.Invoicing.DataSetName = "ds_Invoicing"
             Me.Invoicing.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema
             '
             'CustomerRecentAddrsBindingSource
@@ -492,7 +493,7 @@ Namespace Invoicing
             Me.dg_LineItems.AllowUserToAddRows = False
             Me.dg_LineItems.AllowUserToDeleteRows = False
             Me.dg_LineItems.AutoGenerateColumns = False
-            Me.dg_LineItems.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+            Me.dg_LineItems.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing
             Me.dg_LineItems.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.CITypeIDDataGridViewTextBoxColumn, Me.RateDataGridViewTextBoxColumn, Me.RenderedOnDateDataGridViewTextBoxColumn, Me.Addr1DataGridViewTextBoxColumn, Me.DescTextDataGridViewTextBoxColumn})
             Me.dg_LineItems.ContextMenuStrip = Me.ContextMenuStrip1
             Me.dg_LineItems.DataSource = Me.CustomInvoiceLineItemsBindingSource
@@ -518,14 +519,14 @@ Namespace Invoicing
             Me.CITypeIDDataGridViewTextBoxColumn.Resizable = System.Windows.Forms.DataGridViewTriState.[True]
             Me.CITypeIDDataGridViewTextBoxColumn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic
             Me.CITypeIDDataGridViewTextBoxColumn.ValueMember = "CI_TypeID"
-            Me.CITypeIDDataGridViewTextBoxColumn.Width = 86
+            Me.CITypeIDDataGridViewTextBoxColumn.Width = 93
             '
             'RateDataGridViewTextBoxColumn
             '
             Me.RateDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
             Me.RateDataGridViewTextBoxColumn.DataPropertyName = "Rate"
-            DataGridViewCellStyle8.Format = "C2"
-            Me.RateDataGridViewTextBoxColumn.DefaultCellStyle = DataGridViewCellStyle8
+            DataGridViewCellStyle1.Format = "C2"
+            Me.RateDataGridViewTextBoxColumn.DefaultCellStyle = DataGridViewCellStyle1
             Me.RateDataGridViewTextBoxColumn.HeaderText = "Rate"
             Me.RateDataGridViewTextBoxColumn.Name = "RateDataGridViewTextBoxColumn"
             Me.RateDataGridViewTextBoxColumn.ReadOnly = True
@@ -535,12 +536,12 @@ Namespace Invoicing
             '
             Me.RenderedOnDateDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
             Me.RenderedOnDateDataGridViewTextBoxColumn.DataPropertyName = "RenderedOnDate"
-            DataGridViewCellStyle9.Format = "d"
-            Me.RenderedOnDateDataGridViewTextBoxColumn.DefaultCellStyle = DataGridViewCellStyle9
+            DataGridViewCellStyle2.Format = "d"
+            Me.RenderedOnDateDataGridViewTextBoxColumn.DefaultCellStyle = DataGridViewCellStyle2
             Me.RenderedOnDateDataGridViewTextBoxColumn.HeaderText = "Date of service"
             Me.RenderedOnDateDataGridViewTextBoxColumn.Name = "RenderedOnDateDataGridViewTextBoxColumn"
             Me.RenderedOnDateDataGridViewTextBoxColumn.ReadOnly = True
-            Me.RenderedOnDateDataGridViewTextBoxColumn.Width = 96
+            Me.RenderedOnDateDataGridViewTextBoxColumn.Width = 104
             '
             'Addr1DataGridViewTextBoxColumn
             '
@@ -549,7 +550,7 @@ Namespace Invoicing
             Me.Addr1DataGridViewTextBoxColumn.HeaderText = "Address 1"
             Me.Addr1DataGridViewTextBoxColumn.Name = "Addr1DataGridViewTextBoxColumn"
             Me.Addr1DataGridViewTextBoxColumn.ReadOnly = True
-            Me.Addr1DataGridViewTextBoxColumn.Width = 73
+            Me.Addr1DataGridViewTextBoxColumn.Width = 79
             '
             'DescTextDataGridViewTextBoxColumn
             '
@@ -713,8 +714,8 @@ Namespace Invoicing
             'RateDataGridViewTextBoxColumn1
             '
             Me.RateDataGridViewTextBoxColumn1.DataPropertyName = "Rate"
-            DataGridViewCellStyle10.Format = "C2"
-            Me.RateDataGridViewTextBoxColumn1.DefaultCellStyle = DataGridViewCellStyle10
+            DataGridViewCellStyle3.Format = "C2"
+            Me.RateDataGridViewTextBoxColumn1.DefaultCellStyle = DataGridViewCellStyle3
             Me.RateDataGridViewTextBoxColumn1.HeaderText = "Rate"
             Me.RateDataGridViewTextBoxColumn1.Name = "RateDataGridViewTextBoxColumn1"
             Me.RateDataGridViewTextBoxColumn1.ReadOnly = True
@@ -722,8 +723,8 @@ Namespace Invoicing
             'RenderedOnDateDataGridViewTextBoxColumn1
             '
             Me.RenderedOnDateDataGridViewTextBoxColumn1.DataPropertyName = "RenderedOnDate"
-            DataGridViewCellStyle11.Format = "d"
-            Me.RenderedOnDateDataGridViewTextBoxColumn1.DefaultCellStyle = DataGridViewCellStyle11
+            DataGridViewCellStyle4.Format = "d"
+            Me.RenderedOnDateDataGridViewTextBoxColumn1.DefaultCellStyle = DataGridViewCellStyle4
             Me.RenderedOnDateDataGridViewTextBoxColumn1.HeaderText = "Date of Service"
             Me.RenderedOnDateDataGridViewTextBoxColumn1.Name = "RenderedOnDateDataGridViewTextBoxColumn1"
             Me.RenderedOnDateDataGridViewTextBoxColumn1.ReadOnly = True
@@ -742,8 +743,9 @@ Namespace Invoicing
             Me.Addr1DataGridViewTextBoxColumn1.Name = "Addr1DataGridViewTextBoxColumn1"
             Me.Addr1DataGridViewTextBoxColumn1.ReadOnly = True
             '
-            'Ds_HistoryInv
+            'HistoryInv
             '
+            Me.HistoryInv.DataSetName = "ds_Invoicing"
             Me.HistoryInv.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema
             '
             'lbl_HistoryLines
@@ -814,8 +816,8 @@ Namespace Invoicing
             'TimeCreatedDataGridViewTextBoxColumn
             '
             Me.TimeCreatedDataGridViewTextBoxColumn.DataPropertyName = "Time_Created"
-            DataGridViewCellStyle12.Format = "d"
-            Me.TimeCreatedDataGridViewTextBoxColumn.DefaultCellStyle = DataGridViewCellStyle12
+            DataGridViewCellStyle5.Format = "d"
+            Me.TimeCreatedDataGridViewTextBoxColumn.DefaultCellStyle = DataGridViewCellStyle5
             Me.TimeCreatedDataGridViewTextBoxColumn.HeaderText = "Time Created"
             Me.TimeCreatedDataGridViewTextBoxColumn.Name = "TimeCreatedDataGridViewTextBoxColumn"
             Me.TimeCreatedDataGridViewTextBoxColumn.ReadOnly = True
@@ -823,8 +825,8 @@ Namespace Invoicing
             'DueDateDataGridViewTextBoxColumn
             '
             Me.DueDateDataGridViewTextBoxColumn.DataPropertyName = "DueDate"
-            DataGridViewCellStyle13.Format = "d"
-            Me.DueDateDataGridViewTextBoxColumn.DefaultCellStyle = DataGridViewCellStyle13
+            DataGridViewCellStyle6.Format = "d"
+            Me.DueDateDataGridViewTextBoxColumn.DefaultCellStyle = DataGridViewCellStyle6
             Me.DueDateDataGridViewTextBoxColumn.HeaderText = "Due Date"
             Me.DueDateDataGridViewTextBoxColumn.Name = "DueDateDataGridViewTextBoxColumn"
             Me.DueDateDataGridViewTextBoxColumn.ReadOnly = True
@@ -832,8 +834,8 @@ Namespace Invoicing
             'PostDateDataGridViewTextBoxColumn
             '
             Me.PostDateDataGridViewTextBoxColumn.DataPropertyName = "PostDate"
-            DataGridViewCellStyle14.Format = "d"
-            Me.PostDateDataGridViewTextBoxColumn.DefaultCellStyle = DataGridViewCellStyle14
+            DataGridViewCellStyle7.Format = "d"
+            Me.PostDateDataGridViewTextBoxColumn.DefaultCellStyle = DataGridViewCellStyle7
             Me.PostDateDataGridViewTextBoxColumn.HeaderText = "Post Date"
             Me.PostDateDataGridViewTextBoxColumn.Name = "PostDateDataGridViewTextBoxColumn"
             Me.PostDateDataGridViewTextBoxColumn.ReadOnly = True
@@ -869,7 +871,6 @@ Namespace Invoicing
             'ToolTip1
             '
             Me.ToolTip1.Active = False
-            '
             '
             'CustomInvoicingForm
             '

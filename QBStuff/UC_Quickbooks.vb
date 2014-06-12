@@ -88,7 +88,7 @@ Namespace QBStuff
             End If
 
             ' color rows based on due date
-            ColorRows_QBInvoices(dg_QBInvoices)
+            'ColorRows_QBInvoices(dg_QBInvoices)
         End Sub
 
         Private Sub FetchPayments()
@@ -238,5 +238,9 @@ Namespace QBStuff
         '    '    ' payments tab
         '    'End If
         'End Sub
+
+        Private Sub dg_QBInvoices_RowPrePaint(sender As System.Object, e As System.Windows.Forms.DataGridViewRowPrePaintEventArgs) Handles dg_QBInvoices.RowPrePaint
+            ColorRows_QBInvoices(dg_QBInvoices)
+        End Sub
     End Class
 End Namespace

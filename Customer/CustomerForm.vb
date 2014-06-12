@@ -48,6 +48,8 @@ Namespace Customer
             If (CustomerToolstrip1.CurrentCustomer <> Nothing) Then
                 CurrentCustomer = CustomerToolstrip1.CurrentCustomer
             End If
+            ' set focus to quick search
+            CustomerToolstrip1.QuickSearch.TextBox.Focus()
         End Sub
 
         Private Sub CustomerChanged(ByVal customerNumber As Integer) Handles CustomerToolstrip1.CustomerChanging

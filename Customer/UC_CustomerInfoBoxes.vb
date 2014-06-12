@@ -40,7 +40,7 @@ Namespace Customer
 
                 _isUpdating = value
                 ' throw event
-                RaiseEvent Updating(isUpdating)
+                RaiseEvent Updating(IsUpdating)
             End Set
         End Property
         ' events
@@ -62,6 +62,10 @@ Namespace Customer
                         ' filling customer table
                         _ta.Fill(Ds_Customer.Customer, value)
                         _custRow = Ds_Customer.Customer.Rows(0)
+                        ' checking if deactive
+                        If (_custRow.CustomerIsDeactive) Then
+                            chk_CustDeactive.Visible = True
+                        End If
                     Else
                         UpdateCheck()
                     End If
@@ -104,6 +108,10 @@ Namespace Customer
 
                 ' lock deactivate check box
                 chk_CustDeactive.Enabled = False
+                ' hide deactive if not checked
+                If (Not chk_CustDeactive.Checked) Then
+                    chk_CustDeactive.Visible = True
+                End If
 
                 ' Service and Invoice Information Grp Box
                 ck_SingleInv.Enabled = False
@@ -119,7 +127,6 @@ Namespace Customer
                 box_CustBillCity.ReadOnly = True
                 box_CustBillState.ReadOnly = True
                 box_CustBillZip.ReadOnly = True
-
             Else
                 ' General Information Grp Box
                 box_CustPhone.ReadOnly = False
@@ -134,6 +141,8 @@ Namespace Customer
 
                 ' unlock deactivate check box
                 chk_CustDeactive.Enabled = True
+                ' always show deactive box on edit
+                chk_CustDeactive.Visible = True
 
                 ' Service and Invoice Information Grp Box
                 ck_SingleInv.Enabled = True
@@ -149,7 +158,6 @@ Namespace Customer
                 box_CustBillCity.ReadOnly = False
                 box_CustBillState.ReadOnly = False
                 box_CustBillZip.ReadOnly = False
-
             End If
         End Sub
 
@@ -310,5 +318,6 @@ Namespace Customer
                 nud_BillInterval.Visible = False
             End If
         End Sub
+
     End Class
 End Namespace

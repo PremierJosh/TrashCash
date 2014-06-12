@@ -18,6 +18,7 @@
             Close()
         Else
             MsgBox("Username and/or Password is incorrect.")
+            mtb_Password.SelectAll()
         End If
 
         Cursor = Cursors.Default
