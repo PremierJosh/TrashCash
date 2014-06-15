@@ -26,9 +26,9 @@
             Me.components = New System.ComponentModel.Container()
             Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
             Me.dg_CustNotes = New System.Windows.Forms.DataGridView()
-            Me.Ds_Customer = New TrashCash.ds_Customer()
+            Me.Ds_Customer = New ds_Customer()
             Me.CustomerNotesBindingSource = New System.Windows.Forms.BindingSource(Me.components)
-            Me.CustomerNotesTableAdapter = New TrashCash.ds_CustomerTableAdapters.CustomerNotesTableAdapter()
+            Me.CustomerNotesTableAdapter = New CustomerNotesTableAdapter()
             Me.CustomerNoteTextDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
             Me.CustomerNoteDateDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
             Me.InsertedByUserDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
@@ -114,8 +114,8 @@
         Friend WithEvents CustomerNoteDateDataGridViewTextBoxColumn As System.Windows.Forms.DataGridViewTextBoxColumn
         Friend WithEvents InsertedByUserDataGridViewTextBoxColumn As System.Windows.Forms.DataGridViewTextBoxColumn
         Friend WithEvents CustomerNotesBindingSource As System.Windows.Forms.BindingSource
-        Friend WithEvents Ds_Customer As TrashCash.ds_Customer
-        Friend WithEvents CustomerNotesTableAdapter As TrashCash.ds_CustomerTableAdapters.CustomerNotesTableAdapter
+        Friend WithEvents Ds_Customer As ds_Customer
+        Friend WithEvents CustomerNotesTableAdapter As CustomerNotesTableAdapter
 
     End Class
 End Namespace

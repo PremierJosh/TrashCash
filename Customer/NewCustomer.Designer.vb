@@ -26,7 +26,7 @@
             Me.components = New System.ComponentModel.Container()
             Me.startDatePicker = New System.Windows.Forms.DateTimePicker()
             Me.CustomerBindingSource = New System.Windows.Forms.BindingSource(Me.components)
-            Me.Ds_Customer = New TrashCash.ds_Customer()
+            Me.Ds_Customer = New ds_Customer()
             Me.Label9 = New System.Windows.Forms.Label()
             Me.createCustBtn = New System.Windows.Forms.Button()
             Me.GroupBox2 = New System.Windows.Forms.GroupBox()
@@ -64,7 +64,7 @@
             Me.Label6 = New System.Windows.Forms.Label()
             Me.Label5 = New System.Windows.Forms.Label()
             Me.Label4 = New System.Windows.Forms.Label()
-            Me.CustomerTableAdapter = New TrashCash.ds_CustomerTableAdapters.CustomerTableAdapter()
+            Me.CustomerTableAdapter = New CustomerTableAdapter()
             Me.lbl_BillInter = New System.Windows.Forms.Label()
             CType(Me.CustomerBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
             CType(Me.Ds_Customer, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -540,8 +540,8 @@
         Friend WithEvents Label5 As System.Windows.Forms.Label
         Friend WithEvents Label4 As System.Windows.Forms.Label
         Friend WithEvents CustomerBindingSource As System.Windows.Forms.BindingSource
-        Friend WithEvents Ds_Customer As TrashCash.ds_Customer
-        Friend WithEvents CustomerTableAdapter As TrashCash.ds_CustomerTableAdapters.CustomerTableAdapter
+        Friend WithEvents Ds_Customer As ds_Customer
+        Friend WithEvents CustomerTableAdapter As CustomerTableAdapter
         Friend WithEvents lbl_BillInter As System.Windows.Forms.Label
     End Class
 End Namespace

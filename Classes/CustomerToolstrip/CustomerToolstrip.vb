@@ -1,4 +1,6 @@
 ﻿
+Imports TrashCash.Customer
+
 Namespace Classes.CustomerToolstrip
     Public Class CustomerToolstrip
         Inherits ToolStrip
@@ -40,7 +42,7 @@ Namespace Classes.CustomerToolstrip
         End Sub
 
         ' balance setting
-        Private ReadOnly _ta As ds_CustomerTableAdapters.QueriesTableAdapter
+        Private ReadOnly _ta As QueriesTableAdapter
         Friend Sub GetCustomerBalance(Optional ByRef returnVal As Double = Nothing)
             ' getting queue amount
             Dim queueAmount As Double = _ta.Customer_PaymentTotalInQueue(CurrentCustomer)
@@ -139,7 +141,7 @@ Namespace Classes.CustomerToolstrip
 
         Public Sub New()
             MyBase.New()
-            _ta = New ds_CustomerTableAdapters.QueriesTableAdapter
+            _ta = New QueriesTableAdapter
 
             ' customer combo box and seperator
             CustComboBox = New CustComboBox

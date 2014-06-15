@@ -1,11 +1,13 @@
-﻿Namespace Classes.CustomerToolstrip
+﻿Imports TrashCash.Customer
+
+Namespace Classes.CustomerToolstrip
     Friend Class CustComboBox
         Inherits Windows.Forms.ToolStripComboBox
 
         Private ReadOnly _dv As DataView
 
         Private ReadOnly _dt As ds_Customer.Customer_ListByActiveDataTable
-        Private ReadOnly _ta As ds_CustomerTableAdapters.Customer_ListByActiveTableAdapter
+        Private ReadOnly _ta As Customer_ListByActiveTableAdapter
 
         Friend Property SelectedValue As Integer
             Get
@@ -32,7 +34,7 @@
 
         Friend Event SelectionChangeCommitted(ByVal customerNumber As Integer, ByVal e As EventArgs)
         Protected Overrides Sub OnSelectionChangeCommitted(ByVal e As EventArgs)
-           RaiseEvent SelectionChangeCommitted(CInt(ComboBox.SelectedValue), e)
+            RaiseEvent SelectionChangeCommitted(CInt(ComboBox.SelectedValue), e)
         End Sub
 
         Public Overrides Function ToString() As String
@@ -40,14 +42,14 @@
         End Function
 
         Public Sub New()
-            
+
             ' set key bind catches to quick select from list
             AutoCompleteMode = Windows.Forms.AutoCompleteMode.Suggest
             AutoCompleteSource = Windows.Forms.AutoCompleteSource.ListItems
-           
+
             ' instantiate dt and ta
             _dt = New ds_Customer.Customer_ListByActiveDataTable
-            _ta = New ds_CustomerTableAdapters.Customer_ListByActiveTableAdapter
+            _ta = New Customer_ListByActiveTableAdapter
 
             ' set dataview
             _dv = New DataView
@@ -63,7 +65,7 @@
         End Sub
 
         Friend Sub RefreshCustomerList()
-           _ta.Fill(_dt, False)
+            _ta.Fill(_dt, False)
         End Sub
     End Class
 End Namespace

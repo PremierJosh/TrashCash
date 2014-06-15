@@ -28,7 +28,7 @@
             Me.lbl_BillInterval = New System.Windows.Forms.Label()
             Me.nud_BillInterval = New System.Windows.Forms.NumericUpDown()
             Me.CustomerBindingSource = New System.Windows.Forms.BindingSource(Me.components)
-            Me.Ds_Customer = New TrashCash.ds_Customer()
+            Me.Ds_Customer = New ds_Customer()
             Me.ck_SingleInv = New System.Windows.Forms.CheckBox()
             Me.Label10 = New System.Windows.Forms.Label()
             Me.dtp_StartDate = New System.Windows.Forms.DateTimePicker()
@@ -70,7 +70,7 @@
             Me.Label5 = New System.Windows.Forms.Label()
             Me.Label4 = New System.Windows.Forms.Label()
             Me.tt_CustBillInterval = New System.Windows.Forms.ToolTip(Me.components)
-            Me.CustomerTableAdapter = New TrashCash.ds_CustomerTableAdapters.CustomerTableAdapter()
+            Me.CustomerTableAdapter = New CustomerTableAdapter()
             Me.grp_SrvcInvInfo.SuspendLayout()
             CType(Me.nud_BillInterval, System.ComponentModel.ISupportInitialize).BeginInit()
             CType(Me.CustomerBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -583,7 +583,7 @@
         Friend WithEvents Label5 As System.Windows.Forms.Label
         Friend WithEvents Label4 As System.Windows.Forms.Label
         Friend WithEvents ck_SingleInv As System.Windows.Forms.CheckBox
-     Friend WithEvents tt_CustBillInterval As System.Windows.Forms.ToolTip
+        Friend WithEvents tt_CustBillInterval As System.Windows.Forms.ToolTip
         Friend WithEvents lbl_LastName As System.Windows.Forms.Label
         Friend WithEvents tb_LastName As System.Windows.Forms.TextBox
         Friend WithEvents lbl_FirstName As System.Windows.Forms.Label
@@ -597,8 +597,8 @@
         Friend WithEvents Label11 As System.Windows.Forms.Label
         Friend WithEvents nud_BillInterval As System.Windows.Forms.NumericUpDown
         Friend WithEvents CustomerBindingSource As System.Windows.Forms.BindingSource
-        Friend WithEvents Ds_Customer As TrashCash.ds_Customer
-        Friend WithEvents CustomerTableAdapter As TrashCash.ds_CustomerTableAdapters.CustomerTableAdapter
+        Friend WithEvents Ds_Customer As ds_Customer
+        Friend WithEvents CustomerTableAdapter As CustomerTableAdapter
         Friend WithEvents btn_SaveChanges As System.Windows.Forms.ToolStripMenuItem
         Friend WithEvents lbl_BillInterval As System.Windows.Forms.Label
 

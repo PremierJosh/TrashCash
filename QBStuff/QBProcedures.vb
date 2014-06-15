@@ -1,4 +1,5 @@
-﻿Imports TrashCash.Payments
+﻿Imports TrashCash.Customer
+Imports TrashCash.Payments
 Imports QBFC12Lib
 
 
@@ -294,7 +295,7 @@ Namespace QBStuff
             End With
             Dim resp As IResponse = ConCheck(qbConMgr).GetRespList.GetAt(0)
             If (resp.StatusCode = 0) Then
-                creditObj = QBMethods.ConvertToCreditObjs(resp.Detail).Item(0)
+                creditObj = QBMethods.ConvertToCreditObjs(resp).Item(0)
                 creditObj.EditSequence = CType(resp.Detail, ICreditMemoRet).EditSequence.GetValue
             Else
                 QBMethods.ResponseErr_Misc(resp)
@@ -469,7 +470,7 @@ Namespace QBStuff
             Dim resp As IResponse = ConCheck(qbConMgr).GetRespList.GetAt(0)
             ' if response is good
             If (resp.StatusCode = 0) Then
-                invObjList = QBMethods.ConvertToInvObjs(ConCheck(qbConMgr).GetRespList.GetAt(0))
+                invObjList = QBMethods.ConvertToInvObjs(resp)
             ElseIf (resp.StatusCode > 1) Then
                 QBMethods.ResponseErr_Misc(resp)
             End If
@@ -499,7 +500,7 @@ Namespace QBStuff
                 End If
             End With
 
-            Dim resp As IResponse = QBMethods.ConvertToInvObjs(ConCheck(qbConMgr).GetRespList.GetAt(0))
+            Dim resp As IResponse = ConCheck(qbConMgr).GetRespList.GetAt(0)
             If (resp.StatusCode = 0) Then
                 Dim list As List(Of QBInvoiceObj) = QBMethods.ConvertToInvObjs(resp)
                 ' list will only have 1 item
@@ -780,37 +781,37 @@ Namespace QBStuff
         Private Shared Function ConvertToInvObj(ByRef invRet As IInvoiceRet) As QBInvoiceObj
             Dim invObj As New QBInvoiceObj
             With invObj
-                If (invRet.TxnID.GetValue IsNot Nothing) Then
+                If (invRet.TxnID IsNot Nothing) Then
                     .TxnID = invRet.TxnID.GetValue
                 End If
-                If (invRet.TimeCreated.GetValue <> Nothing) Then
+                If (invRet.TimeCreated IsNot Nothing) Then
                     .TimeCreated = invRet.TimeCreated.GetValue
                 End If
-                If (invRet.RefNumber.GetValue IsNot Nothing) Then
+                If (invRet.RefNumber IsNot Nothing) Then
                     .RefNumber = invRet.RefNumber.GetValue
                 End If
-                If (invRet.CustomerRef.ListID.GetValue IsNot Nothing) Then
+                If (invRet.CustomerRef IsNot Nothing) Then
                     .CustomerListID = invRet.CustomerRef.ListID.GetValue
                 End If
                 If (invRet.BalanceRemaining IsNot Nothing) Then
                     .BalanceRemaining = invRet.BalanceRemaining.GetValue
                 End If
-                If (invRet.DueDate.GetValue <> Nothing) Then
+                If (invRet.DueDate IsNot Nothing) Then
                     .DueDate = invRet.DueDate.GetValue
                 End If
-                If (invRet.TxnDate.GetValue <> Nothing) Then
+                If (invRet.TxnDate IsNot Nothing) Then
                     .TxnDate = invRet.TxnDate.GetValue
                 End If
-                If (invRet.EditSequence.GetValue IsNot Nothing) Then
+                If (invRet.EditSequence IsNot Nothing) Then
                     .EditSequence = invRet.EditSequence.GetValue
                 End If
-                If (invRet.Other.GetValue IsNot Nothing) Then
+                If (invRet.Other IsNot Nothing) Then
                     .Other = invRet.Other.GetValue
                 End If
-                If (invRet.CustomerRef.FullName.GetValue IsNot Nothing) Then
+                If (invRet.CustomerRef IsNot Nothing) Then
                     .CustomerFullName = invRet.CustomerRef.FullName.GetValue
                 End If
-                If (invRet.Subtotal.GetValue <> Nothing) Then
+                If (invRet.Subtotal IsNot Nothing) Then
                     .Subtotal = invRet.Subtotal.GetValue
                 End If
                 If (invRet.ORInvoiceLineRetList IsNot Nothing) Then
@@ -818,12 +819,24 @@ Namespace QBStuff
                         Dim lineRet As IORInvoiceLineRet = invRet.ORInvoiceLineRetList.GetAt(i)
                         Dim line As New QBLineItemObj
                         With lineRet.InvoiceLineRet
-                            line.Desc = lineRet.InvoiceLineRet.Desc.GetValue
-                            line.ItemListID = .ItemRef.ListID.GetValue
-                            line.Quantity = .Quantity.GetValue
-                            line.Rate = .ORRate.Rate.GetValue
-                            line.TxnLineID = .TxnLineID.GetValue
-                            line.Amount = .Amount.GetValue
+                            If (.Desc IsNot Nothing) Then
+                                line.Desc = .Desc.GetValue
+                            End If
+                            If (.ItemRef IsNot Nothing) Then
+                                line.ItemListID = .ItemRef.ListID.GetValue
+                            End If
+                            If (.Quantity IsNot Nothing) Then
+                                line.Quantity = .Quantity.GetValue
+                            End If
+                            If (.ORRate IsNot Nothing) Then
+                                line.Rate = .ORRate.Rate.GetValue
+                            End If
+                            If (.TxnLineID IsNot Nothing) Then
+                                line.TxnLineID = .TxnLineID.GetValue
+                            End If
+                            If (.Amount IsNot Nothing) Then
+                                line.Amount = .Amount.GetValue
+                            End If
                             If (.Other1 IsNot Nothing) Then
                                 line.Other1 = .Other1.GetValue
                             End If
@@ -845,9 +858,15 @@ Namespace QBStuff
                         If (linkRet.TxnType.GetValue = ENTxnType.ttReceivePayment) Then
                             Dim payObj As New QBRecievePaymentObj
                             With payObj
-                                .TxnID = linkRet.TxnID.GetValue
-                                .LinkedTxnAmount = linkRet.Amount.GetValue
-                                .RefNumber = linkRet.RefNumber.GetValue
+                                If (linkRet.TxnID IsNot Nothing) Then
+                                    .TxnID = linkRet.TxnID.GetValue
+                                End If
+                                If (linkRet.Amount IsNot Nothing) Then
+                                    .LinkedTxnAmount = linkRet.Amount.GetValue
+                                End If
+                                If (linkRet.RefNumber IsNot Nothing) Then
+                                    .RefNumber = linkRet.RefNumber.GetValue
+                                End If
                             End With
                             ' checking if list for applied payments exists already
                             If (.LinkedPaymentList Is Nothing) Then
@@ -857,8 +876,12 @@ Namespace QBStuff
                         ElseIf (linkRet.TxnType.GetValue = ENTxnType.ttCreditMemo) Then
                             Dim creditObj As New QBCreditObj
                             With creditObj
-                                .TxnID = linkRet.TxnID.GetValue
-                                .AppliedAmount = linkRet.Amount.GetValue
+                                If (linkRet.TxnID IsNot Nothing) Then
+                                    .TxnID = linkRet.TxnID.GetValue
+                                End If
+                                If (linkRet.Amount IsNot Nothing) Then
+                                    .AppliedAmount = linkRet.Amount.GetValue
+                                End If
                             End With
                             ' checking if list for credits exists
                             If (.LinkedCreditList Is Nothing) Then
@@ -917,7 +940,7 @@ Namespace QBStuff
                         Dim invRet As IInvoiceRet = retList.GetAt(i)
                         payObjList.AddRange(ConvertToPayObjs(invRet.LinkedTxnList))
                     Next
-                Case Is = ENResponseType.rtReceivePaymentModRs Or ENResponseType.rtReceivePaymentAddRs
+                Case Is = ENResponseType.rtReceivePaymentModRs, ENResponseType.rtReceivePaymentAddRs
                     ret = resp.Detail
                     payObj = ConvertToPayObj(ret)
                     payObjList.Add(payObj)
@@ -935,28 +958,28 @@ Namespace QBStuff
         Private Shared Function ConvertToPayObj(ByVal ret As IReceivePaymentRet) As QBRecievePaymentObj
             Dim payObj As New QBRecievePaymentObj
             With payObj
-                If (ret.TxnID.GetValue IsNot Nothing) Then
+                If (ret.TxnID IsNot Nothing) Then
                     .TxnID = ret.TxnID.GetValue
                 End If
-                If (ret.TxnDate.GetValue <> Nothing) Then
+                If (ret.TxnDate IsNot Nothing) Then
                     .TxnDate = ret.TxnDate.GetValue
                 End If
-                If (ret.EditSequence.GetValue IsNot Nothing) Then
+                If (ret.EditSequence IsNot Nothing) Then
                     .EditSequence = ret.EditSequence.GetValue
                 End If
-                If (ret.CustomerRef.ListID.GetValue IsNot Nothing) Then
+                If (ret.CustomerRef IsNot Nothing) Then
                     .CustomerListID = ret.CustomerRef.ListID.GetValue
                 End If
-                If (ret.TotalAmount.GetValue <> Nothing) Then
+                If (ret.TotalAmount IsNot Nothing) Then
                     .TotalAmount = ret.TotalAmount.GetValue
                 End If
-                If (ret.UnusedPayment.GetValue <> Nothing) Then
+                If (ret.UnusedPayment IsNot Nothing) Then
                     .UnusedPayment = ret.UnusedPayment.GetValue
                 End If
-                If (ret.PaymentMethodRef.FullName.GetValue IsNot Nothing) Then
+                If (ret.PaymentMethodRef IsNot Nothing) Then
                     .PayTypeName = ret.PaymentMethodRef.FullName.GetValue
                 End If
-                If (ret.RefNumber.GetValue IsNot Nothing) Then
+                If (ret.RefNumber IsNot Nothing) Then
                     .RefNumber = ret.RefNumber.GetValue
                 End If
                 ' checking for applied txns
@@ -967,8 +990,12 @@ Namespace QBStuff
                         ' only want invoices
                         If (appTxnRet.TxnType.GetValue = ENTxnType.ttInvoice) Then
                             Dim appInv As New QBInvoiceObj
-                            appInv.TxnID = appTxnRet.TxnID.GetValue
-                            appInv.AppliedAmount = appTxnRet.Amount.GetValue
+                            If (appTxnRet.TxnID IsNot Nothing) Then
+                                appInv.TxnID = appTxnRet.TxnID.GetValue
+                            End If
+                            If (appTxnRet.Amount IsNot Nothing) Then
+                                appInv.AppliedAmount = appTxnRet.Amount.GetValue
+                            End If
                             ' add to list
                             payObj.AppliedInvList.Add(appInv)
                         End If
@@ -1035,22 +1062,22 @@ Namespace QBStuff
         Private Shared Function ConvertToCreditObj(ByRef creditRet As ICreditMemoRet) As QBCreditObj
             Dim creditObj As New QBCreditObj
             With creditObj
-                If (creditRet.TxnID.GetValue IsNot Nothing) Then
+                If (creditRet.TxnID IsNot Nothing) Then
                     .TxnID = creditRet.TxnID.GetValue
                 End If
-                If (creditRet.TxnDate.GetValue <> Nothing) Then
+                If (creditRet.TxnDate IsNot Nothing) Then
                     .TxnDate = creditRet.TxnDate.GetValue
                 End If
-                If (creditRet.EditSequence.GetValue IsNot Nothing) Then
+                If (creditRet.EditSequence IsNot Nothing) Then
                     .EditSequence = creditRet.EditSequence.GetValue
                 End If
-                If (creditRet.TotalAmount.GetValue <> Nothing) Then
+                If (creditRet.TotalAmount IsNot Nothing) Then
                     .TotalAmount = creditRet.TotalAmount.GetValue
                 End If
-                If (creditRet.CreditRemaining.GetValue <> Nothing) Then
+                If (creditRet.CreditRemaining IsNot Nothing) Then
                     .CreditRemaining = creditRet.CreditRemaining.GetValue
                 End If
-                If (creditRet.CustomerRef.ListID.GetValue IsNot Nothing) Then
+                If (creditRet.CustomerRef IsNot Nothing) Then
                     .CustomerListID = creditRet.CustomerRef.ListID.GetValue
                 End If
             End With
@@ -1063,8 +1090,9 @@ Namespace QBStuff
             ' setting to customer thats on the invoice
             payObj.CustomerListID = invObj.CustomerListID
 
+            ' dont thiknk i need this anymore
            ' need to get a list of already applied credits
-            QBRequests.InvoiceQuery(invObj, incLinkTxn:=True)
+            ' QBRequests.InvoiceQuery(invObj, incLinkTxn:=True)
            
             ' checking how much we can apply from the passed credit obj
             If (creditObj.CreditRemaining >= invObj.BalanceRemaining) Then
@@ -1076,10 +1104,8 @@ Namespace QBStuff
                 creditObj.CreditRemaining = 0
             End If
 
-            ' checking if there are applied credits on this invoice already
-            If (invObj.LinkedCreditList Is Nothing) Then
-                invObj.LinkedCreditList = New List(Of QBCreditObj)
-            End If
+            ' creating credit list
+            invObj.LinkedCreditList = New List(Of QBCreditObj)
             ' adding passed credit obj
             invObj.LinkedCreditList.Add(creditObj)
 

@@ -23,7 +23,7 @@ Namespace Customer
                 _currentCustomer = value
                 ' getting service table
                 If (value > 0) Then
-                    Using ta As New ds_CustomerTableAdapters.Customer_RecurringServiceTypesTableAdapter
+                    Using ta As New Customer_RecurringServiceTypesTableAdapter
                         _cDT = ta.GetData(value)
                     End Using
 

@@ -35,6 +35,8 @@ Namespace Customer
         ' refresh balance event handleing
         Friend Sub RefreshCustBalance(Optional ByVal customerNumber As Integer = 0) Handles UC_RecurringService.RefreshBalance
             CustomerToolstrip1.GetCustomerBalance()
+            ' if rec srvc is raising this event, balance was adjusted from credit
+            UC_Quickbooks.FetchInvoices(0)
         End Sub
 
         Private Sub Customer_FormClosing(sender As Object, e As System.Windows.Forms.FormClosingEventArgs) Handles Me.FormClosing
@@ -49,7 +51,7 @@ Namespace Customer
                 CurrentCustomer = CustomerToolstrip1.CurrentCustomer
             End If
             ' set focus to quick search
-            CustomerToolstrip1.QuickSearch.TextBox.Focus()
+            CustomerToolstrip1.QuickSearch.TextBox.Select()
         End Sub
 
         Private Sub CustomerChanged(ByVal customerNumber As Integer) Handles CustomerToolstrip1.CustomerChanging

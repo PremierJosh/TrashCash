@@ -130,7 +130,7 @@
                 Dim row As ds_RecurringService.RecurringService_PendingApprovalsRow = dvRow.Row
 
                 ' set and open rec form for selected service
-                _recurringServiceForm = New RecurringServiceForm(_homeForm, row.CustomerFullName, row.CustomerNumber, row.RecurringServiceID)
+                _recurringServiceForm = New RecurringServiceForm(row.CustomerFullName, row.CustomerNumber, row.RecurringServiceID)
                 _recurringServiceForm.ShowDialog()
             End If
         End Sub

@@ -81,7 +81,7 @@ Namespace Customer
                     GlobalConMgr.ResponseErr_Misc(resp)
                     MessageBox.Show("Customer Add failed. Contact Premier.")
                     ' delete row
-                    Using qta As New ds_CustomerTableAdapters.QueriesTableAdapter
+                    Using qta As New QueriesTableAdapter
                         qta.Customer_DeleteByNum(_custRow.CustomerNumber)
                     End Using
                 End If

@@ -231,6 +231,7 @@
             'rdo_AllSrvc
             '
             Me.rdo_AllSrvc.AutoSize = True
+            Me.rdo_AllSrvc.Checked = True
             Me.rdo_AllSrvc.Location = New System.Drawing.Point(6, 62)
             Me.rdo_AllSrvc.Name = "rdo_AllSrvc"
             Me.rdo_AllSrvc.Size = New System.Drawing.Size(36, 17)
@@ -242,12 +243,10 @@
             'rdo_CurrentSrvc
             '
             Me.rdo_CurrentSrvc.AutoSize = True
-            Me.rdo_CurrentSrvc.Checked = True
             Me.rdo_CurrentSrvc.Location = New System.Drawing.Point(6, 16)
             Me.rdo_CurrentSrvc.Name = "rdo_CurrentSrvc"
             Me.rdo_CurrentSrvc.Size = New System.Drawing.Size(59, 17)
             Me.rdo_CurrentSrvc.TabIndex = 1
-            Me.rdo_CurrentSrvc.TabStop = True
             Me.rdo_CurrentSrvc.Text = "Current"
             Me.rdo_CurrentSrvc.UseVisualStyleBackColor = True
             '

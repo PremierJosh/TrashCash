@@ -41,9 +41,9 @@ Namespace Customer
             Me.cm_Void = New System.Windows.Forms.ContextMenuStrip(Me.components)
             Me.btn_VoidCredit = New System.Windows.Forms.ToolStripMenuItem()
             Me.CustomerCreditsBindingSource = New System.Windows.Forms.BindingSource(Me.components)
-            Me.Ds_Customer = New TrashCash.ds_Customer()
+            Me.Ds_Customer = New ds_Customer()
             Me.lbl_CreditHis = New System.Windows.Forms.Label()
-            Me.Customer_CreditsTableAdapter = New TrashCash.ds_CustomerTableAdapters.Customer_CreditsTableAdapter()
+            Me.Customer_CreditsTableAdapter = New Customer_CreditsTableAdapter()
             Me.tb_Amount = New TrashCash.Classes.CurrencyTextBox()
             Me.lbl_Amount = New System.Windows.Forms.Label()
             Me.tb_Reason = New System.Windows.Forms.TextBox()
@@ -352,9 +352,9 @@ Namespace Customer
         Friend WithEvents ReasonDataGridViewTextBoxColumn As System.Windows.Forms.DataGridViewTextBoxColumn
         Friend WithEvents CreatedUserDataGridViewTextBoxColumn As System.Windows.Forms.DataGridViewTextBoxColumn
         Friend WithEvents CustomerCreditsBindingSource As System.Windows.Forms.BindingSource
-        Friend WithEvents Ds_Customer As TrashCash.ds_Customer
+        Friend WithEvents Ds_Customer As ds_Customer
         Friend WithEvents lbl_CreditHis As System.Windows.Forms.Label
-        Friend WithEvents Customer_CreditsTableAdapter As TrashCash.ds_CustomerTableAdapters.Customer_CreditsTableAdapter
+        Friend WithEvents Customer_CreditsTableAdapter As Customer_CreditsTableAdapter
         Friend WithEvents tb_Amount As CurrencyTextBox
         Friend WithEvents lbl_Amount As System.Windows.Forms.Label
         Friend WithEvents tb_Reason As System.Windows.Forms.TextBox

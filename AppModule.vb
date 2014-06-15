@@ -1,4 +1,5 @@
-﻿Imports TrashCash.QBStuff
+﻿Imports TrashCash.Customer
+Imports TrashCash.QBStuff
 
 
 Module AppModule
@@ -8,7 +9,7 @@ Module AppModule
 
     Public ReadOnly UserTA As New ds_ApplicationTableAdapters.USERSTableAdapter
     Public ReadOnly AppQTA As New ds_ApplicationTableAdapters.QueriesTableAdapter
-    Public ReadOnly CustTA As New ds_CustomerTableAdapters.CustomerTableAdapter
+    Public ReadOnly CustTA As New CustomerTableAdapter
 
     ''' <summary>
     ''' Takes a QBConMgr param passed and returns it if not nothing, else return GlobalQBConMgr

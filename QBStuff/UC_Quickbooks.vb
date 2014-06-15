@@ -1,5 +1,4 @@
-﻿Imports TrashCash._DataSets
-
+﻿
 Namespace QBStuff
 
     Public Class UC_Quickbooks
@@ -18,13 +17,11 @@ Namespace QBStuff
                 Return _custListID
             End Get
             Set(value As String)
-                If (_custListID <> value) Then
-                    _custListID = value
+               _custListID = value
 
-                    ' fill with open invoices and all payments
-                    FetchInvoices(0)
-                    FetchPayments()
-                End If
+                ' fill with all invoices and all payments
+                FetchInvoices(0)
+                FetchPayments()
             End Set
         End Property
 
@@ -39,13 +36,14 @@ Namespace QBStuff
                 If (_currentCustomer <> value) Then
                     ' refrence
                     _currentCustomer = value
-                    'clear dts
-                    Display.Clear()
-                End If
+                    End If
             End Set
         End Property
 
-        Private Sub FetchInvoices(ByVal paidStatus As Integer)
+        Friend Sub FetchInvoices(ByVal paidStatus As Integer)
+            ' clear table
+            Ds_Display.QB_InvoiceDisplay.Clear()
+            ' vars
             Dim resp As Integer
             Dim invObjList As New List(Of QBInvoiceObj)
             If (chk_ItemTo.Checked = True And chk_ItemFrom.Checked = False) Then
@@ -62,23 +60,25 @@ Namespace QBStuff
                 ' looping through invoices to build display rows
                 For Each inv As QBInvoiceObj In invObjList
                     ' building new row
-                    Dim newRow As ds_Display.QB_InvoiceDisplayRow = Display.QB_InvoiceDisplay.NewQB_InvoiceDisplayRow
+                    Dim newRow As ds_Display.QB_InvoiceDisplayRow = Ds_Display.QB_InvoiceDisplay.NewQB_InvoiceDisplayRow
                     With newRow
                         .InvoiceRefNumber = inv.RefNumber
                         .InvoicePostDate = inv.TxnDate
                         .InvoiceCreationDate = inv.TimeCreated
-                        .CustomerName = inv.CustomerFullName
                         .InvoiceTotal = inv.Subtotal
                         .InvoiceBalance = inv.BalanceRemaining
                         .InvoiceDueDate = inv.DueDate
                     End With
                     ' adding
-                    Display.QB_InvoiceDisplay.AddQB_InvoiceDisplayRow(newRow)
+                    Ds_Display.QB_InvoiceDisplay.AddQB_InvoiceDisplayRow(newRow)
                 Next
             End If
         End Sub
 
-        Private Sub FetchPayments()
+        Friend Sub FetchPayments()
+            ' clear table
+            Ds_Display.QB_PaymentsDisplay.Clear()
+            'vars
             Dim resp As Integer
             Dim payObjList As New List(Of QBRecievePaymentObj)
             If (chk_ItemTo.Checked = True And chk_ItemFrom.Checked = False) Then
@@ -94,7 +94,7 @@ Namespace QBStuff
             If (resp = 0) Then
                 For Each pay As QBRecievePaymentObj In payObjList
                     ' building new paymentList row
-                    Dim newRow As DS_Display.QB_PaymentsDisplayRow = Display.QB_PaymentsDisplay.NewQB_PaymentsDisplayRow
+                    Dim newRow As ds_Display.QB_PaymentsDisplayRow = Ds_Display.QB_PaymentsDisplay.NewQB_PaymentsDisplayRow
                     With newRow
                         .PaymentDate = pay.TxnDate
                         .PaymentAmount = pay.TotalAmount
@@ -104,7 +104,7 @@ Namespace QBStuff
                         End If
                     End With
                     ' adding
-                    Display.QB_PaymentsDisplay.AddQB_PaymentsDisplayRow(newRow)
+                    Ds_Display.QB_PaymentsDisplay.AddQB_PaymentsDisplayRow(newRow)
                 Next
             End If
             ' updating last fetch time
@@ -182,14 +182,12 @@ Namespace QBStuff
                 .Add("RefNumber")
                 .Add("TxnDate")
                 .Add("TimeCreated")
-                .Add("CustomerRef")
                 .Add("Subtotal")
                 .Add("BalanceRemaining")
                 .Add("DueDate")
             End With
             ' limiting response for pay query
             With _payRetEle
-                .Add("TxnNumber")
                 .Add("TxnDate")
                 .Add("TotalAmount")
                 .Add("RefNumber")
@@ -216,8 +214,8 @@ Namespace QBStuff
             tc_Quickbooks.SelectedIndex = 1
         End Sub
 
-        Private Sub dg_QBInvoices_RowPrePaint(sender As System.Object, e As System.Windows.Forms.DataGridViewRowPrePaintEventArgs) Handles dg_QBInvoices.RowPrePaint
-            ColorRows_QBInvoices(dg_QBInvoices)
+        Private Sub dg_Invoices_RowPrePaint(sender As System.Object, e As System.Windows.Forms.DataGridViewRowPrePaintEventArgs) Handles dg_Invoices.RowPrePaint
+            ColorRows_QBInvoices(dg_Invoices)
         End Sub
     End Class
 End Namespace

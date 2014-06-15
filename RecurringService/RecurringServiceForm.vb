@@ -1,4 +1,6 @@
 ﻿
+Imports TrashCash.Customer
+
 Namespace RecurringService
     Public Class RecurringServiceForm
 
@@ -43,7 +45,7 @@ Namespace RecurringService
                 _custNum = value
 
                 ' fetching customer row
-                Using ta As New ds_CustomerTableAdapters.CustomerTableAdapter
+                Using ta As New CustomerTableAdapter
                     _custRow = ta.GetData(CustomerNumber).Rows(0)
                 End Using
             End Set
@@ -125,26 +127,28 @@ Namespace RecurringService
                         dtp_EndDate.Visible = True
                         dtp_EndDate.Value = value.RecurringServiceEndDate
                         ck_EndDate.Checked = True
-
-                        ' checking if credited due to this end date
-                        If (value.Credited = True) Then
-                            ' set property
-                            Using ta As New ds_RecurringServiceTableAdapters.RecurringService_EndDateCreditsTableAdapter
-                                EndDateCreditRow = ta.GetDataByRecID(value.RecurringServiceID).Rows(0)
-                            End Using
-                        End If
-
                     Else
                         ck_EndDate.Checked = False
                         dtp_EndDate.Visible = False
                     End If
+
+
+                    ' checking if service has end date credits on it
+                    If (value.Credited = True) Then
+                        ' set property
+                        Using ta As New ds_RecurringServiceTableAdapters.RecurringService_EndDateCreditsTableAdapter
+                            EndDateCreditRow = ta.GetDataByRecID(value.RecurringServiceID).Rows(0)
+                        End Using
+                    End If
+
+
                 End If
             End Set
         End Property
 
         ' bool property for whether or not service is new
         Private _isNew As Boolean = True
-        Private Property IsNew As Boolean
+        Friend Property IsNew As Boolean
             Get
                 Return _isNew
             End Get
@@ -265,7 +269,7 @@ Namespace RecurringService
             End Set
         End Property
         ' home form ref var
-        Private ReadOnly _homeForm As TrashCashHome
+        'Private ReadOnly _homeForm As TrashCashHome
 
         Private Sub CreditOverlapDisplayCheck()
             Dim s As String = Nothing
@@ -328,13 +332,10 @@ Namespace RecurringService
         End Sub
 
         ' form bool vars to track whats been updated so parent form can refresh where needed
-        Private _balanceChanged As Boolean = False
-        Friend Event RefreshBalance(ByVal uCustomerNumber As Integer)
-        Private _serviceUpdated As Boolean = False
-        Friend Event RefreshService(ByVal uCustomerNumber As Integer, ByVal uRecurringServiceID As Integer)
+        Friend BalanceChanged As Boolean = False
+        Friend ServiceUpdated As Boolean = False
 
-
-        Public Sub New(ByVal homeForm As TrashCashHome, ByVal customerName As String, ByVal customerNumber As Integer, Optional ByVal recurringServiceID As Integer = 0)
+        Public Sub New(ByVal customerName As String, ByVal customerNumber As Integer, Optional ByVal recurringServiceID As Integer = 0)
 
             ' This call is required by the designer.
             InitializeComponent()
@@ -342,11 +343,10 @@ Namespace RecurringService
             ' Add any initialization after the InitializeComponent() call.
 
             ' property refs
-            _homeForm = homeForm
             Me.CustomerNumber = customerNumber
             ' fill service table
             ServiceTypesTableAdapter.Fill(Ds_Types.ServiceTypes)
-            Me.RecurringServiceID = RecurringServiceID
+            Me.RecurringServiceID = recurringServiceID
             Me.CustomerName = customerName
 
             ' creating dv for credit overlap checking
@@ -384,10 +384,10 @@ Namespace RecurringService
                 Dim creditResult As DialogResult
                 ' bool to determine if credits needs to be voided
                 Dim voidCredits As Boolean?
-              
+
                 ' bring over end date
                 If (ck_EndDate.Checked = True) Then
-                   ' first checking if something needs to be voided
+                    ' first checking if something needs to be voided
                     voidCredits = CreditVoidCheck()
                     If (voidCredits) Then
                         ' checking if end date will cause a credit
@@ -451,7 +451,7 @@ Namespace RecurringService
                 If (voidOldCreditReason IsNot Nothing) Then
                     If (EndDateCreditRow.Voided = False) Then
                         RecurringService_EndDateCredit_Void(EndDateCreditRow, voidOldCreditReason)
-                        _balanceChanged = True
+                        BalanceChanged = True
                     End If
                 End If
 
@@ -461,17 +461,15 @@ Namespace RecurringService
                     Dim srvcRow As ds_Types.ServiceTypesRow = CType(CType(cmb_ServiceTypes.SelectedItem, DataRowView).Row, ds_Types.ServiceTypesRow)
                     RecurringService_EndDateCredit(RecurringServiceRow, srvcRow.ServiceListID, Crediting, dtp_EndDate.Value.Date, _billThruDate)
                     ' setting balance change
-                    _balanceChanged = True
-                    _serviceUpdated = True
-                Else
-                    RecurringServiceRow.SetRecurringServiceEndDateNull()
+                    BalanceChanged = True
+                    ServiceUpdated = True
                 End If
 
                 RecurringServiceRow.EndEdit()
 
                 ' checking if anything changed
                 If (RecurringServiceRow.RowState <> DataRowState.Unchanged) Then
-                    _serviceUpdated = True
+                    ServiceUpdated = True
                 End If
 
                 Cursor = Cursors.WaitCursor
@@ -481,10 +479,6 @@ Namespace RecurringService
                     MessageBox.Show("Message: " & ex.Message & vbCrLf & "LineNumber: " & ex.LineNumber,
                                     "Sql Error: " & ex.Procedure, MessageBoxButtons.OK, MessageBoxIcon.Error)
                 End Try
-                ' checking if service is new to refresh pending approval count on home form
-                If (IsNew) Then
-                    _homeForm.RefreshApprovCount()
-                End If
                 Cursor = Cursors.Default
                 Close()
             End If
@@ -589,20 +583,6 @@ Namespace RecurringService
             End If
         End Sub
 
-        Private Sub RecurringService_FormClosed(sender As Object, e As System.Windows.Forms.FormClosedEventArgs) Handles Me.FormClosed
-            ' update recid outside property
-            _recID = RecurringServiceRow.RecurringServiceID
-            ' checking for updates so can throw events
-            If (_balanceChanged = True) Then
-                RaiseEvent RefreshBalance(CustomerNumber)
-            End If
-            If (_serviceUpdated = True) Then
-                RaiseEvent RefreshService(CustomerNumber, RecurringServiceID)
-            End If
-        End Sub
-
-      
-
         Private Sub btn_Approve_Click(sender As System.Object, e As System.EventArgs) Handles btn_Approve.Click
             Dim result As DialogResult = MessageBox.Show("Confirm the following details are accurate to Approve this Recurring Service for billing:" & vbCrLf & vbCrLf & _
                                                          "Rate: " & FormatCurrency(RecurringServiceRow.RecurringServiceRate) & " x " & RecurringServiceRow.RecurringServiceQuantity & " billed every " & RecurringServiceRow.RecurringServiceBillLength & " month(s)." & vbCrLf & _
@@ -620,7 +600,7 @@ Namespace RecurringService
                 End Try
                 ' raise approval event so approval form can refresh
                 RaiseEvent ServiceApproved()
-                _ServiceUpdated = True
+                ServiceUpdated = True
                 Close()
             End If
         End Sub
@@ -640,12 +620,20 @@ Namespace RecurringService
                         Dim creditAmount As Decimal = CDec(RsEndCreditTA.EndDateCredit_Calc(RecurringServiceRow.RecurringServiceID, dtp_EndDate.Value.Date))
 
                         If (creditAmount > 0) Then
-                            ' update crediting property
-                            Crediting = creditAmount
-                            ' checking if previous credit exists and if it was voided
+                            ' checking if credit is different amount than current there
                             If (EndDateCreditRow IsNot Nothing) Then
                                 If (Not EndDateCreditRow.Voided) Then
-                                    lbl_CreditMsg.Text += vbCrLf & "This will also void the previous credit of " & FormatCurrency(EndDateCreditRow.CreditAmount) & "."
+                                    If (EndDateCreditRow.CreditAmount <> creditAmount) Then
+                                        ' update crediting property
+                                        Crediting = creditAmount
+                                        ' appending text of void notification
+                                        lbl_CreditMsg.Text += vbCrLf & "This will also void the previous credit of " & FormatCurrency(EndDateCreditRow.CreditAmount) & "."
+                                    Else
+                                        Crediting = 0
+                                    End If
+                                Else
+                                    ' update crediting property
+                                    Crediting = creditAmount
                                 End If
                             End If
                         Else
@@ -664,14 +652,13 @@ Namespace RecurringService
         End Sub
 
         Private Sub RecurringService_Load(sender As Object, e As System.EventArgs) Handles Me.Load
-      ' throwing message if customer is single inv
+            ' throwing message if customer is single inv
             If (_custRow.CustomerReceiveOneInvoice = True) Then
                 MessageBox.Show("This Customer is marked to receive 1 invoice. All Recurring Services for this Customer will go onto a single invoice, with a due day date of " & DatePart(DateInterval.Day, _custRow.CustomerStartDate) & ", " & vbCrLf & _
                                 "and they will be billed every " & _custRow.CustomerBillInterval & " month(s) - REGARDLESS of the Bill Length set for their Recurring Services.", "Single Invoice Customer", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
             End If
             ' getting min end date we can have, either service end date or batch inv id 99999 end billing date
             _minEndDate = HistoryTA.MinStartBillingDate(RecurringServiceID)
-            MsgBox(_minEndDate)
         End Sub
 
         Private Sub dg_ServiceNotes_DoubleClick(sender As System.Object, e As System.EventArgs) Handles dg_ServiceNotes.DoubleClick
@@ -681,13 +668,13 @@ Namespace RecurringService
                     NotesTA.ServiceNotes_Insert(RecurringServiceID, noteText)
                     ' refill grid
                     NotesTA.FillByID(Ds_RecurringService.ServiceNotes, RecurringServiceID)
-                Catch ex as SqlException
+                Catch ex As SqlException
                     MessageBox.Show("Message: " & ex.Message & vbCrLf & "LineNumber: " & ex.LineNumber,
                                     "Sql Error: " & ex.Procedure, MessageBoxButtons.OK, MessageBoxIcon.Error)
                 End Try
                 ' updating bool so home uc is refreshed to pickup new note
-                _ServiceUpdated = True
-                End If
+                ServiceUpdated = True
+            End If
         End Sub
 
         Private Sub cm_i_VoidCredit_Click(sender As System.Object, e As System.EventArgs) Handles cm_i_VoidCredit.Click
@@ -706,9 +693,10 @@ Namespace RecurringService
                             RecurringService_Credit_Void(row, reason)
                             MessageBox.Show("Credit Memo Voided", "Credit Memo Voided", MessageBoxButtons.OK, MessageBoxIcon.Information)
                             ' customer balance has changed now
-                            _BalanceChanged = True
-                            ' refresh credit history grid
-                            RsCreditTA.FillByRecID(Ds_RecurringService.RecurringService_Credits, RecurringServiceRow.RecurringServiceID)
+                            BalanceChanged = True
+                            ' refresh credit history grid -- not need, row is passed by ref
+                            'RsCreditTA.FillByRecID(Ds_RecurringService.RecurringService_Credits, RecurringServiceRow.RecurringServiceID)
+                            AppColors.ColorGrid(dg_CreditHistory, "Voided")
                         End If
                     End If
                 Else
@@ -718,7 +706,7 @@ Namespace RecurringService
 
         End Sub
 
-   
+
         Private Sub btn_CreateCredit_Click(sender As System.Object, e As System.EventArgs) Handles btn_CreateCredit.Click
             ' making sure we have valid information here
             If (_minEndDate <= dtp_CreditForDate.Value.Date) Then
@@ -757,7 +745,7 @@ Namespace RecurringService
                             Dim srvcRow As ds_Types.ServiceTypesRow = CType(CType(cmb_ServiceTypes.SelectedItem, DataRowView).Row, ds_Types.ServiceTypesRow)
                             RecurringService_Credit(RecurringServiceRow, srvcRow.ServiceListID, tb_CreditAmount.Text, creditForDate, ck_PrintCredit.Checked, tb_CreditReason.Text)
                             ' balance has changed now
-                            _balanceChanged = True
+                            BalanceChanged = True
                             ' refresh grid
                             Try
                                 RsCreditTA.FillByRecID(Ds_RecurringService.RecurringService_Credits, RecurringServiceID)
@@ -777,33 +765,13 @@ Namespace RecurringService
                     MessageBox.Show("Invalid Credit amount.", "Invalid Credit Amount", MessageBoxButtons.OK, MessageBoxIcon.Error)
                     tb_CreditAmount.BackColor = AppColors.TextBoxErr
                 End If
-                Else
-                    MessageBox.Show("Credit Date cannot be before " & _minEndDate.Date & ".", "Invalid Credit Date", MessageBoxButtons.OK, MessageBoxIcon.Error)
-                    dtp_CreditForDate.Value = _minEndDate
+            Else
+                MessageBox.Show("Credit Date cannot be before " & _minEndDate.Date & ".", "Invalid Credit Date", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                dtp_CreditForDate.Value = _minEndDate
 
-                End If
-        End Sub
-
-        Private Sub ColorCreditHistoryRows()
-            If (dg_CreditHistory.Rows.Count > 0) Then
-                ' color voided rows red
-                For i = 0 To dg_CreditHistory.Rows.Count - 1
-
-                    ' row reference
-                    Dim dvRow As DataRowView = dg_CreditHistory.Rows(i).DataBoundItem
-                    Dim row As ds_RecurringService.RecurringService_CreditsRow = dvRow.Row
-
-                    If (row.Voided) Then
-                        ' credit is voided
-                        dg_CreditHistory.Rows(i).DefaultCellStyle.BackColor = AppColors.GridRed
-                        dg_CreditHistory.Rows(i).DefaultCellStyle.SelectionBackColor = AppColors.GridRedSel
-                    Else
-                        dg_CreditHistory.Rows(i).DefaultCellStyle.BackColor = AppColors.GridGreen
-                        dg_CreditHistory.Rows(i).DefaultCellStyle.SelectionBackColor = AppColors.GridGreenSel
-                    End If
-                Next
             End If
         End Sub
+
 
         Private Sub dg_CreditHistory_CellMouseDown(sender As System.Object, e As System.Windows.Forms.DataGridViewCellMouseEventArgs) Handles dg_CreditHistory.CellMouseDown
             If (e.Button = Windows.Forms.MouseButtons.Right) Then
@@ -828,7 +796,7 @@ Namespace RecurringService
         End Sub
 
         Private Sub dg_CreditHistory_RowPrePaint(sender As System.Object, e As System.Windows.Forms.DataGridViewRowPrePaintEventArgs) Handles dg_CreditHistory.RowPrePaint
-            ColorCreditHistoryRows()
+            AppColors.ColorGrid(dg_CreditHistory, "Voided")
         End Sub
     End Class
 End Namespace

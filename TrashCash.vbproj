@@ -157,6 +157,9 @@
     <Compile Include="Batching\ds_Batching.vb">
       <DependentUpon>ds_Batching.xsd</DependentUpon>
     </Compile>
+    <Compile Include="Customer\ds_Customer.vb">
+      <DependentUpon>ds_Customer.xsd</DependentUpon>
+    </Compile>
     <Compile Include="Types\AdminInvoiceTypes.Designer.vb">
       <DependentUpon>AdminInvoiceTypes.vb</DependentUpon>
     </Compile>

@@ -1,4 +1,5 @@
-﻿Imports QBFC12Lib
+﻿Imports TrashCash.Customer
+Imports QBFC12Lib
 Imports TrashCash.QBStuff
 
 Namespace Admin
@@ -25,20 +26,20 @@ Namespace Admin
         End Property
 
         ' form global tas
-       Dim _cita As ds_ApplicationTableAdapters.Initial_CustomInvoiceTableAdapter
+        Dim _cita As ds_ApplicationTableAdapters.Initial_CustomInvoiceTableAdapter
         Dim _cidt As ds_Application.Initial_CustomInvoiceDataTable
-        Dim _cqta As ds_CustomerTableAdapters.QueriesTableAdapter
-        Private _cta As ds_CustomerTableAdapters.CustomerTableAdapter
+        Dim _cqta As QueriesTableAdapter
+        Private _cta As CustomerTableAdapter
 
 
         Private Sub ImportWork_Load(sender As Object, e As System.EventArgs) Handles Me.Load
-            _cqta = New ds_CustomerTableAdapters.QueriesTableAdapter
+            _cqta = New QueriesTableAdapter
             _cita = New ds_ApplicationTableAdapters.Initial_CustomInvoiceTableAdapter
             _cidt = _cita.GetData
             tb_CustInvCount.Text = _cidt.Rows.Count
-            _cta = New ds_CustomerTableAdapters.CustomerTableAdapter
+            _cta = New CustomerTableAdapter
 
-         ' update missing list id count
+            ' update missing list id count
             MissingCustomerCount = _cqta.Customer_MissingListIDCount
             ' bind account cmb for adding items
             Dim incomes As List(Of ComboBoxPair) = QBMethods.GetComboBoxPair(QBRequests.AccountQuery(ENAccountType.atIncome))
@@ -98,7 +99,7 @@ Namespace Admin
             End If
         End Sub
 
-      
+
         'Private Sub btn_AddCustInv_Click(sender As System.Object, e As System.EventArgs) Handles btn_AddCustInv.Click
         '    ' getting custom inv item
         '    Dim itemID As String

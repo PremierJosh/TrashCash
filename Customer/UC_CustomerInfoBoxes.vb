@@ -5,7 +5,7 @@ Namespace Customer
 
     Public Class UC_CustomerInfoBoxes
         Private _custRow As ds_Customer.CustomerRow
-        Private ReadOnly _ta As ds_CustomerTableAdapters.CustomerTableAdapter
+        Private ReadOnly _ta As CustomerTableAdapter
 
         ' writeonly property for batching status
         Private _batchInProgress As Boolean
@@ -45,7 +45,7 @@ Namespace Customer
         End Property
         ' events
         Public Event Updating(ByVal bool As Boolean)
-       
+
         ' property refrence
         Private _currentCustomer As Integer
         ' property
@@ -89,7 +89,7 @@ Namespace Customer
             ' Add any initialization after the InitializeComponent() call.
 
             ' instantiate
-            _ta = New ds_CustomerTableAdapters.CustomerTableAdapter
+            _ta = New CustomerTableAdapter
             isUpdating = False
         End Sub
 
@@ -187,7 +187,7 @@ Namespace Customer
                     CustomerTableAdapter.Update(_custRow)
                     ' pass event and change property
                     IsUpdating = False
-                   MessageBox.Show("Changes saved.", "Changes saved", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                    MessageBox.Show("Changes saved.", "Changes saved", MessageBoxButtons.OK, MessageBoxIcon.Information)
                 Catch ex As SqlException
                     MessageBox.Show("Message: " & ex.Message & vbCrLf & "LineNumber: " & ex.LineNumber,
                                     "Sql Error: " & ex.Procedure, MessageBoxButtons.OK, MessageBoxIcon.Error)
@@ -262,7 +262,7 @@ Namespace Customer
                 cm_Update.Visible = value
             End Set
         End Property
-    
+
         Private Sub btn_UpdateUnlock_Click(sender As System.Object, e As System.EventArgs) Handles btn_UpdateInfo.Click
             If (Not _batchInProgress) Then
                 IsUpdating = True
@@ -281,7 +281,7 @@ Namespace Customer
         Private Sub chk_CustDeactive_Click(sender As System.Object, e As System.EventArgs) Handles chk_CustDeactive.Click
             ' checking for active services
             Dim count As Integer
-            Using qta As New ds_CustomerTableAdapters.QueriesTableAdapter
+            Using qta As New QueriesTableAdapter
                 count = qta.Customer_RecSrvcActive(CurrentCustomer)
             End Using
 
