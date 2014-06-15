@@ -1,6 +1,4 @@
-﻿
-Imports QBFC12Lib
-Imports TrashCash.QBStuff
+﻿Imports TrashCash.QBStuff
 
 Namespace Batching
 
@@ -52,7 +50,7 @@ Namespace Batching
                 ' this will keep track of time reporting so its not insane
                 Dim lastReportTime As DateTime = Now
                 ' this is how many milliseconds between progress reporting
-                Const elapsedTime As Double = 100
+                Const elapsedTime As Double = 500
 
                 If (_dt.Rows.Count > 0) Then
                     ' setting maximum on progress class
@@ -85,10 +83,10 @@ Namespace Batching
                         Dim invObj As QBInvoiceObj = Invoice(row)
 
                         ' check status
-                        If (row.InvoiceStatus = ENItemStatus.Err) Then
+                        If (row.InvoiceStatus = TC_ENItemStatus.Err) Then
                             ' update err count
                             err += 1
-                        ElseIf (row.InvoiceStatus = ENItemStatus.Complete) Then
+                        ElseIf (row.InvoiceStatus = TC_ENItemStatus.Complete) Then
                             While invObj.BalanceRemaining > 0
                                 If (custBalance < 0) Then
                                     ' attempt to pay invoice
@@ -117,7 +115,7 @@ Namespace Batching
                 Finalize()
             End Sub
 
-            Private Function Invoice(ByRef row As ds_Batching.BATCH_WorkingInvoiceRow) As QBInvoiceObj
+            Private Function Invoice(ByRef row As DS_Batching.BATCH_WorkingInvoiceRow) As QBInvoiceObj
                 ' create invObj
                 Dim invObj As New QBInvoiceObj
                 With invObj
@@ -134,7 +132,7 @@ Namespace Batching
                 ' fill line table
                 _lineDT = _lineTA.GetData(row.WorkingInvoiceID)
                 ' loop through line items
-                For Each lineRow As ds_Batching.BATCH_LineItemsRow In _lineDT.Rows
+                For Each lineRow As DS_Batching.BATCH_LineItemsRow In _lineDT.Rows
                     Dim line As New QBLineItemObj
                     With line
                         .ItemListID = lineRow.ServiceListID
@@ -147,32 +145,22 @@ Namespace Batching
                     ' add line
                     invObj.LineList.Add(line)
                 Next
-
-                Dim resp As IResponse = QBRequests.InvoiceAdd(invObj:=invObj, qbConMgr:=ConMgr)
-                If (resp.StatusCode = 0) Then
-                    row.InvoiceStatus = ENItemStatus.Complete
-                    ' grabbing ret and lineRetList
-                    Dim invRet As IInvoiceRet = resp.Detail
-                    ' updating invObj
-                    With invObj
-                        .TxnID = invRet.TxnID.GetValue
-                        .RefNumber = invRet.RefNumber.GetValue
-                        .BalanceRemaining = invRet.BalanceRemaining.GetValue
-                    End With
+                ' i want to get the response back incase of errors
+                Dim s As String = "s"
+                Dim resp As Integer = QBRequests.InvoiceAdd(invObj:=invObj, qbConMgr:=ConMgr, message:=s)
+                If (resp = 0) Then
+                    row.InvoiceStatus = TC_ENItemStatus.Complete
 
                     ' looping through line rows to update their fields for billed history writing
-                    Dim retLineList As IORInvoiceLineRetList = invRet.ORInvoiceLineRetList
-                    For i = 0 To retLineList.Count - 1
-                        Dim lineRet As IORInvoiceLineRet = retLineList.GetAt(i)
-                        Dim lineID As String = lineRet.InvoiceLineRet.Other1.GetValue
+                    For Each line As QBLineItemObj In invObj.LineList
                         Try
                             ' this should work for inserting history right here
-                            _qta.BilledServices_InsertByLineItemID(Integer.Parse(lineID),
+                            _qta.BilledServices_InsertByLineItemID(line.Other1,
                                                                     invObj.TxnID,
                                                                     invObj.RefNumber,
-                                                                    lineRet.InvoiceLineRet.TxnLineID.GetValue,
+                                                                    line.TxnLineID,
                                                                     _batchID,
-                                                                    lineRet.InvoiceLineRet.Amount.GetValue)
+                                                                    line.Amount)
                         Catch ex As SqlException
                             MessageBox.Show("Message: " & ex.Message & vbCrLf & "LineNumber: " & ex.LineNumber,
                                             "Sql Error: " & ex.Procedure, MessageBoxButtons.OK, MessageBoxIcon.Error)
@@ -186,10 +174,10 @@ Namespace Batching
                                         "Sql Error: " & ex.Procedure, MessageBoxButtons.OK, MessageBoxIcon.Error)
                     End Try
                 Else
-                    row.InvoiceStatus = ENItemStatus.Err
+                    row.InvoiceStatus = TC_ENItemStatus.Err
                     Try
                         ' insert error record
-                        _ta.ERR_INVOICE_Insert(row.WorkingInvoiceID, resp.StatusCode, resp.StatusMessage)
+                        _ta.ERR_INVOICE_Insert(row.WorkingInvoiceID, resp, s)
                     Catch ex As SqlException
                         MessageBox.Show("Message: " & ex.Message & vbCrLf & "LineNumber: " & ex.LineNumber,
                                         "Sql Error: " & ex.Procedure, MessageBoxButtons.OK, MessageBoxIcon.Error)
@@ -208,14 +196,14 @@ Namespace Batching
         Public Class Payments
             Inherits QB_Batching
 
-            Private ReadOnly _dt As ds_Batching.BATCH_WorkingPaymentsDataTable
+            Private ReadOnly _dt As DS_Batching.BATCH_WorkingPaymentsDataTable
 
             ' current batch id
             Private _batchID As Integer
             ' ta
             Private ReadOnly _ta As BATCH_WorkingPaymentsTableAdapter
 
-            Public Sub New(ByVal batchPayDt As ds_Batching.BATCH_WorkingPaymentsDataTable)
+            Public Sub New(ByVal batchPayDt As DS_Batching.BATCH_WorkingPaymentsDataTable)
                 MyBase.New()
                 ' instantiating ta
                 _ta = New BATCH_WorkingPaymentsTableAdapter
@@ -247,7 +235,7 @@ Namespace Batching
                                         "Sql Error: " & ex.Procedure, MessageBoxButtons.OK, MessageBoxIcon.Error)
                     End Try
 
-                    For Each row As ds_Batching.BATCH_WorkingPaymentsRow In _dt.Rows
+                    For Each row As DS_Batching.BATCH_WorkingPaymentsRow In _dt.Rows
                         ' updating progress counter and customer
                         progress.CurrentValue += 1
                         progress.CurrentCustomer = row.CustomerFullName
@@ -262,10 +250,10 @@ Namespace Batching
                         Dim payObj As QBRecievePaymentObj = ReceivePayment(row)
 
                         ' check status
-                        If (row.WorkingPaymentsStatus = ENItemStatus.Err) Then
+                        If (row.WorkingPaymentsStatus = TC_ENItemStatus.Err) Then
                             ' update err
                             err += 1
-                        ElseIf (row.WorkingPaymentsStatus = ENItemStatus.Complete) Then
+                        ElseIf (row.WorkingPaymentsStatus = TC_ENItemStatus.Complete) Then
                             Try
                                 ' insert for cash 
                                 If (row.WorkingPaymentsType = 1) Then
@@ -321,7 +309,7 @@ Namespace Batching
                 Finalize()
             End Sub
 
-            Private Function ReceivePayment(ByRef row As ds_Batching.BATCH_WorkingPaymentsRow) As QBRecievePaymentObj
+            Private Function ReceivePayment(ByRef row As DS_Batching.BATCH_WorkingPaymentsRow) As QBRecievePaymentObj
                 ' return obj
                 Dim payObj As New QBRecievePaymentObj
                 With payObj
@@ -333,22 +321,16 @@ Namespace Batching
                         .RefNumber = row.WorkingPaymentsCheckNum
                     End If
                 End With
-
-                Dim resp As IResponse = QBRequests.PaymentAdd(payObj:=payObj, qbConMgr:=ConMgr)
-                If (resp.StatusCode = 0) Then
-                    Dim recPaymentRet As IReceivePaymentRet = resp.Detail
+                ' i want the status message back for err writing
+                Dim s As String = "s"
+                Dim resp As Integer = QBRequests.PaymentAdd(payObj:=payObj, qbConMgr:=ConMgr, message:=s)
+                If (resp = 0) Then
                     ' update to complete
-                    row.WorkingPaymentsStatus = ENItemStatus.Complete
-                    ' get other values for history insert
-                    payObj.TxnID = recPaymentRet.TxnID.GetValue
-                    payObj.EditSequence = recPaymentRet.EditSequence.GetValue
-                    If (recPaymentRet.RefNumber IsNot Nothing) Then
-                        payObj.RefNumber = recPaymentRet.RefNumber.GetValue
-                    End If
+                    row.WorkingPaymentsStatus = TC_ENItemStatus.Complete
                 Else
-                    row.WorkingPaymentsStatus = ENItemStatus.Err
+                    row.WorkingPaymentsStatus = TC_ENItemStatus.Err
                     Try
-                        _ta.ERR_PAYMENTS_Insert(row.WorkingPaymentsID, resp.StatusCode.ToString, resp.StatusMessage)
+                        _ta.ERR_PAYMENTS_Insert(row.WorkingPaymentsID, resp, s)
                     Catch ex As Exception
                         MsgBox(ex.Message)
                     End Try

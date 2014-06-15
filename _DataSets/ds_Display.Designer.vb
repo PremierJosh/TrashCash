@@ -22,7 +22,7 @@ Namespace _DataSets
         Global.System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedDataSetSchema"), _
         Global.System.Xml.Serialization.XmlRootAttribute("ds_Display"), _
         Global.System.ComponentModel.Design.HelpKeywordAttribute("vs.data.DataSet")> _
-    Partial Public Class DS_Display
+    Partial Public Class ds_Display
         Inherits Global.System.Data.DataSet
 
         Private tableQB_InvoiceDisplay As QB_InvoiceDisplayDataTable
@@ -140,7 +140,7 @@ Namespace _DataSets
                 Return Me._schemaSerializationMode
             End Get
             Set(value As Global.System.Data.SchemaSerializationMode)
-                Me._schemaSerializationMode = Value
+                Me._schemaSerializationMode = value
             End Set
         End Property
 
@@ -388,7 +388,7 @@ Namespace _DataSets
         Partial Public Class QB_InvoiceDisplayDataTable
             Inherits Global.System.Data.TypedTableBase(Of QB_InvoiceDisplayRow)
 
-            Private columnInvoiceNumber As Global.System.Data.DataColumn
+            Private columnInvoiceRefNumber As Global.System.Data.DataColumn
 
             Private columnCustomerNumber As Global.System.Data.DataColumn
 
@@ -441,9 +441,9 @@ Namespace _DataSets
 
             <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
                 Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
-            Public ReadOnly Property InvoiceNumberColumn() As Global.System.Data.DataColumn
+            Public ReadOnly Property InvoiceRefNumberColumn() As Global.System.Data.DataColumn
                 Get
-                    Return Me.columnInvoiceNumber
+                    Return Me.columnInvoiceRefNumber
                 End Get
             End Property
 
@@ -540,9 +540,9 @@ Namespace _DataSets
 
             <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
                 Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
-            Public Overloads Function AddQB_InvoiceDisplayRow(ByVal InvoiceNumber As String, ByVal CustomerNumber As String, ByVal CustomerName As String, ByVal InvoicePostDate As Date, ByVal InvoiceDueDate As Date, ByVal InvoiceTotal As Double, ByVal InvoiceBalance As Double, ByVal InvoiceCreationDate As String) As QB_InvoiceDisplayRow
+            Public Overloads Function AddQB_InvoiceDisplayRow(ByVal InvoiceRefNumber As String, ByVal CustomerNumber As String, ByVal CustomerName As String, ByVal InvoicePostDate As Date, ByVal InvoiceDueDate As Date, ByVal InvoiceTotal As Double, ByVal InvoiceBalance As Double, ByVal InvoiceCreationDate As String) As QB_InvoiceDisplayRow
                 Dim rowQB_InvoiceDisplayRow As QB_InvoiceDisplayRow = CType(Me.NewRow, QB_InvoiceDisplayRow)
-                Dim columnValuesArray() As Object = New Object() {InvoiceNumber, CustomerNumber, CustomerName, InvoicePostDate, InvoiceDueDate, InvoiceTotal, InvoiceBalance, InvoiceCreationDate}
+                Dim columnValuesArray() As Object = New Object() {InvoiceRefNumber, CustomerNumber, CustomerName, InvoicePostDate, InvoiceDueDate, InvoiceTotal, InvoiceBalance, InvoiceCreationDate}
                 rowQB_InvoiceDisplayRow.ItemArray = columnValuesArray
                 Me.Rows.Add(rowQB_InvoiceDisplayRow)
                 Return rowQB_InvoiceDisplayRow
@@ -565,7 +565,7 @@ Namespace _DataSets
             <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
                 Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
             Friend Sub InitVars()
-                Me.columnInvoiceNumber = MyBase.Columns("InvoiceNumber")
+                Me.columnInvoiceRefNumber = MyBase.Columns("InvoiceRefNumber")
                 Me.columnCustomerNumber = MyBase.Columns("CustomerNumber")
                 Me.columnCustomerName = MyBase.Columns("CustomerName")
                 Me.columnInvoicePostDate = MyBase.Columns("InvoicePostDate")
@@ -578,8 +578,8 @@ Namespace _DataSets
             <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
                 Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
             Private Sub InitClass()
-                Me.columnInvoiceNumber = New Global.System.Data.DataColumn("InvoiceNumber", GetType(String), Nothing, Global.System.Data.MappingType.Element)
-                MyBase.Columns.Add(Me.columnInvoiceNumber)
+                Me.columnInvoiceRefNumber = New Global.System.Data.DataColumn("InvoiceRefNumber", GetType(String), Nothing, Global.System.Data.MappingType.Element)
+                MyBase.Columns.Add(Me.columnInvoiceRefNumber)
                 Me.columnCustomerNumber = New Global.System.Data.DataColumn("CustomerNumber", GetType(String), Nothing, Global.System.Data.MappingType.Element)
                 MyBase.Columns.Add(Me.columnCustomerNumber)
                 Me.columnCustomerName = New Global.System.Data.DataColumn("CustomerName", GetType(String), Nothing, Global.System.Data.MappingType.Element)
@@ -731,8 +731,6 @@ Namespace _DataSets
         Partial Public Class QB_PaymentsDisplayDataTable
             Inherits Global.System.Data.TypedTableBase(Of QB_PaymentsDisplayRow)
 
-            Private columnPaymentTxnNumber As Global.System.Data.DataColumn
-
             Private columnPaymentDate As Global.System.Data.DataColumn
 
             Private columnPaymentAmount As Global.System.Data.DataColumn
@@ -775,14 +773,6 @@ Namespace _DataSets
                 MyBase.New(info, context)
                 Me.InitVars()
             End Sub
-
-            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
-                Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
-            Public ReadOnly Property PaymentTxnNumberColumn() As Global.System.Data.DataColumn
-                Get
-                    Return Me.columnPaymentTxnNumber
-                End Get
-            End Property
 
             <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
                 Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
@@ -853,9 +843,9 @@ Namespace _DataSets
 
             <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
                 Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
-            Public Overloads Function AddQB_PaymentsDisplayRow(ByVal PaymentTxnNumber As String, ByVal PaymentDate As Date, ByVal PaymentAmount As Double, ByVal PaymentMethod As String, ByVal PaymentCheckNum As String) As QB_PaymentsDisplayRow
+            Public Overloads Function AddQB_PaymentsDisplayRow(ByVal PaymentDate As Date, ByVal PaymentAmount As Double, ByVal PaymentMethod As String, ByVal PaymentCheckNum As String) As QB_PaymentsDisplayRow
                 Dim rowQB_PaymentsDisplayRow As QB_PaymentsDisplayRow = CType(Me.NewRow, QB_PaymentsDisplayRow)
-                Dim columnValuesArray() As Object = New Object() {PaymentTxnNumber, PaymentDate, PaymentAmount, PaymentMethod, PaymentCheckNum}
+                Dim columnValuesArray() As Object = New Object() {PaymentDate, PaymentAmount, PaymentMethod, PaymentCheckNum}
                 rowQB_PaymentsDisplayRow.ItemArray = columnValuesArray
                 Me.Rows.Add(rowQB_PaymentsDisplayRow)
                 Return rowQB_PaymentsDisplayRow
@@ -878,7 +868,6 @@ Namespace _DataSets
             <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
                 Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
             Friend Sub InitVars()
-                Me.columnPaymentTxnNumber = MyBase.Columns("PaymentTxnNumber")
                 Me.columnPaymentDate = MyBase.Columns("PaymentDate")
                 Me.columnPaymentAmount = MyBase.Columns("PaymentAmount")
                 Me.columnPaymentMethod = MyBase.Columns("PaymentMethod")
@@ -888,8 +877,6 @@ Namespace _DataSets
             <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
                 Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
             Private Sub InitClass()
-                Me.columnPaymentTxnNumber = New Global.System.Data.DataColumn("PaymentTxnNumber", GetType(String), Nothing, Global.System.Data.MappingType.Element)
-                MyBase.Columns.Add(Me.columnPaymentTxnNumber)
                 Me.columnPaymentDate = New Global.System.Data.DataColumn("PaymentDate", GetType(Date), Nothing, Global.System.Data.MappingType.Element)
                 MyBase.Columns.Add(Me.columnPaymentDate)
                 Me.columnPaymentAmount = New Global.System.Data.DataColumn("PaymentAmount", GetType(Double), Nothing, Global.System.Data.MappingType.Element)
@@ -1639,16 +1626,16 @@ Namespace _DataSets
 
             <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
                 Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
-            Public Property InvoiceNumber() As String
+            Public Property InvoiceRefNumber() As String
                 Get
                     Try
-                        Return CType(Me(Me.tableQB_InvoiceDisplay.InvoiceNumberColumn), String)
+                        Return CType(Me(Me.tableQB_InvoiceDisplay.InvoiceRefNumberColumn), String)
                     Catch e As Global.System.InvalidCastException
-                        Throw New Global.System.Data.StrongTypingException("The value for column 'InvoiceNumber' in table 'QB_InvoiceDisplay' is DBNull.", e)
+                        Throw New Global.System.Data.StrongTypingException("The value for column 'InvoiceRefNumber' in table 'QB_InvoiceDisplay' is DBNull.", e)
                     End Try
                 End Get
                 Set(value As String)
-                    Me(Me.tableQB_InvoiceDisplay.InvoiceNumberColumn) = Value
+                    Me(Me.tableQB_InvoiceDisplay.InvoiceRefNumberColumn) = value
                 End Set
             End Property
 
@@ -1663,7 +1650,7 @@ Namespace _DataSets
                     End Try
                 End Get
                 Set(value As String)
-                    Me(Me.tableQB_InvoiceDisplay.CustomerNumberColumn) = Value
+                    Me(Me.tableQB_InvoiceDisplay.CustomerNumberColumn) = value
                 End Set
             End Property
 
@@ -1678,7 +1665,7 @@ Namespace _DataSets
                     End Try
                 End Get
                 Set(value As String)
-                    Me(Me.tableQB_InvoiceDisplay.CustomerNameColumn) = Value
+                    Me(Me.tableQB_InvoiceDisplay.CustomerNameColumn) = value
                 End Set
             End Property
 
@@ -1693,7 +1680,7 @@ Namespace _DataSets
                     End Try
                 End Get
                 Set(value As Date)
-                    Me(Me.tableQB_InvoiceDisplay.InvoicePostDateColumn) = Value
+                    Me(Me.tableQB_InvoiceDisplay.InvoicePostDateColumn) = value
                 End Set
             End Property
 
@@ -1708,7 +1695,7 @@ Namespace _DataSets
                     End Try
                 End Get
                 Set(value As Date)
-                    Me(Me.tableQB_InvoiceDisplay.InvoiceDueDateColumn) = Value
+                    Me(Me.tableQB_InvoiceDisplay.InvoiceDueDateColumn) = value
                 End Set
             End Property
 
@@ -1723,7 +1710,7 @@ Namespace _DataSets
                     End Try
                 End Get
                 Set(value As Double)
-                    Me(Me.tableQB_InvoiceDisplay.InvoiceTotalColumn) = Value
+                    Me(Me.tableQB_InvoiceDisplay.InvoiceTotalColumn) = value
                 End Set
             End Property
 
@@ -1738,7 +1725,7 @@ Namespace _DataSets
                     End Try
                 End Get
                 Set(value As Double)
-                    Me(Me.tableQB_InvoiceDisplay.InvoiceBalanceColumn) = Value
+                    Me(Me.tableQB_InvoiceDisplay.InvoiceBalanceColumn) = value
                 End Set
             End Property
 
@@ -1754,20 +1741,20 @@ Namespace _DataSets
                     End Try
                 End Get
                 Set(value As String)
-                    Me(Me.tableQB_InvoiceDisplay.InvoiceCreationDateColumn) = Value
+                    Me(Me.tableQB_InvoiceDisplay.InvoiceCreationDateColumn) = value
                 End Set
             End Property
 
             <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
                 Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
-            Public Function IsInvoiceNumberNull() As Boolean
-                Return Me.IsNull(Me.tableQB_InvoiceDisplay.InvoiceNumberColumn)
+            Public Function IsInvoiceRefNumberNull() As Boolean
+                Return Me.IsNull(Me.tableQB_InvoiceDisplay.InvoiceRefNumberColumn)
             End Function
 
             <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
                 Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
-            Public Sub SetInvoiceNumberNull()
-                Me(Me.tableQB_InvoiceDisplay.InvoiceNumberColumn) = Global.System.Convert.DBNull
+            Public Sub SetInvoiceRefNumberNull()
+                Me(Me.tableQB_InvoiceDisplay.InvoiceRefNumberColumn) = Global.System.Convert.DBNull
             End Sub
 
             <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
@@ -1872,21 +1859,6 @@ Namespace _DataSets
 
             <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
                 Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
-            Public Property PaymentTxnNumber() As String
-                Get
-                    Try
-                        Return CType(Me(Me.tableQB_PaymentsDisplay.PaymentTxnNumberColumn), String)
-                    Catch e As Global.System.InvalidCastException
-                        Throw New Global.System.Data.StrongTypingException("The value for column 'PaymentTxnNumber' in table 'QB_PaymentsDisplay' is DBNull.", e)
-                    End Try
-                End Get
-                Set(value As String)
-                    Me(Me.tableQB_PaymentsDisplay.PaymentTxnNumberColumn) = Value
-                End Set
-            End Property
-
-            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
-                Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
             Public Property PaymentDate() As Date
                 Get
                     Try
@@ -1896,7 +1868,7 @@ Namespace _DataSets
                     End Try
                 End Get
                 Set(value As Date)
-                    Me(Me.tableQB_PaymentsDisplay.PaymentDateColumn) = Value
+                    Me(Me.tableQB_PaymentsDisplay.PaymentDateColumn) = value
                 End Set
             End Property
 
@@ -1911,7 +1883,7 @@ Namespace _DataSets
                     End Try
                 End Get
                 Set(value As Double)
-                    Me(Me.tableQB_PaymentsDisplay.PaymentAmountColumn) = Value
+                    Me(Me.tableQB_PaymentsDisplay.PaymentAmountColumn) = value
                 End Set
             End Property
 
@@ -1926,7 +1898,7 @@ Namespace _DataSets
                     End Try
                 End Get
                 Set(value As String)
-                    Me(Me.tableQB_PaymentsDisplay.PaymentMethodColumn) = Value
+                    Me(Me.tableQB_PaymentsDisplay.PaymentMethodColumn) = value
                 End Set
             End Property
 
@@ -1941,21 +1913,9 @@ Namespace _DataSets
                     End Try
                 End Get
                 Set(value As String)
-                    Me(Me.tableQB_PaymentsDisplay.PaymentCheckNumColumn) = Value
+                    Me(Me.tableQB_PaymentsDisplay.PaymentCheckNumColumn) = value
                 End Set
             End Property
-
-            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
-                Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
-            Public Function IsPaymentTxnNumberNull() As Boolean
-                Return Me.IsNull(Me.tableQB_PaymentsDisplay.PaymentTxnNumberColumn)
-            End Function
-
-            <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
-                Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
-            Public Sub SetPaymentTxnNumberNull()
-                Me(Me.tableQB_PaymentsDisplay.PaymentTxnNumberColumn) = Global.System.Convert.DBNull
-            End Sub
 
             <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
                 Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
@@ -2032,7 +1992,7 @@ Namespace _DataSets
                     End Try
                 End Get
                 Set(value As String)
-                    Me(Me.tableQBUnpaidInvoices.Inv_TxnIDColumn) = Value
+                    Me(Me.tableQBUnpaidInvoices.Inv_TxnIDColumn) = value
                 End Set
             End Property
 
@@ -2047,7 +2007,7 @@ Namespace _DataSets
                     End Try
                 End Get
                 Set(value As Date)
-                    Me(Me.tableQBUnpaidInvoices.Inv_TxnDateColumn) = Value
+                    Me(Me.tableQBUnpaidInvoices.Inv_TxnDateColumn) = value
                 End Set
             End Property
 
@@ -2062,7 +2022,7 @@ Namespace _DataSets
                     End Try
                 End Get
                 Set(value As Double)
-                    Me(Me.tableQBUnpaidInvoices.Inv_BalanceColumn) = Value
+                    Me(Me.tableQBUnpaidInvoices.Inv_BalanceColumn) = value
                 End Set
             End Property
 
@@ -2077,7 +2037,7 @@ Namespace _DataSets
                     End Try
                 End Get
                 Set(value As Double)
-                    Me(Me.tableQBUnpaidInvoices.RemainingColumn) = Value
+                    Me(Me.tableQBUnpaidInvoices.RemainingColumn) = value
                 End Set
             End Property
 
@@ -2156,7 +2116,7 @@ Namespace _DataSets
                     End Try
                 End Get
                 Set(value As String)
-                    Me(Me.tableQBUnappliedPayments.Pay_TxnIDColumn) = Value
+                    Me(Me.tableQBUnappliedPayments.Pay_TxnIDColumn) = value
                 End Set
             End Property
 
@@ -2171,7 +2131,7 @@ Namespace _DataSets
                     End Try
                 End Get
                 Set(value As String)
-                    Me(Me.tableQBUnappliedPayments.Pay_EditSeqColumn) = Value
+                    Me(Me.tableQBUnappliedPayments.Pay_EditSeqColumn) = value
                 End Set
             End Property
 
@@ -2186,7 +2146,7 @@ Namespace _DataSets
                     End Try
                 End Get
                 Set(value As Date)
-                    Me(Me.tableQBUnappliedPayments.Pay_TxnDateColumn) = Value
+                    Me(Me.tableQBUnappliedPayments.Pay_TxnDateColumn) = value
                 End Set
             End Property
 
@@ -2201,7 +2161,7 @@ Namespace _DataSets
                     End Try
                 End Get
                 Set(value As Double)
-                    Me(Me.tableQBUnappliedPayments.Pay_AmountColumn) = Value
+                    Me(Me.tableQBUnappliedPayments.Pay_AmountColumn) = value
                 End Set
             End Property
 
@@ -2216,7 +2176,7 @@ Namespace _DataSets
                     End Try
                 End Get
                 Set(value As Double)
-                    Me(Me.tableQBUnappliedPayments.RemainingColumn) = Value
+                    Me(Me.tableQBUnappliedPayments.RemainingColumn) = value
                 End Set
             End Property
 

@@ -44,7 +44,8 @@ Module AppModule
     End Function
 
     ' enumerated item status from database
-    Enum ENItemStatus As Int32
+    ' ReSharper disable once InconsistentNaming
+    Enum TC_ENItemStatus As Int32
         Ready = 5
         Err = 6
         Complete = 7

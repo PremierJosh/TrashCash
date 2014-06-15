@@ -44,6 +44,8 @@ Namespace QBStuff
             Public DueDate As Date
             Public IsToBePrinted As Boolean
             Public RefNumber As String
+            Public TimeCreated As Date
+            Public Subtotal As Double
 
             ' this can be used to track balance after applying credits or payments
             Public BalanceRemaining As Double
@@ -51,7 +53,9 @@ Namespace QBStuff
             ' line items
             Public LineList As List(Of QBLineItemObj)
 
-
+            'used for display
+            Public CustomerFullName As String
+            
             ' optional text field
             Public Memo As String
             ' optional data field
@@ -75,7 +79,9 @@ Namespace QBStuff
             Public Rate As Double
             Public Quantity As Integer
             Public Desc As String
-
+            Public TxnLineID As String
+            Public Amount As Double
+            
             ' optional data fields
             Public Other1 As String
             Public Other2 As String
@@ -121,11 +127,13 @@ Namespace QBStuff
         End Structure
 
         ' this is only used for bounced checks
-        Public Structure QBCheckAddObj
+        Public Structure QBCheckObj
             Public AccountListID As String
             Public PayeeListID As String
             Public RefNumber As String
             Public IsToBePrinted As Boolean
+            ' dont do many checks so just going to carry id here after add
+            Public TxnID As String
 
             ' line items list that goes onto this check
             ' (qb item that comes from the account that matches the bank)

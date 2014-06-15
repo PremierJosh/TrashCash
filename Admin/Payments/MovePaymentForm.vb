@@ -101,7 +101,7 @@ Namespace Admin.Payments
             Dim payList As New List(Of QBRecievePaymentObj)
             Dim invList As New List(Of QBInvoiceObj)
             ' reusable resp obj
-            Dim resp As IResponse
+            Dim resp As Integer
 
             ' need to query payment and get its current edit sequence and linked txns
             Dim s As New List(Of String)
@@ -116,67 +116,61 @@ Namespace Admin.Payments
                 .Add("UnusedPayment")
                 .Add("AppliedToTxnRetList")
             End With
-            resp = QBRequests.PaymentQuery(txnID:=PaymentHistoryRow.PaymentTxnID)
+            ' payment im moving
+            Dim payObj As New QBRecievePaymentObj
+            payObj.TxnID = PaymentHistoryRow.PaymentTxnID
+            QBRequests.PaymentQuery(payObj)
+            ' clear ret ele string for re-suse
             s.Clear()
-            ' getting payObj from query - will only be 1 item
-            If (resp.StatusCode = 0) Then
-                _payObj = QBMethods.ConvertToPayObjs(resp).Item(0)
-            Else
-                QBMethods.ResponseErr_Misc(resp)
-            End If
-
+           
             ' startResetDate is the earliest txnDate this payment we are moving paid for. all invoices with a txn date after this one will 
             'have their payments unapplied as well
             Dim startResetDate As Date
             ' if applied list is nothing because this payment wasn't applied to anything, set startResetDate as date of payment
             If (s.Count > 0) Then
-                startResetDate = QBMethods.Invoices_EarliestCreationDate(_payObj.AppliedInvList)
+                startResetDate = QBMethods.Invoices_EarliestCreationDate(payObj.AppliedInvList)
             Else
                 startResetDate = PaymentHistoryRow.DateReceived
             End If
 
             ' modding payment to wipe anything applied and move to new customer
-            _payObj.CustomerListID = GetCustomerListID(newCustomer)
-            resp = QBRequests.PaymentMod(payObj:=_payObj, wipeAppList:=True)
-            If (resp.StatusCode = 0) Then
+            payObj.CustomerListID = GetCustomerListID(newCustomer)
+            resp = QBRequests.PaymentMod(payObj:=payObj, wipeAppList:=True)
+            If (resp = 0) Then
                 ' if response good, update and move payment
-                Dim payRet As IReceivePaymentRet = resp.Detail
-                _payObj.EditSequence = payRet.EditSequence.GetValue
-                _payTA.MovePayToCust(PaymentHistoryRow.PaymentID, newCustomer, _payObj.EditSequence)
+                Try
+                    _payTA.MovePayToCust(PaymentHistoryRow.PaymentID, newCustomer, payObj.EditSequence)
+                Catch ex as SqlException
+                    MessageBox.Show("Message: " & ex.Message & vbCrLf & "LineNumber: " & ex.LineNumber,
+                                    "Sql Error: " & ex.Procedure, MessageBoxButtons.OK, MessageBoxIcon.Error)
+                End Try
             Else
-                QBMethods.ResponseErr_Misc(resp)
+                MessageBox.Show("Move pay fail")
+                Exit Sub
             End If
 
             ' need to get list of payments made on new customer after this payment
-            resp = QBRequests.PaymentQuery(customerListID:=GetCustomerListID(newCustomer), fromDate:=_payHisRow.DateReceived)
-            If (resp.StatusCode = 0) Then
-                payList = QBMethods.ConvertToPayObjs(resp)
+            resp = QBRequests.PaymentQuery(payList, customerListID:=GetCustomerListID(newCustomer), fromDate:=_payHisRow.DateReceived)
+            If (resp = 0) Then
                 If (payList.Count > 0) Then
                     ' reset payments in this list
                     For Each o As QBRecievePaymentObj In payList
                         resp = QBRequests.PaymentMod(payObj:=o, wipeAppList:=True)
-                        If (resp.StatusCode = 0) Then
-                            Dim ret As IReceivePaymentRet = resp.Detail
+                        If (resp = 0) Then
                             Try
                                 ' attempt top update history
-                                _payTA.UpdateEditSeq(ret.TxnID.GetValue, ret.EditSequence.GetValue)
+                                _payTA.UpdateEditSeq(o.TxnID, o.EditSequence)
                             Catch ex As SqlException
                                 MessageBox.Show(
                                     "Message: " & ex.Message & vbCrLf & "LineNumber: " & ex.LineNumber,
                                     "Sql Error: " & ex.Procedure, MessageBoxButtons.OK, MessageBoxIcon.Error)
                             End Try
-                        Else
-                            QBMethods.ResponseErr_Misc(resp)
-                        End If
+                      End If
                     Next
                     ' get list of open invoices
-                    resp = QBRequests.InvoiceQuery(customerListID:=GetCustomerListID(newCustomer), paidStatus:=ENPaidStatus.psNotPaidOnly)
-                    invList = QBMethods.ConvertToInvObjs(resp)
+                    QBRequests.InvoiceQuery(invList, customerListID:=GetCustomerListID(newCustomer), paidStatus:=ENPaidStatus.psNotPaidOnly)
                 End If
-            Else
-                QBMethods.ResponseErr_Misc(resp)
             End If
-
             ' checking if new customer has unapplied payments and open invoices we can pay
             Dim finishOk As Boolean
             finishOk = QBMethods.UseOverpaymentsOnInvoices(payList, invList)
@@ -184,37 +178,31 @@ Namespace Admin.Payments
                 MsgBox("Error with overpay use on 1st part - exiting.")
                 Exit Sub
             End If
+            ' clear lists for orig customer
+            invList.Clear()
+            payList.Clear()
 
             ' same but with old customer using the startResetDate from above (earliest paid inv date of moved payment, or moved payment date)
-            ' first unapply
-            resp = QBRequests.InvoiceQuery(customerListID:=GetCustomerListID(origCustomer), fromDate:=startResetDate, incLinkTxn:=True)
-            If (resp.StatusCode = 0) Then
-                ' putting inv query to it
-                payList = QBMethods.ConvertToPayObjs(resp)
+           resp = QBRequests.InvoiceQuery(invList, customerListID:=GetCustomerListID(origCustomer), fromDate:=startResetDate, incLinkTxn:=True)
+            If (resp = 0) Then
                 If (payList.Count > 0) Then
                     ' reset payments in this list
                     For Each o As QBRecievePaymentObj In payList
                         resp = QBRequests.PaymentMod(payObj:=o, wipeAppList:=True)
-                        If (resp.StatusCode = 0) Then
-                            Dim ret As IReceivePaymentRet = resp.Detail
-                            Try
+                        If (resp = 0) Then
+                           Try
                                 ' attempt top update history
-                                _payTA.UpdateEditSeq(ret.TxnID.GetValue, ret.EditSequence.GetValue)
+                                _payTA.UpdateEditSeq(o.TxnID, o.EditSequence)
                             Catch ex As SqlException
                                 MessageBox.Show(
                                     "Message: " & ex.Message & vbCrLf & "LineNumber: " & ex.LineNumber,
                                     "Sql Error: " & ex.Procedure, MessageBoxButtons.OK, MessageBoxIcon.Error)
                             End Try
-                        Else
-                            QBMethods.ResponseErr_Misc(resp)
-                        End If
+                    End If
                     Next
                     ' get list of open invoices
-                    resp = QBRequests.InvoiceQuery(customerListID:=GetCustomerListID(origCustomer), paidStatus:=ENPaidStatus.psNotPaidOnly)
-                    invList = QBMethods.ConvertToInvObjs(resp)
+                    QBRequests.InvoiceQuery(invList, customerListID:=GetCustomerListID(origCustomer), paidStatus:=ENPaidStatus.psNotPaidOnly)
                 End If
-            Else
-                QBMethods.ResponseErr_Misc(resp)
             End If
 
             ' checking if new customer has unapplied payments and open invoices we can pay

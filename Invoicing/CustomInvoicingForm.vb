@@ -47,7 +47,7 @@ Namespace Invoicing
                 _invRow = Invoicing.CustomInvoices.NewCustomInvoicesRow
                 With _invRow
                     .CustomerNumber = CurrentCustomer
-                    .StatusID = ENItemStatus.Ready
+                    .StatusID = TC_ENItemStatus.Ready
                     .InsertedUser = CurrentUser.USER_NAME
                     .Time_Inserted = Date.Now
                     .DueDate = dtp_DueDate.Value

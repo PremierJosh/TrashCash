@@ -52,7 +52,7 @@ Namespace Invoicing
             Next
             ' submit and update row for submited
             invRow.Time_Submitted = Date.Now
-            invRow.StatusID = ENItemStatus.Submitted
+            invRow.StatusID = TC_ENItemStatus.Submitted
             Try
                 CiTA.Update(invRow)
             Catch ex As SqlException
@@ -60,17 +60,15 @@ Namespace Invoicing
                                 "Sql Error: " & ex.Procedure, MessageBoxButtons.OK, MessageBoxIcon.Error)
             End Try
 
-            Dim resp As IResponse = QBRequests.InvoiceAdd(invObj)
-            If (resp.StatusCode = 0) Then
-                Dim invRet As IInvoiceRet = resp.Detail
-                ' update row
+            Dim resp As Integer = QBRequests.InvoiceAdd(invObj)
+            If (resp = 0) Then
+               ' update row
                 With invRow
-                    .StatusID = ENItemStatus.Complete
-                    .InvoiceListID = invRet.TxnID.GetValue
-                    .InvoiceRefNum = invRet.RefNumber.GetValue
-                    .Time_Created = invRet.TimeCreated.GetValue
+                    .StatusID = TC_ENItemStatus.Complete
+                    .InvoiceListID = invObj.TxnID
+                    .InvoiceRefNum = invObj.RefNumber
+                    .Time_Created = Date.Now
                 End With
-
                 Try
                     CiTA.Update(invRow)
                     pass = True
@@ -80,9 +78,7 @@ Namespace Invoicing
                 End Try
             Else
                 ' log and update row
-                QBMethods.ResponseErr_Misc(resp)
-                invRow.StatusID = ENItemStatus.Err
-
+                invRow.StatusID = TC_ENItemStatus.Err
                 Try
                     CiTA.Update(invRow)
                 Catch ex As SqlException
@@ -100,8 +96,8 @@ Namespace Invoicing
 
             Const voidType As ENTxnVoidType = ENTxnVoidType.tvtInvoice
 
-            Dim resp As IResponse = QBRequests.TxnVoid(row.InvoiceListID, voidType)
-            If (resp.StatusCode = 0) Then
+            Dim resp As Integer = QBRequests.TxnVoid(row.InvoiceListID, voidType)
+            If (resp = 0) Then
 
                 ' update db
                 With row
@@ -118,9 +114,7 @@ Namespace Invoicing
                     MessageBox.Show("Message: " & ex.Message & vbCrLf & "LineNumber: " & ex.LineNumber, "Sql Error: " & ex.Procedure,
                                     MessageBoxButtons.OK, MessageBoxIcon.Error)
                 End Try
-            Else
-                QBMethods.ResponseErr_Misc(resp)
-            End If
+       End If
             Return pass
         End Function
     End Module

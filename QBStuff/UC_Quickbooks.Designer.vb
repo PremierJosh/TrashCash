@@ -41,14 +41,14 @@ Namespace QBStuff
             Me.tc_Quickbooks = New System.Windows.Forms.TabControl()
             Me.tc_qb_p_Invoices = New System.Windows.Forms.TabPage()
             Me.dg_QBInvoices = New System.Windows.Forms.DataGridView()
-            Me.InvoiceNumberDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+            Me.InvoiceRefNumberDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
             Me.InvoicePostDateDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
             Me.InvoiceDueDateDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
             Me.InvoiceTotalDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
             Me.InvoiceBalanceDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
             Me.InvoiceCreationDateDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
             Me.QBInvoiceDisplayBindingSource = New System.Windows.Forms.BindingSource(Me.components)
-            Me.Display = New TrashCash._DataSets.DS_Display()
+            Me.Display = New TrashCash._DataSets.ds_Display
             Me.tc_qb_p_Payments = New System.Windows.Forms.TabPage()
             Me.dg_QBPayments = New System.Windows.Forms.DataGridView()
             Me.PaymentDateDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
@@ -154,7 +154,7 @@ Namespace QBStuff
             Me.dg_QBInvoices.AutoGenerateColumns = False
             Me.dg_QBInvoices.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
             Me.dg_QBInvoices.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-            Me.dg_QBInvoices.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.InvoiceNumberDataGridViewTextBoxColumn, Me.InvoicePostDateDataGridViewTextBoxColumn, Me.InvoiceDueDateDataGridViewTextBoxColumn, Me.InvoiceTotalDataGridViewTextBoxColumn, Me.InvoiceBalanceDataGridViewTextBoxColumn, Me.InvoiceCreationDateDataGridViewTextBoxColumn})
+            Me.dg_QBInvoices.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.InvoiceRefNumberDataGridViewTextBoxColumn, Me.InvoicePostDateDataGridViewTextBoxColumn, Me.InvoiceDueDateDataGridViewTextBoxColumn, Me.InvoiceTotalDataGridViewTextBoxColumn, Me.InvoiceBalanceDataGridViewTextBoxColumn, Me.InvoiceCreationDateDataGridViewTextBoxColumn})
             Me.dg_QBInvoices.DataSource = Me.QBInvoiceDisplayBindingSource
             Me.dg_QBInvoices.Dock = System.Windows.Forms.DockStyle.Fill
             Me.dg_QBInvoices.Location = New System.Drawing.Point(3, 3)
@@ -167,11 +167,11 @@ Namespace QBStuff
             '
             'InvoiceNumberDataGridViewTextBoxColumn
             '
-            Me.InvoiceNumberDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill
-            Me.InvoiceNumberDataGridViewTextBoxColumn.DataPropertyName = "InvoiceNumber"
-            Me.InvoiceNumberDataGridViewTextBoxColumn.HeaderText = "Invoice Ref #"
-            Me.InvoiceNumberDataGridViewTextBoxColumn.Name = "InvoiceNumberDataGridViewTextBoxColumn"
-            Me.InvoiceNumberDataGridViewTextBoxColumn.ReadOnly = True
+            Me.InvoiceRefNumberDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill
+            Me.InvoiceRefNumberDataGridViewTextBoxColumn.DataPropertyName = "InvoiceNumber"
+            Me.InvoiceRefNumberDataGridViewTextBoxColumn.HeaderText = "Invoice Ref #"
+            Me.InvoiceRefNumberDataGridViewTextBoxColumn.Name = "InvoiceNumberDataGridViewTextBoxColumn"
+            Me.InvoiceRefNumberDataGridViewTextBoxColumn.ReadOnly = True
             '
             'InvoicePostDateDataGridViewTextBoxColumn
             '
@@ -370,7 +370,7 @@ Namespace QBStuff
         Friend WithEvents tc_qb_p_Payments As System.Windows.Forms.TabPage
         Friend WithEvents dg_QBPayments As System.Windows.Forms.DataGridView
         Friend WithEvents btn_ViewUnpaidInv As System.Windows.Forms.Button
-        Friend WithEvents InvoiceNumberDataGridViewTextBoxColumn As System.Windows.Forms.DataGridViewTextBoxColumn
+        Friend WithEvents InvoiceRefNumberDataGridViewTextBoxColumn As System.Windows.Forms.DataGridViewTextBoxColumn
         Friend WithEvents InvoicePostDateDataGridViewTextBoxColumn As System.Windows.Forms.DataGridViewTextBoxColumn
         Friend WithEvents InvoiceDueDateDataGridViewTextBoxColumn As System.Windows.Forms.DataGridViewTextBoxColumn
         Friend WithEvents InvoiceTotalDataGridViewTextBoxColumn As System.Windows.Forms.DataGridViewTextBoxColumn

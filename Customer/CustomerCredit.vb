@@ -1,5 +1,5 @@
 ﻿Imports TrashCash.QBStuff
-Imports QBFC12Lib
+
 
 
 Namespace Customer
@@ -73,23 +73,21 @@ Namespace Customer
                         If (Trim(reason).Length > 0) Then
                             ' void credit using its txnID
 
-                            Dim resp As IResponse = QBRequests.TxnVoid(row.CreditTxnID, ENTxnVoidType.tvtCreditMemo)
-                            If (resp.StatusCode = 0) Then
-                              ' update row
+                            Dim resp As Integer = QBRequests.TxnVoid(row.CreditTxnID, 8)
+                            If (resp = 0) Then
+                                ' update row
                                 row.Voided = True
                                 row.VoidReason = reason
                                 row.VoidTime = Date.Now
                                 row.VoidUser = CurrentUser.USER_NAME
                                 Try
                                     Customer_CreditsTableAdapter.Update(row)
-                                Catch ex as SqlException
+                                Catch ex As SqlException
                                     MessageBox.Show("Message: " & ex.Message & vbCrLf & "LineNumber: " & ex.LineNumber,
                                                     "Sql Error: " & ex.Procedure, MessageBoxButtons.OK,
                                                     MessageBoxIcon.Error)
                                 End Try
-                            Else
-                                QBMethods.ResponseErr_Misc(resp)
-                            End If
+                    End If
                             _balanceChanged = True
                             ' reload history table
                             Customer_CreditsTableAdapter.FillByCustomerID(Ds_Customer.Customer_Credits, CurrentCustomer)
@@ -111,20 +109,19 @@ Namespace Customer
                                                                         "Reason:" & vbCrLf & tb_Reason.Text, "Confirm Credit for Customer", MessageBoxButtons.YesNo, MessageBoxIcon.Question)
                     If (confirmPrompt = Windows.Forms.DialogResult.Yes) Then
                         ' create creditObj
-                        Dim addCreditObj As New QBAddCreditObj
-                        With addCreditObj
+                        Dim creditObj As New QBCreditObj
+                        With creditObj
                             .CustomerListID = GetCustomerListID(CurrentCustomer)
                             .ItemListID = cmb_Types.SelectedValue
-                            .CreditAmount = tb_Amount.Text
+                            .TotalAmount = tb_Amount.Text
                             .Desc = tb_Reason.Text
                             .IsToBePrinted = ck_Print.Checked
                         End With
-                        Dim resp As IResponse = QBRequests.CreditMemoAdd(addCreditObj)
-                        If (resp.StatusCode = 0) Then
-                            Dim creditObj As QBCreditObj = QBMethods.ConvertToCreditObj(resp.Detail)
+                        Dim resp As Integer = QBRequests.CreditMemoAdd(creditObj)
+                        If (resp = 0) Then
                             QBMethods.UseNewCredit(creditObj, rb_Newest.Checked)
                         Else
-                            QBMethods.ResponseErr_Misc(resp)
+                            MessageBox.Show("Error adding credit memo")
                         End If
                        _balanceChanged = True
                         ' reload history table

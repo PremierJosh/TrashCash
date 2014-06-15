@@ -118,19 +118,17 @@ Namespace Admin.Payments
             custInvObj.LineList.Add(badCheckLine)
             custInvObj.LineList.Add(feeLine)
             ' send invoice
-            Dim invResp As IResponse = QBRequests.InvoiceAdd(custInvObj)
-            If (invResp.StatusCode = 0) Then
+            Dim invResp As Integer = QBRequests.InvoiceAdd(custInvObj)
+            If (invResp = 0) Then
                 ' get invTxnID
-                Dim invObj As QBInvoiceObj = QBMethods.ConvertToInvObj(invResp.Detail)
-                invTxnID = invObj.TxnID
+                invTxnID = custInvObj.TxnID
             Else
-                QBMethods.ResponseErr_Misc(invResp)
-                MsgBox("CheckBounce Fail")
+               MsgBox("CheckBounce Fail")
                 Exit Sub
             End If
 
             ' doing checkadd to pay bank fee
-            Dim checkObj As New QBCheckAddObj
+            Dim checkObj As New QBCheckObj
             With checkObj
                 .AccountListID = BankRow.QB_Bank_ListID
                 .PayeeListID = BankRow.QB_Vendor_ListID
@@ -147,13 +145,12 @@ Namespace Admin.Payments
             End With
             checkObj.LineList.Add(checkLine)
 
-            Dim checkResp As IResponse = QBRequests.CheckAdd(checkObj)
-            If (checkResp.StatusCode = 0) Then
-                Dim ret As ICheckRet = checkResp.Detail
+            Dim checkResp As Integer = QBRequests.CheckAdd(checkObj)
+            If (checkResp = 0) Then
                 Try
                     'set payment bounced, using invTxnID and ret from checkAdd
                     Using ta As New PaymentHistory_DBTableAdapter
-                        ta.SetBounced(CheckRow.PaymentID, CurrentUser.USER_NAME, invTxnID, ret.TxnID.GetValue)
+                        ta.SetBounced(CheckRow.PaymentID, CurrentUser.USER_NAME, invTxnID, checkObj.TxnID)
                     End Using
                     ' inserting note for customer that check bounced
                     Using ta As New ds_CustomerTableAdapters.CustomerNotesTableAdapter
@@ -164,7 +161,7 @@ Namespace Admin.Payments
                                     "Sql Error: " & ex.Procedure, MessageBoxButtons.OK, MessageBoxIcon.Error)
                 End Try
             Else
-                QBMethods.ResponseErr_Misc(checkResp)
+                MessageBox.Show("Check add fail")
             End If
         End Sub
 

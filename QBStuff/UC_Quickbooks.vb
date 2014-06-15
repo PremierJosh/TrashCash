@@ -1,6 +1,4 @@
-﻿
-Imports QBFC12Lib
-Imports TrashCash._DataSets
+﻿Imports TrashCash._DataSets
 
 Namespace QBStuff
 
@@ -24,7 +22,7 @@ Namespace QBStuff
                     _custListID = value
 
                     ' fill with open invoices and all payments
-                    FetchInvoices(ENPaidStatus.psAll)
+                    FetchInvoices(0)
                     FetchPayments()
                 End If
             End Set
@@ -47,82 +45,67 @@ Namespace QBStuff
             End Set
         End Property
 
-
-        Private Sub UC_Billing_Load(sender As Object, e As System.EventArgs) Handles Me.Load
-
-        End Sub
-
-        Private Sub FetchInvoices(ByVal paidStatus As ENPaidStatus)
-            Dim resp As IResponse
+        Private Sub FetchInvoices(ByVal paidStatus As Integer)
+            Dim resp As Integer
+            Dim invObjList As New List(Of QBInvoiceObj)
             If (chk_ItemTo.Checked = True And chk_ItemFrom.Checked = False) Then
-                resp = QBRequests.InvoiceQuery(customerListID:=CustomerListID, paidStatus:=paidStatus, toDate:=dtp_ItemTo.Value.Date, retEleList:=_invRetEle)
+                resp = QBRequests.InvoiceQuery(invObjList, customerListID:=CustomerListID, paidStatus:=paidStatus, toDate:=dtp_ItemTo.Value.Date, retEleList:=_invRetEle)
             ElseIf (chk_ItemTo.Checked = False And chk_ItemFrom.Checked = True) Then
-                resp = QBRequests.InvoiceQuery(customerListID:=CustomerListID, paidStatus:=paidStatus, fromDate:=dtp_ItemFrom.Value.Date, retEleList:=_invRetEle)
+                resp = QBRequests.InvoiceQuery(invObjList, customerListID:=CustomerListID, paidStatus:=paidStatus, fromDate:=dtp_ItemFrom.Value.Date, retEleList:=_invRetEle)
             ElseIf (chk_ItemTo.Checked = True And chk_ItemFrom.Checked = True) Then
-                resp = QBRequests.InvoiceQuery(customerListID:=CustomerListID, paidStatus:=paidStatus, fromDate:=dtp_ItemFrom.Value.Date, toDate:=dtp_ItemTo.Value.Date, retEleList:=_invRetEle)
+                resp = QBRequests.InvoiceQuery(invObjList, customerListID:=CustomerListID, paidStatus:=paidStatus, fromDate:=dtp_ItemFrom.Value.Date, toDate:=dtp_ItemTo.Value.Date, retEleList:=_invRetEle)
             Else
-                resp = QBRequests.InvoiceQuery(customerListID:=CustomerListID, paidStatus:=paidStatus, retEleList:=_invRetEle)
+                resp = QBRequests.InvoiceQuery(invObjList, customerListID:=CustomerListID, paidStatus:=paidStatus, retEleList:=_invRetEle)
             End If
 
-            If (resp.StatusCode = 0) Then
-                Dim invRetList As IInvoiceRetList = resp.Detail
-                ' looping through invoice ret list
-                For i = 0 To invRetList.Count - 1
-                    Dim invRet As IInvoiceRet = invRetList.GetAt(i)
+            If (resp = 0) Then
+                ' looping through invoices to build display rows
+                For Each inv As QBInvoiceObj In invObjList
                     ' building new row
                     Dim newRow As ds_Display.QB_InvoiceDisplayRow = Display.QB_InvoiceDisplay.NewQB_InvoiceDisplayRow
                     With newRow
-                        .InvoiceNumber = invRet.RefNumber.GetValue
-                        .InvoicePostDate = invRet.TxnDate.GetValue.Date
-                        .InvoiceCreationDate = invRet.TimeCreated.GetValue.Date
-                        .CustomerName = invRet.CustomerRef.FullName.GetValue
-                        .InvoiceTotal = invRet.Subtotal.GetValue
-                        .InvoiceBalance = invRet.BalanceRemaining.GetValue
-                        .InvoiceDueDate = invRet.DueDate.GetValue.Date
+                        .InvoiceRefNumber = inv.RefNumber
+                        .InvoicePostDate = inv.TxnDate
+                        .InvoiceCreationDate = inv.TimeCreated
+                        .CustomerName = inv.CustomerFullName
+                        .InvoiceTotal = inv.Subtotal
+                        .InvoiceBalance = inv.BalanceRemaining
+                        .InvoiceDueDate = inv.DueDate
                     End With
                     ' adding
                     Display.QB_InvoiceDisplay.AddQB_InvoiceDisplayRow(newRow)
-                Next i
-            ElseIf (resp.StatusCode > 1) Then
-                QBMethods.ResponseErr_Misc(resp)
+                Next
             End If
-
-            ' color rows based on due date
-            'ColorRows_QBInvoices(dg_QBInvoices)
         End Sub
 
         Private Sub FetchPayments()
-            Dim resp As IResponse
+            Dim resp As Integer
+            Dim payObjList As New List(Of QBRecievePaymentObj)
             If (chk_ItemTo.Checked = True And chk_ItemFrom.Checked = False) Then
-                resp = QBRequests.PaymentQuery(customerListID:=CustomerListID, toDate:=dtp_ItemTo.Value.Date, retEleList:=_payRetEle)
+                resp = QBRequests.PaymentQuery(payObjList, customerListID:=CustomerListID, toDate:=dtp_ItemTo.Value.Date, retEleList:=_payRetEle)
             ElseIf (chk_ItemTo.Checked = False And chk_ItemFrom.Checked = True) Then
-                resp = QBRequests.PaymentQuery(customerListID:=CustomerListID, fromDate:=dtp_ItemFrom.Value.Date, retEleList:=_payRetEle)
+                resp = QBRequests.PaymentQuery(payObjList, customerListID:=CustomerListID, fromDate:=dtp_ItemFrom.Value.Date, retEleList:=_payRetEle)
             ElseIf (chk_ItemTo.Checked = True And chk_ItemFrom.Checked = True) Then
-                resp = QBRequests.PaymentQuery(customerListID:=CustomerListID, fromDate:=dtp_ItemFrom.Value.Date, toDate:=dtp_ItemTo.Value.Date, retEleList:=_payRetEle)
+                resp = QBRequests.PaymentQuery(payObjList, customerListID:=CustomerListID, fromDate:=dtp_ItemFrom.Value.Date, toDate:=dtp_ItemTo.Value.Date, retEleList:=_payRetEle)
             Else
-                resp = QBRequests.PaymentQuery(customerListID:=CustomerListID, retEleList:=_payRetEle)
+                resp = QBRequests.PaymentQuery(payObjList, customerListID:=CustomerListID, retEleList:=_payRetEle)
             End If
 
-            If (resp.StatusCode = 0) Then
-                Dim paymentRetList As IReceivePaymentRetList = resp.Detail
-                For i = 0 To paymentRetList.Count - 1
-                    Dim paymentRet As IReceivePaymentRet = paymentRetList.GetAt(i)
+            If (resp = 0) Then
+                For Each pay As QBRecievePaymentObj In payObjList
                     ' building new paymentList row
-                    Dim newRow As ds_Display.QB_PaymentsDisplayRow = Display.QB_PaymentsDisplay.NewQB_PaymentsDisplayRow
+                    Dim newRow As DS_Display.QB_PaymentsDisplayRow = Display.QB_PaymentsDisplay.NewQB_PaymentsDisplayRow
                     With newRow
-                        .PaymentTxnNumber = paymentRet.TxnNumber.GetValue
-                        .PaymentDate = paymentRet.TxnDate.GetValue
-                        .PaymentAmount = paymentRet.TotalAmount.GetValue
-                        .PaymentMethod = paymentRet.PaymentMethodRef.FullName.GetValue
-                        If (paymentRet.RefNumber IsNot Nothing) Then
-                            .PaymentCheckNum = paymentRet.RefNumber.GetValue
+                        .PaymentDate = pay.TxnDate
+                        .PaymentAmount = pay.TotalAmount
+                        .PaymentMethod = pay.PayTypeName
+                        If (pay.RefNumber IsNot Nothing) Then
+                            .PaymentCheckNum = pay.RefNumber
                         End If
                     End With
                     ' adding
                     Display.QB_PaymentsDisplay.AddQB_PaymentsDisplayRow(newRow)
-                Next i
-            ElseIf (resp.StatusCode > 1) Then
-                QBMethods.ResponseErr_Misc(resp)
+                Next
             End If
             ' updating last fetch time
             _lastFetchTime = Date.Now
@@ -215,12 +198,14 @@ Namespace QBStuff
         End Sub
 
         Private Sub btn_ViewAllInv_Click(sender As System.Object, e As System.EventArgs) Handles btn_ViewAllInv.Click
-            FetchInvoices(ENPaidStatus.psAll)
+            ' 0 is all
+            FetchInvoices(0)
             tc_Quickbooks.SelectedIndex = 0
         End Sub
 
         Private Sub btn_ViewAllOpenInv_Click(sender As System.Object, e As System.EventArgs) Handles btn_ViewUnpaidInv.Click
-            FetchInvoices(ENPaidStatus.psNotPaidOnly)
+            ' 2 is not paid only
+            FetchInvoices(2)
             tc_Quickbooks.SelectedIndex = 0
         End Sub
 
@@ -230,14 +215,6 @@ Namespace QBStuff
             End If
             tc_Quickbooks.SelectedIndex = 1
         End Sub
-
-        'Private Sub tc_Quickbooks_SelectedIndexChanged(sender As System.Object, e As System.EventArgs) Handles tc_Quickbooks.SelectedIndexChanged
-        '    'If (tc_Quickbooks.SelectedIndex = 0) Then
-        '    '    ' invoices tab
-        '    'Else
-        '    '    ' payments tab
-        '    'End If
-        'End Sub
 
         Private Sub dg_QBInvoices_RowPrePaint(sender As System.Object, e As System.Windows.Forms.DataGridViewRowPrePaintEventArgs) Handles dg_QBInvoices.RowPrePaint
             ColorRows_QBInvoices(dg_QBInvoices)
