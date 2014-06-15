@@ -148,7 +148,7 @@ Namespace Admin.Payments
             End If
 
             ' need to get list of payments made on new customer after this payment
-            resp = QBRequests.PaymentQuery(listID:=GetCustomerListID(newCustomer), fromDate:=_payHisRow.DateReceived)
+            resp = QBRequests.PaymentQuery(customerListID:=GetCustomerListID(newCustomer), fromDate:=_payHisRow.DateReceived)
             If (resp.StatusCode = 0) Then
                 payList = QBMethods.ConvertToPayObjs(resp)
                 If (payList.Count > 0) Then
@@ -170,7 +170,7 @@ Namespace Admin.Payments
                         End If
                     Next
                     ' get list of open invoices
-                    resp = QBRequests.InvoiceQuery(listID:=GetCustomerListID(newCustomer), paidStatus:=ENPaidStatus.psNotPaidOnly)
+                    resp = QBRequests.InvoiceQuery(customerListID:=GetCustomerListID(newCustomer), paidStatus:=ENPaidStatus.psNotPaidOnly)
                     invList = QBMethods.ConvertToInvObjs(resp)
                 End If
             Else
@@ -187,7 +187,7 @@ Namespace Admin.Payments
 
             ' same but with old customer using the startResetDate from above (earliest paid inv date of moved payment, or moved payment date)
             ' first unapply
-            resp = QBRequests.InvoiceQuery(listID:=GetCustomerListID(origCustomer), fromDate:=startResetDate, incLinkTxn:=True)
+            resp = QBRequests.InvoiceQuery(customerListID:=GetCustomerListID(origCustomer), fromDate:=startResetDate, incLinkTxn:=True)
             If (resp.StatusCode = 0) Then
                 ' putting inv query to it
                 payList = QBMethods.ConvertToPayObjs(resp)
@@ -210,7 +210,7 @@ Namespace Admin.Payments
                         End If
                     Next
                     ' get list of open invoices
-                    resp = QBRequests.InvoiceQuery(listID:=GetCustomerListID(origCustomer), paidStatus:=ENPaidStatus.psNotPaidOnly)
+                    resp = QBRequests.InvoiceQuery(customerListID:=GetCustomerListID(origCustomer), paidStatus:=ENPaidStatus.psNotPaidOnly)
                     invList = QBMethods.ConvertToInvObjs(resp)
                 End If
             Else

@@ -154,11 +154,11 @@ Namespace RecurringService
             'ck_EndDate
             '
             Me.ck_EndDate.AutoSize = True
-            Me.ck_EndDate.Location = New System.Drawing.Point(165, 22)
+            Me.ck_EndDate.Location = New System.Drawing.Point(172, 21)
             Me.ck_EndDate.Name = "ck_EndDate"
-            Me.ck_EndDate.Size = New System.Drawing.Size(122, 17)
+            Me.ck_EndDate.Size = New System.Drawing.Size(113, 17)
             Me.ck_EndDate.TabIndex = 5
-            Me.ck_EndDate.Text = "Last Day of Service:"
+            Me.ck_EndDate.Text = "Service End Date:"
             Me.ck_EndDate.UseVisualStyleBackColor = True
             '
             'grp_PickupDay

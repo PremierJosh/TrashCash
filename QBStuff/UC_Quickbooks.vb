@@ -55,13 +55,13 @@ Namespace QBStuff
         Private Sub FetchInvoices(ByVal paidStatus As ENPaidStatus)
             Dim resp As IResponse
             If (chk_ItemTo.Checked = True And chk_ItemFrom.Checked = False) Then
-                resp = QBRequests.InvoiceQuery(listID:=CustomerListID, paidStatus:=paidStatus, toDate:=dtp_ItemTo.Value.Date, retEleList:=_invRetEle)
+                resp = QBRequests.InvoiceQuery(customerListID:=CustomerListID, paidStatus:=paidStatus, toDate:=dtp_ItemTo.Value.Date, retEleList:=_invRetEle)
             ElseIf (chk_ItemTo.Checked = False And chk_ItemFrom.Checked = True) Then
-                resp = QBRequests.InvoiceQuery(listID:=CustomerListID, paidStatus:=paidStatus, fromDate:=dtp_ItemFrom.Value.Date, retEleList:=_invRetEle)
+                resp = QBRequests.InvoiceQuery(customerListID:=CustomerListID, paidStatus:=paidStatus, fromDate:=dtp_ItemFrom.Value.Date, retEleList:=_invRetEle)
             ElseIf (chk_ItemTo.Checked = True And chk_ItemFrom.Checked = True) Then
-                resp = QBRequests.InvoiceQuery(listID:=CustomerListID, paidStatus:=paidStatus, fromDate:=dtp_ItemFrom.Value.Date, toDate:=dtp_ItemTo.Value.Date, retEleList:=_invRetEle)
+                resp = QBRequests.InvoiceQuery(customerListID:=CustomerListID, paidStatus:=paidStatus, fromDate:=dtp_ItemFrom.Value.Date, toDate:=dtp_ItemTo.Value.Date, retEleList:=_invRetEle)
             Else
-                resp = QBRequests.InvoiceQuery(listID:=CustomerListID, paidStatus:=paidStatus, retEleList:=_invRetEle)
+                resp = QBRequests.InvoiceQuery(customerListID:=CustomerListID, paidStatus:=paidStatus, retEleList:=_invRetEle)
             End If
 
             If (resp.StatusCode = 0) Then
@@ -94,13 +94,13 @@ Namespace QBStuff
         Private Sub FetchPayments()
             Dim resp As IResponse
             If (chk_ItemTo.Checked = True And chk_ItemFrom.Checked = False) Then
-                resp = QBRequests.PaymentQuery(listID:=CustomerListID, toDate:=dtp_ItemTo.Value.Date, retEleList:=_payRetEle)
+                resp = QBRequests.PaymentQuery(customerListID:=CustomerListID, toDate:=dtp_ItemTo.Value.Date, retEleList:=_payRetEle)
             ElseIf (chk_ItemTo.Checked = False And chk_ItemFrom.Checked = True) Then
-                resp = QBRequests.PaymentQuery(listID:=CustomerListID, fromDate:=dtp_ItemFrom.Value.Date, retEleList:=_payRetEle)
+                resp = QBRequests.PaymentQuery(customerListID:=CustomerListID, fromDate:=dtp_ItemFrom.Value.Date, retEleList:=_payRetEle)
             ElseIf (chk_ItemTo.Checked = True And chk_ItemFrom.Checked = True) Then
-                resp = QBRequests.PaymentQuery(listID:=CustomerListID, fromDate:=dtp_ItemFrom.Value.Date, toDate:=dtp_ItemTo.Value.Date, retEleList:=_payRetEle)
+                resp = QBRequests.PaymentQuery(customerListID:=CustomerListID, fromDate:=dtp_ItemFrom.Value.Date, toDate:=dtp_ItemTo.Value.Date, retEleList:=_payRetEle)
             Else
-                resp = QBRequests.PaymentQuery(listID:=CustomerListID, retEleList:=_payRetEle)
+                resp = QBRequests.PaymentQuery(customerListID:=CustomerListID, retEleList:=_payRetEle)
             End If
 
             If (resp.StatusCode = 0) Then

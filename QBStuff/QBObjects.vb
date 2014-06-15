@@ -3,16 +3,19 @@
 Namespace QBStuff
     Public Module QBObjects
 
-        Public Structure QBAddCreditObj
-            Public CustomerListID As String
-            Public IsToBePrinted As Boolean
-            Public ItemListID As String
-            Public CreditAmount As Double
-            Public Desc As String
+        'Public Structure QBAddCreditObj
+        '    Public CustomerListID As String
+        '    Public IsToBePrinted As Boolean
+        '    Public ItemListID As String
+        '    Public CreditAmount As Double
+        '    Public Desc As String
 
-            ' internal reference
-            Public DateOfCredit As Date
-        End Structure
+        '    ' internal reference
+        '    Public DateOfCredit As Date
+
+        '    ' status response from qb
+        '    Public StatusCode As Integer
+        'End Structure
 
         Public Structure QBCreditObj
             Public TxnID As String
@@ -24,6 +27,13 @@ Namespace QBStuff
 
             ' this is used when a credit is applied through ISetCredit
             Public AppliedAmount As Double
+
+            ' used when  a new credit is going in
+            Public IsToBePrinted As Boolean
+            Public ItemListID As String
+            Public Desc As String
+            ' internal reference
+            Public DateOfCredit As Date
         End Structure
 
         Public Structure QBInvoiceObj
@@ -41,22 +51,23 @@ Namespace QBStuff
             ' line items
             Public LineList As List(Of QBLineItemObj)
 
-            ' linked txns
-            Public LinkTxnList As List(Of QBLinkedTxnObj)
 
             ' optional text field
             Public Memo As String
             ' optional data field
             Public Other As String
 
-            ' this is used for an applied txn for a payment
-            Public AppliedPaymentAmount As Double
+            ' this is used when a payment is going in and i want it on a specific invoice
+            Public AppliedAmount As Integer
+
+            ' this is a list of applied payments on this invoice
+            Public LinkedPaymentList As List(Of QBRecievePaymentObj)
 
             ' this is used to carry an invoices applied credits
             ''' chose to put this here since the way you apply a credit to an invoice
             ''' is to recieve a payment with no amount, apply payment to invoice by id
             ''' and set the credit txn id and amount used to pay it
-            Public SetCreditList As List(Of QBCreditObj)
+            Public LinkedCreditList As List(Of QBCreditObj)
         End Structure
 
         Public Structure QBLineItemObj
@@ -70,17 +81,17 @@ Namespace QBStuff
             Public Other2 As String
         End Structure
 
-        Public Structure QBLinkedTxnObj
-            Public TxnID As String
-            Public RefNumber As String
-            Public Amount As Double
+        'Public Structure QBLinkedTxnObj
+        '    Public TxnID As String
+        '    Public RefNumber As String
+        '    Public Amount As Double
 
-            ' this is the date of the link, not the date of the txn that is linked
-            Public TxnDate As Date
+        '    ' this is the date of the link, not the date of the txn that is linked
+        '    Public TxnDate As Date
 
-            ' these are enumerated on the return and will need to be ctyped to be read
-            Public TxnType As Integer
-        End Structure
+        '    ' these are enumerated on the return and will need to be ctyped to be read
+        '    Public TxnType As Integer
+        'End Structure
 
         Public Structure QBRecievePaymentObj
             Public TxnID As String
