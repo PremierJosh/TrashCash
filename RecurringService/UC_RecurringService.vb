@@ -51,17 +51,7 @@
             _dv.Table = Ds_RecurringService.RecurringService_DisplayByCustomerID
             dg_RecSrvc.DataSource = _dv
         End Sub
-
-        Private Sub dg_RecSrvc_Click(sender As System.Object, e As System.Windows.Forms.MouseEventArgs) Handles dg_RecSrvc.Click
-            If (e.Button = Windows.Forms.MouseButtons.Left) Then
-                If (dg_RecSrvc.SelectedRows.Count = 1) Then
-                    Dim dvRow As DataRowView = dg_RecSrvc.SelectedRows(0).DataBoundItem
-                    ServiceNotesTableAdapter.FillByID(Ds_RecurringService.ServiceNotes, CType(dvRow.Row, ds_RecurringService.RecurringService_DisplayByCustomerIDRow).RecurringServiceID)
-                End If
-            End If
-        End Sub
-
-
+        
         Private Sub ColorRows()
 
             'loop through all grid rows
@@ -129,7 +119,6 @@
                 End If
                 If (f.ServiceUpdated) Then
                     RecurringService_DisplayByCustomerIDTableAdapter.FillByID(Ds_RecurringService.RecurringService_DisplayByCustomerID, CurrentCustomer)
-                    ServiceNotesTableAdapter.FillByID(Ds_RecurringService.ServiceNotes, f.RecurringServiceID)
                 End If
             End If
         End Sub
@@ -158,13 +147,11 @@
             ColorRows()
         End Sub
 
-        Public Sub New()
-
-            ' This call is required by the designer.
-            InitializeComponent()
-
-            ' Add any initialization after the InitializeComponent() call.
-
+        Private Sub dg_RecSrvc_SelectionChanged(sender As System.Object, e As System.EventArgs) Handles dg_RecSrvc.SelectionChanged
+            If (dg_RecSrvc.SelectedRows.Count = 1) Then
+                    Dim dvRow As DataRowView = dg_RecSrvc.SelectedRows(0).DataBoundItem
+                    ServiceNotesTableAdapter.FillByID(Ds_RecurringService.ServiceNotes, CType(dvRow.Row, ds_RecurringService.RecurringService_DisplayByCustomerIDRow).RecurringServiceID)
+                End If
         End Sub
     End Class
 End Namespace

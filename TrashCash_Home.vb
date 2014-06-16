@@ -1,12 +1,5 @@
 ﻿Imports System.Windows.Forms
 Imports TrashCash.QBStuff
-Imports TrashCash.RecurringService
-Imports TrashCash.Reports
-Imports TrashCash.Payments
-Imports TrashCash.Batching
-Imports TrashCash.Customer
-Imports TrashCash.Invoicing
-Imports TrashCash.Admin
 Imports QBFC12Lib
 
 Public Class TrashCashHome
@@ -77,25 +70,22 @@ Public Class TrashCashHome
     Private _batchRunning As Boolean
 
     ' var for class files
-    Protected CReporting As Reporting
-    Public ReadOnly Property Reporting As Reporting
+    Protected CReporting As Reports.Reporting
+    Public ReadOnly Property Reporting As Reports.Reporting
         Get
             Return CReporting
         End Get
     End Property
-
-    Public Property GlobalConMgr As QBConMgr
-
     ' var for all child forms
-    Friend WithEvents PayForm As PaymentsForm
-    Friend WithEvents BatchForm As BatchingPrep
-    Friend WithEvents Customer As CustomerForm
-    Friend WithEvents PendingApprovals As PendingApprovals
-    Friend WithEvents InvoicingForm As CustomInvoicingForm
+    Friend WithEvents PayForm As Payments.PaymentsForm
+    Friend WithEvents BatchForm As Batching.BatchingPrep
+    Friend WithEvents Customer As Customer.CustomerForm
+    Friend WithEvents PendingApprovals As RecurringService.PendingApprovals
+    Friend WithEvents InvoicingForm As Invoicing.CustomInvoicingForm
 
     ' vars for admin forms'
-    Friend WithEvents UserSelection As UserSelection
-    Friend WithEvents TrashCashAdmin As TrashCashAdmin
+    Friend WithEvents UserSelection As Admin.UserSelection
+    Friend WithEvents TrashCashAdmin As Admin.TrashCashAdmin
 
     ' qb session and msg set req
     Friend AppSessMgr As QBSessionManager
@@ -143,56 +133,34 @@ Public Class TrashCashHome
     End Sub
 
     Private Sub btn_Payments_Click(sender As Object, e As EventArgs) Handles btn_Payments.Click
-        Dim needNew As Boolean = False
-
-        If (PayForm IsNot Nothing) Then
-            If (PayForm.IsDisposed = True) Then
-                needNew = True
-            End If
-        Else
-            needNew = True
-        End If
-
-        If (needNew) Then
-            PayForm = New PaymentsForm(CBool(AppQTA.APP_GetDebugMode))
+        If (PayForm Is Nothing) Then
+            PayForm = New Payments.PaymentsForm(CBool(AppQTA.APP_GetDebugMode))
             PayForm.MdiParent = Me
         End If
-
         PayForm.Show()
         PayForm.BringToFront()
+        PayForm.CustomerToolstrip1.QuickSearch.TextBox.SelectAll()
     End Sub
 
     Private Sub btn_NewCustTab_Click(sender As Object, e As EventArgs) Handles btn_CustTab.Click
-        Dim needNew As Boolean = False
-
-        If (Customer IsNot Nothing) Then
-            If (Customer.IsDisposed = True) Then
-                needNew = True
-            End If
-        Else
-            needNew = True
-        End If
-
-        If (needNew) Then
-            Customer = New CustomerForm(Me)
+        If (Customer Is Nothing) Then
+            Customer = New Customer.CustomerForm(Me)
             Customer.MdiParent = Me
         End If
         Customer.Show()
         Customer.BringToFront()
+        Customer.CustomerToolstrip1.QuickSearch.TextBox.SelectAll()
     End Sub
 
     Private Sub btn_BatchWork_Click(sender As Object, e As EventArgs) Handles btn_BatchWork.Click
         If (BatchForm Is Nothing) Then
-            BatchForm = New BatchingPrep
+            BatchForm = New Batching.BatchingPrep
             BatchForm.MdiParent = Me
         End If
-
         BatchForm.Show()
         BatchForm.BringToFront()
     End Sub
-
-
-
+    
     Private Sub TrashCash_Home_FormClosing(sender As Object, e As FormClosingEventArgs) Handles Me.FormClosing
         If (_batchRunning) Then
             e.Cancel = True
@@ -213,29 +181,34 @@ Public Class TrashCashHome
 
     Private Sub TrashCash_Home_Load(sender As Object, e As EventArgs) Handles Me.Load
         GetQBFileLocation()
-        Try
-            ' create new conMgrObj
-            AppModule.GlobalConMgr = New QBConMgr
-            GlobalConMgr = AppModule.GlobalConMgr
-            ' connect
-            GlobalConMgr.InitCon()
 
+        ' create new conMgrObj
+        GlobalConMgr = New QBConMgr
+
+        ' testing while connection loop to get connected
+        'Dim connected As Boolean = False
+        'While Not connected
+        'connected = GlobalConMgr.InitCon()
+        'End While
+        Try
+            GlobalConMgr.InitCon()
             'temp: setting vars here for other forms
             AppSessMgr = GlobalConMgr.SessionManager
             AppMsgSetReq = GlobalConMgr.MessageSetRequest
-
             ' dim all classes
             CreateAllClasses()
-            _splash.Close()
-
-            ' maximize window
-            WindowState = FormWindowState.Maximized
-
-            ' getting approvals pending on load
-            RefreshApprovCount(True)
         Catch ex As Exception
-            MessageBox.Show("Home Load Message: " & ex.Message & vbCrLf)
+            MsgBox(ex.Message)
         End Try
+
+        _splash.Close()
+
+        ' maximize window
+        WindowState = FormWindowState.Maximized
+
+        ' getting approvals pending on load
+        RefreshApprovCount(True)
+
     End Sub
 
     Private Sub ApprovalsWorked(ByVal countRemain As Integer) Handles PendingApprovals.RemainingApprovals
@@ -260,7 +233,7 @@ Public Class TrashCashHome
     End Sub
 
     Private Sub CreateAllClasses()
-        CReporting = New Reporting(SessionManager, MsgSetRequest)
+        CReporting = New Reports.Reporting(SessionManager, MsgSetRequest)
     End Sub
 
     Private Sub GetQBFileLocation()
@@ -291,18 +264,18 @@ Public Class TrashCashHome
     End Sub
 
     Private Sub btn_Rpt_AllCustomerBalances_Click(sender As Object, e As EventArgs) Handles btn_Rpt_AllCustomerBalances.Click
-        Dim rf As New Report_AllCustBalances(Me)
+        Dim rf As New Reports.Report_AllCustBalances(Me)
         rf.Show()
     End Sub
 
     Private Sub btn_Rpt_PayReceived_Click(sender As Object, e As EventArgs) Handles btn_Rpt_PayReceived.Click
-        Dim rf As New Report_PaymentsReceived
+        Dim rf As New Reports.Report_PaymentsReceived
         rf.Show()
     End Sub
 
 
     Private Sub btn_Rpt_DaysEvents_Click(sender As Object, e As EventArgs) Handles btn_Rpt_DaysEvents.Click
-        Dim rf As New Report_DaysEvents
+        Dim rf As New Reports.Report_DaysEvents
         rf.Show()
     End Sub
 
@@ -320,7 +293,7 @@ Public Class TrashCashHome
     End Sub
 
     Private Sub UnderOverEvenCustomerToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles UnderOverEvenCustomerToolStripMenuItem.Click
-        Dim rf As New Report_UnderOverEven(Me)
+        Dim rf As New Reports.Report_UnderOverEven(Me)
         rf.Show()
     End Sub
 
@@ -331,24 +304,12 @@ Public Class TrashCashHome
     End Sub
 
     Private Sub btn_PendApprovs_Click(sender As Object, e As EventArgs) Handles btn_PendApprovs.Click
-        Dim needNew As Boolean = False
-
-        If (_PendingApprovals IsNot Nothing) Then
-            If (_PendingApprovals.IsDisposed = True) Then
-                needNew = True
-            End If
-        Else
-            needNew = True
+        If (PendingApprovals Is Nothing) Then
+            PendingApprovals = New RecurringService.PendingApprovals(Me)
+            PendingApprovals.MdiParent = Me
         End If
-
-        If (needNew) Then
-            _PendingApprovals = New PendingApprovals(Me)
-            _PendingApprovals.MdiParent = Me
-        End If
-
-        _PendingApprovals.Show()
-        _PendingApprovals.BringToFront()
-
+        PendingApprovals.Show()
+        PendingApprovals.BringToFront()
     End Sub
 
     Private Sub Batch_RefreshBalance_Tick(sender As Object, e As EventArgs) Handles Batch_RefreshBalance.Tick
@@ -359,42 +320,44 @@ Public Class TrashCashHome
     End Sub
 
     Private Sub menu_Admin_Click(sender As Object, e As EventArgs) Handles menu_Admin.Click
+        ' checking if form exists
         If (TrashCashAdmin IsNot Nothing) Then
             If (TrashCashAdmin.IsDisposed = False) Then
-                TrashCashAdmin.BringToFront()
                 TrashCashAdmin.Show()
-            End If
-        Else
-            Dim open As Boolean = False
-            Dim userRow As ds_Application.USERSRow = _currentUserRow
-
-            If (_bypassLogin) Then
-                open = True
-            Else
-                UserSelection = New UserSelection("Administration Login")
-                UserSelection.ShowDialog()
-                If (UserSelection.AuthUserRow IsNot Nothing) Then
-                    open = True
-                    userRow = UserSelection.AuthUserRow
-                End If
-                UserSelection = Nothing
-            End If
-
-            If (open) Then
-                ' making sure userrow is less than 3
-                If (userRow.USER_AUTHLVL < 3) Then
-                    TrashCashAdmin = New TrashCashAdmin(Me, userRow)
-                    TrashCashAdmin.Show()
-                Else
-                    MessageBox.Show("No administrator privledges.", "No privledges", MessageBoxButtons.OK, MessageBoxIcon.Error)
-                End If
+                TrashCashAdmin.BringToFront()
+                Exit Sub
             End If
         End If
+        ' trying to open
+        Dim open As Boolean = False
+        Dim userRow As ds_Application.USERSRow = _currentUserRow
+        If (_bypassLogin) Then
+            open = True
+        Else
+            UserSelection = New Admin.UserSelection("Administration Login")
+            UserSelection.ShowDialog()
+            If (UserSelection.AuthUserRow IsNot Nothing) Then
+                open = True
+                userRow = UserSelection.AuthUserRow
+            End If
+            UserSelection = Nothing
+        End If
+
+        If (open) Then
+            ' making sure userrow auth level is less than 3
+            If (userRow.USER_AUTHLVL < 3) Then
+                TrashCashAdmin = New Admin.TrashCashAdmin(Me, userRow)
+                TrashCashAdmin.Show()
+            Else
+                MessageBox.Show("No administrator privledges.", "No privledges", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            End If
+        End If
+
     End Sub
 
     Private Sub btn_SwitchUser_Click(sender As Object, e As EventArgs) Handles btn_SwitchUser.Click
         If (Not _batchRunning) Then
-            Dim userSwitch As New UserSelection("User Switch")
+            Dim userSwitch As New Admin.UserSelection("User Switch")
             userSwitch.ShowDialog()
             If (userSwitch.AuthUserRow IsNot Nothing) Then
                 ' get new row 
@@ -408,7 +371,7 @@ Public Class TrashCashHome
 
     Private Sub btn_ChangePass_Click(sender As Object, e As EventArgs) Handles btn_ChangePass.Click
         ' check password
-        UserSelection = New UserSelection("Select User for Password Change")
+        UserSelection = New Admin.UserSelection("Select User for Password Change")
         UserSelection.ShowDialog()
 
         If (UserSelection.AuthUserRow IsNot Nothing) Then
@@ -417,7 +380,7 @@ Public Class TrashCashHome
             Dim currentPW As String = UserSelection.AuthPWText
 
             'get new password
-            UserSelection = New UserSelection("New Password", ChangePW:=True)
+            UserSelection = New Admin.UserSelection("New Password", ChangePW:=True)
             UserSelection.Cmb_Users.SelectedValue = changeUserID
             UserSelection.Cmb_Users.Enabled = False
             UserSelection.ShowDialog()
@@ -431,15 +394,12 @@ Public Class TrashCashHome
     End Sub
 
     Private Sub btn_Invoicing_Click(sender As Object, e As EventArgs) Handles btn_Invoicing.Click
-        If (InvoicingForm IsNot Nothing) Then
-            If (InvoicingForm.IsDisposed) Then
-                InvoicingForm = New CustomInvoicingForm
-            End If
-        Else
-            InvoicingForm = New CustomInvoicingForm
+        If (InvoicingForm Is Nothing) Then
+            InvoicingForm = New Invoicing.CustomInvoicingForm
+            InvoicingForm.MdiParent = Me
         End If
-
         InvoicingForm.BringToFront()
         InvoicingForm.Show()
+        InvoicingForm.CustomerToolstrip1.QuickSearch.TextBox.SelectAll()
     End Sub
 End Class

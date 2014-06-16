@@ -7,23 +7,27 @@ Namespace QBStuff
         Public SessionManager As QBSessionManager
         Public MessageSetRequest As IMsgSetRequest
 
-        Public Sub InitCon()
+        Public Function InitCon() As Boolean
+            ' bool to return when connected
+            Dim connected As Boolean = False
             SessionManager = New QBSessionManager()
-            Try
-                ' attempt to start qbfc services
-                StartQBFCServices()
-                ' get connection
-                With SessionManager
-                    .OpenConnection2("V1", "TrashCash", ENConnectionType.ctLocalQBD)
-                    .BeginSession(My.Settings.QB_FILE_LOCATION.ToString, ENOpenMode.omDontCare)
-                End With
-            Catch ex As Exception
-                MsgBox(ex.Message & vbCrLf & ex.InnerException.Message)
-                Application.Exit()
-            End Try
-
-            MessageSetRequest = SessionManager.CreateMsgSetRequest("US", 11, 0)
-        End Sub
+            ' attempt to start qbfc services
+            StartQBFCServices()
+            While Not connected
+                Try
+                   ' get connection
+                    With SessionManager
+                        .OpenConnection2("V1", "TrashCash", ENConnectionType.ctLocalQBD)
+                        .BeginSession(My.Settings.QB_FILE_LOCATION.ToString, ENOpenMode.omDontCare)
+                    End With
+                    MessageSetRequest = SessionManager.CreateMsgSetRequest("US", 11, 0)
+                    connected = True
+                Catch ex As Exception
+                    connected = False
+                End Try
+            End While
+            Return connected
+        End Function
 
         Private Sub StartQBFCServices()
             Dim s As New List(Of String)

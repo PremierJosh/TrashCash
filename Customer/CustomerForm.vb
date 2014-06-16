@@ -45,7 +45,7 @@
                 CurrentCustomer = CustomerToolstrip1.CurrentCustomer
             End If
             ' set focus to quick search
-            CustomerToolstrip1.QuickSearch.TextBox.Select()
+            'CustomerToolstrip1.QuickSearch.TextBox.Select()
             CustomerToolstrip1.GetCustomerBalance()
         End Sub
 

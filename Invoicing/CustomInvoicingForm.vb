@@ -23,6 +23,13 @@ Namespace Invoicing
         ' invoice row for easier refrence
         Private _invRow As DS_Invoicing.CustomInvoicesRow
 
+        Private Sub CustomInvoicingForm_FormClosing(sender As Object, e As System.Windows.Forms.FormClosingEventArgs) Handles Me.FormClosing
+            If (e.CloseReason <> CloseReason.ApplicationExitCall) Then
+                e.Cancel = True
+                Hide()
+            End If
+        End Sub
+
         Private Sub CustomInvoicingForm_Load(sender As Object, e As System.EventArgs) Handles Me.Load
             ' line type fill
             LtTA.Fill(Invoicing.CustomInvoice_LineTypes)

@@ -17,7 +17,6 @@ Namespace RecurringService
             End Set
         End Property
 
-
         ' customer name propety to display at top
         Private _custName As String
         Friend Property CustomerName As String
@@ -139,7 +138,9 @@ Namespace RecurringService
                         End Using
                     End If
 
-
+                    ' set selected service in combo box and its default rate
+                    cmb_ServiceTypes.SelectedValue = RecurringServiceRow.ServiceTypeID
+                    lbl_DefPriceValue.Text = FormatCurrency(CType(CType(cmb_ServiceTypes.SelectedItem, DataRowView).Row, ds_Types.ServiceTypesRow).ServiceRate)
                 End If
             End Set
         End Property
@@ -158,11 +159,11 @@ Namespace RecurringService
                         Invoiced = True
                     End If
                 Else
-                    ' creating new row with dummy values
+                 ' creating new row with dummy values
                     Dim row As ds_RecurringService.RecurringServiceRow = Ds_RecurringService.RecurringService.NewRecurringServiceRow
                     row.CustomerNumber = CustomerNumber
                     row.ServiceTypeID = cmb_ServiceTypes.SelectedValue
-                    row.RecurringServiceRate = DirectCast(cmb_ServiceTypes.SelectedItem, ds_Types.ServiceTypesRow).ServiceRate
+                    row.RecurringServiceRate = CType(CType(cmb_ServiceTypes.SelectedItem, DataRowView).Row, ds_Types.ServiceTypesRow).ServiceRate
                     row.RecurringServiceQuantity = 1
                     row.RecurringServiceStartDate = Date.Now
                     row.RecurringServiceBillLength = 1
@@ -177,16 +178,10 @@ Namespace RecurringService
                     Ds_RecurringService.RecurringService.AddRecurringServiceRow(row)
                     RecurringServiceRow = row
 
-                    ' hide status text
-                    lbl_RecStatus.Visible = False
-                    ' hiding approved button for new services
-                    btn_Approve.Visible = False
-
                     ' hiding credit and bill history tabs
-                    tp_BillHist.Hide()
-                    tp_Credits.Hide()
-                    tp_Notes.Hide()
-
+                    tc_Master.TabPages.Remove(tp_BillHist)
+                    tc_Master.TabPages.Remove(tp_Credits)
+                    tc_Master.TabPages.Remove(tp_Notes)
                 End If
             End Set
         End Property
@@ -198,11 +193,15 @@ Namespace RecurringService
         Private WriteOnly Property Approved As Boolean
             Set(value As Boolean)
                 If (value = False) Then
+                    ' show approve and delete buttons
                     btn_Approve.Visible = True
+                    btn_Delete.Visible = True
+                    ' hiding credit and bill history tabs
+                    tc_Master.TabPages.Remove(tp_BillHist)
+                    tc_Master.TabPages.Remove(tp_Credits)
+                    tc_Master.TabPages.Remove(tp_Notes)
                     ' update status text
                     StatusText = "This Recurring Service has not been Approved for Invoicing. You can still change anything related to this service."
-                Else
-                    btn_Approve.Visible = False
                 End If
             End Set
         End Property
@@ -524,10 +523,12 @@ Namespace RecurringService
 
             ' pickup day
             Dim c As Integer = grp_PickupDay.Controls.OfType(Of CheckBox)().Count(Function(control) (control.Checked = True))
-
+            
             If (c = 0) Then
                 validated = False
                 MessageBox.Show("At least 1 Pickup Day must be selected.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            Else
+                'cleanup row for non null values
             End If
 
             Return validated
@@ -549,29 +550,22 @@ Namespace RecurringService
 
                 ' updating addr tbs
                 ' checking for null values for addr2-4
-                If (_custRow.IsCustomerBillingAddr2Null = False) Then
-                    ' tb_SrvcAddr1.Text = custRow.CustomerBillingAddr1
+                If (Not _custRow.IsCustomerBillingAddr2Null) Then
                     RecurringServiceRow.RecurringServiceAddr1 = _custRow.CustomerBillingAddr2
                 End If
-                If (_custRow.IsCustomerBillingAddr3Null = False) Then
-                    'tb_SrvcAddr2.Text = custRow.CustomerBillingAddr2
+                If (Not _custRow.IsCustomerBillingAddr3Null) Then
                     RecurringServiceRow.RecurringServiceAddr2 = _custRow.CustomerBillingAddr3
                 End If
-                If (_custRow.IsCustomerBillingAddr4Null = False) Then
-                    'tb_SrvcAddr3.Text = custRow.CustomerBillingAddr3
+                If (Not _custRow.IsCustomerBillingAddr4Null) Then
                     RecurringServiceRow.RecurringServiceAddr3 = _custRow.CustomerBillingAddr4
                 End If
 
-                'tb_SrvcCity.Text = custRow.CustomerBillingCity
                 RecurringServiceRow.RecurringServiceCity = _custRow.CustomerBillingCity
-                'tb_SrvcState.Text = custRow.CustomerBillingState
                 RecurringServiceRow.RecurringServiceState = _custRow.CustomerBillingState
-                'tb_SrvcZip.Text = custRow.CustomerBillingZip
                 RecurringServiceRow.RecurringServiceZip = _custRow.CustomerBillingZip
 
                 ' refresh binding source to tbs have new text
                 RecurringServiceBindingSource.ResetCurrentItem()
-
             End If
         End Sub
 
@@ -773,19 +767,35 @@ Namespace RecurringService
 
         Private Sub cmb_ServiceTypes_SelectionChangeCommitted(sender As System.Object, e As System.EventArgs) Handles cmb_ServiceTypes.SelectionChangeCommitted
             ' getting row
-            Dim row As ds_Types.ServiceTypesRow = DirectCast(cmb_ServiceTypes.SelectedItem, ds_Types.ServiceTypesRow)
+            Dim row As ds_Types.ServiceTypesRow = CType(CType(cmb_ServiceTypes.SelectedItem, DataRowView).Row, ds_Types.ServiceTypesRow)
             ' update default price lbl
             lbl_DefPriceValue.Text = FormatCurrency(row.ServiceRate)
             ' adjust rate box to default
-            tb_Rate.Text = CDec(row.ServiceRate)
+            RecurringServiceRow.RecurringServiceRate = row.ServiceRate
             ' update bill length
             RecurringServiceRow.RecurringServiceBillLength = row.ServiceBillLength
             ' also going to reset quantity to 1
             RecurringServiceRow.RecurringServiceQuantity = 1
+            ' and update row with new value
+            RecurringServiceRow.ServiceTypeID = row.ServiceTypeID
+            ' refresh controls
+            RecurringServiceBindingSource.ResetCurrentItem()
         End Sub
 
         Private Sub dg_CreditHistory_RowPrePaint(sender As System.Object, e As System.Windows.Forms.DataGridViewRowPrePaintEventArgs) Handles dg_CreditHistory.RowPrePaint
             AppColors.ColorGrid(dg_CreditHistory, "Voided")
+        End Sub
+
+        Private Sub btn_Delete_Click(sender As System.Object, e As System.EventArgs) Handles btn_Delete.Click
+            Dim result As DialogResult = MessageBox.Show("Delete Recurring Service?", "Confirm delete", MessageBoxButtons.YesNo, MessageBoxIcon.Question)
+            If (result = Windows.Forms.DialogResult.Yes) Then
+                RsTA.RecurringService_DeleteByID(RecurringServiceID)
+                ' refresh approval count and service changes
+                ServiceUpdated = True
+                RaiseEvent ServiceApproved()
+                ' close form
+                Close()
+            End If
         End Sub
     End Class
 End Namespace

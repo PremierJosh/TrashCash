@@ -28,30 +28,24 @@ Namespace Payments
         <System.Diagnostics.DebuggerStepThrough()> _
         Private Sub InitializeComponent()
             Me.components = New System.ComponentModel.Container()
+            Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
             Me.cm_PayGrid = New System.Windows.Forms.ContextMenuStrip(Me.components)
-            Me.DeleteToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-            Me.WorkingPaymentsBindingSource = New System.Windows.Forms.BindingSource(Me.components)
-            Me.Payments = New DS_Payments()
+            Me.btn_DeletePay = New System.Windows.Forms.ToolStripMenuItem()
             Me.tc_Master = New System.Windows.Forms.TabControl()
             Me.tc_p_CustNotes = New System.Windows.Forms.TabPage()
-            Me.UC_CustomerNotes = New UC_CustomerNotes()
+            Me.UC_CustomerNotes = New TrashCash.Customer.UC_CustomerNotes()
             Me.tc_p_CustInfo = New System.Windows.Forms.TabPage()
             Me.UC_CustomerInfoBoxes = New TrashCash.Customer.UC_CustomerInfoBoxes()
-            Me.WorkingPaymentsTableAdapter = New ds_PaymentsTableAdapters.WorkingPaymentsTableAdapter()
             Me.Panel1 = New System.Windows.Forms.Panel()
             Me.pnl_TopContent = New System.Windows.Forms.Panel()
             Me.CustomerToolstrip1 = New TrashCash.Classes.CustomerToolstrip.CustomerToolstrip()
-            Me.DataGridView1 = New System.Windows.Forms.DataGridView()
-            Me.WorkingPaymentsIDDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
-            Me.CustomerNumberDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
-            Me.WorkingPaymentsAmountDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
-            Me.WorkingPaymentsTypeDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
-            Me.WorkingPaymentsCheckNumDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
-            Me.WorkingPaymentsStatusDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
-            Me.TIMERECEIVEDDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
-            Me.DATEONCHECKDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
-            Me.InsertedByUserDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
             Me.pnl_Right = New System.Windows.Forms.Panel()
+            Me.dg_PrepPay = New System.Windows.Forms.DataGridView()
+            Me.CustomerFullName = New System.Windows.Forms.DataGridViewTextBoxColumn()
+            Me.WorkingPaymentsAmountDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+            Me.WorkingPaymentsCheckNum = New System.Windows.Forms.DataGridViewTextBoxColumn()
+            Me.BATCHWorkingPaymentsBindingSource = New System.Windows.Forms.BindingSource(Me.components)
+            Me.Ds_Batching = New TrashCash.ds_Batching()
             Me.lbl_PaysInQueue = New System.Windows.Forms.Label()
             Me.cmb_PayTypes = New System.Windows.Forms.ComboBox()
             Me.PaymentTypesBindingSource = New System.Windows.Forms.BindingSource(Me.components)
@@ -67,41 +61,32 @@ Namespace Payments
             Me.lbl_RefNumber = New System.Windows.Forms.Label()
             Me.tb_Amount = New TrashCash.Classes.CurrencyTextBox()
             Me.Label1 = New System.Windows.Forms.Label()
+            Me.BATCH_WorkingPaymentsTableAdapter = New TrashCash.BATCH_WorkingPaymentsTableAdapter()
             Me.cm_PayGrid.SuspendLayout()
-            CType(Me.WorkingPaymentsBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
-            CType(Me.Payments, System.ComponentModel.ISupportInitialize).BeginInit()
             Me.tc_Master.SuspendLayout()
             Me.tc_p_CustNotes.SuspendLayout()
             Me.tc_p_CustInfo.SuspendLayout()
             Me.Panel1.SuspendLayout()
             Me.pnl_TopContent.SuspendLayout()
-            CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).BeginInit()
             Me.pnl_Right.SuspendLayout()
+            CType(Me.dg_PrepPay, System.ComponentModel.ISupportInitialize).BeginInit()
+            CType(Me.BATCHWorkingPaymentsBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
+            CType(Me.Ds_Batching, System.ComponentModel.ISupportInitialize).BeginInit()
             CType(Me.PaymentTypesBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
             CType(Me.Ds_Types, System.ComponentModel.ISupportInitialize).BeginInit()
             Me.SuspendLayout()
             '
             'cm_PayGrid
             '
-            Me.cm_PayGrid.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.DeleteToolStripMenuItem})
+            Me.cm_PayGrid.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.btn_DeletePay})
             Me.cm_PayGrid.Name = "cm_PayGrid"
-            Me.cm_PayGrid.Size = New System.Drawing.Size(205, 26)
+            Me.cm_PayGrid.Size = New System.Drawing.Size(205, 48)
             '
-            'DeleteToolStripMenuItem
+            'btn_DeletePay
             '
-            Me.DeleteToolStripMenuItem.Name = "DeleteToolStripMenuItem"
-            Me.DeleteToolStripMenuItem.Size = New System.Drawing.Size(204, 22)
-            Me.DeleteToolStripMenuItem.Text = "Delete Selected Payment"
-            '
-            'WorkingPaymentsBindingSource
-            '
-            Me.WorkingPaymentsBindingSource.DataMember = "WorkingPayments"
-            Me.WorkingPaymentsBindingSource.DataSource = Me.Payments
-            '
-            'ds_Payments
-            '
-            Me.Payments.DataSetName = "DataSet"
-            Me.Payments.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema
+            Me.btn_DeletePay.Name = "btn_DeletePay"
+            Me.btn_DeletePay.Size = New System.Drawing.Size(204, 22)
+            Me.btn_DeletePay.Text = "Delete Selected Payment"
             '
             'tc_Master
             '
@@ -147,6 +132,7 @@ Namespace Payments
             '
             'UC_CustomerInfoBoxes
             '
+            Me.UC_CustomerInfoBoxes.AllowUpdate = False
             Me.UC_CustomerInfoBoxes.CurrentCustomer = 0
             Me.UC_CustomerInfoBoxes.Dock = System.Windows.Forms.DockStyle.Fill
             Me.UC_CustomerInfoBoxes.IsUpdating = False
@@ -154,10 +140,6 @@ Namespace Payments
             Me.UC_CustomerInfoBoxes.Name = "UC_CustomerInfoBoxes"
             Me.UC_CustomerInfoBoxes.Size = New System.Drawing.Size(902, 173)
             Me.UC_CustomerInfoBoxes.TabIndex = 0
-            '
-            'WorkingPaymentsTableAdapter
-            '
-            Me.WorkingPaymentsTableAdapter.ClearBeforeFill = False
             '
             'Panel1
             '
@@ -189,94 +171,73 @@ Namespace Payments
             Me.CustomerToolstrip1.TabIndex = 0
             Me.CustomerToolstrip1.Text = "CustomerToolstrip1"
             '
-            'DataGridView1
-            '
-            Me.DataGridView1.AllowUserToAddRows = False
-            Me.DataGridView1.AllowUserToDeleteRows = False
-            Me.DataGridView1.AutoGenerateColumns = False
-            Me.DataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-            Me.DataGridView1.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.WorkingPaymentsIDDataGridViewTextBoxColumn, Me.CustomerNumberDataGridViewTextBoxColumn, Me.WorkingPaymentsAmountDataGridViewTextBoxColumn, Me.WorkingPaymentsTypeDataGridViewTextBoxColumn, Me.WorkingPaymentsCheckNumDataGridViewTextBoxColumn, Me.WorkingPaymentsStatusDataGridViewTextBoxColumn, Me.TIMERECEIVEDDataGridViewTextBoxColumn, Me.DATEONCHECKDataGridViewTextBoxColumn, Me.InsertedByUserDataGridViewTextBoxColumn})
-            Me.DataGridView1.DataSource = Me.WorkingPaymentsBindingSource
-            Me.DataGridView1.Dock = System.Windows.Forms.DockStyle.Fill
-            Me.DataGridView1.Location = New System.Drawing.Point(0, 21)
-            Me.DataGridView1.Name = "DataGridView1"
-            Me.DataGridView1.ReadOnly = True
-            Me.DataGridView1.RowHeadersVisible = False
-            Me.DataGridView1.Size = New System.Drawing.Size(513, 193)
-            Me.DataGridView1.TabIndex = 97
-            '
-            'WorkingPaymentsIDDataGridViewTextBoxColumn
-            '
-            Me.WorkingPaymentsIDDataGridViewTextBoxColumn.DataPropertyName = "WorkingPaymentsID"
-            Me.WorkingPaymentsIDDataGridViewTextBoxColumn.HeaderText = "WorkingPaymentsID"
-            Me.WorkingPaymentsIDDataGridViewTextBoxColumn.Name = "WorkingPaymentsIDDataGridViewTextBoxColumn"
-            Me.WorkingPaymentsIDDataGridViewTextBoxColumn.ReadOnly = True
-            '
-            'CustomerNumberDataGridViewTextBoxColumn
-            '
-            Me.CustomerNumberDataGridViewTextBoxColumn.DataPropertyName = "CustomerNumber"
-            Me.CustomerNumberDataGridViewTextBoxColumn.HeaderText = "CustomerNumber"
-            Me.CustomerNumberDataGridViewTextBoxColumn.Name = "CustomerNumberDataGridViewTextBoxColumn"
-            Me.CustomerNumberDataGridViewTextBoxColumn.ReadOnly = True
-            '
-            'WorkingPaymentsAmountDataGridViewTextBoxColumn
-            '
-            Me.WorkingPaymentsAmountDataGridViewTextBoxColumn.DataPropertyName = "WorkingPaymentsAmount"
-            Me.WorkingPaymentsAmountDataGridViewTextBoxColumn.HeaderText = "WorkingPaymentsAmount"
-            Me.WorkingPaymentsAmountDataGridViewTextBoxColumn.Name = "WorkingPaymentsAmountDataGridViewTextBoxColumn"
-            Me.WorkingPaymentsAmountDataGridViewTextBoxColumn.ReadOnly = True
-            '
-            'WorkingPaymentsTypeDataGridViewTextBoxColumn
-            '
-            Me.WorkingPaymentsTypeDataGridViewTextBoxColumn.DataPropertyName = "WorkingPaymentsType"
-            Me.WorkingPaymentsTypeDataGridViewTextBoxColumn.HeaderText = "WorkingPaymentsType"
-            Me.WorkingPaymentsTypeDataGridViewTextBoxColumn.Name = "WorkingPaymentsTypeDataGridViewTextBoxColumn"
-            Me.WorkingPaymentsTypeDataGridViewTextBoxColumn.ReadOnly = True
-            '
-            'WorkingPaymentsCheckNumDataGridViewTextBoxColumn
-            '
-            Me.WorkingPaymentsCheckNumDataGridViewTextBoxColumn.DataPropertyName = "WorkingPaymentsCheckNum"
-            Me.WorkingPaymentsCheckNumDataGridViewTextBoxColumn.HeaderText = "WorkingPaymentsCheckNum"
-            Me.WorkingPaymentsCheckNumDataGridViewTextBoxColumn.Name = "WorkingPaymentsCheckNumDataGridViewTextBoxColumn"
-            Me.WorkingPaymentsCheckNumDataGridViewTextBoxColumn.ReadOnly = True
-            '
-            'WorkingPaymentsStatusDataGridViewTextBoxColumn
-            '
-            Me.WorkingPaymentsStatusDataGridViewTextBoxColumn.DataPropertyName = "WorkingPaymentsStatus"
-            Me.WorkingPaymentsStatusDataGridViewTextBoxColumn.HeaderText = "WorkingPaymentsStatus"
-            Me.WorkingPaymentsStatusDataGridViewTextBoxColumn.Name = "WorkingPaymentsStatusDataGridViewTextBoxColumn"
-            Me.WorkingPaymentsStatusDataGridViewTextBoxColumn.ReadOnly = True
-            '
-            'TIMERECEIVEDDataGridViewTextBoxColumn
-            '
-            Me.TIMERECEIVEDDataGridViewTextBoxColumn.DataPropertyName = "TIME_RECEIVED"
-            Me.TIMERECEIVEDDataGridViewTextBoxColumn.HeaderText = "TIME_RECEIVED"
-            Me.TIMERECEIVEDDataGridViewTextBoxColumn.Name = "TIMERECEIVEDDataGridViewTextBoxColumn"
-            Me.TIMERECEIVEDDataGridViewTextBoxColumn.ReadOnly = True
-            '
-            'DATEONCHECKDataGridViewTextBoxColumn
-            '
-            Me.DATEONCHECKDataGridViewTextBoxColumn.DataPropertyName = "DATE_ON_CHECK"
-            Me.DATEONCHECKDataGridViewTextBoxColumn.HeaderText = "DATE_ON_CHECK"
-            Me.DATEONCHECKDataGridViewTextBoxColumn.Name = "DATEONCHECKDataGridViewTextBoxColumn"
-            Me.DATEONCHECKDataGridViewTextBoxColumn.ReadOnly = True
-            '
-            'InsertedByUserDataGridViewTextBoxColumn
-            '
-            Me.InsertedByUserDataGridViewTextBoxColumn.DataPropertyName = "InsertedByUser"
-            Me.InsertedByUserDataGridViewTextBoxColumn.HeaderText = "InsertedByUser"
-            Me.InsertedByUserDataGridViewTextBoxColumn.Name = "InsertedByUserDataGridViewTextBoxColumn"
-            Me.InsertedByUserDataGridViewTextBoxColumn.ReadOnly = True
-            '
             'pnl_Right
             '
-            Me.pnl_Right.Controls.Add(Me.DataGridView1)
+            Me.pnl_Right.Controls.Add(Me.dg_PrepPay)
             Me.pnl_Right.Controls.Add(Me.lbl_PaysInQueue)
             Me.pnl_Right.Dock = System.Windows.Forms.DockStyle.Right
             Me.pnl_Right.Location = New System.Drawing.Point(403, 53)
             Me.pnl_Right.Name = "pnl_Right"
             Me.pnl_Right.Size = New System.Drawing.Size(513, 214)
             Me.pnl_Right.TabIndex = 98
+            '
+            'dg_PrepPay
+            '
+            Me.dg_PrepPay.AllowUserToAddRows = False
+            Me.dg_PrepPay.AllowUserToDeleteRows = False
+            Me.dg_PrepPay.AllowUserToResizeRows = False
+            Me.dg_PrepPay.AutoGenerateColumns = False
+            Me.dg_PrepPay.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing
+            Me.dg_PrepPay.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.CustomerFullName, Me.WorkingPaymentsAmountDataGridViewTextBoxColumn, Me.WorkingPaymentsCheckNum})
+            Me.dg_PrepPay.ContextMenuStrip = Me.cm_PayGrid
+            Me.dg_PrepPay.DataSource = Me.BATCHWorkingPaymentsBindingSource
+            Me.dg_PrepPay.Dock = System.Windows.Forms.DockStyle.Fill
+            Me.dg_PrepPay.Location = New System.Drawing.Point(0, 21)
+            Me.dg_PrepPay.MultiSelect = False
+            Me.dg_PrepPay.Name = "dg_PrepPay"
+            Me.dg_PrepPay.ReadOnly = True
+            Me.dg_PrepPay.RowHeadersVisible = False
+            Me.dg_PrepPay.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
+            Me.dg_PrepPay.Size = New System.Drawing.Size(513, 193)
+            Me.dg_PrepPay.TabIndex = 99
+            '
+            'CustomerFullName
+            '
+            Me.CustomerFullName.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill
+            Me.CustomerFullName.DataPropertyName = "CustomerFullName"
+            Me.CustomerFullName.HeaderText = "Customer Name"
+            Me.CustomerFullName.Name = "CustomerFullName"
+            Me.CustomerFullName.ReadOnly = True
+            '
+            'WorkingPaymentsAmountDataGridViewTextBoxColumn
+            '
+            Me.WorkingPaymentsAmountDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
+            Me.WorkingPaymentsAmountDataGridViewTextBoxColumn.DataPropertyName = "WorkingPaymentsAmount"
+            DataGridViewCellStyle2.Format = "C2"
+            Me.WorkingPaymentsAmountDataGridViewTextBoxColumn.DefaultCellStyle = DataGridViewCellStyle2
+            Me.WorkingPaymentsAmountDataGridViewTextBoxColumn.HeaderText = "Amount"
+            Me.WorkingPaymentsAmountDataGridViewTextBoxColumn.Name = "WorkingPaymentsAmountDataGridViewTextBoxColumn"
+            Me.WorkingPaymentsAmountDataGridViewTextBoxColumn.ReadOnly = True
+            Me.WorkingPaymentsAmountDataGridViewTextBoxColumn.Width = 68
+            '
+            'WorkingPaymentsCheckNum
+            '
+            Me.WorkingPaymentsCheckNum.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
+            Me.WorkingPaymentsCheckNum.DataPropertyName = "WorkingPaymentsCheckNum"
+            Me.WorkingPaymentsCheckNum.HeaderText = "Check #"
+            Me.WorkingPaymentsCheckNum.Name = "WorkingPaymentsCheckNum"
+            Me.WorkingPaymentsCheckNum.ReadOnly = True
+            Me.WorkingPaymentsCheckNum.Width = 73
+            '
+            'BATCHWorkingPaymentsBindingSource
+            '
+            Me.BATCHWorkingPaymentsBindingSource.DataMember = "BATCH_WorkingPayments"
+            Me.BATCHWorkingPaymentsBindingSource.DataSource = Me.Ds_Batching
+            '
+            'Ds_Batching
+            '
+            Me.Ds_Batching.DataSetName = "ds_Batching"
+            Me.Ds_Batching.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema
             '
             'lbl_PaysInQueue
             '
@@ -405,6 +366,10 @@ Namespace Payments
             Me.Label1.TabIndex = 112
             Me.Label1.Text = "Amount:"
             '
+            'BATCH_WorkingPaymentsTableAdapter
+            '
+            Me.BATCH_WorkingPaymentsTableAdapter.ClearBeforeFill = True
+            '
             'PaymentsForm
             '
             Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -429,16 +394,16 @@ Namespace Payments
             Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent
             Me.Text = "Payments"
             Me.cm_PayGrid.ResumeLayout(False)
-            CType(Me.WorkingPaymentsBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
-            CType(Me.Payments, System.ComponentModel.ISupportInitialize).EndInit()
             Me.tc_Master.ResumeLayout(False)
             Me.tc_p_CustNotes.ResumeLayout(False)
             Me.tc_p_CustInfo.ResumeLayout(False)
             Me.Panel1.ResumeLayout(False)
             Me.pnl_TopContent.ResumeLayout(False)
             Me.pnl_TopContent.PerformLayout()
-            CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).EndInit()
             Me.pnl_Right.ResumeLayout(False)
+            CType(Me.dg_PrepPay, System.ComponentModel.ISupportInitialize).EndInit()
+            CType(Me.BATCHWorkingPaymentsBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
+            CType(Me.Ds_Batching, System.ComponentModel.ISupportInitialize).EndInit()
             CType(Me.PaymentTypesBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
             CType(Me.Ds_Types, System.ComponentModel.ISupportInitialize).EndInit()
             Me.ResumeLayout(False)
@@ -450,26 +415,13 @@ Namespace Payments
         Friend WithEvents UC_CustomerNotes As UC_CustomerNotes
         Friend WithEvents tc_p_CustInfo As System.Windows.Forms.TabPage
         Friend WithEvents UC_CustomerInfoBoxes As UC_CustomerInfoBoxes
-        Friend WithEvents Payments As ds_Payments
-        Friend WithEvents WorkingPaymentsBindingSource As System.Windows.Forms.BindingSource
-        Friend WithEvents WorkingPaymentsTableAdapter As ds_PaymentsTableAdapters.WorkingPaymentsTableAdapter
         Friend WithEvents CustomerFullNameDataGridViewTextBoxColumn As System.Windows.Forms.DataGridViewTextBoxColumn
         Friend WithEvents PaymentTypeNameDataGridViewTextBoxColumn As System.Windows.Forms.DataGridViewTextBoxColumn
         Friend WithEvents cm_PayGrid As System.Windows.Forms.ContextMenuStrip
-        Friend WithEvents DeleteToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
+        Friend WithEvents btn_DeletePay As System.Windows.Forms.ToolStripMenuItem
         Friend WithEvents Panel1 As System.Windows.Forms.Panel
         Friend WithEvents pnl_TopContent As System.Windows.Forms.Panel
         Friend WithEvents CustomerToolstrip1 As TrashCash.Classes.CustomerToolstrip.CustomerToolstrip
-        Friend WithEvents DataGridView1 As System.Windows.Forms.DataGridView
-        Friend WithEvents WorkingPaymentsIDDataGridViewTextBoxColumn As System.Windows.Forms.DataGridViewTextBoxColumn
-        Friend WithEvents CustomerNumberDataGridViewTextBoxColumn As System.Windows.Forms.DataGridViewTextBoxColumn
-        Friend WithEvents WorkingPaymentsAmountDataGridViewTextBoxColumn As System.Windows.Forms.DataGridViewTextBoxColumn
-        Friend WithEvents WorkingPaymentsTypeDataGridViewTextBoxColumn As System.Windows.Forms.DataGridViewTextBoxColumn
-        Friend WithEvents WorkingPaymentsCheckNumDataGridViewTextBoxColumn As System.Windows.Forms.DataGridViewTextBoxColumn
-        Friend WithEvents WorkingPaymentsStatusDataGridViewTextBoxColumn As System.Windows.Forms.DataGridViewTextBoxColumn
-        Friend WithEvents TIMERECEIVEDDataGridViewTextBoxColumn As System.Windows.Forms.DataGridViewTextBoxColumn
-        Friend WithEvents DATEONCHECKDataGridViewTextBoxColumn As System.Windows.Forms.DataGridViewTextBoxColumn
-        Friend WithEvents InsertedByUserDataGridViewTextBoxColumn As System.Windows.Forms.DataGridViewTextBoxColumn
         Friend WithEvents pnl_Right As System.Windows.Forms.Panel
         Friend WithEvents lbl_PaysInQueue As System.Windows.Forms.Label
         Friend WithEvents cmb_PayTypes As System.Windows.Forms.ComboBox
@@ -486,5 +438,12 @@ Namespace Payments
         Friend WithEvents lbl_RefNumber As System.Windows.Forms.Label
         Friend WithEvents tb_Amount As TrashCash.Classes.CurrencyTextBox
         Friend WithEvents Label1 As System.Windows.Forms.Label
+        Friend WithEvents Ds_Batching As TrashCash.ds_Batching
+        Friend WithEvents BATCHWorkingPaymentsBindingSource As System.Windows.Forms.BindingSource
+        Friend WithEvents BATCH_WorkingPaymentsTableAdapter As TrashCash.BATCH_WorkingPaymentsTableAdapter
+        Friend WithEvents dg_PrepPay As System.Windows.Forms.DataGridView
+        Friend WithEvents CustomerFullName As System.Windows.Forms.DataGridViewTextBoxColumn
+        Friend WithEvents WorkingPaymentsAmountDataGridViewTextBoxColumn As System.Windows.Forms.DataGridViewTextBoxColumn
+        Friend WithEvents WorkingPaymentsCheckNum As System.Windows.Forms.DataGridViewTextBoxColumn
     End Class
 End Namespace
