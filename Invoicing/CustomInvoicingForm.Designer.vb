@@ -228,6 +228,7 @@ Namespace Invoicing
             Me.CustomerToolstrip1.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden
             Me.CustomerToolstrip1.Location = New System.Drawing.Point(0, 0)
             Me.CustomerToolstrip1.Name = "CustomerToolstrip1"
+            Me.CustomerToolstrip1.Padding = New System.Windows.Forms.Padding(0, 3, 1, 0)
             Me.CustomerToolstrip1.Size = New System.Drawing.Size(819, 31)
             Me.CustomerToolstrip1.TabIndex = 2
             Me.CustomerToolstrip1.Text = "Ts_M_Customer1"

@@ -26,10 +26,7 @@ Namespace Invoicing
         Private Sub CustomInvoicingForm_Load(sender As Object, e As System.EventArgs) Handles Me.Load
             ' line type fill
             LtTA.Fill(Invoicing.CustomInvoice_LineTypes)
-            If (CurrentCustomer = Nothing) Then
-                CurrentCustomer = CustomerToolstrip1.CurrentCustomer
-            End If
-        End Sub
+            End Sub
 
         Private Sub CustomerChanged(ByVal customerNumber As Integer) Handles CustomerToolstrip1.CustomerChanging
             CurrentCustomer = customerNumber
@@ -282,6 +279,7 @@ Namespace Invoicing
                 CustomerToolstrip1.SelectCustomer(customerNumber)
             Else
                 CurrentCustomer = CustomerToolstrip1.CurrentCustomer
+                CustomerToolstrip1.GetCustomerBalance()
             End If
         End Sub
 

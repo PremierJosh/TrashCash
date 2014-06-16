@@ -32,6 +32,7 @@ Namespace Classes.CustomerToolstrip
         ' handles when cmb box selection changes
         Private Sub CustomerChanged(ByVal customerNumber As Integer, ByVal e As EventArgs) Handles CustComboBox.SelectionChangeCommitted
             RaiseEvent CustomerChanging(customerNumber)
+            GetCustomerBalance()
         End Sub
         ' handles when enter is pressed in the quick search tb
         Private Sub QuickSearchEnterKey() Handles QuickSearch.EnterPressed

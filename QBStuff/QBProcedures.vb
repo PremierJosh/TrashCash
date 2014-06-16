@@ -1253,7 +1253,7 @@ Namespace QBStuff
         Public Shared Sub UseNewCredit(ByRef creditObj As QBCreditObj, Optional ByVal newestInvsFirst As Boolean = False, Optional ByRef qbConMgr As QBConMgr = Nothing)
             ' getting list of unpaid invoices
             Dim invObjList As New List(Of QBInvoiceObj)
-            QBRequests.InvoiceQuery(invObjList, customerListID:=creditObj.CustomerListID, incLinkTxn:=True, paidStatus:=ENPaidStatus.psNotPaidOnly, qbConMgr:=ConCheck(qbConMgr))
+            QBRequests.InvoiceQuery(invObjList, customerListID:=creditObj.CustomerListID, paidStatus:=ENPaidStatus.psNotPaidOnly, qbConMgr:=ConCheck(qbConMgr))
             ' checking if we want to pay newest invoices first
             If (newestInvsFirst) Then
                 invObjList.Reverse()

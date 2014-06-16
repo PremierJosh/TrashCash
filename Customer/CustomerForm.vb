@@ -1,11 +1,7 @@
-﻿
-Imports TrashCash.Payments
-
-Namespace Customer
+﻿Namespace Customer
     Public Class CustomerForm
         ' new cust var so can switch form when new cust added
         Private WithEvents _newCust As NewCustomer
-  Private WithEvents _invForm As Invoicing.CustomInvoicingForm
 
         Private _currentCustomer As Integer
         Public Property CurrentCustomer As Integer
@@ -15,16 +11,16 @@ Namespace Customer
             Set(value As Integer)
                 _currentCustomer = value
 
-                    UC_CustomerInfoBoxes.CurrentCustomer = value
-                    UC_CustomerNotes.CurrentCustomer = value
-                    UC_RecurringService.CurrentCustomer = value
-                    UC_Quickbooks.CurrentCustomer = value
-                    UC_Quickbooks.CustomerListID = UC_CustomerInfoBoxes.CustomerListID
-                 
-                    ' update window title
-                    Text = CustomerToolstrip1.ToString
-                    ' send name to uc_recsrvc
-                    UC_RecurringService.CustomerName = CustomerToolstrip1.ToString
+                UC_CustomerInfoBoxes.CurrentCustomer = value
+                UC_CustomerNotes.CurrentCustomer = value
+                UC_RecurringService.CurrentCustomer = value
+                UC_Quickbooks.CurrentCustomer = value
+                UC_Quickbooks.CustomerListID = UC_CustomerInfoBoxes.CustomerListID
+
+                ' update window title
+                Text = CustomerToolstrip1.ToString
+                ' send name to uc_recsrvc
+                UC_RecurringService.CustomerName = CustomerToolstrip1.ToString
             End Set
         End Property
 
@@ -51,7 +47,7 @@ Namespace Customer
         End Sub
 
         Private Sub CustomerChanged(ByVal customerNumber As Integer) Handles CustomerToolstrip1.CustomerChanging
-            CurrentCustomer = CustomerNumber
+            CurrentCustomer = customerNumber
         End Sub
 
         ' event handle for begining to update customer info
@@ -97,13 +93,13 @@ Namespace Customer
             InitializeComponent()
 
             ' Add any initialization after the InitializeComponent() call.
-            UC_RecurringService.HomeForm = HomeForm
+            UC_RecurringService.HomeForm = homeForm
             CustomerToolstrip1.GetCustomerBalance()
         End Sub
 
 
         Private Sub btn_Payments_Click(sender As System.Object, e As System.EventArgs) Handles btn_Payments.Click
-            Dim payForm As New PaymentsForm(CBool(AppQTA.APP_GetDebugMode), customerNumber:=CurrentCustomer)
+            Dim payForm As New Payments.PaymentsForm(CBool(AppQTA.APP_GetDebugMode), customerNumber:=CurrentCustomer)
             payForm.ShowDialog()
             If (payForm.PaymentAdded) Then
                 ' update to grab items in queue

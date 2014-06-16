@@ -11,8 +11,6 @@
             Set(value)
                 If (_currentCustomer <> value) Then
                     _currentCustomer = value
-                    ' reset payment information
-                    ResetPayment()
                     ' do stuff when cust changes here
                     UC_CustomerNotes.CurrentCustomer = value
                     UC_CustomerInfoBoxes.CurrentCustomer = value
@@ -70,6 +68,7 @@
                 CustomerToolstrip1.SelectCustomer(customerNumber)
             Else
                 CurrentCustomer = CustomerToolstrip1.CurrentCustomer
+                CustomerToolstrip1.GetCustomerBalance()
             End If
         End Sub
 
@@ -77,6 +76,7 @@
             ' stop closing and hide form
             If (e.CloseReason <> CloseReason.ApplicationExitCall) Then
                 e.Cancel = True
+                ResetPayment()
                 Hide()
             End If
         End Sub
