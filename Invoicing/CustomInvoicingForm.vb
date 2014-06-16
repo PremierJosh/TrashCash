@@ -2,8 +2,10 @@
 
 Namespace Invoicing
     Public Class CustomInvoicingForm
+        ' field for balance changing
+        Friend BalanceChanged As Boolean
 
-   ' current customer property
+        ' current customer property
         Private _currentCustomer As Integer
         Public Property CurrentCustomer As Integer
             Get
@@ -19,7 +21,7 @@ Namespace Invoicing
         End Property
 
         ' invoice row for easier refrence
-        Private _invRow As ds_Invoicing.CustomInvoicesRow
+        Private _invRow As DS_Invoicing.CustomInvoicesRow
 
         Private Sub CustomInvoicingForm_Load(sender As Object, e As System.EventArgs) Handles Me.Load
             ' line type fill
@@ -57,9 +59,9 @@ Namespace Invoicing
                 Invoicing.CustomInvoices.AddCustomInvoicesRow(_invRow)
 
                 ' build line row
-                Dim line As ds_Invoicing.CustomInvoice_LineItemsRow = Invoicing.CustomInvoice_LineItems.NewCustomInvoice_LineItemsRow
+                Dim line As DS_Invoicing.CustomInvoice_LineItemsRow = Invoicing.CustomInvoice_LineItems.NewCustomInvoice_LineItemsRow
                 ' getting reference to type row
-                Dim type As ds_Invoicing.CustomInvoice_LineTypesRow = CType(DirectCast(cmb_LineTypes.SelectedItem, DataRowView).Row, ds_Invoicing.CustomInvoice_LineTypesRow)
+                Dim type As DS_Invoicing.CustomInvoice_LineTypesRow = CType(DirectCast(cmb_LineTypes.SelectedItem, DataRowView).Row, DS_Invoicing.CustomInvoice_LineTypesRow)
                 With line
                     .CI_ID = _invRow.CI_ID
                     .CI_TypeID = cmb_LineTypes.SelectedValue
@@ -208,7 +210,7 @@ Namespace Invoicing
                     MessageBox.Show("Error - Invoice not created.", "QB Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
                 Else
                     ' creating reminders
-                    For Each row As ds_Invoicing.CustomInvoice_LineItemsRow In Invoicing.CustomInvoice_LineItems
+                    For Each row As DS_Invoicing.CustomInvoice_LineItemsRow In Invoicing.CustomInvoice_LineItems
                         If (row.Reminder) Then
                             LiTA.Reminder_CustomInvoice_Insert(row.CI_ID, row.RenderedOnDate, row.CompiledDescText, CurrentUser.USER_NAME)
                         End If
@@ -219,6 +221,8 @@ Namespace Invoicing
                     CiTA.Fill(HistoryInv.CustomInvoices, CurrentCustomer)
                     MessageBox.Show("Invoice Added.")
                     ResetInvoice()
+                    ' update balance var
+                    BalanceChanged = True
                 End If
             End If
         End Sub
@@ -226,8 +230,10 @@ Namespace Invoicing
         Private Sub dg_InvHistory_CellMouseDown(sender As System.Object, e As System.Windows.Forms.DataGridViewCellMouseEventArgs) Handles dg_InvHistory.CellMouseDown
             ' left click = fill line table with history
             If (e.Button = Windows.Forms.MouseButtons.Left) Then
+                ' clear incase no line items are returned
+                HistoryInv.CustomInvoice_LineItems.Clear()
                 LiTA.Fill(HistoryInv.CustomInvoice_LineItems,
-                                                         CType(CType(dg_InvHistory.SelectedRows(0).DataBoundItem, DataRowView).Row, ds_Invoicing.CustomInvoicesRow).CI_ID)
+                                                         CType(CType(dg_InvHistory.SelectedRows(0).DataBoundItem, DataRowView).Row, DS_Invoicing.CustomInvoicesRow).CI_ID)
             End If
         End Sub
 
@@ -239,7 +245,7 @@ Namespace Invoicing
         Private Sub btn_VoidInv_Click(sender As System.Object, e As System.EventArgs) Handles btn_VoidInv.Click
             If (Trim(tb_VoidReason.Text) <> "") Then
                 ' get row reference
-                Dim row As ds_Invoicing.CustomInvoicesRow = CType(dg_InvHistory.SelectedRows(0).DataBoundItem, DataRowView).Row
+                Dim row As DS_Invoicing.CustomInvoicesRow = CType(dg_InvHistory.SelectedRows(0).DataBoundItem, DataRowView).Row
                 ' checking if row is voided
                 If (Not row.Voided) Then
                     ' getting total of invoice
@@ -247,13 +253,11 @@ Namespace Invoicing
                     Dim prompt As DialogResult = MessageBox.Show("Void Invoice in the amount of " & FormatCurrency(total) & " created on " & row.Time_Created, "Confirm Void", MessageBoxButtons.YesNo, MessageBoxIcon.Question)
                     If (prompt = Windows.Forms.DialogResult.Yes) Then
                         Dim succeed As Boolean = CustomInvoice_Void(row, tb_VoidReason.Text)
-                        If (Not succeed) Then
-                            MessageBox.Show("Error - Invoice not voided.", "QB Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
-                        Else
-                            MessageBox.Show("Invoice Voided.")
-                            HistoryInv.Clear()
+                        If (succeed) Then
+                            MessageBox.Show("Invoice Voided.", "Invoice voided", MessageBoxButtons.OK, MessageBoxIcon.Information)
                             tb_VoidReason.Text = ""
-                            CiTA.Fill(HistoryInv.CustomInvoices, CurrentCustomer)
+                        Else
+                            MessageBox.Show("Error - Invoice not voided.", "QB Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
                         End If
                     End If
                 Else
@@ -261,49 +265,30 @@ Namespace Invoicing
                                     "Already Voided", MessageBoxButtons.OK, MessageBoxIcon.Hand)
                 End If
             Else
-                MsgBox("Must provide a reason.")
+                MessageBox.Show("You must provide a reason to void an invoice.", "Invalid reason", MessageBoxButtons.OK, MessageBoxIcon.Error)
             End If
         End Sub
 
-        Private Sub ColorHistoryForVoids()
-            If (dg_InvHistory.RowCount > 0) Then
-                For i = 0 To dg_InvHistory.RowCount - 1
-                    Dim row As ds_Invoicing.CustomInvoicesRow = CType(dg_InvHistory.Rows(i).DataBoundItem, DataRowView).Row
-                    If (row.Voided) Then
-                        ' credit is voided
-                        dg_InvHistory.Rows(i).DefaultCellStyle.BackColor = AppColors.GridRed
-                        dg_InvHistory.Rows(i).DefaultCellStyle.SelectionBackColor = AppColors.GridRedSel
-                    Else
-                        dg_InvHistory.Rows(i).DefaultCellStyle.BackColor = Color.SpringGreen
-                        dg_InvHistory.Rows(i).DefaultCellStyle.SelectionBackColor = Color.MediumSeaGreen
-                    End If
-                Next
-            End If
-        End Sub
 
         Public Sub New(Optional ByVal customerNumber As Integer = Nothing)
-
             ' This call is required by the designer.
             InitializeComponent()
 
             ' Add any initialization after the InitializeComponent() call.
-
-            If (customerNumber <> Nothing) Then
-                CurrentCustomer = customerNumber
-                ' lock customer bar
+            If (customerNumber <> 0) Then
                 CustomerToolstrip1.Enabled = False
-                ' testing tooltip for info as to why they cant change
-                ToolTip1.Active = True
+                CustomerToolstrip1.HideQuickSearch()
+                CurrentCustomer = customerNumber
+                CustomerToolstrip1.SelectCustomer(customerNumber)
             Else
-                ToolTip1.Active = False
-                CustomerToolstrip1.GetCustomerBalance()
+                CurrentCustomer = CustomerToolstrip1.CurrentCustomer
             End If
         End Sub
 
         Private Sub cmb_RecentAddr_SelectionChangeCommitted(sender As System.Object, e As System.EventArgs) Handles cmb_RecentAddr.SelectionChangeCommitted
             ' get row
             If (cmb_RecentAddr.SelectedValue IsNot Nothing) Then
-                Dim row As ds_Invoicing.Customer_RecentAddrsRow = CType(DirectCast(cmb_RecentAddr.SelectedItem, DataRowView).Row, ds_Invoicing.Customer_RecentAddrsRow)
+                Dim row As DS_Invoicing.Customer_RecentAddrsRow = CType(DirectCast(cmb_RecentAddr.SelectedItem, DataRowView).Row, DS_Invoicing.Customer_RecentAddrsRow)
                 tb_Addr1.Text = row.Addr1
                 If (Not row.IsAddr2Null) Then
                     tb_Addr2.Text = row.Addr2
@@ -317,8 +302,8 @@ Namespace Invoicing
             End If
         End Sub
 
-        Private Sub dg_InvHistory_RowsAdded(sender As System.Object, e As System.Windows.Forms.DataGridViewRowsAddedEventArgs) Handles dg_InvHistory.RowsAdded
-            ColorHistoryForVoids()
+        Private Sub dg_InvHistory_RowPrePaint(sender As System.Object, e As System.Windows.Forms.DataGridViewRowPrePaintEventArgs) Handles dg_InvHistory.RowPrePaint
+            AppColors.ColorGrid(dg_InvHistory, "Voided")
         End Sub
     End Class
 End Namespace

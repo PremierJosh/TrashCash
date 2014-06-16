@@ -1,6 +1,4 @@
-﻿Imports TrashCash.Customer
-Imports TrashCash.Payments
-Imports QBFC12Lib
+﻿Imports TrashCash.Payments
 Imports TrashCash.QBStuff
 
 Namespace Admin.Payments
@@ -154,7 +152,7 @@ Namespace Admin.Payments
                         ta.SetBounced(CheckRow.PaymentID, CurrentUser.USER_NAME, invTxnID, checkObj.TxnID)
                     End Using
                     ' inserting note for customer that check bounced
-                    Using ta As New CustomerNotesTableAdapter
+                    Using ta As New ds_CustomerTableAdapters.CustomerNotesTableAdapter
                         ta.CustomerNotes_Insert(CheckRow.CustomerNumber, "Bounced Check Ref #: " & CheckRow.RefNumber & ". Bank Fee of " & FormatCurrency(BankRow.Bank_Fee) & ". Customer charged " & FormatCurrency(_appRow.BAD_CHECK_CUST_FEE) & ".")
                     End Using
                 Catch ex As SqlException

@@ -43,7 +43,7 @@ Namespace Admin.Payments
             Me.CurrentCustomerBindingSource = New System.Windows.Forms.BindingSource(Me.components)
             Me.Ds_Customer = New ds_Customer()
             Me.lbl_CurrCustomer = New System.Windows.Forms.Label()
-            Me.Customer_ListByActiveTableAdapter = New Customer_ListByActiveTableAdapter()
+            Me.Customer_ListByActiveTableAdapter = New ds_CustomerTableAdapters.Customer_ListByActiveTableAdapter()
             Me.lbl_NewCust = New System.Windows.Forms.Label()
             Me.cmb_MoveToCust = New System.Windows.Forms.ComboBox()
             Me.btn_MovePay = New System.Windows.Forms.Button()
@@ -279,7 +279,7 @@ Namespace Admin.Payments
         Friend WithEvents CurrentCustomerBindingSource As System.Windows.Forms.BindingSource
         Friend WithEvents Ds_Customer As ds_Customer
         Friend WithEvents lbl_CurrCustomer As System.Windows.Forms.Label
-        Friend WithEvents Customer_ListByActiveTableAdapter As Customer_ListByActiveTableAdapter
+        Friend WithEvents Customer_ListByActiveTableAdapter As ds_CustomerTableAdapters.Customer_ListByActiveTableAdapter
         Friend WithEvents lbl_InputBy As System.Windows.Forms.Label
         Friend WithEvents dtp_DateOnChk As System.Windows.Forms.DateTimePicker
         Friend WithEvents lbl_DateOnCk As System.Windows.Forms.Label

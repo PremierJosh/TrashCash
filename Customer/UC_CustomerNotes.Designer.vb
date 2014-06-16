@@ -28,7 +28,7 @@
             Me.dg_CustNotes = New System.Windows.Forms.DataGridView()
             Me.Ds_Customer = New ds_Customer()
             Me.CustomerNotesBindingSource = New System.Windows.Forms.BindingSource(Me.components)
-            Me.CustomerNotesTableAdapter = New CustomerNotesTableAdapter()
+            Me.CustomerNotesTableAdapter = New ds_CustomerTableAdapters.CustomerNotesTableAdapter()
             Me.CustomerNoteTextDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
             Me.CustomerNoteDateDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
             Me.InsertedByUserDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
@@ -115,7 +115,7 @@
         Friend WithEvents InsertedByUserDataGridViewTextBoxColumn As System.Windows.Forms.DataGridViewTextBoxColumn
         Friend WithEvents CustomerNotesBindingSource As System.Windows.Forms.BindingSource
         Friend WithEvents Ds_Customer As ds_Customer
-        Friend WithEvents CustomerNotesTableAdapter As CustomerNotesTableAdapter
+        Friend WithEvents CustomerNotesTableAdapter As ds_CustomerTableAdapters.CustomerNotesTableAdapter
 
     End Class
 End Namespace

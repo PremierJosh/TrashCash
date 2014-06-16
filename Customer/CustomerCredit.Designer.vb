@@ -27,8 +27,8 @@ Namespace Customer
         <System.Diagnostics.DebuggerStepThrough()> _
         Private Sub InitializeComponent()
             Me.components = New System.ComponentModel.Container()
-            Dim DataGridViewCellStyle9 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-            Dim DataGridViewCellStyle10 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+            Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+            Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
             Me.Panel1 = New System.Windows.Forms.Panel()
             Me.pnl_TopContent = New System.Windows.Forms.Panel()
             Me.CustomerToolstrip1 = New TrashCash.Classes.CustomerToolstrip.CustomerToolstrip()
@@ -41,9 +41,9 @@ Namespace Customer
             Me.cm_Void = New System.Windows.Forms.ContextMenuStrip(Me.components)
             Me.btn_VoidCredit = New System.Windows.Forms.ToolStripMenuItem()
             Me.CustomerCreditsBindingSource = New System.Windows.Forms.BindingSource(Me.components)
-            Me.Ds_Customer = New ds_Customer()
+            Me.Ds_Customer = New TrashCash.ds_Customer()
             Me.lbl_CreditHis = New System.Windows.Forms.Label()
-            Me.Customer_CreditsTableAdapter = New Customer_CreditsTableAdapter()
+            Me.Customer_CreditsTableAdapter = New TrashCash.ds_CustomerTableAdapters.Customer_CreditsTableAdapter()
             Me.tb_Amount = New TrashCash.Classes.CurrencyTextBox()
             Me.lbl_Amount = New System.Windows.Forms.Label()
             Me.tb_Reason = New System.Windows.Forms.TextBox()
@@ -88,6 +88,7 @@ Namespace Customer
             '
             Me.CustomerToolstrip1.Dock = System.Windows.Forms.DockStyle.Fill
             Me.CustomerToolstrip1.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden
+            Me.CustomerToolstrip1.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.Flow
             Me.CustomerToolstrip1.Location = New System.Drawing.Point(0, 0)
             Me.CustomerToolstrip1.Name = "CustomerToolstrip1"
             Me.CustomerToolstrip1.Size = New System.Drawing.Size(664, 31)
@@ -127,9 +128,9 @@ Namespace Customer
             '
             Me.CreditAmountDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
             Me.CreditAmountDataGridViewTextBoxColumn.DataPropertyName = "CreditAmount"
-            DataGridViewCellStyle9.Format = "C2"
-            DataGridViewCellStyle9.NullValue = Nothing
-            Me.CreditAmountDataGridViewTextBoxColumn.DefaultCellStyle = DataGridViewCellStyle9
+            DataGridViewCellStyle1.Format = "C2"
+            DataGridViewCellStyle1.NullValue = Nothing
+            Me.CreditAmountDataGridViewTextBoxColumn.DefaultCellStyle = DataGridViewCellStyle1
             Me.CreditAmountDataGridViewTextBoxColumn.HeaderText = "Amount"
             Me.CreditAmountDataGridViewTextBoxColumn.Name = "CreditAmountDataGridViewTextBoxColumn"
             Me.CreditAmountDataGridViewTextBoxColumn.ReadOnly = True
@@ -139,9 +140,9 @@ Namespace Customer
             '
             Me.TimeCreatedDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
             Me.TimeCreatedDataGridViewTextBoxColumn.DataPropertyName = "TimeCreated"
-            DataGridViewCellStyle10.Format = "g"
-            DataGridViewCellStyle10.NullValue = Nothing
-            Me.TimeCreatedDataGridViewTextBoxColumn.DefaultCellStyle = DataGridViewCellStyle10
+            DataGridViewCellStyle2.Format = "g"
+            DataGridViewCellStyle2.NullValue = Nothing
+            Me.TimeCreatedDataGridViewTextBoxColumn.DefaultCellStyle = DataGridViewCellStyle2
             Me.TimeCreatedDataGridViewTextBoxColumn.HeaderText = "Time Created"
             Me.TimeCreatedDataGridViewTextBoxColumn.Name = "TimeCreatedDataGridViewTextBoxColumn"
             Me.TimeCreatedDataGridViewTextBoxColumn.ReadOnly = True
@@ -183,6 +184,7 @@ Namespace Customer
             '
             'Ds_Customer
             '
+            Me.Ds_Customer.DataSetName = "ds_Customer"
             Me.Ds_Customer.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema
             '
             'lbl_CreditHis
@@ -285,7 +287,7 @@ Namespace Customer
             Me.lbl_Type.Size = New System.Drawing.Size(242, 29)
             Me.lbl_Type.TabIndex = 108
             Me.lbl_Type.Text = "Select a type of Recurring Service this Customer has had that you are crediting f" & _
-                               "or."
+        "or."
             '
             'cmb_Types
             '
@@ -306,7 +308,6 @@ Namespace Customer
             Me.ck_Print.TabIndex = 110
             Me.ck_Print.Text = "Print"
             Me.ck_Print.UseVisualStyleBackColor = True
-            '
             '
             'CustomerCredit
             '
@@ -354,7 +355,7 @@ Namespace Customer
         Friend WithEvents CustomerCreditsBindingSource As System.Windows.Forms.BindingSource
         Friend WithEvents Ds_Customer As ds_Customer
         Friend WithEvents lbl_CreditHis As System.Windows.Forms.Label
-        Friend WithEvents Customer_CreditsTableAdapter As Customer_CreditsTableAdapter
+        Friend WithEvents Customer_CreditsTableAdapter As ds_CustomerTableAdapters.Customer_CreditsTableAdapter
         Friend WithEvents tb_Amount As CurrencyTextBox
         Friend WithEvents lbl_Amount As System.Windows.Forms.Label
         Friend WithEvents tb_Reason As System.Windows.Forms.TextBox

@@ -10,9 +10,8 @@ Namespace Customer
         Private _cDT As ds_Customer.Customer_RecurringServiceTypesDataTable
         Private _sDT As ds_Types.ServiceTypesDataTable
 
-        ' event if balance changing but only if bool is true to prevent excessive error throwing
-        Private _balanceChanged As Boolean = False
-        Friend Event BalanceChanged(ByVal customerNumber As Integer)
+        ' field for balance changing on customer
+        Friend BalanceChanged As Boolean
 
         Private _currentCustomer As Integer
         Private Property CurrentCustomer As Integer
@@ -23,7 +22,7 @@ Namespace Customer
                 _currentCustomer = value
                 ' getting service table
                 If (value > 0) Then
-                    Using ta As New Customer_RecurringServiceTypesTableAdapter
+                    Using ta As New ds_CustomerTableAdapters.Customer_RecurringServiceTypesTableAdapter
                         _cDT = ta.GetData(value)
                     End Using
 
@@ -87,8 +86,8 @@ Namespace Customer
                                                     "Sql Error: " & ex.Procedure, MessageBoxButtons.OK,
                                                     MessageBoxIcon.Error)
                                 End Try
-                    End If
-                            _balanceChanged = True
+                            End If
+                            BalanceChanged = True
                             ' reload history table
                             Customer_CreditsTableAdapter.FillByCustomerID(Ds_Customer.Customer_Credits, CurrentCustomer)
                         End If
@@ -123,46 +122,18 @@ Namespace Customer
                         Else
                             MessageBox.Show("Error adding credit memo")
                         End If
-                       _balanceChanged = True
+                        BalanceChanged = True
                         ' reload history table
                         Customer_CreditsTableAdapter.FillByCustomerID(Ds_Customer.Customer_Credits, CurrentCustomer)
                         ' reset form controls to default
                         cmb_Types.SelectedIndex = 0
                         tb_Amount.Text = ""
                         tb_Reason.Text = ""
+                        ' update customer balance on toolstrip
+                        CustomerToolstrip1.GetCustomerBalance()
                     End If
                 End If
             End If
-        End Sub
-
-        Private Sub CustomerCredit_FormClosed(sender As Object, e As System.Windows.Forms.FormClosedEventArgs) Handles Me.FormClosed
-            If (_balanceChanged) Then
-                RaiseEvent BalanceChanged(CurrentCustomer)
-            End If
-        End Sub
-
-        Private Sub ColorHistoryForVoids()
-            If (dg_Credits.RowCount > 0) Then
-                For i = 0 To dg_Credits.RowCount - 1
-                    Dim row As ds_Customer.Customer_CreditsRow = CType(dg_Credits.Rows(i).DataBoundItem, DataRowView).Row
-                    If (row.Voided) Then
-                        ' credit is voided
-                        dg_Credits.Rows(i).DefaultCellStyle.BackColor = Color.Red
-                        dg_Credits.Rows(i).DefaultCellStyle.SelectionBackColor = Color.IndianRed
-                    Else
-                        dg_Credits.Rows(i).DefaultCellStyle.BackColor = Color.SpringGreen
-                        dg_Credits.Rows(i).DefaultCellStyle.SelectionBackColor = Color.MediumSeaGreen
-                    End If
-                Next
-            End If
-        End Sub
-
-        Private Sub dg_Credits_RowsAdded(sender As System.Object, e As System.Windows.Forms.DataGridViewRowsAddedEventArgs) Handles dg_Credits.RowsAdded
-            ColorHistoryForVoids()
-        End Sub
-
-        Private Sub dg_Credits_RowsRemoved(sender As System.Object, e As System.Windows.Forms.DataGridViewRowsRemovedEventArgs) Handles dg_Credits.RowsRemoved
-            ColorHistoryForVoids()
         End Sub
 
         Private Sub CustomerCredit_Load(sender As Object, e As System.EventArgs) Handles Me.Load
@@ -177,6 +148,10 @@ Namespace Customer
                 Next
                 dg_Credits.Rows(e.RowIndex).Selected = True
             End If
+        End Sub
+
+        Private Sub dg_Credits_RowPrePaint(sender As System.Object, e As System.Windows.Forms.DataGridViewRowPrePaintEventArgs) Handles dg_Credits.RowPrePaint
+            AppColors.ColorGrid(dg_Credits, "Voided")
         End Sub
     End Class
 End Namespace

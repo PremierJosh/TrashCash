@@ -1,5 +1,8 @@
 ﻿Namespace Payments
     Public Class PaymentsForm
+        ' field to update if item added to queue
+        Friend PaymentAdded As Boolean
+
         Private _currentCustomer As Integer
         Public Property CurrentCustomer
             Get
@@ -119,39 +122,39 @@
                 tb_Amount.BackColor = AppColors.TextBoxErr
                 Return False
             End If
-         End Function
+        End Function
 
         Private Sub btn_AddPayment_Click(sender As System.Object, e As System.EventArgs) Handles btn_AddPayment.Click
             If (OkToCommit()) Then
-               Dim newID As Integer
-                    ' trimming checknum
-                    Dim checkRefNum As String = Trim(tb_RefNum.Text)
-                    Try
-                        ' checking if override checked
-                        If (ck_Override.Checked) Then
-                            ' inserting override date chosen as time inserted
-                            ' insert with current time and check if dateoncheck is nothing (cash payment)
-                            If (cmb_PayTypes.SelectedValue = 1) Then
-                                newID = WorkingPaymentsTableAdapter.WorkingPayments_Insert_ReturnID(CurrentCustomer, tb_Amount.Text, cmb_PayTypes.SelectedValue, checkRefNum,
-                                                                                                    5, dtp_Override.Value.Date, Nothing, CurrentUser.USER_NAME)
-                            Else
-                                newID = WorkingPaymentsTableAdapter.WorkingPayments_Insert_ReturnID(CurrentCustomer, tb_Amount.Text, cmb_PayTypes.SelectedValue, checkRefNum,
-                                                                                                    5, dtp_Override.Value.Date, dtp_DateOnCheck.Value.Date, CurrentUser.USER_NAME)
-                            End If
+                Dim newID As Integer
+                ' trimming checknum
+                Dim checkRefNum As String = Trim(tb_RefNum.Text)
+                Try
+                    ' checking if override checked
+                    If (ck_Override.Checked) Then
+                        ' inserting override date chosen as time inserted
+                        ' insert with current time and check if dateoncheck is nothing (cash payment)
+                        If (cmb_PayTypes.SelectedValue = 1) Then
+                            newID = WorkingPaymentsTableAdapter.WorkingPayments_Insert_ReturnID(CurrentCustomer, tb_Amount.Text, cmb_PayTypes.SelectedValue, checkRefNum,
+                                                                                                5, dtp_Override.Value.Date, Nothing, CurrentUser.USER_NAME)
                         Else
-                            ' insert with current time and check if dateoncheck is nothing (cash payment)
-                            If (cmb_PayTypes.SelectedValue = 1) Then
-                                newID = WorkingPaymentsTableAdapter.WorkingPayments_Insert_ReturnID(CurrentCustomer, tb_Amount.Text, cmb_PayTypes.SelectedValue, checkRefNum,
-                                                                                                    5, Date.Now, Nothing, CurrentUser.USER_NAME)
-                            Else
-                                newID = WorkingPaymentsTableAdapter.WorkingPayments_Insert_ReturnID(CurrentCustomer, tb_Amount.Text, cmb_PayTypes.SelectedValue, checkRefNum,
-                                                                                                    5, Date.Now, dtp_DateOnCheck.Value.Date, CurrentUser.USER_NAME)
-                            End If
+                            newID = WorkingPaymentsTableAdapter.WorkingPayments_Insert_ReturnID(CurrentCustomer, tb_Amount.Text, cmb_PayTypes.SelectedValue, checkRefNum,
+                                                                                                5, dtp_Override.Value.Date, dtp_DateOnCheck.Value.Date, CurrentUser.USER_NAME)
                         End If
-                    Catch ex as SqlException
-                        MessageBox.Show("Message: " & ex.Message & vbCrLf & "LineNumber: " & ex.LineNumber,
-                                        "Sql Error: " & ex.Procedure, MessageBoxButtons.OK, MessageBoxIcon.Error)
-                    End Try
+                    Else
+                        ' insert with current time and check if dateoncheck is nothing (cash payment)
+                        If (cmb_PayTypes.SelectedValue = 1) Then
+                            newID = WorkingPaymentsTableAdapter.WorkingPayments_Insert_ReturnID(CurrentCustomer, tb_Amount.Text, cmb_PayTypes.SelectedValue, checkRefNum,
+                                                                                                5, Date.Now, Nothing, CurrentUser.USER_NAME)
+                        Else
+                            newID = WorkingPaymentsTableAdapter.WorkingPayments_Insert_ReturnID(CurrentCustomer, tb_Amount.Text, cmb_PayTypes.SelectedValue, checkRefNum,
+                                                                                                5, Date.Now, dtp_DateOnCheck.Value.Date, CurrentUser.USER_NAME)
+                        End If
+                    End If
+                Catch ex As SqlException
+                    MessageBox.Show("Message: " & ex.Message & vbCrLf & "LineNumber: " & ex.LineNumber,
+                                    "Sql Error: " & ex.Procedure, MessageBoxButtons.OK, MessageBoxIcon.Error)
+                End Try
                 ResetPayment(newID:=newID)
             Else
                 MessageBox.Show("Please correct the required fields.", "Invalid Information", MessageBoxButtons.OK, MessageBoxIcon.Error)

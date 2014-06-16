@@ -70,7 +70,7 @@
             Me.Label5 = New System.Windows.Forms.Label()
             Me.Label4 = New System.Windows.Forms.Label()
             Me.tt_CustBillInterval = New System.Windows.Forms.ToolTip(Me.components)
-            Me.CustomerTableAdapter = New CustomerTableAdapter()
+            Me.CustomerTableAdapter = New ds_CustomerTableAdapters.CustomerTableAdapter()
             Me.grp_SrvcInvInfo.SuspendLayout()
             CType(Me.nud_BillInterval, System.ComponentModel.ISupportInitialize).BeginInit()
             CType(Me.CustomerBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -598,7 +598,7 @@
         Friend WithEvents nud_BillInterval As System.Windows.Forms.NumericUpDown
         Friend WithEvents CustomerBindingSource As System.Windows.Forms.BindingSource
         Friend WithEvents Ds_Customer As ds_Customer
-        Friend WithEvents CustomerTableAdapter As CustomerTableAdapter
+        Friend WithEvents CustomerTableAdapter As ds_CustomerTableAdapters.CustomerTableAdapter
         Friend WithEvents btn_SaveChanges As System.Windows.Forms.ToolStripMenuItem
         Friend WithEvents lbl_BillInterval As System.Windows.Forms.Label
 

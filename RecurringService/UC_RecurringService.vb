@@ -99,7 +99,10 @@
             Next i
         End Sub
 
-        Private Sub rdo_EndedSrvc_Click(sender As System.Object, e As System.EventArgs) Handles rdo_EndedSrvc.Click
+        Private Sub rdo_EndedSrvc_Click(sender As System.Object, e As System.EventArgs) Handles rdo_EndedSrvc.Click, rdo_AllSrvc.Click, rdo_CurrentSrvc.Click
+            FilterGrid()
+        End Sub
+        Private Sub FilterGrid()
             Dim s As String
             If (rdo_CurrentSrvc.Checked = True) Then
                 s = "RecurringServiceEndDate < '" & Date.Now.Date & "' OR RecurringServiceEndDate IS NULL"
@@ -108,7 +111,7 @@
             Else
                 s = ""
             End If
-           _dv.RowFilter = s
+            _dv.RowFilter = s
         End Sub
 
         

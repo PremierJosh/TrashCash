@@ -1,5 +1,4 @@
-﻿Imports TrashCash.Customer
-
+﻿
 Namespace Classes.CustomerToolstrip
     Friend Class CustComboBox
         Inherits Windows.Forms.ToolStripComboBox
@@ -7,7 +6,7 @@ Namespace Classes.CustomerToolstrip
         Private ReadOnly _dv As DataView
 
         Private ReadOnly _dt As ds_Customer.Customer_ListByActiveDataTable
-        Private ReadOnly _ta As Customer_ListByActiveTableAdapter
+        Private ReadOnly _ta As ds_CustomerTableAdapters.Customer_ListByActiveTableAdapter
 
         Friend Property SelectedValue As Integer
             Get
@@ -49,7 +48,7 @@ Namespace Classes.CustomerToolstrip
 
             ' instantiate dt and ta
             _dt = New ds_Customer.Customer_ListByActiveDataTable
-            _ta = New Customer_ListByActiveTableAdapter
+            _ta = New ds_CustomerTableAdapters.Customer_ListByActiveTableAdapter
 
             ' set dataview
             _dv = New DataView

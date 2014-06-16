@@ -64,7 +64,7 @@
             Me.Label6 = New System.Windows.Forms.Label()
             Me.Label5 = New System.Windows.Forms.Label()
             Me.Label4 = New System.Windows.Forms.Label()
-            Me.CustomerTableAdapter = New CustomerTableAdapter()
+            Me.CustomerTableAdapter = New ds_CustomerTableAdapters.CustomerTableAdapter()
             Me.lbl_BillInter = New System.Windows.Forms.Label()
             CType(Me.CustomerBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
             CType(Me.Ds_Customer, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -541,7 +541,7 @@
         Friend WithEvents Label4 As System.Windows.Forms.Label
         Friend WithEvents CustomerBindingSource As System.Windows.Forms.BindingSource
         Friend WithEvents Ds_Customer As ds_Customer
-        Friend WithEvents CustomerTableAdapter As CustomerTableAdapter
+        Friend WithEvents CustomerTableAdapter As ds_CustomerTableAdapters.CustomerTableAdapter
         Friend WithEvents lbl_BillInter As System.Windows.Forms.Label
     End Class
 End Namespace

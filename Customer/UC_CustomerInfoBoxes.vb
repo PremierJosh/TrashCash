@@ -5,7 +5,7 @@ Namespace Customer
 
     Public Class UC_CustomerInfoBoxes
         Private _custRow As ds_Customer.CustomerRow
-        Private ReadOnly _ta As CustomerTableAdapter
+        Private ReadOnly _ta As ds_CustomerTableAdapters.CustomerTableAdapter
 
         ' writeonly property for batching status
         Private _batchInProgress As Boolean
@@ -89,7 +89,7 @@ Namespace Customer
             ' Add any initialization after the InitializeComponent() call.
 
             ' instantiate
-            _ta = New CustomerTableAdapter
+            _ta = New ds_CustomerTableAdapters.CustomerTableAdapter
             isUpdating = False
         End Sub
 
@@ -281,7 +281,7 @@ Namespace Customer
         Private Sub chk_CustDeactive_Click(sender As System.Object, e As System.EventArgs) Handles chk_CustDeactive.Click
             ' checking for active services
             Dim count As Integer
-            Using qta As New QueriesTableAdapter
+            Using qta As New ds_CustomerTableAdapters.QueriesTableAdapter
                 count = qta.Customer_RecSrvcActive(CurrentCustomer)
             End Using
 

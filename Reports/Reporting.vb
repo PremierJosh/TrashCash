@@ -1,5 +1,4 @@
-﻿Imports TrashCash.Customer
-Imports QBFC12Lib
+﻿Imports QBFC12Lib
 
 Namespace Reports
 
@@ -30,7 +29,7 @@ Namespace Reports
         End Function
         Private Sub GetAllCustomerBalances(ByVal minDaysPastDue As Integer, ByRef includeInactive As Boolean)
             Dim custQuery As ICustomerQuery = MsgSetReq.AppendCustomerQueryRq
-            Dim badQta As New CustomerTableAdapter
+            Dim badQta As New ds_CustomerTableAdapters.CustomerTableAdapter
 
             'checking for includeinactive
             If (includeInactive = True) Then

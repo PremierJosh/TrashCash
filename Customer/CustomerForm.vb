@@ -5,9 +5,7 @@ Namespace Customer
     Public Class CustomerForm
         ' new cust var so can switch form when new cust added
         Private WithEvents _newCust As NewCustomer
-        Private WithEvents _payForm As PaymentsForm
-        Private WithEvents _creditForm As CustomerCredit
-        Private WithEvents _invForm As Invoicing.CustomInvoicingForm
+  Private WithEvents _invForm As Invoicing.CustomInvoicingForm
 
         Private _currentCustomer As Integer
         Public Property CurrentCustomer As Integer
@@ -15,8 +13,7 @@ Namespace Customer
                 Return _currentCustomer
             End Get
             Set(value As Integer)
-                If (_currentCustomer <> value) Then
-                    _currentCustomer = value
+                _currentCustomer = value
 
                     UC_CustomerInfoBoxes.CurrentCustomer = value
                     UC_CustomerNotes.CurrentCustomer = value
@@ -28,7 +25,6 @@ Namespace Customer
                     Text = CustomerToolstrip1.ToString
                     ' send name to uc_recsrvc
                     UC_RecurringService.CustomerName = CustomerToolstrip1.ToString
-                End If
             End Set
         End Property
 
@@ -107,19 +103,30 @@ Namespace Customer
 
 
         Private Sub btn_Payments_Click(sender As System.Object, e As System.EventArgs) Handles btn_Payments.Click
-            _payForm = New PaymentsForm(CBool(AppQTA.APP_GetDebugMode), customerNumber:=CurrentCustomer)
-            ' when opened from customer screen, showdialog
-            _payForm.ShowDialog()
+            Dim payForm As New PaymentsForm(CBool(AppQTA.APP_GetDebugMode), customerNumber:=CurrentCustomer)
+            payForm.ShowDialog()
+            If (payForm.PaymentAdded) Then
+                ' update to grab items in queue
+                CustomerToolstrip1.GetCustomerBalance()
+            End If
         End Sub
 
         Private Sub btn_Credit_Click(sender As System.Object, e As System.EventArgs) Handles btn_Credit.Click
-            _creditForm = New CustomerCredit(CurrentCustomer)
-            _creditForm.ShowDialog()
+            Dim creditForm As New CustomerCredit(CurrentCustomer)
+            creditForm.ShowDialog()
+            If (creditForm.BalanceChanged) Then
+                ' update customer balance
+                CustomerToolstrip1.GetCustomerBalance()
+            End If
         End Sub
 
         Private Sub btn_Inv_Click(sender As System.Object, e As System.EventArgs) Handles btn_Inv.Click
-            _invForm = New Invoicing.CustomInvoicingForm(CurrentCustomer)
-            _invForm.ShowDialog()
+            Dim invForm As New Invoicing.CustomInvoicingForm(CurrentCustomer)
+            invForm.ShowDialog()
+            If (invForm.BalanceChanged) Then
+                ' update customer balance
+                CustomerToolstrip1.GetCustomerBalance()
+            End If
         End Sub
     End Class
 End Namespace
