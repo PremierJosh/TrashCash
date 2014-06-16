@@ -1,7 +1,9 @@
 ﻿Namespace Customer
     Public Class CustomerForm
-        ' new cust var so can switch form when new cust added
-        Private WithEvents _newCust As NewCustomer
+        ' events for customer balance or in queue amount changing
+        Friend Event CustomerBalanceChanged(ByVal customerNumber As Integer)
+        Friend Event CustomerPaymentAdded(ByVal customerNumber As Integer)
+        Friend Event ApprovalsChanged()
 
         Private _currentCustomer As Integer
 
@@ -26,11 +28,11 @@
         End Property
 
         ' refresh balance event handleing
-        Friend Sub RefreshCustBalance(Optional ByVal customerNumber As Integer = 0) _
-            Handles UC_RecurringService.RefreshBalance
-            CustomerToolstrip1.GetCustomerBalance()
-            ' if rec srvc is raising this event, balance was adjusted from credit
+        Friend Sub RefreshCustBalance(ByVal customerNumber As Integer) Handles UC_RecurringService.BalanceChanged
+           ' rec srvc is raising this event, balance was adjusted from credit
             UC_Quickbooks.FetchInvoices(0)
+            ' let home form know customer balance changed from a credit
+            RaiseEvent CustomerBalanceChanged(customerNumber)
         End Sub
 
         Private Sub Customer_FormClosing(sender As Object, e As FormClosingEventArgs) Handles Me.FormClosing
@@ -78,58 +80,49 @@
         End Sub
 
         Private Sub btn_NewCust_Click(sender As Object, e As EventArgs) Handles btn_NewCust.Click
-            _newCust = New NewCustomer()
-            _newCust.ShowDialog()
+            Dim newCust As New NewCustomer()
+            newCust.ShowDialog()
+            If (newCust.NewCustomerAdded) Then
+                CustomerToolstrip1.RefreshCustomerList()
+                CustomerToolstrip1.SelectCustomer(newCust.CustRow.CustomerNumber, True)
+            End If
         End Sub
-
-        ' new cust event handle to switch to it
-        Private Sub NewCustomer(ByVal newCustNum As Integer) Handles _newCust.NewCustomerAdded
-            CustomerToolstrip1.RefreshCustomerList()
-            CustomerToolstrip1.SelectCustomer(newCustNum, True)
-            ' clearing newcust var
-            _newCust = Nothing
-        End Sub
-
-        Public Sub New(ByRef homeForm As TrashCashHome)
-            ' This call is required by the designer.
-            InitializeComponent()
-
-
-            ' Add any initialization after the InitializeComponent() call.
-            UC_RecurringService.HomeForm = homeForm
-            CustomerToolstrip1.GetCustomerBalance()
-        End Sub
-
 
         Private Sub btn_Payments_Click(sender As Object, e As EventArgs) Handles btn_Payments.Click
-            Dim payForm As New Payments.PaymentsForm(CBool(AppQTA.APP_GetDebugMode), customerNumber:=CurrentCustomer)
+            PayForm = New Payments.PaymentsForm(CBool(AppQTA.APP_GetDebugMode), customerNumber:=CurrentCustomer)
             payForm.ShowDialog()
-            If (payForm.PaymentAdded) Then
-                ' update to grab items in queue
-                CustomerToolstrip1.GetCustomerBalance()
-            End If
+        End Sub
+        Private Sub PaymentAddedCatch(ByVal customerNumber As Integer) Handles PayForm.CustomerPaymentAdded
+            RaiseEvent CustomerPaymentAdded(customerNumber)
+            ' TODO: this is just a queue fetch
+            'CustomerToolstrip1.GetCustomerBalance()
         End Sub
 
         Private Sub btn_Credit_Click(sender As Object, e As EventArgs) Handles btn_Credit.Click
-            Dim creditForm As New CustomerCredit(CurrentCustomer)
-            creditForm.ShowDialog()
-            If (creditForm.BalanceChanged) Then
-                ' update customer balance
-                CustomerToolstrip1.GetCustomerBalance()
-                ' update invoices
-                UC_Quickbooks.CustomerListID = UC_Quickbooks.CustomerListID
-            End If
+            CreditForm = New CustomerCredit(CurrentCustomer)
+            CreditForm.ShowDialog()
+        End Sub
+        Private Sub CreditAddCatch(ByVal customerNumber As Integer) Handles CreditForm.CreditAdded
+            RaiseEvent CustomerBalanceChanged(CurrentCustomer)
+        End Sub
+        
+        Private Sub btn_Inv_Click(sender As Object, e As EventArgs) Handles btn_Inv.Click
+            InvForm = New Invoicing.CustomInvoicingForm(CurrentCustomer)
+            InvForm.ShowDialog()
+        End Sub
+        Private Sub InvoiceAddCatch(ByVal customerNumber As Integer) Handles InvForm.CustomerInvoiceAdded
+            RaiseEvent CustomerBalanceChanged(customerNumber)
         End Sub
 
-        Private Sub btn_Inv_Click(sender As Object, e As EventArgs) Handles btn_Inv.Click
-            Dim invForm As New Invoicing.CustomInvoicingForm(CurrentCustomer)
-            invForm.ShowDialog()
-            If (invForm.BalanceChanged) Then
-                ' update customer balance
-                CustomerToolstrip1.GetCustomerBalance()
-                ' update invoices
-                UC_Quickbooks.CustomerListID = UC_Quickbooks.CustomerListID
-            End If
+        ' recurring service approval change
+        Private Sub ApprovalsChanging() Handles UC_RecurringService.ApprovalCountChange
+            RaiseEvent ApprovalsChanged()
         End Sub
+
+
+        ' forms
+        Friend WithEvents CreditForm As CustomerCredit
+        Friend WithEvents InvForm As Invoicing.CustomInvoicingForm
+        Friend WithEvents PayForm As Payments.PaymentsForm
     End Class
 End Namespace

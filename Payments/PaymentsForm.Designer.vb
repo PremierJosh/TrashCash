@@ -61,7 +61,7 @@ Namespace Payments
             Me.lbl_RefNumber = New System.Windows.Forms.Label()
             Me.tb_Amount = New TrashCash.Classes.CurrencyTextBox()
             Me.Label1 = New System.Windows.Forms.Label()
-            Me.BATCH_WorkingPaymentsTableAdapter = New TrashCash.BATCH_WorkingPaymentsTableAdapter()
+            Me.BATCH_WorkingPaymentsTableAdapter = New ds_BatchingTableAdapters.BATCH_WorkingPaymentsTableAdapter()
             Me.cm_PayGrid.SuspendLayout()
             Me.tc_Master.SuspendLayout()
             Me.tc_p_CustNotes.SuspendLayout()
@@ -440,7 +440,7 @@ Namespace Payments
         Friend WithEvents Label1 As System.Windows.Forms.Label
         Friend WithEvents Ds_Batching As TrashCash.ds_Batching
         Friend WithEvents BATCHWorkingPaymentsBindingSource As System.Windows.Forms.BindingSource
-        Friend WithEvents BATCH_WorkingPaymentsTableAdapter As TrashCash.BATCH_WorkingPaymentsTableAdapter
+        Friend WithEvents BATCH_WorkingPaymentsTableAdapter As ds_BatchingTableAdapters.BATCH_WorkingPaymentsTableAdapter
         Friend WithEvents dg_PrepPay As System.Windows.Forms.DataGridView
         Friend WithEvents CustomerFullName As System.Windows.Forms.DataGridViewTextBoxColumn
         Friend WithEvents WorkingPaymentsAmountDataGridViewTextBoxColumn As System.Windows.Forms.DataGridViewTextBoxColumn

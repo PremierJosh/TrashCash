@@ -4,6 +4,8 @@ Namespace Invoicing
     Public Class CustomInvoicingForm
         ' field for balance changing
         Friend BalanceChanged As Boolean
+        ' event for invoicing adding
+        Friend Event CustomerInvoiceAdded(ByVal customerNumber As Integer)
 
         ' current customer property
         Private _currentCustomer As Integer
@@ -229,8 +231,10 @@ Namespace Invoicing
                     CiTA.Fill(HistoryInv.CustomInvoices, CurrentCustomer)
                     MessageBox.Show("Invoice Added.")
                     ResetInvoice()
-                    ' update balance var
+                    ' update balance var for show dialog open
                     BalanceChanged = True
+                    ' raise event for show open
+                    RaiseEvent CustomerInvoiceAdded(CurrentCustomer)
                     CustomerToolstrip1.GetCustomerBalance()
                 End If
             End If

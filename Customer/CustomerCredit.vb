@@ -11,7 +11,7 @@ Namespace Customer
         Private _sDT As ds_Types.ServiceTypesDataTable
 
         ' field for balance changing on customer
-        Friend BalanceChanged As Boolean
+        Friend Event CreditAdded(ByVal customerNumber As Integer)
 
         Private _currentCustomer As Integer
         Private Property CurrentCustomer As Integer
@@ -88,7 +88,7 @@ Namespace Customer
                                                     MessageBoxIcon.Error)
                                 End Try
                             End If
-                            BalanceChanged = True
+                            RaiseEvent CreditAdded(CurrentCustomer)
                             CustomerToolstrip1.GetCustomerBalance()
                             AppColors.ColorGrid(dg_Credits, "Voided")
                         End If
@@ -124,7 +124,7 @@ Namespace Customer
                             Try
                                 Customer_CreditsTableAdapter.Insert(CurrentCustomer, creditObj.TxnID, creditObj.TotalAmount, Date.Now, tb_Reason.Text, CurrentUser.USER_NAME,
                                                                     False, Nothing, Nothing, Nothing)
-                            Catch ex as SqlException
+                            Catch ex As SqlException
                                 MessageBox.Show("Message: " & ex.Message & vbCrLf & "LineNumber: " & ex.LineNumber,
                                                 "Sql Error: " & ex.Procedure, MessageBoxButtons.OK, MessageBoxIcon.Error)
                             End Try
@@ -132,7 +132,7 @@ Namespace Customer
                         Else
                             MessageBox.Show("Error adding credit memo")
                         End If
-                        BalanceChanged = True
+                        RaiseEvent CreditAdded(CurrentCustomer)
                         ' reload history table
                         Customer_CreditsTableAdapter.FillByCustomerID(Ds_Customer.Customer_Credits, CurrentCustomer)
                         ' reset form controls to default

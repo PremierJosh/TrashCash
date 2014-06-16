@@ -3,7 +3,8 @@
     Public Class UC_RecurringService
         
         ' friend events
-        Friend Event RefreshBalance(ByVal customerNumber As Integer)
+        Friend Event BalanceChanged(ByVal customerNumber As Integer)
+        Friend Event ApprovalCountChange()
 
         ' property refrence
         Private _custNum As Decimal
@@ -34,24 +35,15 @@
             End Set
         End Property
 
-        Private _homeForm As TrashCashHome
-        Friend Property HomeForm As TrashCashHome
-            Get
-                Return _homeForm
-            End Get
-            Set(value As TrashCashHome)
-                _homeForm = value
-            End Set
-        End Property
         ' data view property that the rec srvc dg is bound to
         Private _dv As DataView
 
-    Private Sub UC_RecurringService_Load(sender As Object, e As System.EventArgs) Handles Me.Load
+        Private Sub UC_RecurringService_Load(sender As Object, e As System.EventArgs) Handles Me.Load
             _dv = New DataView
             _dv.Table = Ds_RecurringService.RecurringService_DisplayByCustomerID
             dg_RecSrvc.DataSource = _dv
         End Sub
-        
+
         Private Sub ColorRows()
 
             'loop through all grid rows
@@ -106,23 +98,26 @@
             _dv.RowFilter = s
         End Sub
 
-        
 
+        Friend WithEvents RecurringForm As RecurringServiceForm
         Private Sub dg_RecSrvc_DoubleClick(sender As System.Object, e As System.EventArgs) Handles dg_RecSrvc.DoubleClick
             If (dg_RecSrvc.SelectedRows.Count = 1) Then
                 Dim row As ds_RecurringService.RecurringService_DisplayByCustomerIDRow = CType(dg_RecSrvc.SelectedRows(0).DataBoundItem, DataRowView).Row
-                Dim f As New RecurringServiceForm(_custName, CurrentCustomer, row.RecurringServiceID)
-                f.ShowDialog()
+                RecurringForm = New RecurringServiceForm(_custName, CurrentCustomer, row.RecurringServiceID)
+                RecurringForm.ShowDialog()
                 ' get what has updated and refresh controls
-                If (f.BalanceChanged) Then
-                    RaiseEvent RefreshBalance(CurrentCustomer)
+                If (RecurringForm.BalanceChanged) Then
+                    RaiseEvent BalanceChanged(CurrentCustomer)
                 End If
-                If (f.ServiceUpdated) Then
+                If (RecurringForm.ServiceUpdated) Then
                     RecurringService_DisplayByCustomerIDTableAdapter.FillByID(Ds_RecurringService.RecurringService_DisplayByCustomerID, CurrentCustomer)
                 End If
             End If
         End Sub
-
+        Private Sub ServiceApproved() Handles RecurringForm.ServiceApproved
+            RaiseEvent ApprovalCountChange()
+        End Sub
+        
         Private Sub dg_Notes_DoubleClick(sender As System.Object, e As System.EventArgs) Handles dg_Notes.DoubleClick
             Dim noteText As String = InputBox("Note:", "Quick Add Service Note")
             If (Trim(noteText) <> "") Then
@@ -141,6 +136,7 @@
             Dim f As New RecurringServiceForm(_custName, CurrentCustomer)
             f.ShowDialog()
             RecurringService_DisplayByCustomerIDTableAdapter.FillByID(Ds_RecurringService.RecurringService_DisplayByCustomerID, CurrentCustomer)
+            RaiseEvent ApprovalCountChange()
         End Sub
 
         Private Sub dg_RecSrvc_RowPrePaint(sender As System.Object, e As System.Windows.Forms.DataGridViewRowPrePaintEventArgs) Handles dg_RecSrvc.RowPrePaint

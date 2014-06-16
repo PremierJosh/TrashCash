@@ -1,5 +1,4 @@
-﻿Imports TrashCash.Payments
-Imports TrashCash.Customer
+﻿Imports TrashCash.Customer
 
 Namespace Batching
 
@@ -108,7 +107,7 @@ Namespace Batching
         End Property
 
         Public Property MasterForm As CustomerForm
-        Protected QTA As QueriesTableAdapter
+        Protected QTA As ds_BatchingTableAdapters.QueriesTableAdapter
 
         Private Sub BatchingPrep_FormClosed(sender As Object, e As System.Windows.Forms.FormClosingEventArgs) Handles Me.FormClosing
             If (e.CloseReason <> CloseReason.ApplicationExitCall) Then
@@ -208,7 +207,7 @@ Namespace Batching
         Private Sub btn_GenerateInv_Click(sender As System.Object, e As System.EventArgs) Handles btn_GenerateInv.Click
             ' if there are invoices already, we cannot generate
             'Dim qta As New DataSetTableAdapters.QueriesTableAdapter
-            Dim count As Integer = qta.WorkingInvoice_RecurringCount
+            Dim count As Integer = QTA.WorkingInvoice_Count
 
             If (count = 0) Then
                 ' checking if dtp is more than 30 days our
@@ -257,11 +256,9 @@ Namespace Batching
 
         Private Sub BatchWorker_ProgressChanged(sender As Object, e As System.ComponentModel.ProgressChangedEventArgs) Handles BatchWorker.ProgressChanged
             Dim progress As ProgressObj = CType(e.UserState, ProgressObj)
-
             PbMaximumValue = progress.MaximumValue
             PbCurrentValue = progress.CurrentValue
             PbCustomer = progress.CurrentCustomer
-
             ' progress
             PbPercent = e.ProgressPercentage
 
@@ -269,21 +266,17 @@ Namespace Batching
             If (UseWaitCursor = False) Then
                 UseWaitCursor = True
             End If
-
-        End Sub
+            End Sub
 
         Private Sub InvoiceBatchWorker_RunWorkerCompleted(sender As Object, e As System.ComponentModel.RunWorkerCompletedEventArgs) Handles BatchWorker.RunWorkerCompleted
             If (e.Error IsNot Nothing) Then
-                MsgBox("Error: " & e.Error.Message & ". Exception: " & e.Error.InnerException.ToString)
+                MessageBox.Show("Error: " & e.Error.Message & ". Exception: " & e.Error.InnerException.ToString, "Batching Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
             ElseIf (e.Cancelled) Then
-                MsgBox("Batch canceled.", MsgBoxStyle.SystemModal)
+                MessageBox.Show("Batch canceled.", "Batch Canceled", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
             Else
-                MsgBox("Batch Completed.", MsgBoxStyle.SystemModal)
+                MessageBox.Show("Batch Completed.", "Batch Completed", MessageBoxButtons.OK, MessageBoxIcon.Information)
             End If
-
             Batching = False
-
-
             ' refil dataset
             RefreshBatchQueue()
         End Sub
@@ -303,7 +296,7 @@ Namespace Batching
             InitializeComponent()
 
             ' Add any initialization after the InitializeComponent() call.
-            qta = New QueriesTableAdapter
+            QTA = New ds_BatchingTableAdapters.QueriesTableAdapter
         End Sub
 
 
@@ -356,15 +349,14 @@ Namespace Batching
 
         Private Sub DeleteToolStripMenuItem_Click(sender As System.Object, e As System.EventArgs) Handles DeleteToolStripMenuItem.Click
             If (dg_PrepPay.SelectedRows.Count = 1) Then
-                Dim drv As DataRowView = dg_PrepPay.SelectedRows.Item(0).DataBoundItem
-                Dim row As ds_Payments.WorkingPaymentsRow = drv.Row
-                Dim result As MsgBoxResult = MsgBox("Delete this Prepared Payment?", MsgBoxStyle.YesNo)
-                If (result = MsgBoxResult.Yes) Then
+                Dim row As ds_Batching.BATCH_WorkingPaymentsRow = CType(dg_PrepPay.SelectedRows(0).DataBoundItem, DataRowView).Row
+                Dim result As DialogResult = MessageBox.Show("Delete this Prepared Payment?", "Confirm Prepared Payment delete", MessageBoxButtons.YesNo, MessageBoxIcon.Question)
+                If (result = Windows.Forms.DialogResult.Yes) Then
                     BATCH_WorkingPaymentsTableAdapter.DeleteByID(row.WorkingPaymentsID)
                     dg_PrepPay.Rows.RemoveAt(dg_PrepPay.SelectedRows.Item(0).Index)
                 End If
             Else
-                MsgBox("Please select a Payment First.")
+                MessageBox.Show("Please select a Prepared Payment first", "No Prepared Payment selected", MessageBoxButtons.OK, MessageBoxIcon.Error)
             End If
         End Sub
     End Class

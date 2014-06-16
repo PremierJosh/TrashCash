@@ -8,7 +8,7 @@ Namespace Batching
         Protected Friend ConMgr As QBConMgr
 
         ' qta
-        Private ReadOnly _qta As QueriesTableAdapter
+        Private ReadOnly _qta As ds_BatchingTableAdapters.QueriesTableAdapter
 
         Protected Friend Sub New()
             If (ConMgr Is Nothing) Then
@@ -16,7 +16,7 @@ Namespace Batching
                 ConMgr.InitCon()
             End If
 
-            _qta = New QueriesTableAdapter
+            _qta = New ds_BatchingTableAdapters.QueriesTableAdapter
         End Sub
 
         Public Class Invoicing
@@ -30,14 +30,14 @@ Namespace Batching
             Private _batchID As Integer
 
             ' tas
-            Private ReadOnly _ta As BATCH_WorkingInvoiceTableAdapter
-            Private ReadOnly _lineTA As BATCH_LineItemsTableAdapter
+            Private ReadOnly _ta As ds_BatchingTableAdapters.BATCH_WorkingInvoiceTableAdapter
+            Private ReadOnly _lineTA As ds_BatchingTableAdapters.BATCH_LineItemsTableAdapter
 
             Public Sub New(ByVal invoiceDt As ds_Batching.BATCH_WorkingInvoiceDataTable)
                 MyBase.New()
                 ' instantiating tas
-                _ta = New BATCH_WorkingInvoiceTableAdapter
-                _lineTA = New BATCH_LineItemsTableAdapter
+                _ta = New ds_BatchingTableAdapters.BATCH_WorkingInvoiceTableAdapter
+                _lineTA = New ds_BatchingTableAdapters.BATCH_LineItemsTableAdapter
                 _dt = invoiceDt
             End Sub
 
@@ -199,12 +199,12 @@ Namespace Batching
             ' current batch id
             Private _batchID As Integer
             ' ta
-            Private ReadOnly _ta As BATCH_WorkingPaymentsTableAdapter
+            Private ReadOnly _ta As ds_BatchingTableAdapters.BATCH_WorkingPaymentsTableAdapter
 
             Public Sub New(ByVal batchPayDt As DS_Batching.BATCH_WorkingPaymentsDataTable)
                 MyBase.New()
                 ' instantiating ta
-                _ta = New BATCH_WorkingPaymentsTableAdapter
+                _ta = New ds_BatchingTableAdapters.BATCH_WorkingPaymentsTableAdapter
                 _dt = batchPayDt
             End Sub
 

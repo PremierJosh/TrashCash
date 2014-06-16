@@ -2,10 +2,9 @@
     Public Class PaymentsForm
         ' field to update if item added to queue
         Friend PaymentAdded As Boolean
-
-        ' private ta for inserting payments
-        Private _payTA As ds_PaymentsTableAdapters.WorkingPaymentsTableAdapter
-
+        ' events for home form notification
+        Friend Event CustomerPaymentAdded(ByVal customerNumber As Integer)
+        
         Private _currentCustomer As Integer
         Public Property CurrentCustomer As Integer
             Get
@@ -68,9 +67,6 @@
                 CurrentCustomer = CustomerToolstrip1.CurrentCustomer
                 CustomerToolstrip1.GetCustomerBalance()
             End If
-
-            ' instantiate ta
-            _payTA = New ds_PaymentsTableAdapters.WorkingPaymentsTableAdapter
         End Sub
 
         Private Sub Payments_FormClosing(sender As Object, e As System.Windows.Forms.FormClosingEventArgs) Handles Me.FormClosing
@@ -128,8 +124,7 @@
 
         Private Sub btn_AddPayment_Click(sender As System.Object, e As System.EventArgs) Handles btn_AddPayment.Click
             If (OkToCommit()) Then
-                Dim newID As Integer
-                ' trimming checknum
+               ' trimming checknum
                 Dim checkRefNum As String = Trim(tb_RefNum.Text)
                 Try
                     ' checking if override checked
@@ -137,26 +132,27 @@
                         ' inserting override date chosen as time inserted
                         ' insert with current time and check if dateoncheck is nothing (cash payment)
                         If (cmb_PayTypes.SelectedValue = 1) Then
-                            Integer.TryParse(_payTA.WorkingPayments_Insert_ReturnID(CurrentCustomer, tb_Amount.Text, cmb_PayTypes.SelectedValue, Nothing,
-                            TC_ENItemStatus.Ready, dtp_Override.Value.Date, Nothing, CurrentUser.USER_NAME), newID)
+                            BATCH_WorkingPaymentsTableAdapter.WorkingPayments_Insert_ReturnID(CurrentCustomer, tb_Amount.Text, cmb_PayTypes.SelectedValue, Nothing,
+                            TC_ENItemStatus.Ready, dtp_Override.Value.Date, Nothing, CurrentUser.USER_NAME)
                         Else
-                            Integer.TryParse(_payTA.WorkingPayments_Insert_ReturnID(CurrentCustomer, tb_Amount.Text, cmb_PayTypes.SelectedValue, checkRefNum,
-                             TC_ENItemStatus.Ready, dtp_Override.Value.Date, dtp_DateOnCheck.Value.Date, CurrentUser.USER_NAME), newID)
+                            BATCH_WorkingPaymentsTableAdapter.WorkingPayments_Insert_ReturnID(CurrentCustomer, tb_Amount.Text, cmb_PayTypes.SelectedValue, checkRefNum,
+                              TC_ENItemStatus.Ready, dtp_Override.Value.Date, dtp_DateOnCheck.Value.Date, CurrentUser.USER_NAME)
                         End If
                     Else
                         ' insert with current time and check if dateoncheck is nothing (cash payment)
                         If (cmb_PayTypes.SelectedValue = 1) Then
-                            Integer.TryParse(_payTA.WorkingPayments_Insert_ReturnID(CurrentCustomer, tb_Amount.Text, cmb_PayTypes.SelectedValue, Nothing,
-                            TC_ENItemStatus.Ready, Date.Now, Nothing, CurrentUser.USER_NAME), newID)
+                            BATCH_WorkingPaymentsTableAdapter.WorkingPayments_Insert_ReturnID(CurrentCustomer, tb_Amount.Text, cmb_PayTypes.SelectedValue, Nothing,
+                             TC_ENItemStatus.Ready, Date.Now, Nothing, CurrentUser.USER_NAME)
                         Else
-                            Integer.TryParse(_payTA.WorkingPayments_Insert_ReturnID(CurrentCustomer, tb_Amount.Text, cmb_PayTypes.SelectedValue, checkRefNum,
-                             TC_ENItemStatus.Ready, Date.Now, dtp_DateOnCheck.Value.Date, CurrentUser.USER_NAME), newID)
+                            BATCH_WorkingPaymentsTableAdapter.WorkingPayments_Insert_ReturnID(CurrentCustomer, tb_Amount.Text, cmb_PayTypes.SelectedValue, checkRefNum,
+                             TC_ENItemStatus.Ready, Date.Now, dtp_DateOnCheck.Value.Date, CurrentUser.USER_NAME)
                         End If
                     End If
                 Catch ex As SqlException
                     MessageBox.Show("Message: " & ex.Message & vbCrLf & "LineNumber: " & ex.LineNumber,
                                     "Sql Error: " & ex.Procedure, MessageBoxButtons.OK, MessageBoxIcon.Error)
                 End Try
+                RaiseEvent CustomerPaymentAdded(CurrentCustomer)
                 ResetPayment()
                 ' fill table
                 BATCH_WorkingPaymentsTableAdapter.Fill(Ds_Batching.BATCH_WorkingPayments)
@@ -170,7 +166,7 @@
             If (dg_PrepPay.SelectedRows.Count = 1) Then
                 Dim row As ds_Batching.BATCH_WorkingPaymentsRow = CType(dg_PrepPay.SelectedRows(0).DataBoundItem, DataRowView).Row
                 Try
-                    _payTA.DeleteByID(row.WorkingPaymentsID)
+                    BATCH_WorkingPaymentsTableAdapter.DeleteByID(row.WorkingPaymentsID)
                 Catch ex as SqlException
                     MessageBox.Show("Message: " & ex.Message & vbCrLf & "LineNumber: " & ex.LineNumber,
                                     "Sql Error: " & ex.Procedure, MessageBoxButtons.OK, MessageBoxIcon.Error)

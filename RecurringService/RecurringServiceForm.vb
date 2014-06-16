@@ -1,7 +1,7 @@
 ﻿
 Namespace RecurringService
     Public Class RecurringServiceForm
-
+      
         ' dataview for checking if new end date will overlap with existing credits
         ReadOnly _dvEndDateOverlap As DataView
         Private WriteOnly Property DvRowFilter As Date

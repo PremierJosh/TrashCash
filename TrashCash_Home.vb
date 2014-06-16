@@ -83,6 +83,14 @@ Public Class TrashCashHome
     Friend WithEvents PendingApprovals As RecurringService.PendingApprovals
     Friend WithEvents InvoicingForm As Invoicing.CustomInvoicingForm
 
+    ' event handles
+    Private Sub PaymentAddedCatch(ByVal customerNumber As Integer) Handles PayForm.CustomerPaymentAdded, Customer.CustomerPaymentAdded
+        'TODO: fetch new in queue and adjusted balances
+    End Sub
+    Private Sub BalanceChangeCatch(ByVal customerNumber As Integer) Handles InvoicingForm.CustomerInvoiceAdded, Customer.CustomerBalanceChanged
+
+    End Sub
+
     ' vars for admin forms'
     Friend WithEvents UserSelection As Admin.UserSelection
     Friend WithEvents TrashCashAdmin As Admin.TrashCashAdmin
@@ -125,11 +133,13 @@ Public Class TrashCashHome
         ' start timer to refresh balance every 10 seconds
         Batch_RefreshBalance.Enabled = running
         ' make progress bar visible
+        pb_Batching.Value = 0
         pb_Batching.Visible = running
         lbl_BatchProg.Visible = running
     End Sub
     Private Sub BatchProgPercUpdate(ByVal batchProg As Integer) Handles BatchForm.BatchProgPerc
         lbl_BatchProg.Text = batchProg & "%"
+        pb_Batching.Value = batchProg
     End Sub
 
     Private Sub btn_Payments_Click(sender As Object, e As EventArgs) Handles btn_Payments.Click
@@ -144,7 +154,7 @@ Public Class TrashCashHome
 
     Private Sub btn_NewCustTab_Click(sender As Object, e As EventArgs) Handles btn_CustTab.Click
         If (Customer Is Nothing) Then
-            Customer = New Customer.CustomerForm(Me)
+            Customer = New Customer.CustomerForm
             Customer.MdiParent = Me
         End If
         Customer.Show()
@@ -185,11 +195,6 @@ Public Class TrashCashHome
         ' create new conMgrObj
         GlobalConMgr = New QBConMgr
 
-        ' testing while connection loop to get connected
-        'Dim connected As Boolean = False
-        'While Not connected
-        'connected = GlobalConMgr.InitCon()
-        'End While
         Try
             GlobalConMgr.InitCon()
             'temp: setting vars here for other forms
@@ -215,7 +220,7 @@ Public Class TrashCashHome
         PendingApprovalsCount = countRemain
     End Sub
 
-    Friend Sub RefreshApprovCount(Optional ByRef initLoad As Boolean = False)
+  Friend Sub RefreshApprovCount(Optional ByRef initLoad As Boolean = False) Handles Customer.ApprovalsChanged
         ' fetching pending approval count
         PendingApprovalsCount = RecurringService_PendingApprovalsTableAdapter.RecurringService_PendingApprovals_Count()
 
@@ -315,7 +320,7 @@ Public Class TrashCashHome
     Private Sub Batch_RefreshBalance_Tick(sender As Object, e As EventArgs) Handles Batch_RefreshBalance.Tick
         ' if customer form already open, refresh the balance
         If (Customer IsNot Nothing) Then
-            Customer.RefreshCustBalance()
+            Customer.CustomerToolstrip1.GetCustomerBalance()
         End If
     End Sub
 

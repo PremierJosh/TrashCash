@@ -66,8 +66,8 @@
             Me.Label2 = New System.Windows.Forms.Label()
             Me.dtp_GenInvTo = New System.Windows.Forms.DateTimePicker()
             Me.BatchWorker = New System.ComponentModel.BackgroundWorker()
-            Me.BATCH_WorkingPaymentsTableAdapter = New BATCH_WorkingPaymentsTableAdapter()
-            Me.BATCH_WorkingInvoiceTableAdapter = New BATCH_WorkingInvoiceTableAdapter()
+            Me.BATCH_WorkingPaymentsTableAdapter = New ds_BatchingTableAdapters.BATCH_WorkingPaymentsTableAdapter()
+            Me.BATCH_WorkingInvoiceTableAdapter = New ds_BatchingTableAdapters.BATCH_WorkingInvoiceTableAdapter()
             Me.CustomerFullNameDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
             Me.WorkingPaymentsAmountDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
             Me.WorkingPaymentsCheckNum = New System.Windows.Forms.DataGridViewTextBoxColumn()
@@ -626,9 +626,9 @@
         Friend WithEvents DeleteToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
         Friend WithEvents DS_Batching As ds_Batching
         Friend WithEvents BATCHWorkingPaymentsBindingSource As System.Windows.Forms.BindingSource
-        Friend WithEvents BATCH_WorkingPaymentsTableAdapter As BATCH_WorkingPaymentsTableAdapter
+        Friend WithEvents BATCH_WorkingPaymentsTableAdapter As ds_BatchingTableAdapters.BATCH_WorkingPaymentsTableAdapter
         Friend WithEvents BATCHWorkingInvoiceBindingSource As System.Windows.Forms.BindingSource
-        Friend WithEvents BATCH_WorkingInvoiceTableAdapter As BATCH_WorkingInvoiceTableAdapter
+        Friend WithEvents BATCH_WorkingInvoiceTableAdapter As ds_BatchingTableAdapters.BATCH_WorkingInvoiceTableAdapter
         Friend WithEvents CustomerFullNameDataGridViewTextBoxColumn As System.Windows.Forms.DataGridViewTextBoxColumn
         Friend WithEvents WorkingPaymentsAmountDataGridViewTextBoxColumn As System.Windows.Forms.DataGridViewTextBoxColumn
         Friend WithEvents WorkingPaymentsCheckNum As System.Windows.Forms.DataGridViewTextBoxColumn
