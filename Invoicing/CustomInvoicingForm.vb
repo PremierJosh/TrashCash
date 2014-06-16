@@ -5,7 +5,7 @@ Namespace Invoicing
         ' field for balance changing
         Friend BalanceChanged As Boolean
         ' event for invoicing adding
-        Friend Event CustomerInvoiceAdded(ByVal customerNumber As Integer)
+        Friend Event CustomerInvoiceAdded(ByVal customerNumber As Integer, ByRef formType As Type)
 
         ' current customer property
         Private _currentCustomer As Integer
@@ -234,7 +234,7 @@ Namespace Invoicing
                     ' update balance var for show dialog open
                     BalanceChanged = True
                     ' raise event for show open
-                    RaiseEvent CustomerInvoiceAdded(CurrentCustomer)
+                    RaiseEvent CustomerInvoiceAdded(CurrentCustomer, GetType(CustomInvoicingForm))
                     CustomerToolstrip1.GetCustomerBalance()
                 End If
             End If

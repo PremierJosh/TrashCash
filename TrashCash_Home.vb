@@ -81,14 +81,52 @@ Public Class TrashCashHome
     Friend WithEvents BatchForm As Batching.BatchingPrep
     Friend WithEvents Customer As Customer.CustomerForm
     Friend WithEvents PendingApprovals As RecurringService.PendingApprovals
-    Friend WithEvents InvoicingForm As Invoicing.CustomInvoicingForm
+    Friend WithEvents InvForm As Invoicing.CustomInvoicingForm
 
     ' event handles
-    Private Sub PaymentAddedCatch(ByVal customerNumber As Integer) Handles PayForm.CustomerPaymentAdded, Customer.CustomerPaymentAdded
-        'TODO: fetch new in queue and adjusted balances
+    Private Sub PaymentAddedCatch(ByVal customerNumber As Integer, ByRef formType As Type) Handles PayForm.CustomerPaymentAdded, Customer.CustomerPaymentAdded
+        If (formType = GetType(Payments.PaymentsForm)) Then
+            ' came from payment form, need to update customer
+            If (Customer IsNot Nothing) Then
+                If (Customer.CurrentCustomer = customerNumber) Then
+                    Customer.CustomerToolstrip1.GetQueueAmount()
+                End If
+            End If
+        ElseIf (formType = GetType(Customer.CustomerForm)) Then
+            ' need to update in queue on other forms if exist and match new customer
+            If (PayForm IsNot Nothing) Then
+                If (PayForm.CurrentCustomer = customerNumber) Then
+                    PayForm.CustomerToolstrip1.GetQueueAmount()
+                End If
+            End If
+            If (InvForm IsNot Nothing) Then
+                If (InvForm.CurrentCustomer = customerNumber) Then
+                    InvForm.CustomerToolstrip1.GetQueueAmount()
+                End If
+            End If
+        End If
     End Sub
-    Private Sub BalanceChangeCatch(ByVal customerNumber As Integer) Handles InvoicingForm.CustomerInvoiceAdded, Customer.CustomerBalanceChanged
-
+    Private Sub BalanceChangeCatch(ByVal customerNumber As Integer, ByRef formType As Type) Handles InvForm.CustomerInvoiceAdded, Customer.CustomerBalanceChanged
+        If (formType = GetType(Invoicing.CustomInvoicingForm)) Then
+            ' came from custom invoicing form, need to update customer form balance if matches
+            If (Customer IsNot Nothing) Then
+                If (Customer.CurrentCustomer = customerNumber) Then
+                    Customer.CustomerToolstrip1.GetCustomerBalance()
+                End If
+            End If
+        ElseIf (formType = GetType(Customer.CustomerForm)) Then
+            ' need to update balances on other forms if exist and match new customer
+            If (PayForm IsNot Nothing) Then
+                If (PayForm.CurrentCustomer = customerNumber) Then
+                    PayForm.CustomerToolstrip1.GetCustomerBalance()
+                End If
+            End If
+            If (InvForm IsNot Nothing) Then
+                If (InvForm.CurrentCustomer = customerNumber) Then
+                    InvForm.CustomerToolstrip1.GetCustomerBalance()
+                End If
+            End If
+        End If
     End Sub
 
     ' vars for admin forms'
@@ -170,7 +208,7 @@ Public Class TrashCashHome
         BatchForm.Show()
         BatchForm.BringToFront()
     End Sub
-    
+
     Private Sub TrashCash_Home_FormClosing(sender As Object, e As FormClosingEventArgs) Handles Me.FormClosing
         If (_batchRunning) Then
             e.Cancel = True
@@ -220,7 +258,7 @@ Public Class TrashCashHome
         PendingApprovalsCount = countRemain
     End Sub
 
-  Friend Sub RefreshApprovCount(Optional ByRef initLoad As Boolean = False) Handles Customer.ApprovalsChanged
+    Friend Sub RefreshApprovCount(Optional ByRef initLoad As Boolean = False) Handles Customer.ApprovalsChanged
         ' fetching pending approval count
         PendingApprovalsCount = RecurringService_PendingApprovalsTableAdapter.RecurringService_PendingApprovals_Count()
 
@@ -318,9 +356,15 @@ Public Class TrashCashHome
     End Sub
 
     Private Sub Batch_RefreshBalance_Tick(sender As Object, e As EventArgs) Handles Batch_RefreshBalance.Tick
-        ' if customer form already open, refresh the balance
+        ' refresh balances on timer tick (every 10 seconds)
         If (Customer IsNot Nothing) Then
             Customer.CustomerToolstrip1.GetCustomerBalance()
+        End If
+        If (PayForm IsNot Nothing) Then
+            PayForm.CustomerToolstrip1.GetCustomerBalance()
+        End If
+        If (InvForm IsNot Nothing) Then
+            InvForm.CustomerToolstrip1.GetCustomerBalance()
         End If
     End Sub
 
@@ -386,8 +430,8 @@ Public Class TrashCashHome
 
             'get new password
             UserSelection = New Admin.UserSelection("New Password", ChangePW:=True)
-            UserSelection.Cmb_Users.SelectedValue = changeUserID
-            UserSelection.Cmb_Users.Enabled = False
+            UserSelection.cmb_Users.SelectedValue = changeUserID
+            UserSelection.cmb_Users.Enabled = False
             UserSelection.ShowDialog()
 
             ' change password
@@ -399,12 +443,12 @@ Public Class TrashCashHome
     End Sub
 
     Private Sub btn_Invoicing_Click(sender As Object, e As EventArgs) Handles btn_Invoicing.Click
-        If (InvoicingForm Is Nothing) Then
-            InvoicingForm = New Invoicing.CustomInvoicingForm
-            InvoicingForm.MdiParent = Me
+        If (InvForm Is Nothing) Then
+            InvForm = New Invoicing.CustomInvoicingForm
+            InvForm.MdiParent = Me
         End If
-        InvoicingForm.BringToFront()
-        InvoicingForm.Show()
-        InvoicingForm.CustomerToolstrip1.QuickSearch.TextBox.SelectAll()
+        InvForm.BringToFront()
+        InvForm.Show()
+        InvForm.CustomerToolstrip1.QuickSearch.TextBox.SelectAll()
     End Sub
 End Class

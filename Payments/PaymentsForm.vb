@@ -3,7 +3,7 @@
         ' field to update if item added to queue
         Friend PaymentAdded As Boolean
         ' events for home form notification
-        Friend Event CustomerPaymentAdded(ByVal customerNumber As Integer)
+        Friend Event CustomerPaymentAdded(ByVal customerNumber As Integer, ByRef formType As Type)
         
         Private _currentCustomer As Integer
         Public Property CurrentCustomer As Integer
@@ -152,7 +152,7 @@
                     MessageBox.Show("Message: " & ex.Message & vbCrLf & "LineNumber: " & ex.LineNumber,
                                     "Sql Error: " & ex.Procedure, MessageBoxButtons.OK, MessageBoxIcon.Error)
                 End Try
-                RaiseEvent CustomerPaymentAdded(CurrentCustomer)
+                RaiseEvent CustomerPaymentAdded(CurrentCustomer, GetType(PaymentsForm))
                 ResetPayment()
                 ' fill table
                 BATCH_WorkingPaymentsTableAdapter.Fill(Ds_Batching.BATCH_WorkingPayments)
