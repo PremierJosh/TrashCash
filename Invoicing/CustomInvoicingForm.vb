@@ -129,11 +129,17 @@ Namespace Invoicing
             If (Trim(tb_Rate.Text).Length = 0) Then
                 err += 1
                 s.Append(" - Rate must be greater than 0").AppendLine()
+                tb_Rate.BackColor = AppColors.TextBoxErr
+            Else
+                tb_Rate.BackColor = AppColors.TextBoxDef
             End If
 
             If (Trim(tb_DescText.Text).Length = 0) Then
                 err += 1
                 s.Append(" - Description of service missing").AppendLine()
+                tb_DescText.BackColor = AppColors.TextBoxErr
+            Else
+                tb_DescText.BackColor = AppColors.TextBoxDef
             End If
 
             ' address validation
@@ -150,11 +156,9 @@ Namespace Invoicing
                         If (Trim(control.Text) = "") Then
                             err += 1
                             s.Append(" - Address section error").AppendLine()
-                            ' adjust back color
-                            control.BackColor = Color.MistyRose
+                            control.BackColor = AppColors.TextBoxErr
                         Else
-                            ' reset color
-                            control.BackColor = SystemColors.Window
+                           control.BackColor = AppColors.TextBoxDef
                         End If
                     End If
                 End If
@@ -227,6 +231,7 @@ Namespace Invoicing
                     ResetInvoice()
                     ' update balance var
                     BalanceChanged = True
+                    CustomerToolstrip1.GetCustomerBalance()
                 End If
             End If
         End Sub
@@ -260,6 +265,8 @@ Namespace Invoicing
                         If (succeed) Then
                             MessageBox.Show("Invoice Voided.", "Invoice voided", MessageBoxButtons.OK, MessageBoxIcon.Information)
                             tb_VoidReason.Text = ""
+                            ' get new customer balance
+                            CustomerToolstrip1.GetCustomerBalance()
                         Else
                             MessageBox.Show("Error - Invoice not voided.", "QB Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
                         End If

@@ -301,7 +301,7 @@ Namespace Invoicing
             Me.tb_Rate.Location = New System.Drawing.Point(302, 29)
             Me.tb_Rate.Name = "tb_Rate"
             Me.tb_Rate.Size = New System.Drawing.Size(66, 20)
-            Me.tb_Rate.TabIndex = 18
+            Me.tb_Rate.TabIndex = 1
             '
             'lbl_LineType
             '
@@ -341,7 +341,7 @@ Namespace Invoicing
             Me.tb_DescText.Multiline = True
             Me.tb_DescText.Name = "tb_DescText"
             Me.tb_DescText.Size = New System.Drawing.Size(285, 46)
-            Me.tb_DescText.TabIndex = 10
+            Me.tb_DescText.TabIndex = 2
             '
             'ck_Reminder
             '
@@ -350,7 +350,7 @@ Namespace Invoicing
             Me.ck_Reminder.Name = "ck_Reminder"
             Me.ck_Reminder.RightToLeft = System.Windows.Forms.RightToLeft.Yes
             Me.ck_Reminder.Size = New System.Drawing.Size(105, 17)
-            Me.ck_Reminder.TabIndex = 3
+            Me.ck_Reminder.TabIndex = 16
             Me.ck_Reminder.Text = "Create Reminder"
             Me.ck_Reminder.UseVisualStyleBackColor = True
             '
@@ -406,14 +406,14 @@ Namespace Invoicing
             Me.tb_Addr2.Location = New System.Drawing.Point(73, 85)
             Me.tb_Addr2.Name = "tb_Addr2"
             Me.tb_Addr2.Size = New System.Drawing.Size(147, 20)
-            Me.tb_Addr2.TabIndex = 7
+            Me.tb_Addr2.TabIndex = 6
             '
             'tb_Addr3
             '
             Me.tb_Addr3.Location = New System.Drawing.Point(73, 111)
             Me.tb_Addr3.Name = "tb_Addr3"
             Me.tb_Addr3.Size = New System.Drawing.Size(147, 20)
-            Me.tb_Addr3.TabIndex = 9
+            Me.tb_Addr3.TabIndex = 7
             '
             'tb_City
             '
@@ -446,7 +446,7 @@ Namespace Invoicing
             Me.cmb_RecentAddr.Location = New System.Drawing.Point(13, 32)
             Me.cmb_RecentAddr.Name = "cmb_RecentAddr"
             Me.cmb_RecentAddr.Size = New System.Drawing.Size(266, 21)
-            Me.cmb_RecentAddr.TabIndex = 1
+            Me.cmb_RecentAddr.TabIndex = 4
             Me.cmb_RecentAddr.ValueMember = "ID"
             '
             'tb_Zip
@@ -461,7 +461,7 @@ Namespace Invoicing
             Me.dtp_DateOfSrvc.Location = New System.Drawing.Point(168, 141)
             Me.dtp_DateOfSrvc.Name = "dtp_DateOfSrvc"
             Me.dtp_DateOfSrvc.Size = New System.Drawing.Size(200, 20)
-            Me.dtp_DateOfSrvc.TabIndex = 13
+            Me.dtp_DateOfSrvc.TabIndex = 3
             '
             'pnl_3
             '
