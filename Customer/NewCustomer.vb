@@ -27,18 +27,14 @@ Namespace Customer
                 ' setting bill interval
                 _custRow.CustomerBillInterval = nud_BillInterval.Value
                 _custRow.CustomerStartDate = startDatePicker.Value
-
-                ' build full name
-                If (_custRow.IsCustomerCompanyNameNull = False) Then
-                    _custRow.CustomerFullName = _custRow.CustomerCompanyName & " - " & _custRow.CustomerNumber
-                Else
-                    _custRow.CustomerFullName = _custRow.CustomerLastName & ", " & _custRow.CustomerFirstName & " - " & _custRow.CustomerNumber
-                End If
+                
                 ' trim phone number
                 _custRow.CustomerPhone = PhoneFormat(_custRow.CustomerPhone)
                 If (Not _custRow.IsCustomerAltPhoneNull) Then
                     _custRow.CustomerAltPhone = PhoneFormat(_custRow.CustomerAltPhone)
                 End If
+
+                _custRow.EndEdit()
                 Try
                     ' push to table so i have a customer number
                     CustomerTableAdapter.Update(_custRow)
@@ -46,18 +42,25 @@ Namespace Customer
                     MessageBox.Show("Message: " & ex.Message & vbCrLf & "LineNumber: " & ex.LineNumber,
                                     "Sql Error: " & ex.Procedure, MessageBoxButtons.OK, MessageBoxIcon.Error)
                 End Try
+                ' build full name now that i have number
+                If (_custRow.IsCustomerCompanyNameNull = False) Then
+                    _custRow.CustomerFullName = _custRow.CustomerCompanyName & " - " & _custRow.CustomerNumber
+                Else
+                    _custRow.CustomerFullName = _custRow.CustomerLastName & ", " & _custRow.CustomerFirstName & " - " & _custRow.CustomerNumber
+                End If
 
                 ' sending row to customer add function
                 Dim resp As IResponse = QBRequests.CustomerAdd(_custRow)
                 If (resp.StatusCode = 0) Then
                     Dim customerRet As ICustomerRet = resp.Detail
                     ' updating the custRow with ListID and EditSeq
+                    _custRow.BeginEdit()
                     _custRow.CustomerListID = customerRet.ListID.GetValue
                     _custRow.CustomerEditSeq = customerRet.EditSequence.GetValue
-
+                    _custRow.EndEdit()
                     Try
                         CustomerTableAdapter.Update(_custRow)
-                        MsgBox("Customer: '" & _custRow.CustomerFullName & "' added successfully.")
+                        MessageBox.Show("Customer: '" & _custRow.CustomerFullName & "' added successfully.", "Customer Added", MessageBoxButtons.OK, MessageBoxIcon.Information)
                         RaiseEvent NewCustomerAdded(_custRow.CustomerNumber)
                         Close()
                     Catch ex As SqlException
@@ -92,10 +95,11 @@ Namespace Customer
         End Sub
         Private Sub ck_SingleInv_Click(sender As System.Object, e As System.EventArgs) Handles ck_SingleInv.Click
             If (ck_SingleInv.Checked = True) Then
-                Dim result As MsgBoxResult = MsgBox("Marking this Customer as Single Invoice will cause all Recurring Services to bill within that Customers bill interval - no matter the service." & vbCrLf & _
-                                                    "For example, Toters will bill every 1 month if this Customers bill interval is set to 1. This change will also cause all Recurring Services to bill to the Customers start date day." & vbCrLf & _
-                                                    "Do you wish to change this Customer to Single Invoice?")
-                If (result = MsgBoxResult.No) Then
+                Dim result As DialogResult = MessageBox.Show("Marking this Customer as Single Invoice will cause all Recurring Services to bill within that Customers Bill Interval - no matter the service." & vbCrLf & _
+                                                    "For example, Toters will bill every 1 month if this Customers Bill Interval is set to 1. This change will also cause all Recurring Services to bill to " & vbCrLf & _
+                                                    "the same day as the Customers Start Date day." & vbCrLf & _
+                                                    "Do you wish to change this Customer to Single Invoice?", "Confirm Single Invoice Change", MessageBoxButtons.YesNo, MessageBoxIcon.Warning)
+                If (result = Windows.Forms.DialogResult.No) Then
                     ck_SingleInv.Checked = False
                 Else
                     ck_SingleInv.Checked = True
@@ -118,46 +122,46 @@ Namespace Customer
         End Function
         Private Function TextCheck() As Boolean
             Dim errorCount As Integer = 0
-            Dim defaultColor = SystemColors.Window
-
-            If (Not NamesOk()) Then
+           If (Not NamesOk()) Then
                 errorCount += 1
                 MsgBox("Either a Company name is required, or both a First and Last name is required.")
             End If
 
             If (box_CustBillAddr1.Text.Length = 0) Then
                 errorCount += 1
-                box_CustBillAddr1.BackColor = Color.MistyRose
+                box_CustBillAddr1.BackColor = AppColors.TextBoxErr
             Else
-                box_CustBillAddr1.BackColor = defaultColor
+                box_CustBillAddr1.BackColor = AppColors.TextBoxDef
             End If
-
+            If (box_CustBillAddr2.Text.Length = 0) Then
+                errorCount += 1
+                box_CustBillAddr2.BackColor = AppColors.TextBoxErr
+            Else
+                box_CustBillAddr2.BackColor = AppColors.TextBoxDef
+            End If
             If (box_CustBillCity.Text.Length = 0) Then
                 errorCount += 1
-                box_CustBillCity.BackColor = Color.MistyRose
+                box_CustBillCity.BackColor = AppColors.TextBoxErr
             Else
-                box_CustBillCity.BackColor = defaultColor
+                box_CustBillCity.BackColor = AppColors.TextBoxDef
             End If
-
             If (box_CustBillState.Text.Length = 0) Then
                 errorCount += 1
-                box_CustBillState.BackColor = Color.MistyRose
+                box_CustBillState.BackColor = AppColors.TextBoxErr
             Else
-                box_CustBillState.BackColor = defaultColor
+                box_CustBillState.BackColor = AppColors.TextBoxDef
             End If
-
             If (box_CustBillZip.Text.Length = 0) Then
                 errorCount += 1
-                box_CustBillZip.BackColor = Color.MistyRose
+                box_CustBillZip.BackColor = AppColors.TextBoxErr
             Else
-                box_CustBillZip.BackColor = defaultColor
+                box_CustBillZip.BackColor = AppColors.TextBoxDef
             End If
-
             If (nud_BillInterval.Value < 1) Then
                 errorCount += 1
-                nud_BillInterval.BackColor = Color.MistyRose
+                nud_BillInterval.BackColor = AppColors.TextBoxErr
             Else
-                nud_BillInterval.BackColor = defaultColor
+                nud_BillInterval.BackColor = AppColors.TextBoxDef
             End If
 
             If (errorCount = 0) Then
@@ -188,6 +192,7 @@ Namespace Customer
             If (ck_SingleInv.Checked = True) Then
                 lbl_BillInterval.Visible = True
                 nud_BillInterval.Visible = True
+                nud_BillInterval.Value = 1
             Else
                 lbl_BillInterval.Visible = False
                 nud_BillInterval.Visible = False

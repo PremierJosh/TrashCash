@@ -32,15 +32,20 @@ Module AppModule
     End Function
 
     Public Function PhoneFormat(ByVal strPhoneNumber As String) As String
-        ' Remove any style characters from the user input
-        strPhoneNumber = Replace(strPhoneNumber, ")", "")
-        strPhoneNumber = Replace(strPhoneNumber, "(", "")
-        strPhoneNumber = Replace(strPhoneNumber, "-", "")
-        strPhoneNumber = Replace(strPhoneNumber, ".", "")
-        strPhoneNumber = Replace(strPhoneNumber, Space(1), "")
+        ' only do this for 10 digit numbers
+        If (Len(strPhoneNumber) = 10) Then
+            ' Remove any style characters from the user input
+            strPhoneNumber = Replace(strPhoneNumber, ")", "")
+            strPhoneNumber = Replace(strPhoneNumber, "(", "")
+            strPhoneNumber = Replace(strPhoneNumber, "-", "")
+            strPhoneNumber = Replace(strPhoneNumber, ".", "")
+            strPhoneNumber = Replace(strPhoneNumber, Space(1), "")
 
-        Dim strFormatedNumber As String = CLng(strPhoneNumber).ToString("(###) ###-####")
-        Return strFormatedNumber
+            Dim strFormatedNumber As String = CLng(strPhoneNumber).ToString("(###) ###-####")
+            Return strFormatedNumber
+        Else
+            Return strPhoneNumber
+        End If
     End Function
 
     ' enumerated item status from database
