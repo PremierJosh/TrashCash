@@ -153,6 +153,7 @@
                                     "Sql Error: " & ex.Procedure, MessageBoxButtons.OK, MessageBoxIcon.Error)
                 End Try
                 RaiseEvent CustomerPaymentAdded(CurrentCustomer, GetType(PaymentsForm))
+                CustomerToolstrip1.GetQueueAmount()
                 ResetPayment()
                 ' fill table
                 BATCH_WorkingPaymentsTableAdapter.Fill(Ds_Batching.BATCH_WorkingPayments)
