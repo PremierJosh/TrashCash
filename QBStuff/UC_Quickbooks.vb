@@ -17,28 +17,18 @@ Namespace QBStuff
                 Return _custListID
             End Get
             Set(value As String)
-               _custListID = value
+                If (value IsNot Nothing) Then
+                    _custListID = value
 
-                ' fill with all invoices and all payments
-                FetchInvoices(0)
-                FetchPayments()
+                    ' fill with all invoices and all payments
+                    FetchInvoices(0)
+                    FetchPayments()
+                End If
             End Set
         End Property
 
         ' property refrence
-        Private _currentCustomer As Decimal
-        ' properties
-        Public Property CurrentCustomer As Decimal
-            Get
-                Return _currentCustomer
-            End Get
-            Set(ByVal value As Decimal)
-                If (_currentCustomer <> value) Then
-                    ' refrence
-                    _currentCustomer = value
-                    End If
-            End Set
-        End Property
+        Friend CurrentCustomer As Decimal
 
         Friend Sub FetchInvoices(ByVal paidStatus As Integer)
             ' clear table
@@ -216,6 +206,10 @@ Namespace QBStuff
 
         Private Sub dg_Invoices_RowPrePaint(sender As System.Object, e As System.Windows.Forms.DataGridViewRowPrePaintEventArgs) Handles dg_Invoices.RowPrePaint
             ColorRows_QBInvoices(dg_Invoices)
+        End Sub
+
+        Private Sub UC_Quickbooks_Load(sender As Object, e As System.EventArgs) Handles Me.Load
+
         End Sub
     End Class
 End Namespace

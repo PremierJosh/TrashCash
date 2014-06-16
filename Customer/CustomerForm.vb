@@ -4,6 +4,7 @@
         Private WithEvents _newCust As NewCustomer
 
         Private _currentCustomer As Integer
+
         Public Property CurrentCustomer As Integer
             Get
                 Return _currentCustomer
@@ -25,25 +26,27 @@
         End Property
 
         ' refresh balance event handleing
-        Friend Sub RefreshCustBalance(Optional ByVal customerNumber As Integer = 0) Handles UC_RecurringService.RefreshBalance
+        Friend Sub RefreshCustBalance(Optional ByVal customerNumber As Integer = 0) _
+            Handles UC_RecurringService.RefreshBalance
             CustomerToolstrip1.GetCustomerBalance()
             ' if rec srvc is raising this event, balance was adjusted from credit
             UC_Quickbooks.FetchInvoices(0)
         End Sub
 
-        Private Sub Customer_FormClosing(sender As Object, e As System.Windows.Forms.FormClosingEventArgs) Handles Me.FormClosing
+        Private Sub Customer_FormClosing(sender As Object, e As FormClosingEventArgs) Handles Me.FormClosing
             If (e.CloseReason <> CloseReason.ApplicationExitCall) Then
                 e.Cancel = True
                 Hide()
             End If
         End Sub
 
-        Private Sub Customer_Load(sender As Object, e As System.EventArgs) Handles Me.Load
+        Private Sub Customer_Load(sender As Object, e As EventArgs) Handles Me.Load
             If (CustomerToolstrip1.CurrentCustomer <> Nothing) Then
                 CurrentCustomer = CustomerToolstrip1.CurrentCustomer
             End If
             ' set focus to quick search
             CustomerToolstrip1.QuickSearch.TextBox.Select()
+            CustomerToolstrip1.GetCustomerBalance()
         End Sub
 
         Private Sub CustomerChanged(ByVal customerNumber As Integer) Handles CustomerToolstrip1.CustomerChanging
@@ -75,7 +78,7 @@
             End If
         End Sub
 
-        Private Sub btn_NewCust_Click(sender As System.Object, e As System.EventArgs) Handles btn_NewCust.Click
+        Private Sub btn_NewCust_Click(sender As Object, e As EventArgs) Handles btn_NewCust.Click
             _newCust = New NewCustomer()
             _newCust.ShowDialog()
         End Sub
@@ -92,13 +95,14 @@
             ' This call is required by the designer.
             InitializeComponent()
 
+
             ' Add any initialization after the InitializeComponent() call.
             UC_RecurringService.HomeForm = homeForm
             CustomerToolstrip1.GetCustomerBalance()
         End Sub
 
 
-        Private Sub btn_Payments_Click(sender As System.Object, e As System.EventArgs) Handles btn_Payments.Click
+        Private Sub btn_Payments_Click(sender As Object, e As EventArgs) Handles btn_Payments.Click
             Dim payForm As New Payments.PaymentsForm(CBool(AppQTA.APP_GetDebugMode), customerNumber:=CurrentCustomer)
             payForm.ShowDialog()
             If (payForm.PaymentAdded) Then
@@ -107,21 +111,25 @@
             End If
         End Sub
 
-        Private Sub btn_Credit_Click(sender As System.Object, e As System.EventArgs) Handles btn_Credit.Click
+        Private Sub btn_Credit_Click(sender As Object, e As EventArgs) Handles btn_Credit.Click
             Dim creditForm As New CustomerCredit(CurrentCustomer)
             creditForm.ShowDialog()
             If (creditForm.BalanceChanged) Then
                 ' update customer balance
                 CustomerToolstrip1.GetCustomerBalance()
+                ' update invoices
+                UC_Quickbooks.CustomerListID = UC_Quickbooks.CustomerListID
             End If
         End Sub
 
-        Private Sub btn_Inv_Click(sender As System.Object, e As System.EventArgs) Handles btn_Inv.Click
+        Private Sub btn_Inv_Click(sender As Object, e As EventArgs) Handles btn_Inv.Click
             Dim invForm As New Invoicing.CustomInvoicingForm(CurrentCustomer)
             invForm.ShowDialog()
             If (invForm.BalanceChanged) Then
                 ' update customer balance
                 CustomerToolstrip1.GetCustomerBalance()
+                ' update invoices
+                UC_Quickbooks.CustomerListID = UC_Quickbooks.CustomerListID
             End If
         End Sub
     End Class

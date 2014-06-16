@@ -30,5 +30,18 @@
                 End Try
             End If
         End Sub
+
+        Public Sub New()
+
+            ' This call is required by the designer.
+            InitializeComponent()
+
+            ' Add any initialization after the InitializeComponent() call.
+
+        End Sub
+
+        Private Sub UC_CustomerNotes_Load(sender As Object, e As System.EventArgs) Handles Me.Load
+
+        End Sub
     End Class
 End Namespace

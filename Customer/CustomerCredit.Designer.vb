@@ -31,20 +31,11 @@ Namespace Customer
             Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
             Me.Panel1 = New System.Windows.Forms.Panel()
             Me.pnl_TopContent = New System.Windows.Forms.Panel()
-            Me.CustomerToolstrip1 = New TrashCash.Classes.CustomerToolstrip.CustomerToolstrip()
             Me.pnl_Left = New System.Windows.Forms.Panel()
             Me.dg_Credits = New System.Windows.Forms.DataGridView()
-            Me.CreditAmountDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
-            Me.TimeCreatedDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
-            Me.ReasonDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
-            Me.CreatedUserDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
             Me.cm_Void = New System.Windows.Forms.ContextMenuStrip(Me.components)
             Me.btn_VoidCredit = New System.Windows.Forms.ToolStripMenuItem()
-            Me.CustomerCreditsBindingSource = New System.Windows.Forms.BindingSource(Me.components)
-            Me.Ds_Customer = New TrashCash.ds_Customer()
             Me.lbl_CreditHis = New System.Windows.Forms.Label()
-            Me.Customer_CreditsTableAdapter = New TrashCash.ds_CustomerTableAdapters.Customer_CreditsTableAdapter()
-            Me.tb_Amount = New TrashCash.Classes.CurrencyTextBox()
             Me.lbl_Amount = New System.Windows.Forms.Label()
             Me.tb_Reason = New System.Windows.Forms.TextBox()
             Me.lbl_Reason = New System.Windows.Forms.Label()
@@ -55,6 +46,15 @@ Namespace Customer
             Me.lbl_Type = New System.Windows.Forms.Label()
             Me.cmb_Types = New System.Windows.Forms.ComboBox()
             Me.ck_Print = New System.Windows.Forms.CheckBox()
+            Me.tb_Amount = New TrashCash.Classes.CurrencyTextBox()
+            Me.CustomerToolstrip1 = New TrashCash.Classes.CustomerToolstrip.CustomerToolstrip()
+            Me.CreditAmountDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+            Me.TimeCreatedDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+            Me.ReasonDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+            Me.CreatedUserDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+            Me.CustomerCreditsBindingSource = New System.Windows.Forms.BindingSource(Me.components)
+            Me.Ds_Customer = New TrashCash.ds_Customer()
+            Me.Customer_CreditsTableAdapter = New TrashCash.ds_CustomerTableAdapters.Customer_CreditsTableAdapter()
             Me.Panel1.SuspendLayout()
             Me.pnl_TopContent.SuspendLayout()
             Me.pnl_Left.SuspendLayout()
@@ -83,17 +83,6 @@ Namespace Customer
             Me.pnl_TopContent.Name = "pnl_TopContent"
             Me.pnl_TopContent.Size = New System.Drawing.Size(666, 33)
             Me.pnl_TopContent.TabIndex = 2
-            '
-            'CustomerToolstrip1
-            '
-            Me.CustomerToolstrip1.Dock = System.Windows.Forms.DockStyle.Fill
-            Me.CustomerToolstrip1.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden
-            Me.CustomerToolstrip1.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.Flow
-            Me.CustomerToolstrip1.Location = New System.Drawing.Point(0, 0)
-            Me.CustomerToolstrip1.Name = "CustomerToolstrip1"
-            Me.CustomerToolstrip1.Size = New System.Drawing.Size(664, 31)
-            Me.CustomerToolstrip1.TabIndex = 0
-            Me.CustomerToolstrip1.Text = "CustomerToolstrip1"
             '
             'pnl_Left
             '
@@ -124,47 +113,6 @@ Namespace Customer
             Me.dg_Credits.Size = New System.Drawing.Size(430, 267)
             Me.dg_Credits.TabIndex = 1
             '
-            'CreditAmountDataGridViewTextBoxColumn
-            '
-            Me.CreditAmountDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
-            Me.CreditAmountDataGridViewTextBoxColumn.DataPropertyName = "CreditAmount"
-            DataGridViewCellStyle1.Format = "C2"
-            DataGridViewCellStyle1.NullValue = Nothing
-            Me.CreditAmountDataGridViewTextBoxColumn.DefaultCellStyle = DataGridViewCellStyle1
-            Me.CreditAmountDataGridViewTextBoxColumn.HeaderText = "Amount"
-            Me.CreditAmountDataGridViewTextBoxColumn.Name = "CreditAmountDataGridViewTextBoxColumn"
-            Me.CreditAmountDataGridViewTextBoxColumn.ReadOnly = True
-            Me.CreditAmountDataGridViewTextBoxColumn.Width = 68
-            '
-            'TimeCreatedDataGridViewTextBoxColumn
-            '
-            Me.TimeCreatedDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
-            Me.TimeCreatedDataGridViewTextBoxColumn.DataPropertyName = "TimeCreated"
-            DataGridViewCellStyle2.Format = "g"
-            DataGridViewCellStyle2.NullValue = Nothing
-            Me.TimeCreatedDataGridViewTextBoxColumn.DefaultCellStyle = DataGridViewCellStyle2
-            Me.TimeCreatedDataGridViewTextBoxColumn.HeaderText = "Time Created"
-            Me.TimeCreatedDataGridViewTextBoxColumn.Name = "TimeCreatedDataGridViewTextBoxColumn"
-            Me.TimeCreatedDataGridViewTextBoxColumn.ReadOnly = True
-            Me.TimeCreatedDataGridViewTextBoxColumn.Width = 95
-            '
-            'ReasonDataGridViewTextBoxColumn
-            '
-            Me.ReasonDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill
-            Me.ReasonDataGridViewTextBoxColumn.DataPropertyName = "Reason"
-            Me.ReasonDataGridViewTextBoxColumn.HeaderText = "Reason"
-            Me.ReasonDataGridViewTextBoxColumn.Name = "ReasonDataGridViewTextBoxColumn"
-            Me.ReasonDataGridViewTextBoxColumn.ReadOnly = True
-            '
-            'CreatedUserDataGridViewTextBoxColumn
-            '
-            Me.CreatedUserDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
-            Me.CreatedUserDataGridViewTextBoxColumn.DataPropertyName = "CreatedUser"
-            Me.CreatedUserDataGridViewTextBoxColumn.HeaderText = "User"
-            Me.CreatedUserDataGridViewTextBoxColumn.Name = "CreatedUserDataGridViewTextBoxColumn"
-            Me.CreatedUserDataGridViewTextBoxColumn.ReadOnly = True
-            Me.CreatedUserDataGridViewTextBoxColumn.Width = 54
-            '
             'cm_Void
             '
             Me.cm_Void.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.btn_VoidCredit})
@@ -177,16 +125,6 @@ Namespace Customer
             Me.btn_VoidCredit.Size = New System.Drawing.Size(133, 22)
             Me.btn_VoidCredit.Text = "Void Credit"
             '
-            'CustomerCreditsBindingSource
-            '
-            Me.CustomerCreditsBindingSource.DataMember = "Customer_Credits"
-            Me.CustomerCreditsBindingSource.DataSource = Me.Ds_Customer
-            '
-            'Ds_Customer
-            '
-            Me.Ds_Customer.DataSetName = "ds_Customer"
-            Me.Ds_Customer.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema
-            '
             'lbl_CreditHis
             '
             Me.lbl_CreditHis.Dock = System.Windows.Forms.DockStyle.Top
@@ -197,17 +135,6 @@ Namespace Customer
             Me.lbl_CreditHis.TabIndex = 0
             Me.lbl_CreditHis.Text = "Credit History"
             Me.lbl_CreditHis.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
-            '
-            'Customer_CreditsTableAdapter
-            '
-            Me.Customer_CreditsTableAdapter.ClearBeforeFill = True
-            '
-            'tb_Amount
-            '
-            Me.tb_Amount.Location = New System.Drawing.Point(559, 147)
-            Me.tb_Amount.Name = "tb_Amount"
-            Me.tb_Amount.Size = New System.Drawing.Size(75, 20)
-            Me.tb_Amount.TabIndex = 99
             '
             'lbl_Amount
             '
@@ -230,7 +157,7 @@ Namespace Customer
             'lbl_Reason
             '
             Me.lbl_Reason.AutoSize = True
-            Me.lbl_Reason.Location = New System.Drawing.Point(471, 182)
+            Me.lbl_Reason.Location = New System.Drawing.Point(471, 179)
             Me.lbl_Reason.Name = "lbl_Reason"
             Me.lbl_Reason.Size = New System.Drawing.Size(47, 13)
             Me.lbl_Reason.TabIndex = 102
@@ -308,6 +235,80 @@ Namespace Customer
             Me.ck_Print.TabIndex = 110
             Me.ck_Print.Text = "Print"
             Me.ck_Print.UseVisualStyleBackColor = True
+            '
+            'tb_Amount
+            '
+            Me.tb_Amount.Location = New System.Drawing.Point(559, 147)
+            Me.tb_Amount.Name = "tb_Amount"
+            Me.tb_Amount.Size = New System.Drawing.Size(75, 20)
+            Me.tb_Amount.TabIndex = 99
+            '
+            'CustomerToolstrip1
+            '
+            Me.CustomerToolstrip1.Dock = System.Windows.Forms.DockStyle.Fill
+            Me.CustomerToolstrip1.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden
+            Me.CustomerToolstrip1.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.Flow
+            Me.CustomerToolstrip1.Location = New System.Drawing.Point(0, 0)
+            Me.CustomerToolstrip1.Name = "CustomerToolstrip1"
+            Me.CustomerToolstrip1.Padding = New System.Windows.Forms.Padding(0, 5, 1, 0)
+            Me.CustomerToolstrip1.Size = New System.Drawing.Size(664, 31)
+            Me.CustomerToolstrip1.TabIndex = 0
+            Me.CustomerToolstrip1.Text = "CustomerToolstrip1"
+            '
+            'CreditAmountDataGridViewTextBoxColumn
+            '
+            Me.CreditAmountDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
+            Me.CreditAmountDataGridViewTextBoxColumn.DataPropertyName = "CreditAmount"
+            DataGridViewCellStyle1.Format = "C2"
+            DataGridViewCellStyle1.NullValue = Nothing
+            Me.CreditAmountDataGridViewTextBoxColumn.DefaultCellStyle = DataGridViewCellStyle1
+            Me.CreditAmountDataGridViewTextBoxColumn.HeaderText = "Amount"
+            Me.CreditAmountDataGridViewTextBoxColumn.Name = "CreditAmountDataGridViewTextBoxColumn"
+            Me.CreditAmountDataGridViewTextBoxColumn.ReadOnly = True
+            Me.CreditAmountDataGridViewTextBoxColumn.Width = 68
+            '
+            'TimeCreatedDataGridViewTextBoxColumn
+            '
+            Me.TimeCreatedDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
+            Me.TimeCreatedDataGridViewTextBoxColumn.DataPropertyName = "TimeCreated"
+            DataGridViewCellStyle2.Format = "g"
+            DataGridViewCellStyle2.NullValue = Nothing
+            Me.TimeCreatedDataGridViewTextBoxColumn.DefaultCellStyle = DataGridViewCellStyle2
+            Me.TimeCreatedDataGridViewTextBoxColumn.HeaderText = "Time Created"
+            Me.TimeCreatedDataGridViewTextBoxColumn.Name = "TimeCreatedDataGridViewTextBoxColumn"
+            Me.TimeCreatedDataGridViewTextBoxColumn.ReadOnly = True
+            Me.TimeCreatedDataGridViewTextBoxColumn.Width = 95
+            '
+            'ReasonDataGridViewTextBoxColumn
+            '
+            Me.ReasonDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill
+            Me.ReasonDataGridViewTextBoxColumn.DataPropertyName = "Reason"
+            Me.ReasonDataGridViewTextBoxColumn.HeaderText = "Reason"
+            Me.ReasonDataGridViewTextBoxColumn.Name = "ReasonDataGridViewTextBoxColumn"
+            Me.ReasonDataGridViewTextBoxColumn.ReadOnly = True
+            '
+            'CreatedUserDataGridViewTextBoxColumn
+            '
+            Me.CreatedUserDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
+            Me.CreatedUserDataGridViewTextBoxColumn.DataPropertyName = "CreatedUser"
+            Me.CreatedUserDataGridViewTextBoxColumn.HeaderText = "User"
+            Me.CreatedUserDataGridViewTextBoxColumn.Name = "CreatedUserDataGridViewTextBoxColumn"
+            Me.CreatedUserDataGridViewTextBoxColumn.ReadOnly = True
+            Me.CreatedUserDataGridViewTextBoxColumn.Width = 54
+            '
+            'CustomerCreditsBindingSource
+            '
+            Me.CustomerCreditsBindingSource.DataMember = "Customer_Credits"
+            Me.CustomerCreditsBindingSource.DataSource = Me.Ds_Customer
+            '
+            'Ds_Customer
+            '
+            Me.Ds_Customer.DataSetName = "ds_Customer"
+            Me.Ds_Customer.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema
+            '
+            'Customer_CreditsTableAdapter
+            '
+            Me.Customer_CreditsTableAdapter.ClearBeforeFill = True
             '
             'CustomerCredit
             '

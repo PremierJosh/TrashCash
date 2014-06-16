@@ -1850,6 +1850,7 @@ Partial Public Class ds_Customer
             Me.columnReason.MaxLength = 300
             Me.columnCreatedUser.AllowDBNull = false
             Me.columnCreatedUser.MaxLength = 50
+            Me.columnVoided.AllowDBNull = false
             Me.columnVoidReason.MaxLength = 300
             Me.columnVoidUser.MaxLength = 50
         End Sub
@@ -2952,11 +2953,7 @@ Partial Public Class ds_Customer
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
         Public Property Voided() As Boolean
             Get
-                Try 
-                    Return CType(Me(Me.tableCustomer_Credits.VoidedColumn),Boolean)
-                Catch e As Global.System.InvalidCastException
-                    Throw New Global.System.Data.StrongTypingException("The value for column 'Voided' in table 'Customer_Credits' is DBNull.", e)
-                End Try
+                Return CType(Me(Me.tableCustomer_Credits.VoidedColumn),Boolean)
             End Get
             Set
                 Me(Me.tableCustomer_Credits.VoidedColumn) = value
@@ -3007,18 +3004,6 @@ Partial Public Class ds_Customer
                 Me(Me.tableCustomer_Credits.VoidUserColumn) = value
             End Set
         End Property
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Function IsVoidedNull() As Boolean
-            Return Me.IsNull(Me.tableCustomer_Credits.VoidedColumn)
-        End Function
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Sub SetVoidedNull()
-            Me(Me.tableCustomer_Credits.VoidedColumn) = Global.System.Convert.DBNull
-        End Sub
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _

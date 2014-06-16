@@ -24,13 +24,13 @@
         <System.Diagnostics.DebuggerStepThrough()> _
         Private Sub InitializeComponent()
             Me.components = New System.ComponentModel.Container()
-            Dim DataGridViewCellStyle8 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-            Dim DataGridViewCellStyle9 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-            Dim DataGridViewCellStyle10 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-            Dim DataGridViewCellStyle11 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-            Dim DataGridViewCellStyle12 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-            Dim DataGridViewCellStyle13 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-            Dim DataGridViewCellStyle14 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+            Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+            Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+            Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+            Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+            Dim DataGridViewCellStyle5 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+            Dim DataGridViewCellStyle6 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+            Dim DataGridViewCellStyle7 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
             Me.grp_DateFilter = New System.Windows.Forms.GroupBox()
             Me.dtp_ItemFrom = New System.Windows.Forms.DateTimePicker()
             Me.dtp_ItemTo = New System.Windows.Forms.DateTimePicker()
@@ -75,7 +75,7 @@
             Me.grp_DateFilter.Controls.Add(Me.dtp_ItemTo)
             Me.grp_DateFilter.Controls.Add(Me.chk_ItemTo)
             Me.grp_DateFilter.Controls.Add(Me.chk_ItemFrom)
-            Me.grp_DateFilter.Location = New System.Drawing.Point(725, 6)
+            Me.grp_DateFilter.Location = New System.Drawing.Point(721, 6)
             Me.grp_DateFilter.Name = "grp_DateFilter"
             Me.grp_DateFilter.Size = New System.Drawing.Size(168, 67)
             Me.grp_DateFilter.TabIndex = 56
@@ -170,8 +170,8 @@
             'InvoicePostDateDataGridViewTextBoxColumn
             '
             Me.InvoicePostDateDataGridViewTextBoxColumn.DataPropertyName = "InvoicePostDate"
-            DataGridViewCellStyle8.Format = "d"
-            Me.InvoicePostDateDataGridViewTextBoxColumn.DefaultCellStyle = DataGridViewCellStyle8
+            DataGridViewCellStyle1.Format = "d"
+            Me.InvoicePostDateDataGridViewTextBoxColumn.DefaultCellStyle = DataGridViewCellStyle1
             Me.InvoicePostDateDataGridViewTextBoxColumn.HeaderText = "Post Date"
             Me.InvoicePostDateDataGridViewTextBoxColumn.Name = "InvoicePostDateDataGridViewTextBoxColumn"
             Me.InvoicePostDateDataGridViewTextBoxColumn.ReadOnly = True
@@ -179,8 +179,8 @@
             'InvoiceDueDateDataGridViewTextBoxColumn
             '
             Me.InvoiceDueDateDataGridViewTextBoxColumn.DataPropertyName = "InvoiceDueDate"
-            DataGridViewCellStyle9.Format = "d"
-            Me.InvoiceDueDateDataGridViewTextBoxColumn.DefaultCellStyle = DataGridViewCellStyle9
+            DataGridViewCellStyle2.Format = "d"
+            Me.InvoiceDueDateDataGridViewTextBoxColumn.DefaultCellStyle = DataGridViewCellStyle2
             Me.InvoiceDueDateDataGridViewTextBoxColumn.HeaderText = "Due Date"
             Me.InvoiceDueDateDataGridViewTextBoxColumn.Name = "InvoiceDueDateDataGridViewTextBoxColumn"
             Me.InvoiceDueDateDataGridViewTextBoxColumn.ReadOnly = True
@@ -188,8 +188,8 @@
             'InvoiceTotalDataGridViewTextBoxColumn
             '
             Me.InvoiceTotalDataGridViewTextBoxColumn.DataPropertyName = "InvoiceTotal"
-            DataGridViewCellStyle10.Format = "C2"
-            Me.InvoiceTotalDataGridViewTextBoxColumn.DefaultCellStyle = DataGridViewCellStyle10
+            DataGridViewCellStyle3.Format = "C2"
+            Me.InvoiceTotalDataGridViewTextBoxColumn.DefaultCellStyle = DataGridViewCellStyle3
             Me.InvoiceTotalDataGridViewTextBoxColumn.HeaderText = "Total"
             Me.InvoiceTotalDataGridViewTextBoxColumn.Name = "InvoiceTotalDataGridViewTextBoxColumn"
             Me.InvoiceTotalDataGridViewTextBoxColumn.ReadOnly = True
@@ -197,8 +197,8 @@
             'InvoiceBalanceDataGridViewTextBoxColumn
             '
             Me.InvoiceBalanceDataGridViewTextBoxColumn.DataPropertyName = "InvoiceBalance"
-            DataGridViewCellStyle11.Format = "C2"
-            Me.InvoiceBalanceDataGridViewTextBoxColumn.DefaultCellStyle = DataGridViewCellStyle11
+            DataGridViewCellStyle4.Format = "C2"
+            Me.InvoiceBalanceDataGridViewTextBoxColumn.DefaultCellStyle = DataGridViewCellStyle4
             Me.InvoiceBalanceDataGridViewTextBoxColumn.HeaderText = "Balance"
             Me.InvoiceBalanceDataGridViewTextBoxColumn.Name = "InvoiceBalanceDataGridViewTextBoxColumn"
             Me.InvoiceBalanceDataGridViewTextBoxColumn.ReadOnly = True
@@ -206,8 +206,8 @@
             'InvoiceCreationDateDataGridViewTextBoxColumn
             '
             Me.InvoiceCreationDateDataGridViewTextBoxColumn.DataPropertyName = "InvoiceCreationDate"
-            DataGridViewCellStyle12.Format = "d"
-            Me.InvoiceCreationDateDataGridViewTextBoxColumn.DefaultCellStyle = DataGridViewCellStyle12
+            DataGridViewCellStyle5.Format = "d"
+            Me.InvoiceCreationDateDataGridViewTextBoxColumn.DefaultCellStyle = DataGridViewCellStyle5
             Me.InvoiceCreationDateDataGridViewTextBoxColumn.HeaderText = "Creation Date"
             Me.InvoiceCreationDateDataGridViewTextBoxColumn.Name = "InvoiceCreationDateDataGridViewTextBoxColumn"
             Me.InvoiceCreationDateDataGridViewTextBoxColumn.ReadOnly = True
@@ -253,8 +253,8 @@
             'PaymentDateDataGridViewTextBoxColumn
             '
             Me.PaymentDateDataGridViewTextBoxColumn.DataPropertyName = "PaymentDate"
-            DataGridViewCellStyle13.Format = "d"
-            Me.PaymentDateDataGridViewTextBoxColumn.DefaultCellStyle = DataGridViewCellStyle13
+            DataGridViewCellStyle6.Format = "d"
+            Me.PaymentDateDataGridViewTextBoxColumn.DefaultCellStyle = DataGridViewCellStyle6
             Me.PaymentDateDataGridViewTextBoxColumn.HeaderText = "Date"
             Me.PaymentDateDataGridViewTextBoxColumn.Name = "PaymentDateDataGridViewTextBoxColumn"
             Me.PaymentDateDataGridViewTextBoxColumn.ReadOnly = True
@@ -262,8 +262,8 @@
             'PaymentAmountDataGridViewTextBoxColumn
             '
             Me.PaymentAmountDataGridViewTextBoxColumn.DataPropertyName = "PaymentAmount"
-            DataGridViewCellStyle14.Format = "C2"
-            Me.PaymentAmountDataGridViewTextBoxColumn.DefaultCellStyle = DataGridViewCellStyle14
+            DataGridViewCellStyle7.Format = "C2"
+            Me.PaymentAmountDataGridViewTextBoxColumn.DefaultCellStyle = DataGridViewCellStyle7
             Me.PaymentAmountDataGridViewTextBoxColumn.HeaderText = "Amount"
             Me.PaymentAmountDataGridViewTextBoxColumn.Name = "PaymentAmountDataGridViewTextBoxColumn"
             Me.PaymentAmountDataGridViewTextBoxColumn.ReadOnly = True
@@ -291,7 +291,7 @@
             '
             Me.btn_ViewUnpaidInv.Location = New System.Drawing.Point(719, 135)
             Me.btn_ViewUnpaidInv.Name = "btn_ViewUnpaidInv"
-            Me.btn_ViewUnpaidInv.Size = New System.Drawing.Size(174, 32)
+            Me.btn_ViewUnpaidInv.Size = New System.Drawing.Size(170, 32)
             Me.btn_ViewUnpaidInv.TabIndex = 59
             Me.btn_ViewUnpaidInv.Text = "View Unpaid Invoices"
             Me.btn_ViewUnpaidInv.UseVisualStyleBackColor = True
@@ -300,7 +300,7 @@
             '
             Me.btn_ViewAllInv.Location = New System.Drawing.Point(719, 95)
             Me.btn_ViewAllInv.Name = "btn_ViewAllInv"
-            Me.btn_ViewAllInv.Size = New System.Drawing.Size(174, 32)
+            Me.btn_ViewAllInv.Size = New System.Drawing.Size(170, 32)
             Me.btn_ViewAllInv.TabIndex = 60
             Me.btn_ViewAllInv.Text = "View All Invoices"
             Me.btn_ViewAllInv.UseVisualStyleBackColor = True
@@ -309,7 +309,7 @@
             '
             Me.btn_ViewPayments.Location = New System.Drawing.Point(719, 175)
             Me.btn_ViewPayments.Name = "btn_ViewPayments"
-            Me.btn_ViewPayments.Size = New System.Drawing.Size(174, 32)
+            Me.btn_ViewPayments.Size = New System.Drawing.Size(170, 32)
             Me.btn_ViewPayments.TabIndex = 61
             Me.btn_ViewPayments.Text = "View Payments"
             Me.btn_ViewPayments.UseVisualStyleBackColor = True
@@ -324,7 +324,7 @@
             Me.Controls.Add(Me.grp_DateFilter)
             Me.Controls.Add(Me.tc_Quickbooks)
             Me.Name = "UC_Quickbooks"
-            Me.Size = New System.Drawing.Size(900, 230)
+            Me.Size = New System.Drawing.Size(891, 230)
             Me.grp_DateFilter.ResumeLayout(False)
             Me.grp_DateFilter.PerformLayout()
             Me.tc_Quickbooks.ResumeLayout(False)

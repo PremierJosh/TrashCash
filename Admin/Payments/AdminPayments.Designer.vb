@@ -1,6 +1,4 @@
 ﻿
-Imports TrashCash.Payments
-
 Namespace Admin.Payments
     <Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
     Partial Class AdminPayments
@@ -50,7 +48,7 @@ Namespace Admin.Payments
             Me.Label1 = New System.Windows.Forms.Label()
             Me.dtp_StartDate = New System.Windows.Forms.DateTimePicker()
             Me.lbl_DateFilter = New System.Windows.Forms.Label()
-            Me.PaymentHistory_DisplayTableAdapter = New PaymentHistory_DisplayTableAdapter()
+            Me.PaymentHistory_DisplayTableAdapter = New ds_PaymentsTableAdapters.PaymentHistory_DisplayTableAdapter()
             Me.cmb_PayTypes = New System.Windows.Forms.ComboBox()
             Me.pnl_Top.SuspendLayout()
             Me.pnl_TopContent.SuspendLayout()
@@ -302,7 +300,7 @@ Namespace Admin.Payments
         Friend WithEvents InsertedByUserDataGridViewTextBoxColumn As System.Windows.Forms.DataGridViewTextBoxColumn
         Friend WithEvents PaymentHistoryDisplayBindingSource As System.Windows.Forms.BindingSource
         Friend WithEvents Payments As DS_Payments
-        Friend WithEvents PaymentHistory_DisplayTableAdapter As PaymentHistory_DisplayTableAdapter
+        Friend WithEvents PaymentHistory_DisplayTableAdapter As ds_PaymentsTableAdapters.PaymentHistory_DisplayTableAdapter
         Friend WithEvents CustomerToolstrip1 As TrashCash.Classes.CustomerToolstrip.CustomerToolstrip
         Friend WithEvents cmb_PayTypes As System.Windows.Forms.ComboBox
     End Class

@@ -37,7 +37,7 @@ Namespace Payments
             Me.UC_CustomerNotes = New UC_CustomerNotes()
             Me.tc_p_CustInfo = New System.Windows.Forms.TabPage()
             Me.UC_CustomerInfoBoxes = New TrashCash.Customer.UC_CustomerInfoBoxes()
-            Me.WorkingPaymentsTableAdapter = New WorkingPaymentsTableAdapter()
+            Me.WorkingPaymentsTableAdapter = New ds_PaymentsTableAdapters.WorkingPaymentsTableAdapter()
             Me.Panel1 = New System.Windows.Forms.Panel()
             Me.pnl_TopContent = New System.Windows.Forms.Panel()
             Me.CustomerToolstrip1 = New TrashCash.Classes.CustomerToolstrip.CustomerToolstrip()
@@ -450,9 +450,9 @@ Namespace Payments
         Friend WithEvents UC_CustomerNotes As UC_CustomerNotes
         Friend WithEvents tc_p_CustInfo As System.Windows.Forms.TabPage
         Friend WithEvents UC_CustomerInfoBoxes As UC_CustomerInfoBoxes
-        Friend WithEvents Payments As DS_Payments
+        Friend WithEvents Payments As ds_Payments
         Friend WithEvents WorkingPaymentsBindingSource As System.Windows.Forms.BindingSource
-        Friend WithEvents WorkingPaymentsTableAdapter As WorkingPaymentsTableAdapter
+        Friend WithEvents WorkingPaymentsTableAdapter As ds_PaymentsTableAdapters.WorkingPaymentsTableAdapter
         Friend WithEvents CustomerFullNameDataGridViewTextBoxColumn As System.Windows.Forms.DataGridViewTextBoxColumn
         Friend WithEvents PaymentTypeNameDataGridViewTextBoxColumn As System.Windows.Forms.DataGridViewTextBoxColumn
         Friend WithEvents cm_PayGrid As System.Windows.Forms.ContextMenuStrip

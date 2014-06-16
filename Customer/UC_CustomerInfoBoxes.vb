@@ -319,5 +319,8 @@ Namespace Customer
             End If
         End Sub
 
+        Private Sub UC_CustomerInfoBoxes_Load(sender As Object, e As System.EventArgs) Handles Me.Load
+
+        End Sub
     End Class
 End Namespace

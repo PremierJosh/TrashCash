@@ -58,6 +58,7 @@ Namespace Customer
             CustomerToolstrip1.SelectCustomer(customerNumber)
             CustomerToolstrip1.Enabled = False
             CustomerToolstrip1.HideQuickSearch()
+            CustomerToolstrip1.GetCustomerBalance()
         End Sub
 
         Private Sub btn_VoidCredit_Click(sender As System.Object, e As System.EventArgs) Handles btn_VoidCredit.Click
@@ -88,8 +89,8 @@ Namespace Customer
                                 End Try
                             End If
                             BalanceChanged = True
-                            ' reload history table
-                            Customer_CreditsTableAdapter.FillByCustomerID(Ds_Customer.Customer_Credits, CurrentCustomer)
+                            CustomerToolstrip1.GetCustomerBalance()
+                            AppColors.ColorGrid(dg_Credits, "Voided")
                         End If
                     End If
 
@@ -102,8 +103,10 @@ Namespace Customer
         Private Sub btn_Create_Click(sender As System.Object, e As System.EventArgs) Handles btn_Create.Click
             ' making sure we have an amouint
             If (Trim(tb_Amount.Text).Length > 0) Then
+                tb_Amount.BackColor = AppColors.TextBoxDef
                 ' making sure we have a reason
                 If (Trim(tb_Reason.Text).Length > 0) Then
+                    tb_Reason.BackColor = AppColors.TextBoxDef
                     Dim confirmPrompt As DialogResult = MessageBox.Show("Create Credit for " & CustomerToolstrip1.ToString & " - " & FormatCurrency(tb_Amount.Text) & vbCrLf & _
                                                                         "Reason:" & vbCrLf & tb_Reason.Text, "Confirm Credit for Customer", MessageBoxButtons.YesNo, MessageBoxIcon.Question)
                     If (confirmPrompt = Windows.Forms.DialogResult.Yes) Then
@@ -118,6 +121,13 @@ Namespace Customer
                         End With
                         Dim resp As Integer = QBRequests.CreditMemoAdd(creditObj)
                         If (resp = 0) Then
+                            Try
+                                Customer_CreditsTableAdapter.Insert(CurrentCustomer, creditObj.TxnID, creditObj.TotalAmount, Date.Now, tb_Reason.Text, CurrentUser.USER_NAME,
+                                                                    False, Nothing, Nothing, Nothing)
+                            Catch ex as SqlException
+                                MessageBox.Show("Message: " & ex.Message & vbCrLf & "LineNumber: " & ex.LineNumber,
+                                                "Sql Error: " & ex.Procedure, MessageBoxButtons.OK, MessageBoxIcon.Error)
+                            End Try
                             QBMethods.UseNewCredit(creditObj, rb_Newest.Checked)
                         Else
                             MessageBox.Show("Error adding credit memo")
@@ -132,7 +142,13 @@ Namespace Customer
                         ' update customer balance on toolstrip
                         CustomerToolstrip1.GetCustomerBalance()
                     End If
+                Else
+                    tb_Reason.BackColor = AppColors.TextBoxDef
+                    MessageBox.Show("Must provide a reason for credit.", "Invalid Reason", MessageBoxButtons.OK, MessageBoxIcon.Error)
                 End If
+            Else
+                tb_Amount.BackColor = AppColors.TextBoxErr
+                MessageBox.Show("Invalid Credit amount.", "Invalid amount", MessageBoxButtons.OK, MessageBoxIcon.Error)
             End If
         End Sub
 

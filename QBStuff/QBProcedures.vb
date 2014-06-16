@@ -1,6 +1,4 @@
-﻿Imports TrashCash.Customer
-Imports TrashCash.Payments
-Imports QBFC12Lib
+﻿Imports QBFC12Lib
 
 
 Namespace QBStuff
@@ -602,9 +600,11 @@ Namespace QBStuff
                     .TxnFilter.EntityFilter.OREntityFilter.ListIDList.Add(customerListID)
                 End If
                 ' checking for ret element list
-                For Each s As String In retEleList
-                    creditQuery.IncludeRetElementList.Add(s)
-                Next
+                If (retEleList IsNot Nothing) Then
+                    For Each s As String In retEleList
+                        creditQuery.IncludeRetElementList.Add(s)
+                    Next
+                End If
 
                 ' checking dates
                 With .TxnFilter.ORDateRangeFilter.TxnDateRangeFilter.ORTxnDateRangeFilter.TxnDateFilter
@@ -639,10 +639,13 @@ Namespace QBStuff
             With creditQuery.ORTxnQuery
                 ' checking for customer id or txnid filter
                 .TxnIDList.Add(creditObj.TxnID)
-                ' checking for ret element list
-                For Each s As String In retEleList
-                    creditQuery.IncludeRetElementList.Add(s)
-                Next
+                If (retEleList IsNot Nothing) Then
+                    ' checking for ret element list
+                    For Each s As String In retEleList
+                        creditQuery.IncludeRetElementList.Add(s)
+                    Next
+                End If
+
             End With
             Dim resp As IResponse = ConCheck(qbConMgr).GetRespList.GetAt(0)
             If (resp.StatusCode = 0) Then
@@ -1154,7 +1157,7 @@ Namespace QBStuff
                                     If (resp = 0) Then
                                         Try
                                             ' attempting to update history edit seq
-                                            Using ta As New PaymentHistory_DBTableAdapter
+                                            Using ta As New ds_PaymentsTableAdapters.PaymentHistory_DBTableAdapter
                                                 ta.UpdateEditSeq(pay.TxnID, pay.EditSequence)
                                             End Using
                                         Catch ex As SqlException

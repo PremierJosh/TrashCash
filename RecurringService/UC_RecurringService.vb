@@ -14,12 +14,14 @@
                 Return _custNum
             End Get
             Set(ByVal value As Decimal)
-                ' refrence
-                _custNum = value
-
                 If (value > 0) Then
-                    RecurringService_DisplayByCustomerIDTableAdapter.FillByID(Ds_RecurringService.RecurringService_DisplayByCustomerID, value)
-                    ColorRows()
+                    ' refrence
+                    _custNum = value
+
+                    If (value > 0) Then
+                        RecurringService_DisplayByCustomerIDTableAdapter.FillByID(Ds_RecurringService.RecurringService_DisplayByCustomerID, value)
+                        ColorRows()
+                    End If
                 End If
             End Set
         End Property
@@ -105,9 +107,9 @@
         Private Sub FilterGrid()
             Dim s As String
             If (rdo_CurrentSrvc.Checked = True) Then
-                s = "RecurringServiceEndDate < '" & Date.Now.Date & "' OR RecurringServiceEndDate IS NULL"
+                s = "RecurringServiceEndDate > '" & Date.Now.Date & "' OR RecurringServiceEndDate IS NULL"
             ElseIf (rdo_EndedSrvc.Checked = True) Then
-                s = "RecurringServiceEndDate > '" & Date.Now.Date & "' AND RecurringServiceEndDate IS NOT NULL"
+                s = "RecurringServiceEndDate < '" & Date.Now.Date & "' AND RecurringServiceEndDate IS NOT NULL"
             Else
                 s = ""
             End If
@@ -154,6 +156,15 @@
 
         Private Sub dg_RecSrvc_RowPrePaint(sender As System.Object, e As System.Windows.Forms.DataGridViewRowPrePaintEventArgs) Handles dg_RecSrvc.RowPrePaint
             ColorRows()
+        End Sub
+
+        Public Sub New()
+
+            ' This call is required by the designer.
+            InitializeComponent()
+
+            ' Add any initialization after the InitializeComponent() call.
+
         End Sub
     End Class
 End Namespace

@@ -4,11 +4,11 @@
         Friend PaymentAdded As Boolean
 
         Private _currentCustomer As Integer
-        Public Property CurrentCustomer
+        Public Property CurrentCustomer As Integer
             Get
                 Return _currentCustomer
             End Get
-            Set(value)
+            Set(value As Integer)
                 If (_currentCustomer <> value) Then
                     _currentCustomer = value
                     ' do stuff when cust changes here
@@ -135,20 +135,20 @@
                         ' inserting override date chosen as time inserted
                         ' insert with current time and check if dateoncheck is nothing (cash payment)
                         If (cmb_PayTypes.SelectedValue = 1) Then
-                            newID = WorkingPaymentsTableAdapter.WorkingPayments_Insert_ReturnID(CurrentCustomer, tb_Amount.Text, cmb_PayTypes.SelectedValue, checkRefNum,
-                                                                                                5, dtp_Override.Value.Date, Nothing, CurrentUser.USER_NAME)
+                            Integer.TryParse(WorkingPaymentsTableAdapter.WorkingPayments_Insert_ReturnID(CurrentCustomer, tb_Amount.Text, cmb_PayTypes.SelectedValue, Nothing,
+                                                                                                 TC_ENItemStatus.Ready, dtp_Override.Value.Date, Nothing, CurrentUser.USER_NAME), newID)
                         Else
-                            newID = WorkingPaymentsTableAdapter.WorkingPayments_Insert_ReturnID(CurrentCustomer, tb_Amount.Text, cmb_PayTypes.SelectedValue, checkRefNum,
-                                                                                                5, dtp_Override.Value.Date, dtp_DateOnCheck.Value.Date, CurrentUser.USER_NAME)
+                            Integer.TryParse(WorkingPaymentsTableAdapter.WorkingPayments_Insert_ReturnID(CurrentCustomer, tb_Amount.Text, cmb_PayTypes.SelectedValue, checkRefNum,
+                                                                                                TC_ENItemStatus.Ready, dtp_Override.Value.Date, dtp_DateOnCheck.Value.Date, CurrentUser.USER_NAME), newID)
                         End If
                     Else
                         ' insert with current time and check if dateoncheck is nothing (cash payment)
                         If (cmb_PayTypes.SelectedValue = 1) Then
-                            newID = WorkingPaymentsTableAdapter.WorkingPayments_Insert_ReturnID(CurrentCustomer, tb_Amount.Text, cmb_PayTypes.SelectedValue, checkRefNum,
-                                                                                                5, Date.Now, Nothing, CurrentUser.USER_NAME)
+                            Integer.TryParse(WorkingPaymentsTableAdapter.WorkingPayments_Insert_ReturnID(CurrentCustomer, tb_Amount.Text, cmb_PayTypes.SelectedValue, Nothing,
+                                                                                                TC_ENItemStatus.Ready, Date.Now, Nothing, CurrentUser.USER_NAME), newID)
                         Else
-                            newID = WorkingPaymentsTableAdapter.WorkingPayments_Insert_ReturnID(CurrentCustomer, tb_Amount.Text, cmb_PayTypes.SelectedValue, checkRefNum,
-                                                                                                5, Date.Now, dtp_DateOnCheck.Value.Date, CurrentUser.USER_NAME)
+                            Integer.TryParse(WorkingPaymentsTableAdapter.WorkingPayments_Insert_ReturnID(CurrentCustomer, tb_Amount.Text, cmb_PayTypes.SelectedValue, checkRefNum,
+                                                                                                TC_ENItemStatus.Ready, Date.Now, dtp_DateOnCheck.Value.Date, CurrentUser.USER_NAME), newID)
                         End If
                     End If
                 Catch ex As SqlException

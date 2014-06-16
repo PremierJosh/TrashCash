@@ -1,5 +1,4 @@
-﻿Imports TrashCash.Payments
-Imports TrashCash.QBStuff
+﻿Imports TrashCash.QBStuff
 
 Namespace Admin.Payments
 
@@ -42,7 +41,7 @@ Namespace Admin.Payments
                 _appRow = ta.GetData().Rows(0)
                 tb_CustFee.Text = FormatCurrency(_appRow.BAD_CHECK_CUST_FEE)
             End Using
-            Using ta As New PaymentHistory_DBTableAdapter
+            Using ta As New ds_PaymentsTableAdapters.PaymentHistory_DBTableAdapter
                 CheckRow = ta.GetData(payHistoryID).Rows(0)
             End Using
         End Sub
@@ -148,7 +147,7 @@ Namespace Admin.Payments
             If (checkResp = 0) Then
                 Try
                     'set payment bounced, using invTxnID and ret from checkAdd
-                    Using ta As New PaymentHistory_DBTableAdapter
+                    Using ta As New ds_PaymentsTableAdapters.PaymentHistory_DBTableAdapter
                         ta.SetBounced(CheckRow.PaymentID, CurrentUser.USER_NAME, invTxnID, checkObj.TxnID)
                     End Using
                     ' inserting note for customer that check bounced

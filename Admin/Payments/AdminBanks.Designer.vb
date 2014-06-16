@@ -1,6 +1,4 @@
 ﻿
-Imports TrashCash.Payments
-
 Namespace Admin.Payments
     <Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
     Partial Class AdminBanks
@@ -49,7 +47,7 @@ Namespace Admin.Payments
             Me.lbl_BankSelecInfo = New System.Windows.Forms.Label()
             Me.Payments = New DS_Payments()
             Me.BadCheckBanksBindingSource = New System.Windows.Forms.BindingSource(Me.components)
-            Me.Bad_Check_BanksTableAdapter = New Bad_Check_BanksTableAdapter()
+            Me.Bad_Check_BanksTableAdapter = New ds_PaymentsTableAdapters.Bad_Check_BanksTableAdapter()
             Me.ck_Deactive = New System.Windows.Forms.CheckBox()
             BankBounceFeeLabel = New System.Windows.Forms.Label()
             lbl_vendorSelInfo = New System.Windows.Forms.Label()
@@ -293,7 +291,7 @@ Namespace Admin.Payments
         Friend WithEvents ToolStripSeparator2 As System.Windows.Forms.ToolStripSeparator
         Friend WithEvents Payments As DS_Payments
         Friend WithEvents BadCheckBanksBindingSource As System.Windows.Forms.BindingSource
-        Friend WithEvents Bad_Check_BanksTableAdapter As Bad_Check_BanksTableAdapter
+        Friend WithEvents Bad_Check_BanksTableAdapter As ds_PaymentsTableAdapters.Bad_Check_BanksTableAdapter
         Friend WithEvents ck_Deactive As System.Windows.Forms.CheckBox
     End Class
 End Namespace

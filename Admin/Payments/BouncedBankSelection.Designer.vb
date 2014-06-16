@@ -1,5 +1,4 @@
-﻿Imports TrashCash.Payments
-Imports TrashCash.Classes
+﻿Imports TrashCash.Classes
 
 Namespace Admin.Payments
     <Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
@@ -46,7 +45,7 @@ Namespace Admin.Payments
             Me.cmb_Banks = New System.Windows.Forms.ComboBox()
             Me.Payments = New DS_Payments()
             Me.BadCheckBanksBindingSource = New System.Windows.Forms.BindingSource(Me.components)
-            Me.Bad_Check_BanksTableAdapter = New Bad_Check_BanksTableAdapter()
+            Me.Bad_Check_BanksTableAdapter = New ds_PaymentsTableAdapters.Bad_Check_BanksTableAdapter()
             BankBounceFeeLabel = New System.Windows.Forms.Label()
             CustomerChargeRateLabel = New System.Windows.Forms.Label()
             lbl_checkAmount = New System.Windows.Forms.Label()
@@ -279,6 +278,6 @@ Namespace Admin.Payments
         Friend WithEvents cmb_Banks As System.Windows.Forms.ComboBox
         Friend WithEvents Payments As DS_Payments
         Friend WithEvents BadCheckBanksBindingSource As System.Windows.Forms.BindingSource
-        Friend WithEvents Bad_Check_BanksTableAdapter As Bad_Check_BanksTableAdapter
+        Friend WithEvents Bad_Check_BanksTableAdapter As ds_PaymentsTableAdapters.Bad_Check_BanksTableAdapter
     End Class
 End Namespace

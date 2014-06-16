@@ -119,8 +119,7 @@ Namespace Customer
             '
             'UC_Quickbooks
             '
-            Me.UC_Quickbooks.CurrentCustomer = New Decimal(New Integer() {0, 0, 0, 0})
-            Me.UC_Quickbooks.CustomerListID = Nothing
+           Me.UC_Quickbooks.CustomerListID = Nothing
             Me.UC_Quickbooks.Dock = System.Windows.Forms.DockStyle.Fill
             Me.UC_Quickbooks.Location = New System.Drawing.Point(3, 3)
             Me.UC_Quickbooks.Name = "UC_Quickbooks"

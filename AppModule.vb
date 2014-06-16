@@ -140,7 +140,7 @@ Module AppModule
         End Property
         Public Shared ReadOnly Property TextBoxDef As Color
             Get
-                Return SystemColors.Control
+                Return SystemColors.Window
             End Get
         End Property
     End Class

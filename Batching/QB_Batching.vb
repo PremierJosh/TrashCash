@@ -87,18 +87,16 @@ Namespace Batching
                             ' update err count
                             err += 1
                         ElseIf (row.InvoiceStatus = TC_ENItemStatus.Complete) Then
-                            While invObj.BalanceRemaining > 0
-                                If (custBalance < 0) Then
-                                    ' attempt to pay invoice
-                                    QBMethods.PayInvoice(invObj, qbConMgr:=ConMgr)
-                                End If
-                            End While
+                            If (custBalance < 0) Then
+                                ' attempt to pay invoice
+                                QBMethods.PayInvoice(invObj, qbConMgr:=ConMgr)
+                          End If
                         End If
-                        ' checking for cancel request
-                        If (worker.CancellationPending = True) Then
-                            e.Cancel = True
-                            Exit For
-                        End If
+                            ' checking for cancel request
+                            If (worker.CancellationPending = True) Then
+                                e.Cancel = True
+                                Exit For
+                            End If
                     Next row
                     Try
                         ' update batch row for completion
