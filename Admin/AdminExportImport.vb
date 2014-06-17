@@ -32,6 +32,7 @@ Namespace Admin
 
 
         Private Sub ImportWork_Load(sender As Object, e As System.EventArgs) Handles Me.Load
+            ServiceTypesTableAdapter.Fill(Me.Ds_Types.ServiceTypes)
             _cqta = New ds_CustomerTableAdapters.QueriesTableAdapter
             _cita = New ds_ApplicationTableAdapters.Initial_CustomInvoiceTableAdapter
             _cidt = _cita.GetData()
@@ -91,13 +92,7 @@ Namespace Admin
             End If
         End Sub
 
-        Private Sub btn_AddSrvcs_Click(sender As System.Object, e As System.EventArgs) Handles btn_AddSrvcs.Click
-            Dim result As MsgBoxResult = MsgBox("Please make sure the correct Account is selected above.", MsgBoxStyle.YesNo)
-            If (result = MsgBoxResult.Yes) Then
-                Items_ImportAllMissingListID(cmb_IncomeAcc.SelectedValue)
-            End If
-        End Sub
-
+   
 
         'Private Sub btn_AddCustInv_Click(sender As System.Object, e As System.EventArgs) Handles btn_AddCustInv.Click
         '    ' getting custom inv item
@@ -156,42 +151,228 @@ Namespace Admin
         '    MsgBox("Invoices added. Be sure to delete rows before next import.")
         'End Sub
 
-        Public Sub Items_ImportAllMissingListID(ByVal qbAccount As String)
-            Dim ta As New ds_TypesTableAdapters.ServiceTypesTableAdapter
-            Dim dt As ds_Types.ServiceTypesDataTable = ta.GetData
+        Public Sub Items_ImportAllMissingListID(sender As System.Object, e As System.EventArgs) Handles btn_AddSrvcs.Click
+            Dim result As MsgBoxResult = MsgBox("Please make sure the correct Account is selected above.", MsgBoxStyle.YesNo)
+            If (result = MsgBoxResult.Yes) Then
+                Dim dt As ds_Types.ServiceTypesDataTable = ServiceTypesTableAdapter.GetData
+                For Each row As ds_Types.ServiceTypesRow In dt.Rows
+                    If (row.IsServiceListIDNull = True) Then
+                        Dim item As New QBItemObj
+                        With item
+                            .ItemName = row.ServiceName
+                            .Price = row.ServiceRate
+                            .Desc = row.ServiceDescription
+                            .IncomeAccountListID = cmb_IncomeAcc.SelectedValue
+                        End With
 
-            For Each row As ds_Types.ServiceTypesRow In dt.Rows
-                If (row.IsServiceListIDNull = True) Then
-                    Dim item As New QBItemObj
-                    With item
-                        .ItemName = row.ServiceName
-                        .Price = row.ServiceRate
-                        .Desc = row.ServiceDescription
-                        .IncomeAccountListID = qbAccount
-                    End With
+                        Dim resp As IResponse = QBRequests.ServiceItemAdd(item)
+                        If (resp.StatusCode = 0) Then
+                            Dim itemRet As IItemServiceRet = resp.Detail
+                            ' update db information with edit sequence and list id
+                            row.ServiceListID = itemRet.ListID.GetValue
+                            row.ServiceEditSequence = itemRet.EditSequence.GetValue
+                            Try
+                                ' commit to db
+                                ServiceTypesTableAdapter.Update(row)
+                            Catch ex As SqlException
+                                MessageBox.Show("Message: " & ex.Message & vbCrLf & "LineNumber: " & ex.LineNumber,
+                                                "Sql Error: " & ex.Procedure, MessageBoxButtons.OK, MessageBoxIcon.Error)
+                            End Try
 
-                    Dim resp As IResponse = QBRequests.ServiceItemAdd(item)
-                    If (resp.StatusCode = 0) Then
-                        Dim itemRet As IItemServiceRet = resp.Detail
-                        ' update db information with edit sequence and list id
-                        row.ServiceListID = itemRet.ListID.GetValue
-                        row.ServiceEditSequence = itemRet.EditSequence.GetValue
+                        Else
+                            QBMethods.ResponseErr_Misc(resp)
+                        End If
+                    End If
+                Next row
+            End If
+        End Sub
 
+        Private Sub btn_AddSrvc_Click(sender As System.Object, e As System.EventArgs) Handles btn_AddSrvc.Click
+            Dim row As ds_Types.ServiceTypesRow = CType(cmb_ServiceTypes.SelectedItem, DataRowView).Row
+            If (row.IsServiceListIDNull) Then
+                Dim item As New QBItemObj
+                With item
+                    .ItemName = row.ServiceName
+                    .Price = row.ServiceRate
+                    .Desc = row.ServiceDescription
+                    .IncomeAccountListID = cmb_IncomeAcc.SelectedValue
+                End With
+                Dim resp As IResponse = QBRequests.ServiceItemAdd(item)
+                If (resp.StatusCode = 0) Then
+                    Dim itemRet As IItemServiceRet = resp.Detail
+                    ' update db information with edit sequence and list id
+                    row.ServiceListID = itemRet.ListID.GetValue
+                    row.ServiceEditSequence = itemRet.EditSequence.GetValue
+                    Try
+                        ' commit to db
+                        ServiceTypesTableAdapter.Update(row)
+                    Catch ex As SqlException
+                        MessageBox.Show("Message: " & ex.Message & vbCrLf & "LineNumber: " & ex.LineNumber,
+                                        "Sql Error: " & ex.Procedure, MessageBoxButtons.OK, MessageBoxIcon.Error)
+                    End Try
+                    ServiceTypesBindingSource.ResetCurrentItem()
+                Else
+                    QBMethods.ResponseErr_Misc(resp)
+                End If
+            Else
+                MessageBox.Show("Item already has ListID. Contact Premier to resolve.", "Contact Premier", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            End If
+        End Sub
+
+        Private _importRow As ds_Application.BilledServicesRow
+        Private _resetTbl As ds_Application.RecurringService_ResetInvoiceListDataTable
+        Private _resetTA As ds_ApplicationTableAdapters.RecurringService_ResetInvoiceListTableAdapter
+        Private _importTA As ds_ApplicationTableAdapters.BilledServicesTableAdapter
+        Private Sub btn_FetchRecReset_Click(sender As System.Object, e As System.EventArgs) Handles btn_FetchRecReset.Click
+            ' checking for previous invoices to delete
+            If (_resetTA Is Nothing) Then
+                _resetTA = New ds_ApplicationTableAdapters.RecurringService_ResetInvoiceListTableAdapter
+            End If
+            _resetTbl = _resetTA.GetData(tb_ResetRecID.Text)
+            If (_resetTbl.Rows.Count > 0) Then
+                ' enable deletion pf invoice history btn
+                lbl_DeleteTotal.Text = "To be deleted: " & _resetTbl.Rows.Count
+                lbl_DeleteTotal.Visible = True
+                btn_DeleteHistory.Enabled = True
+            Else
+                btn_DeleteHistory.Enabled = False
+                lbl_DeleteTotal.Visible = False
+            End If
+
+            ' checking if we already have a last bill thru row
+            If (_importRow Is Nothing) Then
+               If (Trim(tb_ResetRecID.Text) <> "") Then
+                    ' instantiate ta
+                    If (_importTA Is Nothing) Then
+                        _importTA = New ds_ApplicationTableAdapters.BilledServicesTableAdapter
+                    End If
+                    _importRow = _importTA.GetData(tb_ResetRecID.Text).Rows(0)
+                    ' check if row returned
+                    If (_importRow IsNot Nothing) Then
+                        ' show group
+                        grp_ResetInvGrp.Visible = True
+                        btn_LastBillThru.Text = "Update Row"
+                        dtp_LastBillThru.Value = _importRow.EndBillingDate.Date
+                        ' update text
+                        btn_FetchRecReset.Text = "Reset Info"
+                        tb_ResetRecID.Clear()
+                    Else
+                        ' no initial row is there
+                        MessageBox.Show("No initial Billed Service row found. Setting a Last Bill Thru will create one.", "No Initial Row", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                        grp_ResetInvGrp.Visible = True
+                        ' change text on last bill thru btn
+                        btn_LastBillThru.Text = "Create Row"
+                    End If
+                End If
+            Else
+                ResetForNewImportRow()
+            End If
+        End Sub
+        Private Sub ResetForNewImportRow()
+            ' we already have a row and need to reset
+            _importRow = Nothing
+            _resetTbl = Nothing
+            grp_ResetInvGrp.Visible = False
+            dtp_LastBillThru.Value = Date.Now
+            ' update text
+            btn_FetchRecReset.Text = "Fetch Info"
+            tb_ResetRecID.Clear()
+        End Sub
+
+        Private Sub btn_LastBillThru_Click(sender As System.Object, e As System.EventArgs) Handles btn_LastBillThru.Click
+            ' checking if row is there or not so this can be an insert or update
+            If (_importRow IsNot Nothing) Then
+                ' this is an update
+                If (_importRow.EndBillingDate.Date <> dtp_LastBillThru.Value.Date) Then
+                    Dim result As DialogResult = MessageBox.Show("Update Last Bill Thru from " & _importRow.EndBillingDate.Date & " to " & dtp_LastBillThru.Value.Date, "Confirm Change",
+                                                                 MessageBoxButtons.YesNo, MessageBoxIcon.Question)
+                    If (result = Windows.Forms.DialogResult.Yes) Then
+                        _importRow.EndBillingDate = dtp_LastBillThru.Value.Date
+                        _importRow.StartBillingDate = dtp_LastBillThru.Value.Date
+                        _importRow.EndEdit()
                         Try
-                            ' commit to db
-                            ta.Update(row)
-                        Catch ex As SqlException
+                            _importTA.Update(_importRow)
+                            ResetForNewImportRow()
+                        Catch ex as SqlException
                             MessageBox.Show("Message: " & ex.Message & vbCrLf & "LineNumber: " & ex.LineNumber,
                                             "Sql Error: " & ex.Procedure, MessageBoxButtons.OK, MessageBoxIcon.Error)
                         End Try
-                    Else
-                        QBMethods.ResponseErr_Misc(resp)
-
                     End If
-
+                Else
+                    MessageBox.Show("LastBillThru date didn't change", "Date didn't change", MessageBoxButtons.OK, MessageBoxIcon.Error)
                 End If
-            Next row
+            Else
+                Dim result As DialogResult = MessageBox.Show("Confirm creating Import row for RecurringServiceID: " & tb_ResetRecID.Text & ". With dates of: " & dtp_LastBillThru.Value.Date,
+                                                             "Confirm ImportRow Creation", MessageBoxButtons.YesNo, MessageBoxIcon.Hand)
+                If (result = Windows.Forms.DialogResult.Yes) Then
+                    ' import row doesn't exist so we need to make a new one
+                    Try
+                        _importTA.Insert(tb_ResetRecID.Text,
+                                         dtp_LastBillThru.Value.Date,
+                                         dtp_LastBillThru.Value.Date,
+                                         0,
+                                         0,
+                                         0,
+                                         False,
+                                         Nothing,
+                                         Nothing,
+                                         99999,
+                                         Nothing,
+                                         0)
+                        ResetForNewImportRow()
+                    Catch ex as SqlException
+                        MessageBox.Show("Message: " & ex.Message & vbCrLf & "LineNumber: " & ex.LineNumber,
+                                        "Sql Error: " & ex.Procedure, MessageBoxButtons.OK, MessageBoxIcon.Error)
+                    End Try
+                End If
+            End If
+        End Sub
 
+        Private Sub btn_DeleteHistory_Click(sender As System.Object, e As System.EventArgs) Handles btn_DeleteHistory.Click
+            ' concat string for modify needs
+            Dim modNeed As Boolean = False
+            Dim conS As New System.Text.StringBuilder
+            If (_resetTbl IsNot Nothing) Then
+                If (_resetTbl.Rows.Count > 0) Then
+                    Dim result As DialogResult = MessageBox.Show("Do you wish to delete invoice history for this recurring service. Deleted count will be: " & _resetTbl.Rows.Count,
+                                                                 "Confirm Delete", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation)
+                    If (result = Windows.Forms.DialogResult.Yes) Then
+                        For Each row As ds_Application.RecurringService_ResetInvoiceListRow In _resetTbl.Rows
+                            ' modify to remove line item
+                            If (row.NeedModify) Then
+                                ' for now im just going to return the invoice ref number for ease
+                                Dim invObj As New QBInvoiceObj
+                                invObj.TxnID = row.InvTxnID
+                                ' only need ref number back for modify
+                                Dim s As New List(Of String)
+                                s.Add("RefNumber")
+                                Dim resp As Integer = QBRequests.InvoiceQuery(invObj, retEleList:=s, incLineItems:=True)
+                                If (resp = 0) Then
+                                    modNeed = True
+                                    conS.Append("Invoice Ref #: " & invObj.RefNumber & ". LineItemID: " & row.LineItemID).AppendLine()
+                                End If
+                            Else
+                                ' delete invoices
+                                Dim txnDel As ITxnDel = GlobalConMgr.MessageSetRequest.AppendTxnDelRq
+                                txnDel.TxnDelType.SetValue(ENTxnDelType.tdtInvoice)
+                                txnDel.TxnID.SetValue(row.InvTxnID)
+                                Dim iresp As IResponse = GlobalConMgr.GetRespList.GetAt(0)
+                                If (iresp.StatusCode <> 0) Then
+                                    QBMethods.ResponseErr_Misc(iresp)
+                                    Exit Sub
+                                End If
+                            End If
+                        Next
+                        MsgBox("Deletion finished, 2nd warning will mean manual intervention")
+                        ResetForNewImportRow()
+                    End If
+                End If
+            End If
+
+            ' checking if need to display list for modify
+            If (modNeed) Then
+                MsgBox("Invoices need to be manually corrected: " & vbCrLf & conS.ToString)
+            End If
         End Sub
     End Class
 End Namespace

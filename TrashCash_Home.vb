@@ -252,6 +252,9 @@ Public Class TrashCashHome
         ' getting approvals pending on load
         RefreshApprovCount(True)
 
+        ' testing report lib button
+        toolstripbtn1.DropDown = New ReportingLib.ReportsDropDown
+
     End Sub
 
     Private Sub ApprovalsWorked(ByVal countRemain As Integer) Handles PendingApprovals.RemainingApprovals

@@ -33,6 +33,8 @@ Public Class Connection
             My.Settings.SQLSERVER = GetSetting(My.Application.Info.AssemblyName, "Connection", "Server")
             My.Settings.DATABASENAME = GetSetting(My.Application.Info.AssemblyName, "Connection", "Database")
             My.Settings.Item("QBDBConnectionString") = "Data Source=" & My.Settings.SQLSERVER & ";Initial Catalog=" & My.Settings.DATABASENAME & ";Integrated Security=True;MultipleActiveResultSets=False"
+            ' update reporting lib conn string
+            ReportingLib.My.MySettings.Default.Item("ConnectionString") = My.Settings.QBDBConnectionString
             Dim login As New Login(Me)
             login.Show()
 
@@ -140,9 +142,14 @@ Public Class Connection
             My.Settings.SQLSERVER = cmb_Server.Text
             My.Settings.DATABASENAME = cmb_DB.Text
             My.Settings.QB_FILE_LOCATION = tb_QBFileLoc.Text
+            ' telling report library where qb file is
+            ReportingLib.My.MySettings.Default.QB_File_Location = My.Settings.QB_FILE_LOCATION
 
             ' set db con string
             My.Settings.Item("QBDBConnectionString") = "Data Source=" & My.Settings.SQLSERVER & ";Initial Catalog=" & My.Settings.DATABASENAME & ";Integrated Security=True;MultipleActiveResultSets=False"
+            ' set in reporting library as well
+            ' update reporting lib conn string
+            ReportingLib.My.MySettings.Default.Item("ConnectionString") = "Data Source=" & My.Settings.SQLSERVER & ";Initial Catalog=" & My.Settings.DATABASENAME & ";Integrated Security=True;MultipleActiveResultSets=False"
 
             'con
             Dim con As New SqlConnection
