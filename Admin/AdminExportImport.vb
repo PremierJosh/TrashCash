@@ -25,18 +25,13 @@ Namespace Admin
         End Property
 
         ' form global tas
-        Dim _cita As ds_ApplicationTableAdapters.Initial_CustomInvoiceTableAdapter
-        Dim _cidt As ds_Application.Initial_CustomInvoiceDataTable
         Dim _cqta As ds_CustomerTableAdapters.QueriesTableAdapter
         Private _cta As ds_CustomerTableAdapters.CustomerTableAdapter
 
 
         Private Sub ImportWork_Load(sender As Object, e As System.EventArgs) Handles Me.Load
-            ServiceTypesTableAdapter.Fill(Me.Ds_Types.ServiceTypes)
+            ServiceTypesTableAdapter.Fill(Ds_Types.ServiceTypes)
             _cqta = New ds_CustomerTableAdapters.QueriesTableAdapter
-            _cita = New ds_ApplicationTableAdapters.Initial_CustomInvoiceTableAdapter
-            _cidt = _cita.GetData()
-            tb_CustInvCount.Text = _cidt.Rows.Count
             _cta = New ds_CustomerTableAdapters.CustomerTableAdapter
 
             ' update missing list id count
@@ -219,5 +214,8 @@ Namespace Admin
             End If
         End Sub
         
+        Private Sub btn_AddCustInv_Click(sender As System.Object, e As System.EventArgs) Handles btn_AddCustInv.Click
+
+        End Sub
     End Class
 End Namespace

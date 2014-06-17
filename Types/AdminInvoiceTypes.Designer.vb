@@ -35,7 +35,7 @@ Namespace Types
             Me.NAMEDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
             Me.CustomInvoiceLineTypesBindingSource = New System.Windows.Forms.BindingSource(Me.components)
             Me.Invoicing = New DS_Invoicing()
-            Me.CustomInvoice_LineTypesTableAdapter = New CustomInvoice_LineTypesTableAdapter()
+            Me.CustomInvoice_LineTypesTableAdapter = New ds_InvoicingTableAdapters.CustomInvoice_LineTypesTableAdapter()
             Me.tb_Name = New System.Windows.Forms.TextBox()
             Me.tb_Desc = New System.Windows.Forms.TextBox()
             Me.cmb_QBAccount = New System.Windows.Forms.ComboBox()
@@ -216,7 +216,7 @@ Namespace Types
         Friend WithEvents DataGridView1 As System.Windows.Forms.DataGridView
         Friend WithEvents Invoicing As DS_Invoicing
         Friend WithEvents CustomInvoiceLineTypesBindingSource As System.Windows.Forms.BindingSource
-        Friend WithEvents CustomInvoice_LineTypesTableAdapter As CustomInvoice_LineTypesTableAdapter
+        Friend WithEvents CustomInvoice_LineTypesTableAdapter As ds_InvoicingTableAdapters.CustomInvoice_LineTypesTableAdapter
         Friend WithEvents CITypeIDDataGridViewTextBoxColumn As System.Windows.Forms.DataGridViewTextBoxColumn
         Friend WithEvents QBListIDDataGridViewTextBoxColumn As System.Windows.Forms.DataGridViewTextBoxColumn
         Friend WithEvents QBEditSeqDataGridViewTextBoxColumn As System.Windows.Forms.DataGridViewTextBoxColumn

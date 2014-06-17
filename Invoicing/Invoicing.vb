@@ -4,10 +4,10 @@ Imports QBFC12Lib
 Namespace Invoicing
     Friend Module Invoicing
 
-        Friend ReadOnly CiTA As New CustomInvoicesTableAdapter
-        Friend ReadOnly LiTA As New CustomInvoice_LineItemsTableAdapter
-        Friend ReadOnly LtTA As New CustomInvoice_LineTypesTableAdapter
-        Friend ReadOnly RaTA As New Customer_RecentAddrsTableAdapter
+        Friend ReadOnly CiTA As New ds_InvoicingTableAdapters.CustomInvoicesTableAdapter
+        Friend ReadOnly LiTA As New ds_InvoicingTableAdapters.CustomInvoice_LineItemsTableAdapter
+        Friend ReadOnly LtTA As New ds_InvoicingTableAdapters.CustomInvoice_LineTypesTableAdapter
+        Friend ReadOnly RaTA As New ds_InvoicingTableAdapters.Customer_RecentAddrsTableAdapter
 
         Public Function CustomInvoice_Create(ByRef ds As ds_Invoicing, ByVal print As Boolean) As Boolean
             ' return succeed or fail
