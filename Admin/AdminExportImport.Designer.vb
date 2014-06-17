@@ -24,7 +24,6 @@
         <System.Diagnostics.DebuggerStepThrough()> _
         Private Sub InitializeComponent()
             Me.components = New System.ComponentModel.Container()
-            Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(AdminExportImport))
             Me.FlowLayoutPanel1 = New System.Windows.Forms.FlowLayoutPanel()
             Me.pnl_CustAdd = New System.Windows.Forms.Panel()
             Me.lbl_AllCustAddCount = New System.Windows.Forms.Label()
@@ -47,14 +46,11 @@
             Me.Panel2 = New System.Windows.Forms.Panel()
             Me.tb_ResetRecID = New System.Windows.Forms.TextBox()
             Me.btn_FetchRecReset = New System.Windows.Forms.Button()
-            Me.lbl_SrvcResetHeader = New System.Windows.Forms.Label()
+            Me.lbl_ChangeLastBillHeader = New System.Windows.Forms.Label()
             Me.ServiceTypesTableAdapter = New TrashCash.ds_TypesTableAdapters.ServiceTypesTableAdapter()
             Me.lbl_RecResetID = New System.Windows.Forms.Label()
-            Me.btn_LastBillThru = New System.Windows.Forms.Button()
-            Me.btn_DeleteHistory = New System.Windows.Forms.Button()
-            Me.lbl_DeleteTotal = New System.Windows.Forms.Label()
+            Me.btn_UpdateLastBill = New System.Windows.Forms.Button()
             Me.dtp_LastBillThru = New System.Windows.Forms.DateTimePicker()
-            Me.grp_ResetInvGrp = New System.Windows.Forms.GroupBox()
             Me.FlowLayoutPanel1.SuspendLayout()
             Me.pnl_CustAdd.SuspendLayout()
             Me.Panel1.SuspendLayout()
@@ -62,7 +58,6 @@
             CType(Me.Ds_Types, System.ComponentModel.ISupportInitialize).BeginInit()
             Me.Panel3.SuspendLayout()
             Me.Panel2.SuspendLayout()
-            Me.grp_ResetInvGrp.SuspendLayout()
             Me.SuspendLayout()
             '
             'FlowLayoutPanel1
@@ -246,11 +241,12 @@
             'Panel2
             '
             Me.Panel2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-            Me.Panel2.Controls.Add(Me.grp_ResetInvGrp)
+            Me.Panel2.Controls.Add(Me.btn_UpdateLastBill)
+            Me.Panel2.Controls.Add(Me.dtp_LastBillThru)
             Me.Panel2.Controls.Add(Me.lbl_RecResetID)
             Me.Panel2.Controls.Add(Me.tb_ResetRecID)
             Me.Panel2.Controls.Add(Me.btn_FetchRecReset)
-            Me.Panel2.Controls.Add(Me.lbl_SrvcResetHeader)
+            Me.Panel2.Controls.Add(Me.lbl_ChangeLastBillHeader)
             Me.Panel2.Location = New System.Drawing.Point(3, 237)
             Me.Panel2.Name = "Panel2"
             Me.Panel2.Size = New System.Drawing.Size(585, 117)
@@ -272,15 +268,16 @@
             Me.btn_FetchRecReset.Text = "Fetch Info"
             Me.btn_FetchRecReset.UseVisualStyleBackColor = True
             '
-            'lbl_SrvcResetHeader
+            'lbl_ChangeLastBillHeader
             '
-            Me.lbl_SrvcResetHeader.Dock = System.Windows.Forms.DockStyle.Top
-            Me.lbl_SrvcResetHeader.Location = New System.Drawing.Point(0, 0)
-            Me.lbl_SrvcResetHeader.Name = "lbl_SrvcResetHeader"
-            Me.lbl_SrvcResetHeader.Size = New System.Drawing.Size(583, 39)
-            Me.lbl_SrvcResetHeader.TabIndex = 0
-            Me.lbl_SrvcResetHeader.Text = resources.GetString("lbl_SrvcResetHeader.Text")
-            Me.lbl_SrvcResetHeader.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+            Me.lbl_ChangeLastBillHeader.Dock = System.Windows.Forms.DockStyle.Top
+            Me.lbl_ChangeLastBillHeader.Location = New System.Drawing.Point(0, 0)
+            Me.lbl_ChangeLastBillHeader.Name = "lbl_ChangeLastBillHeader"
+            Me.lbl_ChangeLastBillHeader.Size = New System.Drawing.Size(583, 26)
+            Me.lbl_ChangeLastBillHeader.TabIndex = 0
+            Me.lbl_ChangeLastBillHeader.Text = "Enter a RecurringServiceID to view its ""LastBillThru"" date if it had one, or the " & _
+        "ability to create one."
+            Me.lbl_ChangeLastBillHeader.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
             '
             'ServiceTypesTableAdapter
             '
@@ -295,55 +292,22 @@
             Me.lbl_RecResetID.TabIndex = 3
             Me.lbl_RecResetID.Text = "RecurringServiceID:"
             '
-            'btn_LastBillThru
+            'btn_UpdateLastBill
             '
-            Me.btn_LastBillThru.Location = New System.Drawing.Point(32, 43)
-            Me.btn_LastBillThru.Name = "btn_LastBillThru"
-            Me.btn_LastBillThru.Size = New System.Drawing.Size(75, 23)
-            Me.btn_LastBillThru.TabIndex = 4
-            Me.btn_LastBillThru.Text = "LastBillThru"
-            Me.btn_LastBillThru.UseVisualStyleBackColor = True
-            '
-            'btn_DeleteHistory
-            '
-            Me.btn_DeleteHistory.AutoSize = True
-            Me.btn_DeleteHistory.Location = New System.Drawing.Point(166, 43)
-            Me.btn_DeleteHistory.Name = "btn_DeleteHistory"
-            Me.btn_DeleteHistory.Size = New System.Drawing.Size(83, 23)
-            Me.btn_DeleteHistory.TabIndex = 5
-            Me.btn_DeleteHistory.Text = "Delete History"
-            Me.btn_DeleteHistory.UseVisualStyleBackColor = True
-            '
-            'lbl_DeleteTotal
-            '
-            Me.lbl_DeleteTotal.AutoSize = True
-            Me.lbl_DeleteTotal.Location = New System.Drawing.Point(143, 20)
-            Me.lbl_DeleteTotal.Name = "lbl_DeleteTotal"
-            Me.lbl_DeleteTotal.Size = New System.Drawing.Size(114, 13)
-            Me.lbl_DeleteTotal.TabIndex = 6
-            Me.lbl_DeleteTotal.Text = "Total to be deleted: 99"
+            Me.btn_UpdateLastBill.Location = New System.Drawing.Point(426, 76)
+            Me.btn_UpdateLastBill.Name = "btn_UpdateLastBill"
+            Me.btn_UpdateLastBill.Size = New System.Drawing.Size(75, 23)
+            Me.btn_UpdateLastBill.TabIndex = 4
+            Me.btn_UpdateLastBill.Text = "LastBillThru"
+            Me.btn_UpdateLastBill.UseVisualStyleBackColor = True
             '
             'dtp_LastBillThru
             '
             Me.dtp_LastBillThru.Format = System.Windows.Forms.DateTimePickerFormat.[Short]
-            Me.dtp_LastBillThru.Location = New System.Drawing.Point(18, 18)
+            Me.dtp_LastBillThru.Location = New System.Drawing.Point(426, 50)
             Me.dtp_LastBillThru.Name = "dtp_LastBillThru"
             Me.dtp_LastBillThru.Size = New System.Drawing.Size(104, 20)
             Me.dtp_LastBillThru.TabIndex = 7
-            '
-            'grp_ResetInvGrp
-            '
-            Me.grp_ResetInvGrp.Controls.Add(Me.dtp_LastBillThru)
-            Me.grp_ResetInvGrp.Controls.Add(Me.btn_LastBillThru)
-            Me.grp_ResetInvGrp.Controls.Add(Me.lbl_DeleteTotal)
-            Me.grp_ResetInvGrp.Controls.Add(Me.btn_DeleteHistory)
-            Me.grp_ResetInvGrp.Location = New System.Drawing.Point(298, 39)
-            Me.grp_ResetInvGrp.Name = "grp_ResetInvGrp"
-            Me.grp_ResetInvGrp.Size = New System.Drawing.Size(277, 73)
-            Me.grp_ResetInvGrp.TabIndex = 8
-            Me.grp_ResetInvGrp.TabStop = False
-            Me.grp_ResetInvGrp.Text = "Recurring Service Info"
-            Me.grp_ResetInvGrp.Visible = False
             '
             'AdminExportImport
             '
@@ -364,8 +328,6 @@
             Me.Panel3.PerformLayout()
             Me.Panel2.ResumeLayout(False)
             Me.Panel2.PerformLayout()
-            Me.grp_ResetInvGrp.ResumeLayout(False)
-            Me.grp_ResetInvGrp.PerformLayout()
             Me.ResumeLayout(False)
 
         End Sub
@@ -388,16 +350,13 @@
         Friend WithEvents cmb_ServiceTypes As System.Windows.Forms.ComboBox
         Friend WithEvents tb_ResetRecID As System.Windows.Forms.TextBox
         Friend WithEvents btn_FetchRecReset As System.Windows.Forms.Button
-        Friend WithEvents lbl_SrvcResetHeader As System.Windows.Forms.Label
+        Friend WithEvents lbl_ChangeLastBillHeader As System.Windows.Forms.Label
         Friend WithEvents btn_AddSrvc As System.Windows.Forms.Button
         Friend WithEvents Ds_Types As TrashCash.ds_Types
         Friend WithEvents ServiceTypesBindingSource As System.Windows.Forms.BindingSource
         Friend WithEvents ServiceTypesTableAdapter As TrashCash.ds_TypesTableAdapters.ServiceTypesTableAdapter
         Friend WithEvents dtp_LastBillThru As System.Windows.Forms.DateTimePicker
-        Friend WithEvents lbl_DeleteTotal As System.Windows.Forms.Label
-        Friend WithEvents btn_DeleteHistory As System.Windows.Forms.Button
-        Friend WithEvents btn_LastBillThru As System.Windows.Forms.Button
+        Friend WithEvents btn_UpdateLastBill As System.Windows.Forms.Button
         Friend WithEvents lbl_RecResetID As System.Windows.Forms.Label
-        Friend WithEvents grp_ResetInvGrp As System.Windows.Forms.GroupBox
     End Class
 End Namespace

@@ -117,10 +117,6 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="lbl_SrvcResetHeader.Text" xml:space="preserve">
-    <value>Enter a RecurringServiceID to view its "LastBillThru" date if it had one, or the ability to create one.
-You can also delete all of its invoices in quickbooks, and delete the line items if the invoices is for more than  one service.</value>
-  </data>
   <metadata name="ServiceTypesBindingSource.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>119, 17</value>
   </metadata>
