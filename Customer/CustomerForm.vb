@@ -33,6 +33,7 @@
             UC_Quickbooks.FetchInvoices(0)
             ' let home form know customer balance changed from a credit
             RaiseEvent CustomerBalanceChanged(customerNumber, GetType(CustomerForm))
+            CustomerToolstrip1.GetCustomerBalance()
         End Sub
 
         Private Sub Customer_FormClosing(sender As Object, e As FormClosingEventArgs) Handles Me.FormClosing
@@ -48,7 +49,7 @@
             End If
             ' set focus to quick search
             CustomerToolstrip1.GetCustomerBalance()
-        End Sub
+            End Sub
 
         Private Sub CustomerChanged(ByVal customerNumber As Integer) Handles CustomerToolstrip1.CustomerChanging
             CurrentCustomer = customerNumber
@@ -103,6 +104,9 @@
         End Sub
         Private Sub CreditAddCatch(ByVal customerNumber As Integer) Handles CreditForm.CreditAdded
             RaiseEvent CustomerBalanceChanged(CurrentCustomer, GetType(CustomerForm))
+            CustomerToolstrip1.GetCustomerBalance()
+            ' get invoices incase they were paid with credit
+            UC_Quickbooks.FetchInvoices(0)
         End Sub
         
         Private Sub btn_Inv_Click(sender As Object, e As EventArgs) Handles btn_Inv.Click
@@ -111,6 +115,9 @@
         End Sub
         Private Sub InvoiceAddCatch(ByVal customerNumber As Integer, ByRef formType As Type) Handles InvForm.CustomerInvoiceAdded
             RaiseEvent CustomerBalanceChanged(customerNumber, GetType(CustomerForm))
+            CustomerToolstrip1.GetCustomerBalance()
+            ' get new invoices
+            UC_Quickbooks.FetchInvoices(0)
         End Sub
 
         ' recurring service approval change

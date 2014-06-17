@@ -1,9 +1,10 @@
 ﻿Imports System.Text
+Imports TrashCash.QBStuff
 
 Namespace Invoicing
     Public Class CustomInvoicingForm
         ' field for balance changing
-        Friend BalanceChanged As Boolean
+        'Friend BalanceChanged As Boolean
         ' event for invoicing adding
         Friend Event CustomerInvoiceAdded(ByVal customerNumber As Integer, ByRef formType As Type)
 
@@ -203,6 +204,9 @@ Namespace Invoicing
 
         Private Sub btn_CreateInv_Click(sender As System.Object, e As System.EventArgs) Handles btn_CreateInv.Click
             If (InvoiceValidation()) Then
+                ' get balance for payment of invoice after
+                Dim custBalance As Double
+                CustomerToolstrip1.GetCustomerBalance(custBalance)
                 ' update time inserted
                 _invRow.Time_Inserted = Date.Now
                 ' submit invoice and line items
@@ -215,42 +219,34 @@ Namespace Invoicing
                 End Try
 
                 ' send to QB
-                Dim succeed As Boolean = CustomInvoice_Create(Invoicing, ck_Print.Checked)
+                Dim invObj As New QBInvoiceObj
+                Dim succeed As Boolean = CustomInvoice_Create(invObj, Invoicing, ck_Print.Checked)
                 If (Not succeed) Then
                     MessageBox.Show("Error - Invoice not created.", "QB Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
                 Else
                     ' creating reminders
-                    For Each row As DS_Invoicing.CustomInvoice_LineItemsRow In Invoicing.CustomInvoice_LineItems
+                    For Each row As ds_Invoicing.CustomInvoice_LineItemsRow In Invoicing.CustomInvoice_LineItems
                         If (row.Reminder) Then
                             LiTA.Reminder_CustomInvoice_Insert(row.CI_ID, row.RenderedOnDate, row.CompiledDescText, CurrentUser.USER_NAME)
                         End If
                     Next
-
                     ' refill history grid
                     HistoryInv.Clear()
-                    CiTA.Fill(HistoryInv.CustomInvoices, CurrentCustomer)
-                    MessageBox.Show("Invoice Added.")
                     ResetInvoice()
-                    ' update balance var for show dialog open
-                    BalanceChanged = True
-                    ' raise event for show open
+                    CiTA.Fill(HistoryInv.CustomInvoices, CurrentCustomer)
+                    ' attempt to pay new invoice
+                    If (custBalance < 0) Then
+                        QBMethods.PayInvoice(invObj)
+                    End If
+                    MessageBox.Show("Invoice Added.", "", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                    ' raise event for balance refreshes
                     RaiseEvent CustomerInvoiceAdded(CurrentCustomer, GetType(CustomInvoicingForm))
                     CustomerToolstrip1.GetCustomerBalance()
-                End If
+                    End If
             End If
         End Sub
 
-        Private Sub dg_InvHistory_CellMouseDown(sender As System.Object, e As System.Windows.Forms.DataGridViewCellMouseEventArgs) Handles dg_InvHistory.CellMouseDown
-            ' left click = fill line table with history
-            If (e.Button = Windows.Forms.MouseButtons.Left) Then
-                ' clear incase no line items are returned
-                HistoryInv.CustomInvoice_LineItems.Clear()
-                LiTA.Fill(HistoryInv.CustomInvoice_LineItems,
-                                                         CType(CType(dg_InvHistory.SelectedRows(0).DataBoundItem, DataRowView).Row, DS_Invoicing.CustomInvoicesRow).CI_ID)
-            End If
-        End Sub
-
-        Private Sub btn_DeleteLine_Click(sender As System.Object, e As System.EventArgs) Handles btn_DeleteLine.Click
+      Private Sub btn_DeleteLine_Click(sender As System.Object, e As System.EventArgs) Handles btn_DeleteLine.Click
             Dim row As DataRow = CType(dg_LineItems.SelectedRows(0).DataBoundItem, DataRowView).Row
             row.Delete()
         End Sub
@@ -319,7 +315,15 @@ Namespace Invoicing
         End Sub
 
         Private Sub dg_InvHistory_RowPrePaint(sender As System.Object, e As System.Windows.Forms.DataGridViewRowPrePaintEventArgs) Handles dg_InvHistory.RowPrePaint
-            AppColors.ColorGrid(dg_InvHistory, "Voided")
+            AppColors.ColorGridRow(dg_InvHistory.Rows(e.RowIndex), "Voided")
+
         End Sub
+
+        'Private Sub dg_InvHistory_SelectionChanged(sender As System.Object, e As System.EventArgs) Handles dg_InvHistory.SelectionChanged
+        '    ' clear incase no line items are returned
+        '    HistoryInv.CustomInvoice_LineItems.Clear()
+        '    LiTA.Fill(HistoryInv.CustomInvoice_LineItems,
+        '                                             CType(CType(dg_InvHistory.SelectedRows(0).DataBoundItem, DataRowView).Row, ds_Invoicing.CustomInvoicesRow).CI_ID)
+        'End Sub
     End Class
 End Namespace

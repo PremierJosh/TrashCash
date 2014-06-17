@@ -73,7 +73,7 @@ Namespace Customer
                         If (Trim(reason).Length > 0) Then
                             ' void credit using its txnID
 
-                            Dim resp As Integer = QBRequests.TxnVoid(row.CreditTxnID, 8)
+                            Dim resp As Integer = QBRequests.TxnVoid(row.CreditTxnID, "Credit")
                             If (resp = 0) Then
                                 ' update row
                                 row.Voided = True
@@ -90,7 +90,10 @@ Namespace Customer
                             End If
                             RaiseEvent CreditAdded(CurrentCustomer)
                             CustomerToolstrip1.GetCustomerBalance()
-                            AppColors.ColorGrid(dg_Credits, "Voided")
+                            For Each dgvRow As DataGridViewRow In dg_Credits.Rows
+                                AppColors.ColorGridRow(dgvRow, "Voided")
+                            Next
+
                         End If
                     End If
 
@@ -128,7 +131,10 @@ Namespace Customer
                                 MessageBox.Show("Message: " & ex.Message & vbCrLf & "LineNumber: " & ex.LineNumber,
                                                 "Sql Error: " & ex.Procedure, MessageBoxButtons.OK, MessageBoxIcon.Error)
                             End Try
-                            QBMethods.UseNewCredit(creditObj, rb_Newest.Checked)
+                            ' seeing if we want to use this new credit
+                            If (ck_AutoApply.Checked) Then
+                                QBMethods.UseNewCredit(creditObj, rb_Newest.Checked)
+                            End If
                         Else
                             MessageBox.Show("Error adding credit memo")
                         End If
@@ -167,7 +173,7 @@ Namespace Customer
         End Sub
 
         Private Sub dg_Credits_RowPrePaint(sender As System.Object, e As System.Windows.Forms.DataGridViewRowPrePaintEventArgs) Handles dg_Credits.RowPrePaint
-            AppColors.ColorGrid(dg_Credits, "Voided")
+            AppColors.ColorGridRow(dg_Credits.Rows(e.RowIndex), "Voided")
         End Sub
     End Class
 End Namespace

@@ -783,7 +783,8 @@ Namespace RecurringService
         End Sub
 
         Private Sub dg_CreditHistory_RowPrePaint(sender As System.Object, e As System.Windows.Forms.DataGridViewRowPrePaintEventArgs) Handles dg_CreditHistory.RowPrePaint
-            AppColors.ColorGrid(dg_CreditHistory, "Voided")
+            AppColors.ColorGridRow(dg_CreditHistory.Rows(e.RowIndex), "Voided")
+
         End Sub
 
         Private Sub btn_Delete_Click(sender As System.Object, e As System.EventArgs) Handles btn_Delete.Click

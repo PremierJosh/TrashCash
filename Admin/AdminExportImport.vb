@@ -30,6 +30,7 @@ Namespace Admin
 
 
         Private Sub ImportWork_Load(sender As Object, e As System.EventArgs) Handles Me.Load
+     CustomInvoice_LineTypesTableAdapter.Fill(Ds_Invoicing.CustomInvoice_LineTypes)
             ServiceTypesTableAdapter.Fill(Ds_Types.ServiceTypes)
             _cqta = New ds_CustomerTableAdapters.QueriesTableAdapter
             _cta = New ds_CustomerTableAdapters.CustomerTableAdapter
@@ -213,9 +214,56 @@ Namespace Admin
                 MessageBox.Show("Item already has ListID. Contact Premier to resolve.", "Contact Premier", MessageBoxButtons.OK, MessageBoxIcon.Error)
             End If
         End Sub
-        
+      
         Private Sub btn_AddCustInv_Click(sender As System.Object, e As System.EventArgs) Handles btn_AddCustInv.Click
+            Dim ds As New ds_Invoicing
+          ' fill with all invoices missing a list id and all line items
+            Invoicing.CiTA.FillMissingListID(ds.CustomInvoices)
+            Invoicing.LiTA.FillWithAll(ds.CustomInvoice_LineItems)
+            CustomInvoice_LineTypesTableAdapter.Fill(ds.CustomInvoice_LineTypes)
+            If (ds.CustomInvoices.Rows.Count > 0) Then
+                Dim result As MsgBoxResult = MsgBox("Add " & ds.CustomInvoices.Rows.Count & " Custom Invoices?", MsgBoxStyle.YesNo)
+                If (result = MsgBoxResult.Yes) Then
+                    Dim invObj As New QBInvoiceObj
+                    Dim pass As Boolean = Invoicing.CustomInvoice_Create(invObj, ds, False)
+                    If (pass) Then
+                        MsgBox("Invoices Added")
+                    Else
+                        MsgBox("Invoice Add Fail")
+                    End If
+                End If
+            End If
+        End Sub
 
+        Private Sub btn_AddInvType_Click(sender As System.Object, e As System.EventArgs) Handles btn_AddInvType.Click
+            Dim row As ds_Invoicing.CustomInvoice_LineTypesRow = CType(cmb_InvTypes.SelectedItem, DataRowView).Row
+            If (row.IsQBListIDNull) Then
+                Dim item As New QBItemObj
+                With item
+                    .ItemName = row.NAME
+                    .Desc = row.Description
+                    .IncomeAccountListID = cmb_IncomeAcc.SelectedValue
+                End With
+
+                Dim resp As IResponse = QBRequests.ServiceItemAdd(item)
+                If (resp.StatusCode = 0) Then
+                    Dim ret As IItemServiceRet = resp.Detail
+                    Try
+                        row.QBListID = ret.ListID.GetValue
+                        row.QBEditSeq = ret.EditSequence.GetValue
+                        row.EndEdit()
+                        CustomInvoice_LineTypesTableAdapter.Update(row)
+                    Catch ex As SqlException
+                        MessageBox.Show("Message: " & ex.Message & vbCrLf & "LineNumber: " & ex.LineNumber,
+                                        "Sql Error: " & ex.Procedure, MessageBoxButtons.OK, MessageBoxIcon.Error)
+                    End Try
+                    MessageBox.Show("Item added.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                Else
+                    QBMethods.ResponseErr_Misc(resp)
+                End If
+            Else
+                MsgBox("Item already has listID")
+            End If
         End Sub
     End Class
 End Namespace

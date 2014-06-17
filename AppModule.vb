@@ -102,39 +102,35 @@ Module AppModule
         End Property
 
         ''' <summary>
-        ''' This will take a DGV and color its rows when a boolean column value is true (green) or red (false).
+        ''' This will take a DGV row and color it when a boolean column, specified by greenRedColName, value is true (green) or red (false).
         ''' </summary>
-        ''' <param name="grid">DGV that a DataGrid is bound that that needs colored</param>
+        ''' <param name="dgvRow">DGV that a DataGrid is bound that that needs colored</param>
         ''' <param name="greenRedColName">Column that will turn the row green when true or red when false</param>
         ''' <param name="yellowColName">When this column is true, the row will turn yellow over any other color.</param>
         ''' <remarks></remarks>
-        Public Shared Sub ColorGrid(ByRef grid As DataGridView, ByVal greenRedColName As String, Optional ByVal yellowColName As String = Nothing)
-            Dim row As DataRow
-            For i = 0 To grid.RowCount - 1
-                With grid.Rows(i).DefaultCellStyle
-                    row = CType(grid.Rows(i).DataBoundItem, DataRowView).Row
-                    If (row.Item(greenRedColName) = True) Then
-                        .BackColor = GridRed
-                        .SelectionBackColor = GridRedSel
-                        ' setting sel text color white
-                        .SelectionForeColor = GridDefTextSel
-                    ElseIf (row.Item(greenRedColName) = False) Then
-                        .BackColor = GridGreen
-                        .SelectionBackColor = GridGreenSel
-                        ' setting sel text color white
-                        .SelectionForeColor = GridDefTextSel
+        Public Shared Sub ColorGridRow(ByRef dgvRow As DataGridViewRow, ByVal greenRedColName As String, Optional ByVal yellowColName As String = Nothing)
+            Dim row As DataRow = CType(dgvRow.DataBoundItem, DataRowView).Row
+            With dgvRow.DefaultCellStyle
+                If (row.Item(greenRedColName) = True) Then
+                    .BackColor = GridRed
+                    .SelectionBackColor = GridRedSel
+                    ' setting sel text color white
+                    .SelectionForeColor = GridDefTextSel
+                ElseIf (row.Item(greenRedColName) = False) Then
+                    .BackColor = GridGreen
+                    .SelectionBackColor = GridGreenSel
+                    ' setting sel text color white
+                    .SelectionForeColor = GridDefTextSel
+                End If
+                If (yellowColName IsNot Nothing) Then
+                    If (row.Item(yellowColName) = True) Then
+                        .BackColor = GridYellow
+                        .SelectionBackColor = GridYellowSel
+                        ' setting sel text color to black
+                        .SelectionForeColor = GridDefText
                     End If
-                    If (yellowColName IsNot Nothing) Then
-                        If (row.Item(yellowColName) = True) Then
-                            .BackColor = GridYellow
-                            .SelectionBackColor = GridYellowSel
-                            ' setting sel text color to black
-                            .SelectionForeColor = GridDefText
-                        End If
-                    End If
-                End With
-                ' checking yellow
-            Next
+                End If
+            End With
         End Sub
 
         ' text box color and default

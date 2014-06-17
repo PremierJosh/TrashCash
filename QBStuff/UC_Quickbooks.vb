@@ -117,46 +117,40 @@ Namespace QBStuff
             End If
         End Sub
 
-        Private Sub ColorRows_QBInvoices(ByRef grid As DataGridView)
-            ' loop through all grid rows
-            For i As Integer = 0 To grid.RowCount - 1
-                Dim row As DataRowView = grid.Rows(i).DataBoundItem
-                If (row IsNot Nothing) Then
-                    ' easier to refrence here
-                    Dim dbRow As ds_Display.QB_InvoiceDisplayRow = row.Row
-                    ' checking for balance
-                    With grid.Rows(i).DefaultCellStyle
+        Private Sub ColorRows_QBInvoices(ByRef dgvRow As DataGridViewRow)
+            Dim dbRow As ds_Display.QB_InvoiceDisplayRow = CType(dgvRow.DataBoundItem, DataRowView).Row
+            ' checking for balance
+            With dgvRow.DefaultCellStyle
+                If (dbRow.InvoiceBalance > 0) Then
+                    ' checking if its past due
+                    If (dbRow.InvoiceDueDate <= Date.Now.Date) Then
+                        ' due date has passed
                         If (dbRow.InvoiceBalance > 0) Then
-                            ' checking if its past due
-                            If (dbRow.InvoiceDueDate <= Date.Now.Date) Then
-                                ' due date has passed
-                                If (dbRow.InvoiceBalance > 0) Then
-                                    ' inv has balance and is past due
-                                    .BackColor = AppColors.GridRed
-                                    .SelectionBackColor = AppColors.GridRedSel
-                                    ' change selected color to white
-                                    .SelectionForeColor = AppColors.GridDefTextSel
-                                End If
-                            Else
-                                ' due date HAS not passed
-                                If (dbRow.InvoiceBalance <> dbRow.InvoiceTotal) Then
-                                    ' invoice is partially paid
-                                    .BackColor = AppColors.GridYellow
-                                    .SelectionBackColor = AppColors.GridYellowSel
-                                    ' change selected color to black
-                                    .SelectionForeColor = AppColors.GridDefText
-                                End If
-                            End If
-                        Else
-                            ' balance is 0
-                            .BackColor = AppColors.GridGreen
-                            .SelectionBackColor = AppColors.GridGreenSel
+                            ' inv has balance and is past due
+                            .BackColor = AppColors.GridRed
+                            .SelectionBackColor = AppColors.GridRedSel
                             ' change selected color to white
                             .SelectionForeColor = AppColors.GridDefTextSel
                         End If
-                    End With
+                    Else
+                        ' due date HAS not passed
+                        If (dbRow.InvoiceBalance <> dbRow.InvoiceTotal) Then
+                            ' invoice is partially paid
+                            .BackColor = AppColors.GridYellow
+                            .SelectionBackColor = AppColors.GridYellowSel
+                            ' change selected color to black
+                            .SelectionForeColor = AppColors.GridDefText
+                        End If
+                    End If
+                Else
+                    ' balance is 0
+                    .BackColor = AppColors.GridGreen
+                    .SelectionBackColor = AppColors.GridGreenSel
+                    ' change selected color to white
+                    .SelectionForeColor = AppColors.GridDefTextSel
                 End If
-            Next i
+            End With
+             
         End Sub
 
         Public Sub New()
@@ -205,7 +199,7 @@ Namespace QBStuff
         End Sub
 
         Private Sub dg_Invoices_RowPrePaint(sender As System.Object, e As System.Windows.Forms.DataGridViewRowPrePaintEventArgs) Handles dg_Invoices.RowPrePaint
-            ColorRows_QBInvoices(dg_Invoices)
+            ColorRows_QBInvoices(dg_Invoices.Rows(e.RowIndex))
         End Sub
 
         Private Sub UC_Quickbooks_Load(sender As Object, e As System.EventArgs) Handles Me.Load

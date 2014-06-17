@@ -59,7 +59,7 @@ Namespace RecurringService
 
         Friend Sub RecurringService_EndDateCredit_Void(ByRef row As ds_RecurringService.RecurringService_EndDateCreditsRow, ByVal voidReason As String)
             ' credit memo void type is 8
-            Dim resp As Integer = QBRequests.TxnVoid(row.CreditMemoTxnID, 8)
+            Dim resp As Integer = QBRequests.TxnVoid(row.CreditMemoTxnID, "Credit")
             If (resp = 0) Then
                 Try
                     ' updating row
@@ -112,7 +112,7 @@ Namespace RecurringService
         End Sub
 
         Friend Sub RecurringService_Credit_Void(ByRef row As ds_RecurringService.RecurringService_CreditsRow, ByVal voidReason As String)
-            Dim resp As Integer = QBRequests.TxnVoid(row.CreditMemoTxnID, 8)
+            Dim resp As Integer = QBRequests.TxnVoid(row.CreditMemoTxnID, "Credit")
             If (resp = 0) Then
                 Try
                     ' credit voided: update row

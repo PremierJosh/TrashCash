@@ -45,7 +45,8 @@ Namespace Classes.CustomerToolstrip
             ' set key bind catches to quick select from list
             AutoCompleteMode = Windows.Forms.AutoCompleteMode.Suggest
             AutoCompleteSource = Windows.Forms.AutoCompleteSource.ListItems
-
+            DropDownStyle = ComboBoxStyle.DropDownList
+            
             ' instantiate dt and ta
             _dt = New ds_Customer.Customer_ListByActiveDataTable
             _ta = New ds_CustomerTableAdapters.Customer_ListByActiveTableAdapter
@@ -61,7 +62,7 @@ Namespace Classes.CustomerToolstrip
             ComboBox.DataSource = _dv
             ComboBox.DisplayMember = "CustomerFullName"
             ComboBox.ValueMember = "CustomerNumber"
-        End Sub
+            End Sub
 
         Friend Sub RefreshCustomerList()
             _ta.Fill(_dt, False)

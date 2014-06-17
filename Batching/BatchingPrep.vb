@@ -19,7 +19,8 @@ Namespace Batching
                     _batching = value
 
                     If (value = True) Then
-                        UseWaitCursor = True
+                        btn_InvBatch.UseWaitCursor = True
+                        btn_PayBatch.UseWaitCursor = True
                         ' hide batch btns
                         btn_PayBatch.Visible = False
                         btn_InvBatch.Visible = False
@@ -27,8 +28,8 @@ Namespace Batching
                         ' hide cm for deleting payments
                         cm_PayGrid.Enabled = False
                     Else
-                        ' reset cursor
-                        UseWaitCursor = False
+                        btn_InvBatch.UseWaitCursor = False
+                        btn_PayBatch.UseWaitCursor = False
                         ' reset pb max var
                         PbMaximumValue = Nothing
                         PbCurrentValue = 1
@@ -215,10 +216,10 @@ Namespace Batching
                 If (dtp_GenInvTo.Value.Date > futureDate) Then
                     MsgBox("You cannot generate Invoices more than 30 days ahead of time.")
                 Else
-                    Cursor = Cursors.WaitCursor
+                    btn_GenerateInv.UseWaitCursor = True
                     qta.GenerateRecurringInvoices(dtp_GenInvTo.Value.Date)
                     BATCH_WorkingInvoiceTableAdapter.Fill(Ds_Batching.BATCH_WorkingInvoice)
-                    Cursor = Cursors.Default
+                    btn_GenerateInv.UseWaitCursor = False
                 End If
             Else
                 MsgBox("You cannot Generate Recurring Service Invoices while there are other Recurring Service Invoices prepared. You must first Batch or Delete them.", MsgBoxStyle.Exclamation)
@@ -261,11 +262,6 @@ Namespace Batching
             PbCustomer = progress.CurrentCustomer
             ' progress
             PbPercent = e.ProgressPercentage
-
-            ' checking cursor state
-            If (UseWaitCursor = False) Then
-                UseWaitCursor = True
-            End If
             End Sub
 
         Private Sub InvoiceBatchWorker_RunWorkerCompleted(sender As Object, e As System.ComponentModel.RunWorkerCompletedEventArgs) Handles BatchWorker.RunWorkerCompleted

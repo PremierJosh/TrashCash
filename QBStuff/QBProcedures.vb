@@ -5,11 +5,18 @@ Namespace QBStuff
     Friend Class QBRequests
 
         ' misc
-        Public Shared Function TxnVoid(ByVal txnID As String, ByVal voidType As ENTxnVoidType, Optional ByRef qbConMgr As QBConMgr = Nothing) As Integer
+        Public Shared Function TxnVoid(ByVal txnID As String, ByVal voidType As String, Optional ByRef qbConMgr As QBConMgr = Nothing) As Integer
+            Dim type As ENTxnVoidType
+            Select Case voidType
+                Case Is = "Invoice"
+                    type = ENTxnVoidType.tvtInvoice
+                Case Is = "Credit"
+                    type = ENTxnVoidType.tvtCreditMemo
+            End Select
             Dim txnVoidRq As ITxnVoid = ConCheck(qbConMgr).MessageSetRequest.AppendTxnVoidRq
             With txnVoidRq
                 .TxnID.SetValue(txnID)
-                .TxnVoidType.SetValue(voidType)
+                .TxnVoidType.SetValue(type)
             End With
 
             Return ConCheck(qbConMgr).GetRespList.GetAt(0).StatusCode
@@ -1101,7 +1108,7 @@ Namespace QBStuff
             If (creditObj.CreditRemaining >= invObj.BalanceRemaining) Then
                 ' if remaining credit is greater than balance, apply balance
                 creditObj.AppliedAmount = invObj.BalanceRemaining
-                creditObj.CreditRemaining = invObj.BalanceRemaining
+                creditObj.CreditRemaining = creditObj.CreditRemaining - invObj.BalanceRemaining
             Else
                 creditObj.AppliedAmount = creditObj.CreditRemaining
                 creditObj.CreditRemaining = 0

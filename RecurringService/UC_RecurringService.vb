@@ -21,7 +21,6 @@
 
                     If (value > 0) Then
                         RecurringService_DisplayByCustomerIDTableAdapter.FillByID(Ds_RecurringService.RecurringService_DisplayByCustomerID, value)
-                        ColorRows()
                     End If
                 End If
             End Set
@@ -44,43 +43,39 @@
             dg_RecSrvc.DataSource = _dv
         End Sub
 
-        Private Sub ColorRows()
-
-            'loop through all grid rows
-            Dim grid = dg_RecSrvc
-            For i As Integer = 0 To grid.RowCount - 1
-                Dim dvRow As DataRowView = grid.Rows(i).DataBoundItem
-                Dim row As ds_RecurringService.RecurringService_DisplayByCustomerIDRow = dvRow.Row
+        Private Sub ColorRow(ByRef dgvRow As DataGridViewRow)
+            Dim row As ds_RecurringService.RecurringService_DisplayByCustomerIDRow = CType(dgvRow.DataBoundItem, DataRowView).Row
+            With dgvRow.DefaultCellStyle
                 ' checking end date for colorization
                 If (row.IsRecurringServiceEndDateNull = False) Then
                     ' end date is NOT NULL
                     If (row.RecurringServiceEndDate < Date.Now.Date) Then
                         ' service has ended
-                        grid.Rows(i).DefaultCellStyle.BackColor = AppColors.GridRed
-                        grid.Rows(i).DefaultCellStyle.SelectionBackColor = AppColors.GridRedSel
+                        .BackColor = AppColors.GridRed
+                        .SelectionBackColor = AppColors.GridRedSel
                         ' need a default font
-                        grid.Rows(i).DefaultCellStyle.SelectionForeColor = AppColors.GridDefTextSel
+                        .SelectionForeColor = AppColors.GridDefTextSel
                     ElseIf (row.RecurringServiceEndDate >= Date.Now.Date) Then
                         ' service has end date but it hasnt passed yet
-                        grid.Rows(i).DefaultCellStyle.BackColor = AppColors.GridYellow
-                        grid.Rows(i).DefaultCellStyle.SelectionBackColor = AppColors.GridYellowSel
+                        .BackColor = AppColors.GridYellow
+                        .SelectionBackColor = AppColors.GridYellowSel
                         ' need a darker font
-                        grid.Rows(i).DefaultCellStyle.SelectionForeColor = AppColors.GridDefText
+                        .SelectionForeColor = AppColors.GridDefText
                     End If
                 ElseIf (row.Approved = False) Then
                     ' approval pending rows will be yellow
-                    grid.Rows(i).DefaultCellStyle.BackColor = AppColors.GridYellow
-                    grid.Rows(i).DefaultCellStyle.SelectionBackColor = AppColors.GridYellowSel
+                    .BackColor = AppColors.GridYellow
+                    .SelectionBackColor = AppColors.GridYellowSel
                     ' need a darker font
-                    grid.Rows(i).DefaultCellStyle.SelectionForeColor = AppColors.GridDefText
+                    .SelectionForeColor = AppColors.GridDefText
                 Else
                     ' end date is NULL
-                    grid.Rows(i).DefaultCellStyle.BackColor = AppColors.GridGreen
-                    grid.Rows(i).DefaultCellStyle.SelectionBackColor = AppColors.GridGreenSel
+                    .BackColor = AppColors.GridGreen
+                    .SelectionBackColor = AppColors.GridGreenSel
                     ' need a default font
-                    grid.Rows(i).DefaultCellStyle.SelectionForeColor = AppColors.GridDefTextSel
+                    .SelectionForeColor = AppColors.GridDefTextSel
                 End If
-            Next i
+            End With
         End Sub
 
         Private Sub rdo_EndedSrvc_Click(sender As System.Object, e As System.EventArgs) Handles rdo_EndedSrvc.Click, rdo_AllSrvc.Click, rdo_CurrentSrvc.Click
@@ -140,7 +135,7 @@
         End Sub
 
         Private Sub dg_RecSrvc_RowPrePaint(sender As System.Object, e As System.Windows.Forms.DataGridViewRowPrePaintEventArgs) Handles dg_RecSrvc.RowPrePaint
-            ColorRows()
+            ColorRow(dg_RecSrvc.Rows(e.RowIndex))
         End Sub
 
         Private Sub dg_RecSrvc_SelectionChanged(sender As System.Object, e As System.EventArgs) Handles dg_RecSrvc.SelectionChanged

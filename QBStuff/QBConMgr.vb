@@ -56,14 +56,17 @@ Namespace QBStuff
             Return respList
         End Function
 
-        Public Sub CloseCon()
+        Public Function CloseCon() As Boolean
             Try
-                SessionManager.EndSession()
-                SessionManager.CloseConnection()
+                If (SessionManager IsNot Nothing) Then
+                    SessionManager.EndSession()
+                    SessionManager.CloseConnection()
+                End If
             Catch ex As Exception
-                MsgBox("Close connection error: " & ex.Message)
+                Return False
             End Try
-        End Sub
+            Return True
+        End Function
 
         ' going to put customer balance sub here for quick access
         Public Function GetCustomerBalance(ByVal customerListID As String) As Double

@@ -41,15 +41,23 @@
             Me.lbl_ServiceAdd = New System.Windows.Forms.Label()
             Me.Panel3 = New System.Windows.Forms.Panel()
             Me.btn_AddCustInv = New System.Windows.Forms.Button()
-            Me.tb_CustInvCount = New System.Windows.Forms.TextBox()
             Me.lbl_CustInvImport = New System.Windows.Forms.Label()
             Me.ServiceTypesTableAdapter = New TrashCash.ds_TypesTableAdapters.ServiceTypesTableAdapter()
+            Me.lbl_Add1Srvc = New System.Windows.Forms.Label()
+            Me.lbl_ImportInvType = New System.Windows.Forms.Label()
+            Me.cmb_InvTypes = New System.Windows.Forms.ComboBox()
+            Me.btn_AddInvType = New System.Windows.Forms.Button()
+            Me.Ds_Invoicing = New TrashCash.ds_Invoicing()
+            Me.CustomInvoiceLineTypesBindingSource = New System.Windows.Forms.BindingSource(Me.components)
+            Me.CustomInvoice_LineTypesTableAdapter = New TrashCash.ds_InvoicingTableAdapters.CustomInvoice_LineTypesTableAdapter()
             Me.FlowLayoutPanel1.SuspendLayout()
             Me.pnl_CustAdd.SuspendLayout()
             Me.Panel1.SuspendLayout()
             CType(Me.ServiceTypesBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
             CType(Me.Ds_Types, System.ComponentModel.ISupportInitialize).BeginInit()
             Me.Panel3.SuspendLayout()
+            CType(Me.Ds_Invoicing, System.ComponentModel.ISupportInitialize).BeginInit()
+            CType(Me.CustomInvoiceLineTypesBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
             Me.SuspendLayout()
             '
             'FlowLayoutPanel1
@@ -124,6 +132,7 @@
             'Panel1
             '
             Me.Panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+            Me.Panel1.Controls.Add(Me.lbl_Add1Srvc)
             Me.Panel1.Controls.Add(Me.btn_AddSrvc)
             Me.Panel1.Controls.Add(Me.cmb_ServiceTypes)
             Me.Panel1.Controls.Add(Me.btn_AddSrvcs)
@@ -131,13 +140,13 @@
             Me.Panel1.Controls.Add(Me.lbl_ServiceAdd)
             Me.Panel1.Location = New System.Drawing.Point(3, 77)
             Me.Panel1.Name = "Panel1"
-            Me.Panel1.Size = New System.Drawing.Size(585, 70)
+            Me.Panel1.Size = New System.Drawing.Size(585, 106)
             Me.Panel1.TabIndex = 2
             '
             'btn_AddSrvc
             '
             Me.btn_AddSrvc.AutoSize = True
-            Me.btn_AddSrvc.Location = New System.Drawing.Point(487, 40)
+            Me.btn_AddSrvc.Location = New System.Drawing.Point(487, 55)
             Me.btn_AddSrvc.Name = "btn_AddSrvc"
             Me.btn_AddSrvc.Size = New System.Drawing.Size(87, 23)
             Me.btn_AddSrvc.TabIndex = 4
@@ -149,7 +158,7 @@
             Me.cmb_ServiceTypes.DataSource = Me.ServiceTypesBindingSource
             Me.cmb_ServiceTypes.DisplayMember = "ServiceName"
             Me.cmb_ServiceTypes.FormattingEnabled = True
-            Me.cmb_ServiceTypes.Location = New System.Drawing.Point(312, 40)
+            Me.cmb_ServiceTypes.Location = New System.Drawing.Point(312, 56)
             Me.cmb_ServiceTypes.Name = "cmb_ServiceTypes"
             Me.cmb_ServiceTypes.Size = New System.Drawing.Size(169, 21)
             Me.cmb_ServiceTypes.TabIndex = 3
@@ -185,45 +194,40 @@
             '
             'lbl_ServiceAdd
             '
-            Me.lbl_ServiceAdd.AutoSize = True
-            Me.lbl_ServiceAdd.Location = New System.Drawing.Point(3, 18)
+            Me.lbl_ServiceAdd.Location = New System.Drawing.Point(35, 14)
             Me.lbl_ServiceAdd.Name = "lbl_ServiceAdd"
-            Me.lbl_ServiceAdd.Size = New System.Drawing.Size(310, 13)
+            Me.lbl_ServiceAdd.Size = New System.Drawing.Size(274, 30)
             Me.lbl_ServiceAdd.TabIndex = 0
-            Me.lbl_ServiceAdd.Text = "This will add all services to the following account in Quickbooks."
+            Me.lbl_ServiceAdd.Text = "This will add all services missing list ID's to the following account in Quickboo" & _
+        "ks."
             '
             'Panel3
             '
             Me.Panel3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+            Me.Panel3.Controls.Add(Me.btn_AddInvType)
+            Me.Panel3.Controls.Add(Me.cmb_InvTypes)
+            Me.Panel3.Controls.Add(Me.lbl_ImportInvType)
             Me.Panel3.Controls.Add(Me.btn_AddCustInv)
-            Me.Panel3.Controls.Add(Me.tb_CustInvCount)
             Me.Panel3.Controls.Add(Me.lbl_CustInvImport)
-            Me.Panel3.Location = New System.Drawing.Point(3, 153)
+            Me.Panel3.Location = New System.Drawing.Point(3, 189)
             Me.Panel3.Name = "Panel3"
-            Me.Panel3.Size = New System.Drawing.Size(585, 78)
+            Me.Panel3.Size = New System.Drawing.Size(585, 91)
             Me.Panel3.TabIndex = 4
             '
             'btn_AddCustInv
             '
             Me.btn_AddCustInv.AutoSize = True
-            Me.btn_AddCustInv.Location = New System.Drawing.Point(477, 21)
+            Me.btn_AddCustInv.Location = New System.Drawing.Point(474, 3)
             Me.btn_AddCustInv.Name = "btn_AddCustInv"
             Me.btn_AddCustInv.Size = New System.Drawing.Size(79, 23)
             Me.btn_AddCustInv.TabIndex = 2
             Me.btn_AddCustInv.Text = "Add Invoices"
             Me.btn_AddCustInv.UseVisualStyleBackColor = True
             '
-            'tb_CustInvCount
-            '
-            Me.tb_CustInvCount.Location = New System.Drawing.Point(404, 23)
-            Me.tb_CustInvCount.Name = "tb_CustInvCount"
-            Me.tb_CustInvCount.Size = New System.Drawing.Size(67, 20)
-            Me.tb_CustInvCount.TabIndex = 1
-            '
             'lbl_CustInvImport
             '
             Me.lbl_CustInvImport.AutoSize = True
-            Me.lbl_CustInvImport.Location = New System.Drawing.Point(8, 26)
+            Me.lbl_CustInvImport.Location = New System.Drawing.Point(5, 8)
             Me.lbl_CustInvImport.Name = "lbl_CustInvImport"
             Me.lbl_CustInvImport.Size = New System.Drawing.Size(376, 13)
             Me.lbl_CustInvImport.TabIndex = 0
@@ -233,6 +237,59 @@
             'ServiceTypesTableAdapter
             '
             Me.ServiceTypesTableAdapter.ClearBeforeFill = True
+            '
+            'lbl_Add1Srvc
+            '
+            Me.lbl_Add1Srvc.AutoSize = True
+            Me.lbl_Add1Srvc.Location = New System.Drawing.Point(32, 59)
+            Me.lbl_Add1Srvc.Name = "lbl_Add1Srvc"
+            Me.lbl_Add1Srvc.Size = New System.Drawing.Size(270, 13)
+            Me.lbl_Add1Srvc.TabIndex = 5
+            Me.lbl_Add1Srvc.Text = "This will add the selected Service to the above account"
+            '
+            'lbl_ImportInvType
+            '
+            Me.lbl_ImportInvType.AutoSize = True
+            Me.lbl_ImportInvType.Location = New System.Drawing.Point(8, 45)
+            Me.lbl_ImportInvType.Name = "lbl_ImportInvType"
+            Me.lbl_ImportInvType.Size = New System.Drawing.Size(346, 13)
+            Me.lbl_ImportInvType.TabIndex = 3
+            Me.lbl_ImportInvType.Text = "This will import the selected Invoice type to the selected Account above"
+            '
+            'cmb_InvTypes
+            '
+            Me.cmb_InvTypes.DataSource = Me.CustomInvoiceLineTypesBindingSource
+            Me.cmb_InvTypes.DisplayMember = "NAME"
+            Me.cmb_InvTypes.FormattingEnabled = True
+            Me.cmb_InvTypes.Location = New System.Drawing.Point(360, 42)
+            Me.cmb_InvTypes.Name = "cmb_InvTypes"
+            Me.cmb_InvTypes.Size = New System.Drawing.Size(130, 21)
+            Me.cmb_InvTypes.TabIndex = 5
+            Me.cmb_InvTypes.ValueMember = "CI_TypeID"
+            '
+            'btn_AddInvType
+            '
+            Me.btn_AddInvType.AutoSize = True
+            Me.btn_AddInvType.Location = New System.Drawing.Point(493, 40)
+            Me.btn_AddInvType.Name = "btn_AddInvType"
+            Me.btn_AddInvType.Size = New System.Drawing.Size(87, 23)
+            Me.btn_AddInvType.TabIndex = 6
+            Me.btn_AddInvType.Text = "<- Add Service"
+            Me.btn_AddInvType.UseVisualStyleBackColor = True
+            '
+            'Ds_Invoicing
+            '
+            Me.Ds_Invoicing.DataSetName = "ds_Invoicing"
+            Me.Ds_Invoicing.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema
+            '
+            'CustomInvoiceLineTypesBindingSource
+            '
+            Me.CustomInvoiceLineTypesBindingSource.DataMember = "CustomInvoice_LineTypes"
+            Me.CustomInvoiceLineTypesBindingSource.DataSource = Me.Ds_Invoicing
+            '
+            'CustomInvoice_LineTypesTableAdapter
+            '
+            Me.CustomInvoice_LineTypesTableAdapter.ClearBeforeFill = True
             '
             'AdminExportImport
             '
@@ -251,6 +308,8 @@
             CType(Me.Ds_Types, System.ComponentModel.ISupportInitialize).EndInit()
             Me.Panel3.ResumeLayout(False)
             Me.Panel3.PerformLayout()
+            CType(Me.Ds_Invoicing, System.ComponentModel.ISupportInitialize).EndInit()
+            CType(Me.CustomInvoiceLineTypesBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
             Me.ResumeLayout(False)
 
         End Sub
@@ -268,11 +327,17 @@
         Friend WithEvents Panel3 As System.Windows.Forms.Panel
         Friend WithEvents lbl_CustInvImport As System.Windows.Forms.Label
         Friend WithEvents btn_AddCustInv As System.Windows.Forms.Button
-        Friend WithEvents tb_CustInvCount As System.Windows.Forms.TextBox
         Friend WithEvents cmb_ServiceTypes As System.Windows.Forms.ComboBox
         Friend WithEvents btn_AddSrvc As System.Windows.Forms.Button
         Friend WithEvents Ds_Types As TrashCash.ds_Types
         Friend WithEvents ServiceTypesBindingSource As System.Windows.Forms.BindingSource
         Friend WithEvents ServiceTypesTableAdapter As TrashCash.ds_TypesTableAdapters.ServiceTypesTableAdapter
+        Friend WithEvents lbl_Add1Srvc As System.Windows.Forms.Label
+        Friend WithEvents lbl_ImportInvType As System.Windows.Forms.Label
+        Friend WithEvents btn_AddInvType As System.Windows.Forms.Button
+        Friend WithEvents cmb_InvTypes As System.Windows.Forms.ComboBox
+        Friend WithEvents Ds_Invoicing As TrashCash.ds_Invoicing
+        Friend WithEvents CustomInvoiceLineTypesBindingSource As System.Windows.Forms.BindingSource
+        Friend WithEvents CustomInvoice_LineTypesTableAdapter As TrashCash.ds_InvoicingTableAdapters.CustomInvoice_LineTypesTableAdapter
     End Class
 End Namespace

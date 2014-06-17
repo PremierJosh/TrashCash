@@ -197,8 +197,8 @@ Public Class TrashCashHome
         End If
         Customer.Show()
         Customer.BringToFront()
-        Customer.CustomerToolstrip1.QuickSearch.TextBox.SelectAll()
-    End Sub
+        Customer.CustomerToolstrip1.QuickSearch.TextBox.Select()
+       End Sub
 
     Private Sub btn_BatchWork_Click(sender As Object, e As EventArgs) Handles btn_BatchWork.Click
         If (BatchForm Is Nothing) Then

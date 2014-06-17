@@ -223,6 +223,8 @@ Namespace Classes.CustomerToolstrip
             'set visuals
             GripStyle = ToolStripGripStyle.Hidden
             Dock = DockStyle.Fill
+            CustComboBox.SelectedText = Nothing
+
         End Sub
 
         ' these subs catch search events from the tb

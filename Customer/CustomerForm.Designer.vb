@@ -31,20 +31,20 @@ Namespace Customer
             Me.components = New System.ComponentModel.Container()
             Me.tc_Master = New System.Windows.Forms.TabControl()
             Me.tc_p_Notes = New System.Windows.Forms.TabPage()
-            Me.UC_CustomerNotes = New TrashCash.Customer.UC_CustomerNotes()
             Me.tc_p_RecSrvcs = New System.Windows.Forms.TabPage()
-            Me.UC_RecurringService = New TrashCash.RecurringService.UC_RecurringService()
             Me.tc_p_QBItems = New System.Windows.Forms.TabPage()
-            Me.UC_Quickbooks = New TrashCash.QBStuff.UC_Quickbooks()
             Me.pnl_Top = New System.Windows.Forms.Panel()
             Me.pnl_TopContent = New System.Windows.Forms.Panel()
-            Me.CustomerToolstrip1 = New TrashCash.Classes.CustomerToolstrip.CustomerToolstrip()
             Me.ts_Top = New System.Windows.Forms.ToolStrip()
             Me.btn_Inv = New System.Windows.Forms.ToolStripButton()
             Me.btn_Payments = New System.Windows.Forms.ToolStripButton()
             Me.btn_NewCust = New System.Windows.Forms.ToolStripButton()
             Me.btn_Credit = New System.Windows.Forms.ToolStripButton()
+            Me.UC_CustomerNotes = New TrashCash.Customer.UC_CustomerNotes()
+            Me.UC_RecurringService = New TrashCash.RecurringService.UC_RecurringService()
+            Me.UC_Quickbooks = New TrashCash.QBStuff.UC_Quickbooks()
             Me.UC_CustomerInfoBoxes = New TrashCash.Customer.UC_CustomerInfoBoxes()
+            Me.CustomerToolstrip1 = New TrashCash.Classes.CustomerToolstrip.CustomerToolstrip()
             Me.tc_Master.SuspendLayout()
             Me.tc_p_Notes.SuspendLayout()
             Me.tc_p_RecSrvcs.SuspendLayout()
@@ -77,15 +77,6 @@ Namespace Customer
             Me.tc_p_Notes.TabIndex = 0
             Me.tc_p_Notes.Text = "Notes"
             '
-            'UC_CustomerNotes
-            '
-            Me.UC_CustomerNotes.CurrentCustomer = New Decimal(New Integer() {0, 0, 0, 0})
-            Me.UC_CustomerNotes.Dock = System.Windows.Forms.DockStyle.Fill
-            Me.UC_CustomerNotes.Location = New System.Drawing.Point(3, 3)
-            Me.UC_CustomerNotes.Name = "UC_CustomerNotes"
-            Me.UC_CustomerNotes.Size = New System.Drawing.Size(888, 264)
-            Me.UC_CustomerNotes.TabIndex = 0
-            '
             'tc_p_RecSrvcs
             '
             Me.tc_p_RecSrvcs.BackColor = System.Drawing.SystemColors.Control
@@ -97,15 +88,6 @@ Namespace Customer
             Me.tc_p_RecSrvcs.TabIndex = 1
             Me.tc_p_RecSrvcs.Text = "Recurring Services"
             '
-            'UC_RecurringService
-            '
-            Me.UC_RecurringService.CurrentCustomer = New Decimal(New Integer() {0, 0, 0, 0})
-            Me.UC_RecurringService.Dock = System.Windows.Forms.DockStyle.Fill
-            Me.UC_RecurringService.Location = New System.Drawing.Point(3, 3)
-            Me.UC_RecurringService.Name = "UC_RecurringService"
-            Me.UC_RecurringService.Size = New System.Drawing.Size(888, 264)
-            Me.UC_RecurringService.TabIndex = 0
-            '
             'tc_p_QBItems
             '
             Me.tc_p_QBItems.BackColor = System.Drawing.SystemColors.Control
@@ -116,15 +98,6 @@ Namespace Customer
             Me.tc_p_QBItems.Size = New System.Drawing.Size(894, 270)
             Me.tc_p_QBItems.TabIndex = 2
             Me.tc_p_QBItems.Text = "In Quickbooks"
-            '
-            'UC_Quickbooks
-            '
-           Me.UC_Quickbooks.CustomerListID = Nothing
-            Me.UC_Quickbooks.Dock = System.Windows.Forms.DockStyle.Fill
-            Me.UC_Quickbooks.Location = New System.Drawing.Point(3, 3)
-            Me.UC_Quickbooks.Name = "UC_Quickbooks"
-            Me.UC_Quickbooks.Size = New System.Drawing.Size(888, 264)
-            Me.UC_Quickbooks.TabIndex = 0
             '
             'pnl_Top
             '
@@ -145,16 +118,6 @@ Namespace Customer
             Me.pnl_TopContent.Name = "pnl_TopContent"
             Me.pnl_TopContent.Size = New System.Drawing.Size(862, 33)
             Me.pnl_TopContent.TabIndex = 14
-            '
-            'CustomerToolstrip1
-            '
-            Me.CustomerToolstrip1.Dock = System.Windows.Forms.DockStyle.Fill
-            Me.CustomerToolstrip1.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden
-            Me.CustomerToolstrip1.Location = New System.Drawing.Point(0, 0)
-            Me.CustomerToolstrip1.Name = "CustomerToolstrip1"
-            Me.CustomerToolstrip1.Size = New System.Drawing.Size(860, 31)
-            Me.CustomerToolstrip1.TabIndex = 0
-            Me.CustomerToolstrip1.Text = "CustomerToolstrip1"
             '
             'ts_Top
             '
@@ -200,6 +163,33 @@ Namespace Customer
             Me.btn_Credit.Size = New System.Drawing.Size(59, 22)
             Me.btn_Credit.Text = "Credit"
             '
+            'UC_CustomerNotes
+            '
+            Me.UC_CustomerNotes.CurrentCustomer = New Decimal(New Integer() {0, 0, 0, 0})
+            Me.UC_CustomerNotes.Dock = System.Windows.Forms.DockStyle.Fill
+            Me.UC_CustomerNotes.Location = New System.Drawing.Point(3, 3)
+            Me.UC_CustomerNotes.Name = "UC_CustomerNotes"
+            Me.UC_CustomerNotes.Size = New System.Drawing.Size(888, 264)
+            Me.UC_CustomerNotes.TabIndex = 0
+            '
+            'UC_RecurringService
+            '
+            Me.UC_RecurringService.CurrentCustomer = New Decimal(New Integer() {0, 0, 0, 0})
+            Me.UC_RecurringService.Dock = System.Windows.Forms.DockStyle.Fill
+            Me.UC_RecurringService.Location = New System.Drawing.Point(3, 3)
+            Me.UC_RecurringService.Name = "UC_RecurringService"
+            Me.UC_RecurringService.Size = New System.Drawing.Size(888, 264)
+            Me.UC_RecurringService.TabIndex = 0
+            '
+            'UC_Quickbooks
+            '
+            Me.UC_Quickbooks.CustomerListID = Nothing
+            Me.UC_Quickbooks.Dock = System.Windows.Forms.DockStyle.Fill
+            Me.UC_Quickbooks.Location = New System.Drawing.Point(3, 3)
+            Me.UC_Quickbooks.Name = "UC_Quickbooks"
+            Me.UC_Quickbooks.Size = New System.Drawing.Size(888, 264)
+            Me.UC_Quickbooks.TabIndex = 0
+            '
             'UC_CustomerInfoBoxes
             '
             Me.UC_CustomerInfoBoxes.AllowUpdate = False
@@ -211,6 +201,17 @@ Namespace Customer
             Me.UC_CustomerInfoBoxes.Name = "UC_CustomerInfoBoxes"
             Me.UC_CustomerInfoBoxes.Size = New System.Drawing.Size(902, 172)
             Me.UC_CustomerInfoBoxes.TabIndex = 9
+            Me.UC_CustomerInfoBoxes.TabStop = False
+            '
+            'CustomerToolstrip1
+            '
+            Me.CustomerToolstrip1.Dock = System.Windows.Forms.DockStyle.Fill
+            Me.CustomerToolstrip1.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden
+            Me.CustomerToolstrip1.Location = New System.Drawing.Point(0, 0)
+            Me.CustomerToolstrip1.Name = "CustomerToolstrip1"
+            Me.CustomerToolstrip1.Size = New System.Drawing.Size(860, 31)
+            Me.CustomerToolstrip1.TabIndex = 9
+            Me.CustomerToolstrip1.Text = "CustomerToolstrip1"
             '
             'CustomerForm
             '

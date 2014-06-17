@@ -24,16 +24,22 @@
         <System.Diagnostics.DebuggerStepThrough()> _
         Private Sub InitializeComponent()
             Me.components = New System.ComponentModel.Container()
-            Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(BatchingPrep))
-            Dim DataGridViewCellStyle5 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
             Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
             Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
             Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
             Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+            Dim DataGridViewCellStyle5 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+            Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(BatchingPrep))
             Me.pnl_Left = New System.Windows.Forms.Panel()
             Me.dg_PrepInv = New System.Windows.Forms.DataGridView()
+            Me.InvoiceToBePrintedDataGridViewCheckBoxColumn = New System.Windows.Forms.DataGridViewCheckBoxColumn()
+            Me.CustomerFullNameDataGridViewTextBoxColumn1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+            Me.InvoicePostDateDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+            Me.StartBillingDateDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+            Me.EndBillingDateDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+            Me.TotalDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
             Me.BATCHWorkingInvoiceBindingSource = New System.Windows.Forms.BindingSource(Me.components)
-            Me.Ds_Batching = New ds_Batching()
+            Me.DS_Batching = New TrashCash.ds_Batching()
             Me.pnl_LeftBot = New System.Windows.Forms.Panel()
             Me.lbl_InvBatchCust = New System.Windows.Forms.Label()
             Me.Label1 = New System.Windows.Forms.Label()
@@ -45,6 +51,9 @@
             Me.lbl_InvHeader = New System.Windows.Forms.Label()
             Me.pnl_Right = New System.Windows.Forms.Panel()
             Me.dg_PrepPay = New System.Windows.Forms.DataGridView()
+            Me.CustomerFullNameDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+            Me.WorkingPaymentsAmountDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+            Me.WorkingPaymentsCheckNum = New System.Windows.Forms.DataGridViewTextBoxColumn()
             Me.cm_PayGrid = New System.Windows.Forms.ContextMenuStrip(Me.components)
             Me.DeleteToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
             Me.BATCHWorkingPaymentsBindingSource = New System.Windows.Forms.BindingSource(Me.components)
@@ -66,21 +75,12 @@
             Me.Label2 = New System.Windows.Forms.Label()
             Me.dtp_GenInvTo = New System.Windows.Forms.DateTimePicker()
             Me.BatchWorker = New System.ComponentModel.BackgroundWorker()
-            Me.BATCH_WorkingPaymentsTableAdapter = New ds_BatchingTableAdapters.BATCH_WorkingPaymentsTableAdapter()
-            Me.BATCH_WorkingInvoiceTableAdapter = New ds_BatchingTableAdapters.BATCH_WorkingInvoiceTableAdapter()
-            Me.CustomerFullNameDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
-            Me.WorkingPaymentsAmountDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
-            Me.WorkingPaymentsCheckNum = New System.Windows.Forms.DataGridViewTextBoxColumn()
-            Me.InvoiceToBePrintedDataGridViewCheckBoxColumn = New System.Windows.Forms.DataGridViewCheckBoxColumn()
-            Me.CustomerFullNameDataGridViewTextBoxColumn1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-            Me.InvoicePostDateDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
-            Me.StartBillingDateDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
-            Me.EndBillingDateDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
-            Me.TotalDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+            Me.BATCH_WorkingPaymentsTableAdapter = New TrashCash.ds_BatchingTableAdapters.BATCH_WorkingPaymentsTableAdapter()
+            Me.BATCH_WorkingInvoiceTableAdapter = New TrashCash.ds_BatchingTableAdapters.BATCH_WorkingInvoiceTableAdapter()
             Me.pnl_Left.SuspendLayout()
             CType(Me.dg_PrepInv, System.ComponentModel.ISupportInitialize).BeginInit()
             CType(Me.BATCHWorkingInvoiceBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
-            CType(Me.Ds_Batching, System.ComponentModel.ISupportInitialize).BeginInit()
+            CType(Me.DS_Batching, System.ComponentModel.ISupportInitialize).BeginInit()
             Me.pnl_LeftBot.SuspendLayout()
             Me.pnl_LeftTop.SuspendLayout()
             Me.pnl_Right.SuspendLayout()
@@ -124,15 +124,73 @@
             Me.dg_PrepInv.Size = New System.Drawing.Size(610, 327)
             Me.dg_PrepInv.TabIndex = 2
             '
+            'InvoiceToBePrintedDataGridViewCheckBoxColumn
+            '
+            Me.InvoiceToBePrintedDataGridViewCheckBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
+            Me.InvoiceToBePrintedDataGridViewCheckBoxColumn.DataPropertyName = "InvoiceToBePrinted"
+            Me.InvoiceToBePrintedDataGridViewCheckBoxColumn.HeaderText = "Print"
+            Me.InvoiceToBePrintedDataGridViewCheckBoxColumn.Name = "InvoiceToBePrintedDataGridViewCheckBoxColumn"
+            Me.InvoiceToBePrintedDataGridViewCheckBoxColumn.Width = 34
+            '
+            'CustomerFullNameDataGridViewTextBoxColumn1
+            '
+            Me.CustomerFullNameDataGridViewTextBoxColumn1.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill
+            Me.CustomerFullNameDataGridViewTextBoxColumn1.DataPropertyName = "CustomerFullName"
+            Me.CustomerFullNameDataGridViewTextBoxColumn1.HeaderText = "Customer Name"
+            Me.CustomerFullNameDataGridViewTextBoxColumn1.Name = "CustomerFullNameDataGridViewTextBoxColumn1"
+            '
+            'InvoicePostDateDataGridViewTextBoxColumn
+            '
+            Me.InvoicePostDateDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
+            Me.InvoicePostDateDataGridViewTextBoxColumn.DataPropertyName = "InvoicePostDate"
+            DataGridViewCellStyle1.Format = "d"
+            Me.InvoicePostDateDataGridViewTextBoxColumn.DefaultCellStyle = DataGridViewCellStyle1
+            Me.InvoicePostDateDataGridViewTextBoxColumn.HeaderText = "Post Date"
+            Me.InvoicePostDateDataGridViewTextBoxColumn.Name = "InvoicePostDateDataGridViewTextBoxColumn"
+            Me.InvoicePostDateDataGridViewTextBoxColumn.Width = 79
+            '
+            'StartBillingDateDataGridViewTextBoxColumn
+            '
+            Me.StartBillingDateDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
+            Me.StartBillingDateDataGridViewTextBoxColumn.DataPropertyName = "StartBillingDate"
+            DataGridViewCellStyle2.Format = "d"
+            Me.StartBillingDateDataGridViewTextBoxColumn.DefaultCellStyle = DataGridViewCellStyle2
+            Me.StartBillingDateDataGridViewTextBoxColumn.HeaderText = "Start Billing"
+            Me.StartBillingDateDataGridViewTextBoxColumn.Name = "StartBillingDateDataGridViewTextBoxColumn"
+            Me.StartBillingDateDataGridViewTextBoxColumn.ReadOnly = True
+            Me.StartBillingDateDataGridViewTextBoxColumn.Width = 84
+            '
+            'EndBillingDateDataGridViewTextBoxColumn
+            '
+            Me.EndBillingDateDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
+            Me.EndBillingDateDataGridViewTextBoxColumn.DataPropertyName = "EndBillingDate"
+            DataGridViewCellStyle3.Format = "d"
+            Me.EndBillingDateDataGridViewTextBoxColumn.DefaultCellStyle = DataGridViewCellStyle3
+            Me.EndBillingDateDataGridViewTextBoxColumn.HeaderText = "End Billing"
+            Me.EndBillingDateDataGridViewTextBoxColumn.Name = "EndBillingDateDataGridViewTextBoxColumn"
+            Me.EndBillingDateDataGridViewTextBoxColumn.ReadOnly = True
+            Me.EndBillingDateDataGridViewTextBoxColumn.Width = 81
+            '
+            'TotalDataGridViewTextBoxColumn
+            '
+            Me.TotalDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
+            Me.TotalDataGridViewTextBoxColumn.DataPropertyName = "Total"
+            DataGridViewCellStyle4.Format = "C2"
+            Me.TotalDataGridViewTextBoxColumn.DefaultCellStyle = DataGridViewCellStyle4
+            Me.TotalDataGridViewTextBoxColumn.HeaderText = "Total"
+            Me.TotalDataGridViewTextBoxColumn.Name = "TotalDataGridViewTextBoxColumn"
+            Me.TotalDataGridViewTextBoxColumn.ReadOnly = True
+            Me.TotalDataGridViewTextBoxColumn.Width = 56
+            '
             'BATCHWorkingInvoiceBindingSource
             '
             Me.BATCHWorkingInvoiceBindingSource.DataMember = "BATCH_WorkingInvoice"
-            Me.BATCHWorkingInvoiceBindingSource.DataSource = Me.Ds_Batching
+            Me.BATCHWorkingInvoiceBindingSource.DataSource = Me.DS_Batching
             '
-            'Ds_Batching
+            'DS_Batching
             '
-            Me.Ds_Batching.DataSetName = "ds_Batching"
-            Me.Ds_Batching.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema
+            Me.DS_Batching.DataSetName = "ds_Batching"
+            Me.DS_Batching.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema
             '
             'pnl_LeftBot
             '
@@ -166,7 +224,7 @@
             '
             'lbl_InvBatchCount
             '
-            Me.lbl_InvBatchCount.Location = New System.Drawing.Point(459, 3)
+            Me.lbl_InvBatchCount.Location = New System.Drawing.Point(519, 3)
             Me.lbl_InvBatchCount.Name = "lbl_InvBatchCount"
             Me.lbl_InvBatchCount.Size = New System.Drawing.Size(87, 13)
             Me.lbl_InvBatchCount.TabIndex = 1
@@ -226,7 +284,7 @@
             Me.lbl_InvHeader.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
             Me.lbl_InvHeader.Location = New System.Drawing.Point(5, 3)
             Me.lbl_InvHeader.Name = "lbl_InvHeader"
-            Me.lbl_InvHeader.Size = New System.Drawing.Size(135, 16)
+            Me.lbl_InvHeader.Size = New System.Drawing.Size(138, 16)
             Me.lbl_InvHeader.TabIndex = 0
             Me.lbl_InvHeader.Text = "Prepared Invoices"
             '
@@ -262,6 +320,32 @@
             Me.dg_PrepPay.Size = New System.Drawing.Size(424, 327)
             Me.dg_PrepPay.TabIndex = 3
             '
+            'CustomerFullNameDataGridViewTextBoxColumn
+            '
+            Me.CustomerFullNameDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill
+            Me.CustomerFullNameDataGridViewTextBoxColumn.DataPropertyName = "CustomerFullName"
+            Me.CustomerFullNameDataGridViewTextBoxColumn.HeaderText = "Customer Name"
+            Me.CustomerFullNameDataGridViewTextBoxColumn.Name = "CustomerFullNameDataGridViewTextBoxColumn"
+            Me.CustomerFullNameDataGridViewTextBoxColumn.ReadOnly = True
+            '
+            'WorkingPaymentsAmountDataGridViewTextBoxColumn
+            '
+            Me.WorkingPaymentsAmountDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
+            Me.WorkingPaymentsAmountDataGridViewTextBoxColumn.DataPropertyName = "WorkingPaymentsAmount"
+            DataGridViewCellStyle5.Format = "C2"
+            Me.WorkingPaymentsAmountDataGridViewTextBoxColumn.DefaultCellStyle = DataGridViewCellStyle5
+            Me.WorkingPaymentsAmountDataGridViewTextBoxColumn.HeaderText = "Amount"
+            Me.WorkingPaymentsAmountDataGridViewTextBoxColumn.Name = "WorkingPaymentsAmountDataGridViewTextBoxColumn"
+            Me.WorkingPaymentsAmountDataGridViewTextBoxColumn.ReadOnly = True
+            Me.WorkingPaymentsAmountDataGridViewTextBoxColumn.Width = 68
+            '
+            'WorkingPaymentsCheckNum
+            '
+            Me.WorkingPaymentsCheckNum.DataPropertyName = "WorkingPaymentsCheckNum"
+            Me.WorkingPaymentsCheckNum.HeaderText = "Check #"
+            Me.WorkingPaymentsCheckNum.Name = "WorkingPaymentsCheckNum"
+            Me.WorkingPaymentsCheckNum.ReadOnly = True
+            '
             'cm_PayGrid
             '
             Me.cm_PayGrid.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.DeleteToolStripMenuItem})
@@ -277,7 +361,7 @@
             'BATCHWorkingPaymentsBindingSource
             '
             Me.BATCHWorkingPaymentsBindingSource.DataMember = "BATCH_WorkingPayments"
-            Me.BATCHWorkingPaymentsBindingSource.DataSource = Me.Ds_Batching
+            Me.BATCHWorkingPaymentsBindingSource.DataSource = Me.DS_Batching
             '
             'pnl_RightBot
             '
@@ -371,7 +455,7 @@
             Me.lbl_PrepPayHeader.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
             Me.lbl_PrepPayHeader.Location = New System.Drawing.Point(5, 4)
             Me.lbl_PrepPayHeader.Name = "lbl_PrepPayHeader"
-            Me.lbl_PrepPayHeader.Size = New System.Drawing.Size(145, 16)
+            Me.lbl_PrepPayHeader.Size = New System.Drawing.Size(148, 16)
             Me.lbl_PrepPayHeader.TabIndex = 1
             Me.lbl_PrepPayHeader.Text = "Prepared Payments"
             '
@@ -470,90 +554,6 @@
             '
             Me.BATCH_WorkingInvoiceTableAdapter.ClearBeforeFill = True
             '
-            'CustomerFullNameDataGridViewTextBoxColumn
-            '
-            Me.CustomerFullNameDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill
-            Me.CustomerFullNameDataGridViewTextBoxColumn.DataPropertyName = "CustomerFullName"
-            Me.CustomerFullNameDataGridViewTextBoxColumn.HeaderText = "Customer Name"
-            Me.CustomerFullNameDataGridViewTextBoxColumn.Name = "CustomerFullNameDataGridViewTextBoxColumn"
-            Me.CustomerFullNameDataGridViewTextBoxColumn.ReadOnly = True
-            '
-            'WorkingPaymentsAmountDataGridViewTextBoxColumn
-            '
-            Me.WorkingPaymentsAmountDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
-            Me.WorkingPaymentsAmountDataGridViewTextBoxColumn.DataPropertyName = "WorkingPaymentsAmount"
-            DataGridViewCellStyle5.Format = "C2"
-            Me.WorkingPaymentsAmountDataGridViewTextBoxColumn.DefaultCellStyle = DataGridViewCellStyle5
-            Me.WorkingPaymentsAmountDataGridViewTextBoxColumn.HeaderText = "Amount"
-            Me.WorkingPaymentsAmountDataGridViewTextBoxColumn.Name = "WorkingPaymentsAmountDataGridViewTextBoxColumn"
-            Me.WorkingPaymentsAmountDataGridViewTextBoxColumn.ReadOnly = True
-            Me.WorkingPaymentsAmountDataGridViewTextBoxColumn.Width = 68
-            '
-            'WorkingPaymentsCheckNum
-            '
-            Me.WorkingPaymentsCheckNum.DataPropertyName = "WorkingPaymentsCheckNum"
-            Me.WorkingPaymentsCheckNum.HeaderText = "Check #"
-            Me.WorkingPaymentsCheckNum.Name = "WorkingPaymentsCheckNum"
-            Me.WorkingPaymentsCheckNum.ReadOnly = True
-            '
-            'InvoiceToBePrintedDataGridViewCheckBoxColumn
-            '
-            Me.InvoiceToBePrintedDataGridViewCheckBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
-            Me.InvoiceToBePrintedDataGridViewCheckBoxColumn.DataPropertyName = "InvoiceToBePrinted"
-            Me.InvoiceToBePrintedDataGridViewCheckBoxColumn.HeaderText = "Print"
-            Me.InvoiceToBePrintedDataGridViewCheckBoxColumn.Name = "InvoiceToBePrintedDataGridViewCheckBoxColumn"
-            Me.InvoiceToBePrintedDataGridViewCheckBoxColumn.Width = 34
-            '
-            'CustomerFullNameDataGridViewTextBoxColumn1
-            '
-            Me.CustomerFullNameDataGridViewTextBoxColumn1.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill
-            Me.CustomerFullNameDataGridViewTextBoxColumn1.DataPropertyName = "CustomerFullName"
-            Me.CustomerFullNameDataGridViewTextBoxColumn1.HeaderText = "Customer Name"
-            Me.CustomerFullNameDataGridViewTextBoxColumn1.Name = "CustomerFullNameDataGridViewTextBoxColumn1"
-            '
-            'InvoicePostDateDataGridViewTextBoxColumn
-            '
-            Me.InvoicePostDateDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
-            Me.InvoicePostDateDataGridViewTextBoxColumn.DataPropertyName = "InvoicePostDate"
-            DataGridViewCellStyle1.Format = "d"
-            Me.InvoicePostDateDataGridViewTextBoxColumn.DefaultCellStyle = DataGridViewCellStyle1
-            Me.InvoicePostDateDataGridViewTextBoxColumn.HeaderText = "Post Date"
-            Me.InvoicePostDateDataGridViewTextBoxColumn.Name = "InvoicePostDateDataGridViewTextBoxColumn"
-            Me.InvoicePostDateDataGridViewTextBoxColumn.Width = 79
-            '
-            'StartBillingDateDataGridViewTextBoxColumn
-            '
-            Me.StartBillingDateDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
-            Me.StartBillingDateDataGridViewTextBoxColumn.DataPropertyName = "StartBillingDate"
-            DataGridViewCellStyle2.Format = "d"
-            Me.StartBillingDateDataGridViewTextBoxColumn.DefaultCellStyle = DataGridViewCellStyle2
-            Me.StartBillingDateDataGridViewTextBoxColumn.HeaderText = "Start Billing"
-            Me.StartBillingDateDataGridViewTextBoxColumn.Name = "StartBillingDateDataGridViewTextBoxColumn"
-            Me.StartBillingDateDataGridViewTextBoxColumn.ReadOnly = True
-            Me.StartBillingDateDataGridViewTextBoxColumn.Width = 84
-            '
-            'EndBillingDateDataGridViewTextBoxColumn
-            '
-            Me.EndBillingDateDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
-            Me.EndBillingDateDataGridViewTextBoxColumn.DataPropertyName = "EndBillingDate"
-            DataGridViewCellStyle3.Format = "d"
-            Me.EndBillingDateDataGridViewTextBoxColumn.DefaultCellStyle = DataGridViewCellStyle3
-            Me.EndBillingDateDataGridViewTextBoxColumn.HeaderText = "End Billing"
-            Me.EndBillingDateDataGridViewTextBoxColumn.Name = "EndBillingDateDataGridViewTextBoxColumn"
-            Me.EndBillingDateDataGridViewTextBoxColumn.ReadOnly = True
-            Me.EndBillingDateDataGridViewTextBoxColumn.Width = 81
-            '
-            'TotalDataGridViewTextBoxColumn
-            '
-            Me.TotalDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
-            Me.TotalDataGridViewTextBoxColumn.DataPropertyName = "Total"
-            DataGridViewCellStyle4.Format = "C2"
-            Me.TotalDataGridViewTextBoxColumn.DefaultCellStyle = DataGridViewCellStyle4
-            Me.TotalDataGridViewTextBoxColumn.HeaderText = "Total"
-            Me.TotalDataGridViewTextBoxColumn.Name = "TotalDataGridViewTextBoxColumn"
-            Me.TotalDataGridViewTextBoxColumn.ReadOnly = True
-            Me.TotalDataGridViewTextBoxColumn.Width = 56
-            '
             'BatchingPrep
             '
             Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -569,7 +569,7 @@
             Me.pnl_Left.ResumeLayout(False)
             CType(Me.dg_PrepInv, System.ComponentModel.ISupportInitialize).EndInit()
             CType(Me.BATCHWorkingInvoiceBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
-            CType(Me.Ds_Batching, System.ComponentModel.ISupportInitialize).EndInit()
+            CType(Me.DS_Batching, System.ComponentModel.ISupportInitialize).EndInit()
             Me.pnl_LeftBot.ResumeLayout(False)
             Me.pnl_LeftBot.PerformLayout()
             Me.pnl_LeftTop.ResumeLayout(False)
