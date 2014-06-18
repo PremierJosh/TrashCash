@@ -45,7 +45,7 @@ Namespace Admin.Payments
         ' dataview
         Private _dv As DataView
 
-        Private Sub ck_All_Click(sender As System.Object, e As System.EventArgs) Handles ck_All.Click
+        Private Sub ck_All_Click(sender As System.Object, e As System.EventArgs) Handles ck_All.CheckedChanged
             If (ck_All.Checked = True) Then
                 ' disable payment types combo box
                 cmb_PayTypes.Enabled = False
@@ -67,25 +67,28 @@ Namespace Admin.Payments
         End Sub
 
         Private Sub PaymentHistory_Load(sender As Object, e As System.EventArgs) Handles Me.Load
+            PaymentTypesTableAdapter.Fill(Ds_Types.PaymentTypes)
             ' new stuff
             _dv = New DataView
             _dv.Table = Payments.PaymentHistory_Display
             _dv.Sort = "DateReceived DESC"
             dg_PaymentHistory.DataSource = _dv
-
+            
             ' set date time picker values
             dtp_StartDate.Value = DateAdd(DateInterval.Day, -1, Date.Today)
             dtp_EndDate.Value = DateAdd(DateInterval.Month, 1, Date.Today)
 
             ' set payment type
-            PaymentType = cmb_PayTypes.SelectedValue
+            ck_All.Checked = True
 
             ' setting initial customer to screen isnt blank
             CurrentCustomer = CustomerToolstrip1.CurrentCustomer
+            CustomerToolstrip1.GetCustomerBalance()
         End Sub
 
-        Private Sub CustomerCatch(ByVal custNum As Integer) Handles CustomerToolstrip1.CustomerChanging
-            CurrentCustomer = custNum
+        Private Sub CustomerCatch(ByVal customerNumber As Integer) Handles CustomerToolstrip1.CustomerChanging
+            CurrentCustomer = customerNumber
+            CustomerToolstrip1.GetCustomerBalance()
         End Sub
 
         Public Sub Fetch_History() Handles dtp_EndDate.ValueChanged, dtp_StartDate.ValueChanged

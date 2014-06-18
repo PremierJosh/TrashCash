@@ -32,14 +32,16 @@ Namespace Admin
             cmb_BadCheckCustInvItem.ValueMember = "ValueMember"
             cmb_BadCheckCustInvItem.DataSource = list
             ' bind cmb for inv item representing our fee
+            Dim list2 As New List(Of ComboBoxPair)
+            list2.AddRange(list)
             cmb_BadCheckItem.DisplayMember = "DisplayMember"
             cmb_BadCheckItem.ValueMember = "ValueMember"
-            cmb_BadCheckItem.DataSource = list
+            cmb_BadCheckItem.DataSource = list2
 
             ' fill table
             _dt = _ta.GetData
             _row = _dt.Rows(0)
-
+            
             SetControls()
             End Sub
 

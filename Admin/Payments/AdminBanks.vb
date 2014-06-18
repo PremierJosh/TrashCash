@@ -24,9 +24,6 @@ Namespace Admin.Payments
                     '' check if this is a new row
                     'If (value.RowState = DataRowState.Detached) Then
 
-                    'Else
-
-                    'End If
                 Else
                     ' hide bottom panel
                     pnl_Bottom.Visible = False
@@ -41,7 +38,7 @@ Namespace Admin.Payments
                 End If
             End Set
         End Property
-
+        
         Private Sub AdminBanks_FormClosing(sender As Object, e As System.Windows.Forms.FormClosingEventArgs) Handles Me.FormClosing
             If (e.CloseReason <> CloseReason.ApplicationExitCall) Then
                 e.Cancel = True
@@ -54,13 +51,7 @@ Namespace Admin.Payments
             BindCmbs()
             ' bind banks list on toolstrip
             Bad_Check_BanksTableAdapter.Fill(Payments.Bad_Check_Banks)
-            ' checkin if we have any banks
-            If (cmb_BankList.ComboBox.Items.Count = 0) Then
-                btn_ModBank.Visible = False
-            Else
-                btn_ModBank.Visible = True
-            End If
-            cmb_BankList.ComboBox.DisplayMember = "Bank_Name"
+           cmb_BankList.ComboBox.DisplayMember = "Bank_Name"
             cmb_BankList.ComboBox.ValueMember = "Bank_ID"
             cmb_BankList.ComboBox.DataSource = (Payments.Bad_Check_Banks)
             ' hide bottom panel
@@ -86,14 +77,26 @@ Namespace Admin.Payments
 
         Private Sub btn_ModBank_Click(sender As System.Object, e As EventArgs) Handles btn_ModBank.Click
             If (cmb_BankList.ComboBox.SelectedValue IsNot Nothing) Then
-                BankRow = DirectCast(cmb_BankList.ComboBox.SelectedItem, ds_Payments.Bad_Check_BanksRow)
+                BankRow = CType(cmb_BankList.ComboBox.SelectedItem, DataRowView).Row
+                ' set row
+                cmb_BankAccs.SelectedValue = BankRow.QB_Bank_ListID
+                cmb_BanksInvItem.SelectedValue = BankRow.QB_Bank_Inv_Item_ListID
+                cmb_VendorAcc.SelectedValue = BankRow.QB_Vendor_ListID
+                tb_BankFee.Text = BankRow.Bank_Fee
+                tb_BankName.Text = BankRow.Bank_Name
+                ' update nulls
+                If (BankRow.IsDeactiveNull) Then
+                    BankRow.Deactive = 0
+                End If
+                ck_Deactive.Checked = BankRow.Deactive
             End If
         End Sub
-
+      
+    
         Private Sub btn_SaveChanges_Click(sender As System.Object, e As System.EventArgs) Handles btn_SaveChanges.Click
             If (ValidForEntry()) Then
                 If (BankRow IsNot Nothing) Then
-                    ' update row
+                  ' update row
                     With BankRow
                         .Bank_Name = tb_BankName.Text
                         .QB_Bank_ListID = cmb_BankAccs.SelectedValue

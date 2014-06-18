@@ -6,9 +6,7 @@ Namespace Admin
 
     Public Class TrashCashAdmin
         ' home form ref
-        Friend HomeForm As TrashCashHome
-
-        ' user row
+ ' user row
         Private _userRow As ds_Application.USERSRow
         Friend Property UserRow As ds_Application.USERSRow
             Get
@@ -23,16 +21,23 @@ Namespace Admin
             End Set
         End Property
 
-        Public Sub New(ByRef homeForm As TrashCashHome, ByVal userRow As ds_Application.USERSRow)
+        Public Sub New(ByVal userRow As ds_Application.USERSRow)
 
             ' This call is required by the designer.
             InitializeComponent()
 
             ' Add any initialization after the InitializeComponent() call.
-            Me.HomeForm = homeForm
             Me.UserRow = userRow
         End Sub
+        ' this is sub to handle events for balance changing and payments being added to queues
+        Friend Sub CustomerBalancingChanged(ByVal customerNumber As Integer)
+            If (AdminPay IsNot Nothing) Then
 
+            End If
+        End Sub
+        Friend Sub CustomerPaymentAdded(ByVal customerNumber As Integer)
+
+        End Sub
         ' public auth level property for easier access and event raising
         Private _authLevel As Integer
         ' vars for quick menu checking
@@ -69,7 +74,7 @@ Namespace Admin
 
         ' form refs
         Private WithEvents _userSelection As UserSelection
-        Private WithEvents _adminPay As AdminPayments
+        Friend WithEvents AdminPay As AdminPayments
         Private WithEvents _adminServiceTypes As AdminServiceTypes
         Private WithEvents _adminBanks As AdminBanks
         Private WithEvents _adminDefaults As AdminDefaults
@@ -77,9 +82,9 @@ Namespace Admin
         Private WithEvents _adminInvoiceTypes As AdminInvoiceTypes
 
         Private Sub btn_AdminPay_Click(sender As System.Object, e As System.EventArgs) Handles btn_AdminPay.Click
-            If (_adminPay Is Nothing) Then
-                _adminPay = New AdminPayments()
-                _adminPay.MdiParent = Me
+            If (AdminPay Is Nothing) Then
+                AdminPay = New AdminPayments()
+                AdminPay.MdiParent = Me
             End If
             Dim open As Boolean = False
 
@@ -96,8 +101,8 @@ Namespace Admin
             End If
 
             If (open) Then
-                _adminPay.BringToFront()
-                _adminPay.Show()
+                AdminPay.BringToFront()
+                AdminPay.Show()
             End If
 
         End Sub
@@ -211,7 +216,6 @@ Namespace Admin
             If (open) Then
                 _adminInvoiceTypes.BringToFront()
                 _adminInvoiceTypes.Show()
-            End If
             End If
         End Sub
     End Class

@@ -14,15 +14,17 @@ Namespace My
 
 
         Private Sub MyApplication_Shutdown(sender As Object, e As System.EventArgs) Handles Me.Shutdown
-            Dim closed As Boolean = GlobalConMgr.CloseCon()
-            Dim forceClose As Date = DateAdd(DateInterval.Second, 5, Date.Now)
-            While Not closed
-                closed = GlobalConMgr.CloseCon()
-                If (Date.Now > forceClose) Then
-                    MessageBox.Show("force close fail")
-                    Exit While
-                End If
-            End While
+            If (GlobalConMgr IsNot Nothing) Then
+                Dim closed As Boolean = GlobalConMgr.CloseCon()
+                Dim forceClose As Date = DateAdd(DateInterval.Second, 5, Date.Now)
+                While Not closed
+                    closed = GlobalConMgr.CloseCon()
+                    If (Date.Now > forceClose) Then
+                        MessageBox.Show("force close fail")
+                        Exit While
+                    End If
+                End While
+            End If
         End Sub
     End Class
 

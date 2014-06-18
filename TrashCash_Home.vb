@@ -105,6 +105,14 @@ Public Class TrashCashHome
                 End If
             End If
         End If
+        ' checking for admin payments
+        If (TrashCashAdmin IsNot Nothing) Then
+            If (TrashCashAdmin.AdminPay IsNot Nothing) Then
+                If (TrashCashAdmin.AdminPay.CurrentCustomer = customerNumber) Then
+                    TrashCashAdmin.AdminPay.CustomerToolstrip1.GetQueueAmount()
+                End If
+            End If
+        End If
     End Sub
     Private Sub BalanceChangeCatch(ByVal customerNumber As Integer, ByRef formType As Type) Handles InvForm.CustomerInvoiceAdded, Customer.CustomerBalanceChanged
         If (formType = GetType(Invoicing.CustomInvoicingForm)) Then
@@ -124,6 +132,14 @@ Public Class TrashCashHome
             If (InvForm IsNot Nothing) Then
                 If (InvForm.CurrentCustomer = customerNumber) Then
                     InvForm.CustomerToolstrip1.GetCustomerBalance()
+                End If
+            End If
+        End If
+        ' checking for admin payments
+        If (TrashCashAdmin IsNot Nothing) Then
+            If (TrashCashAdmin.AdminPay IsNot Nothing) Then
+                If (TrashCashAdmin.AdminPay.CurrentCustomer = customerNumber) Then
+                    TrashCashAdmin.AdminPay.CustomerToolstrip1.GetCustomerBalance()
                 End If
             End If
         End If
@@ -198,7 +214,7 @@ Public Class TrashCashHome
         Customer.Show()
         Customer.BringToFront()
         Customer.CustomerToolstrip1.QuickSearch.TextBox.Select()
-       End Sub
+    End Sub
 
     Private Sub btn_BatchWork_Click(sender As Object, e As EventArgs) Handles btn_BatchWork.Click
         If (BatchForm Is Nothing) Then
@@ -369,18 +385,15 @@ Public Class TrashCashHome
         If (InvForm IsNot Nothing) Then
             InvForm.CustomerToolstrip1.GetCustomerBalance()
         End If
+        If (TrashCashAdmin IsNot Nothing) Then
+            If (TrashCashAdmin.AdminPay IsNot Nothing) Then
+                TrashCashAdmin.AdminPay.CustomerToolstrip1.GetCustomerBalance()
+            End If
+        End If
     End Sub
 
     Private Sub menu_Admin_Click(sender As Object, e As EventArgs) Handles menu_Admin.Click
-        ' checking if form exists
-        If (TrashCashAdmin IsNot Nothing) Then
-            If (TrashCashAdmin.IsDisposed = False) Then
-                TrashCashAdmin.Show()
-                TrashCashAdmin.BringToFront()
-                Exit Sub
-            End If
-        End If
-        ' trying to open
+       ' trying to open
         Dim open As Boolean = False
         Dim userRow As ds_Application.USERSRow = _currentUserRow
         If (_bypassLogin) Then
@@ -398,7 +411,7 @@ Public Class TrashCashHome
         If (open) Then
             ' making sure userrow auth level is less than 3
             If (userRow.USER_AUTHLVL < 3) Then
-                TrashCashAdmin = New Admin.TrashCashAdmin(Me, userRow)
+                TrashCashAdmin = New Admin.TrashCashAdmin(userRow)
                 TrashCashAdmin.Show()
             Else
                 MessageBox.Show("No administrator privledges.", "No privledges", MessageBoxButtons.OK, MessageBoxIcon.Error)
