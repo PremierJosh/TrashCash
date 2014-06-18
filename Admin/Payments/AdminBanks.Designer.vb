@@ -37,6 +37,7 @@ Namespace Admin.Payments
             Me.btn_ModBank = New System.Windows.Forms.ToolStripButton()
             Me.btn_SaveChanges = New System.Windows.Forms.ToolStripButton()
             Me.pnl_Bottom = New System.Windows.Forms.Panel()
+            Me.ck_Deactive = New System.Windows.Forms.CheckBox()
             Me.lbl_BankName = New System.Windows.Forms.Label()
             Me.tb_BankName = New System.Windows.Forms.TextBox()
             Me.pnl_BankSelection = New System.Windows.Forms.Panel()
@@ -45,10 +46,9 @@ Namespace Admin.Payments
             Me.cmb_BanksInvItem = New System.Windows.Forms.ComboBox()
             Me.cmb_VendorAcc = New System.Windows.Forms.ComboBox()
             Me.lbl_BankSelecInfo = New System.Windows.Forms.Label()
-            Me.Payments = New DS_Payments()
+            Me.Payments = New TrashCash.ds_Payments()
             Me.BadCheckBanksBindingSource = New System.Windows.Forms.BindingSource(Me.components)
-            Me.Bad_Check_BanksTableAdapter = New ds_PaymentsTableAdapters.Bad_Check_BanksTableAdapter()
-            Me.ck_Deactive = New System.Windows.Forms.CheckBox()
+            Me.Bad_Check_BanksTableAdapter = New TrashCash.ds_PaymentsTableAdapters.Bad_Check_BanksTableAdapter()
             BankBounceFeeLabel = New System.Windows.Forms.Label()
             lbl_vendorSelInfo = New System.Windows.Forms.Label()
             lbl_BankInvItem = New System.Windows.Forms.Label()
@@ -151,6 +151,17 @@ Namespace Admin.Payments
             Me.pnl_Bottom.Size = New System.Drawing.Size(582, 163)
             Me.pnl_Bottom.TabIndex = 2
             '
+            'ck_Deactive
+            '
+            Me.ck_Deactive.AutoSize = True
+            Me.ck_Deactive.ForeColor = System.Drawing.Color.Red
+            Me.ck_Deactive.Location = New System.Drawing.Point(440, 9)
+            Me.ck_Deactive.Name = "ck_Deactive"
+            Me.ck_Deactive.Size = New System.Drawing.Size(69, 17)
+            Me.ck_Deactive.TabIndex = 71
+            Me.ck_Deactive.Text = "Deactive"
+            Me.ck_Deactive.UseVisualStyleBackColor = True
+            '
             'lbl_BankName
             '
             Me.lbl_BankName.AutoSize = True
@@ -224,7 +235,7 @@ Namespace Admin.Payments
             Me.lbl_BankSelecInfo.TabIndex = 59
             Me.lbl_BankSelecInfo.Text = "This is the Quickbooks Bank Account that could recieve a Bounced Check."
             '
-            'Ds_Payments
+            'Payments
             '
             Me.Payments.DataSetName = "ds_Payments"
             Me.Payments.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema
@@ -237,17 +248,6 @@ Namespace Admin.Payments
             'Bad_Check_BanksTableAdapter
             '
             Me.Bad_Check_BanksTableAdapter.ClearBeforeFill = True
-            '
-            'ck_Deactive
-            '
-            Me.ck_Deactive.AutoSize = True
-            Me.ck_Deactive.ForeColor = System.Drawing.Color.Red
-            Me.ck_Deactive.Location = New System.Drawing.Point(440, 9)
-            Me.ck_Deactive.Name = "ck_Deactive"
-            Me.ck_Deactive.Size = New System.Drawing.Size(69, 17)
-            Me.ck_Deactive.TabIndex = 71
-            Me.ck_Deactive.Text = "Deactive"
-            Me.ck_Deactive.UseVisualStyleBackColor = True
             '
             'AdminBanks
             '

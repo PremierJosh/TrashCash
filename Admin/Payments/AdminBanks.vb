@@ -47,9 +47,17 @@ Namespace Admin.Payments
             BindCmbs()
             ' bind banks list on toolstrip
             Bad_Check_BanksTableAdapter.Fill(Payments.Bad_Check_Banks)
+            ' checkin if we have any banks
+            If (cmb_BankList.ComboBox.Items.Count = 0) Then
+                btn_ModBank.Visible = False
+            Else
+                btn_ModBank.Visible = True
+            End If
             cmb_BankList.ComboBox.DisplayMember = "Bank_Name"
             cmb_BankList.ComboBox.ValueMember = "Bank_ID"
             cmb_BankList.ComboBox.DataSource = (Payments.Bad_Check_Banks)
+            ' hide bottom panel
+            pnl_Bottom.Visible = False
         End Sub
 
         Private Sub BindCmbs()
