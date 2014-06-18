@@ -67,7 +67,7 @@ Namespace Admin.Payments
 
             ' grabbing default bank selection
             If (cmb_Banks.SelectedValue IsNot Nothing) Then
-                BankRow = DirectCast(cmb_Banks.SelectedItem, ds_Payments.Bad_Check_BanksRow)
+                BankRow = CType(cmb_Banks.SelectedItem, DataRowView).Row
             End If
             ' hiding locking customer toolstrip
             CustomerToolstrip1.Enabled = False

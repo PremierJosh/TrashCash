@@ -5,10 +5,13 @@ Namespace Types
     Public Class AdminInvoiceTypes
 
         Private Sub AdminInvoiceTypes_FormClosing(sender As Object, e As System.Windows.Forms.FormClosingEventArgs) Handles Me.FormClosing
-            If (e.CloseReason <> CloseReason.ApplicationExitCall) Then
-                e.Cancel = True
-                Hide()
-            End If
+            Select Case e.CloseReason
+                Case Is = CloseReason.ApplicationExitCall, CloseReason.MdiFormClosing
+                    Dispose()
+                Case Else
+                    e.Cancel = True
+                    Hide()
+            End Select
         End Sub
 
         Private Sub AdminInvoiceTypes_Load(sender As System.Object, e As System.EventArgs) Handles MyBase.Load
