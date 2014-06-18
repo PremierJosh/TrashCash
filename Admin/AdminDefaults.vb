@@ -2,21 +2,10 @@
 
 Namespace Admin
     Public Class AdminDefaults
-        Private ReadOnly _ta As ds_ApplicationTableAdapters.APP_SETTINGSTableAdapter
-
         ' refrences
         Private _dt As ds_Application.APP_SETTINGSDataTable
         Private _row As ds_Application.APP_SETTINGSRow
 
-
-        Public Sub New()
-
-            ' This call is required by the designer.
-            InitializeComponent()
-
-            ' Add any initialization after the InitializeComponent() call.
-            _ta = New ds_ApplicationTableAdapters.APP_SETTINGSTableAdapter
-        End Sub
 
         Private Sub AdminDefaults_FormClosing(sender As Object, e As System.Windows.Forms.FormClosingEventArgs) Handles Me.FormClosing
             Select Case e.CloseReason
@@ -42,7 +31,7 @@ Namespace Admin
             cmb_BadCheckItem.DataSource = list2
 
             ' fill table
-            _dt = _ta.GetData
+            _dt = AppTA.GetData
             _row = _dt.Rows(0)
             
             SetControls()
@@ -64,7 +53,7 @@ Namespace Admin
             _row.EndEdit()
             If (_row.RowState = DataRowState.Modified) Then
                 Try
-                    _ta.Update(_row)
+                    AppTA.Update(_row)
                 Catch ex as SqlException
                     MessageBox.Show("Message: " & ex.Message & vbCrLf & "LineNumber: " & ex.LineNumber,
                                     "Sql Error: " & ex.Procedure, MessageBoxButtons.OK, MessageBoxIcon.Error)

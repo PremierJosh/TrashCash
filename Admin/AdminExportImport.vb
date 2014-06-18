@@ -15,10 +15,10 @@ Namespace Admin
 
                 ' color box red if value > 0
                 If (value > 0) Then
-                    tb_MissingCount.BackColor = Color.MistyRose
+                    tb_MissingCount.BackColor = AppColors.TextBoxErr
                     btn_AddCustomers.Enabled = True
                 Else
-                    tb_MissingCount.BackColor = SystemColors.Window
+                    tb_MissingCount.BackColor = AppColors.TextBoxDef
                     btn_AddCustomers.Enabled = False
                 End If
             End Set
@@ -52,6 +52,11 @@ Namespace Admin
             cmb_IncomeAcc.DisplayMember = "DisplayMember"
             cmb_IncomeAcc.ValueMember = "ValueMember"
             cmb_IncomeAcc.DataSource = incomes
+            ' get bank accounts
+            Dim banks As List(Of ComboBoxPair) = QBMethods.GetComboBoxPair(QBRequests.AccountQuery(ENAccountType.atBank))
+            cmb_BankAccs.DisplayMember = "DisplayMember"
+            cmb_BankAccs.ValueMember = "ValueMember"
+            cmb_BankAccs.DataSource = banks
         End Sub
 
         Private Sub btn_AddCustomers_Click(sender As System.Object, e As System.EventArgs) Handles btn_AddCustomers.Click
@@ -99,64 +104,6 @@ Namespace Admin
         End Sub
 
    
-
-        'Private Sub btn_AddCustInv_Click(sender As System.Object, e As System.EventArgs) Handles btn_AddCustInv.Click
-        '    ' getting custom inv item
-        '    Dim itemID As String
-
-        '    For Each row As ds_Application.Initial_CustomInvoiceRow In _cidt
-        '        Dim invoiceAdd As IInvoiceAdd = GlobalConMgr.MessageSetRequest.AppendInvoiceAddRq
-
-        '        ' build request
-        '        invoiceAdd.CustomerRef.ListID.SetValue(row.CustomerListID)
-        '        invoiceAdd.TxnDate.SetValue(row.PostAndDueDate)
-        '        invoiceAdd.DueDate.SetValue(row.PostAndDueDate)
-        '        invoiceAdd.IsToBePrinted.SetValue(False)
-
-        '        ' line list
-        '        Dim lineList As IORInvoiceLineAddList = invoiceAdd.ORInvoiceLineAddList
-        '        ' line item to reuse
-        '        Dim lineItem As IORInvoiceLineAdd
-
-
-        '        lineItem = lineList.Append
-
-        '        lineItem.InvoiceLineAdd.ItemRef.ListID.SetValue(itemID)
-        '        lineItem.InvoiceLineAdd.ORRatePriceLevel.Rate.SetValue(row.Total)
-        '        lineItem.InvoiceLineAdd.Quantity.SetValue(1)
-
-        '        Dim respList As IResponseList = GlobalConMgr.GetRespList
-
-        '        For i = 0 To respList.Count - 1
-        '            Dim resp As IResponse = respList.GetAt(i)
-        '            If (resp.StatusCode <> 0) Then
-
-        '                Try
-        '                    GlobalConMgr.ResponseErr_Misc(resp)
-        '                    Exit Sub
-        '                Catch ex As Exception
-        '                    MsgBox("Err_Invoice_Insert: " & ex.Message)
-        '                End Try
-
-        '            Else
-        '                Dim invRet As IInvoiceRet = resp.Detail
-
-        '                ' custom invoice history insert
-        '                Try
-
-        '                Catch ex As Exception
-        '                    MsgBox(ex.Message)
-        '                End Try
-
-        '            End If
-
-        '        Next i
-
-        '    Next row
-
-        '    MsgBox("Invoices added. Be sure to delete rows before next import.")
-        'End Sub
-
         Public Sub Items_ImportAllMissingListID(sender As System.Object, e As System.EventArgs) Handles btn_AddSrvcs.Click
             Dim result As MsgBoxResult = MsgBox("Please make sure the correct Account is selected above.", MsgBoxStyle.YesNo)
             If (result = MsgBoxResult.Yes) Then
@@ -275,5 +222,59 @@ Namespace Admin
                 MsgBox("Item already has listID")
             End If
         End Sub
+
+       
+        Private Sub btn_AddCheckBounce_Click(sender As System.Object, e As System.EventArgs) Handles btn_AddCheckBounce.Click
+            If (cmb_BankAccs.SelectedValue IsNot Nothing) Then
+                Dim row As ds_Application.APP_SETTINGSRow = AppTA.GetData.Rows(0)
+                'Create 3 items:
+                '1 - Bad Check Charge - "Customer charge for a bad check" (Other charge) - this is the item we charge customers for bouncing a check with us
+                '2 - Bad Check Fee - "Fee from Bank for a bad check" (Other charge) - this is the item the bank charges us for
+                '3 - Carl S. Bradley Bad Check - "Bad check amount" (Carl S. Bradley Account) - this is the item that goes on the inv for the bounced amount
+                'Create vendor account:
+                'Carl S. Bradley Fees
+
+                '1 - Bad Check Charge - "Customer charge for a bad check" (Other charge) - this is the item we charge customers for bouncing a check with us
+                Dim checkCharge As New QBItemObj
+                With checkCharge
+                    .ItemName = "Bad Check Charge"
+                    .IncomeAccountListID = cmb_IncomeAcc.SelectedValue
+                    .Desc = "Customer charge for bad check."
+                End With
+                QBRequests.OtherChargeItemAdd(checkCharge)
+                row.BAD_CHECK_CUSTITEM_LISTID = checkCharge.ListID
+                '2 - Bad Check Fee - "Fee from Bank for a bad check" (Other charge) - this is the item the bank charges us for
+                Dim bankFee As New QBItemObj
+                With bankFee
+                    .ItemName = "Bad Check Fee"
+                    .IncomeAccountListID = cmb_IncomeAcc.SelectedValue
+                    .Desc = "Fee from Bank for a bad check."
+                End With
+                QBRequests.OtherChargeItemAdd(bankFee)
+                row.BAD_CHECK_CHECKITEM_LISTID = cmb_IncomeAcc.SelectedValue
+                '3 - Carl S. Bradley Bad Check - "Bad check amount" (Carl S. Bradley Account) - this is the item that goes on the inv for the bounced amount
+                Dim bankItem As New QBItemObj
+                With bankItem
+                    .ItemName = cmb_BankAccs.GetItemText(cmb_BankAccs.SelectedItem) & " Bad Check"
+                    .IncomeAccountListID = cmb_BankAccs.SelectedValue
+                    .Desc = "Bad check amount"
+                End With
+                QBRequests.OtherChargeItemAdd(bankItem)
+                ' this isn't set on any row, but will be used when setting up the bank
+                ' now need to create the vendor thqts used to pay the fee from the bank via check
+                Dim newVendor As IVendorAdd = GlobalConMgr.MessageSetRequest.AppendVendorAddRq
+                newVendor.Name.SetValue(cmb_BankAccs.GetItemText(cmb_BankAccs.SelectedItem) & " Fees")
+                newVendor.CompanyName.SetValue(cmb_BankAccs.GetItemText(cmb_BankAccs.SelectedItem))
+                Dim resp As IResponse = GlobalConMgr.GetRespList.GetAt(0)
+                If (resp.StatusCode <> 0) Then
+                    QBMethods.ResponseErr_Misc(resp)
+                    MsgBox("Vendor add fail: " & resp.StatusMessage)
+                Else
+                    MessageBox.Show("Items added for Bounced Checks.")
+                End If
+            
+            End If
+        End Sub
+
     End Class
 End Namespace

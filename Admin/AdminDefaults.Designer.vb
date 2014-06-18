@@ -44,7 +44,7 @@ Namespace Admin
             '
             'lbl_CustInfoDesc
             '
-            lbl_CustInfoDesc.Location = New System.Drawing.Point(14, 32)
+            lbl_CustInfoDesc.Location = New System.Drawing.Point(14, 42)
             lbl_CustInfoDesc.Name = "lbl_CustInfoDesc"
             lbl_CustInfoDesc.Size = New System.Drawing.Size(356, 22)
             lbl_CustInfoDesc.TabIndex = 56
@@ -52,16 +52,17 @@ Namespace Admin
             '
             'lbl_CheckItem
             '
-            lbl_CheckItem.Location = New System.Drawing.Point(70, 5)
+            lbl_CheckItem.Location = New System.Drawing.Point(8, 5)
             lbl_CheckItem.Name = "lbl_CheckItem"
-            lbl_CheckItem.Size = New System.Drawing.Size(300, 21)
+            lbl_CheckItem.Size = New System.Drawing.Size(362, 27)
             lbl_CheckItem.TabIndex = 47
-            lbl_CheckItem.Text = "This is the Quickbooks Item that represents a returned check."
+            lbl_CheckItem.Text = "This is the Quickbooks Item that represents a returned check and is the amount th" & _
+        "at the bank is charging us."
             '
             'CustomerChargeRateLabel
             '
             CustomerChargeRateLabel.AutoSize = True
-            CustomerChargeRateLabel.Location = New System.Drawing.Point(155, 59)
+            CustomerChargeRateLabel.Location = New System.Drawing.Point(155, 69)
             CustomerChargeRateLabel.Name = "CustomerChargeRateLabel"
             CustomerChargeRateLabel.Size = New System.Drawing.Size(205, 13)
             CustomerChargeRateLabel.TabIndex = 52
@@ -84,7 +85,7 @@ Namespace Admin
             Me.hdr_BadCheck.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
             Me.hdr_BadCheck.Location = New System.Drawing.Point(3, 0)
             Me.hdr_BadCheck.Name = "hdr_BadCheck"
-            Me.hdr_BadCheck.Size = New System.Drawing.Size(143, 16)
+            Me.hdr_BadCheck.Size = New System.Drawing.Size(149, 16)
             Me.hdr_BadCheck.TabIndex = 5
             Me.hdr_BadCheck.Text = "Bad Check Settings"
             '
@@ -99,12 +100,12 @@ Namespace Admin
             Me.Panel1.Controls.Add(CustomerChargeRateLabel)
             Me.Panel1.Location = New System.Drawing.Point(3, 19)
             Me.Panel1.Name = "Panel1"
-            Me.Panel1.Size = New System.Drawing.Size(578, 90)
+            Me.Panel1.Size = New System.Drawing.Size(578, 133)
             Me.Panel1.TabIndex = 4
             '
             'tb_BadCheckCustFee
             '
-            Me.tb_BadCheckCustFee.Location = New System.Drawing.Point(376, 56)
+            Me.tb_BadCheckCustFee.Location = New System.Drawing.Point(376, 66)
             Me.tb_BadCheckCustFee.Name = "tb_BadCheckCustFee"
             Me.tb_BadCheckCustFee.Size = New System.Drawing.Size(100, 20)
             Me.tb_BadCheckCustFee.TabIndex = 61
@@ -120,7 +121,7 @@ Namespace Admin
             'cmb_BadCheckCustInvItem
             '
             Me.cmb_BadCheckCustInvItem.FormattingEnabled = True
-            Me.cmb_BadCheckCustInvItem.Location = New System.Drawing.Point(376, 29)
+            Me.cmb_BadCheckCustInvItem.Location = New System.Drawing.Point(376, 39)
             Me.cmb_BadCheckCustInvItem.Name = "cmb_BadCheckCustInvItem"
             Me.cmb_BadCheckCustInvItem.Size = New System.Drawing.Size(187, 21)
             Me.cmb_BadCheckCustInvItem.TabIndex = 59

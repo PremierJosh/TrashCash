@@ -32,6 +32,7 @@
             Me.tb_MissingCount = New System.Windows.Forms.TextBox()
             Me.lbl_AddCustInfo = New System.Windows.Forms.Label()
             Me.Panel1 = New System.Windows.Forms.Panel()
+            Me.lbl_Add1Srvc = New System.Windows.Forms.Label()
             Me.btn_AddSrvc = New System.Windows.Forms.Button()
             Me.cmb_ServiceTypes = New System.Windows.Forms.ComboBox()
             Me.ServiceTypesBindingSource = New System.Windows.Forms.BindingSource(Me.components)
@@ -40,24 +41,28 @@
             Me.cmb_IncomeAcc = New System.Windows.Forms.ComboBox()
             Me.lbl_ServiceAdd = New System.Windows.Forms.Label()
             Me.Panel3 = New System.Windows.Forms.Panel()
+            Me.btn_AddInvType = New System.Windows.Forms.Button()
+            Me.cmb_InvTypes = New System.Windows.Forms.ComboBox()
+            Me.CustomInvoiceLineTypesBindingSource = New System.Windows.Forms.BindingSource(Me.components)
+            Me.Ds_Invoicing = New TrashCash.ds_Invoicing()
+            Me.lbl_ImportInvType = New System.Windows.Forms.Label()
             Me.btn_AddCustInv = New System.Windows.Forms.Button()
             Me.lbl_CustInvImport = New System.Windows.Forms.Label()
+            Me.Panel2 = New System.Windows.Forms.Panel()
+            Me.lbl_PrepCheckBounce = New System.Windows.Forms.Label()
             Me.ServiceTypesTableAdapter = New TrashCash.ds_TypesTableAdapters.ServiceTypesTableAdapter()
-            Me.lbl_Add1Srvc = New System.Windows.Forms.Label()
-            Me.lbl_ImportInvType = New System.Windows.Forms.Label()
-            Me.cmb_InvTypes = New System.Windows.Forms.ComboBox()
-            Me.btn_AddInvType = New System.Windows.Forms.Button()
-            Me.Ds_Invoicing = New TrashCash.ds_Invoicing()
-            Me.CustomInvoiceLineTypesBindingSource = New System.Windows.Forms.BindingSource(Me.components)
             Me.CustomInvoice_LineTypesTableAdapter = New TrashCash.ds_InvoicingTableAdapters.CustomInvoice_LineTypesTableAdapter()
+            Me.cmb_BankAccs = New System.Windows.Forms.ComboBox()
+            Me.btn_AddCheckBounce = New System.Windows.Forms.Button()
             Me.FlowLayoutPanel1.SuspendLayout()
             Me.pnl_CustAdd.SuspendLayout()
             Me.Panel1.SuspendLayout()
             CType(Me.ServiceTypesBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
             CType(Me.Ds_Types, System.ComponentModel.ISupportInitialize).BeginInit()
             Me.Panel3.SuspendLayout()
-            CType(Me.Ds_Invoicing, System.ComponentModel.ISupportInitialize).BeginInit()
             CType(Me.CustomInvoiceLineTypesBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
+            CType(Me.Ds_Invoicing, System.ComponentModel.ISupportInitialize).BeginInit()
+            Me.Panel2.SuspendLayout()
             Me.SuspendLayout()
             '
             'FlowLayoutPanel1
@@ -65,6 +70,7 @@
             Me.FlowLayoutPanel1.Controls.Add(Me.pnl_CustAdd)
             Me.FlowLayoutPanel1.Controls.Add(Me.Panel1)
             Me.FlowLayoutPanel1.Controls.Add(Me.Panel3)
+            Me.FlowLayoutPanel1.Controls.Add(Me.Panel2)
             Me.FlowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill
             Me.FlowLayoutPanel1.Location = New System.Drawing.Point(0, 0)
             Me.FlowLayoutPanel1.Name = "FlowLayoutPanel1"
@@ -143,6 +149,15 @@
             Me.Panel1.Size = New System.Drawing.Size(585, 106)
             Me.Panel1.TabIndex = 2
             '
+            'lbl_Add1Srvc
+            '
+            Me.lbl_Add1Srvc.AutoSize = True
+            Me.lbl_Add1Srvc.Location = New System.Drawing.Point(32, 59)
+            Me.lbl_Add1Srvc.Name = "lbl_Add1Srvc"
+            Me.lbl_Add1Srvc.Size = New System.Drawing.Size(270, 13)
+            Me.lbl_Add1Srvc.TabIndex = 5
+            Me.lbl_Add1Srvc.Text = "This will add the selected Service to the above account"
+            '
             'btn_AddSrvc
             '
             Me.btn_AddSrvc.AutoSize = True
@@ -214,6 +229,46 @@
             Me.Panel3.Size = New System.Drawing.Size(585, 91)
             Me.Panel3.TabIndex = 4
             '
+            'btn_AddInvType
+            '
+            Me.btn_AddInvType.AutoSize = True
+            Me.btn_AddInvType.Location = New System.Drawing.Point(493, 40)
+            Me.btn_AddInvType.Name = "btn_AddInvType"
+            Me.btn_AddInvType.Size = New System.Drawing.Size(87, 23)
+            Me.btn_AddInvType.TabIndex = 6
+            Me.btn_AddInvType.Text = "<- Add Service"
+            Me.btn_AddInvType.UseVisualStyleBackColor = True
+            '
+            'cmb_InvTypes
+            '
+            Me.cmb_InvTypes.DataSource = Me.CustomInvoiceLineTypesBindingSource
+            Me.cmb_InvTypes.DisplayMember = "NAME"
+            Me.cmb_InvTypes.FormattingEnabled = True
+            Me.cmb_InvTypes.Location = New System.Drawing.Point(360, 42)
+            Me.cmb_InvTypes.Name = "cmb_InvTypes"
+            Me.cmb_InvTypes.Size = New System.Drawing.Size(130, 21)
+            Me.cmb_InvTypes.TabIndex = 5
+            Me.cmb_InvTypes.ValueMember = "CI_TypeID"
+            '
+            'CustomInvoiceLineTypesBindingSource
+            '
+            Me.CustomInvoiceLineTypesBindingSource.DataMember = "CustomInvoice_LineTypes"
+            Me.CustomInvoiceLineTypesBindingSource.DataSource = Me.Ds_Invoicing
+            '
+            'Ds_Invoicing
+            '
+            Me.Ds_Invoicing.DataSetName = "ds_Invoicing"
+            Me.Ds_Invoicing.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema
+            '
+            'lbl_ImportInvType
+            '
+            Me.lbl_ImportInvType.AutoSize = True
+            Me.lbl_ImportInvType.Location = New System.Drawing.Point(8, 45)
+            Me.lbl_ImportInvType.Name = "lbl_ImportInvType"
+            Me.lbl_ImportInvType.Size = New System.Drawing.Size(346, 13)
+            Me.lbl_ImportInvType.TabIndex = 3
+            Me.lbl_ImportInvType.Text = "This will import the selected Invoice type to the selected Account above"
+            '
             'btn_AddCustInv
             '
             Me.btn_AddCustInv.AutoSize = True
@@ -234,62 +289,53 @@
             Me.lbl_CustInvImport.Text = "This will import all invoices in the Custom Invoice table that are missing a List" & _
         "ID"
             '
+            'Panel2
+            '
+            Me.Panel2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+            Me.Panel2.Controls.Add(Me.btn_AddCheckBounce)
+            Me.Panel2.Controls.Add(Me.cmb_BankAccs)
+            Me.Panel2.Controls.Add(Me.lbl_PrepCheckBounce)
+            Me.Panel2.Location = New System.Drawing.Point(3, 286)
+            Me.Panel2.Name = "Panel2"
+            Me.Panel2.Size = New System.Drawing.Size(585, 91)
+            Me.Panel2.TabIndex = 5
+            '
+            'lbl_PrepCheckBounce
+            '
+            Me.lbl_PrepCheckBounce.Dock = System.Windows.Forms.DockStyle.Top
+            Me.lbl_PrepCheckBounce.Location = New System.Drawing.Point(0, 0)
+            Me.lbl_PrepCheckBounce.Name = "lbl_PrepCheckBounce"
+            Me.lbl_PrepCheckBounce.Size = New System.Drawing.Size(583, 27)
+            Me.lbl_PrepCheckBounce.TabIndex = 0
+            Me.lbl_PrepCheckBounce.Text = "This will add the items needed for bouncing a check into Quickbooks using the sel" & _
+        "ected Bank account."
+            Me.lbl_PrepCheckBounce.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+            '
             'ServiceTypesTableAdapter
             '
             Me.ServiceTypesTableAdapter.ClearBeforeFill = True
             '
-            'lbl_Add1Srvc
-            '
-            Me.lbl_Add1Srvc.AutoSize = True
-            Me.lbl_Add1Srvc.Location = New System.Drawing.Point(32, 59)
-            Me.lbl_Add1Srvc.Name = "lbl_Add1Srvc"
-            Me.lbl_Add1Srvc.Size = New System.Drawing.Size(270, 13)
-            Me.lbl_Add1Srvc.TabIndex = 5
-            Me.lbl_Add1Srvc.Text = "This will add the selected Service to the above account"
-            '
-            'lbl_ImportInvType
-            '
-            Me.lbl_ImportInvType.AutoSize = True
-            Me.lbl_ImportInvType.Location = New System.Drawing.Point(8, 45)
-            Me.lbl_ImportInvType.Name = "lbl_ImportInvType"
-            Me.lbl_ImportInvType.Size = New System.Drawing.Size(346, 13)
-            Me.lbl_ImportInvType.TabIndex = 3
-            Me.lbl_ImportInvType.Text = "This will import the selected Invoice type to the selected Account above"
-            '
-            'cmb_InvTypes
-            '
-            Me.cmb_InvTypes.DataSource = Me.CustomInvoiceLineTypesBindingSource
-            Me.cmb_InvTypes.DisplayMember = "NAME"
-            Me.cmb_InvTypes.FormattingEnabled = True
-            Me.cmb_InvTypes.Location = New System.Drawing.Point(360, 42)
-            Me.cmb_InvTypes.Name = "cmb_InvTypes"
-            Me.cmb_InvTypes.Size = New System.Drawing.Size(130, 21)
-            Me.cmb_InvTypes.TabIndex = 5
-            Me.cmb_InvTypes.ValueMember = "CI_TypeID"
-            '
-            'btn_AddInvType
-            '
-            Me.btn_AddInvType.AutoSize = True
-            Me.btn_AddInvType.Location = New System.Drawing.Point(493, 40)
-            Me.btn_AddInvType.Name = "btn_AddInvType"
-            Me.btn_AddInvType.Size = New System.Drawing.Size(87, 23)
-            Me.btn_AddInvType.TabIndex = 6
-            Me.btn_AddInvType.Text = "<- Add Service"
-            Me.btn_AddInvType.UseVisualStyleBackColor = True
-            '
-            'Ds_Invoicing
-            '
-            Me.Ds_Invoicing.DataSetName = "ds_Invoicing"
-            Me.Ds_Invoicing.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema
-            '
-            'CustomInvoiceLineTypesBindingSource
-            '
-            Me.CustomInvoiceLineTypesBindingSource.DataMember = "CustomInvoice_LineTypes"
-            Me.CustomInvoiceLineTypesBindingSource.DataSource = Me.Ds_Invoicing
-            '
             'CustomInvoice_LineTypesTableAdapter
             '
             Me.CustomInvoice_LineTypesTableAdapter.ClearBeforeFill = True
+            '
+            'cmb_BankAccs
+            '
+            Me.cmb_BankAccs.FormattingEnabled = True
+            Me.cmb_BankAccs.Location = New System.Drawing.Point(61, 30)
+            Me.cmb_BankAccs.Name = "cmb_BankAccs"
+            Me.cmb_BankAccs.Size = New System.Drawing.Size(154, 21)
+            Me.cmb_BankAccs.TabIndex = 1
+            '
+            'btn_AddCheckBounce
+            '
+            Me.btn_AddCheckBounce.AutoSize = True
+            Me.btn_AddCheckBounce.Location = New System.Drawing.Point(257, 30)
+            Me.btn_AddCheckBounce.Name = "btn_AddCheckBounce"
+            Me.btn_AddCheckBounce.Size = New System.Drawing.Size(138, 23)
+            Me.btn_AddCheckBounce.TabIndex = 2
+            Me.btn_AddCheckBounce.Text = "Add Check Bounce Items"
+            Me.btn_AddCheckBounce.UseVisualStyleBackColor = True
             '
             'AdminExportImport
             '
@@ -308,8 +354,10 @@
             CType(Me.Ds_Types, System.ComponentModel.ISupportInitialize).EndInit()
             Me.Panel3.ResumeLayout(False)
             Me.Panel3.PerformLayout()
-            CType(Me.Ds_Invoicing, System.ComponentModel.ISupportInitialize).EndInit()
             CType(Me.CustomInvoiceLineTypesBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
+            CType(Me.Ds_Invoicing, System.ComponentModel.ISupportInitialize).EndInit()
+            Me.Panel2.ResumeLayout(False)
+            Me.Panel2.PerformLayout()
             Me.ResumeLayout(False)
 
         End Sub
@@ -339,5 +387,9 @@
         Friend WithEvents Ds_Invoicing As TrashCash.ds_Invoicing
         Friend WithEvents CustomInvoiceLineTypesBindingSource As System.Windows.Forms.BindingSource
         Friend WithEvents CustomInvoice_LineTypesTableAdapter As TrashCash.ds_InvoicingTableAdapters.CustomInvoice_LineTypesTableAdapter
+        Friend WithEvents Panel2 As System.Windows.Forms.Panel
+        Friend WithEvents lbl_PrepCheckBounce As System.Windows.Forms.Label
+        Friend WithEvents btn_AddCheckBounce As System.Windows.Forms.Button
+        Friend WithEvents cmb_BankAccs As System.Windows.Forms.ComboBox
     End Class
 End Namespace

@@ -39,10 +39,9 @@ Namespace Admin.Payments
             InitializeComponent()
 
             ' Add any initialization after the InitializeComponent() call.
-            Using ta As New ds_ApplicationTableAdapters.APP_SETTINGSTableAdapter
-                _appRow = ta.GetData().Rows(0)
-                tb_CustFee.Text = FormatCurrency(_appRow.BAD_CHECK_CUST_FEE)
-            End Using
+            _appRow = AppTA.GetData().Rows(0)
+            tb_CustFee.Text = FormatCurrency(_appRow.BAD_CHECK_CUST_FEE)
+
             Using ta As New ds_PaymentsTableAdapters.PaymentHistory_DBTableAdapter
                 CheckRow = ta.GetData(payHistoryID).Rows(0)
             End Using

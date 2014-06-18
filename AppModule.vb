@@ -8,6 +8,7 @@ Module AppModule
 
     Public ReadOnly UserTA As New ds_ApplicationTableAdapters.USERSTableAdapter
     Public ReadOnly AppQTA As New ds_ApplicationTableAdapters.QueriesTableAdapter
+    Public ReadOnly AppTA As New ds_ApplicationTableAdapters.APP_SETTINGSTableAdapter
     Public ReadOnly CustTA As New ds_CustomerTableAdapters.CustomerTableAdapter
 
     ''' <summary>

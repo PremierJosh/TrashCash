@@ -85,6 +85,27 @@ Namespace QBStuff
 
             Return ConCheck(qbConMgr).GetRespList.GetAt(0)
         End Function
+
+        ' other charge item
+        Public Shared Function OtherChargeItemAdd(ByRef item As QBItemObj)
+            Dim newItem As IItemOtherChargeAdd = GlobalConMgr.MessageSetRequest.AppendItemOtherChargeAddRq
+            newItem.Name.SetValue(item.ItemName)
+            With newItem.ORSalesPurchase.SalesOrPurchase
+                .AccountRef.ListID.SetValue(item.IncomeAccountListID)
+                .Desc.SetValue(item.Desc)
+                If (item.Price <> Nothing) Then
+                    .ORPrice.Price.SetValue(item.Price)
+                End If
+            End With
+            Dim resp As IResponse = GlobalConMgr.GetRespList.GetAt(0)
+            If (resp.StatusCode = 0) Then
+                item.ListID = CType(resp.Detail, IItemOtherChargeRet).ListID.GetValue
+            Else
+                QBMethods.ResponseErr_Misc(resp)
+            End If
+
+            Return resp.StatusCode
+        End Function
         ' customer
         Public Shared Function CustomerAdd(ByRef custRow As ds_Customer.CustomerRow, Optional ByRef qbConMgr As QBConMgr = Nothing) As IResponse
             Dim custAdd As ICustomerAdd = ConCheck(qbConMgr).MessageSetRequest.AppendCustomerAddRq
