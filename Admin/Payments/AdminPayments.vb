@@ -4,6 +4,9 @@ Namespace Admin.Payments
 
         ' move payment form ref
         Friend WithEvents MovePaymentForm As MovePaymentForm
+        ' events
+        Friend Event CustomerCheckBounce(ByVal customerNumber As Integer)
+        Friend Event CustomerPaymentMoved(ByVal origCustomerNumber As Integer, ByVal newCustomerNumber As Integer)
 
         ' property to keep last selected customer
         Private _currentCustomer As Integer
@@ -33,11 +36,6 @@ Namespace Admin.Payments
                     _dv.RowFilter = s
                 Else
                     _dv.RowFilter = ""
-                End If
-
-                ' if check type then color rows for bounced
-                If (value = 2) Then
-                    ColorRows()
                 End If
             End Set
         End Property
@@ -105,20 +103,6 @@ Namespace Admin.Payments
             End If
         End Sub
 
-        Private Sub ColorRows()
-            Dim grid As DataGridView = dg_PaymentHistory
-            ' loop through rows
-            For i As Integer = 0 To grid.RowCount - 1
-                ' easier refrence
-                Dim row As DataRowView = grid.Rows(i).DataBoundItem
-                ' checking if bounced
-                If (CBool(row.Item("Bounced")) = True) Then
-                    grid.Rows(i).DefaultCellStyle.BackColor = AppColors.GridRed
-                    grid.Rows(i).DefaultCellStyle.SelectionBackColor = AppColors.GridRedSel
-                End If
-            Next
-        End Sub
-
         Private Sub cm_i_BouncedCheck_Click(sender As System.Object, e As System.EventArgs) Handles cm_i_BounceCheck.Click
             If (dg_PaymentHistory.SelectedRows.Count = 1) Then
                 ' easier refrence
@@ -127,7 +111,10 @@ Namespace Admin.Payments
                     If (Not row.Bounced) Then
                         Dim bounceForm As New BouncedBankSelection(row.PaymentID)
                         bounceForm.ShowDialog()
-                        Fetch_History()
+                        If (bounceForm.Bounced) Then
+                            RaiseEvent CustomerCheckBounce(CurrentCustomer)
+                            Fetch_History()
+                        End If
                     Else
                         MsgBox("Check has already been set to bounced.")
                     End If
@@ -170,13 +157,24 @@ Namespace Admin.Payments
                     ' create move payment form
                     MovePaymentForm = New MovePaymentForm(row.PaymentID)
                     MovePaymentForm.ShowDialog()
+                    If (MovePaymentForm.Moved) Then
+                        RaiseEvent CustomerPaymentMoved(MovePaymentForm.OrigCustomerNumber, MovePaymentForm.NewCustomerNumber)
+                        Fetch_History()
+                    End If
                 End If
 
             End If
         End Sub
 
-        Private Sub PaymentMoveCompleted() Handles MovePaymentForm.PaymentMoveComplete
-            Fetch_History()
+       
+        Private Sub dg_PaymentHistory_RowPrePaint(sender As System.Object, e As System.Windows.Forms.DataGridViewRowPrePaintEventArgs) Handles dg_PaymentHistory.RowPrePaint
+            ' easier refrence
+            Dim row As DataRowView = dg_PaymentHistory.Rows(e.RowIndex).DataBoundItem
+            ' checking if bounced
+            If (CBool(row.Item("Bounced")) = True) Then
+                dg_PaymentHistory.Rows(e.RowIndex).DefaultCellStyle.BackColor = AppColors.GridRed
+                dg_PaymentHistory.Rows(e.RowIndex).DefaultCellStyle.SelectionBackColor = AppColors.GridRedSel
+            End If
         End Sub
     End Class
 End Namespace

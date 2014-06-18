@@ -36,8 +36,10 @@ Namespace Classes.CustomerToolstrip
         End Sub
         ' handles when enter is pressed in the quick search tb
         Private Sub QuickSearchEnterKey() Handles QuickSearch.EnterPressed
-            GetCustomerBalance(CurrentCustomer)
-            RaiseEvent CustomerChanging(CurrentCustomer)
+            If (CurrentCustomer <> Nothing) Then
+                GetCustomerBalance(CurrentCustomer)
+                RaiseEvent CustomerChanging(CurrentCustomer)
+            End If
         End Sub
 
         ' balance setting

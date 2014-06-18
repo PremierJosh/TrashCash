@@ -41,13 +41,13 @@ Namespace Admin.Payments
             Me.lbl_Amount = New System.Windows.Forms.Label()
             Me.cmb_CurrCustomer = New System.Windows.Forms.ComboBox()
             Me.CurrentCustomerBindingSource = New System.Windows.Forms.BindingSource(Me.components)
-            Me.Ds_Customer = New ds_Customer()
+            Me.Ds_Customer = New TrashCash.ds_Customer()
             Me.lbl_CurrCustomer = New System.Windows.Forms.Label()
-            Me.Customer_ListByActiveTableAdapter = New ds_CustomerTableAdapters.Customer_ListByActiveTableAdapter()
+            Me.Customer_ListByActiveTableAdapter = New TrashCash.ds_CustomerTableAdapters.Customer_ListByActiveTableAdapter()
             Me.lbl_NewCust = New System.Windows.Forms.Label()
             Me.cmb_MoveToCust = New System.Windows.Forms.ComboBox()
-            Me.btn_MovePay = New System.Windows.Forms.Button()
             Me.NewCustomerBindingSource = New System.Windows.Forms.BindingSource(Me.components)
+            Me.btn_MovePay = New System.Windows.Forms.Button()
             Me.pnl_top.SuspendLayout()
             Me.grp_CurPayInfo.SuspendLayout()
             CType(Me.CurrentCustomerBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -232,6 +232,11 @@ Namespace Admin.Payments
             Me.cmb_MoveToCust.TabIndex = 3
             Me.cmb_MoveToCust.ValueMember = "CustomerNumber"
             '
+            'NewCustomerBindingSource
+            '
+            Me.NewCustomerBindingSource.DataMember = "Customer_ListByActive"
+            Me.NewCustomerBindingSource.DataSource = Me.Ds_Customer
+            '
             'btn_MovePay
             '
             Me.btn_MovePay.AutoSize = True
@@ -242,11 +247,6 @@ Namespace Admin.Payments
             Me.btn_MovePay.TabIndex = 5
             Me.btn_MovePay.Text = "Move Payment"
             Me.btn_MovePay.UseVisualStyleBackColor = True
-            '
-            'NewCustomerBindingSource
-            '
-            Me.NewCustomerBindingSource.DataMember = "Customer_ListByActive"
-            Me.NewCustomerBindingSource.DataSource = Me.Ds_Customer
             '
             'MovePaymentForm
             '

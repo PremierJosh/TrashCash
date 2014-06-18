@@ -25,8 +25,8 @@ Namespace Admin.Payments
         <System.Diagnostics.DebuggerStepThrough()> _
         Private Sub InitializeComponent()
             Me.components = New System.ComponentModel.Container()
-            Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-            Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+            Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+            Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
             Me.pnl_Top = New System.Windows.Forms.Panel()
             Me.pnl_TopContent = New System.Windows.Forms.Panel()
             Me.CustomerToolstrip1 = New TrashCash.Classes.CustomerToolstrip.CustomerToolstrip()
@@ -43,6 +43,8 @@ Namespace Admin.Payments
             Me.Payments = New TrashCash.ds_Payments()
             Me.pnl_Filter = New System.Windows.Forms.Panel()
             Me.cmb_PayTypes = New System.Windows.Forms.ComboBox()
+            Me.PaymentTypesBindingSource = New System.Windows.Forms.BindingSource(Me.components)
+            Me.Ds_Types = New TrashCash.ds_Types()
             Me.ck_All = New System.Windows.Forms.CheckBox()
             Me.Label2 = New System.Windows.Forms.Label()
             Me.dtp_EndDate = New System.Windows.Forms.DateTimePicker()
@@ -50,8 +52,6 @@ Namespace Admin.Payments
             Me.dtp_StartDate = New System.Windows.Forms.DateTimePicker()
             Me.lbl_DateFilter = New System.Windows.Forms.Label()
             Me.PaymentHistory_DisplayTableAdapter = New TrashCash.ds_PaymentsTableAdapters.PaymentHistory_DisplayTableAdapter()
-            Me.Ds_Types = New TrashCash.ds_Types()
-            Me.PaymentTypesBindingSource = New System.Windows.Forms.BindingSource(Me.components)
             Me.PaymentTypesTableAdapter = New TrashCash.ds_TypesTableAdapters.PaymentTypesTableAdapter()
             Me.pnl_Top.SuspendLayout()
             Me.pnl_TopContent.SuspendLayout()
@@ -60,8 +60,8 @@ Namespace Admin.Payments
             CType(Me.PaymentHistoryDisplayBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
             CType(Me.Payments, System.ComponentModel.ISupportInitialize).BeginInit()
             Me.pnl_Filter.SuspendLayout()
-            CType(Me.Ds_Types, System.ComponentModel.ISupportInitialize).BeginInit()
             CType(Me.PaymentTypesBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
+            CType(Me.Ds_Types, System.ComponentModel.ISupportInitialize).BeginInit()
             Me.SuspendLayout()
             '
             'pnl_Top
@@ -131,8 +131,8 @@ Namespace Admin.Payments
             'AmountDataGridViewTextBoxColumn
             '
             Me.AmountDataGridViewTextBoxColumn.DataPropertyName = "Amount"
-            DataGridViewCellStyle3.Format = "C2"
-            Me.AmountDataGridViewTextBoxColumn.DefaultCellStyle = DataGridViewCellStyle3
+            DataGridViewCellStyle1.Format = "C2"
+            Me.AmountDataGridViewTextBoxColumn.DefaultCellStyle = DataGridViewCellStyle1
             Me.AmountDataGridViewTextBoxColumn.HeaderText = "Amount"
             Me.AmountDataGridViewTextBoxColumn.Name = "AmountDataGridViewTextBoxColumn"
             Me.AmountDataGridViewTextBoxColumn.ReadOnly = True
@@ -140,8 +140,8 @@ Namespace Admin.Payments
             'DateReceivedDataGridViewTextBoxColumn
             '
             Me.DateReceivedDataGridViewTextBoxColumn.DataPropertyName = "DateReceived"
-            DataGridViewCellStyle4.Format = "d"
-            Me.DateReceivedDataGridViewTextBoxColumn.DefaultCellStyle = DataGridViewCellStyle4
+            DataGridViewCellStyle2.Format = "d"
+            Me.DateReceivedDataGridViewTextBoxColumn.DefaultCellStyle = DataGridViewCellStyle2
             Me.DateReceivedDataGridViewTextBoxColumn.HeaderText = "Date Received"
             Me.DateReceivedDataGridViewTextBoxColumn.Name = "DateReceivedDataGridViewTextBoxColumn"
             Me.DateReceivedDataGridViewTextBoxColumn.ReadOnly = True
@@ -207,6 +207,16 @@ Namespace Admin.Payments
             Me.cmb_PayTypes.TabIndex = 10
             Me.cmb_PayTypes.ValueMember = "PaymentTypeID"
             '
+            'PaymentTypesBindingSource
+            '
+            Me.PaymentTypesBindingSource.DataMember = "PaymentTypes"
+            Me.PaymentTypesBindingSource.DataSource = Me.Ds_Types
+            '
+            'Ds_Types
+            '
+            Me.Ds_Types.DataSetName = "ds_Types"
+            Me.Ds_Types.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema
+            '
             'ck_All
             '
             Me.ck_All.AutoSize = True
@@ -262,16 +272,6 @@ Namespace Admin.Payments
             '
             Me.PaymentHistory_DisplayTableAdapter.ClearBeforeFill = True
             '
-            'Ds_Types
-            '
-            Me.Ds_Types.DataSetName = "ds_Types"
-            Me.Ds_Types.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema
-            '
-            'PaymentTypesBindingSource
-            '
-            Me.PaymentTypesBindingSource.DataMember = "PaymentTypes"
-            Me.PaymentTypesBindingSource.DataSource = Me.Ds_Types
-            '
             'PaymentTypesTableAdapter
             '
             Me.PaymentTypesTableAdapter.ClearBeforeFill = True
@@ -299,8 +299,8 @@ Namespace Admin.Payments
             CType(Me.Payments, System.ComponentModel.ISupportInitialize).EndInit()
             Me.pnl_Filter.ResumeLayout(False)
             Me.pnl_Filter.PerformLayout()
-            CType(Me.Ds_Types, System.ComponentModel.ISupportInitialize).EndInit()
             CType(Me.PaymentTypesBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
+            CType(Me.Ds_Types, System.ComponentModel.ISupportInitialize).EndInit()
             Me.ResumeLayout(False)
 
         End Sub

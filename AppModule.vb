@@ -27,6 +27,8 @@ Module AppModule
         Return paramConMgr
     End Function
 
+    Public HomeForm As TrashCashHome
+
     Public Function GetCustomerListID(ByVal customerNumber As Integer) As String
         Return CustTA.GetListID(customerNumber)
     End Function

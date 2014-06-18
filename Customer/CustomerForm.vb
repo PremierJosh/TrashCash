@@ -36,10 +36,11 @@
         End Sub
 
         Private Sub Customer_FormClosing(sender As Object, e As FormClosingEventArgs) Handles Me.FormClosing
-            If (e.CloseReason <> CloseReason.ApplicationExitCall) Then
-                e.Cancel = True
-                Hide()
-            End If
+            Select Case e.CloseReason
+                Case Is <> CloseReason.ApplicationExitCall, CloseReason.MdiFormClosing
+                    e.Cancel = True
+                    Hide()
+            End Select
         End Sub
 
         Private Sub Customer_Load(sender As Object, e As EventArgs) Handles Me.Load

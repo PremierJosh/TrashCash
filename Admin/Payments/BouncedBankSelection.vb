@@ -3,6 +3,8 @@
 Namespace Admin.Payments
 
     Public Class BouncedBankSelection
+        ' field to be read back if bounced or not
+        Friend Bounced As Boolean = False
 
         Private _checkRow As ds_Payments.PaymentHistory_DBRow
         Private Property CheckRow As ds_Payments.PaymentHistory_DBRow
@@ -18,12 +20,12 @@ Namespace Admin.Payments
                 CustomerToolstrip1.SelectCustomer(value.CustomerNumber)
             End Set
         End Property
-        Private _bankRow As ds_Payments.BAD_CHECK_BANKSRow
-        Private Property BankRow As ds_Payments.BAD_CHECK_BANKSRow
+        Private _bankRow As ds_Payments.Bad_Check_BanksRow
+        Private Property BankRow As ds_Payments.Bad_Check_BanksRow
             Get
                 Return _bankRow
             End Get
-            Set(value As ds_Payments.BAD_CHECK_BANKSRow)
+            Set(value As ds_Payments.Bad_Check_BanksRow)
                 _bankRow = value
                 ' set fee
                 tb_BankFee.Text = FormatCurrency(value.Bank_Fee)
@@ -56,6 +58,7 @@ Namespace Admin.Payments
             If (result = MsgBoxResult.Yes) Then
                 BounceCheck()
                 MessageBox.Show("Check Bounce completed.", "Check Bounce completed.", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                Bounced = True
                 Close()
             End If
         End Sub

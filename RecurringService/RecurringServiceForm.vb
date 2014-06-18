@@ -195,7 +195,10 @@ Namespace RecurringService
                 If (value = False) Then
                     ' show approve and delete buttons
                     btn_Approve.Visible = True
-                    btn_Delete.Visible = True
+                    ' only want to allow delete on pre approval - not new
+                    If (Not IsNew) Then
+                        btn_Delete.Visible = True
+                    End If
                     ' hiding credit and bill history tabs
                     tc_Master.TabPages.Remove(tp_BillHist)
                     tc_Master.TabPages.Remove(tp_Credits)

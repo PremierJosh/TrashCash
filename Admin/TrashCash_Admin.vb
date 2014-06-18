@@ -84,6 +84,8 @@ Namespace Admin
         Private Sub btn_AdminPay_Click(sender As System.Object, e As System.EventArgs) Handles btn_AdminPay.Click
             If (AdminPay Is Nothing) Then
                 AdminPay = New AdminPayments()
+                AddHandler AdminPay.CustomerCheckBounce, AddressOf HomeForm.CustomerCheckBounced
+                AddHandler AdminPay.CustomerPaymentMoved, AddressOf HomeForm.CustomerPaymentMoved
                 AdminPay.MdiParent = Me
             End If
             Dim open As Boolean = False
@@ -106,7 +108,7 @@ Namespace Admin
             End If
 
         End Sub
-
+       
         Private Sub btn_ServiceTypes_Click(sender As System.Object, e As System.EventArgs) Handles btn_ServiceTypes.Click
             If (_adminServiceTypes Is Nothing) Then
                 _adminServiceTypes = New AdminServiceTypes()

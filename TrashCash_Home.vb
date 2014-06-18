@@ -123,7 +123,19 @@ Public Class TrashCashHome
         End If
     End Sub
     Private Sub BalanceChangeCatch(ByVal customerNumber As Integer) Handles InvForm.CustomerInvoiceAdded, Customer.CustomerBalanceChanged
-        ' came from custom invoicing form, need to update customer form balance if matches
+        RefreshCustomerBalance(customerNumber)
+    End Sub
+    ' admin payment event catches
+    Friend Sub CustomerCheckBounced(ByVal customerNumber As Integer)
+        RefreshCustomerBalance(customerNumber)
+    End Sub
+    Friend Sub CustomerPaymentMoved(ByVal origCustomerNumber As Integer, ByVal newCustomerNumber As Integer)
+        RefreshCustomerBalance(origCustomerNumber)
+        RefreshCustomerBalance(newCustomerNumber)
+    End Sub
+
+    ' sub to refresh customer balance on all forms
+    Private Sub RefreshCustomerBalance(ByVal customerNumber As Integer)
         If (Customer IsNot Nothing) Then
             If (Customer.CurrentCustomer = customerNumber) Then
                 Customer.CustomerToolstrip1.GetCustomerBalance()
@@ -160,7 +172,6 @@ Public Class TrashCashHome
             End If
         End If
     End Sub
-
     ' vars for admin forms'
     Friend WithEvents UserSelection As Admin.UserSelection
     Friend WithEvents TrashCashAdmin As Admin.TrashCashAdmin
@@ -264,6 +275,8 @@ Public Class TrashCashHome
 
         ' create new conMgrObj
         GlobalConMgr = New QBConMgr
+        ' create global reference to this form
+        HomeForm = Me
 
         Try
             GlobalConMgr.InitCon()
@@ -409,7 +422,7 @@ Public Class TrashCashHome
     End Sub
 
     Private Sub menu_Admin_Click(sender As Object, e As EventArgs) Handles menu_Admin.Click
-       ' trying to open
+        ' trying to open
         Dim open As Boolean = False
         Dim userRow As ds_Application.USERSRow = _currentUserRow
         If (_bypassLogin) Then

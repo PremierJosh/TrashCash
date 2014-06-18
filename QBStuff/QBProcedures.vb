@@ -212,8 +212,12 @@ Namespace QBStuff
             ' set fields
             With invAdd
                 .CustomerRef.ListID.SetValue(invObj.CustomerListID)
-                .TxnDate.SetValue(invObj.TxnDate)
-                .DueDate.SetValue(invObj.DueDate)
+                If (invObj.TxnDate <> Nothing) Then
+                    .TxnDate.SetValue(invObj.TxnDate)
+                End If
+                If (invObj.DueDate <> Nothing) Then
+                    .DueDate.SetValue(invObj.DueDate)
+                End If
                 .IsToBePrinted.SetValue(invObj.IsToBePrinted)
                 ' optional fields
                 If (invObj.Memo IsNot Nothing) Then
@@ -586,8 +590,7 @@ Namespace QBStuff
             Dim resp As IResponse = ConCheck(qbConMgr).GetRespList.GetAt(0)
             If (resp.StatusCode = 0) Then
                 ' going to come back as ret list but is going to contain only 1 response
-                Dim ret As IReceivePaymentRet = CType(resp.Detail, IReceivePaymentRetList).GetAt(0)
-                payObj = QBMethods.ConvertToPayObjs(ret).Item(0)
+               payObj = QBMethods.ConvertToPayObjs(resp).Item(0)
             ElseIf (resp.StatusCode > 1) Then
                 QBMethods.ResponseErr_Misc(resp)
             End If
@@ -994,7 +997,9 @@ Namespace QBStuff
                 End If
                 ' checking for applied txns
                 If (ret.AppliedToTxnRetList IsNot Nothing) Then
-                    payObj.AppliedInvList = New List(Of QBInvoiceObj)
+                    If (payObj.AppliedInvList Is Nothing) Then
+                        payObj.AppliedInvList = New List(Of QBInvoiceObj)
+                    End If
                     For l = 0 To ret.AppliedToTxnRetList.Count - 1
                         Dim appTxnRet As IAppliedToTxnRet = ret.AppliedToTxnRetList.GetAt(l)
                         ' only want invoices
