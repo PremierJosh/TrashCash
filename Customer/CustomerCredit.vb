@@ -145,8 +145,6 @@ Namespace Customer
                         cmb_Types.SelectedIndex = 0
                         tb_Amount.Text = ""
                         tb_Reason.Text = ""
-                        ' update customer balance on toolstrip
-                        CustomerToolstrip1.GetCustomerBalance()
                     End If
                 Else
                     tb_Reason.BackColor = AppColors.TextBoxDef

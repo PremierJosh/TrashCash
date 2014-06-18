@@ -59,6 +59,13 @@
         ' event to let home form know the count
         Friend Event RemainingApprovals(ByVal c As Integer)
 
+        Private Sub PendingApprovals_FormClosing(sender As Object, e As System.Windows.Forms.FormClosingEventArgs) Handles Me.FormClosing
+            If (e.CloseReason <> CloseReason.ApplicationExitCall) Then
+                e.Cancel = True
+                Hide()
+            End If
+        End Sub
+
         Private Sub PendingApprovals_Load(sender As System.Object, e As System.EventArgs) Handles MyBase.Load
             ' fill initial grid
             RecurringService_PendingApprovalsTableAdapter.Fill(Ds_RecurringService.RecurringService_PendingApprovals)
@@ -142,5 +149,7 @@
             UnapprovedCount = Ds_RecurringService.RecurringService_PendingApprovals.Rows.Count
             ApprovedCount = 0
         End Sub
+
+      
     End Class
 End Namespace

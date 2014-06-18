@@ -3,7 +3,7 @@
         ' field to update if item added to queue
         Friend PaymentAdded As Boolean
         ' events for home form notification
-        Friend Event CustomerPaymentAdded(ByVal customerNumber As Integer, ByRef formType As Type)
+        Friend Event CustomerPaymentAdded(ByVal customerNumber As Integer)
         
         Private _currentCustomer As Integer
         Public Property CurrentCustomer As Integer
@@ -50,6 +50,9 @@
             End If
         End Sub
 
+        ' if customer number is passed at new, this is locked form and should be disposed when closed
+        Private ReadOnly _dispose As Boolean
+
         Public Sub New(ByRef debug As Boolean, Optional ByVal customerNumber As Integer = 0)
             ' This call is required by the designer.
             InitializeComponent()
@@ -63,17 +66,20 @@
                 CustomerToolstrip1.HideQuickSearch()
                 CurrentCustomer = customerNumber
                 CustomerToolstrip1.SelectCustomer(customerNumber)
+                ' mark for disposal at close
+                _dispose = True
             Else
                 CurrentCustomer = CustomerToolstrip1.CurrentCustomer
                 CustomerToolstrip1.GetCustomerBalance()
+                ' keep open after
+                _dispose = False
             End If
         End Sub
 
         Private Sub Payments_FormClosing(sender As Object, e As System.Windows.Forms.FormClosingEventArgs) Handles Me.FormClosing
             ' stop closing and hide form
-            If (e.CloseReason <> CloseReason.ApplicationExitCall) Then
+            If (Not _dispose) Then
                 e.Cancel = True
-                ResetPayment()
                 Hide()
             End If
         End Sub
@@ -152,9 +158,8 @@
                     MessageBox.Show("Message: " & ex.Message & vbCrLf & "LineNumber: " & ex.LineNumber,
                                     "Sql Error: " & ex.Procedure, MessageBoxButtons.OK, MessageBoxIcon.Error)
                 End Try
-                RaiseEvent CustomerPaymentAdded(CurrentCustomer, GetType(PaymentsForm))
-                CustomerToolstrip1.GetQueueAmount()
-                ResetPayment()
+                RaiseEvent CustomerPaymentAdded(CurrentCustomer)
+               ResetPayment()
                 ' fill table
                 BATCH_WorkingPaymentsTableAdapter.Fill(Ds_Batching.BATCH_WorkingPayments)
             Else

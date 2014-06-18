@@ -84,27 +84,35 @@ Public Class TrashCashHome
     Friend WithEvents InvForm As Invoicing.CustomInvoicingForm
 
     ' event handles
-    Private Sub PaymentAddedCatch(ByVal customerNumber As Integer, ByRef formType As Type) Handles PayForm.CustomerPaymentAdded, Customer.CustomerPaymentAdded
-        If (formType = GetType(Payments.PaymentsForm)) Then
-            ' came from payment form, need to update customer
-            If (Customer IsNot Nothing) Then
-                If (Customer.CurrentCustomer = customerNumber) Then
-                    Customer.CustomerToolstrip1.GetQueueAmount()
+    Private Sub PaymentAddedCatch(ByVal customerNumber As Integer) Handles PayForm.CustomerPaymentAdded, Customer.CustomerPaymentAdded
+        ' came from custom invoicing form, need to update customer form balance if matches
+        If (Customer IsNot Nothing) Then
+            If (Customer.CurrentCustomer = customerNumber) Then
+                Customer.CustomerToolstrip1.GetQueueAmount()
+                ' checking for 1 of 3 showdialog forms
+                If (Customer.CreditForm IsNot Nothing) Then
+                    Customer.CreditForm.CustomerToolstrip1.GetQueueAmount()
                 End If
-            End If
-        ElseIf (formType = GetType(Customer.CustomerForm)) Then
-            ' need to update in queue on other forms if exist and match new customer
-            If (PayForm IsNot Nothing) Then
-                If (PayForm.CurrentCustomer = customerNumber) Then
-                    PayForm.CustomerToolstrip1.GetQueueAmount()
+                If (Customer.InvForm IsNot Nothing) Then
+                    Customer.InvForm.CustomerToolstrip1.GetQueueAmount()
                 End If
-            End If
-            If (InvForm IsNot Nothing) Then
-                If (InvForm.CurrentCustomer = customerNumber) Then
-                    InvForm.CustomerToolstrip1.GetQueueAmount()
+                If (Customer.PayForm IsNot Nothing) Then
+                    Customer.PayForm.CustomerToolstrip1.GetQueueAmount()
                 End If
             End If
         End If
+        ' need to update in queue on other forms if exist and match new customer
+        If (PayForm IsNot Nothing) Then
+            If (PayForm.CurrentCustomer = customerNumber) Then
+                PayForm.CustomerToolstrip1.GetQueueAmount()
+            End If
+        End If
+        If (InvForm IsNot Nothing) Then
+            If (InvForm.CurrentCustomer = customerNumber) Then
+                InvForm.CustomerToolstrip1.GetQueueAmount()
+            End If
+        End If
+
         ' checking for admin payments
         If (TrashCashAdmin IsNot Nothing) Then
             If (TrashCashAdmin.AdminPay IsNot Nothing) Then
@@ -114,27 +122,35 @@ Public Class TrashCashHome
             End If
         End If
     End Sub
-    Private Sub BalanceChangeCatch(ByVal customerNumber As Integer, ByRef formType As Type) Handles InvForm.CustomerInvoiceAdded, Customer.CustomerBalanceChanged
-        If (formType = GetType(Invoicing.CustomInvoicingForm)) Then
-            ' came from custom invoicing form, need to update customer form balance if matches
-            If (Customer IsNot Nothing) Then
-                If (Customer.CurrentCustomer = customerNumber) Then
-                    Customer.CustomerToolstrip1.GetCustomerBalance()
+    Private Sub BalanceChangeCatch(ByVal customerNumber As Integer) Handles InvForm.CustomerInvoiceAdded, Customer.CustomerBalanceChanged
+        ' came from custom invoicing form, need to update customer form balance if matches
+        If (Customer IsNot Nothing) Then
+            If (Customer.CurrentCustomer = customerNumber) Then
+                Customer.CustomerToolstrip1.GetCustomerBalance()
+                ' checking for 1 of 3 showdialog forms
+                If (Customer.CreditForm IsNot Nothing) Then
+                    Customer.CreditForm.CustomerToolstrip1.GetCustomerBalance()
                 End If
-            End If
-        ElseIf (formType = GetType(Customer.CustomerForm)) Then
-            ' need to update balances on other forms if exist and match new customer
-            If (PayForm IsNot Nothing) Then
-                If (PayForm.CurrentCustomer = customerNumber) Then
-                    PayForm.CustomerToolstrip1.GetCustomerBalance()
+                If (Customer.InvForm IsNot Nothing) Then
+                    Customer.InvForm.CustomerToolstrip1.GetCustomerBalance()
                 End If
-            End If
-            If (InvForm IsNot Nothing) Then
-                If (InvForm.CurrentCustomer = customerNumber) Then
-                    InvForm.CustomerToolstrip1.GetCustomerBalance()
+                If (Customer.PayForm IsNot Nothing) Then
+                    Customer.PayForm.CustomerToolstrip1.GetCustomerBalance()
                 End If
             End If
         End If
+        ' need to update balances on other forms if exist and match new customer
+        If (PayForm IsNot Nothing) Then
+            If (PayForm.CurrentCustomer = customerNumber) Then
+                PayForm.CustomerToolstrip1.GetCustomerBalance()
+            End If
+        End If
+        If (InvForm IsNot Nothing) Then
+            If (InvForm.CurrentCustomer = customerNumber) Then
+                InvForm.CustomerToolstrip1.GetCustomerBalance()
+            End If
+        End If
+
         ' checking for admin payments
         If (TrashCashAdmin IsNot Nothing) Then
             If (TrashCashAdmin.AdminPay IsNot Nothing) Then

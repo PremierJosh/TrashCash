@@ -34,13 +34,8 @@
             End Set
         End Property
 
-        ' data view property that the rec srvc dg is bound to
-        Private _dv As DataView
-
         Private Sub UC_RecurringService_Load(sender As Object, e As System.EventArgs) Handles Me.Load
-            _dv = New DataView
-            _dv.Table = Ds_RecurringService.RecurringService_DisplayByCustomerID
-            dg_RecSrvc.DataSource = _dv
+           
         End Sub
 
         Private Sub ColorRow(ByRef dgvRow As DataGridViewRow)
@@ -78,22 +73,7 @@
             End With
         End Sub
 
-        Private Sub rdo_EndedSrvc_Click(sender As System.Object, e As System.EventArgs) Handles rdo_EndedSrvc.Click, rdo_AllSrvc.Click, rdo_CurrentSrvc.Click
-            FilterGrid()
-        End Sub
-        Private Sub FilterGrid()
-            Dim s As String
-            If (rdo_CurrentSrvc.Checked = True) Then
-                s = "RecurringServiceEndDate > '" & Date.Now.Date & "' OR RecurringServiceEndDate IS NULL"
-            ElseIf (rdo_EndedSrvc.Checked = True) Then
-                s = "RecurringServiceEndDate < '" & Date.Now.Date & "' AND RecurringServiceEndDate IS NOT NULL"
-            Else
-                s = ""
-            End If
-            _dv.RowFilter = s
-        End Sub
-
-
+      
         Friend WithEvents RecurringForm As RecurringServiceForm
         Private Sub dg_RecSrvc_DoubleClick(sender As System.Object, e As System.EventArgs) Handles dg_RecSrvc.DoubleClick
             If (dg_RecSrvc.SelectedRows.Count = 1) Then
@@ -127,12 +107,6 @@
             End If
         End Sub
 
-        Private Sub btn_NewSrvc_Click(sender As System.Object, e As System.EventArgs) Handles btn_NewSrvc.Click
-            Dim f As New RecurringServiceForm(_custName, CurrentCustomer)
-            f.ShowDialog()
-            RecurringService_DisplayByCustomerIDTableAdapter.FillByID(Ds_RecurringService.RecurringService_DisplayByCustomerID, CurrentCustomer)
-            RaiseEvent ApprovalCountChange()
-        End Sub
 
         Private Sub dg_RecSrvc_RowPrePaint(sender As System.Object, e As System.Windows.Forms.DataGridViewRowPrePaintEventArgs) Handles dg_RecSrvc.RowPrePaint
             ColorRow(dg_RecSrvc.Rows(e.RowIndex))

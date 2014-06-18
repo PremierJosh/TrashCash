@@ -1,8 +1,8 @@
 ﻿Namespace Customer
     Public Class CustomerForm
         ' events for customer balance or in queue amount changing
-        Friend Event CustomerBalanceChanged(ByVal customerNumber As Integer, ByRef formType As Type)
-        Friend Event CustomerPaymentAdded(ByVal customerNumber As Integer, ByRef formType As Type)
+        Friend Event CustomerBalanceChanged(ByVal customerNumber As Integer)
+        Friend Event CustomerPaymentAdded(ByVal customerNumber As Integer)
         Friend Event ApprovalsChanged()
 
         Private _currentCustomer As Integer
@@ -29,11 +29,10 @@
 
         ' refresh balance event handleing
         Friend Sub RefreshCustBalance(ByVal customerNumber As Integer) Handles UC_RecurringService.BalanceChanged
-           ' rec srvc is raising this event, balance was adjusted from credit
+          ' let home form know customer balance changed from a credit
+            RaiseEvent CustomerBalanceChanged(customerNumber)
+            ' rec srvc is raising this event, possible invoices were paid with credit
             UC_Quickbooks.FetchInvoices(0)
-            ' let home form know customer balance changed from a credit
-            RaiseEvent CustomerBalanceChanged(customerNumber, GetType(CustomerForm))
-            CustomerToolstrip1.GetCustomerBalance()
         End Sub
 
         Private Sub Customer_FormClosing(sender As Object, e As FormClosingEventArgs) Handles Me.FormClosing
@@ -91,31 +90,34 @@
 
         Private Sub btn_Payments_Click(sender As Object, e As EventArgs) Handles btn_Payments.Click
             PayForm = New Payments.PaymentsForm(CBool(AppQTA.APP_GetDebugMode), customerNumber:=CurrentCustomer)
-            payForm.ShowDialog()
+            PayForm.ShowDialog()
+            PayForm.Dispose()
+            PayForm = Nothing
         End Sub
-        Private Sub PaymentAddedCatch(ByVal customerNumber As Integer, ByRef formType As Type) Handles PayForm.CustomerPaymentAdded
-            RaiseEvent CustomerPaymentAdded(customerNumber, GetType(CustomerForm))
-            CustomerToolstrip1.GetQueueAmount()
-        End Sub
+        Private Sub PaymentAddedCatch(ByVal customerNumber As Integer) Handles PayForm.CustomerPaymentAdded
+            RaiseEvent CustomerPaymentAdded(customerNumber)
+          End Sub
 
         Private Sub btn_Credit_Click(sender As Object, e As EventArgs) Handles btn_Credit.Click
             CreditForm = New CustomerCredit(CurrentCustomer)
             CreditForm.ShowDialog()
+            CreditForm.Dispose()
+            CreditForm = Nothing
         End Sub
         Private Sub CreditAddCatch(ByVal customerNumber As Integer) Handles CreditForm.CreditAdded
-            RaiseEvent CustomerBalanceChanged(CurrentCustomer, GetType(CustomerForm))
-            CustomerToolstrip1.GetCustomerBalance()
-            ' get invoices incase they were paid with credit
+            RaiseEvent CustomerBalanceChanged(CurrentCustomer)
+          ' get invoices incase they were paid with credit
             UC_Quickbooks.FetchInvoices(0)
         End Sub
         
         Private Sub btn_Inv_Click(sender As Object, e As EventArgs) Handles btn_Inv.Click
             InvForm = New Invoicing.CustomInvoicingForm(CurrentCustomer)
             InvForm.ShowDialog()
+            InvForm.Dispose()
+            InvForm = Nothing
         End Sub
-        Private Sub InvoiceAddCatch(ByVal customerNumber As Integer, ByRef formType As Type) Handles InvForm.CustomerInvoiceAdded
-            RaiseEvent CustomerBalanceChanged(customerNumber, GetType(CustomerForm))
-            CustomerToolstrip1.GetCustomerBalance()
+        Private Sub InvoiceAddCatch(ByVal customerNumber As Integer) Handles InvForm.CustomerInvoiceAdded
+            RaiseEvent CustomerBalanceChanged(customerNumber)
             ' get new invoices
             UC_Quickbooks.FetchInvoices(0)
         End Sub
@@ -124,11 +126,16 @@
         Private Sub ApprovalsChanging() Handles UC_RecurringService.ApprovalCountChange
             RaiseEvent ApprovalsChanged()
         End Sub
-
-
+        
         ' forms
         Friend WithEvents CreditForm As CustomerCredit
         Friend WithEvents InvForm As Invoicing.CustomInvoicingForm
         Friend WithEvents PayForm As Payments.PaymentsForm
+
+        Private Sub btn_NewSrvc_Click(sender As System.Object, e As System.EventArgs) Handles btn_NewSrvc.Click
+            Dim f As New RecurringService.RecurringServiceForm(CustomerToolstrip1.ToString, CurrentCustomer)
+            f.ShowDialog()
+            RaiseEvent ApprovalsChanged()
+        End Sub
     End Class
 End Namespace

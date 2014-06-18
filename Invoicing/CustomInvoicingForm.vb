@@ -6,7 +6,7 @@ Namespace Invoicing
         ' field for balance changing
         'Friend BalanceChanged As Boolean
         ' event for invoicing adding
-        Friend Event CustomerInvoiceAdded(ByVal customerNumber As Integer, ByRef formType As Type)
+        Friend Event CustomerInvoiceAdded(ByVal customerNumber As Integer)
 
         ' current customer property
         Private _currentCustomer As Integer
@@ -27,7 +27,7 @@ Namespace Invoicing
         Private _invRow As DS_Invoicing.CustomInvoicesRow
 
         Private Sub CustomInvoicingForm_FormClosing(sender As Object, e As System.Windows.Forms.FormClosingEventArgs) Handles Me.FormClosing
-            If (e.CloseReason <> CloseReason.ApplicationExitCall) Then
+            If (Not _dispose) Then
                 e.Cancel = True
                 Hide()
             End If
@@ -240,9 +240,8 @@ Namespace Invoicing
                     End If
                     MessageBox.Show("Invoice Added.", "", MessageBoxButtons.OK, MessageBoxIcon.Information)
                     ' raise event for balance refreshes
-                    RaiseEvent CustomerInvoiceAdded(CurrentCustomer, GetType(CustomInvoicingForm))
-                    CustomerToolstrip1.GetCustomerBalance()
-                    End If
+                    RaiseEvent CustomerInvoiceAdded(CurrentCustomer)
+                End If
             End If
         End Sub
 
@@ -280,6 +279,8 @@ Namespace Invoicing
             End If
         End Sub
 
+        ' if customer number is passed at new, this is locked form and should be disposed when closed
+        Private ReadOnly _dispose As Boolean
 
         Public Sub New(Optional ByVal customerNumber As Integer = Nothing)
             ' This call is required by the designer.
@@ -291,9 +292,13 @@ Namespace Invoicing
                 CustomerToolstrip1.HideQuickSearch()
                 CurrentCustomer = customerNumber
                 CustomerToolstrip1.SelectCustomer(customerNumber)
+                ' mark for disposal
+                _dispose = True
             Else
                 CurrentCustomer = CustomerToolstrip1.CurrentCustomer
                 CustomerToolstrip1.GetCustomerBalance()
+                ' keep form alive
+                _dispose = False
             End If
         End Sub
 

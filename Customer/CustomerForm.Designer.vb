@@ -29,22 +29,24 @@ Namespace Customer
         <System.Diagnostics.DebuggerStepThrough()> _
         Private Sub InitializeComponent()
             Me.components = New System.ComponentModel.Container()
+            Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(CustomerForm))
             Me.tc_Master = New System.Windows.Forms.TabControl()
             Me.tc_p_Notes = New System.Windows.Forms.TabPage()
+            Me.UC_CustomerNotes = New TrashCash.Customer.UC_CustomerNotes()
             Me.tc_p_RecSrvcs = New System.Windows.Forms.TabPage()
+            Me.UC_RecurringService = New TrashCash.RecurringService.UC_RecurringService()
             Me.tc_p_QBItems = New System.Windows.Forms.TabPage()
+            Me.UC_Quickbooks = New TrashCash.QBStuff.UC_Quickbooks()
             Me.pnl_Top = New System.Windows.Forms.Panel()
             Me.pnl_TopContent = New System.Windows.Forms.Panel()
+            Me.CustomerToolstrip1 = New TrashCash.Classes.CustomerToolstrip.CustomerToolstrip()
             Me.ts_Top = New System.Windows.Forms.ToolStrip()
+            Me.UC_CustomerInfoBoxes = New TrashCash.Customer.UC_CustomerInfoBoxes()
             Me.btn_Inv = New System.Windows.Forms.ToolStripButton()
             Me.btn_Payments = New System.Windows.Forms.ToolStripButton()
             Me.btn_NewCust = New System.Windows.Forms.ToolStripButton()
             Me.btn_Credit = New System.Windows.Forms.ToolStripButton()
-            Me.UC_CustomerNotes = New TrashCash.Customer.UC_CustomerNotes()
-            Me.UC_RecurringService = New TrashCash.RecurringService.UC_RecurringService()
-            Me.UC_Quickbooks = New TrashCash.QBStuff.UC_Quickbooks()
-            Me.UC_CustomerInfoBoxes = New TrashCash.Customer.UC_CustomerInfoBoxes()
-            Me.CustomerToolstrip1 = New TrashCash.Classes.CustomerToolstrip.CustomerToolstrip()
+            Me.btn_NewSrvc = New System.Windows.Forms.ToolStripButton()
             Me.tc_Master.SuspendLayout()
             Me.tc_p_Notes.SuspendLayout()
             Me.tc_p_RecSrvcs.SuspendLayout()
@@ -77,6 +79,15 @@ Namespace Customer
             Me.tc_p_Notes.TabIndex = 0
             Me.tc_p_Notes.Text = "Notes"
             '
+            'UC_CustomerNotes
+            '
+            Me.UC_CustomerNotes.CurrentCustomer = New Decimal(New Integer() {0, 0, 0, 0})
+            Me.UC_CustomerNotes.Dock = System.Windows.Forms.DockStyle.Fill
+            Me.UC_CustomerNotes.Location = New System.Drawing.Point(3, 3)
+            Me.UC_CustomerNotes.Name = "UC_CustomerNotes"
+            Me.UC_CustomerNotes.Size = New System.Drawing.Size(888, 264)
+            Me.UC_CustomerNotes.TabIndex = 0
+            '
             'tc_p_RecSrvcs
             '
             Me.tc_p_RecSrvcs.BackColor = System.Drawing.SystemColors.Control
@@ -88,6 +99,15 @@ Namespace Customer
             Me.tc_p_RecSrvcs.TabIndex = 1
             Me.tc_p_RecSrvcs.Text = "Recurring Services"
             '
+            'UC_RecurringService
+            '
+            Me.UC_RecurringService.CurrentCustomer = New Decimal(New Integer() {0, 0, 0, 0})
+            Me.UC_RecurringService.Dock = System.Windows.Forms.DockStyle.Fill
+            Me.UC_RecurringService.Location = New System.Drawing.Point(3, 3)
+            Me.UC_RecurringService.Name = "UC_RecurringService"
+            Me.UC_RecurringService.Size = New System.Drawing.Size(888, 264)
+            Me.UC_RecurringService.TabIndex = 0
+            '
             'tc_p_QBItems
             '
             Me.tc_p_QBItems.BackColor = System.Drawing.SystemColors.Control
@@ -98,6 +118,15 @@ Namespace Customer
             Me.tc_p_QBItems.Size = New System.Drawing.Size(894, 270)
             Me.tc_p_QBItems.TabIndex = 2
             Me.tc_p_QBItems.Text = "In Quickbooks"
+            '
+            'UC_Quickbooks
+            '
+            Me.UC_Quickbooks.CustomerListID = Nothing
+            Me.UC_Quickbooks.Dock = System.Windows.Forms.DockStyle.Fill
+            Me.UC_Quickbooks.Location = New System.Drawing.Point(3, 3)
+            Me.UC_Quickbooks.Name = "UC_Quickbooks"
+            Me.UC_Quickbooks.Size = New System.Drawing.Size(888, 264)
+            Me.UC_Quickbooks.TabIndex = 0
             '
             'pnl_Top
             '
@@ -119,15 +148,39 @@ Namespace Customer
             Me.pnl_TopContent.Size = New System.Drawing.Size(862, 33)
             Me.pnl_TopContent.TabIndex = 14
             '
+            'CustomerToolstrip1
+            '
+            Me.CustomerToolstrip1.Dock = System.Windows.Forms.DockStyle.Fill
+            Me.CustomerToolstrip1.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden
+            Me.CustomerToolstrip1.Location = New System.Drawing.Point(0, 0)
+            Me.CustomerToolstrip1.Name = "CustomerToolstrip1"
+            Me.CustomerToolstrip1.Size = New System.Drawing.Size(860, 31)
+            Me.CustomerToolstrip1.TabIndex = 9
+            Me.CustomerToolstrip1.Text = "CustomerToolstrip1"
+            '
             'ts_Top
             '
             Me.ts_Top.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden
-            Me.ts_Top.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.btn_Inv, Me.btn_Payments, Me.btn_NewCust, Me.btn_Credit})
+            Me.ts_Top.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.btn_Inv, Me.btn_Payments, Me.btn_NewCust, Me.btn_Credit, Me.btn_NewSrvc})
+            Me.ts_Top.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.HorizontalStackWithOverflow
             Me.ts_Top.Location = New System.Drawing.Point(0, 0)
             Me.ts_Top.Name = "ts_Top"
             Me.ts_Top.Size = New System.Drawing.Size(902, 25)
             Me.ts_Top.TabIndex = 0
             Me.ts_Top.Text = "ToolStrip1"
+            '
+            'UC_CustomerInfoBoxes
+            '
+            Me.UC_CustomerInfoBoxes.AllowUpdate = False
+            Me.UC_CustomerInfoBoxes.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+            Me.UC_CustomerInfoBoxes.CurrentCustomer = 0
+            Me.UC_CustomerInfoBoxes.Dock = System.Windows.Forms.DockStyle.Top
+            Me.UC_CustomerInfoBoxes.IsUpdating = False
+            Me.UC_CustomerInfoBoxes.Location = New System.Drawing.Point(0, 78)
+            Me.UC_CustomerInfoBoxes.Name = "UC_CustomerInfoBoxes"
+            Me.UC_CustomerInfoBoxes.Size = New System.Drawing.Size(902, 172)
+            Me.UC_CustomerInfoBoxes.TabIndex = 9
+            Me.UC_CustomerInfoBoxes.TabStop = False
             '
             'btn_Inv
             '
@@ -163,55 +216,13 @@ Namespace Customer
             Me.btn_Credit.Size = New System.Drawing.Size(59, 22)
             Me.btn_Credit.Text = "Credit"
             '
-            'UC_CustomerNotes
+            'btn_NewSrvc
             '
-            Me.UC_CustomerNotes.CurrentCustomer = New Decimal(New Integer() {0, 0, 0, 0})
-            Me.UC_CustomerNotes.Dock = System.Windows.Forms.DockStyle.Fill
-            Me.UC_CustomerNotes.Location = New System.Drawing.Point(3, 3)
-            Me.UC_CustomerNotes.Name = "UC_CustomerNotes"
-            Me.UC_CustomerNotes.Size = New System.Drawing.Size(888, 264)
-            Me.UC_CustomerNotes.TabIndex = 0
-            '
-            'UC_RecurringService
-            '
-            Me.UC_RecurringService.CurrentCustomer = New Decimal(New Integer() {0, 0, 0, 0})
-            Me.UC_RecurringService.Dock = System.Windows.Forms.DockStyle.Fill
-            Me.UC_RecurringService.Location = New System.Drawing.Point(3, 3)
-            Me.UC_RecurringService.Name = "UC_RecurringService"
-            Me.UC_RecurringService.Size = New System.Drawing.Size(888, 264)
-            Me.UC_RecurringService.TabIndex = 0
-            '
-            'UC_Quickbooks
-            '
-            Me.UC_Quickbooks.CustomerListID = Nothing
-            Me.UC_Quickbooks.Dock = System.Windows.Forms.DockStyle.Fill
-            Me.UC_Quickbooks.Location = New System.Drawing.Point(3, 3)
-            Me.UC_Quickbooks.Name = "UC_Quickbooks"
-            Me.UC_Quickbooks.Size = New System.Drawing.Size(888, 264)
-            Me.UC_Quickbooks.TabIndex = 0
-            '
-            'UC_CustomerInfoBoxes
-            '
-            Me.UC_CustomerInfoBoxes.AllowUpdate = False
-            Me.UC_CustomerInfoBoxes.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-            Me.UC_CustomerInfoBoxes.CurrentCustomer = 0
-            Me.UC_CustomerInfoBoxes.Dock = System.Windows.Forms.DockStyle.Top
-            Me.UC_CustomerInfoBoxes.IsUpdating = False
-            Me.UC_CustomerInfoBoxes.Location = New System.Drawing.Point(0, 78)
-            Me.UC_CustomerInfoBoxes.Name = "UC_CustomerInfoBoxes"
-            Me.UC_CustomerInfoBoxes.Size = New System.Drawing.Size(902, 172)
-            Me.UC_CustomerInfoBoxes.TabIndex = 9
-            Me.UC_CustomerInfoBoxes.TabStop = False
-            '
-            'CustomerToolstrip1
-            '
-            Me.CustomerToolstrip1.Dock = System.Windows.Forms.DockStyle.Fill
-            Me.CustomerToolstrip1.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden
-            Me.CustomerToolstrip1.Location = New System.Drawing.Point(0, 0)
-            Me.CustomerToolstrip1.Name = "CustomerToolstrip1"
-            Me.CustomerToolstrip1.Size = New System.Drawing.Size(860, 31)
-            Me.CustomerToolstrip1.TabIndex = 9
-            Me.CustomerToolstrip1.Text = "CustomerToolstrip1"
+            Me.btn_NewSrvc.Image = CType(resources.GetObject("btn_NewSrvc.Image"), System.Drawing.Image)
+            Me.btn_NewSrvc.ImageTransparentColor = System.Drawing.Color.Magenta
+            Me.btn_NewSrvc.Name = "btn_NewSrvc"
+            Me.btn_NewSrvc.Size = New System.Drawing.Size(145, 22)
+            Me.btn_NewSrvc.Text = "New Recurring Service"
             '
             'CustomerForm
             '
@@ -256,5 +267,6 @@ Namespace Customer
         Friend WithEvents btn_Credit As System.Windows.Forms.ToolStripButton
         Friend WithEvents CustomerToolstrip1 As TrashCash.Classes.CustomerToolstrip.CustomerToolstrip
         Friend WithEvents UC_CustomerNotes As TrashCash.Customer.UC_CustomerNotes
+        Friend WithEvents btn_NewSrvc As System.Windows.Forms.ToolStripButton
     End Class
 End Namespace
