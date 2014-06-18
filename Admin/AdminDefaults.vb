@@ -39,10 +39,15 @@ Namespace Admin
 
         Private Sub SetControls()
             ' set bad check defaults
-            cmb_BadCheckCustInvItem.SelectedValue = _row.BAD_CHECK_CUSTITEM_LISTID
-            cmb_BadCheckItem.SelectedValue = _row.BAD_CHECK_CHECKITEM_LISTID
-            tb_BadCheckCustFee.Text = _row.BAD_CHECK_CUST_FEE
-
+            If (Not _row.IsBAD_CHECK_CUSTITEM_LISTIDNull) Then
+                cmb_BadCheckCustInvItem.SelectedValue = _row.BAD_CHECK_CUSTITEM_LISTID
+            End If
+            If (Not _row.IsBAD_CHECK_CHECKITEM_LISTIDNull) Then
+                cmb_BadCheckItem.SelectedValue = _row.BAD_CHECK_CHECKITEM_LISTID
+            End If
+            If (Not _row.IsBAD_CHECK_CUST_FEENull) Then
+                tb_BadCheckCustFee.Text = _row.BAD_CHECK_CUST_FEE
+            End If
         End Sub
 
         Private Sub btn_Save_Click(sender As System.Object, e As System.EventArgs) Handles btn_Save.Click

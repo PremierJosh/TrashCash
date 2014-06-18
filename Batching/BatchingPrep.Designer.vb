@@ -236,6 +236,7 @@
             Me.pb_Invoices.Location = New System.Drawing.Point(0, 16)
             Me.pb_Invoices.Name = "pb_Invoices"
             Me.pb_Invoices.Size = New System.Drawing.Size(610, 23)
+            Me.pb_Invoices.Style = System.Windows.Forms.ProgressBarStyle.Continuous
             Me.pb_Invoices.TabIndex = 0
             '
             'pnl_LeftTop
@@ -284,7 +285,7 @@
             Me.lbl_InvHeader.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
             Me.lbl_InvHeader.Location = New System.Drawing.Point(5, 3)
             Me.lbl_InvHeader.Name = "lbl_InvHeader"
-            Me.lbl_InvHeader.Size = New System.Drawing.Size(138, 16)
+            Me.lbl_InvHeader.Size = New System.Drawing.Size(135, 16)
             Me.lbl_InvHeader.TabIndex = 0
             Me.lbl_InvHeader.Text = "Prepared Invoices"
             '
@@ -390,6 +391,7 @@
             Me.pb_Payments.Location = New System.Drawing.Point(0, 16)
             Me.pb_Payments.Name = "pb_Payments"
             Me.pb_Payments.Size = New System.Drawing.Size(424, 23)
+            Me.pb_Payments.Style = System.Windows.Forms.ProgressBarStyle.Continuous
             Me.pb_Payments.TabIndex = 1
             '
             'Label3
@@ -455,7 +457,7 @@
             Me.lbl_PrepPayHeader.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
             Me.lbl_PrepPayHeader.Location = New System.Drawing.Point(5, 4)
             Me.lbl_PrepPayHeader.Name = "lbl_PrepPayHeader"
-            Me.lbl_PrepPayHeader.Size = New System.Drawing.Size(148, 16)
+            Me.lbl_PrepPayHeader.Size = New System.Drawing.Size(145, 16)
             Me.lbl_PrepPayHeader.TabIndex = 1
             Me.lbl_PrepPayHeader.Text = "Prepared Payments"
             '

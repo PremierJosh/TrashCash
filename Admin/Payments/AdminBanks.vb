@@ -1,5 +1,4 @@
-﻿Imports TrashCash.Payments
-Imports TrashCash.QBStuff
+﻿Imports TrashCash.QBStuff
 
 Namespace Admin.Payments
     Public Class AdminBanks

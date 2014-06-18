@@ -101,6 +101,7 @@ Namespace Batching
                         pb_Invoices.Value = value
                     ElseIf (pnl_RightBot.Visible) Then
                         ' payments
+                        pb_Invoices.Increment(1)
                         pb_Payments.Value = value
                     End If
                 End If

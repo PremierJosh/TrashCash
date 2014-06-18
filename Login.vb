@@ -1,5 +1,6 @@
 ﻿Public Class Login
-    
+
+    Private _splash As SplashScreen
     Private Sub btn_Login_Click(sender As System.Object, e As System.EventArgs) Handles btn_Login.Click
         Cursor = Cursors.WaitCursor
 
@@ -9,11 +10,9 @@
             '' CHANGE CONNECTION STRING - doing on home form
             'Dim conPW As String = "Yealink01"
             'My.Settings.Item("QBDBConnectionString") = "Data Source=" & My.Settings.SQLSERVER & ";Initial Catalog=" & My.Settings.DATABASENAME & ";Integrated Security=False;USER ID=" & qta.USERS_GetName(userID).ToString & ";Password=" & conPW
-
-            Dim splash As New SplashScreen
-            splash.Show()
+            _splash.Show()
             Hide()
-            Dim home As New TrashCashHome(splash, userID)
+            Dim home As New TrashCashHome(_splash, userID)
             home.Show()
             Close()
         Else
@@ -41,7 +40,8 @@
         InitializeComponent()
 
         ' Add any initialization after the InitializeComponent() call.
-        _conForm = ConForm
+        _conForm = conForm
+        _splash = New SplashScreen
     End Sub
 
     Private Sub mtb_Password_KeyDown(sender As System.Object, e As System.Windows.Forms.KeyEventArgs) Handles mtb_Password.KeyDown, tb_Username.KeyDown

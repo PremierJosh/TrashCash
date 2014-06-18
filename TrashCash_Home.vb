@@ -279,7 +279,11 @@ Public Class TrashCashHome
         HomeForm = Me
 
         Try
-            GlobalConMgr.InitCon()
+            Dim connected As Boolean = GlobalConMgr.InitCon()
+            If (Not connected) Then
+                MsgBox("Unable to connect to quickbooks")
+                Application.Exit()
+            End If
             'temp: setting vars here for other forms
             AppSessMgr = GlobalConMgr.SessionManager
             AppMsgSetReq = GlobalConMgr.MessageSetRequest

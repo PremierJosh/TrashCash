@@ -1,2 +1,3 @@
-﻿Partial Class DS_Batching
+﻿' ReSharper disable once CheckNamespace
+Partial Class DS_Batching
 End Class
