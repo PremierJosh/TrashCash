@@ -4,6 +4,13 @@ Imports TrashCash.QBStuff
 Namespace Types
     Public Class AdminInvoiceTypes
 
+        Private Sub AdminInvoiceTypes_FormClosing(sender As Object, e As System.Windows.Forms.FormClosingEventArgs) Handles Me.FormClosing
+            If (e.CloseReason <> CloseReason.ApplicationExitCall) Then
+                e.Cancel = True
+                Hide()
+            End If
+        End Sub
+
         Private Sub AdminInvoiceTypes_Load(sender As System.Object, e As System.EventArgs) Handles MyBase.Load
             ' init fill
             CustomInvoice_LineTypesTableAdapter.Fill(Invoicing.CustomInvoice_LineTypes)

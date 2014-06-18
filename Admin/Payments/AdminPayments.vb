@@ -1,5 +1,4 @@
-﻿Imports TrashCash.Payments
-
+﻿
 Namespace Admin.Payments
     Public Class AdminPayments
 
@@ -57,6 +56,13 @@ Namespace Admin.Payments
                 cmb_PayTypes.Enabled = True
                 ' reset paymenttype
                 PaymentType = cmb_PayTypes.SelectedValue
+            End If
+        End Sub
+
+        Private Sub AdminPayments_FormClosing(sender As Object, e As System.Windows.Forms.FormClosingEventArgs) Handles Me.FormClosing
+            If (e.CloseReason <> CloseReason.ApplicationExitCall) Then
+                e.Cancel = True
+                Hide()
             End If
         End Sub
 

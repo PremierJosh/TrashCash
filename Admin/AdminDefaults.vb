@@ -17,6 +17,13 @@ Namespace Admin
             ' Add any initialization after the InitializeComponent() call.
             _ta = New ds_ApplicationTableAdapters.APP_SETTINGSTableAdapter
         End Sub
+
+        Private Sub AdminDefaults_FormClosing(sender As Object, e As System.Windows.Forms.FormClosingEventArgs) Handles Me.FormClosing
+            If (e.CloseReason <> CloseReason.ApplicationExitCall) Then
+                e.Cancel = True
+                Hide()
+            End If
+        End Sub
         Private Sub App_Defaults_Load(sender As Object, e As System.EventArgs) Handles Me.Load
             ' both combo boxes for items are other charge items and can use the same DS
             Dim list As List(Of ComboBoxPair) = QBMethods.GetComboBoxPair(QBRequests.OtherChargeItemQuery)

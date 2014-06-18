@@ -28,6 +28,13 @@ Namespace Admin
         Dim _cqta As ds_CustomerTableAdapters.QueriesTableAdapter
         Private _cta As ds_CustomerTableAdapters.CustomerTableAdapter
 
+        Private Sub AdminExportImport_FormClosing(sender As Object, e As System.Windows.Forms.FormClosingEventArgs) Handles Me.FormClosing
+            If (e.CloseReason <> CloseReason.ApplicationExitCall) Then
+                e.Cancel = True
+                Hide()
+            End If
+        End Sub
+
 
         Private Sub ImportWork_Load(sender As Object, e As System.EventArgs) Handles Me.Load
      CustomInvoice_LineTypesTableAdapter.Fill(Ds_Invoicing.CustomInvoice_LineTypes)

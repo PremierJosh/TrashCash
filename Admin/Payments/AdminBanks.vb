@@ -42,6 +42,13 @@ Namespace Admin.Payments
             End Set
         End Property
 
+        Private Sub AdminBanks_FormClosing(sender As Object, e As System.Windows.Forms.FormClosingEventArgs) Handles Me.FormClosing
+            If (e.CloseReason <> CloseReason.ApplicationExitCall) Then
+                e.Cancel = True
+                Hide()
+            End If
+        End Sub
+
         Private Sub BankMaint_Load(sender As Object, e As System.EventArgs) Handles MyBase.Load
             ' bind combo boxes to qb items
             BindCmbs()
