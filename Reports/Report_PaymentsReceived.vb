@@ -14,7 +14,7 @@
                 ta.FillByBatchID(Report_DataSet.ReceivedPaymentsOnDay, cmb_BatchHistory.SelectedValue)
                 ' create header row for date range display
                 Dim hRow As DS_Reports.ReportHeadersRow = Report_DataSet.ReportHeaders.NewReportHeadersRow
-                hRow.HeaderText = "For Batch: " & cmb_BatchHistory.GetItemText(cmb_BatchHistory.SelectedItem).ToString
+                hRow.HeaderText = "For Batch: " & cmb_BatchHistory.Text
                 Report_DataSet.ReportHeaders.AddReportHeadersRow(hRow)
             End If
 

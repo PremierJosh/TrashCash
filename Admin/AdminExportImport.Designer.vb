@@ -49,11 +49,11 @@
             Me.btn_AddCustInv = New System.Windows.Forms.Button()
             Me.lbl_CustInvImport = New System.Windows.Forms.Label()
             Me.Panel2 = New System.Windows.Forms.Panel()
+            Me.btn_AddCheckBounce = New System.Windows.Forms.Button()
+            Me.cmb_BankAccs = New System.Windows.Forms.ComboBox()
             Me.lbl_PrepCheckBounce = New System.Windows.Forms.Label()
             Me.ServiceTypesTableAdapter = New TrashCash.ds_TypesTableAdapters.ServiceTypesTableAdapter()
             Me.CustomInvoice_LineTypesTableAdapter = New TrashCash.ds_InvoicingTableAdapters.CustomInvoice_LineTypesTableAdapter()
-            Me.cmb_BankAccs = New System.Windows.Forms.ComboBox()
-            Me.btn_AddCheckBounce = New System.Windows.Forms.Button()
             Me.FlowLayoutPanel1.SuspendLayout()
             Me.pnl_CustAdd.SuspendLayout()
             Me.Panel1.SuspendLayout()
@@ -232,7 +232,7 @@
             'btn_AddInvType
             '
             Me.btn_AddInvType.AutoSize = True
-            Me.btn_AddInvType.Location = New System.Drawing.Point(493, 40)
+            Me.btn_AddInvType.Location = New System.Drawing.Point(490, 11)
             Me.btn_AddInvType.Name = "btn_AddInvType"
             Me.btn_AddInvType.Size = New System.Drawing.Size(87, 23)
             Me.btn_AddInvType.TabIndex = 6
@@ -244,7 +244,7 @@
             Me.cmb_InvTypes.DataSource = Me.CustomInvoiceLineTypesBindingSource
             Me.cmb_InvTypes.DisplayMember = "NAME"
             Me.cmb_InvTypes.FormattingEnabled = True
-            Me.cmb_InvTypes.Location = New System.Drawing.Point(360, 42)
+            Me.cmb_InvTypes.Location = New System.Drawing.Point(357, 13)
             Me.cmb_InvTypes.Name = "cmb_InvTypes"
             Me.cmb_InvTypes.Size = New System.Drawing.Size(130, 21)
             Me.cmb_InvTypes.TabIndex = 5
@@ -263,7 +263,7 @@
             'lbl_ImportInvType
             '
             Me.lbl_ImportInvType.AutoSize = True
-            Me.lbl_ImportInvType.Location = New System.Drawing.Point(8, 45)
+            Me.lbl_ImportInvType.Location = New System.Drawing.Point(5, 16)
             Me.lbl_ImportInvType.Name = "lbl_ImportInvType"
             Me.lbl_ImportInvType.Size = New System.Drawing.Size(346, 13)
             Me.lbl_ImportInvType.TabIndex = 3
@@ -272,7 +272,7 @@
             'btn_AddCustInv
             '
             Me.btn_AddCustInv.AutoSize = True
-            Me.btn_AddCustInv.Location = New System.Drawing.Point(474, 3)
+            Me.btn_AddCustInv.Location = New System.Drawing.Point(486, 56)
             Me.btn_AddCustInv.Name = "btn_AddCustInv"
             Me.btn_AddCustInv.Size = New System.Drawing.Size(79, 23)
             Me.btn_AddCustInv.TabIndex = 2
@@ -282,7 +282,7 @@
             'lbl_CustInvImport
             '
             Me.lbl_CustInvImport.AutoSize = True
-            Me.lbl_CustInvImport.Location = New System.Drawing.Point(5, 8)
+            Me.lbl_CustInvImport.Location = New System.Drawing.Point(17, 61)
             Me.lbl_CustInvImport.Name = "lbl_CustInvImport"
             Me.lbl_CustInvImport.Size = New System.Drawing.Size(376, 13)
             Me.lbl_CustInvImport.TabIndex = 0
@@ -299,6 +299,24 @@
             Me.Panel2.Name = "Panel2"
             Me.Panel2.Size = New System.Drawing.Size(585, 91)
             Me.Panel2.TabIndex = 5
+            '
+            'btn_AddCheckBounce
+            '
+            Me.btn_AddCheckBounce.AutoSize = True
+            Me.btn_AddCheckBounce.Location = New System.Drawing.Point(257, 30)
+            Me.btn_AddCheckBounce.Name = "btn_AddCheckBounce"
+            Me.btn_AddCheckBounce.Size = New System.Drawing.Size(138, 23)
+            Me.btn_AddCheckBounce.TabIndex = 2
+            Me.btn_AddCheckBounce.Text = "Add Check Bounce Items"
+            Me.btn_AddCheckBounce.UseVisualStyleBackColor = True
+            '
+            'cmb_BankAccs
+            '
+            Me.cmb_BankAccs.FormattingEnabled = True
+            Me.cmb_BankAccs.Location = New System.Drawing.Point(61, 30)
+            Me.cmb_BankAccs.Name = "cmb_BankAccs"
+            Me.cmb_BankAccs.Size = New System.Drawing.Size(154, 21)
+            Me.cmb_BankAccs.TabIndex = 1
             '
             'lbl_PrepCheckBounce
             '
@@ -318,24 +336,6 @@
             'CustomInvoice_LineTypesTableAdapter
             '
             Me.CustomInvoice_LineTypesTableAdapter.ClearBeforeFill = True
-            '
-            'cmb_BankAccs
-            '
-            Me.cmb_BankAccs.FormattingEnabled = True
-            Me.cmb_BankAccs.Location = New System.Drawing.Point(61, 30)
-            Me.cmb_BankAccs.Name = "cmb_BankAccs"
-            Me.cmb_BankAccs.Size = New System.Drawing.Size(154, 21)
-            Me.cmb_BankAccs.TabIndex = 1
-            '
-            'btn_AddCheckBounce
-            '
-            Me.btn_AddCheckBounce.AutoSize = True
-            Me.btn_AddCheckBounce.Location = New System.Drawing.Point(257, 30)
-            Me.btn_AddCheckBounce.Name = "btn_AddCheckBounce"
-            Me.btn_AddCheckBounce.Size = New System.Drawing.Size(138, 23)
-            Me.btn_AddCheckBounce.TabIndex = 2
-            Me.btn_AddCheckBounce.Text = "Add Check Bounce Items"
-            Me.btn_AddCheckBounce.UseVisualStyleBackColor = True
             '
             'AdminExportImport
             '

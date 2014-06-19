@@ -79,7 +79,7 @@ Namespace Admin.Payments
                 If (cmb_MoveToCust.SelectedValue <> cmb_CurrCustomer.SelectedValue) Then
                     ' prompting to confirm move
                     Dim result As DialogResult = MessageBox.Show("Move payment for " & FormatCurrency(PaymentHistoryRow.Amount) & ", receieved on " & FormatDateTime(PaymentHistoryRow.DateReceived, DateFormat.GeneralDate) & " for " & _
-                                                                 "Customer: " & cmb_CurrCustomer.GetItemText(cmb_CurrCustomer.SelectedItem) & vbCrLf & "To Customer: " & cmb_MoveToCust.GetItemText(cmb_MoveToCust.SelectedItem) & "?", "Confirm moving payment", MessageBoxButtons.YesNo, MessageBoxIcon.Question)
+                                                                 "Customer: " & cmb_CurrCustomer.Text & vbCrLf & "To Customer: " & cmb_MoveToCust.Text & "?", "Confirm moving payment", MessageBoxButtons.YesNo, MessageBoxIcon.Question)
 
                     If (result = DialogResult.Yes) Then
                         Try

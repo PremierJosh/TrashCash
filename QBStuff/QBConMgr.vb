@@ -12,7 +12,7 @@ Namespace QBStuff
             Dim connected As Boolean = False
             SessionManager = New QBSessionManager()
             ' attempt to start qbfc services
-            StartQBFCServices()
+            'StartQBFCServices()
             While Not connected
                 Try
                    ' get connection

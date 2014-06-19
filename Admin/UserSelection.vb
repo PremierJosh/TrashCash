@@ -27,7 +27,7 @@
             Cursor = Cursors.WaitCursor
 
             Dim userID As Integer
-            userID = UserTA.Authenticate(cmb_Users.GetItemText(cmb_Users.SelectedItem).ToString, mtb_Password.Text)
+            userID = UserTA.Authenticate(cmb_Users.Text, mtb_Password.Text)
 
             ' checking if this is for a pw change
             If (_pwChange) Then

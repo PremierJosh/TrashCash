@@ -126,6 +126,10 @@ Namespace Admin.Payments
 
         Private Sub btn_AddBank_Click(sender As System.Object, e As System.EventArgs) Handles btn_AddBank.Click
             BankRow = Payments.Bad_Check_Banks.NewBad_Check_BanksRow
+            'setting default text
+            If (cmb_BankAccs.Text IsNot Nothing) Then
+                tb_BankName.Text = cmb_BankAccs.Text
+            End If
         End Sub
 
         Private Function ValidForEntry() As Boolean
@@ -168,5 +172,9 @@ Namespace Admin.Payments
                 Return False
             End If
         End Function
+
+        Private Sub cmb_BankAccs_SelectionChangeCommitted(sender As System.Object, e As System.EventArgs) Handles cmb_BankAccs.SelectionChangeCommitted
+            tb_BankName.Text = cmb_BankAccs.Text
+        End Sub
     End Class
 End Namespace

@@ -105,8 +105,9 @@ Namespace Admin
 
    
         Public Sub Items_ImportAllMissingListID(sender As System.Object, e As System.EventArgs) Handles btn_AddSrvcs.Click
-            Dim result As MsgBoxResult = MsgBox("Please make sure the correct Account is selected above.", MsgBoxStyle.YesNo)
+            Dim result As MsgBoxResult = MsgBox("Please make sure the correct Income Account is selected.", MsgBoxStyle.YesNo)
             If (result = MsgBoxResult.Yes) Then
+                Dim err As Boolean = False
                 Dim dt As ds_Types.ServiceTypesDataTable = ServiceTypesTableAdapter.GetData
                 For Each row As ds_Types.ServiceTypesRow In dt.Rows
                     If (row.IsServiceListIDNull = True) Then
@@ -133,10 +134,16 @@ Namespace Admin
                             End Try
 
                         Else
+                            err = True
                             QBMethods.ResponseErr_Misc(resp)
                         End If
                     End If
                 Next row
+                If (Not err) Then
+                    MsgBox("Items added")
+                Else
+                    MsgBox("Error adding items")
+                End If
             End If
         End Sub
 
@@ -255,7 +262,7 @@ Namespace Admin
                 '3 - Carl S. Bradley Bad Check - "Bad check amount" (Carl S. Bradley Account) - this is the item that goes on the inv for the bounced amount
                 Dim bankItem As New QBItemObj
                 With bankItem
-                    .ItemName = cmb_BankAccs.GetItemText(cmb_BankAccs.SelectedItem) & " Bad Check"
+                    .ItemName = cmb_BankAccs.Text & " Bad Check"
                     .IncomeAccountListID = cmb_BankAccs.SelectedValue
                     .Desc = "Bad check amount"
                 End With
@@ -263,8 +270,8 @@ Namespace Admin
                 ' this isn't set on any row, but will be used when setting up the bank
                 ' now need to create the vendor thqts used to pay the fee from the bank via check
                 Dim newVendor As IVendorAdd = GlobalConMgr.MessageSetRequest.AppendVendorAddRq
-                newVendor.Name.SetValue(cmb_BankAccs.GetItemText(cmb_BankAccs.SelectedItem) & " Fees")
-                newVendor.CompanyName.SetValue(cmb_BankAccs.GetItemText(cmb_BankAccs.SelectedItem))
+                newVendor.Name.SetValue(cmb_BankAccs.Text & " Fees")
+                newVendor.CompanyName.SetValue(cmb_BankAccs.Text)
                 Dim resp As IResponse = GlobalConMgr.GetRespList.GetAt(0)
                 If (resp.StatusCode <> 0) Then
                     QBMethods.ResponseErr_Misc(resp)

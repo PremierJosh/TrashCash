@@ -82,7 +82,7 @@ Namespace Admin.Payments
 
         Private Sub Cmb_Banks_SelectionChangeCommitted(sender As ComboBox, e As EventArgs) Handles cmb_Banks.SelectionChangeCommitted
             If (cmb_Banks.SelectedValue IsNot Nothing) Then
-                BankRow = DirectCast(cmb_Banks.SelectedItem, ds_Payments.Bad_Check_BanksRow)
+                BankRow = CType(cmb_Banks.SelectedItem, DataRowView).Row
             End If
         End Sub
 
