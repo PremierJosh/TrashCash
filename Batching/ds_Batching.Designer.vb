@@ -2068,6 +2068,8 @@ Partial Public Class ds_Batching
         
         Private columnCompletedSubtotal As Global.System.Data.DataColumn
         
+        Private columnErrCount As Global.System.Data.DataColumn
+        
         Private columnCanceled As Global.System.Data.DataColumn
         
         Private columnStartTime As Global.System.Data.DataColumn
@@ -2165,6 +2167,14 @@ Partial Public Class ds_Batching
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        Public ReadOnly Property ErrCountColumn() As Global.System.Data.DataColumn
+            Get
+                Return Me.columnErrCount
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
         Public ReadOnly Property CanceledColumn() As Global.System.Data.DataColumn
             Get
                 Return Me.columnCanceled
@@ -2248,9 +2258,9 @@ Partial Public Class ds_Batching
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Overloads Function AddBatch_InvoicesRow(ByVal TargetedBillDate As Date, ByVal StartCount As Integer, ByVal StartSubtotal As Decimal, ByVal CompletedCount As Integer, ByVal CompletedSubtotal As Decimal, ByVal Canceled As Boolean, ByVal StartTime As Date, ByVal StartUser As String, ByVal EndTime As String, ByVal EndUser As String, ByVal ConnInterrupt As Boolean) As Batch_InvoicesRow
+        Public Overloads Function AddBatch_InvoicesRow(ByVal TargetedBillDate As Date, ByVal StartCount As Integer, ByVal StartSubtotal As Decimal, ByVal CompletedCount As Integer, ByVal CompletedSubtotal As Decimal, ByVal ErrCount As Integer, ByVal Canceled As Boolean, ByVal StartTime As Date, ByVal StartUser As String, ByVal EndTime As String, ByVal EndUser As String, ByVal ConnInterrupt As Boolean) As Batch_InvoicesRow
             Dim rowBatch_InvoicesRow As Batch_InvoicesRow = CType(Me.NewRow,Batch_InvoicesRow)
-            Dim columnValuesArray() As Object = New Object() {Nothing, TargetedBillDate, StartCount, StartSubtotal, CompletedCount, CompletedSubtotal, Canceled, StartTime, StartUser, EndTime, EndUser, ConnInterrupt}
+            Dim columnValuesArray() As Object = New Object() {Nothing, TargetedBillDate, StartCount, StartSubtotal, CompletedCount, CompletedSubtotal, ErrCount, Canceled, StartTime, StartUser, EndTime, EndUser, ConnInterrupt}
             rowBatch_InvoicesRow.ItemArray = columnValuesArray
             Me.Rows.Add(rowBatch_InvoicesRow)
             Return rowBatch_InvoicesRow
@@ -2285,6 +2295,7 @@ Partial Public Class ds_Batching
             Me.columnStartSubtotal = MyBase.Columns("StartSubtotal")
             Me.columnCompletedCount = MyBase.Columns("CompletedCount")
             Me.columnCompletedSubtotal = MyBase.Columns("CompletedSubtotal")
+            Me.columnErrCount = MyBase.Columns("ErrCount")
             Me.columnCanceled = MyBase.Columns("Canceled")
             Me.columnStartTime = MyBase.Columns("StartTime")
             Me.columnStartUser = MyBase.Columns("StartUser")
@@ -2308,6 +2319,8 @@ Partial Public Class ds_Batching
             MyBase.Columns.Add(Me.columnCompletedCount)
             Me.columnCompletedSubtotal = New Global.System.Data.DataColumn("CompletedSubtotal", GetType(Decimal), Nothing, Global.System.Data.MappingType.Element)
             MyBase.Columns.Add(Me.columnCompletedSubtotal)
+            Me.columnErrCount = New Global.System.Data.DataColumn("ErrCount", GetType(Integer), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnErrCount)
             Me.columnCanceled = New Global.System.Data.DataColumn("Canceled", GetType(Boolean), Nothing, Global.System.Data.MappingType.Element)
             MyBase.Columns.Add(Me.columnCanceled)
             Me.columnStartTime = New Global.System.Data.DataColumn("StartTime", GetType(Date), Nothing, Global.System.Data.MappingType.Element)
@@ -2484,6 +2497,8 @@ Partial Public Class ds_Batching
         
         Private columnCompletedSubtotal As Global.System.Data.DataColumn
         
+        Private columnErrCount As Global.System.Data.DataColumn
+        
         Private columnCanceled As Global.System.Data.DataColumn
         
         Private columnStartTime As Global.System.Data.DataColumn
@@ -2573,6 +2588,14 @@ Partial Public Class ds_Batching
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        Public ReadOnly Property ErrCountColumn() As Global.System.Data.DataColumn
+            Get
+                Return Me.columnErrCount
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
         Public ReadOnly Property CanceledColumn() As Global.System.Data.DataColumn
             Get
                 Return Me.columnCanceled
@@ -2656,9 +2679,9 @@ Partial Public Class ds_Batching
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Overloads Function AddBatch_PaymentsRow(ByVal StartCount As Integer, ByVal StartTotal As Decimal, ByVal CompletedCount As Integer, ByVal CompletedSubtotal As Decimal, ByVal Canceled As Boolean, ByVal StartTime As Date, ByVal StartUser As String, ByVal EndTime As String, ByVal EndUser As String, ByVal ConnInterrupt As Boolean) As Batch_PaymentsRow
+        Public Overloads Function AddBatch_PaymentsRow(ByVal StartCount As Integer, ByVal StartTotal As Decimal, ByVal CompletedCount As Integer, ByVal CompletedSubtotal As Decimal, ByVal ErrCount As Integer, ByVal Canceled As Boolean, ByVal StartTime As Date, ByVal StartUser As String, ByVal EndTime As String, ByVal EndUser As String, ByVal ConnInterrupt As Boolean) As Batch_PaymentsRow
             Dim rowBatch_PaymentsRow As Batch_PaymentsRow = CType(Me.NewRow,Batch_PaymentsRow)
-            Dim columnValuesArray() As Object = New Object() {Nothing, StartCount, StartTotal, CompletedCount, CompletedSubtotal, Canceled, StartTime, StartUser, EndTime, EndUser, ConnInterrupt}
+            Dim columnValuesArray() As Object = New Object() {Nothing, StartCount, StartTotal, CompletedCount, CompletedSubtotal, ErrCount, Canceled, StartTime, StartUser, EndTime, EndUser, ConnInterrupt}
             rowBatch_PaymentsRow.ItemArray = columnValuesArray
             Me.Rows.Add(rowBatch_PaymentsRow)
             Return rowBatch_PaymentsRow
@@ -2692,6 +2715,7 @@ Partial Public Class ds_Batching
             Me.columnStartTotal = MyBase.Columns("StartTotal")
             Me.columnCompletedCount = MyBase.Columns("CompletedCount")
             Me.columnCompletedSubtotal = MyBase.Columns("CompletedSubtotal")
+            Me.columnErrCount = MyBase.Columns("ErrCount")
             Me.columnCanceled = MyBase.Columns("Canceled")
             Me.columnStartTime = MyBase.Columns("StartTime")
             Me.columnStartUser = MyBase.Columns("StartUser")
@@ -2713,6 +2737,8 @@ Partial Public Class ds_Batching
             MyBase.Columns.Add(Me.columnCompletedCount)
             Me.columnCompletedSubtotal = New Global.System.Data.DataColumn("CompletedSubtotal", GetType(Decimal), Nothing, Global.System.Data.MappingType.Element)
             MyBase.Columns.Add(Me.columnCompletedSubtotal)
+            Me.columnErrCount = New Global.System.Data.DataColumn("ErrCount", GetType(Integer), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnErrCount)
             Me.columnCanceled = New Global.System.Data.DataColumn("Canceled", GetType(Boolean), Nothing, Global.System.Data.MappingType.Element)
             MyBase.Columns.Add(Me.columnCanceled)
             Me.columnStartTime = New Global.System.Data.DataColumn("StartTime", GetType(Date), Nothing, Global.System.Data.MappingType.Element)
@@ -3877,6 +3903,21 @@ Partial Public Class ds_Batching
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        Public Property ErrCount() As Integer
+            Get
+                Try 
+                    Return CType(Me(Me.tableBatch_Invoices.ErrCountColumn),Integer)
+                Catch e As Global.System.InvalidCastException
+                    Throw New Global.System.Data.StrongTypingException("The value for column 'ErrCount' in table 'Batch_Invoices' is DBNull.", e)
+                End Try
+            End Get
+            Set
+                Me(Me.tableBatch_Invoices.ErrCountColumn) = value
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
         Public Property Canceled() As Boolean
             Get
                 Return CType(Me(Me.tableBatch_Invoices.CanceledColumn),Boolean)
@@ -3971,6 +4012,18 @@ Partial Public Class ds_Batching
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
         Public Sub SetCompletedSubtotalNull()
             Me(Me.tableBatch_Invoices.CompletedSubtotalColumn) = Global.System.Convert.DBNull
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        Public Function IsErrCountNull() As Boolean
+            Return Me.IsNull(Me.tableBatch_Invoices.ErrCountColumn)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        Public Sub SetErrCountNull()
+            Me(Me.tableBatch_Invoices.ErrCountColumn) = Global.System.Convert.DBNull
         End Sub
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
@@ -4078,6 +4131,21 @@ Partial Public Class ds_Batching
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        Public Property ErrCount() As Integer
+            Get
+                Try 
+                    Return CType(Me(Me.tableBatch_Payments.ErrCountColumn),Integer)
+                Catch e As Global.System.InvalidCastException
+                    Throw New Global.System.Data.StrongTypingException("The value for column 'ErrCount' in table 'Batch_Payments' is DBNull.", e)
+                End Try
+            End Get
+            Set
+                Me(Me.tableBatch_Payments.ErrCountColumn) = value
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
         Public Property Canceled() As Boolean
             Get
                 Return CType(Me(Me.tableBatch_Payments.CanceledColumn),Boolean)
@@ -4172,6 +4240,18 @@ Partial Public Class ds_Batching
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
         Public Sub SetCompletedSubtotalNull()
             Me(Me.tableBatch_Payments.CompletedSubtotalColumn) = Global.System.Convert.DBNull
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        Public Function IsErrCountNull() As Boolean
+            Return Me.IsNull(Me.tableBatch_Payments.ErrCountColumn)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        Public Sub SetErrCountNull()
+            Me(Me.tableBatch_Payments.ErrCountColumn) = Global.System.Convert.DBNull
         End Sub
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
@@ -5990,6 +6070,7 @@ Namespace ds_BatchingTableAdapters
             tableMapping.ColumnMappings.Add("StartSubtotal", "StartSubtotal")
             tableMapping.ColumnMappings.Add("CompletedCount", "CompletedCount")
             tableMapping.ColumnMappings.Add("CompletedSubtotal", "CompletedSubtotal")
+            tableMapping.ColumnMappings.Add("ErrCount", "ErrCount")
             tableMapping.ColumnMappings.Add("Canceled", "Canceled")
             tableMapping.ColumnMappings.Add("StartTime", "StartTime")
             tableMapping.ColumnMappings.Add("StartUser", "StartUser")
@@ -6001,51 +6082,55 @@ Namespace ds_BatchingTableAdapters
             Me._adapter.InsertCommand.Connection = Me.Connection
             Me._adapter.InsertCommand.CommandText = "dbo.Batch_Invoices_Insert"
             Me._adapter.InsertCommand.CommandType = Global.System.Data.CommandType.StoredProcedure
-            Me._adapter.InsertCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@RETURN_VALUE", Global.System.Data.SqlDbType.[Variant], 0, Global.System.Data.ParameterDirection.ReturnValue, 0, 0, Nothing, Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
-            Me._adapter.InsertCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@TargetedBillDate", Global.System.Data.SqlDbType.[Date], 0, Global.System.Data.ParameterDirection.Input, 0, 0, "TargetedBillDate", Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
-            Me._adapter.InsertCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@StartCount", Global.System.Data.SqlDbType.Int, 0, Global.System.Data.ParameterDirection.Input, 0, 0, "StartCount", Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
-            Me._adapter.InsertCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@StartSubtotal", Global.System.Data.SqlDbType.[Decimal], 0, Global.System.Data.ParameterDirection.Input, 18, 2, "StartSubtotal", Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
-            Me._adapter.InsertCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@CompletedCount", Global.System.Data.SqlDbType.Int, 0, Global.System.Data.ParameterDirection.Input, 0, 0, "CompletedCount", Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
-            Me._adapter.InsertCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@CompletedSubtotal", Global.System.Data.SqlDbType.[Decimal], 0, Global.System.Data.ParameterDirection.Input, 18, 2, "CompletedSubtotal", Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
-            Me._adapter.InsertCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@Canceled", Global.System.Data.SqlDbType.Bit, 0, Global.System.Data.ParameterDirection.Input, 0, 0, "Canceled", Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
-            Me._adapter.InsertCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@StartTime", Global.System.Data.SqlDbType.DateTime, 0, Global.System.Data.ParameterDirection.Input, 0, 0, "StartTime", Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
-            Me._adapter.InsertCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@StartUser", Global.System.Data.SqlDbType.VarChar, 0, Global.System.Data.ParameterDirection.Input, 0, 0, "StartUser", Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
-            Me._adapter.InsertCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@EndTime", Global.System.Data.SqlDbType.VarChar, 0, Global.System.Data.ParameterDirection.Input, 0, 0, "EndTime", Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
-            Me._adapter.InsertCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@EndUser", Global.System.Data.SqlDbType.VarChar, 0, Global.System.Data.ParameterDirection.Input, 0, 0, "EndUser", Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
-            Me._adapter.InsertCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@ConnInterrupt", Global.System.Data.SqlDbType.Bit, 0, Global.System.Data.ParameterDirection.Input, 0, 0, "ConnInterrupt", Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
+            Me._adapter.InsertCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@RETURN_VALUE", Global.System.Data.SqlDbType.Int, 4, Global.System.Data.ParameterDirection.ReturnValue, 10, 0, Nothing, Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
+            Me._adapter.InsertCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@TargetedBillDate", Global.System.Data.SqlDbType.[Date], 3, Global.System.Data.ParameterDirection.Input, 10, 0, "TargetedBillDate", Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
+            Me._adapter.InsertCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@StartCount", Global.System.Data.SqlDbType.Int, 4, Global.System.Data.ParameterDirection.Input, 10, 0, "StartCount", Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
+            Me._adapter.InsertCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@StartSubtotal", Global.System.Data.SqlDbType.[Decimal], 9, Global.System.Data.ParameterDirection.Input, 18, 2, "StartSubtotal", Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
+            Me._adapter.InsertCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@CompletedCount", Global.System.Data.SqlDbType.Int, 4, Global.System.Data.ParameterDirection.Input, 10, 0, "CompletedCount", Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
+            Me._adapter.InsertCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@CompletedSubtotal", Global.System.Data.SqlDbType.[Decimal], 9, Global.System.Data.ParameterDirection.Input, 18, 2, "CompletedSubtotal", Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
+            Me._adapter.InsertCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@ErrCount", Global.System.Data.SqlDbType.Int, 4, Global.System.Data.ParameterDirection.Input, 10, 0, "ErrCount", Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
+            Me._adapter.InsertCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@Canceled", Global.System.Data.SqlDbType.Bit, 1, Global.System.Data.ParameterDirection.Input, 1, 0, "Canceled", Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
+            Me._adapter.InsertCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@StartTime", Global.System.Data.SqlDbType.DateTime, 8, Global.System.Data.ParameterDirection.Input, 23, 3, "StartTime", Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
+            Me._adapter.InsertCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@StartUser", Global.System.Data.SqlDbType.VarChar, 50, Global.System.Data.ParameterDirection.Input, 0, 0, "StartUser", Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
+            Me._adapter.InsertCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@EndTime", Global.System.Data.SqlDbType.VarChar, 50, Global.System.Data.ParameterDirection.Input, 0, 0, "EndTime", Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
+            Me._adapter.InsertCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@EndUser", Global.System.Data.SqlDbType.VarChar, 50, Global.System.Data.ParameterDirection.Input, 0, 0, "EndUser", Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
+            Me._adapter.InsertCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@ConnInterrupt", Global.System.Data.SqlDbType.Bit, 1, Global.System.Data.ParameterDirection.Input, 1, 0, "ConnInterrupt", Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
             Me._adapter.UpdateCommand = New Global.System.Data.SqlClient.SqlCommand()
             Me._adapter.UpdateCommand.Connection = Me.Connection
             Me._adapter.UpdateCommand.CommandText = "dbo.Batch_Invoices_Update"
             Me._adapter.UpdateCommand.CommandType = Global.System.Data.CommandType.StoredProcedure
-            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@RETURN_VALUE", Global.System.Data.SqlDbType.[Variant], 0, Global.System.Data.ParameterDirection.ReturnValue, 0, 0, Nothing, Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
-            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@TargetedBillDate", Global.System.Data.SqlDbType.[Date], 0, Global.System.Data.ParameterDirection.Input, 0, 0, "TargetedBillDate", Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
-            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@StartCount", Global.System.Data.SqlDbType.Int, 0, Global.System.Data.ParameterDirection.Input, 0, 0, "StartCount", Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
-            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@StartSubtotal", Global.System.Data.SqlDbType.[Decimal], 0, Global.System.Data.ParameterDirection.Input, 18, 2, "StartSubtotal", Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
-            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@CompletedCount", Global.System.Data.SqlDbType.Int, 0, Global.System.Data.ParameterDirection.Input, 0, 0, "CompletedCount", Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
-            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@CompletedSubtotal", Global.System.Data.SqlDbType.[Decimal], 0, Global.System.Data.ParameterDirection.Input, 18, 2, "CompletedSubtotal", Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
-            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@Canceled", Global.System.Data.SqlDbType.Bit, 0, Global.System.Data.ParameterDirection.Input, 0, 0, "Canceled", Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
-            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@StartTime", Global.System.Data.SqlDbType.DateTime, 0, Global.System.Data.ParameterDirection.Input, 0, 0, "StartTime", Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
-            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@StartUser", Global.System.Data.SqlDbType.VarChar, 0, Global.System.Data.ParameterDirection.Input, 0, 0, "StartUser", Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
-            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@EndTime", Global.System.Data.SqlDbType.VarChar, 0, Global.System.Data.ParameterDirection.Input, 0, 0, "EndTime", Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
-            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@EndUser", Global.System.Data.SqlDbType.VarChar, 0, Global.System.Data.ParameterDirection.Input, 0, 0, "EndUser", Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
-            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@ConnInterrupt", Global.System.Data.SqlDbType.Bit, 0, Global.System.Data.ParameterDirection.Input, 0, 0, "ConnInterrupt", Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
-            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@Original_InvBatch_ID", Global.System.Data.SqlDbType.Int, 0, Global.System.Data.ParameterDirection.Input, 0, 0, "InvBatch_ID", Global.System.Data.DataRowVersion.Original, false, Nothing, "", "", ""))
-            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@Original_TargetedBillDate", Global.System.Data.SqlDbType.[Date], 0, Global.System.Data.ParameterDirection.Input, 0, 0, "TargetedBillDate", Global.System.Data.DataRowVersion.Original, false, Nothing, "", "", ""))
-            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@Original_StartCount", Global.System.Data.SqlDbType.Int, 0, Global.System.Data.ParameterDirection.Input, 0, 0, "StartCount", Global.System.Data.DataRowVersion.Original, false, Nothing, "", "", ""))
-            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@Original_StartSubtotal", Global.System.Data.SqlDbType.[Decimal], 0, Global.System.Data.ParameterDirection.Input, 18, 2, "StartSubtotal", Global.System.Data.DataRowVersion.Original, false, Nothing, "", "", ""))
-            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@IsNull_CompletedCount", Global.System.Data.SqlDbType.Int, 0, Global.System.Data.ParameterDirection.Input, 0, 0, "CompletedCount", Global.System.Data.DataRowVersion.Original, true, Nothing, "", "", ""))
-            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@Original_CompletedCount", Global.System.Data.SqlDbType.Int, 0, Global.System.Data.ParameterDirection.Input, 0, 0, "CompletedCount", Global.System.Data.DataRowVersion.Original, false, Nothing, "", "", ""))
-            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@IsNull_CompletedSubtotal", Global.System.Data.SqlDbType.Int, 0, Global.System.Data.ParameterDirection.Input, 0, 0, "CompletedSubtotal", Global.System.Data.DataRowVersion.Original, true, Nothing, "", "", ""))
-            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@Original_CompletedSubtotal", Global.System.Data.SqlDbType.[Decimal], 0, Global.System.Data.ParameterDirection.Input, 18, 2, "CompletedSubtotal", Global.System.Data.DataRowVersion.Original, false, Nothing, "", "", ""))
-            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@Original_Canceled", Global.System.Data.SqlDbType.Bit, 0, Global.System.Data.ParameterDirection.Input, 0, 0, "Canceled", Global.System.Data.DataRowVersion.Original, false, Nothing, "", "", ""))
-            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@Original_StartTime", Global.System.Data.SqlDbType.DateTime, 0, Global.System.Data.ParameterDirection.Input, 0, 0, "StartTime", Global.System.Data.DataRowVersion.Original, false, Nothing, "", "", ""))
-            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@Original_StartUser", Global.System.Data.SqlDbType.VarChar, 0, Global.System.Data.ParameterDirection.Input, 0, 0, "StartUser", Global.System.Data.DataRowVersion.Original, false, Nothing, "", "", ""))
-            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@IsNull_EndTime", Global.System.Data.SqlDbType.Int, 0, Global.System.Data.ParameterDirection.Input, 0, 0, "EndTime", Global.System.Data.DataRowVersion.Original, true, Nothing, "", "", ""))
-            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@Original_EndTime", Global.System.Data.SqlDbType.VarChar, 0, Global.System.Data.ParameterDirection.Input, 0, 0, "EndTime", Global.System.Data.DataRowVersion.Original, false, Nothing, "", "", ""))
-            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@IsNull_EndUser", Global.System.Data.SqlDbType.Int, 0, Global.System.Data.ParameterDirection.Input, 0, 0, "EndUser", Global.System.Data.DataRowVersion.Original, true, Nothing, "", "", ""))
-            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@Original_EndUser", Global.System.Data.SqlDbType.VarChar, 0, Global.System.Data.ParameterDirection.Input, 0, 0, "EndUser", Global.System.Data.DataRowVersion.Original, false, Nothing, "", "", ""))
-            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@Original_ConnInterrupt", Global.System.Data.SqlDbType.Bit, 0, Global.System.Data.ParameterDirection.Input, 0, 0, "ConnInterrupt", Global.System.Data.DataRowVersion.Original, false, Nothing, "", "", ""))
-            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@InvBatch_ID", Global.System.Data.SqlDbType.Int, 4, Global.System.Data.ParameterDirection.Input, 0, 0, "InvBatch_ID", Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
+            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@RETURN_VALUE", Global.System.Data.SqlDbType.Int, 4, Global.System.Data.ParameterDirection.ReturnValue, 10, 0, Nothing, Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
+            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@TargetedBillDate", Global.System.Data.SqlDbType.[Date], 3, Global.System.Data.ParameterDirection.Input, 10, 0, "TargetedBillDate", Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
+            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@StartCount", Global.System.Data.SqlDbType.Int, 4, Global.System.Data.ParameterDirection.Input, 10, 0, "StartCount", Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
+            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@StartSubtotal", Global.System.Data.SqlDbType.[Decimal], 9, Global.System.Data.ParameterDirection.Input, 18, 2, "StartSubtotal", Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
+            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@CompletedCount", Global.System.Data.SqlDbType.Int, 4, Global.System.Data.ParameterDirection.Input, 10, 0, "CompletedCount", Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
+            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@CompletedSubtotal", Global.System.Data.SqlDbType.[Decimal], 9, Global.System.Data.ParameterDirection.Input, 18, 2, "CompletedSubtotal", Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
+            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@ErrCount", Global.System.Data.SqlDbType.Int, 4, Global.System.Data.ParameterDirection.Input, 10, 0, "ErrCount", Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
+            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@Canceled", Global.System.Data.SqlDbType.Bit, 1, Global.System.Data.ParameterDirection.Input, 1, 0, "Canceled", Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
+            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@StartTime", Global.System.Data.SqlDbType.DateTime, 8, Global.System.Data.ParameterDirection.Input, 23, 3, "StartTime", Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
+            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@StartUser", Global.System.Data.SqlDbType.VarChar, 50, Global.System.Data.ParameterDirection.Input, 0, 0, "StartUser", Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
+            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@EndTime", Global.System.Data.SqlDbType.VarChar, 50, Global.System.Data.ParameterDirection.Input, 0, 0, "EndTime", Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
+            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@EndUser", Global.System.Data.SqlDbType.VarChar, 50, Global.System.Data.ParameterDirection.Input, 0, 0, "EndUser", Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
+            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@ConnInterrupt", Global.System.Data.SqlDbType.Bit, 1, Global.System.Data.ParameterDirection.Input, 1, 0, "ConnInterrupt", Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
+            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@Original_InvBatch_ID", Global.System.Data.SqlDbType.Int, 4, Global.System.Data.ParameterDirection.Input, 10, 0, "InvBatch_ID", Global.System.Data.DataRowVersion.Original, false, Nothing, "", "", ""))
+            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@Original_TargetedBillDate", Global.System.Data.SqlDbType.[Date], 3, Global.System.Data.ParameterDirection.Input, 10, 0, "TargetedBillDate", Global.System.Data.DataRowVersion.Original, false, Nothing, "", "", ""))
+            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@Original_StartCount", Global.System.Data.SqlDbType.Int, 4, Global.System.Data.ParameterDirection.Input, 10, 0, "StartCount", Global.System.Data.DataRowVersion.Original, false, Nothing, "", "", ""))
+            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@Original_StartSubtotal", Global.System.Data.SqlDbType.[Decimal], 9, Global.System.Data.ParameterDirection.Input, 18, 2, "StartSubtotal", Global.System.Data.DataRowVersion.Original, false, Nothing, "", "", ""))
+            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@IsNull_CompletedCount", Global.System.Data.SqlDbType.Int, 4, Global.System.Data.ParameterDirection.Input, 10, 0, "CompletedCount", Global.System.Data.DataRowVersion.Original, true, Nothing, "", "", ""))
+            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@Original_CompletedCount", Global.System.Data.SqlDbType.Int, 4, Global.System.Data.ParameterDirection.Input, 10, 0, "CompletedCount", Global.System.Data.DataRowVersion.Original, false, Nothing, "", "", ""))
+            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@IsNull_CompletedSubtotal", Global.System.Data.SqlDbType.Int, 4, Global.System.Data.ParameterDirection.Input, 10, 0, "CompletedSubtotal", Global.System.Data.DataRowVersion.Original, true, Nothing, "", "", ""))
+            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@Original_CompletedSubtotal", Global.System.Data.SqlDbType.[Decimal], 9, Global.System.Data.ParameterDirection.Input, 18, 2, "CompletedSubtotal", Global.System.Data.DataRowVersion.Original, false, Nothing, "", "", ""))
+            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@IsNull_ErrCount", Global.System.Data.SqlDbType.Int, 4, Global.System.Data.ParameterDirection.Input, 10, 0, "ErrCount", Global.System.Data.DataRowVersion.Original, true, Nothing, "", "", ""))
+            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@Original_ErrCount", Global.System.Data.SqlDbType.Int, 4, Global.System.Data.ParameterDirection.Input, 10, 0, "ErrCount", Global.System.Data.DataRowVersion.Original, false, Nothing, "", "", ""))
+            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@Original_Canceled", Global.System.Data.SqlDbType.Bit, 1, Global.System.Data.ParameterDirection.Input, 1, 0, "Canceled", Global.System.Data.DataRowVersion.Original, false, Nothing, "", "", ""))
+            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@Original_StartTime", Global.System.Data.SqlDbType.DateTime, 8, Global.System.Data.ParameterDirection.Input, 23, 3, "StartTime", Global.System.Data.DataRowVersion.Original, false, Nothing, "", "", ""))
+            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@Original_StartUser", Global.System.Data.SqlDbType.VarChar, 50, Global.System.Data.ParameterDirection.Input, 0, 0, "StartUser", Global.System.Data.DataRowVersion.Original, false, Nothing, "", "", ""))
+            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@IsNull_EndTime", Global.System.Data.SqlDbType.Int, 4, Global.System.Data.ParameterDirection.Input, 10, 0, "EndTime", Global.System.Data.DataRowVersion.Original, true, Nothing, "", "", ""))
+            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@Original_EndTime", Global.System.Data.SqlDbType.VarChar, 50, Global.System.Data.ParameterDirection.Input, 0, 0, "EndTime", Global.System.Data.DataRowVersion.Original, false, Nothing, "", "", ""))
+            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@IsNull_EndUser", Global.System.Data.SqlDbType.Int, 4, Global.System.Data.ParameterDirection.Input, 10, 0, "EndUser", Global.System.Data.DataRowVersion.Original, true, Nothing, "", "", ""))
+            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@Original_EndUser", Global.System.Data.SqlDbType.VarChar, 50, Global.System.Data.ParameterDirection.Input, 0, 0, "EndUser", Global.System.Data.DataRowVersion.Original, false, Nothing, "", "", ""))
+            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@Original_ConnInterrupt", Global.System.Data.SqlDbType.Bit, 1, Global.System.Data.ParameterDirection.Input, 1, 0, "ConnInterrupt", Global.System.Data.DataRowVersion.Original, false, Nothing, "", "", ""))
+            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@InvBatch_ID", Global.System.Data.SqlDbType.Int, 4, Global.System.Data.ParameterDirection.Input, 10, 0, "InvBatch_ID", Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
         End Sub
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
@@ -6058,22 +6143,25 @@ Namespace ds_BatchingTableAdapters
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
         Private Sub InitCommandCollection()
-            Me._commandCollection = New Global.System.Data.SqlClient.SqlCommand(0) {}
+            Me._commandCollection = New Global.System.Data.SqlClient.SqlCommand(1) {}
             Me._commandCollection(0) = New Global.System.Data.SqlClient.SqlCommand()
             Me._commandCollection(0).Connection = Me.Connection
-            Me._commandCollection(0).CommandText = "dbo.Batch_Invoices_SelectByID"
+            Me._commandCollection(0).CommandText = "dbo.Batch_Invoices_SelectNewest"
             Me._commandCollection(0).CommandType = Global.System.Data.CommandType.StoredProcedure
-            Me._commandCollection(0).Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@RETURN_VALUE", Global.System.Data.SqlDbType.[Variant], 0, Global.System.Data.ParameterDirection.ReturnValue, 0, 0, Nothing, Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
-            Me._commandCollection(0).Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@InvBatch_ID", Global.System.Data.SqlDbType.Int, 4, Global.System.Data.ParameterDirection.Input, 0, 0, "InvBatch_ID", Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
+            Me._commandCollection(0).Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@RETURN_VALUE", Global.System.Data.SqlDbType.Int, 4, Global.System.Data.ParameterDirection.ReturnValue, 10, 0, Nothing, Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
+            Me._commandCollection(1) = New Global.System.Data.SqlClient.SqlCommand()
+            Me._commandCollection(1).Connection = Me.Connection
+            Me._commandCollection(1).CommandText = "dbo.WorkingInvoice_QueueTotal"
+            Me._commandCollection(1).CommandType = Global.System.Data.CommandType.StoredProcedure
+            Me._commandCollection(1).Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@RETURN_VALUE", Global.System.Data.SqlDbType.Int, 4, Global.System.Data.ParameterDirection.ReturnValue, 10, 0, Nothing, Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
         End Sub
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0"),  _
          Global.System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter"),  _
          Global.System.ComponentModel.DataObjectMethodAttribute(Global.System.ComponentModel.DataObjectMethodType.[Select], true)>  _
-        Public Overloads Overridable Function GetDataByID(ByVal InvBatch_ID As Integer) As ds_Batching.Batch_InvoicesDataTable
+        Public Overloads Overridable Function GetNewest() As ds_Batching.Batch_InvoicesDataTable
             Me.Adapter.SelectCommand = Me.CommandCollection(0)
-            Me.Adapter.SelectCommand.Parameters(1).Value = CType(InvBatch_ID,Integer)
             Dim dataTable As ds_Batching.Batch_InvoicesDataTable = New ds_Batching.Batch_InvoicesDataTable()
             Me.Adapter.Fill(dataTable)
             Return dataTable
@@ -6111,10 +6199,22 @@ Namespace ds_BatchingTableAdapters
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0"),  _
          Global.System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter"),  _
          Global.System.ComponentModel.DataObjectMethodAttribute(Global.System.ComponentModel.DataObjectMethodType.Insert, true)>  _
-        Public Overloads Overridable Function Insert(ByVal TargetedBillDate As Date, ByVal StartCount As Integer, ByVal StartSubtotal As Decimal, ByVal CompletedCount As Global.System.Nullable(Of Integer), ByVal CompletedSubtotal As Global.System.Nullable(Of Decimal), ByVal Canceled As Boolean, ByVal StartTime As Date, ByVal StartUser As String, ByVal EndTime As String, ByVal EndUser As String, ByVal ConnInterrupt As Boolean) As Integer
-            Me.Adapter.InsertCommand.Parameters(1).Value = CType(TargetedBillDate,Date)
-            Me.Adapter.InsertCommand.Parameters(2).Value = CType(StartCount,Integer)
-            Me.Adapter.InsertCommand.Parameters(3).Value = CType(StartSubtotal,Decimal)
+        Public Overloads Overridable Function Insert(ByVal TargetedBillDate As Global.System.Nullable(Of Date), ByVal StartCount As Global.System.Nullable(Of Integer), ByVal StartSubtotal As Global.System.Nullable(Of Decimal), ByVal CompletedCount As Global.System.Nullable(Of Integer), ByVal CompletedSubtotal As Global.System.Nullable(Of Decimal), ByVal ErrCount As Global.System.Nullable(Of Integer), ByVal Canceled As Global.System.Nullable(Of Boolean), ByVal StartTime As Global.System.Nullable(Of Date), ByVal StartUser As String, ByVal EndTime As String, ByVal EndUser As String, ByVal ConnInterrupt As Global.System.Nullable(Of Boolean)) As Integer
+            If (TargetedBillDate.HasValue = true) Then
+                Me.Adapter.InsertCommand.Parameters(1).Value = CType(TargetedBillDate.Value,Date)
+            Else
+                Me.Adapter.InsertCommand.Parameters(1).Value = Global.System.DBNull.Value
+            End If
+            If (StartCount.HasValue = true) Then
+                Me.Adapter.InsertCommand.Parameters(2).Value = CType(StartCount.Value,Integer)
+            Else
+                Me.Adapter.InsertCommand.Parameters(2).Value = Global.System.DBNull.Value
+            End If
+            If (StartSubtotal.HasValue = true) Then
+                Me.Adapter.InsertCommand.Parameters(3).Value = CType(StartSubtotal.Value,Decimal)
+            Else
+                Me.Adapter.InsertCommand.Parameters(3).Value = Global.System.DBNull.Value
+            End If
             If (CompletedCount.HasValue = true) Then
                 Me.Adapter.InsertCommand.Parameters(4).Value = CType(CompletedCount.Value,Integer)
             Else
@@ -6125,24 +6225,41 @@ Namespace ds_BatchingTableAdapters
             Else
                 Me.Adapter.InsertCommand.Parameters(5).Value = Global.System.DBNull.Value
             End If
-            Me.Adapter.InsertCommand.Parameters(6).Value = CType(Canceled,Boolean)
-            Me.Adapter.InsertCommand.Parameters(7).Value = CType(StartTime,Date)
-            If (StartUser Is Nothing) Then
-                Throw New Global.System.ArgumentNullException("StartUser")
+            If (ErrCount.HasValue = true) Then
+                Me.Adapter.InsertCommand.Parameters(6).Value = CType(ErrCount.Value,Integer)
             Else
-                Me.Adapter.InsertCommand.Parameters(8).Value = CType(StartUser,String)
+                Me.Adapter.InsertCommand.Parameters(6).Value = Global.System.DBNull.Value
             End If
-            If (EndTime Is Nothing) Then
+            If (Canceled.HasValue = true) Then
+                Me.Adapter.InsertCommand.Parameters(7).Value = CType(Canceled.Value,Boolean)
+            Else
+                Me.Adapter.InsertCommand.Parameters(7).Value = Global.System.DBNull.Value
+            End If
+            If (StartTime.HasValue = true) Then
+                Me.Adapter.InsertCommand.Parameters(8).Value = CType(StartTime.Value,Date)
+            Else
+                Me.Adapter.InsertCommand.Parameters(8).Value = Global.System.DBNull.Value
+            End If
+            If (StartUser Is Nothing) Then
                 Me.Adapter.InsertCommand.Parameters(9).Value = Global.System.DBNull.Value
             Else
-                Me.Adapter.InsertCommand.Parameters(9).Value = CType(EndTime,String)
+                Me.Adapter.InsertCommand.Parameters(9).Value = CType(StartUser,String)
             End If
-            If (EndUser Is Nothing) Then
+            If (EndTime Is Nothing) Then
                 Me.Adapter.InsertCommand.Parameters(10).Value = Global.System.DBNull.Value
             Else
-                Me.Adapter.InsertCommand.Parameters(10).Value = CType(EndUser,String)
+                Me.Adapter.InsertCommand.Parameters(10).Value = CType(EndTime,String)
             End If
-            Me.Adapter.InsertCommand.Parameters(11).Value = CType(ConnInterrupt,Boolean)
+            If (EndUser Is Nothing) Then
+                Me.Adapter.InsertCommand.Parameters(11).Value = Global.System.DBNull.Value
+            Else
+                Me.Adapter.InsertCommand.Parameters(11).Value = CType(EndUser,String)
+            End If
+            If (ConnInterrupt.HasValue = true) Then
+                Me.Adapter.InsertCommand.Parameters(12).Value = CType(ConnInterrupt.Value,Boolean)
+            Else
+                Me.Adapter.InsertCommand.Parameters(12).Value = Global.System.DBNull.Value
+            End If
             Dim previousConnectionState As Global.System.Data.ConnectionState = Me.Adapter.InsertCommand.Connection.State
             If ((Me.Adapter.InsertCommand.Connection.State And Global.System.Data.ConnectionState.Open)  _
                         <> Global.System.Data.ConnectionState.Open) Then
@@ -6163,33 +6280,47 @@ Namespace ds_BatchingTableAdapters
          Global.System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter"),  _
          Global.System.ComponentModel.DataObjectMethodAttribute(Global.System.ComponentModel.DataObjectMethodType.Update, true)>  _
         Public Overloads Overridable Function Update( _
-                    ByVal TargetedBillDate As Date,  _
-                    ByVal StartCount As Integer,  _
-                    ByVal StartSubtotal As Decimal,  _
+                    ByVal TargetedBillDate As Global.System.Nullable(Of Date),  _
+                    ByVal StartCount As Global.System.Nullable(Of Integer),  _
+                    ByVal StartSubtotal As Global.System.Nullable(Of Decimal),  _
                     ByVal CompletedCount As Global.System.Nullable(Of Integer),  _
                     ByVal CompletedSubtotal As Global.System.Nullable(Of Decimal),  _
-                    ByVal Canceled As Boolean,  _
-                    ByVal StartTime As Date,  _
+                    ByVal ErrCount As Global.System.Nullable(Of Integer),  _
+                    ByVal Canceled As Global.System.Nullable(Of Boolean),  _
+                    ByVal StartTime As Global.System.Nullable(Of Date),  _
                     ByVal StartUser As String,  _
                     ByVal EndTime As String,  _
                     ByVal EndUser As String,  _
-                    ByVal ConnInterrupt As Boolean,  _
-                    ByVal Original_InvBatch_ID As Integer,  _
-                    ByVal Original_TargetedBillDate As Date,  _
-                    ByVal Original_StartCount As Integer,  _
-                    ByVal Original_StartSubtotal As Decimal,  _
+                    ByVal ConnInterrupt As Global.System.Nullable(Of Boolean),  _
+                    ByVal Original_InvBatch_ID As Global.System.Nullable(Of Integer),  _
+                    ByVal Original_TargetedBillDate As Global.System.Nullable(Of Date),  _
+                    ByVal Original_StartCount As Global.System.Nullable(Of Integer),  _
+                    ByVal Original_StartSubtotal As Global.System.Nullable(Of Decimal),  _
                     ByVal Original_CompletedCount As Global.System.Nullable(Of Integer),  _
                     ByVal Original_CompletedSubtotal As Global.System.Nullable(Of Decimal),  _
-                    ByVal Original_Canceled As Boolean,  _
-                    ByVal Original_StartTime As Date,  _
+                    ByVal Original_ErrCount As Global.System.Nullable(Of Integer),  _
+                    ByVal Original_Canceled As Global.System.Nullable(Of Boolean),  _
+                    ByVal Original_StartTime As Global.System.Nullable(Of Date),  _
                     ByVal Original_StartUser As String,  _
                     ByVal Original_EndTime As String,  _
                     ByVal Original_EndUser As String,  _
-                    ByVal Original_ConnInterrupt As Boolean,  _
-                    ByVal InvBatch_ID As Integer) As Integer
-            Me.Adapter.UpdateCommand.Parameters(1).Value = CType(TargetedBillDate,Date)
-            Me.Adapter.UpdateCommand.Parameters(2).Value = CType(StartCount,Integer)
-            Me.Adapter.UpdateCommand.Parameters(3).Value = CType(StartSubtotal,Decimal)
+                    ByVal Original_ConnInterrupt As Global.System.Nullable(Of Boolean),  _
+                    ByVal InvBatch_ID As Global.System.Nullable(Of Integer)) As Integer
+            If (TargetedBillDate.HasValue = true) Then
+                Me.Adapter.UpdateCommand.Parameters(1).Value = CType(TargetedBillDate.Value,Date)
+            Else
+                Me.Adapter.UpdateCommand.Parameters(1).Value = Global.System.DBNull.Value
+            End If
+            If (StartCount.HasValue = true) Then
+                Me.Adapter.UpdateCommand.Parameters(2).Value = CType(StartCount.Value,Integer)
+            Else
+                Me.Adapter.UpdateCommand.Parameters(2).Value = Global.System.DBNull.Value
+            End If
+            If (StartSubtotal.HasValue = true) Then
+                Me.Adapter.UpdateCommand.Parameters(3).Value = CType(StartSubtotal.Value,Decimal)
+            Else
+                Me.Adapter.UpdateCommand.Parameters(3).Value = Global.System.DBNull.Value
+            End If
             If (CompletedCount.HasValue = true) Then
                 Me.Adapter.UpdateCommand.Parameters(4).Value = CType(CompletedCount.Value,Integer)
             Else
@@ -6200,65 +6331,121 @@ Namespace ds_BatchingTableAdapters
             Else
                 Me.Adapter.UpdateCommand.Parameters(5).Value = Global.System.DBNull.Value
             End If
-            Me.Adapter.UpdateCommand.Parameters(6).Value = CType(Canceled,Boolean)
-            Me.Adapter.UpdateCommand.Parameters(7).Value = CType(StartTime,Date)
-            If (StartUser Is Nothing) Then
-                Throw New Global.System.ArgumentNullException("StartUser")
+            If (ErrCount.HasValue = true) Then
+                Me.Adapter.UpdateCommand.Parameters(6).Value = CType(ErrCount.Value,Integer)
             Else
-                Me.Adapter.UpdateCommand.Parameters(8).Value = CType(StartUser,String)
+                Me.Adapter.UpdateCommand.Parameters(6).Value = Global.System.DBNull.Value
             End If
-            If (EndTime Is Nothing) Then
+            If (Canceled.HasValue = true) Then
+                Me.Adapter.UpdateCommand.Parameters(7).Value = CType(Canceled.Value,Boolean)
+            Else
+                Me.Adapter.UpdateCommand.Parameters(7).Value = Global.System.DBNull.Value
+            End If
+            If (StartTime.HasValue = true) Then
+                Me.Adapter.UpdateCommand.Parameters(8).Value = CType(StartTime.Value,Date)
+            Else
+                Me.Adapter.UpdateCommand.Parameters(8).Value = Global.System.DBNull.Value
+            End If
+            If (StartUser Is Nothing) Then
                 Me.Adapter.UpdateCommand.Parameters(9).Value = Global.System.DBNull.Value
             Else
-                Me.Adapter.UpdateCommand.Parameters(9).Value = CType(EndTime,String)
+                Me.Adapter.UpdateCommand.Parameters(9).Value = CType(StartUser,String)
             End If
-            If (EndUser Is Nothing) Then
+            If (EndTime Is Nothing) Then
                 Me.Adapter.UpdateCommand.Parameters(10).Value = Global.System.DBNull.Value
             Else
-                Me.Adapter.UpdateCommand.Parameters(10).Value = CType(EndUser,String)
+                Me.Adapter.UpdateCommand.Parameters(10).Value = CType(EndTime,String)
             End If
-            Me.Adapter.UpdateCommand.Parameters(11).Value = CType(ConnInterrupt,Boolean)
-            Me.Adapter.UpdateCommand.Parameters(12).Value = CType(Original_InvBatch_ID,Integer)
-            Me.Adapter.UpdateCommand.Parameters(13).Value = CType(Original_TargetedBillDate,Date)
-            Me.Adapter.UpdateCommand.Parameters(14).Value = CType(Original_StartCount,Integer)
-            Me.Adapter.UpdateCommand.Parameters(15).Value = CType(Original_StartSubtotal,Decimal)
-            If (Original_CompletedCount.HasValue = true) Then
-                Me.Adapter.UpdateCommand.Parameters(16).Value = CType(0,Object)
-                Me.Adapter.UpdateCommand.Parameters(17).Value = CType(Original_CompletedCount.Value,Integer)
+            If (EndUser Is Nothing) Then
+                Me.Adapter.UpdateCommand.Parameters(11).Value = Global.System.DBNull.Value
             Else
-                Me.Adapter.UpdateCommand.Parameters(16).Value = CType(1,Object)
-                Me.Adapter.UpdateCommand.Parameters(17).Value = Global.System.DBNull.Value
+                Me.Adapter.UpdateCommand.Parameters(11).Value = CType(EndUser,String)
+            End If
+            If (ConnInterrupt.HasValue = true) Then
+                Me.Adapter.UpdateCommand.Parameters(12).Value = CType(ConnInterrupt.Value,Boolean)
+            Else
+                Me.Adapter.UpdateCommand.Parameters(12).Value = Global.System.DBNull.Value
+            End If
+            If (Original_InvBatch_ID.HasValue = true) Then
+                Me.Adapter.UpdateCommand.Parameters(13).Value = CType(Original_InvBatch_ID.Value,Integer)
+            Else
+                Me.Adapter.UpdateCommand.Parameters(13).Value = Global.System.DBNull.Value
+            End If
+            If (Original_TargetedBillDate.HasValue = true) Then
+                Me.Adapter.UpdateCommand.Parameters(14).Value = CType(Original_TargetedBillDate.Value,Date)
+            Else
+                Me.Adapter.UpdateCommand.Parameters(14).Value = Global.System.DBNull.Value
+            End If
+            If (Original_StartCount.HasValue = true) Then
+                Me.Adapter.UpdateCommand.Parameters(15).Value = CType(Original_StartCount.Value,Integer)
+            Else
+                Me.Adapter.UpdateCommand.Parameters(15).Value = Global.System.DBNull.Value
+            End If
+            If (Original_StartSubtotal.HasValue = true) Then
+                Me.Adapter.UpdateCommand.Parameters(16).Value = CType(Original_StartSubtotal.Value,Decimal)
+            Else
+                Me.Adapter.UpdateCommand.Parameters(16).Value = Global.System.DBNull.Value
+            End If
+            If (Original_CompletedCount.HasValue = true) Then
+                Me.Adapter.UpdateCommand.Parameters(17).Value = CType(0,Object)
+                Me.Adapter.UpdateCommand.Parameters(18).Value = CType(Original_CompletedCount.Value,Integer)
+            Else
+                Me.Adapter.UpdateCommand.Parameters(17).Value = CType(1,Object)
+                Me.Adapter.UpdateCommand.Parameters(18).Value = Global.System.DBNull.Value
             End If
             If (Original_CompletedSubtotal.HasValue = true) Then
-                Me.Adapter.UpdateCommand.Parameters(18).Value = CType(0,Object)
-                Me.Adapter.UpdateCommand.Parameters(19).Value = CType(Original_CompletedSubtotal.Value,Decimal)
+                Me.Adapter.UpdateCommand.Parameters(19).Value = CType(0,Object)
+                Me.Adapter.UpdateCommand.Parameters(20).Value = CType(Original_CompletedSubtotal.Value,Decimal)
             Else
-                Me.Adapter.UpdateCommand.Parameters(18).Value = CType(1,Object)
-                Me.Adapter.UpdateCommand.Parameters(19).Value = Global.System.DBNull.Value
+                Me.Adapter.UpdateCommand.Parameters(19).Value = CType(1,Object)
+                Me.Adapter.UpdateCommand.Parameters(20).Value = Global.System.DBNull.Value
             End If
-            Me.Adapter.UpdateCommand.Parameters(20).Value = CType(Original_Canceled,Boolean)
-            Me.Adapter.UpdateCommand.Parameters(21).Value = CType(Original_StartTime,Date)
-            If (Original_StartUser Is Nothing) Then
-                Throw New Global.System.ArgumentNullException("Original_StartUser")
+            If (Original_ErrCount.HasValue = true) Then
+                Me.Adapter.UpdateCommand.Parameters(21).Value = CType(0,Object)
+                Me.Adapter.UpdateCommand.Parameters(22).Value = CType(Original_ErrCount.Value,Integer)
             Else
-                Me.Adapter.UpdateCommand.Parameters(22).Value = CType(Original_StartUser,String)
+                Me.Adapter.UpdateCommand.Parameters(21).Value = CType(1,Object)
+                Me.Adapter.UpdateCommand.Parameters(22).Value = Global.System.DBNull.Value
+            End If
+            If (Original_Canceled.HasValue = true) Then
+                Me.Adapter.UpdateCommand.Parameters(23).Value = CType(Original_Canceled.Value,Boolean)
+            Else
+                Me.Adapter.UpdateCommand.Parameters(23).Value = Global.System.DBNull.Value
+            End If
+            If (Original_StartTime.HasValue = true) Then
+                Me.Adapter.UpdateCommand.Parameters(24).Value = CType(Original_StartTime.Value,Date)
+            Else
+                Me.Adapter.UpdateCommand.Parameters(24).Value = Global.System.DBNull.Value
+            End If
+            If (Original_StartUser Is Nothing) Then
+                Me.Adapter.UpdateCommand.Parameters(25).Value = Global.System.DBNull.Value
+            Else
+                Me.Adapter.UpdateCommand.Parameters(25).Value = CType(Original_StartUser,String)
             End If
             If (Original_EndTime Is Nothing) Then
-                Me.Adapter.UpdateCommand.Parameters(23).Value = CType(1,Object)
-                Me.Adapter.UpdateCommand.Parameters(24).Value = Global.System.DBNull.Value
+                Me.Adapter.UpdateCommand.Parameters(26).Value = CType(1,Object)
+                Me.Adapter.UpdateCommand.Parameters(27).Value = Global.System.DBNull.Value
             Else
-                Me.Adapter.UpdateCommand.Parameters(23).Value = CType(0,Object)
-                Me.Adapter.UpdateCommand.Parameters(24).Value = CType(Original_EndTime,String)
+                Me.Adapter.UpdateCommand.Parameters(26).Value = CType(0,Object)
+                Me.Adapter.UpdateCommand.Parameters(27).Value = CType(Original_EndTime,String)
             End If
             If (Original_EndUser Is Nothing) Then
-                Me.Adapter.UpdateCommand.Parameters(25).Value = CType(1,Object)
-                Me.Adapter.UpdateCommand.Parameters(26).Value = Global.System.DBNull.Value
+                Me.Adapter.UpdateCommand.Parameters(28).Value = CType(1,Object)
+                Me.Adapter.UpdateCommand.Parameters(29).Value = Global.System.DBNull.Value
             Else
-                Me.Adapter.UpdateCommand.Parameters(25).Value = CType(0,Object)
-                Me.Adapter.UpdateCommand.Parameters(26).Value = CType(Original_EndUser,String)
+                Me.Adapter.UpdateCommand.Parameters(28).Value = CType(0,Object)
+                Me.Adapter.UpdateCommand.Parameters(29).Value = CType(Original_EndUser,String)
             End If
-            Me.Adapter.UpdateCommand.Parameters(27).Value = CType(Original_ConnInterrupt,Boolean)
-            Me.Adapter.UpdateCommand.Parameters(28).Value = CType(InvBatch_ID,Integer)
+            If (Original_ConnInterrupt.HasValue = true) Then
+                Me.Adapter.UpdateCommand.Parameters(30).Value = CType(Original_ConnInterrupt.Value,Boolean)
+            Else
+                Me.Adapter.UpdateCommand.Parameters(30).Value = Global.System.DBNull.Value
+            End If
+            If (InvBatch_ID.HasValue = true) Then
+                Me.Adapter.UpdateCommand.Parameters(31).Value = CType(InvBatch_ID.Value,Integer)
+            Else
+                Me.Adapter.UpdateCommand.Parameters(31).Value = Global.System.DBNull.Value
+            End If
             Dim previousConnectionState As Global.System.Data.ConnectionState = Me.Adapter.UpdateCommand.Connection.State
             If ((Me.Adapter.UpdateCommand.Connection.State And Global.System.Data.ConnectionState.Open)  _
                         <> Global.System.Data.ConnectionState.Open) Then
@@ -6279,30 +6466,58 @@ Namespace ds_BatchingTableAdapters
          Global.System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter"),  _
          Global.System.ComponentModel.DataObjectMethodAttribute(Global.System.ComponentModel.DataObjectMethodType.Update, true)>  _
         Public Overloads Overridable Function Update( _
-                    ByVal TargetedBillDate As Date,  _
-                    ByVal StartCount As Integer,  _
-                    ByVal StartSubtotal As Decimal,  _
+                    ByVal TargetedBillDate As Global.System.Nullable(Of Date),  _
+                    ByVal StartCount As Global.System.Nullable(Of Integer),  _
+                    ByVal StartSubtotal As Global.System.Nullable(Of Decimal),  _
                     ByVal CompletedCount As Global.System.Nullable(Of Integer),  _
                     ByVal CompletedSubtotal As Global.System.Nullable(Of Decimal),  _
-                    ByVal Canceled As Boolean,  _
-                    ByVal StartTime As Date,  _
+                    ByVal ErrCount As Global.System.Nullable(Of Integer),  _
+                    ByVal Canceled As Global.System.Nullable(Of Boolean),  _
+                    ByVal StartTime As Global.System.Nullable(Of Date),  _
                     ByVal StartUser As String,  _
                     ByVal EndTime As String,  _
                     ByVal EndUser As String,  _
-                    ByVal ConnInterrupt As Boolean,  _
-                    ByVal Original_InvBatch_ID As Integer,  _
-                    ByVal Original_TargetedBillDate As Date,  _
-                    ByVal Original_StartCount As Integer,  _
-                    ByVal Original_StartSubtotal As Decimal,  _
+                    ByVal ConnInterrupt As Global.System.Nullable(Of Boolean),  _
+                    ByVal Original_InvBatch_ID As Global.System.Nullable(Of Integer),  _
+                    ByVal Original_TargetedBillDate As Global.System.Nullable(Of Date),  _
+                    ByVal Original_StartCount As Global.System.Nullable(Of Integer),  _
+                    ByVal Original_StartSubtotal As Global.System.Nullable(Of Decimal),  _
                     ByVal Original_CompletedCount As Global.System.Nullable(Of Integer),  _
                     ByVal Original_CompletedSubtotal As Global.System.Nullable(Of Decimal),  _
-                    ByVal Original_Canceled As Boolean,  _
-                    ByVal Original_StartTime As Date,  _
+                    ByVal Original_ErrCount As Global.System.Nullable(Of Integer),  _
+                    ByVal Original_Canceled As Global.System.Nullable(Of Boolean),  _
+                    ByVal Original_StartTime As Global.System.Nullable(Of Date),  _
                     ByVal Original_StartUser As String,  _
                     ByVal Original_EndTime As String,  _
                     ByVal Original_EndUser As String,  _
-                    ByVal Original_ConnInterrupt As Boolean) As Integer
-            Return Me.Update(TargetedBillDate, StartCount, StartSubtotal, CompletedCount, CompletedSubtotal, Canceled, StartTime, StartUser, EndTime, EndUser, ConnInterrupt, Original_InvBatch_ID, Original_TargetedBillDate, Original_StartCount, Original_StartSubtotal, Original_CompletedCount, Original_CompletedSubtotal, Original_Canceled, Original_StartTime, Original_StartUser, Original_EndTime, Original_EndUser, Original_ConnInterrupt, Original_InvBatch_ID)
+                    ByVal Original_ConnInterrupt As Global.System.Nullable(Of Boolean)) As Integer
+            Return Me.Update(TargetedBillDate, StartCount, StartSubtotal, CompletedCount, CompletedSubtotal, ErrCount, Canceled, StartTime, StartUser, EndTime, EndUser, ConnInterrupt, Original_InvBatch_ID, Original_TargetedBillDate, Original_StartCount, Original_StartSubtotal, Original_CompletedCount, Original_CompletedSubtotal, Original_ErrCount, Original_Canceled, Original_StartTime, Original_StartUser, Original_EndTime, Original_EndUser, Original_ConnInterrupt, Original_InvBatch_ID)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0"),  _
+         Global.System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")>  _
+        Public Overloads Overridable Function QueueTotal() As Object
+            Dim command As Global.System.Data.SqlClient.SqlCommand = Me.CommandCollection(1)
+            Dim previousConnectionState As Global.System.Data.ConnectionState = command.Connection.State
+            If ((command.Connection.State And Global.System.Data.ConnectionState.Open)  _
+                        <> Global.System.Data.ConnectionState.Open) Then
+                command.Connection.Open
+            End If
+            Dim returnValue As Object
+            Try 
+                returnValue = command.ExecuteScalar
+            Finally
+                If (previousConnectionState = Global.System.Data.ConnectionState.Closed) Then
+                    command.Connection.Close
+                End If
+            End Try
+            If ((returnValue Is Nothing)  _
+                        OrElse (returnValue.GetType Is GetType(Global.System.DBNull))) Then
+                Return Nothing
+            Else
+                Return CType(returnValue,Object)
+            End If
         End Function
     End Class
     
@@ -6438,6 +6653,7 @@ Namespace ds_BatchingTableAdapters
             tableMapping.ColumnMappings.Add("StartTotal", "StartTotal")
             tableMapping.ColumnMappings.Add("CompletedCount", "CompletedCount")
             tableMapping.ColumnMappings.Add("CompletedSubtotal", "CompletedSubtotal")
+            tableMapping.ColumnMappings.Add("ErrCount", "ErrCount")
             tableMapping.ColumnMappings.Add("Canceled", "Canceled")
             tableMapping.ColumnMappings.Add("StartTime", "StartTime")
             tableMapping.ColumnMappings.Add("StartUser", "StartUser")
@@ -6449,48 +6665,52 @@ Namespace ds_BatchingTableAdapters
             Me._adapter.InsertCommand.Connection = Me.Connection
             Me._adapter.InsertCommand.CommandText = "dbo.Batch_Payments_Insert"
             Me._adapter.InsertCommand.CommandType = Global.System.Data.CommandType.StoredProcedure
-            Me._adapter.InsertCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@RETURN_VALUE", Global.System.Data.SqlDbType.[Variant], 0, Global.System.Data.ParameterDirection.ReturnValue, 0, 0, Nothing, Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
-            Me._adapter.InsertCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@StartCount", Global.System.Data.SqlDbType.Int, 0, Global.System.Data.ParameterDirection.Input, 0, 0, "StartCount", Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
-            Me._adapter.InsertCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@StartTotal", Global.System.Data.SqlDbType.[Decimal], 0, Global.System.Data.ParameterDirection.Input, 18, 2, "StartTotal", Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
-            Me._adapter.InsertCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@CompletedCount", Global.System.Data.SqlDbType.Int, 0, Global.System.Data.ParameterDirection.Input, 0, 0, "CompletedCount", Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
-            Me._adapter.InsertCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@CompletedSubtotal", Global.System.Data.SqlDbType.[Decimal], 0, Global.System.Data.ParameterDirection.Input, 18, 2, "CompletedSubtotal", Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
-            Me._adapter.InsertCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@Canceled", Global.System.Data.SqlDbType.Bit, 0, Global.System.Data.ParameterDirection.Input, 0, 0, "Canceled", Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
-            Me._adapter.InsertCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@StartTime", Global.System.Data.SqlDbType.DateTime, 0, Global.System.Data.ParameterDirection.Input, 0, 0, "StartTime", Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
-            Me._adapter.InsertCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@StartUser", Global.System.Data.SqlDbType.VarChar, 0, Global.System.Data.ParameterDirection.Input, 0, 0, "StartUser", Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
-            Me._adapter.InsertCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@EndTime", Global.System.Data.SqlDbType.VarChar, 0, Global.System.Data.ParameterDirection.Input, 0, 0, "EndTime", Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
-            Me._adapter.InsertCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@EndUser", Global.System.Data.SqlDbType.VarChar, 0, Global.System.Data.ParameterDirection.Input, 0, 0, "EndUser", Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
-            Me._adapter.InsertCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@ConnInterrupt", Global.System.Data.SqlDbType.Bit, 0, Global.System.Data.ParameterDirection.Input, 0, 0, "ConnInterrupt", Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
+            Me._adapter.InsertCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@RETURN_VALUE", Global.System.Data.SqlDbType.Int, 4, Global.System.Data.ParameterDirection.ReturnValue, 10, 0, Nothing, Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
+            Me._adapter.InsertCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@StartCount", Global.System.Data.SqlDbType.Int, 4, Global.System.Data.ParameterDirection.Input, 10, 0, "StartCount", Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
+            Me._adapter.InsertCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@StartTotal", Global.System.Data.SqlDbType.[Decimal], 9, Global.System.Data.ParameterDirection.Input, 18, 2, "StartTotal", Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
+            Me._adapter.InsertCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@CompletedCount", Global.System.Data.SqlDbType.Int, 4, Global.System.Data.ParameterDirection.Input, 10, 0, "CompletedCount", Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
+            Me._adapter.InsertCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@CompletedSubtotal", Global.System.Data.SqlDbType.[Decimal], 9, Global.System.Data.ParameterDirection.Input, 18, 2, "CompletedSubtotal", Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
+            Me._adapter.InsertCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@ErrCount", Global.System.Data.SqlDbType.Int, 4, Global.System.Data.ParameterDirection.Input, 10, 0, "ErrCount", Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
+            Me._adapter.InsertCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@Canceled", Global.System.Data.SqlDbType.Bit, 1, Global.System.Data.ParameterDirection.Input, 1, 0, "Canceled", Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
+            Me._adapter.InsertCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@StartTime", Global.System.Data.SqlDbType.DateTime, 8, Global.System.Data.ParameterDirection.Input, 23, 3, "StartTime", Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
+            Me._adapter.InsertCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@StartUser", Global.System.Data.SqlDbType.VarChar, 50, Global.System.Data.ParameterDirection.Input, 0, 0, "StartUser", Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
+            Me._adapter.InsertCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@EndTime", Global.System.Data.SqlDbType.VarChar, 50, Global.System.Data.ParameterDirection.Input, 0, 0, "EndTime", Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
+            Me._adapter.InsertCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@EndUser", Global.System.Data.SqlDbType.VarChar, 50, Global.System.Data.ParameterDirection.Input, 0, 0, "EndUser", Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
+            Me._adapter.InsertCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@ConnInterrupt", Global.System.Data.SqlDbType.Bit, 1, Global.System.Data.ParameterDirection.Input, 1, 0, "ConnInterrupt", Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
             Me._adapter.UpdateCommand = New Global.System.Data.SqlClient.SqlCommand()
             Me._adapter.UpdateCommand.Connection = Me.Connection
             Me._adapter.UpdateCommand.CommandText = "dbo.Batch_Payments_Update"
             Me._adapter.UpdateCommand.CommandType = Global.System.Data.CommandType.StoredProcedure
-            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@RETURN_VALUE", Global.System.Data.SqlDbType.[Variant], 0, Global.System.Data.ParameterDirection.ReturnValue, 0, 0, Nothing, Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
-            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@StartCount", Global.System.Data.SqlDbType.Int, 0, Global.System.Data.ParameterDirection.Input, 0, 0, "StartCount", Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
-            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@StartTotal", Global.System.Data.SqlDbType.[Decimal], 0, Global.System.Data.ParameterDirection.Input, 18, 2, "StartTotal", Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
-            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@CompletedCount", Global.System.Data.SqlDbType.Int, 0, Global.System.Data.ParameterDirection.Input, 0, 0, "CompletedCount", Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
-            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@CompletedSubtotal", Global.System.Data.SqlDbType.[Decimal], 0, Global.System.Data.ParameterDirection.Input, 18, 2, "CompletedSubtotal", Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
-            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@Canceled", Global.System.Data.SqlDbType.Bit, 0, Global.System.Data.ParameterDirection.Input, 0, 0, "Canceled", Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
-            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@StartTime", Global.System.Data.SqlDbType.DateTime, 0, Global.System.Data.ParameterDirection.Input, 0, 0, "StartTime", Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
-            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@StartUser", Global.System.Data.SqlDbType.VarChar, 0, Global.System.Data.ParameterDirection.Input, 0, 0, "StartUser", Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
-            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@EndTime", Global.System.Data.SqlDbType.VarChar, 0, Global.System.Data.ParameterDirection.Input, 0, 0, "EndTime", Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
-            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@EndUser", Global.System.Data.SqlDbType.VarChar, 0, Global.System.Data.ParameterDirection.Input, 0, 0, "EndUser", Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
-            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@ConnInterrupt", Global.System.Data.SqlDbType.Bit, 0, Global.System.Data.ParameterDirection.Input, 0, 0, "ConnInterrupt", Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
-            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@Original_PayBatch_ID", Global.System.Data.SqlDbType.Int, 0, Global.System.Data.ParameterDirection.Input, 0, 0, "PayBatch_ID", Global.System.Data.DataRowVersion.Original, false, Nothing, "", "", ""))
-            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@Original_StartCount", Global.System.Data.SqlDbType.Int, 0, Global.System.Data.ParameterDirection.Input, 0, 0, "StartCount", Global.System.Data.DataRowVersion.Original, false, Nothing, "", "", ""))
-            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@Original_StartTotal", Global.System.Data.SqlDbType.[Decimal], 0, Global.System.Data.ParameterDirection.Input, 18, 2, "StartTotal", Global.System.Data.DataRowVersion.Original, false, Nothing, "", "", ""))
-            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@IsNull_CompletedCount", Global.System.Data.SqlDbType.Int, 0, Global.System.Data.ParameterDirection.Input, 0, 0, "CompletedCount", Global.System.Data.DataRowVersion.Original, true, Nothing, "", "", ""))
-            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@Original_CompletedCount", Global.System.Data.SqlDbType.Int, 0, Global.System.Data.ParameterDirection.Input, 0, 0, "CompletedCount", Global.System.Data.DataRowVersion.Original, false, Nothing, "", "", ""))
-            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@IsNull_CompletedSubtotal", Global.System.Data.SqlDbType.Int, 0, Global.System.Data.ParameterDirection.Input, 0, 0, "CompletedSubtotal", Global.System.Data.DataRowVersion.Original, true, Nothing, "", "", ""))
-            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@Original_CompletedSubtotal", Global.System.Data.SqlDbType.[Decimal], 0, Global.System.Data.ParameterDirection.Input, 18, 2, "CompletedSubtotal", Global.System.Data.DataRowVersion.Original, false, Nothing, "", "", ""))
-            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@Original_Canceled", Global.System.Data.SqlDbType.Bit, 0, Global.System.Data.ParameterDirection.Input, 0, 0, "Canceled", Global.System.Data.DataRowVersion.Original, false, Nothing, "", "", ""))
-            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@Original_StartTime", Global.System.Data.SqlDbType.DateTime, 0, Global.System.Data.ParameterDirection.Input, 0, 0, "StartTime", Global.System.Data.DataRowVersion.Original, false, Nothing, "", "", ""))
-            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@Original_StartUser", Global.System.Data.SqlDbType.VarChar, 0, Global.System.Data.ParameterDirection.Input, 0, 0, "StartUser", Global.System.Data.DataRowVersion.Original, false, Nothing, "", "", ""))
-            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@IsNull_EndTime", Global.System.Data.SqlDbType.Int, 0, Global.System.Data.ParameterDirection.Input, 0, 0, "EndTime", Global.System.Data.DataRowVersion.Original, true, Nothing, "", "", ""))
-            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@Original_EndTime", Global.System.Data.SqlDbType.VarChar, 0, Global.System.Data.ParameterDirection.Input, 0, 0, "EndTime", Global.System.Data.DataRowVersion.Original, false, Nothing, "", "", ""))
-            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@IsNull_EndUser", Global.System.Data.SqlDbType.Int, 0, Global.System.Data.ParameterDirection.Input, 0, 0, "EndUser", Global.System.Data.DataRowVersion.Original, true, Nothing, "", "", ""))
-            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@Original_EndUser", Global.System.Data.SqlDbType.VarChar, 0, Global.System.Data.ParameterDirection.Input, 0, 0, "EndUser", Global.System.Data.DataRowVersion.Original, false, Nothing, "", "", ""))
-            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@Original_ConnInterrupt", Global.System.Data.SqlDbType.Bit, 0, Global.System.Data.ParameterDirection.Input, 0, 0, "ConnInterrupt", Global.System.Data.DataRowVersion.Original, false, Nothing, "", "", ""))
-            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@PayBatch_ID", Global.System.Data.SqlDbType.Int, 4, Global.System.Data.ParameterDirection.Input, 0, 0, "PayBatch_ID", Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
+            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@RETURN_VALUE", Global.System.Data.SqlDbType.Int, 4, Global.System.Data.ParameterDirection.ReturnValue, 10, 0, Nothing, Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
+            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@StartCount", Global.System.Data.SqlDbType.Int, 4, Global.System.Data.ParameterDirection.Input, 10, 0, "StartCount", Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
+            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@StartTotal", Global.System.Data.SqlDbType.[Decimal], 9, Global.System.Data.ParameterDirection.Input, 18, 2, "StartTotal", Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
+            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@CompletedCount", Global.System.Data.SqlDbType.Int, 4, Global.System.Data.ParameterDirection.Input, 10, 0, "CompletedCount", Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
+            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@CompletedSubtotal", Global.System.Data.SqlDbType.[Decimal], 9, Global.System.Data.ParameterDirection.Input, 18, 2, "CompletedSubtotal", Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
+            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@ErrCount", Global.System.Data.SqlDbType.Int, 4, Global.System.Data.ParameterDirection.Input, 10, 0, "ErrCount", Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
+            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@Canceled", Global.System.Data.SqlDbType.Bit, 1, Global.System.Data.ParameterDirection.Input, 1, 0, "Canceled", Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
+            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@StartTime", Global.System.Data.SqlDbType.DateTime, 8, Global.System.Data.ParameterDirection.Input, 23, 3, "StartTime", Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
+            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@StartUser", Global.System.Data.SqlDbType.VarChar, 50, Global.System.Data.ParameterDirection.Input, 0, 0, "StartUser", Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
+            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@EndTime", Global.System.Data.SqlDbType.VarChar, 50, Global.System.Data.ParameterDirection.Input, 0, 0, "EndTime", Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
+            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@EndUser", Global.System.Data.SqlDbType.VarChar, 50, Global.System.Data.ParameterDirection.Input, 0, 0, "EndUser", Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
+            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@ConnInterrupt", Global.System.Data.SqlDbType.Bit, 1, Global.System.Data.ParameterDirection.Input, 1, 0, "ConnInterrupt", Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
+            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@Original_PayBatch_ID", Global.System.Data.SqlDbType.Int, 4, Global.System.Data.ParameterDirection.Input, 10, 0, "PayBatch_ID", Global.System.Data.DataRowVersion.Original, false, Nothing, "", "", ""))
+            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@Original_StartCount", Global.System.Data.SqlDbType.Int, 4, Global.System.Data.ParameterDirection.Input, 10, 0, "StartCount", Global.System.Data.DataRowVersion.Original, false, Nothing, "", "", ""))
+            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@Original_StartTotal", Global.System.Data.SqlDbType.[Decimal], 9, Global.System.Data.ParameterDirection.Input, 18, 2, "StartTotal", Global.System.Data.DataRowVersion.Original, false, Nothing, "", "", ""))
+            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@IsNull_CompletedCount", Global.System.Data.SqlDbType.Int, 4, Global.System.Data.ParameterDirection.Input, 10, 0, "CompletedCount", Global.System.Data.DataRowVersion.Original, true, Nothing, "", "", ""))
+            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@Original_CompletedCount", Global.System.Data.SqlDbType.Int, 4, Global.System.Data.ParameterDirection.Input, 10, 0, "CompletedCount", Global.System.Data.DataRowVersion.Original, false, Nothing, "", "", ""))
+            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@IsNull_CompletedSubtotal", Global.System.Data.SqlDbType.Int, 4, Global.System.Data.ParameterDirection.Input, 10, 0, "CompletedSubtotal", Global.System.Data.DataRowVersion.Original, true, Nothing, "", "", ""))
+            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@Original_CompletedSubtotal", Global.System.Data.SqlDbType.[Decimal], 9, Global.System.Data.ParameterDirection.Input, 18, 2, "CompletedSubtotal", Global.System.Data.DataRowVersion.Original, false, Nothing, "", "", ""))
+            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@IsNull_ErrCount", Global.System.Data.SqlDbType.Int, 4, Global.System.Data.ParameterDirection.Input, 10, 0, "ErrCount", Global.System.Data.DataRowVersion.Original, true, Nothing, "", "", ""))
+            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@Original_ErrCount", Global.System.Data.SqlDbType.Int, 4, Global.System.Data.ParameterDirection.Input, 10, 0, "ErrCount", Global.System.Data.DataRowVersion.Original, false, Nothing, "", "", ""))
+            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@Original_Canceled", Global.System.Data.SqlDbType.Bit, 1, Global.System.Data.ParameterDirection.Input, 1, 0, "Canceled", Global.System.Data.DataRowVersion.Original, false, Nothing, "", "", ""))
+            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@Original_StartTime", Global.System.Data.SqlDbType.DateTime, 8, Global.System.Data.ParameterDirection.Input, 23, 3, "StartTime", Global.System.Data.DataRowVersion.Original, false, Nothing, "", "", ""))
+            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@Original_StartUser", Global.System.Data.SqlDbType.VarChar, 50, Global.System.Data.ParameterDirection.Input, 0, 0, "StartUser", Global.System.Data.DataRowVersion.Original, false, Nothing, "", "", ""))
+            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@IsNull_EndTime", Global.System.Data.SqlDbType.Int, 4, Global.System.Data.ParameterDirection.Input, 10, 0, "EndTime", Global.System.Data.DataRowVersion.Original, true, Nothing, "", "", ""))
+            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@Original_EndTime", Global.System.Data.SqlDbType.VarChar, 50, Global.System.Data.ParameterDirection.Input, 0, 0, "EndTime", Global.System.Data.DataRowVersion.Original, false, Nothing, "", "", ""))
+            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@IsNull_EndUser", Global.System.Data.SqlDbType.Int, 4, Global.System.Data.ParameterDirection.Input, 10, 0, "EndUser", Global.System.Data.DataRowVersion.Original, true, Nothing, "", "", ""))
+            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@Original_EndUser", Global.System.Data.SqlDbType.VarChar, 50, Global.System.Data.ParameterDirection.Input, 0, 0, "EndUser", Global.System.Data.DataRowVersion.Original, false, Nothing, "", "", ""))
+            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@Original_ConnInterrupt", Global.System.Data.SqlDbType.Bit, 1, Global.System.Data.ParameterDirection.Input, 1, 0, "ConnInterrupt", Global.System.Data.DataRowVersion.Original, false, Nothing, "", "", ""))
+            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@PayBatch_ID", Global.System.Data.SqlDbType.Int, 4, Global.System.Data.ParameterDirection.Input, 10, 0, "PayBatch_ID", Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
         End Sub
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
@@ -6506,19 +6726,17 @@ Namespace ds_BatchingTableAdapters
             Me._commandCollection = New Global.System.Data.SqlClient.SqlCommand(0) {}
             Me._commandCollection(0) = New Global.System.Data.SqlClient.SqlCommand()
             Me._commandCollection(0).Connection = Me.Connection
-            Me._commandCollection(0).CommandText = "dbo.Batch_Payments_SelectByID"
+            Me._commandCollection(0).CommandText = "dbo.Batch_Payments_SelectNewest"
             Me._commandCollection(0).CommandType = Global.System.Data.CommandType.StoredProcedure
-            Me._commandCollection(0).Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@RETURN_VALUE", Global.System.Data.SqlDbType.[Variant], 0, Global.System.Data.ParameterDirection.ReturnValue, 0, 0, Nothing, Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
-            Me._commandCollection(0).Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@PayBatch_ID", Global.System.Data.SqlDbType.Int, 4, Global.System.Data.ParameterDirection.Input, 0, 0, "PayBatch_ID", Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
+            Me._commandCollection(0).Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@RETURN_VALUE", Global.System.Data.SqlDbType.Int, 4, Global.System.Data.ParameterDirection.ReturnValue, 10, 0, Nothing, Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
         End Sub
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0"),  _
          Global.System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter"),  _
          Global.System.ComponentModel.DataObjectMethodAttribute(Global.System.ComponentModel.DataObjectMethodType.[Select], true)>  _
-        Public Overloads Overridable Function GetDataByID(ByVal PayBatch_ID As Integer) As ds_Batching.Batch_PaymentsDataTable
+        Public Overloads Overridable Function GetNewest() As ds_Batching.Batch_PaymentsDataTable
             Me.Adapter.SelectCommand = Me.CommandCollection(0)
-            Me.Adapter.SelectCommand.Parameters(1).Value = CType(PayBatch_ID,Integer)
             Dim dataTable As ds_Batching.Batch_PaymentsDataTable = New ds_Batching.Batch_PaymentsDataTable()
             Me.Adapter.Fill(dataTable)
             Return dataTable
@@ -6556,9 +6774,17 @@ Namespace ds_BatchingTableAdapters
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0"),  _
          Global.System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter"),  _
          Global.System.ComponentModel.DataObjectMethodAttribute(Global.System.ComponentModel.DataObjectMethodType.Insert, true)>  _
-        Public Overloads Overridable Function Insert(ByVal StartCount As Integer, ByVal StartTotal As Decimal, ByVal CompletedCount As Global.System.Nullable(Of Integer), ByVal CompletedSubtotal As Global.System.Nullable(Of Decimal), ByVal Canceled As Boolean, ByVal StartTime As Date, ByVal StartUser As String, ByVal EndTime As String, ByVal EndUser As String, ByVal ConnInterrupt As Boolean) As Integer
-            Me.Adapter.InsertCommand.Parameters(1).Value = CType(StartCount,Integer)
-            Me.Adapter.InsertCommand.Parameters(2).Value = CType(StartTotal,Decimal)
+        Public Overloads Overridable Function Insert(ByVal StartCount As Global.System.Nullable(Of Integer), ByVal StartTotal As Global.System.Nullable(Of Decimal), ByVal CompletedCount As Global.System.Nullable(Of Integer), ByVal CompletedSubtotal As Global.System.Nullable(Of Decimal), ByVal ErrCount As Global.System.Nullable(Of Integer), ByVal Canceled As Global.System.Nullable(Of Boolean), ByVal StartTime As Global.System.Nullable(Of Date), ByVal StartUser As String, ByVal EndTime As String, ByVal EndUser As String, ByVal ConnInterrupt As Global.System.Nullable(Of Boolean)) As Integer
+            If (StartCount.HasValue = true) Then
+                Me.Adapter.InsertCommand.Parameters(1).Value = CType(StartCount.Value,Integer)
+            Else
+                Me.Adapter.InsertCommand.Parameters(1).Value = Global.System.DBNull.Value
+            End If
+            If (StartTotal.HasValue = true) Then
+                Me.Adapter.InsertCommand.Parameters(2).Value = CType(StartTotal.Value,Decimal)
+            Else
+                Me.Adapter.InsertCommand.Parameters(2).Value = Global.System.DBNull.Value
+            End If
             If (CompletedCount.HasValue = true) Then
                 Me.Adapter.InsertCommand.Parameters(3).Value = CType(CompletedCount.Value,Integer)
             Else
@@ -6569,24 +6795,41 @@ Namespace ds_BatchingTableAdapters
             Else
                 Me.Adapter.InsertCommand.Parameters(4).Value = Global.System.DBNull.Value
             End If
-            Me.Adapter.InsertCommand.Parameters(5).Value = CType(Canceled,Boolean)
-            Me.Adapter.InsertCommand.Parameters(6).Value = CType(StartTime,Date)
-            If (StartUser Is Nothing) Then
-                Throw New Global.System.ArgumentNullException("StartUser")
+            If (ErrCount.HasValue = true) Then
+                Me.Adapter.InsertCommand.Parameters(5).Value = CType(ErrCount.Value,Integer)
             Else
-                Me.Adapter.InsertCommand.Parameters(7).Value = CType(StartUser,String)
+                Me.Adapter.InsertCommand.Parameters(5).Value = Global.System.DBNull.Value
             End If
-            If (EndTime Is Nothing) Then
+            If (Canceled.HasValue = true) Then
+                Me.Adapter.InsertCommand.Parameters(6).Value = CType(Canceled.Value,Boolean)
+            Else
+                Me.Adapter.InsertCommand.Parameters(6).Value = Global.System.DBNull.Value
+            End If
+            If (StartTime.HasValue = true) Then
+                Me.Adapter.InsertCommand.Parameters(7).Value = CType(StartTime.Value,Date)
+            Else
+                Me.Adapter.InsertCommand.Parameters(7).Value = Global.System.DBNull.Value
+            End If
+            If (StartUser Is Nothing) Then
                 Me.Adapter.InsertCommand.Parameters(8).Value = Global.System.DBNull.Value
             Else
-                Me.Adapter.InsertCommand.Parameters(8).Value = CType(EndTime,String)
+                Me.Adapter.InsertCommand.Parameters(8).Value = CType(StartUser,String)
             End If
-            If (EndUser Is Nothing) Then
+            If (EndTime Is Nothing) Then
                 Me.Adapter.InsertCommand.Parameters(9).Value = Global.System.DBNull.Value
             Else
-                Me.Adapter.InsertCommand.Parameters(9).Value = CType(EndUser,String)
+                Me.Adapter.InsertCommand.Parameters(9).Value = CType(EndTime,String)
             End If
-            Me.Adapter.InsertCommand.Parameters(10).Value = CType(ConnInterrupt,Boolean)
+            If (EndUser Is Nothing) Then
+                Me.Adapter.InsertCommand.Parameters(10).Value = Global.System.DBNull.Value
+            Else
+                Me.Adapter.InsertCommand.Parameters(10).Value = CType(EndUser,String)
+            End If
+            If (ConnInterrupt.HasValue = true) Then
+                Me.Adapter.InsertCommand.Parameters(11).Value = CType(ConnInterrupt.Value,Boolean)
+            Else
+                Me.Adapter.InsertCommand.Parameters(11).Value = Global.System.DBNull.Value
+            End If
             Dim previousConnectionState As Global.System.Data.ConnectionState = Me.Adapter.InsertCommand.Connection.State
             If ((Me.Adapter.InsertCommand.Connection.State And Global.System.Data.ConnectionState.Open)  _
                         <> Global.System.Data.ConnectionState.Open) Then
@@ -6607,30 +6850,40 @@ Namespace ds_BatchingTableAdapters
          Global.System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter"),  _
          Global.System.ComponentModel.DataObjectMethodAttribute(Global.System.ComponentModel.DataObjectMethodType.Update, true)>  _
         Public Overloads Overridable Function Update( _
-                    ByVal StartCount As Integer,  _
-                    ByVal StartTotal As Decimal,  _
+                    ByVal StartCount As Global.System.Nullable(Of Integer),  _
+                    ByVal StartTotal As Global.System.Nullable(Of Decimal),  _
                     ByVal CompletedCount As Global.System.Nullable(Of Integer),  _
                     ByVal CompletedSubtotal As Global.System.Nullable(Of Decimal),  _
-                    ByVal Canceled As Boolean,  _
-                    ByVal StartTime As Date,  _
+                    ByVal ErrCount As Global.System.Nullable(Of Integer),  _
+                    ByVal Canceled As Global.System.Nullable(Of Boolean),  _
+                    ByVal StartTime As Global.System.Nullable(Of Date),  _
                     ByVal StartUser As String,  _
                     ByVal EndTime As String,  _
                     ByVal EndUser As String,  _
-                    ByVal ConnInterrupt As Boolean,  _
-                    ByVal Original_PayBatch_ID As Integer,  _
-                    ByVal Original_StartCount As Integer,  _
-                    ByVal Original_StartTotal As Decimal,  _
+                    ByVal ConnInterrupt As Global.System.Nullable(Of Boolean),  _
+                    ByVal Original_PayBatch_ID As Global.System.Nullable(Of Integer),  _
+                    ByVal Original_StartCount As Global.System.Nullable(Of Integer),  _
+                    ByVal Original_StartTotal As Global.System.Nullable(Of Decimal),  _
                     ByVal Original_CompletedCount As Global.System.Nullable(Of Integer),  _
                     ByVal Original_CompletedSubtotal As Global.System.Nullable(Of Decimal),  _
-                    ByVal Original_Canceled As Boolean,  _
-                    ByVal Original_StartTime As Date,  _
+                    ByVal Original_ErrCount As Global.System.Nullable(Of Integer),  _
+                    ByVal Original_Canceled As Global.System.Nullable(Of Boolean),  _
+                    ByVal Original_StartTime As Global.System.Nullable(Of Date),  _
                     ByVal Original_StartUser As String,  _
                     ByVal Original_EndTime As String,  _
                     ByVal Original_EndUser As String,  _
-                    ByVal Original_ConnInterrupt As Boolean,  _
-                    ByVal PayBatch_ID As Integer) As Integer
-            Me.Adapter.UpdateCommand.Parameters(1).Value = CType(StartCount,Integer)
-            Me.Adapter.UpdateCommand.Parameters(2).Value = CType(StartTotal,Decimal)
+                    ByVal Original_ConnInterrupt As Global.System.Nullable(Of Boolean),  _
+                    ByVal PayBatch_ID As Global.System.Nullable(Of Integer)) As Integer
+            If (StartCount.HasValue = true) Then
+                Me.Adapter.UpdateCommand.Parameters(1).Value = CType(StartCount.Value,Integer)
+            Else
+                Me.Adapter.UpdateCommand.Parameters(1).Value = Global.System.DBNull.Value
+            End If
+            If (StartTotal.HasValue = true) Then
+                Me.Adapter.UpdateCommand.Parameters(2).Value = CType(StartTotal.Value,Decimal)
+            Else
+                Me.Adapter.UpdateCommand.Parameters(2).Value = Global.System.DBNull.Value
+            End If
             If (CompletedCount.HasValue = true) Then
                 Me.Adapter.UpdateCommand.Parameters(3).Value = CType(CompletedCount.Value,Integer)
             Else
@@ -6641,64 +6894,116 @@ Namespace ds_BatchingTableAdapters
             Else
                 Me.Adapter.UpdateCommand.Parameters(4).Value = Global.System.DBNull.Value
             End If
-            Me.Adapter.UpdateCommand.Parameters(5).Value = CType(Canceled,Boolean)
-            Me.Adapter.UpdateCommand.Parameters(6).Value = CType(StartTime,Date)
-            If (StartUser Is Nothing) Then
-                Throw New Global.System.ArgumentNullException("StartUser")
+            If (ErrCount.HasValue = true) Then
+                Me.Adapter.UpdateCommand.Parameters(5).Value = CType(ErrCount.Value,Integer)
             Else
-                Me.Adapter.UpdateCommand.Parameters(7).Value = CType(StartUser,String)
+                Me.Adapter.UpdateCommand.Parameters(5).Value = Global.System.DBNull.Value
             End If
-            If (EndTime Is Nothing) Then
+            If (Canceled.HasValue = true) Then
+                Me.Adapter.UpdateCommand.Parameters(6).Value = CType(Canceled.Value,Boolean)
+            Else
+                Me.Adapter.UpdateCommand.Parameters(6).Value = Global.System.DBNull.Value
+            End If
+            If (StartTime.HasValue = true) Then
+                Me.Adapter.UpdateCommand.Parameters(7).Value = CType(StartTime.Value,Date)
+            Else
+                Me.Adapter.UpdateCommand.Parameters(7).Value = Global.System.DBNull.Value
+            End If
+            If (StartUser Is Nothing) Then
                 Me.Adapter.UpdateCommand.Parameters(8).Value = Global.System.DBNull.Value
             Else
-                Me.Adapter.UpdateCommand.Parameters(8).Value = CType(EndTime,String)
+                Me.Adapter.UpdateCommand.Parameters(8).Value = CType(StartUser,String)
             End If
-            If (EndUser Is Nothing) Then
+            If (EndTime Is Nothing) Then
                 Me.Adapter.UpdateCommand.Parameters(9).Value = Global.System.DBNull.Value
             Else
-                Me.Adapter.UpdateCommand.Parameters(9).Value = CType(EndUser,String)
+                Me.Adapter.UpdateCommand.Parameters(9).Value = CType(EndTime,String)
             End If
-            Me.Adapter.UpdateCommand.Parameters(10).Value = CType(ConnInterrupt,Boolean)
-            Me.Adapter.UpdateCommand.Parameters(11).Value = CType(Original_PayBatch_ID,Integer)
-            Me.Adapter.UpdateCommand.Parameters(12).Value = CType(Original_StartCount,Integer)
-            Me.Adapter.UpdateCommand.Parameters(13).Value = CType(Original_StartTotal,Decimal)
-            If (Original_CompletedCount.HasValue = true) Then
-                Me.Adapter.UpdateCommand.Parameters(14).Value = CType(0,Object)
-                Me.Adapter.UpdateCommand.Parameters(15).Value = CType(Original_CompletedCount.Value,Integer)
+            If (EndUser Is Nothing) Then
+                Me.Adapter.UpdateCommand.Parameters(10).Value = Global.System.DBNull.Value
             Else
-                Me.Adapter.UpdateCommand.Parameters(14).Value = CType(1,Object)
-                Me.Adapter.UpdateCommand.Parameters(15).Value = Global.System.DBNull.Value
+                Me.Adapter.UpdateCommand.Parameters(10).Value = CType(EndUser,String)
+            End If
+            If (ConnInterrupt.HasValue = true) Then
+                Me.Adapter.UpdateCommand.Parameters(11).Value = CType(ConnInterrupt.Value,Boolean)
+            Else
+                Me.Adapter.UpdateCommand.Parameters(11).Value = Global.System.DBNull.Value
+            End If
+            If (Original_PayBatch_ID.HasValue = true) Then
+                Me.Adapter.UpdateCommand.Parameters(12).Value = CType(Original_PayBatch_ID.Value,Integer)
+            Else
+                Me.Adapter.UpdateCommand.Parameters(12).Value = Global.System.DBNull.Value
+            End If
+            If (Original_StartCount.HasValue = true) Then
+                Me.Adapter.UpdateCommand.Parameters(13).Value = CType(Original_StartCount.Value,Integer)
+            Else
+                Me.Adapter.UpdateCommand.Parameters(13).Value = Global.System.DBNull.Value
+            End If
+            If (Original_StartTotal.HasValue = true) Then
+                Me.Adapter.UpdateCommand.Parameters(14).Value = CType(Original_StartTotal.Value,Decimal)
+            Else
+                Me.Adapter.UpdateCommand.Parameters(14).Value = Global.System.DBNull.Value
+            End If
+            If (Original_CompletedCount.HasValue = true) Then
+                Me.Adapter.UpdateCommand.Parameters(15).Value = CType(0,Object)
+                Me.Adapter.UpdateCommand.Parameters(16).Value = CType(Original_CompletedCount.Value,Integer)
+            Else
+                Me.Adapter.UpdateCommand.Parameters(15).Value = CType(1,Object)
+                Me.Adapter.UpdateCommand.Parameters(16).Value = Global.System.DBNull.Value
             End If
             If (Original_CompletedSubtotal.HasValue = true) Then
-                Me.Adapter.UpdateCommand.Parameters(16).Value = CType(0,Object)
-                Me.Adapter.UpdateCommand.Parameters(17).Value = CType(Original_CompletedSubtotal.Value,Decimal)
+                Me.Adapter.UpdateCommand.Parameters(17).Value = CType(0,Object)
+                Me.Adapter.UpdateCommand.Parameters(18).Value = CType(Original_CompletedSubtotal.Value,Decimal)
             Else
-                Me.Adapter.UpdateCommand.Parameters(16).Value = CType(1,Object)
-                Me.Adapter.UpdateCommand.Parameters(17).Value = Global.System.DBNull.Value
+                Me.Adapter.UpdateCommand.Parameters(17).Value = CType(1,Object)
+                Me.Adapter.UpdateCommand.Parameters(18).Value = Global.System.DBNull.Value
             End If
-            Me.Adapter.UpdateCommand.Parameters(18).Value = CType(Original_Canceled,Boolean)
-            Me.Adapter.UpdateCommand.Parameters(19).Value = CType(Original_StartTime,Date)
-            If (Original_StartUser Is Nothing) Then
-                Throw New Global.System.ArgumentNullException("Original_StartUser")
+            If (Original_ErrCount.HasValue = true) Then
+                Me.Adapter.UpdateCommand.Parameters(19).Value = CType(0,Object)
+                Me.Adapter.UpdateCommand.Parameters(20).Value = CType(Original_ErrCount.Value,Integer)
             Else
-                Me.Adapter.UpdateCommand.Parameters(20).Value = CType(Original_StartUser,String)
+                Me.Adapter.UpdateCommand.Parameters(19).Value = CType(1,Object)
+                Me.Adapter.UpdateCommand.Parameters(20).Value = Global.System.DBNull.Value
+            End If
+            If (Original_Canceled.HasValue = true) Then
+                Me.Adapter.UpdateCommand.Parameters(21).Value = CType(Original_Canceled.Value,Boolean)
+            Else
+                Me.Adapter.UpdateCommand.Parameters(21).Value = Global.System.DBNull.Value
+            End If
+            If (Original_StartTime.HasValue = true) Then
+                Me.Adapter.UpdateCommand.Parameters(22).Value = CType(Original_StartTime.Value,Date)
+            Else
+                Me.Adapter.UpdateCommand.Parameters(22).Value = Global.System.DBNull.Value
+            End If
+            If (Original_StartUser Is Nothing) Then
+                Me.Adapter.UpdateCommand.Parameters(23).Value = Global.System.DBNull.Value
+            Else
+                Me.Adapter.UpdateCommand.Parameters(23).Value = CType(Original_StartUser,String)
             End If
             If (Original_EndTime Is Nothing) Then
-                Me.Adapter.UpdateCommand.Parameters(21).Value = CType(1,Object)
-                Me.Adapter.UpdateCommand.Parameters(22).Value = Global.System.DBNull.Value
+                Me.Adapter.UpdateCommand.Parameters(24).Value = CType(1,Object)
+                Me.Adapter.UpdateCommand.Parameters(25).Value = Global.System.DBNull.Value
             Else
-                Me.Adapter.UpdateCommand.Parameters(21).Value = CType(0,Object)
-                Me.Adapter.UpdateCommand.Parameters(22).Value = CType(Original_EndTime,String)
+                Me.Adapter.UpdateCommand.Parameters(24).Value = CType(0,Object)
+                Me.Adapter.UpdateCommand.Parameters(25).Value = CType(Original_EndTime,String)
             End If
             If (Original_EndUser Is Nothing) Then
-                Me.Adapter.UpdateCommand.Parameters(23).Value = CType(1,Object)
-                Me.Adapter.UpdateCommand.Parameters(24).Value = Global.System.DBNull.Value
+                Me.Adapter.UpdateCommand.Parameters(26).Value = CType(1,Object)
+                Me.Adapter.UpdateCommand.Parameters(27).Value = Global.System.DBNull.Value
             Else
-                Me.Adapter.UpdateCommand.Parameters(23).Value = CType(0,Object)
-                Me.Adapter.UpdateCommand.Parameters(24).Value = CType(Original_EndUser,String)
+                Me.Adapter.UpdateCommand.Parameters(26).Value = CType(0,Object)
+                Me.Adapter.UpdateCommand.Parameters(27).Value = CType(Original_EndUser,String)
             End If
-            Me.Adapter.UpdateCommand.Parameters(25).Value = CType(Original_ConnInterrupt,Boolean)
-            Me.Adapter.UpdateCommand.Parameters(26).Value = CType(PayBatch_ID,Integer)
+            If (Original_ConnInterrupt.HasValue = true) Then
+                Me.Adapter.UpdateCommand.Parameters(28).Value = CType(Original_ConnInterrupt.Value,Boolean)
+            Else
+                Me.Adapter.UpdateCommand.Parameters(28).Value = Global.System.DBNull.Value
+            End If
+            If (PayBatch_ID.HasValue = true) Then
+                Me.Adapter.UpdateCommand.Parameters(29).Value = CType(PayBatch_ID.Value,Integer)
+            Else
+                Me.Adapter.UpdateCommand.Parameters(29).Value = Global.System.DBNull.Value
+            End If
             Dim previousConnectionState As Global.System.Data.ConnectionState = Me.Adapter.UpdateCommand.Connection.State
             If ((Me.Adapter.UpdateCommand.Connection.State And Global.System.Data.ConnectionState.Open)  _
                         <> Global.System.Data.ConnectionState.Open) Then
@@ -6719,28 +7024,30 @@ Namespace ds_BatchingTableAdapters
          Global.System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter"),  _
          Global.System.ComponentModel.DataObjectMethodAttribute(Global.System.ComponentModel.DataObjectMethodType.Update, true)>  _
         Public Overloads Overridable Function Update( _
-                    ByVal StartCount As Integer,  _
-                    ByVal StartTotal As Decimal,  _
+                    ByVal StartCount As Global.System.Nullable(Of Integer),  _
+                    ByVal StartTotal As Global.System.Nullable(Of Decimal),  _
                     ByVal CompletedCount As Global.System.Nullable(Of Integer),  _
                     ByVal CompletedSubtotal As Global.System.Nullable(Of Decimal),  _
-                    ByVal Canceled As Boolean,  _
-                    ByVal StartTime As Date,  _
+                    ByVal ErrCount As Global.System.Nullable(Of Integer),  _
+                    ByVal Canceled As Global.System.Nullable(Of Boolean),  _
+                    ByVal StartTime As Global.System.Nullable(Of Date),  _
                     ByVal StartUser As String,  _
                     ByVal EndTime As String,  _
                     ByVal EndUser As String,  _
-                    ByVal ConnInterrupt As Boolean,  _
-                    ByVal Original_PayBatch_ID As Integer,  _
-                    ByVal Original_StartCount As Integer,  _
-                    ByVal Original_StartTotal As Decimal,  _
+                    ByVal ConnInterrupt As Global.System.Nullable(Of Boolean),  _
+                    ByVal Original_PayBatch_ID As Global.System.Nullable(Of Integer),  _
+                    ByVal Original_StartCount As Global.System.Nullable(Of Integer),  _
+                    ByVal Original_StartTotal As Global.System.Nullable(Of Decimal),  _
                     ByVal Original_CompletedCount As Global.System.Nullable(Of Integer),  _
                     ByVal Original_CompletedSubtotal As Global.System.Nullable(Of Decimal),  _
-                    ByVal Original_Canceled As Boolean,  _
-                    ByVal Original_StartTime As Date,  _
+                    ByVal Original_ErrCount As Global.System.Nullable(Of Integer),  _
+                    ByVal Original_Canceled As Global.System.Nullable(Of Boolean),  _
+                    ByVal Original_StartTime As Global.System.Nullable(Of Date),  _
                     ByVal Original_StartUser As String,  _
                     ByVal Original_EndTime As String,  _
                     ByVal Original_EndUser As String,  _
-                    ByVal Original_ConnInterrupt As Boolean) As Integer
-            Return Me.Update(StartCount, StartTotal, CompletedCount, CompletedSubtotal, Canceled, StartTime, StartUser, EndTime, EndUser, ConnInterrupt, Original_PayBatch_ID, Original_StartCount, Original_StartTotal, Original_CompletedCount, Original_CompletedSubtotal, Original_Canceled, Original_StartTime, Original_StartUser, Original_EndTime, Original_EndUser, Original_ConnInterrupt, Original_PayBatch_ID)
+                    ByVal Original_ConnInterrupt As Global.System.Nullable(Of Boolean)) As Integer
+            Return Me.Update(StartCount, StartTotal, CompletedCount, CompletedSubtotal, ErrCount, Canceled, StartTime, StartUser, EndTime, EndUser, ConnInterrupt, Original_PayBatch_ID, Original_StartCount, Original_StartTotal, Original_CompletedCount, Original_CompletedSubtotal, Original_ErrCount, Original_Canceled, Original_StartTime, Original_StartUser, Original_EndTime, Original_EndUser, Original_ConnInterrupt, Original_PayBatch_ID)
         End Function
     End Class
     
@@ -6772,7 +7079,7 @@ Namespace ds_BatchingTableAdapters
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
         Private Sub InitCommandCollection()
-            Me._commandCollection = New Global.System.Data.IDbCommand(5) {}
+            Me._commandCollection = New Global.System.Data.IDbCommand(6) {}
             Me._commandCollection(0) = New Global.System.Data.SqlClient.SqlCommand()
             CType(Me._commandCollection(0),Global.System.Data.SqlClient.SqlCommand).Connection = New Global.System.Data.SqlClient.SqlConnection(Global.TrashCash.My.MySettings.Default.QBDBConnectionString)
             CType(Me._commandCollection(0),Global.System.Data.SqlClient.SqlCommand).CommandText = "dbo.BilledServices_InsertByLineItemID"
@@ -6812,6 +7119,13 @@ Namespace ds_BatchingTableAdapters
             CType(Me._commandCollection(5),Global.System.Data.SqlClient.SqlCommand).CommandText = "dbo.WorkingInvoice_Count"
             CType(Me._commandCollection(5),Global.System.Data.SqlClient.SqlCommand).CommandType = Global.System.Data.CommandType.StoredProcedure
             CType(Me._commandCollection(5),Global.System.Data.SqlClient.SqlCommand).Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@RETURN_VALUE", Global.System.Data.SqlDbType.Int, 4, Global.System.Data.ParameterDirection.ReturnValue, 10, 0, Nothing, Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
+            Me._commandCollection(6) = New Global.System.Data.SqlClient.SqlCommand()
+            CType(Me._commandCollection(6),Global.System.Data.SqlClient.SqlCommand).Connection = New Global.System.Data.SqlClient.SqlConnection(Global.TrashCash.My.MySettings.Default.QBDBConnectionString)
+            CType(Me._commandCollection(6),Global.System.Data.SqlClient.SqlCommand).CommandText = "dbo.App_Settings_BatchWork"
+            CType(Me._commandCollection(6),Global.System.Data.SqlClient.SqlCommand).CommandType = Global.System.Data.CommandType.StoredProcedure
+            CType(Me._commandCollection(6),Global.System.Data.SqlClient.SqlCommand).Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@RETURN_VALUE", Global.System.Data.SqlDbType.Int, 4, Global.System.Data.ParameterDirection.ReturnValue, 10, 0, Nothing, Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
+            CType(Me._commandCollection(6),Global.System.Data.SqlClient.SqlCommand).Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@BatchType", Global.System.Data.SqlDbType.VarChar, 50, Global.System.Data.ParameterDirection.Input, 0, 0, Nothing, Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
+            CType(Me._commandCollection(6),Global.System.Data.SqlClient.SqlCommand).Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@BatchRunning", Global.System.Data.SqlDbType.Bit, 1, Global.System.Data.ParameterDirection.Input, 1, 0, Nothing, Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
         End Sub
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
@@ -7003,6 +7317,37 @@ Namespace ds_BatchingTableAdapters
             Else
                 Return CType(returnValue,Object)
             End If
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0"),  _
+         Global.System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")>  _
+        Public Overloads Overridable Function App_Settings_BatchWork(ByVal BatchType As String, ByVal BatchRunning As Global.System.Nullable(Of Boolean)) As Integer
+            Dim command As Global.System.Data.SqlClient.SqlCommand = CType(Me.CommandCollection(6),Global.System.Data.SqlClient.SqlCommand)
+            If (BatchType Is Nothing) Then
+                command.Parameters(1).Value = Global.System.DBNull.Value
+            Else
+                command.Parameters(1).Value = CType(BatchType,String)
+            End If
+            If (BatchRunning.HasValue = true) Then
+                command.Parameters(2).Value = CType(BatchRunning.Value,Boolean)
+            Else
+                command.Parameters(2).Value = Global.System.DBNull.Value
+            End If
+            Dim previousConnectionState As Global.System.Data.ConnectionState = command.Connection.State
+            If ((command.Connection.State And Global.System.Data.ConnectionState.Open)  _
+                        <> Global.System.Data.ConnectionState.Open) Then
+                command.Connection.Open
+            End If
+            Dim returnValue As Integer
+            Try 
+                returnValue = command.ExecuteNonQuery
+            Finally
+                If (previousConnectionState = Global.System.Data.ConnectionState.Closed) Then
+                    command.Connection.Close
+                End If
+            End Try
+            Return returnValue
         End Function
     End Class
     

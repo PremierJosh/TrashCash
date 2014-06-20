@@ -180,7 +180,7 @@ Namespace Batching
                     btn_CancelPayBatch.Visible = True
                     btn_CancelPayBatch.Enabled = True
                     ' init the object that the worker calls
-                    Dim payment As New QB_Batching.Payments(Ds_Batching.BATCH_WorkingPayments)
+                    Dim payment As New QB_Batching.Payments()
                     ' start the worker
                     BatchWorker.RunWorkerAsync(payment)
                 End If
@@ -198,7 +198,7 @@ Namespace Batching
                     btn_CancelInvBatch.Visible = True
                     btn_CancelInvBatch.Enabled = True
                     ' init the object that the worker calls
-                    Dim invoice As New QB_Batching.Invoicing(Ds_Batching.BATCH_WorkingInvoice)
+                    Dim invoice As New QB_Batching.Invoicing(_targetedBillDate)
                     ' start the work
                     BatchWorker.RunWorkerAsync(invoice)
                 End If
@@ -206,6 +206,7 @@ Namespace Batching
 
         End Sub
 
+        Private _targetedBillDate As Date
         Private Sub btn_GenerateInv_Click(sender As System.Object, e As System.EventArgs) Handles btn_GenerateInv.Click
             ' if there are invoices already, we cannot generate
             'Dim qta As New DataSetTableAdapters.QueriesTableAdapter
@@ -221,6 +222,7 @@ Namespace Batching
                     qta.GenerateRecurringInvoices(dtp_GenInvTo.Value.Date)
                     BATCH_WorkingInvoiceTableAdapter.Fill(Ds_Batching.BATCH_WorkingInvoice)
                     btn_GenerateInv.UseWaitCursor = False
+                    _targetedBillDate = dtp_GenInvTo.Value.Date
                 End If
             Else
                 MsgBox("You cannot Generate Recurring Service Invoices while there are other Recurring Service Invoices prepared. You must first Batch or Delete them.", MsgBoxStyle.Exclamation)

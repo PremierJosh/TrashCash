@@ -31,16 +31,16 @@ Partial Public Class ds_Application
     
     Private _schemaSerializationMode As Global.System.Data.SchemaSerializationMode = Global.System.Data.SchemaSerializationMode.IncludeSchema
     
-    <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
-     Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
+    <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+     Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
     Public Sub New()
-        MyBase.New()
-        Me.BeginInit()
-        Me.InitClass()
+        MyBase.New
+        Me.BeginInit
+        Me.InitClass
         Dim schemaChangedHandler As Global.System.ComponentModel.CollectionChangeEventHandler = AddressOf Me.SchemaChanged
         AddHandler MyBase.Tables.CollectionChanged, schemaChangedHandler
         AddHandler MyBase.Relations.CollectionChanged, schemaChangedHandler
-        Me.EndInit()
+        Me.EndInit
     End Sub
     
     <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
@@ -627,6 +627,10 @@ Partial Public Class ds_Application
         
         Private columnDEBUG_MODE As Global.System.Data.DataColumn
         
+        Private columnBatching_Invoices As Global.System.Data.DataColumn
+        
+        Private columnBatching_Payments As Global.System.Data.DataColumn
+        
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
         Public Sub New()
@@ -711,6 +715,22 @@ Partial Public Class ds_Application
         End Property
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        Public ReadOnly Property Batching_InvoicesColumn() As Global.System.Data.DataColumn
+            Get
+                Return Me.columnBatching_Invoices
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        Public ReadOnly Property Batching_PaymentsColumn() As Global.System.Data.DataColumn
+            Get
+                Return Me.columnBatching_Payments
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0"),  _
          Global.System.ComponentModel.Browsable(false)>  _
         Public ReadOnly Property Count() As Integer
@@ -747,9 +767,9 @@ Partial Public Class ds_Application
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Overloads Function AddAPP_SETTINGSRow(ByVal QB_FILE_LOCATION As String, ByVal BAD_CHECK_CHECKITEM_LISTID As String, ByVal BAD_CHECK_CUSTITEM_LISTID As String, ByVal BAD_CHECK_CUST_FEE As Decimal, ByVal DEBUG_MODE As Boolean) As APP_SETTINGSRow
+        Public Overloads Function AddAPP_SETTINGSRow(ByVal QB_FILE_LOCATION As String, ByVal BAD_CHECK_CHECKITEM_LISTID As String, ByVal BAD_CHECK_CUSTITEM_LISTID As String, ByVal BAD_CHECK_CUST_FEE As Decimal, ByVal DEBUG_MODE As Boolean, ByVal Batching_Invoices As Boolean, ByVal Batching_Payments As Boolean) As APP_SETTINGSRow
             Dim rowAPP_SETTINGSRow As APP_SETTINGSRow = CType(Me.NewRow,APP_SETTINGSRow)
-            Dim columnValuesArray() As Object = New Object() {Nothing, QB_FILE_LOCATION, BAD_CHECK_CHECKITEM_LISTID, BAD_CHECK_CUSTITEM_LISTID, BAD_CHECK_CUST_FEE, DEBUG_MODE}
+            Dim columnValuesArray() As Object = New Object() {Nothing, QB_FILE_LOCATION, BAD_CHECK_CHECKITEM_LISTID, BAD_CHECK_CUSTITEM_LISTID, BAD_CHECK_CUST_FEE, DEBUG_MODE, Batching_Invoices, Batching_Payments}
             rowAPP_SETTINGSRow.ItemArray = columnValuesArray
             Me.Rows.Add(rowAPP_SETTINGSRow)
             Return rowAPP_SETTINGSRow
@@ -784,6 +804,8 @@ Partial Public Class ds_Application
             Me.columnBAD_CHECK_CUSTITEM_LISTID = MyBase.Columns("BAD_CHECK_CUSTITEM_LISTID")
             Me.columnBAD_CHECK_CUST_FEE = MyBase.Columns("BAD_CHECK_CUST_FEE")
             Me.columnDEBUG_MODE = MyBase.Columns("DEBUG_MODE")
+            Me.columnBatching_Invoices = MyBase.Columns("Batching_Invoices")
+            Me.columnBatching_Payments = MyBase.Columns("Batching_Payments")
         End Sub
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
@@ -801,6 +823,10 @@ Partial Public Class ds_Application
             MyBase.Columns.Add(Me.columnBAD_CHECK_CUST_FEE)
             Me.columnDEBUG_MODE = New Global.System.Data.DataColumn("DEBUG_MODE", GetType(Boolean), Nothing, Global.System.Data.MappingType.Element)
             MyBase.Columns.Add(Me.columnDEBUG_MODE)
+            Me.columnBatching_Invoices = New Global.System.Data.DataColumn("Batching_Invoices", GetType(Boolean), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnBatching_Invoices)
+            Me.columnBatching_Payments = New Global.System.Data.DataColumn("Batching_Payments", GetType(Boolean), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnBatching_Payments)
             Me.Constraints.Add(New Global.System.Data.UniqueConstraint("Constraint1", New Global.System.Data.DataColumn() {Me.columnID}, true))
             Me.columnID.AutoIncrement = true
             Me.columnID.AutoIncrementSeed = -1
@@ -811,6 +837,8 @@ Partial Public Class ds_Application
             Me.columnQB_FILE_LOCATION.MaxLength = 100
             Me.columnBAD_CHECK_CHECKITEM_LISTID.MaxLength = 50
             Me.columnBAD_CHECK_CUSTITEM_LISTID.MaxLength = 50
+            Me.columnBatching_Invoices.AllowDBNull = false
+            Me.columnBatching_Payments.AllowDBNull = false
             Me.ExtendedProperties.Add("Generator_RowClassName", "APP_SETTINGSRow")
             Me.ExtendedProperties.Add("Generator_RowEvArgName", "APP_SETTINGSRowChangeEvent")
             Me.ExtendedProperties.Add("Generator_RowEvHandlerName", "APP_SETTINGSRowChangeEventHandler")
@@ -1096,6 +1124,28 @@ Partial Public Class ds_Application
             End Get
             Set
                 Me(Me.tableAPP_SETTINGS.DEBUG_MODEColumn) = value
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        Public Property Batching_Invoices() As Boolean
+            Get
+                Return CType(Me(Me.tableAPP_SETTINGS.Batching_InvoicesColumn),Boolean)
+            End Get
+            Set
+                Me(Me.tableAPP_SETTINGS.Batching_InvoicesColumn) = value
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        Public Property Batching_Payments() As Boolean
+            Get
+                Return CType(Me(Me.tableAPP_SETTINGS.Batching_PaymentsColumn),Boolean)
+            End Get
+            Set
+                Me(Me.tableAPP_SETTINGS.Batching_PaymentsColumn) = value
             End Set
         End Property
         
@@ -1658,29 +1708,31 @@ Namespace ds_ApplicationTableAdapters
             tableMapping.ColumnMappings.Add("BAD_CHECK_CUSTITEM_LISTID", "BAD_CHECK_CUSTITEM_LISTID")
             tableMapping.ColumnMappings.Add("BAD_CHECK_CUST_FEE", "BAD_CHECK_CUST_FEE")
             tableMapping.ColumnMappings.Add("DEBUG_MODE", "DEBUG_MODE")
+            tableMapping.ColumnMappings.Add("Batching_Invoices", "Batching_Invoices")
+            tableMapping.ColumnMappings.Add("Batching_Payments", "Batching_Payments")
             Me._adapter.TableMappings.Add(tableMapping)
             Me._adapter.UpdateCommand = New Global.System.Data.SqlClient.SqlCommand()
             Me._adapter.UpdateCommand.Connection = Me.Connection
             Me._adapter.UpdateCommand.CommandText = "dbo.App_Settings_Update"
             Me._adapter.UpdateCommand.CommandType = Global.System.Data.CommandType.StoredProcedure
-            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@RETURN_VALUE", Global.System.Data.SqlDbType.[Variant], 0, Global.System.Data.ParameterDirection.ReturnValue, 0, 0, Nothing, Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
-            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@QB_FILE_LOCATION", Global.System.Data.SqlDbType.VarChar, 0, Global.System.Data.ParameterDirection.Input, 0, 0, "QB_FILE_LOCATION", Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
-            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@BAD_CHECK_CHECKITEM_LISTID", Global.System.Data.SqlDbType.VarChar, 0, Global.System.Data.ParameterDirection.Input, 0, 0, "BAD_CHECK_CHECKITEM_LISTID", Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
-            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@BAD_CHECK_CUSTITEM_LISTID", Global.System.Data.SqlDbType.VarChar, 0, Global.System.Data.ParameterDirection.Input, 0, 0, "BAD_CHECK_CUSTITEM_LISTID", Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
-            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@BAD_CHECK_CUST_FEE", Global.System.Data.SqlDbType.[Decimal], 0, Global.System.Data.ParameterDirection.Input, 18, 2, "BAD_CHECK_CUST_FEE", Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
-            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@DEBUG_MODE", Global.System.Data.SqlDbType.Bit, 0, Global.System.Data.ParameterDirection.Input, 0, 0, "DEBUG_MODE", Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
-            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@Original_ID", Global.System.Data.SqlDbType.Int, 0, Global.System.Data.ParameterDirection.Input, 0, 0, "ID", Global.System.Data.DataRowVersion.Original, false, Nothing, "", "", ""))
-            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@IsNull_QB_FILE_LOCATION", Global.System.Data.SqlDbType.Int, 0, Global.System.Data.ParameterDirection.Input, 0, 0, "QB_FILE_LOCATION", Global.System.Data.DataRowVersion.Original, true, Nothing, "", "", ""))
-            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@Original_QB_FILE_LOCATION", Global.System.Data.SqlDbType.VarChar, 0, Global.System.Data.ParameterDirection.Input, 0, 0, "QB_FILE_LOCATION", Global.System.Data.DataRowVersion.Original, false, Nothing, "", "", ""))
-            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@IsNull_BAD_CHECK_CHECKITEM_LISTID", Global.System.Data.SqlDbType.Int, 0, Global.System.Data.ParameterDirection.Input, 0, 0, "BAD_CHECK_CHECKITEM_LISTID", Global.System.Data.DataRowVersion.Original, true, Nothing, "", "", ""))
-            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@Original_BAD_CHECK_CHECKITEM_LISTID", Global.System.Data.SqlDbType.VarChar, 0, Global.System.Data.ParameterDirection.Input, 0, 0, "BAD_CHECK_CHECKITEM_LISTID", Global.System.Data.DataRowVersion.Original, false, Nothing, "", "", ""))
-            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@IsNull_BAD_CHECK_CUSTITEM_LISTID", Global.System.Data.SqlDbType.Int, 0, Global.System.Data.ParameterDirection.Input, 0, 0, "BAD_CHECK_CUSTITEM_LISTID", Global.System.Data.DataRowVersion.Original, true, Nothing, "", "", ""))
-            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@Original_BAD_CHECK_CUSTITEM_LISTID", Global.System.Data.SqlDbType.VarChar, 0, Global.System.Data.ParameterDirection.Input, 0, 0, "BAD_CHECK_CUSTITEM_LISTID", Global.System.Data.DataRowVersion.Original, false, Nothing, "", "", ""))
-            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@IsNull_BAD_CHECK_CUST_FEE", Global.System.Data.SqlDbType.Int, 0, Global.System.Data.ParameterDirection.Input, 0, 0, "BAD_CHECK_CUST_FEE", Global.System.Data.DataRowVersion.Original, true, Nothing, "", "", ""))
-            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@Original_BAD_CHECK_CUST_FEE", Global.System.Data.SqlDbType.[Decimal], 0, Global.System.Data.ParameterDirection.Input, 18, 2, "BAD_CHECK_CUST_FEE", Global.System.Data.DataRowVersion.Original, false, Nothing, "", "", ""))
-            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@IsNull_DEBUG_MODE", Global.System.Data.SqlDbType.Int, 0, Global.System.Data.ParameterDirection.Input, 0, 0, "DEBUG_MODE", Global.System.Data.DataRowVersion.Original, true, Nothing, "", "", ""))
-            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@Original_DEBUG_MODE", Global.System.Data.SqlDbType.Bit, 0, Global.System.Data.ParameterDirection.Input, 0, 0, "DEBUG_MODE", Global.System.Data.DataRowVersion.Original, false, Nothing, "", "", ""))
-            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@ID", Global.System.Data.SqlDbType.Int, 4, Global.System.Data.ParameterDirection.Input, 0, 0, "ID", Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
+            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@RETURN_VALUE", Global.System.Data.SqlDbType.Int, 4, Global.System.Data.ParameterDirection.ReturnValue, 10, 0, Nothing, Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
+            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@QB_FILE_LOCATION", Global.System.Data.SqlDbType.VarChar, 100, Global.System.Data.ParameterDirection.Input, 0, 0, "QB_FILE_LOCATION", Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
+            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@BAD_CHECK_CHECKITEM_LISTID", Global.System.Data.SqlDbType.VarChar, 50, Global.System.Data.ParameterDirection.Input, 0, 0, "BAD_CHECK_CHECKITEM_LISTID", Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
+            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@BAD_CHECK_CUSTITEM_LISTID", Global.System.Data.SqlDbType.VarChar, 50, Global.System.Data.ParameterDirection.Input, 0, 0, "BAD_CHECK_CUSTITEM_LISTID", Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
+            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@BAD_CHECK_CUST_FEE", Global.System.Data.SqlDbType.[Decimal], 9, Global.System.Data.ParameterDirection.Input, 18, 2, "BAD_CHECK_CUST_FEE", Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
+            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@DEBUG_MODE", Global.System.Data.SqlDbType.Bit, 1, Global.System.Data.ParameterDirection.Input, 1, 0, "DEBUG_MODE", Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
+            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@Original_ID", Global.System.Data.SqlDbType.Int, 4, Global.System.Data.ParameterDirection.Input, 10, 0, "ID", Global.System.Data.DataRowVersion.Original, false, Nothing, "", "", ""))
+            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@IsNull_QB_FILE_LOCATION", Global.System.Data.SqlDbType.Int, 4, Global.System.Data.ParameterDirection.Input, 10, 0, "QB_FILE_LOCATION", Global.System.Data.DataRowVersion.Original, true, Nothing, "", "", ""))
+            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@Original_QB_FILE_LOCATION", Global.System.Data.SqlDbType.VarChar, 100, Global.System.Data.ParameterDirection.Input, 0, 0, "QB_FILE_LOCATION", Global.System.Data.DataRowVersion.Original, false, Nothing, "", "", ""))
+            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@IsNull_BAD_CHECK_CHECKITEM_LISTID", Global.System.Data.SqlDbType.Int, 4, Global.System.Data.ParameterDirection.Input, 10, 0, "BAD_CHECK_CHECKITEM_LISTID", Global.System.Data.DataRowVersion.Original, true, Nothing, "", "", ""))
+            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@Original_BAD_CHECK_CHECKITEM_LISTID", Global.System.Data.SqlDbType.VarChar, 50, Global.System.Data.ParameterDirection.Input, 0, 0, "BAD_CHECK_CHECKITEM_LISTID", Global.System.Data.DataRowVersion.Original, false, Nothing, "", "", ""))
+            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@IsNull_BAD_CHECK_CUSTITEM_LISTID", Global.System.Data.SqlDbType.Int, 4, Global.System.Data.ParameterDirection.Input, 10, 0, "BAD_CHECK_CUSTITEM_LISTID", Global.System.Data.DataRowVersion.Original, true, Nothing, "", "", ""))
+            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@Original_BAD_CHECK_CUSTITEM_LISTID", Global.System.Data.SqlDbType.VarChar, 50, Global.System.Data.ParameterDirection.Input, 0, 0, "BAD_CHECK_CUSTITEM_LISTID", Global.System.Data.DataRowVersion.Original, false, Nothing, "", "", ""))
+            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@IsNull_BAD_CHECK_CUST_FEE", Global.System.Data.SqlDbType.Int, 4, Global.System.Data.ParameterDirection.Input, 10, 0, "BAD_CHECK_CUST_FEE", Global.System.Data.DataRowVersion.Original, true, Nothing, "", "", ""))
+            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@Original_BAD_CHECK_CUST_FEE", Global.System.Data.SqlDbType.[Decimal], 9, Global.System.Data.ParameterDirection.Input, 18, 2, "BAD_CHECK_CUST_FEE", Global.System.Data.DataRowVersion.Original, false, Nothing, "", "", ""))
+            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@IsNull_DEBUG_MODE", Global.System.Data.SqlDbType.Int, 4, Global.System.Data.ParameterDirection.Input, 10, 0, "DEBUG_MODE", Global.System.Data.DataRowVersion.Original, true, Nothing, "", "", ""))
+            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@Original_DEBUG_MODE", Global.System.Data.SqlDbType.Bit, 1, Global.System.Data.ParameterDirection.Input, 1, 0, "DEBUG_MODE", Global.System.Data.DataRowVersion.Original, false, Nothing, "", "", ""))
+            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@ID", Global.System.Data.SqlDbType.Int, 4, Global.System.Data.ParameterDirection.Input, 10, 0, "ID", Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
         End Sub
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
@@ -1698,7 +1750,7 @@ Namespace ds_ApplicationTableAdapters
             Me._commandCollection(0).Connection = Me.Connection
             Me._commandCollection(0).CommandText = "dbo.App_Settings_Select"
             Me._commandCollection(0).CommandType = Global.System.Data.CommandType.StoredProcedure
-            Me._commandCollection(0).Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@RETURN_VALUE", Global.System.Data.SqlDbType.[Variant], 0, Global.System.Data.ParameterDirection.ReturnValue, 0, 0, Nothing, Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
+            Me._commandCollection(0).Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@RETURN_VALUE", Global.System.Data.SqlDbType.Int, 4, Global.System.Data.ParameterDirection.ReturnValue, 10, 0, Nothing, Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
         End Sub
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
@@ -1757,7 +1809,7 @@ Namespace ds_ApplicationTableAdapters
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0"),  _
          Global.System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter"),  _
          Global.System.ComponentModel.DataObjectMethodAttribute(Global.System.ComponentModel.DataObjectMethodType.Update, true)>  _
-        Public Overloads Overridable Function Update(ByVal QB_FILE_LOCATION As String, ByVal BAD_CHECK_CHECKITEM_LISTID As String, ByVal BAD_CHECK_CUSTITEM_LISTID As String, ByVal BAD_CHECK_CUST_FEE As Global.System.Nullable(Of Decimal), ByVal DEBUG_MODE As Global.System.Nullable(Of Boolean), ByVal Original_ID As Integer, ByVal Original_QB_FILE_LOCATION As String, ByVal Original_BAD_CHECK_CHECKITEM_LISTID As String, ByVal Original_BAD_CHECK_CUSTITEM_LISTID As String, ByVal Original_BAD_CHECK_CUST_FEE As Global.System.Nullable(Of Decimal), ByVal Original_DEBUG_MODE As Global.System.Nullable(Of Boolean), ByVal ID As Integer) As Integer
+        Public Overloads Overridable Function Update(ByVal QB_FILE_LOCATION As String, ByVal BAD_CHECK_CHECKITEM_LISTID As String, ByVal BAD_CHECK_CUSTITEM_LISTID As String, ByVal BAD_CHECK_CUST_FEE As Global.System.Nullable(Of Decimal), ByVal DEBUG_MODE As Global.System.Nullable(Of Boolean), ByVal Original_ID As Global.System.Nullable(Of Integer), ByVal Original_QB_FILE_LOCATION As String, ByVal Original_BAD_CHECK_CHECKITEM_LISTID As String, ByVal Original_BAD_CHECK_CUSTITEM_LISTID As String, ByVal Original_BAD_CHECK_CUST_FEE As Global.System.Nullable(Of Decimal), ByVal Original_DEBUG_MODE As Global.System.Nullable(Of Boolean), ByVal ID As Global.System.Nullable(Of Integer)) As Integer
             If (QB_FILE_LOCATION Is Nothing) Then
                 Me.Adapter.UpdateCommand.Parameters(1).Value = Global.System.DBNull.Value
             Else
@@ -1783,7 +1835,11 @@ Namespace ds_ApplicationTableAdapters
             Else
                 Me.Adapter.UpdateCommand.Parameters(5).Value = Global.System.DBNull.Value
             End If
-            Me.Adapter.UpdateCommand.Parameters(6).Value = CType(Original_ID,Integer)
+            If (Original_ID.HasValue = true) Then
+                Me.Adapter.UpdateCommand.Parameters(6).Value = CType(Original_ID.Value,Integer)
+            Else
+                Me.Adapter.UpdateCommand.Parameters(6).Value = Global.System.DBNull.Value
+            End If
             If (Original_QB_FILE_LOCATION Is Nothing) Then
                 Me.Adapter.UpdateCommand.Parameters(7).Value = CType(1,Object)
                 Me.Adapter.UpdateCommand.Parameters(8).Value = Global.System.DBNull.Value
@@ -1819,7 +1875,11 @@ Namespace ds_ApplicationTableAdapters
                 Me.Adapter.UpdateCommand.Parameters(15).Value = CType(1,Object)
                 Me.Adapter.UpdateCommand.Parameters(16).Value = Global.System.DBNull.Value
             End If
-            Me.Adapter.UpdateCommand.Parameters(17).Value = CType(ID,Integer)
+            If (ID.HasValue = true) Then
+                Me.Adapter.UpdateCommand.Parameters(17).Value = CType(ID.Value,Integer)
+            Else
+                Me.Adapter.UpdateCommand.Parameters(17).Value = Global.System.DBNull.Value
+            End If
             Dim previousConnectionState As Global.System.Data.ConnectionState = Me.Adapter.UpdateCommand.Connection.State
             If ((Me.Adapter.UpdateCommand.Connection.State And Global.System.Data.ConnectionState.Open)  _
                         <> Global.System.Data.ConnectionState.Open) Then
@@ -1839,7 +1899,7 @@ Namespace ds_ApplicationTableAdapters
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0"),  _
          Global.System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter"),  _
          Global.System.ComponentModel.DataObjectMethodAttribute(Global.System.ComponentModel.DataObjectMethodType.Update, true)>  _
-        Public Overloads Overridable Function Update(ByVal QB_FILE_LOCATION As String, ByVal BAD_CHECK_CHECKITEM_LISTID As String, ByVal BAD_CHECK_CUSTITEM_LISTID As String, ByVal BAD_CHECK_CUST_FEE As Global.System.Nullable(Of Decimal), ByVal DEBUG_MODE As Global.System.Nullable(Of Boolean), ByVal Original_ID As Integer, ByVal Original_QB_FILE_LOCATION As String, ByVal Original_BAD_CHECK_CHECKITEM_LISTID As String, ByVal Original_BAD_CHECK_CUSTITEM_LISTID As String, ByVal Original_BAD_CHECK_CUST_FEE As Global.System.Nullable(Of Decimal), ByVal Original_DEBUG_MODE As Global.System.Nullable(Of Boolean)) As Integer
+        Public Overloads Overridable Function Update(ByVal QB_FILE_LOCATION As String, ByVal BAD_CHECK_CHECKITEM_LISTID As String, ByVal BAD_CHECK_CUSTITEM_LISTID As String, ByVal BAD_CHECK_CUST_FEE As Global.System.Nullable(Of Decimal), ByVal DEBUG_MODE As Global.System.Nullable(Of Boolean), ByVal Original_ID As Global.System.Nullable(Of Integer), ByVal Original_QB_FILE_LOCATION As String, ByVal Original_BAD_CHECK_CHECKITEM_LISTID As String, ByVal Original_BAD_CHECK_CUSTITEM_LISTID As String, ByVal Original_BAD_CHECK_CUST_FEE As Global.System.Nullable(Of Decimal), ByVal Original_DEBUG_MODE As Global.System.Nullable(Of Boolean)) As Integer
             Return Me.Update(QB_FILE_LOCATION, BAD_CHECK_CHECKITEM_LISTID, BAD_CHECK_CUSTITEM_LISTID, BAD_CHECK_CUST_FEE, DEBUG_MODE, Original_ID, Original_QB_FILE_LOCATION, Original_BAD_CHECK_CHECKITEM_LISTID, Original_BAD_CHECK_CUSTITEM_LISTID, Original_BAD_CHECK_CUST_FEE, Original_DEBUG_MODE, Original_ID)
         End Function
     End Class
