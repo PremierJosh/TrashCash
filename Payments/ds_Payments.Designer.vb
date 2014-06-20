@@ -750,13 +750,13 @@ Partial Public Class ds_Payments
 
         Private columnBounced As Global.System.Data.DataColumn
 
-        Private columnBATCH_PAY_ID As Global.System.Data.DataColumn
-
         Private columnInsertedByUser As Global.System.Data.DataColumn
 
         Private columnBouncedByUser As Global.System.Data.DataColumn
 
         Private columnBounced_Time As Global.System.Data.DataColumn
+
+        Private columnPayBatch_ID As Global.System.Data.DataColumn
 
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
@@ -875,14 +875,6 @@ Partial Public Class ds_Payments
 
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
-        Public ReadOnly Property BATCH_PAY_IDColumn() As Global.System.Data.DataColumn
-            Get
-                Return Me.columnBATCH_PAY_ID
-            End Get
-        End Property
-
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
         Public ReadOnly Property InsertedByUserColumn() As Global.System.Data.DataColumn
             Get
                 Return Me.columnInsertedByUser
@@ -902,6 +894,14 @@ Partial Public Class ds_Payments
         Public ReadOnly Property Bounced_TimeColumn() As Global.System.Data.DataColumn
             Get
                 Return Me.columnBounced_Time
+            End Get
+        End Property
+
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
+        Public ReadOnly Property PayBatch_IDColumn() As Global.System.Data.DataColumn
+            Get
+                Return Me.columnPayBatch_ID
             End Get
         End Property
 
@@ -942,9 +942,9 @@ Partial Public Class ds_Payments
 
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
-        Public Overloads Function AddPaymentHistory_DBRow(ByVal CustomerNumber As Decimal, ByVal PaymentTypeID As Decimal, ByVal RefNumber As String, ByVal PaymentTxnID As String, ByVal PaymentEditSeq As String, ByVal Amount As Decimal, ByVal DateReceived As Date, ByVal DateOnCheck As Date, ByVal Bounced As Boolean, ByVal BATCH_PAY_ID As Integer, ByVal InsertedByUser As String, ByVal BouncedByUser As String, ByVal Bounced_Time As Date) As PaymentHistory_DBRow
+        Public Overloads Function AddPaymentHistory_DBRow(ByVal CustomerNumber As Decimal, ByVal PaymentTypeID As Decimal, ByVal RefNumber As String, ByVal PaymentTxnID As String, ByVal PaymentEditSeq As String, ByVal Amount As Decimal, ByVal DateReceived As Date, ByVal DateOnCheck As Date, ByVal Bounced As Boolean, ByVal InsertedByUser As String, ByVal BouncedByUser As String, ByVal Bounced_Time As Date, ByVal PayBatch_ID As Integer) As PaymentHistory_DBRow
             Dim rowPaymentHistory_DBRow As PaymentHistory_DBRow = CType(Me.NewRow, PaymentHistory_DBRow)
-            Dim columnValuesArray() As Object = New Object() {Nothing, CustomerNumber, PaymentTypeID, RefNumber, PaymentTxnID, PaymentEditSeq, Amount, DateReceived, DateOnCheck, Bounced, BATCH_PAY_ID, InsertedByUser, BouncedByUser, Bounced_Time}
+            Dim columnValuesArray() As Object = New Object() {Nothing, CustomerNumber, PaymentTypeID, RefNumber, PaymentTxnID, PaymentEditSeq, Amount, DateReceived, DateOnCheck, Bounced, InsertedByUser, BouncedByUser, Bounced_Time, PayBatch_ID}
             rowPaymentHistory_DBRow.ItemArray = columnValuesArray
             Me.Rows.Add(rowPaymentHistory_DBRow)
             Return rowPaymentHistory_DBRow
@@ -983,10 +983,10 @@ Partial Public Class ds_Payments
             Me.columnDateReceived = MyBase.Columns("DateReceived")
             Me.columnDateOnCheck = MyBase.Columns("DateOnCheck")
             Me.columnBounced = MyBase.Columns("Bounced")
-            Me.columnBATCH_PAY_ID = MyBase.Columns("BATCH_PAY_ID")
             Me.columnInsertedByUser = MyBase.Columns("InsertedByUser")
             Me.columnBouncedByUser = MyBase.Columns("BouncedByUser")
             Me.columnBounced_Time = MyBase.Columns("Bounced_Time")
+            Me.columnPayBatch_ID = MyBase.Columns("PayBatch_ID")
         End Sub
 
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
@@ -1012,14 +1012,14 @@ Partial Public Class ds_Payments
             MyBase.Columns.Add(Me.columnDateOnCheck)
             Me.columnBounced = New Global.System.Data.DataColumn("Bounced", GetType(Boolean), Nothing, Global.System.Data.MappingType.Element)
             MyBase.Columns.Add(Me.columnBounced)
-            Me.columnBATCH_PAY_ID = New Global.System.Data.DataColumn("BATCH_PAY_ID", GetType(Integer), Nothing, Global.System.Data.MappingType.Element)
-            MyBase.Columns.Add(Me.columnBATCH_PAY_ID)
             Me.columnInsertedByUser = New Global.System.Data.DataColumn("InsertedByUser", GetType(String), Nothing, Global.System.Data.MappingType.Element)
             MyBase.Columns.Add(Me.columnInsertedByUser)
             Me.columnBouncedByUser = New Global.System.Data.DataColumn("BouncedByUser", GetType(String), Nothing, Global.System.Data.MappingType.Element)
             MyBase.Columns.Add(Me.columnBouncedByUser)
             Me.columnBounced_Time = New Global.System.Data.DataColumn("Bounced_Time", GetType(Date), Nothing, Global.System.Data.MappingType.Element)
             MyBase.Columns.Add(Me.columnBounced_Time)
+            Me.columnPayBatch_ID = New Global.System.Data.DataColumn("PayBatch_ID", GetType(Integer), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnPayBatch_ID)
             Me.Constraints.Add(New Global.System.Data.UniqueConstraint("Constraint1", New Global.System.Data.DataColumn() {Me.columnPaymentID}, True))
             Me.columnPaymentID.AutoIncrement = True
             Me.columnPaymentID.AutoIncrementSeed = -1
@@ -1035,9 +1035,9 @@ Partial Public Class ds_Payments
             Me.columnPaymentEditSeq.MaxLength = 16
             Me.columnAmount.AllowDBNull = False
             Me.columnDateReceived.AllowDBNull = False
-            Me.columnBATCH_PAY_ID.AllowDBNull = False
             Me.columnInsertedByUser.MaxLength = 50
             Me.columnBouncedByUser.MaxLength = 50
+            Me.columnPayBatch_ID.AllowDBNull = False
         End Sub
 
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
@@ -1826,17 +1826,6 @@ Partial Public Class ds_Payments
 
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
-        Public Property BATCH_PAY_ID() As Integer
-            Get
-                Return CType(Me(Me.tablePaymentHistory_DB.BATCH_PAY_IDColumn), Integer)
-            End Get
-            Set(value As Integer)
-                Me(Me.tablePaymentHistory_DB.BATCH_PAY_IDColumn) = value
-            End Set
-        End Property
-
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
         Public Property InsertedByUser() As String
             Get
                 Try
@@ -1877,6 +1866,17 @@ Partial Public Class ds_Payments
             End Get
             Set(value As Date)
                 Me(Me.tablePaymentHistory_DB.Bounced_TimeColumn) = value
+            End Set
+        End Property
+
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
+        Public Property PayBatch_ID() As Integer
+            Get
+                Return CType(Me(Me.tablePaymentHistory_DB.PayBatch_IDColumn), Integer)
+            End Get
+            Set(value As Integer)
+                Me(Me.tablePaymentHistory_DB.PayBatch_IDColumn) = value
             End Set
         End Property
 
@@ -2511,10 +2511,10 @@ Namespace ds_PaymentsTableAdapters
             tableMapping.ColumnMappings.Add("DateReceived", "DateReceived")
             tableMapping.ColumnMappings.Add("DateOnCheck", "DateOnCheck")
             tableMapping.ColumnMappings.Add("Bounced", "Bounced")
-            tableMapping.ColumnMappings.Add("BATCH_PAY_ID", "BATCH_PAY_ID")
             tableMapping.ColumnMappings.Add("InsertedByUser", "InsertedByUser")
             tableMapping.ColumnMappings.Add("BouncedByUser", "BouncedByUser")
             tableMapping.ColumnMappings.Add("Bounced_Time", "Bounced_Time")
+            tableMapping.ColumnMappings.Add("PayBatch_ID", "PayBatch_ID")
             Me._adapter.TableMappings.Add(tableMapping)
         End Sub
 
@@ -2822,20 +2822,20 @@ Namespace ds_PaymentsTableAdapters
                 Return Me._connection
             End Get
             Set(value As Global.System.Data.SqlClient.SqlConnection)
-                Me._connection = Value
+                Me._connection = value
                 If (Not (Me.Adapter.InsertCommand) Is Nothing) Then
-                    Me.Adapter.InsertCommand.Connection = Value
+                    Me.Adapter.InsertCommand.Connection = value
                 End If
                 If (Not (Me.Adapter.DeleteCommand) Is Nothing) Then
-                    Me.Adapter.DeleteCommand.Connection = Value
+                    Me.Adapter.DeleteCommand.Connection = value
                 End If
                 If (Not (Me.Adapter.UpdateCommand) Is Nothing) Then
-                    Me.Adapter.UpdateCommand.Connection = Value
+                    Me.Adapter.UpdateCommand.Connection = value
                 End If
                 Dim i As Integer = 0
                 Do While (i < Me.CommandCollection.Length)
                     If (Not (Me.CommandCollection(i)) Is Nothing) Then
-                        CType(Me.CommandCollection(i), Global.System.Data.SqlClient.SqlCommand).Connection = Value
+                        CType(Me.CommandCollection(i), Global.System.Data.SqlClient.SqlCommand).Connection = value
                     End If
                     i = (i + 1)
                 Loop
@@ -2849,7 +2849,7 @@ Namespace ds_PaymentsTableAdapters
                 Return Me._transaction
             End Get
             Set(value As Global.System.Data.SqlClient.SqlTransaction)
-                Me._transaction = Value
+                Me._transaction = value
                 Dim i As Integer = 0
                 Do While (i < Me.CommandCollection.Length)
                     Me.CommandCollection(i).Transaction = Me._transaction
@@ -2888,7 +2888,7 @@ Namespace ds_PaymentsTableAdapters
                 Return Me._clearBeforeFill
             End Get
             Set(value As Boolean)
-                Me._clearBeforeFill = Value
+                Me._clearBeforeFill = value
             End Set
         End Property
 
@@ -3167,7 +3167,7 @@ Namespace ds_PaymentsTableAdapters
                 Return Me._updateOrder
             End Get
             Set(value As UpdateOrderOption)
-                Me._updateOrder = Value
+                Me._updateOrder = value
             End Set
         End Property
 
@@ -3181,7 +3181,7 @@ Namespace ds_PaymentsTableAdapters
                 Return Me._bad_Check_BanksTableAdapter
             End Get
             Set(value As Bad_Check_BanksTableAdapter)
-                Me._bad_Check_BanksTableAdapter = Value
+                Me._bad_Check_BanksTableAdapter = value
             End Set
         End Property
 
@@ -3192,7 +3192,7 @@ Namespace ds_PaymentsTableAdapters
                 Return Me._backupDataSetBeforeUpdate
             End Get
             Set(value As Boolean)
-                Me._backupDataSetBeforeUpdate = Value
+                Me._backupDataSetBeforeUpdate = value
             End Set
         End Property
 
@@ -3211,7 +3211,7 @@ Namespace ds_PaymentsTableAdapters
                 Return Nothing
             End Get
             Set(value As Global.System.Data.IDbConnection)
-                Me._connection = Value
+                Me._connection = value
             End Set
         End Property
 

@@ -38,7 +38,7 @@
           </TableAdapter>
           <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="PaymentHistory_DBTableAdapter" GeneratorDataComponentClassName="PaymentHistory_DBTableAdapter" Name="PaymentHistory_DB" UserDataComponentName="PaymentHistory_DBTableAdapter">
             <MainSource>
-              <DbSource ConnectionRef="QBDBConnectionString (MySettings)" DbObjectName="QuickbooksV2.dbo.PaymentHistory_GetByID" DbObjectType="StoredProcedure" GenerateMethods="Get" GenerateShortCommands="false" GeneratorGetMethodName="GetData" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="false" UserGetMethodName="GetData" UserSourceName="GetData">
+              <DbSource ConnectionRef="QBDBConnectionString (MySettings)" DbObjectName="PI_TrashCash.dbo.PaymentHistory_GetByID" DbObjectType="StoredProcedure" GenerateMethods="Get" GenerateShortCommands="false" GeneratorGetMethodName="GetData" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="false" UserGetMethodName="GetData" UserSourceName="GetData">
                 <SelectCommand>
                   <DbCommand CommandType="StoredProcedure" ModifiedByUser="false">
                     <CommandText>dbo.PaymentHistory_GetByID</CommandText>
@@ -61,10 +61,10 @@
               <Mapping SourceColumn="DateReceived" DataSetColumn="DateReceived" />
               <Mapping SourceColumn="DateOnCheck" DataSetColumn="DateOnCheck" />
               <Mapping SourceColumn="Bounced" DataSetColumn="Bounced" />
-              <Mapping SourceColumn="BATCH_PAY_ID" DataSetColumn="BATCH_PAY_ID" />
               <Mapping SourceColumn="InsertedByUser" DataSetColumn="InsertedByUser" />
               <Mapping SourceColumn="BouncedByUser" DataSetColumn="BouncedByUser" />
               <Mapping SourceColumn="Bounced_Time" DataSetColumn="Bounced_Time" />
+              <Mapping SourceColumn="PayBatch_ID" DataSetColumn="PayBatch_ID" />
             </Mappings>
             <Sources>
               <DbSource ConnectionRef="QBDBConnectionString (MySettings)" DbObjectName="QuickbooksV2.dbo.PaymentHistory_MovePayToCust" DbObjectType="StoredProcedure" GenerateShortCommands="true" GeneratorSourceName="MovePayToCust" Modifier="Public" Name="MovePayToCust" QueryType="NoData" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetDataBy" UserSourceName="MovePayToCust">
@@ -197,7 +197,7 @@
   <xs:element name="ds_Payments" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="ds_Payments" msprop:Generator_UserDSName="ds_Payments">
     <xs:complexType>
       <xs:choice minOccurs="0" maxOccurs="unbounded">
-        <xs:element name="PaymentHistory_Display" msprop:Generator_TableClassName="PaymentHistory_DisplayDataTable" msprop:Generator_TableVarName="tablePaymentHistory_Display" msprop:Generator_RowChangedName="PaymentHistory_DisplayRowChanged" msprop:Generator_TablePropName="PaymentHistory_Display" msprop:Generator_RowDeletingName="PaymentHistory_DisplayRowDeleting" msprop:Generator_RowChangingName="PaymentHistory_DisplayRowChanging" msprop:Generator_RowEvHandlerName="PaymentHistory_DisplayRowChangeEventHandler" msprop:Generator_RowDeletedName="PaymentHistory_DisplayRowDeleted" msprop:Generator_RowClassName="PaymentHistory_DisplayRow" msprop:Generator_UserTableName="PaymentHistory_Display" msprop:Generator_RowEvArgName="PaymentHistory_DisplayRowChangeEvent">
+        <xs:element name="PaymentHistory_Display" msprop:Generator_TableClassName="PaymentHistory_DisplayDataTable" msprop:Generator_TableVarName="tablePaymentHistory_Display" msprop:Generator_TablePropName="PaymentHistory_Display" msprop:Generator_RowDeletingName="PaymentHistory_DisplayRowDeleting" msprop:Generator_RowChangingName="PaymentHistory_DisplayRowChanging" msprop:Generator_RowEvHandlerName="PaymentHistory_DisplayRowChangeEventHandler" msprop:Generator_RowDeletedName="PaymentHistory_DisplayRowDeleted" msprop:Generator_UserTableName="PaymentHistory_Display" msprop:Generator_RowChangedName="PaymentHistory_DisplayRowChanged" msprop:Generator_RowEvArgName="PaymentHistory_DisplayRowChangeEvent" msprop:Generator_RowClassName="PaymentHistory_DisplayRow">
           <xs:complexType>
             <xs:sequence>
               <xs:element name="PaymentID" msdata:ReadOnly="true" msdata:AutoIncrement="true" msdata:AutoIncrementSeed="-1" msdata:AutoIncrementStep="-1" msprop:Generator_ColumnVarNameInTable="columnPaymentID" msprop:Generator_ColumnPropNameInRow="PaymentID" msprop:Generator_ColumnPropNameInTable="PaymentIDColumn" msprop:Generator_UserColumnName="PaymentID" type="xs:decimal" />
@@ -230,7 +230,7 @@
             </xs:sequence>
           </xs:complexType>
         </xs:element>
-        <xs:element name="PaymentHistory_DB" msprop:Generator_TableClassName="PaymentHistory_DBDataTable" msprop:Generator_TableVarName="tablePaymentHistory_DB" msprop:Generator_RowChangedName="PaymentHistory_DBRowChanged" msprop:Generator_TablePropName="PaymentHistory_DB" msprop:Generator_RowDeletingName="PaymentHistory_DBRowDeleting" msprop:Generator_RowChangingName="PaymentHistory_DBRowChanging" msprop:Generator_RowEvHandlerName="PaymentHistory_DBRowChangeEventHandler" msprop:Generator_RowDeletedName="PaymentHistory_DBRowDeleted" msprop:Generator_RowClassName="PaymentHistory_DBRow" msprop:Generator_UserTableName="PaymentHistory_DB" msprop:Generator_RowEvArgName="PaymentHistory_DBRowChangeEvent">
+        <xs:element name="PaymentHistory_DB" msprop:Generator_TableClassName="PaymentHistory_DBDataTable" msprop:Generator_TableVarName="tablePaymentHistory_DB" msprop:Generator_TablePropName="PaymentHistory_DB" msprop:Generator_RowDeletingName="PaymentHistory_DBRowDeleting" msprop:Generator_RowChangingName="PaymentHistory_DBRowChanging" msprop:Generator_RowEvHandlerName="PaymentHistory_DBRowChangeEventHandler" msprop:Generator_RowDeletedName="PaymentHistory_DBRowDeleted" msprop:Generator_UserTableName="PaymentHistory_DB" msprop:Generator_RowChangedName="PaymentHistory_DBRowChanged" msprop:Generator_RowEvArgName="PaymentHistory_DBRowChangeEvent" msprop:Generator_RowClassName="PaymentHistory_DBRow">
           <xs:complexType>
             <xs:sequence>
               <xs:element name="PaymentID" msdata:ReadOnly="true" msdata:AutoIncrement="true" msdata:AutoIncrementSeed="-1" msdata:AutoIncrementStep="-1" msprop:Generator_ColumnVarNameInTable="columnPaymentID" msprop:Generator_ColumnPropNameInRow="PaymentID" msprop:Generator_ColumnPropNameInTable="PaymentIDColumn" msprop:Generator_UserColumnName="PaymentID" type="xs:decimal" />
@@ -261,7 +261,6 @@
               <xs:element name="DateReceived" msprop:Generator_ColumnVarNameInTable="columnDateReceived" msprop:Generator_ColumnPropNameInRow="DateReceived" msprop:Generator_ColumnPropNameInTable="DateReceivedColumn" msprop:Generator_UserColumnName="DateReceived" type="xs:dateTime" />
               <xs:element name="DateOnCheck" msprop:Generator_ColumnVarNameInTable="columnDateOnCheck" msprop:Generator_ColumnPropNameInRow="DateOnCheck" msprop:Generator_ColumnPropNameInTable="DateOnCheckColumn" msprop:Generator_UserColumnName="DateOnCheck" type="xs:dateTime" minOccurs="0" />
               <xs:element name="Bounced" msprop:Generator_ColumnVarNameInTable="columnBounced" msprop:Generator_ColumnPropNameInRow="Bounced" msprop:Generator_ColumnPropNameInTable="BouncedColumn" msprop:Generator_UserColumnName="Bounced" type="xs:boolean" minOccurs="0" />
-              <xs:element name="BATCH_PAY_ID" msprop:Generator_ColumnVarNameInTable="columnBATCH_PAY_ID" msprop:Generator_ColumnPropNameInRow="BATCH_PAY_ID" msprop:Generator_ColumnPropNameInTable="BATCH_PAY_IDColumn" msprop:Generator_UserColumnName="BATCH_PAY_ID" type="xs:int" />
               <xs:element name="InsertedByUser" msprop:Generator_ColumnVarNameInTable="columnInsertedByUser" msprop:Generator_ColumnPropNameInRow="InsertedByUser" msprop:Generator_ColumnPropNameInTable="InsertedByUserColumn" msprop:Generator_UserColumnName="InsertedByUser" minOccurs="0">
                 <xs:simpleType>
                   <xs:restriction base="xs:string">
@@ -277,10 +276,11 @@
                 </xs:simpleType>
               </xs:element>
               <xs:element name="Bounced_Time" msprop:Generator_ColumnVarNameInTable="columnBounced_Time" msprop:Generator_ColumnPropNameInRow="Bounced_Time" msprop:Generator_ColumnPropNameInTable="Bounced_TimeColumn" msprop:Generator_UserColumnName="Bounced_Time" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="PayBatch_ID" msprop:Generator_ColumnVarNameInTable="columnPayBatch_ID" msprop:Generator_ColumnPropNameInRow="PayBatch_ID" msprop:Generator_ColumnPropNameInTable="PayBatch_IDColumn" msprop:Generator_UserColumnName="PayBatch_ID" type="xs:int" />
             </xs:sequence>
           </xs:complexType>
         </xs:element>
-        <xs:element name="Bad_Check_Banks" msprop:Generator_TableClassName="Bad_Check_BanksDataTable" msprop:Generator_TableVarName="tableBad_Check_Banks" msprop:Generator_TablePropName="Bad_Check_Banks" msprop:Generator_RowDeletingName="Bad_Check_BanksRowDeleting" msprop:Generator_RowChangingName="Bad_Check_BanksRowChanging" msprop:Generator_RowEvHandlerName="Bad_Check_BanksRowChangeEventHandler" msprop:Generator_RowDeletedName="Bad_Check_BanksRowDeleted" msprop:Generator_UserTableName="Bad_Check_Banks" msprop:Generator_RowChangedName="Bad_Check_BanksRowChanged" msprop:Generator_RowEvArgName="Bad_Check_BanksRowChangeEvent" msprop:Generator_RowClassName="Bad_Check_BanksRow">
+        <xs:element name="Bad_Check_Banks" msprop:Generator_TableClassName="Bad_Check_BanksDataTable" msprop:Generator_TableVarName="tableBad_Check_Banks" msprop:Generator_RowChangedName="Bad_Check_BanksRowChanged" msprop:Generator_TablePropName="Bad_Check_Banks" msprop:Generator_RowDeletingName="Bad_Check_BanksRowDeleting" msprop:Generator_RowChangingName="Bad_Check_BanksRowChanging" msprop:Generator_RowEvHandlerName="Bad_Check_BanksRowChangeEventHandler" msprop:Generator_RowDeletedName="Bad_Check_BanksRowDeleted" msprop:Generator_RowClassName="Bad_Check_BanksRow" msprop:Generator_UserTableName="Bad_Check_Banks" msprop:Generator_RowEvArgName="Bad_Check_BanksRowChangeEvent">
           <xs:complexType>
             <xs:sequence>
               <xs:element name="Bank_ID" msdata:ReadOnly="true" msdata:AutoIncrement="true" msdata:AutoIncrementSeed="-1" msdata:AutoIncrementStep="-1" msprop:Generator_ColumnVarNameInTable="columnBank_ID" msprop:Generator_ColumnPropNameInRow="Bank_ID" msprop:Generator_ColumnPropNameInTable="Bank_IDColumn" msprop:Generator_UserColumnName="Bank_ID" type="xs:int" />

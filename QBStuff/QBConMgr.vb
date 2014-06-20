@@ -13,6 +13,8 @@ Namespace QBStuff
             SessionManager = New QBSessionManager()
             ' attempt to start qbfc services
             'StartQBFCServices()
+            ' setting limit for inital con to 5 seconds
+          Dim startTime As Date = Date.Now
             While Not connected
                 Try
                    ' get connection
@@ -23,6 +25,11 @@ Namespace QBStuff
                     MessageSetRequest = SessionManager.CreateMsgSetRequest("US", 11, 0)
                     connected = True
                 Catch ex As Exception
+                    If (DateAdd(DateInterval.Second, 5, startTime) > Date.Now) Then
+                        MsgBox("Connection error: " & ex.Message & vbCrLf & "Restart TrashCash. Closing...")
+                        Application.Exit()
+                        Exit While
+                    End If
                     connected = False
                 End Try
             End While

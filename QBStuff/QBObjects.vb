@@ -114,6 +114,10 @@ Namespace QBStuff
 
             ' this is used for a linked txn amount
             Public LinkedTxnAmount As Double
+
+            ' external guid field will hold the workingpayments row id
+            ' ReSharper disable once InconsistentNaming
+            Public ExternalGUID As String
         End Structure
 
         Public Structure QBItemObj

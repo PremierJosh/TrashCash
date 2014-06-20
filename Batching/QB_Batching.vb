@@ -59,9 +59,9 @@ Namespace Batching
                 ' this is how many milliseconds between progress reporting
                 Const elapsedTime As Double = 500
                
-
-
                 If (_dt.Rows.Count > 0) Then
+                    ' setting batch started
+                    _qta.App_Settings_BatchWork("Invoices", True)
                     ' setting maximum on progress class
                     progress.MaximumValue = _dt.Rows.Count
                     '' completed counter and batching row
@@ -72,7 +72,7 @@ Namespace Batching
 
                     ' checking if a batch row is passed to be completed
                     If (batchRow Is Nothing) Then
-                       batchRow = _bdt.NewBatch_InvoicesRow
+                        batchRow = _bdt.NewBatch_InvoicesRow
                         With batchRow
                             .TargetedBillDate = _targetedBillDate
                             .StartCount = _dt.Rows.Count
@@ -91,98 +91,106 @@ Namespace Batching
                         End Try
                     Else
                         ' row is passed and this is a continuation so we need to set vars
-                        errCount = batchRow.ErrCount
-                        compCount = batchRow.CompletedCount
-                        compTotal = batchRow.CompletedSubtotal
-                        ' update progress obj
-                        progress.CurrentValue = batchRow.CompletedCount
-                    End If
-                    
-                    ' start looping through rows
-                    For Each row As ds_Batching.BATCH_WorkingInvoiceRow In _dt.Rows
-                        If (row.InvoiceStatus = 5) Then
-                            ' checking if we errored and prompting to continue
-                            If (errOnPrevRun) Then
-                                Dim result As DialogResult = MessageBox.Show("There was an error adding the previous Invoice. Do you wish to continue with the batch?", "Batch Error", MessageBoxButtons.YesNo, MessageBoxIcon.Error)
-                                If (result = DialogResult.Yes) Then
-                                    e.Cancel = True
-                                End If
-                                ' reset bool
-                                errOnPrevRun = False
-                            End If
-                            ' checking for cancel request
-                            If (worker.CancellationPending = True) Then
-                                e.Cancel = True
-                                batchRow.Canceled = True
-                                Exit For
-                            End If
-                            ' updating progress counter and customer
-                            progress.CurrentValue += 1
-                            progress.CurrentCustomer = row.CustomerFullName
-                            ' getting percent
-                            progPercent = CInt(progress.CurrentValue / progress.MaximumValue * 100)
-                            ' report if enough time has passed
-                            If (Now > lastReportTime.AddMilliseconds(elapsedTime)) Then
-                                worker.ReportProgress(progPercent, progress)
-                            End If
-                            ' checking balance of customer
-                            Dim custBalance As Double = ConMgr.GetCustomerBalance(row.CustomerListID)
-
-                            ' send invoice through row
-                            Dim invObj As QBInvoiceObj = Invoice(row, compTotal, batchRow.InvBatch_ID)
-
-                            ' check status
-                            If (row.InvoiceStatus = TC_ENItemStatus.Complete) Then
-                                ' increment completed
-                                compCount += 1
-                                Try
-                                    ' update batch row
-                                    batchRow.CompletedCount = compCount
-                                    batchRow.CompletedSubtotal = compTotal
-                                    _bta.Update(batchRow)
-                                Catch ex As SqlException
-                                    MessageBox.Show("Message: " & ex.Message & vbCrLf & "LineNumber: " & ex.LineNumber,
-                                                    "Sql Error: " & ex.Procedure, MessageBoxButtons.OK,
-                                                    MessageBoxIcon.Error)
-                                End Try
-                                If (custBalance < 0) Then
-                                    ' attempt to pay invoice
-                                    QBMethods.PayInvoice(invObj, qbConMgr:=ConMgr)
-                                End If
-                            Else
-                                errCount += 1
-                                errOnPrevRun = True
-                                Try
-                                    ' update batch row
-                                    batchRow.ErrCount = errCount
-                                    _bta.Update(batchRow)
-                                Catch ex As SqlException
-                                    MessageBox.Show("Message: " & ex.Message & vbCrLf & "LineNumber: " & ex.LineNumber,
-                                                    "Sql Error: " & ex.Procedure, MessageBoxButtons.OK,
-                                                    MessageBoxIcon.Error)
-                                End Try
-                            End If
+                        If (Not batchRow.IsErrCountNull) Then
+                            errCount = batchRow.ErrCount
                         End If
-                    Next row
-                    ' update batch row for completion
-                    With batchRow
-                        .CompletedCount = compCount
-                        .CompletedSubtotal = compTotal
-                        .ErrCount = errCount
-                        .EndTime = Date.Now
-                        .EndUser = CurrentUser.USER_NAME
-                        .ConnInterrupt = False
-                    End With
-                    Try
+                        If (Not batchRow.IsCompletedCountNull) Then
+                            compCount = batchRow.CompletedCount
+                            ' update progress obj
+                            progress.CurrentValue = batchRow.CompletedCount
+                        End If
+                        If (Not batchRow.IsCompletedSubtotalNull) Then
+                            compTotal = batchRow.CompletedSubtotal
+                        End If
+                  End If
+
+                        ' start looping through rows
+                        For Each row As ds_Batching.BATCH_WorkingInvoiceRow In _dt.Rows
+                            If (row.InvoiceStatus = 5) Then
+                                ' checking if we errored and prompting to continue
+                                If (errOnPrevRun) Then
+                                    Dim result As DialogResult = MessageBox.Show("There was an error adding the previous Invoice. Do you wish to continue with the batch?", "Batch Error", MessageBoxButtons.YesNo, MessageBoxIcon.Error)
+                                    If (result = DialogResult.Yes) Then
+                                        e.Cancel = True
+                                    End If
+                                    ' reset bool
+                                    errOnPrevRun = False
+                                End If
+                                ' checking for cancel request
+                                If (worker.CancellationPending = True) Then
+                                    e.Cancel = True
+                                    batchRow.Canceled = True
+                                    Exit For
+                                End If
+                                ' updating progress counter and customer
+                                progress.CurrentValue += 1
+                                progress.CurrentCustomer = row.CustomerFullName
+                                ' getting percent
+                                progPercent = CInt(progress.CurrentValue / progress.MaximumValue * 100)
+                                ' report if enough time has passed
+                                If (Now > lastReportTime.AddMilliseconds(elapsedTime)) Then
+                                    worker.ReportProgress(progPercent, progress)
+                                End If
+                                ' checking balance of customer
+                                Dim custBalance As Double = ConMgr.GetCustomerBalance(row.CustomerListID)
+
+                                ' send invoice through row
+                                Dim invObj As QBInvoiceObj = Invoice(row, compTotal, batchRow.InvBatch_ID)
+
+                                ' check status
+                                If (row.InvoiceStatus = TC_ENItemStatus.Complete) Then
+                                    ' increment completed
+                                    compCount += 1
+                                    Try
+                                        ' update batch row
+                                        batchRow.CompletedCount = compCount
+                                        batchRow.CompletedSubtotal = compTotal
+                                        _bta.Update(batchRow)
+                                    Catch ex As SqlException
+                                        MessageBox.Show("Message: " & ex.Message & vbCrLf & "LineNumber: " & ex.LineNumber,
+                                                        "Sql Error: " & ex.Procedure, MessageBoxButtons.OK,
+                                                        MessageBoxIcon.Error)
+                                    End Try
+                                    If (custBalance < 0) Then
+                                        ' attempt to pay invoice
+                                        QBMethods.PayInvoice(invObj, qbConMgr:=ConMgr)
+                                    End If
+                                Else
+                                    errCount += 1
+                                    errOnPrevRun = True
+                                    Try
+                                        ' update batch row
+                                        batchRow.ErrCount = errCount
+                                        _bta.Update(batchRow)
+                                    Catch ex As SqlException
+                                        MessageBox.Show("Message: " & ex.Message & vbCrLf & "LineNumber: " & ex.LineNumber,
+                                                        "Sql Error: " & ex.Procedure, MessageBoxButtons.OK,
+                                                        MessageBoxIcon.Error)
+                                    End Try
+                                End If
+                            End If
+                        Next row
                         ' update batch row for completion
-                        ' and delete completed rows
-                        _bta.Update(batchRow)
-                        _ta.Update(_dt)
-                        _ta.DeleteComplete()
-                    Catch ex As SqlException
-                        MessageBox.Show("Message: " & ex.Message & vbCrLf & "LineNumber: " & ex.LineNumber,
-                                        "Sql Error: " & ex.Procedure, MessageBoxButtons.OK, MessageBoxIcon.Error)
-                    End Try
+                        With batchRow
+                            .CompletedCount = compCount
+                            .CompletedSubtotal = compTotal
+                            .ErrCount = errCount
+                            .EndTime = Date.Now
+                            .EndUser = CurrentUser.USER_NAME
+                            .ConnInterrupt = False
+                        End With
+                        Try
+                            ' update batch row for completion
+                            ' and delete completed rows
+                            _bta.Update(batchRow)
+                            _ta.Update(_dt)
+                            _ta.DeleteComplete()
+                            ' setting batch completed
+                            _qta.App_Settings_BatchWork("Invoices", False)
+                        Catch ex As SqlException
+                            MessageBox.Show("Message: " & ex.Message & vbCrLf & "LineNumber: " & ex.LineNumber,
+                                            "Sql Error: " & ex.Procedure, MessageBoxButtons.OK, MessageBoxIcon.Error)
+                        End Try
                 End If
                 Finalize()
 
@@ -308,6 +316,8 @@ Namespace Batching
                 Const elapsedTime As Double = 100
 
                 If (_dt.Rows.Count > 0) Then
+                    ' setting batch completed
+                    _qta.App_Settings_BatchWork("Payments", True)
                     ' setting maximum on progress class
                     progress.MaximumValue = _dt.Rows.Count
                     ' completed counter and batching row
@@ -335,12 +345,17 @@ Namespace Batching
                                             "Sql Error: " & ex.Procedure, MessageBoxButtons.OK, MessageBoxIcon.Error)
                         End Try
                     Else
-                        ' row is passed and this is a continuation so we need to set vars
-                        errCount = batchRow.ErrCount
-                        compCount = batchRow.CompletedCount
-                        compTotal = batchRow.CompletedSubtotal
-                        ' update progress obj
-                        progress.CurrentValue = batchRow.CompletedCount
+                        If (Not batchRow.IsErrCountNull) Then
+                            errCount = batchRow.ErrCount
+                        End If
+                        If (Not batchRow.IsCompletedCountNull) Then
+                            compCount = batchRow.CompletedCount
+                            ' update progress obj
+                            progress.CurrentValue = batchRow.CompletedCount
+                        End If
+                        If (Not batchRow.IsCompletedSubtotalNull) Then
+                            compTotal = batchRow.CompletedSubtotal
+                        End If
                     End If
 
                     ' begin the loop
@@ -372,7 +387,7 @@ Namespace Batching
                             End If
 
                             ' send payment to quickbooks through row ref
-                            Dim payObj As QBRecievePaymentObj = ReceivePayment(row)
+                            Dim payObj As QBRecievePaymentObj = ReceivePayment(row, compTotal)
 
                             ' check status
                             If (row.WorkingPaymentsStatus = TC_ENItemStatus.Complete) Then
@@ -453,6 +468,8 @@ Namespace Batching
                         _bta.Update(batchRow)
                         _ta.Update(_dt)
                         _ta.DeleteComplete()
+                        ' setting batch completed
+                        _qta.App_Settings_BatchWork("Payments", False)
                     Catch ex As SqlException
                         MessageBox.Show("Message: " & ex.Message & vbCrLf & "LineNumber: " & ex.LineNumber,
                                         "Sql Error: " & ex.Procedure, MessageBoxButtons.OK, MessageBoxIcon.Error)
@@ -461,7 +478,7 @@ Namespace Batching
                 Finalize()
             End Sub
 
-            Private Function ReceivePayment(ByRef row As ds_Batching.BATCH_WorkingPaymentsRow) As QBRecievePaymentObj
+            Private Function ReceivePayment(ByRef row As ds_Batching.BATCH_WorkingPaymentsRow, ByRef currTotal As Double) As QBRecievePaymentObj
                 ' return obj
                 Dim payObj As New QBRecievePaymentObj
                 With payObj
@@ -472,6 +489,7 @@ Namespace Batching
                     If (Not row.IsWorkingPaymentsCheckNumNull) Then
                         .RefNumber = row.WorkingPaymentsCheckNum
                     End If
+                    .ExternalGUID = row.WorkingPaymentsID
                 End With
                 ' i want the status message back for err writing
                 Dim s As String = "s"
@@ -479,6 +497,8 @@ Namespace Batching
                 If (resp = 0) Then
                     ' update to complete
                     row.WorkingPaymentsStatus = TC_ENItemStatus.Complete
+                    ' update current total
+                    currTotal = currTotal + payObj.TotalAmount
                 Else
                     row.WorkingPaymentsStatus = TC_ENItemStatus.Err
                     Try

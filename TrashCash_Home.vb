@@ -281,8 +281,7 @@ Public Class TrashCashHome
         Try
             Dim connected As Boolean = GlobalConMgr.InitCon()
             If (Not connected) Then
-                MsgBox("Unable to connect to quickbooks")
-                Application.Exit()
+               Application.Exit()
             End If
             'temp: setting vars here for other forms
             AppSessMgr = GlobalConMgr.SessionManager
@@ -310,8 +309,8 @@ Public Class TrashCashHome
         If (row.Batching_Invoices) Then
             finBatch = New Batching.BatchInterruption
             finBatch.InvoiceBatch = True
-          ElseIf (row.Batching_Payments) Then
-            finBatch = new Batching.BatchInterruption
+        ElseIf (row.Batching_Payments) Then
+            finBatch = New Batching.BatchInterruption
             finBatch.PaymentBatch = True
         End If
 

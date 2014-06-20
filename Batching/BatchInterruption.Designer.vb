@@ -47,6 +47,7 @@
             Me.lbl_Count.Size = New System.Drawing.Size(60, 13)
             Me.lbl_Count.TabIndex = 2
             Me.lbl_Count.Text = "1000/1000"
+            Me.lbl_Count.Visible = False
             '
             'lbl_CustName
             '
@@ -56,6 +57,7 @@
             Me.lbl_CustName.Size = New System.Drawing.Size(134, 13)
             Me.lbl_CustName.TabIndex = 3
             Me.lbl_CustName.Text = "Customer Full Name - 1000"
+            Me.lbl_CustName.Visible = False
             '
             'Label1
             '
@@ -78,6 +80,8 @@
             '
             'BatchWorker
             '
+            Me.BatchWorker.WorkerReportsProgress = True
+            Me.BatchWorker.WorkerSupportsCancellation = True
             '
             'BatchInterruption
             '
