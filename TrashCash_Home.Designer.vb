@@ -214,6 +214,7 @@ Partial Class TrashCashHome
         Me.toolstripbtn1.Name = "toolstripbtn1"
         Me.toolstripbtn1.Size = New System.Drawing.Size(29, 23)
         Me.toolstripbtn1.Text = "ToolStripDropDownButton1"
+        Me.toolstripbtn1.Visible = False
         '
         'RecurringService_PendingApprovalsTableAdapter
         '

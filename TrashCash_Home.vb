@@ -304,6 +304,14 @@ Public Class TrashCashHome
         ' testing report lib button
         toolstripbtn1.DropDown = New ReportingLib.ReportsDropDown
 
+        ' checking if a batch didn't complete last time the program was run
+        Dim row As ds_Application.APP_SETTINGSRow = AppTA.GetData().Rows(0)
+        If (row.Batching_Invoices) Then
+
+        ElseIf (row.Batching_Payments) Then
+
+        End If
+        
     End Sub
 
     Private Sub ApprovalsWorked(ByVal countRemain As Integer) Handles PendingApprovals.RemainingApprovals

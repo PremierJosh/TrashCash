@@ -1,5 +1,5 @@
 ﻿Imports TrashCash.QBStuff
-'Imports TrashCash.ds_Batching
+Imports TrashCash.ds_Batching
 
 Namespace Batching
 
@@ -35,7 +35,7 @@ Namespace Batching
             Private ReadOnly _bdt As ds_Batching.Batch_InvoicesDataTable
 
             Private ReadOnly _targetedBillDate As Date
-            Public Sub New(ByVal targetedBillDate As Date)
+            Public Sub New(Optional ByVal targetedBillDate As Date = Nothing)
                 MyBase.New()
                 ' instantiating tas
                 _ta = New ds_BatchingTableAdapters.BATCH_WorkingInvoiceTableAdapter
@@ -47,7 +47,8 @@ Namespace Batching
                 _targetedBillDate = targetedBillDate
             End Sub
 
-            Public Sub Batch(ByVal worker As System.ComponentModel.BackgroundWorker, ByVal e As System.ComponentModel.DoWorkEventArgs)
+            Public Sub Batch(ByVal worker As System.ComponentModel.BackgroundWorker, ByVal e As System.ComponentModel.DoWorkEventArgs,
+                             Optional ByRef batchRow As ds_Batching.Batch_InvoicesRow = Nothing)
 
                 ' this will keep track of this batches progress
                 Dim progress As New ProgressObj
@@ -57,37 +58,46 @@ Namespace Batching
                 Dim lastReportTime As DateTime = Now
                 ' this is how many milliseconds between progress reporting
                 Const elapsedTime As Double = 500
-                Dim batchRow As ds_Batching.Batch_InvoicesRow = _bdt.NewBatch_InvoicesRow
+               
+
 
                 If (_dt.Rows.Count > 0) Then
                     ' setting maximum on progress class
                     progress.MaximumValue = _dt.Rows.Count
-                    ' getting total of this batch
-                    Dim startTotal As Double = _bta.QueueTotal
-                    ' completed counter and batching row
+                    '' completed counter and batching row
                     Dim errCount As Integer
                     Dim errOnPrevRun As Boolean
                     Dim compCount As Integer
                     Dim compTotal As Double
 
-                    With batchRow
-                        .TargetedBillDate = _targetedBillDate
-                        .StartCount = _dt.Rows.Count
-                        .StartSubtotal = startTotal
-                        .StartTime = Date.Now
-                        .StartUser = CurrentUser.USER_NAME
-                        .ConnInterrupt = True
-                    End With
-                    _bdt.AddBatch_InvoicesRow(batchRow)
-
-                    Try
-                        ' batch inv row created
-                        _bta.Update(batchRow)
-                    Catch ex As SqlException
-                        MessageBox.Show("Message: " & ex.Message & vbCrLf & "LineNumber: " & ex.LineNumber,
-                                        "Sql Error: " & ex.Procedure, MessageBoxButtons.OK, MessageBoxIcon.Error)
-                    End Try
-
+                    ' checking if a batch row is passed to be completed
+                    If (batchRow Is Nothing) Then
+                       batchRow = _bdt.NewBatch_InvoicesRow
+                        With batchRow
+                            .TargetedBillDate = _targetedBillDate
+                            .StartCount = _dt.Rows.Count
+                            .StartSubtotal = _bta.QueueTotal
+                            .StartTime = Date.Now
+                            .StartUser = CurrentUser.USER_NAME
+                            .ConnInterrupt = True
+                        End With
+                        _bdt.AddBatch_InvoicesRow(batchRow)
+                        Try
+                            ' batch row creation
+                            _bta.Update(batchRow)
+                        Catch ex As SqlException
+                            MessageBox.Show("Message: " & ex.Message & vbCrLf & "LineNumber: " & ex.LineNumber,
+                                            "Sql Error: " & ex.Procedure, MessageBoxButtons.OK, MessageBoxIcon.Error)
+                        End Try
+                    Else
+                        ' row is passed and this is a continuation so we need to set vars
+                        errCount = batchRow.ErrCount
+                        compCount = batchRow.CompletedCount
+                        compTotal = batchRow.CompletedSubtotal
+                        ' update progress obj
+                        progress.CurrentValue = batchRow.CompletedCount
+                    End If
+                    
                     ' start looping through rows
                     For Each row As ds_Batching.BATCH_WorkingInvoiceRow In _dt.Rows
                         If (row.InvoiceStatus = 5) Then
@@ -285,7 +295,8 @@ Namespace Batching
                 _bdt = New ds_Batching.Batch_PaymentsDataTable
             End Sub
 
-            Public Sub Batch(ByVal worker As System.ComponentModel.BackgroundWorker, ByVal e As System.ComponentModel.DoWorkEventArgs)
+            Public Sub Batch(ByVal worker As System.ComponentModel.BackgroundWorker, ByVal e As System.ComponentModel.DoWorkEventArgs,
+                             Optional ByRef batchRow As ds_Batching.Batch_PaymentsRow = Nothing)
 
                 ' this will keep track of this batches progress
                 Dim progress As New ProgressObj
@@ -295,40 +306,49 @@ Namespace Batching
                 Dim lastReportTime As DateTime = Now
                 ' this is how many milliseconds between progress reporting
                 Const elapsedTime As Double = 100
-                Dim batchRow As ds_Batching.Batch_PaymentsRow = _bdt.NewBatch_PaymentsRow
 
                 If (_dt.Rows.Count > 0) Then
                     ' setting maximum on progress class
                     progress.MaximumValue = _dt.Rows.Count
-                    ' getting total of this batch
-                    Dim startTotal As Double = _dt.Compute("SUM(WorkingPaymentsAmount)", "")
                     ' completed counter and batching row
                     Dim errCount As Integer
                     Dim errOnPrevRun As Boolean
                     Dim compCount As Integer
                     Dim compTotal As Double
 
-                    With batchRow
-                        .StartCount = _dt.Rows.Count
-                        .StartTotal = startTotal
-                        .StartTime = Date.Now
-                        .StartUser = CurrentUser.USER_NAME
-                        .ConnInterrupt = True
-                    End With
-                    _bdt.AddBatch_PaymentsRow(batchRow)
-                    Try
-                        ' batch row creation
-                        _bta.Update(batchRow)
-                    Catch ex As SqlException
-                        MessageBox.Show("Message: " & ex.Message & vbCrLf & "LineNumber: " & ex.LineNumber,
-                                        "Sql Error: " & ex.Procedure, MessageBoxButtons.OK, MessageBoxIcon.Error)
-                    End Try
+                    ' checking if a batch row is passed to be completed
+                    If (batchRow Is Nothing) Then
+                        batchRow = _bdt.NewBatch_PaymentsRow
+                        With batchRow
+                            .StartCount = _dt.Rows.Count
+                            .StartTotal = _dt.Compute("SUM(WorkingPaymentsAmount)", "")
+                            .StartTime = Date.Now
+                            .StartUser = CurrentUser.USER_NAME
+                            .ConnInterrupt = True
+                        End With
+                        _bdt.AddBatch_PaymentsRow(batchRow)
+                        Try
+                            ' batch row creation
+                            _bta.Update(batchRow)
+                        Catch ex As SqlException
+                            MessageBox.Show("Message: " & ex.Message & vbCrLf & "LineNumber: " & ex.LineNumber,
+                                            "Sql Error: " & ex.Procedure, MessageBoxButtons.OK, MessageBoxIcon.Error)
+                        End Try
+                    Else
+                        ' row is passed and this is a continuation so we need to set vars
+                        errCount = batchRow.ErrCount
+                        compCount = batchRow.CompletedCount
+                        compTotal = batchRow.CompletedSubtotal
+                        ' update progress obj
+                        progress.CurrentValue = batchRow.CompletedCount
+                    End If
 
+                    ' begin the loop
                     For Each row As ds_Batching.BATCH_WorkingPaymentsRow In _dt.Rows
                         If (row.WorkingPaymentsStatus = 5) Then
                             ' checking if we errored and prompting to continue
                             If (errOnPrevRun) Then
-                                Dim result As DialogResult = MessageBox.Show("There was an error adding the previous Invoice. Do you wish to continue with the batch?", "Batch Error", MessageBoxButtons.YesNo, MessageBoxIcon.Error)
+                                Dim result As DialogResult = MessageBox.Show("There was an error adding the previous Payment. Do you wish to continue with the batch?", "Batch Error", MessageBoxButtons.YesNo, MessageBoxIcon.Error)
                                 If (result = DialogResult.Yes) Then
                                     e.Cancel = True
                                 End If
