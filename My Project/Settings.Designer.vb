@@ -57,7 +57,7 @@ Namespace My
         <Global.System.Configuration.ApplicationScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.Configuration.SpecialSettingAttribute(Global.System.Configuration.SpecialSetting.ConnectionString),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("Data Source=JOSH-PC\JOSHEXPRESS;Initial Catalog=QuickbooksV2;Integrated Security="& _ 
+         Global.System.Configuration.DefaultSettingValueAttribute("Data Source=JOSH-PC\JOSHEXPRESS;Initial Catalog=PI_TrashCash;Integrated Security="& _ 
             "True;MultipleActiveResultSets=False")>  _
         Public ReadOnly Property QBDBConnectionString() As String
             Get
