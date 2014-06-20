@@ -306,12 +306,22 @@ Public Class TrashCashHome
 
         ' checking if a batch didn't complete last time the program was run
         Dim row As ds_Application.APP_SETTINGSRow = AppTA.GetData().Rows(0)
+        Dim finBatch As Batching.BatchInterruption = Nothing
         If (row.Batching_Invoices) Then
-
-        ElseIf (row.Batching_Payments) Then
-
+            finBatch = New Batching.BatchInterruption
+            finBatch.InvoiceBatch = True
+          ElseIf (row.Batching_Payments) Then
+            finBatch = new Batching.BatchInterruption
+            finBatch.PaymentBatch = True
         End If
-        
+
+        If (finBatch IsNot Nothing) Then
+            finBatch.ShowDialog()
+            ' check if batch finished
+            If (Not finBatch.BatchCompleted) Then
+                Application.Exit()
+            End If
+        End If
     End Sub
 
     Private Sub ApprovalsWorked(ByVal countRemain As Integer) Handles PendingApprovals.RemainingApprovals

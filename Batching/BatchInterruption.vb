@@ -73,7 +73,12 @@ Namespace Batching
                 MessageBox.Show("Batch canceled.", "Batch Canceled", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
             Else
                 MessageBox.Show("Batch Completed.", "Batch Completed", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                BatchCompleted = True
             End If
+
+            Close()
         End Sub
+
+        Friend BatchCompleted As Boolean = False
     End Class
 End Namespace
