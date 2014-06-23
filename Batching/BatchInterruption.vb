@@ -1,5 +1,5 @@
 ﻿Imports TrashCash.QBStuff
-Imports TrashCash.ds_Batching
+'Imports TrashCash.ds_Batching
 
 Namespace Batching
     Public Class BatchInterruption
