@@ -354,10 +354,6 @@ Namespace QBStuff
                 If (payObj.RefNumber IsNot Nothing) Then
                     .RefNumber.SetValue(payObj.RefNumber)
                 End If
-                ' optional guid
-                If (payObj.ExternalGUID IsNot Nothing) Then
-                    .ExternalGUID.SetValue(payObj.ExternalGUID)
-                End If
                 ' checking if appTxnList isnot nothing
                 If (payObj.AppliedInvList IsNot Nothing) Then
                     ' unset auto apply
@@ -1021,8 +1017,8 @@ Namespace QBStuff
                     .RefNumber = ret.RefNumber.GetValue
                 End If
                 ' checking externalGUID
-                If (ret.ExternalGUID IsNot Nothing) Then
-                    .ExternalGUID = ret.ExternalGUID.GetValue
+                If (ret.Memo IsNot Nothing) Then
+                    .Memo = ret.Memo.GetValue
                 End If
                 ' checking for applied txns
                 If (ret.AppliedToTxnRetList IsNot Nothing) Then

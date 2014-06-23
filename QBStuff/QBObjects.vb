@@ -108,17 +108,14 @@ Namespace QBStuff
             Public EditSequence As String
             Public UnusedPayment As Double
             Public RefNumber As String
+            Public Memo As String
 
             ' optional list of invoices this payment is paying
             Public AppliedInvList As List(Of QBInvoiceObj)
 
             ' this is used for a linked txn amount
             Public LinkedTxnAmount As Double
-
-            ' external guid field will hold the workingpayments row id
-            ' ReSharper disable once InconsistentNaming
-            Public ExternalGUID As String
-        End Structure
+            End Structure
 
         Public Structure QBItemObj
             Public ItemName As String

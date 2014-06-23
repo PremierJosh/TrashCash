@@ -136,7 +136,7 @@ Namespace Batching
 
                             ' send invoice through row
                             Dim batchID As Integer = batchRow.InvBatch_ID
-                            Dim invObj As QBInvoiceObj = Invoice(row, compTotal, batchRow.InvBatch_ID)
+                            Dim invObj As QBInvoiceObj = Invoice(row, compTotal, batchID)
 
                             ' check status
                             If (row.InvoiceStatus = TC_ENItemStatus.Complete) Then
@@ -197,7 +197,7 @@ Namespace Batching
 
             End Sub
 
-            Private Function Invoice(ByRef row As ds_Batching.BATCH_WorkingInvoiceRow, ByRef compTotal As Double, ByRef batchID As Integer) As QBInvoiceObj
+            Private Function Invoice(ByRef row As ds_Batching.BATCH_WorkingInvoiceRow, ByRef compTotal As Double, ByVal batchID As Integer) As QBInvoiceObj
                 ' create invObj
                 Dim invObj As New QBInvoiceObj
                 With invObj
@@ -399,35 +399,8 @@ Namespace Batching
                                 Try
                                     ' update batch row
                                     _bta.Update(batchRow)
-                                    ' inserting history records
-                                    ' insert for cash 
-                                    If (row.WorkingPaymentsType = 1) Then
-                                        _ta.PaymentHistory_Insert(row.CustomerNumber,
-                                                                    Nothing,
-                                                                    payObj.TxnID,
-                                                                    payObj.EditSequence,
-                                                                    row.WorkingPaymentsType,
-                                                                                payObj.TotalAmount,
-                                                                                row.TIME_RECEIVED,
-                                                                                Nothing,
-                                                                                batchRow.PayBatch_ID,
-                                                                                row.InsertedByUser
-                                                                                )
-
-                                    Else
-                                        ' insert for non cash
-                                        _ta.PaymentHistory_Insert(row.CustomerNumber,
-                                                                    payObj.RefNumber,
-                                                                    payObj.TxnID,
-                                                                    payObj.EditSequence,
-                                                                    row.WorkingPaymentsType,
-                                                                    payObj.TotalAmount,
-                                                                    row.TIME_RECEIVED,
-                                                                    row.DATE_ON_CHECK,
-                                                                    batchRow.PayBatch_ID,
-                                                                    row.InsertedByUser)
-
-                                    End If
+                                    ' inserting history record
+                                  _ta.PaymentHistory_Insert(row.WorkingPaymentsID, payObj.TxnID, payObj.EditSequence, batchRow.PayBatch_ID, CurrentUser.USER_NAME)
                                     ' update row status to complete
                                     _ta.Update(row)
                                 Catch ex As SqlException
@@ -485,7 +458,7 @@ Namespace Batching
                     If (Not row.IsWorkingPaymentsCheckNumNull) Then
                         .RefNumber = row.WorkingPaymentsCheckNum
                     End If
-                    .ExternalGUID = row.WorkingPaymentsID
+                    .Memo = row.WorkingPaymentsID
                 End With
                 ' i want the status message back for err writing
                 Dim s As String = "s"

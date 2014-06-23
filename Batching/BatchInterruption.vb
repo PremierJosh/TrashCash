@@ -111,10 +111,11 @@ Namespace Batching
                             ' checking if payment exists in ret list
                             Dim payFound As Boolean
                             For Each payObj As QBRecievePaymentObj In payObjList
-                                If (row.WorkingPaymentsID = payObj.ExternalGUID) Then
+                                If (row.WorkingPaymentsID = payObj.Memo) Then
                                     ' payment found
                                     payFound = True
-                               End If
+                                    ' TODO: CHECK IF TXNID IS IN PAY HISTORY AND INSERT IF NOT
+                                End If
                             Next
                             ' checking if we found payment, update batch count and pay row
                             If (payFound) Then

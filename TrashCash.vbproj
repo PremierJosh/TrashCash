@@ -163,6 +163,9 @@
     <Compile Include="Customer\ds_Customer.vb">
       <DependentUpon>ds_Customer.xsd</DependentUpon>
     </Compile>
+    <Compile Include="RecurringService\ds_RecurringService.vb">
+      <DependentUpon>ds_RecurringService.xsd</DependentUpon>
+    </Compile>
     <Compile Include="Types\AdminInvoiceTypes.Designer.vb">
       <DependentUpon>AdminInvoiceTypes.vb</DependentUpon>
     </Compile>
@@ -798,7 +801,7 @@
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties BuildVersion_StartDate="2014/3/2" BuildVersion_BuildVersioningStyle="None.None.None.Increment" BuildVersion_UpdateFileVersion="True" BuildVersion_UpdateAssemblyVersion="True" BuildVersion_AssemblyInfoFilename="My Project\AssemblyInfo.vb" />
+      <UserProperties BuildVersion_AssemblyInfoFilename="My Project\AssemblyInfo.vb" BuildVersion_UpdateAssemblyVersion="True" BuildVersion_UpdateFileVersion="True" BuildVersion_BuildVersioningStyle="None.None.None.Increment" BuildVersion_StartDate="2014/3/2" />
     </VisualStudio>
   </ProjectExtensions>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

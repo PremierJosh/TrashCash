@@ -2548,15 +2548,10 @@ Namespace ds_PaymentsTableAdapters
             Me._commandCollection(2).CommandText = "dbo.PaymentHistory_Insert"
             Me._commandCollection(2).CommandType = Global.System.Data.CommandType.StoredProcedure
             Me._commandCollection(2).Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@RETURN_VALUE", Global.System.Data.SqlDbType.Int, 4, Global.System.Data.ParameterDirection.ReturnValue, 10, 0, Nothing, Global.System.Data.DataRowVersion.Current, False, Nothing, "", "", ""))
-            Me._commandCollection(2).Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@CustomerNumber", Global.System.Data.SqlDbType.[Decimal], 9, Global.System.Data.ParameterDirection.Input, 18, 0, Nothing, Global.System.Data.DataRowVersion.Current, False, Nothing, "", "", ""))
-            Me._commandCollection(2).Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@RefNumber", Global.System.Data.SqlDbType.VarChar, 50, Global.System.Data.ParameterDirection.Input, 0, 0, Nothing, Global.System.Data.DataRowVersion.Current, False, Nothing, "", "", ""))
+            Me._commandCollection(2).Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@WorkingPaymentID", Global.System.Data.SqlDbType.[Decimal], 9, Global.System.Data.ParameterDirection.Input, 18, 0, Nothing, Global.System.Data.DataRowVersion.Current, False, Nothing, "", "", ""))
             Me._commandCollection(2).Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@PaymentTxnID", Global.System.Data.SqlDbType.VarChar, 50, Global.System.Data.ParameterDirection.Input, 0, 0, Nothing, Global.System.Data.DataRowVersion.Current, False, Nothing, "", "", ""))
             Me._commandCollection(2).Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@EditSequence", Global.System.Data.SqlDbType.VarChar, 16, Global.System.Data.ParameterDirection.Input, 0, 0, Nothing, Global.System.Data.DataRowVersion.Current, False, Nothing, "", "", ""))
-            Me._commandCollection(2).Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@PaymentTypeID", Global.System.Data.SqlDbType.[Decimal], 9, Global.System.Data.ParameterDirection.Input, 18, 0, Nothing, Global.System.Data.DataRowVersion.Current, False, Nothing, "", "", ""))
-            Me._commandCollection(2).Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@Amount", Global.System.Data.SqlDbType.[Decimal], 9, Global.System.Data.ParameterDirection.Input, 18, 2, Nothing, Global.System.Data.DataRowVersion.Current, False, Nothing, "", "", ""))
-            Me._commandCollection(2).Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@DateReceived", Global.System.Data.SqlDbType.[Date], 3, Global.System.Data.ParameterDirection.Input, 10, 0, Nothing, Global.System.Data.DataRowVersion.Current, False, Nothing, "", "", ""))
-            Me._commandCollection(2).Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@DateOnCheck", Global.System.Data.SqlDbType.[Date], 3, Global.System.Data.ParameterDirection.Input, 10, 0, Nothing, Global.System.Data.DataRowVersion.Current, False, Nothing, "", "", ""))
-            Me._commandCollection(2).Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@BATCH_PAY_ID", Global.System.Data.SqlDbType.Int, 4, Global.System.Data.ParameterDirection.Input, 10, 0, Nothing, Global.System.Data.DataRowVersion.Current, False, Nothing, "", "", ""))
+            Me._commandCollection(2).Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@PayBatch_ID", Global.System.Data.SqlDbType.Int, 4, Global.System.Data.ParameterDirection.Input, 10, 0, Nothing, Global.System.Data.DataRowVersion.Current, False, Nothing, "", "", ""))
             Me._commandCollection(2).Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@InsertedByUser", Global.System.Data.SqlDbType.VarChar, 50, Global.System.Data.ParameterDirection.Input, 0, 0, Nothing, Global.System.Data.DataRowVersion.Current, False, Nothing, "", "", ""))
             Me._commandCollection(3) = New Global.System.Data.SqlClient.SqlCommand()
             Me._commandCollection(3).Connection = Me.Connection
@@ -2631,57 +2626,32 @@ Namespace ds_PaymentsTableAdapters
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0"), _
          Global.System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")> _
-        Public Overridable Overloads Function PaymentHistory_Insert(ByVal CustomerNumber As Global.System.Nullable(Of Decimal), ByVal RefNumber As String, ByVal PaymentTxnID As String, ByVal EditSequence As String, ByVal PaymentTypeID As Global.System.Nullable(Of Decimal), ByVal Amount As Global.System.Nullable(Of Decimal), ByVal DateReceived As Global.System.Nullable(Of Date), ByVal DateOnCheck As Global.System.Nullable(Of Date), ByVal BATCH_PAY_ID As Global.System.Nullable(Of Integer), ByVal InsertedByUser As String) As Integer
+        Public Overridable Overloads Function PaymentHistory_Insert(ByVal WorkingPaymentID As Global.System.Nullable(Of Decimal), ByVal PaymentTxnID As String, ByVal EditSequence As String, ByVal PayBatch_ID As Global.System.Nullable(Of Integer), ByVal InsertedByUser As String) As Integer
             Dim command As Global.System.Data.SqlClient.SqlCommand = Me.CommandCollection(2)
-            If (CustomerNumber.HasValue = True) Then
-                command.Parameters(1).Value = CType(CustomerNumber.Value, Decimal)
+            If (WorkingPaymentID.HasValue = True) Then
+                command.Parameters(1).Value = CType(WorkingPaymentID.Value, Decimal)
             Else
                 command.Parameters(1).Value = Global.System.DBNull.Value
             End If
-            If (RefNumber Is Nothing) Then
+            If (PaymentTxnID Is Nothing) Then
                 command.Parameters(2).Value = Global.System.DBNull.Value
             Else
-                command.Parameters(2).Value = CType(RefNumber, String)
-            End If
-            If (PaymentTxnID Is Nothing) Then
-                command.Parameters(3).Value = Global.System.DBNull.Value
-            Else
-                command.Parameters(3).Value = CType(PaymentTxnID, String)
+                command.Parameters(2).Value = CType(PaymentTxnID, String)
             End If
             If (EditSequence Is Nothing) Then
+                command.Parameters(3).Value = Global.System.DBNull.Value
+            Else
+                command.Parameters(3).Value = CType(EditSequence, String)
+            End If
+            If (PayBatch_ID.HasValue = True) Then
+                command.Parameters(4).Value = CType(PayBatch_ID.Value, Integer)
+            Else
                 command.Parameters(4).Value = Global.System.DBNull.Value
-            Else
-                command.Parameters(4).Value = CType(EditSequence, String)
-            End If
-            If (PaymentTypeID.HasValue = True) Then
-                command.Parameters(5).Value = CType(PaymentTypeID.Value, Decimal)
-            Else
-                command.Parameters(5).Value = Global.System.DBNull.Value
-            End If
-            If (Amount.HasValue = True) Then
-                command.Parameters(6).Value = CType(Amount.Value, Decimal)
-            Else
-                command.Parameters(6).Value = Global.System.DBNull.Value
-            End If
-            If (DateReceived.HasValue = True) Then
-                command.Parameters(7).Value = CType(DateReceived.Value, Date)
-            Else
-                command.Parameters(7).Value = Global.System.DBNull.Value
-            End If
-            If (DateOnCheck.HasValue = True) Then
-                command.Parameters(8).Value = CType(DateOnCheck.Value, Date)
-            Else
-                command.Parameters(8).Value = Global.System.DBNull.Value
-            End If
-            If (BATCH_PAY_ID.HasValue = True) Then
-                command.Parameters(9).Value = CType(BATCH_PAY_ID.Value, Integer)
-            Else
-                command.Parameters(9).Value = Global.System.DBNull.Value
             End If
             If (InsertedByUser Is Nothing) Then
-                command.Parameters(10).Value = Global.System.DBNull.Value
+                command.Parameters(5).Value = Global.System.DBNull.Value
             Else
-                command.Parameters(10).Value = CType(InsertedByUser, String)
+                command.Parameters(5).Value = CType(InsertedByUser, String)
             End If
             Dim previousConnectionState As Global.System.Data.ConnectionState = command.Connection.State
             If ((command.Connection.State And Global.System.Data.ConnectionState.Open) _

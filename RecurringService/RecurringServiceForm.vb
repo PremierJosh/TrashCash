@@ -106,9 +106,10 @@ Namespace RecurringService
 
                 If (okToSet) Then
                     _recRow = value
-
+                    
                     ' fill billed services display
                     HistoryTA.FillByRecurringID(Ds_RecurringService.RecurringService_BillHistory, value.RecurringServiceID)
+                    IsNew = False
                     ' fill service notes display
                     NotesTA.FillByID(Ds_RecurringService.ServiceNotes, value.RecurringServiceID)
                     ' fill credit history
@@ -624,9 +625,10 @@ Namespace RecurringService
                                     ' update crediting property
                                     Crediting = creditAmount
                                 End If
+                            Else
+                                ' no end credit row
+                                Crediting = creditAmount
                             End If
-                        Else
-                            Crediting = 0
                         End If
                     Else
                         Crediting = 0
