@@ -37,11 +37,11 @@ Namespace Batching
 
 
         Private Sub CheckSubmitted()
+            Dim qta As New ds_BatchingTableAdapters.QueriesTableAdapter
             If (InvoiceBatch) Then
                 Dim invTA As New ds_BatchingTableAdapters.BATCH_WorkingInvoiceTableAdapter
                 Dim invDT As ds_Batching.BATCH_WorkingInvoiceDataTable = invTA.GetSubmitted
-                Dim qta As New ds_BatchingTableAdapters.QueriesTableAdapter
-               ' any submitted we need to query for the invoice to see if it went
+                ' any submitted we need to query for the invoice to see if it went
                 If (invDT.Rows.Count > 0) Then
                     Dim lineTA As New ds_BatchingTableAdapters.BATCH_LineItemsTableAdapter
                     For Each row As ds_Batching.BATCH_WorkingInvoiceRow In invDT
@@ -76,7 +76,7 @@ Namespace Batching
                                     ' update the completed count
                                     _invBatchRow.CompletedCount += 1
                                     _batchInvTA.Update(_invBatchRow)
-                                Catch ex as SqlException
+                                Catch ex As SqlException
                                     MessageBox.Show("Message: " & ex.Message & vbCrLf & "LineNumber: " & ex.LineNumber,
                                                     "Sql Error: " & ex.Procedure, MessageBoxButtons.OK,
                                                     MessageBoxIcon.Error)
@@ -114,7 +114,10 @@ Namespace Batching
                                 If (row.WorkingPaymentsID = payObj.Memo) Then
                                     ' payment found
                                     payFound = True
-                                    ' TODO: CHECK IF TXNID IS IN PAY HISTORY AND INSERT IF NOT
+                                    ' if history doesnt exist, insert it
+                                    If (Not qta.PaymentHistory_TxnIDExists(payObj.TxnID)) Then
+                                        qta.PaymentHistory_Insert(row.WorkingPaymentsID, payObj.TxnID, payObj.EditSequence, _payBatchRow.PayBatch_ID, CurrentUser.USER_NAME)
+                                    End If
                                 End If
                             Next
                             ' checking if we found payment, update batch count and pay row
@@ -123,7 +126,7 @@ Namespace Batching
                                 Try
                                     _payBatchRow.CompletedCount += 1
                                     _batchPayTA.Update(_payBatchRow)
-                                Catch ex as SqlException
+                                Catch ex As SqlException
                                     MessageBox.Show("Message: " & ex.Message & vbCrLf & "LineNumber: " & ex.LineNumber,
                                                     "Sql Error: " & ex.Procedure, MessageBoxButtons.OK,
                                                     MessageBoxIcon.Error)
@@ -139,7 +142,7 @@ Namespace Batching
                         Try
                             ' update payment row
                             payTA.Update(row)
-                        Catch ex as SqlException
+                        Catch ex As SqlException
                             MessageBox.Show("Message: " & ex.Message & vbCrLf & "LineNumber: " & ex.LineNumber,
                                             "Sql Error: " & ex.Procedure, MessageBoxButtons.OK, MessageBoxIcon.Error)
                         End Try

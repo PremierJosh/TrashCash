@@ -11,7 +11,7 @@
     <Shape ID="DesignTable:BATCH_LineItems" ZOrder="6" X="1039" Y="109" Height="229" Width="247" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="178" />
     <Shape ID="DesignTable:Batch_Invoices" ZOrder="2" X="505" Y="469" Height="324" Width="229" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="254" />
     <Shape ID="DesignTable:Batch_Payments" ZOrder="4" X="813" Y="444" Height="324" Width="239" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="273" />
-    <Shape ID="DesignSources:QueriesTableAdapter" ZOrder="5" X="0" Y="11" Height="181" Width="300" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="24" SplitterPosition="177" />
+    <Shape ID="DesignSources:QueriesTableAdapter" ZOrder="5" X="0" Y="11" Height="200" Width="300" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="24" SplitterPosition="196" />
   </Shapes>
   <Connectors />
 </DiagramLayout>

@@ -14,10 +14,10 @@ Namespace QBStuff
             ' attempt to start qbfc services
             StartQBFCServices()
             ' setting limit for inital con to 5 seconds
-          Dim startTime As Date = Date.Now
+            Dim startTime As Date = Date.Now
             While Not connected
                 Try
-                   ' get connection
+                    ' get connection
                     With SessionManager
                         .OpenConnection2("V1", "TrashCash", ENConnectionType.ctLocalQBD)
                         .BeginSession(My.Settings.QB_FILE_LOCATION.ToString, ENOpenMode.omDontCare)
