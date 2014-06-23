@@ -281,7 +281,7 @@ Public Class TrashCashHome
         Try
             Dim connected As Boolean = GlobalConMgr.InitCon()
             If (Not connected) Then
-               Application.Exit()
+                Application.Exit()
             End If
             'temp: setting vars here for other forms
             AppSessMgr = GlobalConMgr.SessionManager

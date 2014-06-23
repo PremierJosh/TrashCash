@@ -12,7 +12,7 @@ Namespace QBStuff
             Dim connected As Boolean = False
             SessionManager = New QBSessionManager()
             ' attempt to start qbfc services
-            'StartQBFCServices()
+            StartQBFCServices()
             ' setting limit for inital con to 5 seconds
           Dim startTime As Date = Date.Now
             While Not connected
@@ -26,8 +26,8 @@ Namespace QBStuff
                     connected = True
                 Catch ex As Exception
                     If (DateAdd(DateInterval.Second, 5, startTime) > Date.Now) Then
-                        MsgBox("Connection error: " & ex.Message & vbCrLf & "Restart TrashCash. Closing...")
-                        Application.Exit()
+                        MsgBox("Connection error: " & ex.Message & vbCrLf & "Restart TrashCash...")
+                        Application.Restart()
                         Exit While
                     End If
                     connected = False
@@ -40,7 +40,7 @@ Namespace QBStuff
             Dim s As New List(Of String)
             s.Add("QBCFMonitorService")
             s.Add("QBIDPService")
-            s.Add("QuickbooksDB23")
+            's.Add("QuickbooksDB23")
 
             For Each service As String In s
                 Dim sc As New ServiceController(service)

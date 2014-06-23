@@ -1164,7 +1164,7 @@ Partial Public Class ds_Customer
             Me.columnCustomerPrintInvoices.AllowDBNull = false
             Me.columnCustomerReceiveOneInvoice.AllowDBNull = false
             Me.columnCustomerBillInterval.AllowDBNull = false
-            Me.columnCustomerBillInterval.DefaultValue = CType(1, Byte)
+            Me.columnCustomerBillInterval.DefaultValue = CType(1,Byte)
         End Sub
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _

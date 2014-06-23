@@ -11,6 +11,8 @@ Namespace Customer
         ' LOAD EVENTS
         Private Sub CustomerForm_Load(sender As System.Object, e As System.EventArgs) Handles MyBase.Load
             CustRow = Ds_Customer.Customer.NewCustomerRow
+            ' setting bill interval to at least 1
+            CustRow.CustomerBillInterval = 1
             Ds_Customer.Customer.AddCustomerRow(CustRow)
         End Sub
 

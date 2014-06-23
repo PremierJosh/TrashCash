@@ -29,13 +29,13 @@
             Me.pnl_Top = New System.Windows.Forms.Panel()
             Me.lbl_Header = New System.Windows.Forms.Label()
             Me.dg_PendingApprovals = New System.Windows.Forms.DataGridView()
+            Me.RecurringServicePendingApprovalsBindingSource = New System.Windows.Forms.BindingSource(Me.components)
+            Me.Ds_RecurringService = New TrashCash.ds_RecurringService()
             Me.pnl_SaveChanges = New System.Windows.Forms.Panel()
             Me.lbl_UnApproved = New System.Windows.Forms.Label()
             Me.lbl_Approved = New System.Windows.Forms.Label()
             Me.btn_SaveApprovals = New System.Windows.Forms.Button()
             Me.lbl_Save = New System.Windows.Forms.Label()
-            Me.Ds_RecurringService = New TrashCash.ds_RecurringService()
-            Me.RecurringServicePendingApprovalsBindingSource = New System.Windows.Forms.BindingSource(Me.components)
             Me.RecurringService_PendingApprovalsTableAdapter = New TrashCash.ds_RecurringServiceTableAdapters.RecurringService_PendingApprovalsTableAdapter()
             Me.CustomerFullNameDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
             Me.ServiceNameDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
@@ -43,9 +43,9 @@
             Me.ApprovedDataGridViewCheckBoxColumn = New System.Windows.Forms.DataGridViewCheckBoxColumn()
             Me.pnl_Top.SuspendLayout()
             CType(Me.dg_PendingApprovals, System.ComponentModel.ISupportInitialize).BeginInit()
-            Me.pnl_SaveChanges.SuspendLayout()
-            CType(Me.Ds_RecurringService, System.ComponentModel.ISupportInitialize).BeginInit()
             CType(Me.RecurringServicePendingApprovalsBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
+            CType(Me.Ds_RecurringService, System.ComponentModel.ISupportInitialize).BeginInit()
+            Me.pnl_SaveChanges.SuspendLayout()
             Me.SuspendLayout()
             '
             'pnl_Top
@@ -83,6 +83,16 @@
             Me.dg_PendingApprovals.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
             Me.dg_PendingApprovals.Size = New System.Drawing.Size(568, 369)
             Me.dg_PendingApprovals.TabIndex = 1
+            '
+            'RecurringServicePendingApprovalsBindingSource
+            '
+            Me.RecurringServicePendingApprovalsBindingSource.DataMember = "RecurringService_PendingApprovals"
+            Me.RecurringServicePendingApprovalsBindingSource.DataSource = Me.Ds_RecurringService
+            '
+            'Ds_RecurringService
+            '
+            Me.Ds_RecurringService.DataSetName = "ds_RecurringService"
+            Me.Ds_RecurringService.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema
             '
             'pnl_SaveChanges
             '
@@ -138,18 +148,8 @@
             Me.lbl_Save.Size = New System.Drawing.Size(257, 66)
             Me.lbl_Save.TabIndex = 0
             Me.lbl_Save.Text = "When you are finished marking Recurring Services for approval to bill, click the " & _
-                               "button below"
+        "button below"
             Me.lbl_Save.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
-            '
-            'Ds_RecurringService
-            '
-            Me.Ds_RecurringService.DataSetName = "ds_RecurringService"
-            Me.Ds_RecurringService.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema
-            '
-            'RecurringServicePendingApprovalsBindingSource
-            '
-            Me.RecurringServicePendingApprovalsBindingSource.DataMember = "RecurringService_PendingApprovals"
-            Me.RecurringServicePendingApprovalsBindingSource.DataSource = Me.Ds_RecurringService
             '
             'RecurringService_PendingApprovalsTableAdapter
             '
@@ -161,6 +161,7 @@
             Me.CustomerFullNameDataGridViewTextBoxColumn.DataPropertyName = "CustomerFullName"
             Me.CustomerFullNameDataGridViewTextBoxColumn.HeaderText = "Customer Name"
             Me.CustomerFullNameDataGridViewTextBoxColumn.Name = "CustomerFullNameDataGridViewTextBoxColumn"
+            Me.CustomerFullNameDataGridViewTextBoxColumn.ReadOnly = True
             '
             'ServiceNameDataGridViewTextBoxColumn
             '
@@ -168,6 +169,7 @@
             Me.ServiceNameDataGridViewTextBoxColumn.DataPropertyName = "ServiceName"
             Me.ServiceNameDataGridViewTextBoxColumn.HeaderText = "Service"
             Me.ServiceNameDataGridViewTextBoxColumn.Name = "ServiceNameDataGridViewTextBoxColumn"
+            Me.ServiceNameDataGridViewTextBoxColumn.ReadOnly = True
             Me.ServiceNameDataGridViewTextBoxColumn.Width = 68
             '
             'RecurringServiceStartDateDataGridViewTextBoxColumn
@@ -178,6 +180,7 @@
             Me.RecurringServiceStartDateDataGridViewTextBoxColumn.DefaultCellStyle = DataGridViewCellStyle1
             Me.RecurringServiceStartDateDataGridViewTextBoxColumn.HeaderText = "Start Date"
             Me.RecurringServiceStartDateDataGridViewTextBoxColumn.Name = "RecurringServiceStartDateDataGridViewTextBoxColumn"
+            Me.RecurringServiceStartDateDataGridViewTextBoxColumn.ReadOnly = True
             Me.RecurringServiceStartDateDataGridViewTextBoxColumn.Width = 80
             '
             'ApprovedDataGridViewCheckBoxColumn
@@ -202,9 +205,9 @@
             Me.Text = "Pending Approvals"
             Me.pnl_Top.ResumeLayout(False)
             CType(Me.dg_PendingApprovals, System.ComponentModel.ISupportInitialize).EndInit()
-            Me.pnl_SaveChanges.ResumeLayout(False)
-            CType(Me.Ds_RecurringService, System.ComponentModel.ISupportInitialize).EndInit()
             CType(Me.RecurringServicePendingApprovalsBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
+            CType(Me.Ds_RecurringService, System.ComponentModel.ISupportInitialize).EndInit()
+            Me.pnl_SaveChanges.ResumeLayout(False)
             Me.ResumeLayout(False)
 
         End Sub

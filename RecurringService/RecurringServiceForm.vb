@@ -76,9 +76,7 @@ Namespace RecurringService
                     RsTA.FillByID(Ds_RecurringService.RecurringService, value)
                     ' update row reference
                     If (Ds_RecurringService.RecurringService.Rows.Count = 1) Then
-                        RecurringServiceRow = Ds_RecurringService.RecurringService.Rows(0)
-                        ' set isNew to false
-                        IsNew = False
+                       RecurringServiceRow = Ds_RecurringService.RecurringService.Rows(0)
                     Else
                         MessageBox.Show("Error: No recurring row retieved on initial fetch", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
                     End If
@@ -146,7 +144,7 @@ Namespace RecurringService
         End Property
 
         ' bool property for whether or not service is new
-        Private _isNew As Boolean = True
+        Private _isNew As Boolean
         Friend Property IsNew As Boolean
             Get
                 Return _isNew
@@ -205,7 +203,7 @@ Namespace RecurringService
                     tc_Master.TabPages.Remove(tp_Notes)
                     ' update status text
                     StatusText = "This Recurring Service has not been Approved for Invoicing. You can still change anything related to this service."
-                End If
+                   End If
             End Set
         End Property
 
@@ -230,6 +228,8 @@ Namespace RecurringService
                 Else
                     StatusText = "This Recurring Service has not been invoiced yet. You can still change anything related to this service."
                     LockDetails(False)
+                    ' hide bill thru date
+                    lbl_BillThru.Visible = False
                 End If
             End Set
         End Property

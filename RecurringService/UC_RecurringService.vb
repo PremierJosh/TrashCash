@@ -94,16 +94,18 @@
         End Sub
         
         Private Sub dg_Notes_DoubleClick(sender As System.Object, e As System.EventArgs) Handles dg_Notes.DoubleClick
-            Dim noteText As String = InputBox("Note:", "Quick Add Service Note")
-            If (Trim(noteText) <> "") Then
-                Dim dvRow As DataRowView = dg_RecSrvc.SelectedRows(0).DataBoundItem
-                Try
-                    ServiceNotesTableAdapter.ServiceNotes_Insert(CType(dvRow.Row, ds_RecurringService.RecurringService_DisplayByCustomerIDRow).RecurringServiceID, noteText)
-                    ' refill grid
-                    ServiceNotesTableAdapter.FillByID(Ds_RecurringService.ServiceNotes, CType(dvRow.Row, ds_RecurringService.RecurringService_DisplayByCustomerIDRow).RecurringServiceID)
-                Catch ex As Exception
-                    MsgBox(ex.Message)
-                End Try
+            If (dg_RecSrvc.SelectedRows.Count = 1) Then
+                Dim noteText As String = InputBox("Note:", "Quick Add Service Note")
+                If (Trim(noteText) <> "") Then
+                    Dim dvRow As DataRowView = dg_RecSrvc.SelectedRows(0).DataBoundItem
+                    Try
+                        ServiceNotesTableAdapter.ServiceNotes_Insert(CType(dvRow.Row, ds_RecurringService.RecurringService_DisplayByCustomerIDRow).RecurringServiceID, noteText)
+                        ' refill grid
+                        ServiceNotesTableAdapter.FillByID(Ds_RecurringService.ServiceNotes, CType(dvRow.Row, ds_RecurringService.RecurringService_DisplayByCustomerIDRow).RecurringServiceID)
+                    Catch ex As Exception
+                        MsgBox(ex.Message)
+                    End Try
+                End If
             End If
         End Sub
 

@@ -136,6 +136,7 @@
         Private Sub btn_NewSrvc_Click(sender As System.Object, e As System.EventArgs) Handles btn_NewSrvc.Click
             Dim f As New RecurringService.RecurringServiceForm(CustomerToolstrip1.ToString, CurrentCustomer)
             f.ShowDialog()
+            UC_RecurringService.CurrentCustomer = CurrentCustomer
             RaiseEvent ApprovalsChanged()
         End Sub
     End Class

@@ -41,6 +41,7 @@
 
             ' reseting payment type selection to first option
             cmb_PayTypes.SelectedIndex = 0
+            tb_Amount.Select()
 
             ' checking if in debug mode
             If (_debug) Then

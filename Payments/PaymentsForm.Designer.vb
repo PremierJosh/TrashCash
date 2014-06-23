@@ -28,7 +28,7 @@ Namespace Payments
         <System.Diagnostics.DebuggerStepThrough()> _
         Private Sub InitializeComponent()
             Me.components = New System.ComponentModel.Container()
-            Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+            Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
             Me.cm_PayGrid = New System.Windows.Forms.ContextMenuStrip(Me.components)
             Me.btn_DeletePay = New System.Windows.Forms.ToolStripMenuItem()
             Me.tc_Master = New System.Windows.Forms.TabControl()
@@ -61,7 +61,7 @@ Namespace Payments
             Me.lbl_RefNumber = New System.Windows.Forms.Label()
             Me.tb_Amount = New TrashCash.Classes.CurrencyTextBox()
             Me.Label1 = New System.Windows.Forms.Label()
-            Me.BATCH_WorkingPaymentsTableAdapter = New ds_BatchingTableAdapters.BATCH_WorkingPaymentsTableAdapter()
+            Me.BATCH_WorkingPaymentsTableAdapter = New TrashCash.ds_BatchingTableAdapters.BATCH_WorkingPaymentsTableAdapter()
             Me.cm_PayGrid.SuspendLayout()
             Me.tc_Master.SuspendLayout()
             Me.tc_p_CustNotes.SuspendLayout()
@@ -80,7 +80,7 @@ Namespace Payments
             '
             Me.cm_PayGrid.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.btn_DeletePay})
             Me.cm_PayGrid.Name = "cm_PayGrid"
-            Me.cm_PayGrid.Size = New System.Drawing.Size(205, 48)
+            Me.cm_PayGrid.Size = New System.Drawing.Size(205, 26)
             '
             'btn_DeletePay
             '
@@ -213,8 +213,8 @@ Namespace Payments
             '
             Me.WorkingPaymentsAmountDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
             Me.WorkingPaymentsAmountDataGridViewTextBoxColumn.DataPropertyName = "WorkingPaymentsAmount"
-            DataGridViewCellStyle2.Format = "C2"
-            Me.WorkingPaymentsAmountDataGridViewTextBoxColumn.DefaultCellStyle = DataGridViewCellStyle2
+            DataGridViewCellStyle1.Format = "C2"
+            Me.WorkingPaymentsAmountDataGridViewTextBoxColumn.DefaultCellStyle = DataGridViewCellStyle1
             Me.WorkingPaymentsAmountDataGridViewTextBoxColumn.HeaderText = "Amount"
             Me.WorkingPaymentsAmountDataGridViewTextBoxColumn.Name = "WorkingPaymentsAmountDataGridViewTextBoxColumn"
             Me.WorkingPaymentsAmountDataGridViewTextBoxColumn.ReadOnly = True
@@ -257,7 +257,7 @@ Namespace Payments
             Me.cmb_PayTypes.Location = New System.Drawing.Point(58, 83)
             Me.cmb_PayTypes.Name = "cmb_PayTypes"
             Me.cmb_PayTypes.Size = New System.Drawing.Size(175, 21)
-            Me.cmb_PayTypes.TabIndex = 99
+            Me.cmb_PayTypes.TabIndex = 0
             Me.cmb_PayTypes.ValueMember = "PaymentTypeID"
             '
             'PaymentTypesBindingSource
@@ -289,7 +289,7 @@ Namespace Payments
             Me.dtp_Override.Location = New System.Drawing.Point(149, 185)
             Me.dtp_Override.Name = "dtp_Override"
             Me.dtp_Override.Size = New System.Drawing.Size(84, 20)
-            Me.dtp_Override.TabIndex = 110
+            Me.dtp_Override.TabIndex = 5
             Me.dtp_Override.Visible = False
             '
             'ck_Override
@@ -298,7 +298,7 @@ Namespace Payments
             Me.ck_Override.Location = New System.Drawing.Point(67, 192)
             Me.ck_Override.Name = "ck_Override"
             Me.ck_Override.Size = New System.Drawing.Size(63, 17)
-            Me.ck_Override.TabIndex = 109
+            Me.ck_Override.TabIndex = 4
             Me.ck_Override.Text = "Overide"
             Me.ck_Override.UseVisualStyleBackColor = True
             Me.ck_Override.Visible = False
@@ -308,7 +308,7 @@ Namespace Payments
             Me.btn_AddPayment.Location = New System.Drawing.Point(58, 215)
             Me.btn_AddPayment.Name = "btn_AddPayment"
             Me.btn_AddPayment.Size = New System.Drawing.Size(187, 23)
-            Me.btn_AddPayment.TabIndex = 111
+            Me.btn_AddPayment.TabIndex = 6
             Me.btn_AddPayment.Text = "Add Payment"
             Me.btn_AddPayment.UseVisualStyleBackColor = True
             '
@@ -318,7 +318,7 @@ Namespace Payments
             Me.dtp_DateOnCheck.Location = New System.Drawing.Point(149, 159)
             Me.dtp_DateOnCheck.Name = "dtp_DateOnCheck"
             Me.dtp_DateOnCheck.Size = New System.Drawing.Size(84, 20)
-            Me.dtp_DateOnCheck.TabIndex = 108
+            Me.dtp_DateOnCheck.TabIndex = 3
             Me.dtp_DateOnCheck.Visible = False
             '
             'tb_RefNum
@@ -326,7 +326,7 @@ Namespace Payments
             Me.tb_RefNum.Location = New System.Drawing.Point(133, 133)
             Me.tb_RefNum.Name = "tb_RefNum"
             Me.tb_RefNum.Size = New System.Drawing.Size(100, 20)
-            Me.tb_RefNum.TabIndex = 107
+            Me.tb_RefNum.TabIndex = 2
             Me.tb_RefNum.TabStop = False
             Me.tb_RefNum.Visible = False
             '
@@ -355,7 +355,7 @@ Namespace Payments
             Me.tb_Amount.Location = New System.Drawing.Point(133, 110)
             Me.tb_Amount.Name = "tb_Amount"
             Me.tb_Amount.Size = New System.Drawing.Size(100, 20)
-            Me.tb_Amount.TabIndex = 106
+            Me.tb_Amount.TabIndex = 1
             '
             'Label1
             '

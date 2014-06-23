@@ -1934,12 +1934,14 @@ Partial Public Class ds_Batching
             Me.columnTargetedBillDate.AllowDBNull = false
             Me.columnStartCount.AllowDBNull = false
             Me.columnStartSubtotal.AllowDBNull = false
+            Me.columnCanceled.AllowDBNull = false
             Me.columnCanceled.DefaultValue = CType(false,Boolean)
             Me.columnStartTime.AllowDBNull = false
             Me.columnStartUser.AllowDBNull = false
             Me.columnStartUser.MaxLength = 50
             Me.columnEndTime.MaxLength = 50
             Me.columnEndUser.MaxLength = 50
+            Me.columnConnInterrupt.AllowDBNull = false
             Me.columnConnInterrupt.DefaultValue = CType(false,Boolean)
         End Sub
         
@@ -3328,11 +3330,7 @@ Partial Public Class ds_Batching
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
         Public Property Canceled() As Boolean
             Get
-                Try 
-                    Return CType(Me(Me.tableBatch_Invoices.CanceledColumn),Boolean)
-                Catch e As Global.System.InvalidCastException
-                    Throw New Global.System.Data.StrongTypingException("The value for column 'Canceled' in table 'Batch_Invoices' is DBNull.", e)
-                End Try
+                Return CType(Me(Me.tableBatch_Invoices.CanceledColumn),Boolean)
             End Get
             Set
                 Me(Me.tableBatch_Invoices.CanceledColumn) = value
@@ -3395,11 +3393,7 @@ Partial Public Class ds_Batching
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
         Public Property ConnInterrupt() As Boolean
             Get
-                Try 
-                    Return CType(Me(Me.tableBatch_Invoices.ConnInterruptColumn),Boolean)
-                Catch e As Global.System.InvalidCastException
-                    Throw New Global.System.Data.StrongTypingException("The value for column 'ConnInterrupt' in table 'Batch_Invoices' is DBNull.", e)
-                End Try
+                Return CType(Me(Me.tableBatch_Invoices.ConnInterruptColumn),Boolean)
             End Get
             Set
                 Me(Me.tableBatch_Invoices.ConnInterruptColumn) = value
@@ -3444,18 +3438,6 @@ Partial Public Class ds_Batching
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Function IsCanceledNull() As Boolean
-            Return Me.IsNull(Me.tableBatch_Invoices.CanceledColumn)
-        End Function
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Sub SetCanceledNull()
-            Me(Me.tableBatch_Invoices.CanceledColumn) = Global.System.Convert.DBNull
-        End Sub
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
         Public Function IsEndTimeNull() As Boolean
             Return Me.IsNull(Me.tableBatch_Invoices.EndTimeColumn)
         End Function
@@ -3476,18 +3458,6 @@ Partial Public Class ds_Batching
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
         Public Sub SetEndUserNull()
             Me(Me.tableBatch_Invoices.EndUserColumn) = Global.System.Convert.DBNull
-        End Sub
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Function IsConnInterruptNull() As Boolean
-            Return Me.IsNull(Me.tableBatch_Invoices.ConnInterruptColumn)
-        End Function
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Sub SetConnInterruptNull()
-            Me(Me.tableBatch_Invoices.ConnInterruptColumn) = Global.System.Convert.DBNull
         End Sub
     End Class
     
