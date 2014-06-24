@@ -133,6 +133,7 @@ Namespace QBStuff
             Public PayeeListID As String
             Public RefNumber As String
             Public IsToBePrinted As Boolean
+            Public TxnDate As Date
             ' dont do many checks so just going to carry id here after add
             Public TxnID As String
 

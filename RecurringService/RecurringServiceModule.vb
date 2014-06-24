@@ -102,6 +102,9 @@ Namespace RecurringService
                                             Nothing,
                                             Nothing,
                                             Nothing)
+                    ' insert note
+                    NotesTA.ServiceNotes_Insert(row.RecurringServiceID, "Credit issued for date: " & dateOfCredit & " in the amount of " & FormatCurrency(creditAmount) & "." & _
+                                                "Reason: " & reason)
                 Catch ex As SqlException
                     MessageBox.Show("Message: " & ex.Message & vbCrLf & "LineNumber: " & ex.LineNumber,
                                     "Sql Error: " & ex.Procedure, MessageBoxButtons.OK, MessageBoxIcon.Error)

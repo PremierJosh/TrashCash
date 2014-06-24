@@ -48,13 +48,11 @@ Namespace Admin.Payments
         End Sub
 
         Private Sub btn_Submit_Click(sender As Object, e As EventArgs) Handles btn_Submit.Click
-            Dim result As MsgBoxResult =
-                    MsgBox(
-                        "Confirm: Bouncing Check Ref Number: " & CheckRow.RefNumber & " - " &
+            Dim result As DialogResult = MessageBox.Show("Confirm: Bouncing Check Ref Number: " & CheckRow.RefNumber & " - " &
                         FormatCurrency(CheckRow.Amount) & "." & vbCrLf _
                         & "Bank Fee: " & FormatCurrency(BankRow.Bank_Fee) & ". Our Fee: " &
-                        FormatCurrency(tb_CustFee.Text) & ".", MsgBoxStyle.YesNo)
-            If (result = MsgBoxResult.Yes) Then
+                        FormatCurrency(tb_CustFee.Text) & ".", "Confirm Bounce Check", MessageBoxButtons.YesNo, MessageBoxIcon.Question)
+            If (result = Windows.Forms.DialogResult.Yes) Then
                 BounceCheck()
                 MessageBox.Show("Check Bounce completed.", "Check Bounce completed.", MessageBoxButtons.OK, MessageBoxIcon.Information)
                 Bounced = True
@@ -97,6 +95,8 @@ Namespace Admin.Payments
                 ' default print these
                 .IsToBePrinted = True
                 .LineList = New List(Of QBLineItemObj)
+                ' set date of invoice to date of check
+                .TxnDate = CheckRow.DateReceived
             End With
             ' item attached to bank and amount of bounced check
             Dim badCheckLine As New QBLineItemObj
@@ -132,6 +132,8 @@ Namespace Admin.Payments
             With checkObj
                 .AccountListID = BankRow.QB_Bank_ListID
                 .PayeeListID = BankRow.QB_Vendor_ListID
+                ' setting post date to date of check
+                .TxnDate = CheckRow.DateReceived
                 .RefNumber = "ReturnCheck"
                 .IsToBePrinted = False
                 .LineList = New List(Of QBLineItemObj)

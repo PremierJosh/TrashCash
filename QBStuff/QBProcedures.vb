@@ -29,6 +29,8 @@ Namespace QBStuff
             addRq.AccountRef.ListID.SetValue(checkObj.AccountListID)
             ' payee is vendor
             addRq.PayeeEntityRef.ListID.SetValue(checkObj.PayeeListID)
+            ' set post date
+            addRq.TxnDate.SetValue(checkObj.TxnDate)
             ' ref number is returncheck
             addRq.RefNumber.SetValue(checkObj.RefNumber)
             ' not printing

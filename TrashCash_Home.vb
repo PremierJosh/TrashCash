@@ -128,6 +128,10 @@ Public Class TrashCashHome
     ' admin payment event catches
     Friend Sub CustomerCheckBounced(ByVal customerNumber As Integer)
         RefreshCustomerBalance(customerNumber)
+        ' fetch customer notes
+        If (Customer.UC_CustomerNotes.CurrentCustomer = customerNumber) Then
+            Customer.UC_CustomerNotes.CurrentCustomer = customerNumber
+        End If
     End Sub
     Friend Sub CustomerPaymentMoved(ByVal origCustomerNumber As Integer, ByVal newCustomerNumber As Integer)
         RefreshCustomerBalance(origCustomerNumber)
