@@ -174,7 +174,7 @@ Namespace Admin.Payments
         End Function
 
         Private Sub cmb_BankAccs_SelectionChangeCommitted(sender As System.Object, e As System.EventArgs) Handles cmb_BankAccs.SelectionChangeCommitted
-            tb_BankName.Text = cmb_BankAccs.Text
+            tb_BankName.Text = cmb_BankAccs.GetItemText(cmb_BankAccs.SelectedItem)
         End Sub
     End Class
 End Namespace

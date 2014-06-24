@@ -25,8 +25,8 @@ Namespace Admin.Payments
         <System.Diagnostics.DebuggerStepThrough()> _
         Private Sub InitializeComponent()
             Me.components = New System.ComponentModel.Container()
-            Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-            Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+            Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+            Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
             Me.pnl_Top = New System.Windows.Forms.Panel()
             Me.pnl_TopContent = New System.Windows.Forms.Panel()
             Me.CustomerToolstrip1 = New TrashCash.Classes.CustomerToolstrip.CustomerToolstrip()
@@ -53,6 +53,7 @@ Namespace Admin.Payments
             Me.lbl_DateFilter = New System.Windows.Forms.Label()
             Me.PaymentHistory_DisplayTableAdapter = New TrashCash.ds_PaymentsTableAdapters.PaymentHistory_DisplayTableAdapter()
             Me.PaymentTypesTableAdapter = New TrashCash.ds_TypesTableAdapters.PaymentTypesTableAdapter()
+            Me.Panel1 = New System.Windows.Forms.Panel()
             Me.pnl_Top.SuspendLayout()
             Me.pnl_TopContent.SuspendLayout()
             CType(Me.dg_PaymentHistory, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -131,8 +132,8 @@ Namespace Admin.Payments
             'AmountDataGridViewTextBoxColumn
             '
             Me.AmountDataGridViewTextBoxColumn.DataPropertyName = "Amount"
-            DataGridViewCellStyle1.Format = "C2"
-            Me.AmountDataGridViewTextBoxColumn.DefaultCellStyle = DataGridViewCellStyle1
+            DataGridViewCellStyle3.Format = "C2"
+            Me.AmountDataGridViewTextBoxColumn.DefaultCellStyle = DataGridViewCellStyle3
             Me.AmountDataGridViewTextBoxColumn.HeaderText = "Amount"
             Me.AmountDataGridViewTextBoxColumn.Name = "AmountDataGridViewTextBoxColumn"
             Me.AmountDataGridViewTextBoxColumn.ReadOnly = True
@@ -140,8 +141,8 @@ Namespace Admin.Payments
             'DateReceivedDataGridViewTextBoxColumn
             '
             Me.DateReceivedDataGridViewTextBoxColumn.DataPropertyName = "DateReceived"
-            DataGridViewCellStyle2.Format = "d"
-            Me.DateReceivedDataGridViewTextBoxColumn.DefaultCellStyle = DataGridViewCellStyle2
+            DataGridViewCellStyle4.Format = "d"
+            Me.DateReceivedDataGridViewTextBoxColumn.DefaultCellStyle = DataGridViewCellStyle4
             Me.DateReceivedDataGridViewTextBoxColumn.HeaderText = "Date Received"
             Me.DateReceivedDataGridViewTextBoxColumn.Name = "DateReceivedDataGridViewTextBoxColumn"
             Me.DateReceivedDataGridViewTextBoxColumn.ReadOnly = True
@@ -183,6 +184,7 @@ Namespace Admin.Payments
             '
             'pnl_Filter
             '
+            Me.pnl_Filter.Controls.Add(Me.Panel1)
             Me.pnl_Filter.Controls.Add(Me.cmb_PayTypes)
             Me.pnl_Filter.Controls.Add(Me.ck_All)
             Me.pnl_Filter.Controls.Add(Me.Label2)
@@ -214,7 +216,6 @@ Namespace Admin.Payments
             '
             'Ds_Types
             '
-            Me.Ds_Types.DataSetName = "ds_Types"
             Me.Ds_Types.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema
             '
             'ck_All
@@ -276,6 +277,13 @@ Namespace Admin.Payments
             '
             Me.PaymentTypesTableAdapter.ClearBeforeFill = True
             '
+            'Panel1
+            '
+            Me.Panel1.Location = New System.Drawing.Point(843, 26)
+            Me.Panel1.Name = "Panel1"
+            Me.Panel1.Size = New System.Drawing.Size(25, 21)
+            Me.Panel1.TabIndex = 11
+            '
             'AdminPayments
             '
             Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -330,5 +338,6 @@ Namespace Admin.Payments
         Friend WithEvents Ds_Types As TrashCash.ds_Types
         Friend WithEvents PaymentTypesBindingSource As System.Windows.Forms.BindingSource
         Friend WithEvents PaymentTypesTableAdapter As TrashCash.ds_TypesTableAdapters.PaymentTypesTableAdapter
+        Friend WithEvents Panel1 As System.Windows.Forms.Panel
     End Class
 End Namespace

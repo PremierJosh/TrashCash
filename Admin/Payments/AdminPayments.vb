@@ -1,4 +1,6 @@
-﻿
+﻿Imports TrashCash.QBStuff
+
+
 Namespace Admin.Payments
     Public Class AdminPayments
 
@@ -174,6 +176,26 @@ Namespace Admin.Payments
             If (CBool(row.Item("Bounced")) = True) Then
                 dg_PaymentHistory.Rows(e.RowIndex).DefaultCellStyle.BackColor = AppColors.GridRed
                 dg_PaymentHistory.Rows(e.RowIndex).DefaultCellStyle.SelectionBackColor = AppColors.GridRedSel
+            End If
+        End Sub
+
+        Private Sub Panel1_MouseClick(sender As System.Object, e As System.Windows.Forms.MouseEventArgs) Handles Panel1.MouseClick
+            If (e.Button = Windows.Forms.MouseButtons.Middle) Then
+                Dim f As New UserSelection("Login for Payment Re-Sync")
+                If (f.AuthUserRow.USER_AUTHLVL = 1) Then
+                    ' get full payment history
+                    Dim payObjList As New List(Of QBRecievePaymentObj)
+                    QBRequests.PaymentQuery(payObjList, GetCustomerListID(CurrentCustomer))
+                    ' wipe applied payments
+                    For Each payObj As QBRecievePaymentObj In payObjList
+                        QBRequests.PaymentMod(payObj, wipeAppList:=True)
+                    Next
+                    ' get list of open invoices
+                    Dim invObjList As New List(Of QBInvoiceObj)
+                    QBRequests.InvoiceQuery(invObjList, GetCustomerListID(CurrentCustomer), paidStatus:=2)
+                    ' pay invoices with unapplied payments
+                    QBMethods.UseOverpaymentsOnInvoices(payObjList, invObjList)
+                End If
             End If
         End Sub
     End Class

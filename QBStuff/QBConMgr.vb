@@ -25,11 +25,12 @@ Namespace QBStuff
                     MessageSetRequest = SessionManager.CreateMsgSetRequest("US", 11, 0)
                     connected = True
                 Catch ex As Exception
-                    If (DateAdd(DateInterval.Second, 5, startTime) > Date.Now) Then
+                    If (DateAdd(DateInterval.Second, 5, startTime) < Date.Now) Then
                         MsgBox("Connection error: " & ex.Message & vbCrLf & "Restart TrashCash...")
                         Application.Restart()
                         Exit While
                     End If
+                    SessionManager.CloseConnection()
                     connected = False
                 End Try
             End While
