@@ -60,7 +60,8 @@ Namespace Admin
                 If (value = 1) Then
                     _bypassLogin = True
                 ElseIf (value = 2) Then
-                    ' level 2 = login prompts, no import work
+                    ' level 2 = no login prompts, no import work
+                    _bypassLogin = True
                     btn_ExportImport.Enabled = False
                 ElseIf (value = 3) Then
                     ' disable admin
