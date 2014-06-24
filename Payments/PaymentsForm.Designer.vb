@@ -28,7 +28,7 @@ Namespace Payments
         <System.Diagnostics.DebuggerStepThrough()> _
         Private Sub InitializeComponent()
             Me.components = New System.ComponentModel.Container()
-            Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+            Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
             Me.cm_PayGrid = New System.Windows.Forms.ContextMenuStrip(Me.components)
             Me.btn_DeletePay = New System.Windows.Forms.ToolStripMenuItem()
             Me.tc_Master = New System.Windows.Forms.TabControl()
@@ -213,8 +213,8 @@ Namespace Payments
             '
             Me.WorkingPaymentsAmountDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
             Me.WorkingPaymentsAmountDataGridViewTextBoxColumn.DataPropertyName = "WorkingPaymentsAmount"
-            DataGridViewCellStyle1.Format = "C2"
-            Me.WorkingPaymentsAmountDataGridViewTextBoxColumn.DefaultCellStyle = DataGridViewCellStyle1
+            DataGridViewCellStyle2.Format = "C2"
+            Me.WorkingPaymentsAmountDataGridViewTextBoxColumn.DefaultCellStyle = DataGridViewCellStyle2
             Me.WorkingPaymentsAmountDataGridViewTextBoxColumn.HeaderText = "Amount"
             Me.WorkingPaymentsAmountDataGridViewTextBoxColumn.Name = "WorkingPaymentsAmountDataGridViewTextBoxColumn"
             Me.WorkingPaymentsAmountDataGridViewTextBoxColumn.ReadOnly = True
@@ -236,7 +236,6 @@ Namespace Payments
             '
             'Ds_Batching
             '
-            Me.Ds_Batching.DataSetName = "ds_Batching"
             Me.Ds_Batching.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema
             '
             'lbl_PaysInQueue
@@ -267,7 +266,6 @@ Namespace Payments
             '
             'Ds_Types
             '
-            Me.Ds_Types.DataSetName = "ds_Types"
             Me.Ds_Types.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema
             '
             'PaymentTypesTableAdapter
@@ -327,7 +325,6 @@ Namespace Payments
             Me.tb_RefNum.Name = "tb_RefNum"
             Me.tb_RefNum.Size = New System.Drawing.Size(100, 20)
             Me.tb_RefNum.TabIndex = 2
-            Me.tb_RefNum.TabStop = False
             Me.tb_RefNum.Visible = False
             '
             'lbl_DateOnCheck

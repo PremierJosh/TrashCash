@@ -131,8 +131,12 @@
 
         Private Sub btn_AddPayment_Click(sender As System.Object, e As System.EventArgs) Handles btn_AddPayment.Click
             If (OkToCommit()) Then
-               ' trimming checknum
+                ' remove all spaces from begining and end
                 Dim checkRefNum As String = Trim(tb_RefNum.Text)
+                ' replace all zeros by spaces, and then, left-trim that result, ie, remove starting spaces. 
+                'The external Replace replaces the spaces left in the string to their initial 0 character.
+                Replace(LTrim(Replace(checkRefNum, "0", " ")), " ", "0")
+
                 Try
                     ' checking if override checked
                     If (ck_Override.Checked) Then
@@ -160,7 +164,7 @@
                                     "Sql Error: " & ex.Procedure, MessageBoxButtons.OK, MessageBoxIcon.Error)
                 End Try
                 RaiseEvent CustomerPaymentAdded(CurrentCustomer)
-               ResetPayment()
+                ResetPayment()
                 ' fill table
                 BATCH_WorkingPaymentsTableAdapter.Fill(Ds_Batching.BATCH_WorkingPayments)
             Else

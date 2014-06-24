@@ -49,6 +49,8 @@
             End If
             ' set focus to quick search
             CustomerToolstrip1.GetCustomerBalance()
+            ' allow customer info changing
+            UC_CustomerInfoBoxes.AllowUpdate = True
             End Sub
 
         Private Sub CustomerChanged(ByVal customerNumber As Integer) Handles CustomerToolstrip1.CustomerChanging
