@@ -293,7 +293,7 @@ Namespace Payments
             'ck_Override
             '
             Me.ck_Override.AutoSize = True
-            Me.ck_Override.Location = New System.Drawing.Point(67, 192)
+            Me.ck_Override.Location = New System.Drawing.Point(69, 186)
             Me.ck_Override.Name = "ck_Override"
             Me.ck_Override.Size = New System.Drawing.Size(63, 17)
             Me.ck_Override.TabIndex = 4

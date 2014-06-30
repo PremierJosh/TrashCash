@@ -259,7 +259,6 @@ Namespace Customer
                 _allowUpdate = value
                 ' set visibility of context menu buttons
                 cm_Update.Enabled = value
-                cm_Update.Visible = value
             End Set
         End Property
 

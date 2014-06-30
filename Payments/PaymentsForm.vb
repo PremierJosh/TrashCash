@@ -46,7 +46,6 @@
             ' checking if in debug mode
             If (_debug) Then
                 ck_Override.Checked = False
-                dtp_Override.Visible = False
                 dtp_Override.Value = Date.Now
             End If
         End Sub
@@ -60,7 +59,11 @@
 
             ' Add any initialization after the InitializeComponent() call.
             _debug = debug
-
+            If (debug) Then
+                ck_Override.Visible = True
+                dtp_Override.Visible = True
+            End If
+            
             ' if number is passed, lock ts
             If (customerNumber <> 0) Then
                 CustomerToolstrip1.Enabled = False

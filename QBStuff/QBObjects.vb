@@ -3,7 +3,7 @@
 Namespace QBStuff
     Public Module QBObjects
 
-        'Public Structure QBAddCreditObj
+        'Public Class QBAddCreditObj
         '    Public CustomerListID As String
         '    Public IsToBePrinted As Boolean
         '    Public ItemListID As String
@@ -15,9 +15,9 @@ Namespace QBStuff
 
         '    ' status response from qb
         '    Public StatusCode As Integer
-        'End Structure
+        'End Class
 
-        Public Structure QBCreditObj
+        Public Class QBCreditObj
             Public TxnID As String
             Public CreditRemaining As Double
             Public TxnDate As Date
@@ -34,9 +34,9 @@ Namespace QBStuff
             Public Desc As String
             ' internal reference
             Public DateOfCredit As Date
-        End Structure
+        End Class
 
-        Public Structure QBInvoiceObj
+        Public Class QBInvoiceObj
             Public TxnID As String
             Public EditSequence As String
             Public CustomerListID As String
@@ -55,7 +55,7 @@ Namespace QBStuff
 
             'used for display
             Public CustomerFullName As String
-            
+
             ' optional text field
             Public Memo As String
             ' optional data field
@@ -72,22 +72,22 @@ Namespace QBStuff
             ''' is to recieve a payment with no amount, apply payment to invoice by id
             ''' and set the credit txn id and amount used to pay it
             Public LinkedCreditList As List(Of QBCreditObj)
-        End Structure
+        End Class
 
-        Public Structure QBLineItemObj
+        Public Class QBLineItemObj
             Public ItemListID As String
             Public Rate As Double
             Public Quantity As Integer
             Public Desc As String
             Public TxnLineID As String
             Public Amount As Double
-            
+
             ' optional data fields
             Public Other1 As String
             Public Other2 As String
-        End Structure
+        End Class
 
-        'Public Structure QBLinkedTxnObj
+        'Public Class QBLinkedTxnObj
         '    Public TxnID As String
         '    Public RefNumber As String
         '    Public Amount As Double
@@ -97,16 +97,16 @@ Namespace QBStuff
 
         '    ' these are enumerated on the return and will need to be ctyped to be read
         '    Public TxnType As Integer
-        'End Structure
+        'End Class
 
-        Public Structure QBRecievePaymentObj
+        Public Class QBRecievePaymentObj
             Public TxnID As String
             Public TxnDate As Date
             Public TotalAmount As Double
             Public PayTypeName As String
             Public CustomerListID As String
             Public EditSequence As String
-            Public UnusedPayment As Double
+            Public Property UnusedPayment As Double
             Public RefNumber As String
             Public Memo As String
 
@@ -115,9 +115,9 @@ Namespace QBStuff
 
             ' this is used for a linked txn amount
             Public LinkedTxnAmount As Double
-            End Structure
+        End Class
 
-        Public Structure QBItemObj
+        Public Class QBItemObj
             Public ItemName As String
             Public ListID As String
             Public EditSequence As String
@@ -125,10 +125,10 @@ Namespace QBStuff
             Public Desc As String
 
             Public IncomeAccountListID As String
-        End Structure
+        End Class
 
         ' this is only used for bounced checks
-        Public Structure QBCheckObj
+        Public Class QBCheckObj
             Public AccountListID As String
             Public PayeeListID As String
             Public RefNumber As String
@@ -139,8 +139,8 @@ Namespace QBStuff
 
             ' line items list that goes onto this check
             ' (qb item that comes from the account that matches the bank)
-            Dim LineList As List(Of QBLineItemObj)
-        End Structure
+            Public LineList As List(Of QBLineItemObj)
+        End Class
 
     End Module
 

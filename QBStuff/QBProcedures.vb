@@ -414,33 +414,55 @@ Namespace QBStuff
                 For Each invObj As QBInvoiceObj In payObj.AppliedInvList
                     Dim appTxn As IAppliedToTxnMod = appTxnList.Append
                     appTxn.TxnID.SetValue(invObj.TxnID)
-                    ' checking if there is an applied amount
-                    If (invObj.AppliedAmount <> Nothing) Then
-                        appTxn.PaymentAmount.SetValue(invObj.AppliedAmount)
+                    If (wipeAppList) Then
+                        ' removing applied amount
+                        appTxn.PaymentAmount.SetEmpty()
+                    Else
+                        ' checking if there is an applied amount
+                        If (invObj.AppliedAmount <> Nothing) Then
+                            appTxn.PaymentAmount.SetValue(invObj.AppliedAmount)
+                        End If
+                        ' checking if credit list is applied
+                        If (invObj.LinkedCreditList IsNot Nothing) Then
+                            Dim setCreditList As ISetCreditList = appTxn.SetCreditList
+                            For Each creditObj As QBCreditObj In invObj.LinkedCreditList
+                                Dim setCredit As ISetCredit = setCreditList.Append
+                                With setCredit
+                                    .CreditTxnID.SetValue(creditObj.TxnID)
+                                    .AppliedAmount.SetValue(creditObj.AppliedAmount)
+                                End With
+                            Next
+                        End If
                     End If
-                    ' checking if credit list is applied
-                    If (invObj.LinkedCreditList IsNot Nothing) Then
-                        Dim setCreditList As ISetCreditList = appTxn.SetCreditList
-                        For Each creditObj As QBCreditObj In invObj.LinkedCreditList
-                            Dim setCredit As ISetCredit = setCreditList.Append
-                            With setCredit
-                                .CreditTxnID.SetValue(creditObj.TxnID)
-                                .AppliedAmount.SetValue(creditObj.AppliedAmount)
-                            End With
-                        Next
-                    End If
+
                 Next
-            Else
-                ' checking if optional param to wipe applied list is set to true
-                If (wipeAppList) Then
-                    ' ReSharper disable once UnusedVariable
-                    Dim appTxnList As IAppliedToTxnModList = payMod.AppliedToTxnModList
-                End If
+                'Else
+                '    ' checking if optional param to wipe applied list is set to true
+                '    If (wipeAppList) Then
+                '        ' ReSharper disable once UnusedVariable
+                '        Dim appTxnList As IAppliedToTxnModList = payMod.AppliedToTxnModList
+                '        appTxnList.Append()
+
+                '    End If
             End If
 
             Dim resp As IResponse = ConCheck(qbConMgr).GetRespList.GetAt(0)
             If (resp.StatusCode = 0) Then
                 payObj = QBMethods.ConvertToPayObjs(resp).Item(0)
+                ' wiping applied list if there were any returned with a 0 applied amount
+                If (wipeAppList) Then
+                    If (payObj.AppliedInvList IsNot Nothing) Then
+                        For i = 0 To payObj.AppliedInvList.Count - 1
+                            If (payObj.AppliedInvList.Item(i).AppliedAmount = 0) Then
+                                payObj.AppliedInvList.RemoveAt(i)
+                            End If
+                        Next
+                        ' if no items remain, set to nothing
+                        If (payObj.AppliedInvList.Count = 0) Then
+                            payObj.AppliedInvList = Nothing
+                        End If
+                    End If
+                End If
             Else
                 QBMethods.ResponseErr_Misc(resp)
             End If
@@ -1170,46 +1192,53 @@ Namespace QBStuff
             ' checking if new customer has unapplied payments and open invoices we can pay
             If (payObjList.Count > 0) Then
                 If (invObjList.Count > 0) Then
-                    For Each pay As QBRecievePaymentObj In payObjList
-                        If (pay.UnusedPayment > 0) Then
-                            For Each invObj As QBInvoiceObj In invObjList
-                                If (invObj.BalanceRemaining > 0) Then
-                                    ' checking if payment is being used on other invoices
-                                    If (pay.AppliedInvList Is Nothing) Then
-                                        pay.AppliedInvList = New List(Of QBInvoiceObj)
+                    For p = 0 To payObjList.Count - 1
+                        If (payObjList.Item(p).UnusedPayment > 0) Then
+                            For i = 0 To invObjList.Count - 1
+                                If (payObjList.Item(p).UnusedPayment > 0) Then
+                                 If (invObjList.Item(i).BalanceRemaining > 0) Then
+                                        ' checking if payment is being used on other invoices
+                                        If (payObjList.Item(p).AppliedInvList Is Nothing) Then
+                                            payObjList.Item(p).AppliedInvList = New List(Of QBInvoiceObj)
+                                        End If
+                                        ' checking how much we can apply
+                                        If (payObjList.Item(p).UnusedPayment >= invObjList.Item(i).BalanceRemaining) Then
+                                            invObjList.Item(i).AppliedAmount = invObjList.Item(i).BalanceRemaining
+                                            ' update balances
+                                            invObjList.Item(i).BalanceRemaining = 0
+                                            payObjList.Item(p).UnusedPayment = payObjList.Item(p).UnusedPayment - invObjList.Item(i).AppliedAmount
+                                        Else
+                                            invObjList.Item(i).AppliedAmount = payObjList.Item(p).UnusedPayment
+                                            ' update balances
+                                            payObjList.Item(p).UnusedPayment = 0
+                                            invObjList.Item(i).BalanceRemaining = invObjList.Item(i).BalanceRemaining - invObjList.Item(i).AppliedAmount
+                                        End If
+                                        ' going to use passed payObj as mod obj
+                                        payObjList.Item(p).AppliedInvList.Add(invObjList.Item(i))
                                     End If
-                                    ' going to use passed payObj as mod obj
-                                    pay.AppliedInvList.Add(invObj)
-                                    ' checking how much we can apply
-                                    If (pay.UnusedPayment >= invObj.BalanceRemaining) Then
-                                        invObj.AppliedAmount = invObj.BalanceRemaining
-                                        ' update balances
-                                        invObj.BalanceRemaining = 0
-                                        pay.UnusedPayment = pay.UnusedPayment - invObj.BalanceRemaining
-                                    Else
-                                        invObj.AppliedAmount = pay.UnusedPayment
-                                        ' update balances
-                                        pay.UnusedPayment = 0
-                                        invObj.BalanceRemaining = invObj.BalanceRemaining - pay.UnusedPayment
-                                    End If
-                                    ' send invoice
-                                    Dim resp As Integer = QBRequests.PaymentMod(pay)
-                                    If (resp = 0) Then
-                                        Try
-                                            ' attempting to update history edit seq
-                                            Using ta As New ds_PaymentsTableAdapters.PaymentHistory_DBTableAdapter
-                                                ta.UpdateEditSeq(pay.TxnID, pay.EditSequence)
-                                            End Using
-                                        Catch ex As SqlException
-                                            MessageBox.Show(
-                                                "Message: " & ex.Message & vbCrLf & "LineNumber: " & ex.LineNumber,
-                                                "Sql Error: " & ex.Procedure, MessageBoxButtons.OK, MessageBoxIcon.Error)
-                                        End Try
-                                    Else
-                                        err += 1
-                                    End If
+                                Else
+                                    ' payment is all used, exit loop
+                                    Exit For
                                 End If
                             Next
+
+                            ' send invoice
+                            Dim resp As Integer = QBRequests.PaymentMod(payObjList.Item(p))
+                            If (resp = 0) Then
+                                Try
+                                    ' attempting to update history edit seq
+                                    Using ta As New ds_PaymentsTableAdapters.PaymentHistory_DBTableAdapter
+                                        ta.UpdateEditSeq(payObjList.Item(p).TxnID, payObjList.Item(p).EditSequence)
+                                    End Using
+                                Catch ex As SqlException
+                                    MessageBox.Show(
+                                        "Message: " & ex.Message & vbCrLf & "LineNumber: " & ex.LineNumber,
+                                        "Sql Error: " & ex.Procedure, MessageBoxButtons.OK, MessageBoxIcon.Error)
+                                End Try
+
+                            Else
+                                err += 1
+                            End If
                         End If
                     Next
                 End If
