@@ -1223,7 +1223,7 @@ Namespace QBStuff
                             Next
 
                             ' send invoice
-                            Dim resp As Integer = QBRequests.PaymentMod(payObjList.Item(p))
+                            Dim resp As Integer = QBRequests.PaymentMod(payObjList.Item(p), qbConMgr:=ConCheck(qbConMgr))
                             If (resp = 0) Then
                                 Try
                                     ' attempting to update history edit seq
