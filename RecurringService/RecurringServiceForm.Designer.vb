@@ -196,7 +196,6 @@ Namespace RecurringService
             '
             'Ds_RecurringService
             '
-            Me.Ds_RecurringService.DataSetName = "ds_RecurringService"
             Me.Ds_RecurringService.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema
             '
             'ck_Fri
@@ -381,7 +380,6 @@ Namespace RecurringService
             '
             'Ds_Types
             '
-            Me.Ds_Types.DataSetName = "ds_Types"
             Me.Ds_Types.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema
             '
             'nud_BillLength
