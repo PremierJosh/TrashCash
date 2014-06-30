@@ -28,7 +28,7 @@ Namespace Payments
         <System.Diagnostics.DebuggerStepThrough()> _
         Private Sub InitializeComponent()
             Me.components = New System.ComponentModel.Container()
-            Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+            Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
             Me.cm_PayGrid = New System.Windows.Forms.ContextMenuStrip(Me.components)
             Me.btn_DeletePay = New System.Windows.Forms.ToolStripMenuItem()
             Me.tc_Master = New System.Windows.Forms.TabControl()
@@ -62,6 +62,13 @@ Namespace Payments
             Me.tb_Amount = New TrashCash.Classes.CurrencyTextBox()
             Me.Label1 = New System.Windows.Forms.Label()
             Me.BATCH_WorkingPaymentsTableAdapter = New TrashCash.ds_BatchingTableAdapters.BATCH_WorkingPaymentsTableAdapter()
+            Me.grp_PrevPayInfo = New System.Windows.Forms.GroupBox()
+            Me.dtp_PrevDateOnCheck = New System.Windows.Forms.DateTimePicker()
+            Me.tb_PrevRefNum = New System.Windows.Forms.TextBox()
+            Me.lbl_PrevDateOnCheck = New System.Windows.Forms.Label()
+            Me.lbl_PrevRefNum = New System.Windows.Forms.Label()
+            Me.tb_PrevAmount = New TrashCash.Classes.CurrencyTextBox()
+            Me.lbl_PrevAmount = New System.Windows.Forms.Label()
             Me.cm_PayGrid.SuspendLayout()
             Me.tc_Master.SuspendLayout()
             Me.tc_p_CustNotes.SuspendLayout()
@@ -74,6 +81,7 @@ Namespace Payments
             CType(Me.Ds_Batching, System.ComponentModel.ISupportInitialize).BeginInit()
             CType(Me.PaymentTypesBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
             CType(Me.Ds_Types, System.ComponentModel.ISupportInitialize).BeginInit()
+            Me.grp_PrevPayInfo.SuspendLayout()
             Me.SuspendLayout()
             '
             'cm_PayGrid
@@ -96,7 +104,7 @@ Namespace Payments
             Me.tc_Master.Location = New System.Drawing.Point(0, 267)
             Me.tc_Master.Name = "tc_Master"
             Me.tc_Master.SelectedIndex = 0
-            Me.tc_Master.Size = New System.Drawing.Size(916, 205)
+            Me.tc_Master.Size = New System.Drawing.Size(966, 205)
             Me.tc_Master.TabIndex = 95
             '
             'tc_p_CustNotes
@@ -106,7 +114,7 @@ Namespace Payments
             Me.tc_p_CustNotes.Location = New System.Drawing.Point(4, 22)
             Me.tc_p_CustNotes.Name = "tc_p_CustNotes"
             Me.tc_p_CustNotes.Padding = New System.Windows.Forms.Padding(3)
-            Me.tc_p_CustNotes.Size = New System.Drawing.Size(908, 179)
+            Me.tc_p_CustNotes.Size = New System.Drawing.Size(958, 179)
             Me.tc_p_CustNotes.TabIndex = 3
             Me.tc_p_CustNotes.Text = "Customer Notes"
             '
@@ -116,7 +124,7 @@ Namespace Payments
             Me.UC_CustomerNotes.Dock = System.Windows.Forms.DockStyle.Fill
             Me.UC_CustomerNotes.Location = New System.Drawing.Point(3, 3)
             Me.UC_CustomerNotes.Name = "UC_CustomerNotes"
-            Me.UC_CustomerNotes.Size = New System.Drawing.Size(902, 173)
+            Me.UC_CustomerNotes.Size = New System.Drawing.Size(952, 173)
             Me.UC_CustomerNotes.TabIndex = 0
             '
             'tc_p_CustInfo
@@ -148,7 +156,7 @@ Namespace Payments
             Me.Panel1.Location = New System.Drawing.Point(0, 0)
             Me.Panel1.Name = "Panel1"
             Me.Panel1.Padding = New System.Windows.Forms.Padding(20, 10, 20, 10)
-            Me.Panel1.Size = New System.Drawing.Size(916, 53)
+            Me.Panel1.Size = New System.Drawing.Size(966, 53)
             Me.Panel1.TabIndex = 96
             '
             'pnl_TopContent
@@ -158,7 +166,7 @@ Namespace Payments
             Me.pnl_TopContent.Dock = System.Windows.Forms.DockStyle.Fill
             Me.pnl_TopContent.Location = New System.Drawing.Point(20, 10)
             Me.pnl_TopContent.Name = "pnl_TopContent"
-            Me.pnl_TopContent.Size = New System.Drawing.Size(876, 33)
+            Me.pnl_TopContent.Size = New System.Drawing.Size(926, 33)
             Me.pnl_TopContent.TabIndex = 2
             '
             'CustomerToolstrip1
@@ -167,7 +175,7 @@ Namespace Payments
             Me.CustomerToolstrip1.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden
             Me.CustomerToolstrip1.Location = New System.Drawing.Point(0, 0)
             Me.CustomerToolstrip1.Name = "CustomerToolstrip1"
-            Me.CustomerToolstrip1.Size = New System.Drawing.Size(874, 31)
+            Me.CustomerToolstrip1.Size = New System.Drawing.Size(924, 31)
             Me.CustomerToolstrip1.TabIndex = 0
             Me.CustomerToolstrip1.Text = "CustomerToolstrip1"
             '
@@ -176,7 +184,7 @@ Namespace Payments
             Me.pnl_Right.Controls.Add(Me.dg_PrepPay)
             Me.pnl_Right.Controls.Add(Me.lbl_PaysInQueue)
             Me.pnl_Right.Dock = System.Windows.Forms.DockStyle.Right
-            Me.pnl_Right.Location = New System.Drawing.Point(403, 53)
+            Me.pnl_Right.Location = New System.Drawing.Point(453, 53)
             Me.pnl_Right.Name = "pnl_Right"
             Me.pnl_Right.Size = New System.Drawing.Size(513, 214)
             Me.pnl_Right.TabIndex = 98
@@ -213,8 +221,8 @@ Namespace Payments
             '
             Me.WorkingPaymentsAmountDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
             Me.WorkingPaymentsAmountDataGridViewTextBoxColumn.DataPropertyName = "WorkingPaymentsAmount"
-            DataGridViewCellStyle2.Format = "C2"
-            Me.WorkingPaymentsAmountDataGridViewTextBoxColumn.DefaultCellStyle = DataGridViewCellStyle2
+            DataGridViewCellStyle1.Format = "C2"
+            Me.WorkingPaymentsAmountDataGridViewTextBoxColumn.DefaultCellStyle = DataGridViewCellStyle1
             Me.WorkingPaymentsAmountDataGridViewTextBoxColumn.HeaderText = "Amount"
             Me.WorkingPaymentsAmountDataGridViewTextBoxColumn.Name = "WorkingPaymentsAmountDataGridViewTextBoxColumn"
             Me.WorkingPaymentsAmountDataGridViewTextBoxColumn.ReadOnly = True
@@ -236,6 +244,7 @@ Namespace Payments
             '
             'Ds_Batching
             '
+            Me.Ds_Batching.DataSetName = "ds_Batching"
             Me.Ds_Batching.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema
             '
             'lbl_PaysInQueue
@@ -266,6 +275,7 @@ Namespace Payments
             '
             'Ds_Types
             '
+            Me.Ds_Types.DataSetName = "ds_Types"
             Me.Ds_Types.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema
             '
             'PaymentTypesTableAdapter
@@ -367,11 +377,81 @@ Namespace Payments
             '
             Me.BATCH_WorkingPaymentsTableAdapter.ClearBeforeFill = True
             '
+            'grp_PrevPayInfo
+            '
+            Me.grp_PrevPayInfo.Controls.Add(Me.dtp_PrevDateOnCheck)
+            Me.grp_PrevPayInfo.Controls.Add(Me.tb_PrevRefNum)
+            Me.grp_PrevPayInfo.Controls.Add(Me.lbl_PrevDateOnCheck)
+            Me.grp_PrevPayInfo.Controls.Add(Me.lbl_PrevRefNum)
+            Me.grp_PrevPayInfo.Controls.Add(Me.tb_PrevAmount)
+            Me.grp_PrevPayInfo.Controls.Add(Me.lbl_PrevAmount)
+            Me.grp_PrevPayInfo.Enabled = False
+            Me.grp_PrevPayInfo.Location = New System.Drawing.Point(254, 103)
+            Me.grp_PrevPayInfo.Name = "grp_PrevPayInfo"
+            Me.grp_PrevPayInfo.Size = New System.Drawing.Size(193, 100)
+            Me.grp_PrevPayInfo.TabIndex = 115
+            Me.grp_PrevPayInfo.TabStop = False
+            Me.grp_PrevPayInfo.Text = "Last Batched Payment"
+            '
+            'dtp_PrevDateOnCheck
+            '
+            Me.dtp_PrevDateOnCheck.Format = System.Windows.Forms.DateTimePickerFormat.[Short]
+            Me.dtp_PrevDateOnCheck.Location = New System.Drawing.Point(95, 65)
+            Me.dtp_PrevDateOnCheck.Name = "dtp_PrevDateOnCheck"
+            Me.dtp_PrevDateOnCheck.Size = New System.Drawing.Size(84, 20)
+            Me.dtp_PrevDateOnCheck.TabIndex = 117
+            Me.dtp_PrevDateOnCheck.Visible = False
+            '
+            'tb_PrevRefNum
+            '
+            Me.tb_PrevRefNum.Location = New System.Drawing.Point(79, 39)
+            Me.tb_PrevRefNum.Name = "tb_PrevRefNum"
+            Me.tb_PrevRefNum.Size = New System.Drawing.Size(100, 20)
+            Me.tb_PrevRefNum.TabIndex = 116
+            Me.tb_PrevRefNum.Visible = False
+            '
+            'lbl_PrevDateOnCheck
+            '
+            Me.lbl_PrevDateOnCheck.AutoSize = True
+            Me.lbl_PrevDateOnCheck.Location = New System.Drawing.Point(8, 69)
+            Me.lbl_PrevDateOnCheck.Name = "lbl_PrevDateOnCheck"
+            Me.lbl_PrevDateOnCheck.Size = New System.Drawing.Size(81, 13)
+            Me.lbl_PrevDateOnCheck.TabIndex = 120
+            Me.lbl_PrevDateOnCheck.Text = "Date on check:"
+            Me.lbl_PrevDateOnCheck.Visible = False
+            '
+            'lbl_PrevRefNum
+            '
+            Me.lbl_PrevRefNum.AutoSize = True
+            Me.lbl_PrevRefNum.Location = New System.Drawing.Point(6, 42)
+            Me.lbl_PrevRefNum.Name = "lbl_PrevRefNum"
+            Me.lbl_PrevRefNum.Size = New System.Drawing.Size(70, 13)
+            Me.lbl_PrevRefNum.TabIndex = 119
+            Me.lbl_PrevRefNum.Text = "Reference #:"
+            Me.lbl_PrevRefNum.Visible = False
+            '
+            'tb_PrevAmount
+            '
+            Me.tb_PrevAmount.Location = New System.Drawing.Point(79, 16)
+            Me.tb_PrevAmount.Name = "tb_PrevAmount"
+            Me.tb_PrevAmount.Size = New System.Drawing.Size(100, 20)
+            Me.tb_PrevAmount.TabIndex = 115
+            '
+            'lbl_PrevAmount
+            '
+            Me.lbl_PrevAmount.AutoSize = True
+            Me.lbl_PrevAmount.Location = New System.Drawing.Point(30, 19)
+            Me.lbl_PrevAmount.Name = "lbl_PrevAmount"
+            Me.lbl_PrevAmount.Size = New System.Drawing.Size(46, 13)
+            Me.lbl_PrevAmount.TabIndex = 118
+            Me.lbl_PrevAmount.Text = "Amount:"
+            '
             'PaymentsForm
             '
             Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
             Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-            Me.ClientSize = New System.Drawing.Size(916, 472)
+            Me.ClientSize = New System.Drawing.Size(966, 472)
+            Me.Controls.Add(Me.grp_PrevPayInfo)
             Me.Controls.Add(Me.dtp_Override)
             Me.Controls.Add(Me.ck_Override)
             Me.Controls.Add(Me.btn_AddPayment)
@@ -403,6 +483,8 @@ Namespace Payments
             CType(Me.Ds_Batching, System.ComponentModel.ISupportInitialize).EndInit()
             CType(Me.PaymentTypesBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
             CType(Me.Ds_Types, System.ComponentModel.ISupportInitialize).EndInit()
+            Me.grp_PrevPayInfo.ResumeLayout(False)
+            Me.grp_PrevPayInfo.PerformLayout()
             Me.ResumeLayout(False)
             Me.PerformLayout()
 
@@ -442,5 +524,12 @@ Namespace Payments
         Friend WithEvents CustomerFullName As System.Windows.Forms.DataGridViewTextBoxColumn
         Friend WithEvents WorkingPaymentsAmountDataGridViewTextBoxColumn As System.Windows.Forms.DataGridViewTextBoxColumn
         Friend WithEvents WorkingPaymentsCheckNum As System.Windows.Forms.DataGridViewTextBoxColumn
+        Friend WithEvents grp_PrevPayInfo As System.Windows.Forms.GroupBox
+        Friend WithEvents dtp_PrevDateOnCheck As System.Windows.Forms.DateTimePicker
+        Friend WithEvents tb_PrevRefNum As System.Windows.Forms.TextBox
+        Friend WithEvents lbl_PrevDateOnCheck As System.Windows.Forms.Label
+        Friend WithEvents lbl_PrevRefNum As System.Windows.Forms.Label
+        Friend WithEvents tb_PrevAmount As TrashCash.Classes.CurrencyTextBox
+        Friend WithEvents lbl_PrevAmount As System.Windows.Forms.Label
     End Class
 End Namespace

@@ -172,7 +172,6 @@ Namespace Customer
             Else
                 Return False
             End If
-
         End Function
 
         Private Sub box_CustBillAddr1_Enter(sender As System.Object, e As System.EventArgs) Handles box_CustBillAddr1.Enter

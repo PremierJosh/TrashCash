@@ -59,6 +59,14 @@ Module AppModule
         Complete = 7
         Submitted = 8
     End Enum
+    ' enum pay types for easier reference
+    ' ReSharper disable once InconsistentNaming
+    Enum TC_ENPaymentTypes As Int32
+        Cash = 1
+        Check = 2
+        MoneyOrder = 3
+    End Enum
+
 
     ' global colors for app
     Public Class AppColors

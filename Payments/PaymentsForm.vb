@@ -18,6 +18,8 @@
                     UC_CustomerInfoBoxes.CurrentCustomer = value
                     ' update window title text
                     Text = CustomerToolstrip1.ToString
+                    ' fetch most recent payment and display in group box
+                    FetchPrevPayment()
                 End If
             End Set
         End Property
@@ -93,10 +95,11 @@
             PaymentTypesTableAdapter.Fill(Ds_Types.PaymentTypes)
             ' setting uc info boxes to display only
             UC_CustomerInfoBoxes.AllowUpdate = False
+            _hTA = New ds_PaymentsTableAdapters.PaymentHistory_DBTableAdapter
         End Sub
 
         Private Sub cmb_PayTypes_SelectedValueChanged(sender As System.Object, e As System.EventArgs) Handles cmb_PayTypes.SelectedValueChanged
-            If (cmb_PayTypes.SelectedValue = 1) Then
+            If (cmb_PayTypes.SelectedValue = TC_ENPaymentTypes.Cash) Then
                 ' ref number
                 tb_RefNum.Visible = False
                 lbl_RefNumber.Visible = False
@@ -131,6 +134,32 @@
                 Return False
             End If
         End Function
+        ' ta for fetching prev payment
+        Private _hTA As ds_PaymentsTableAdapters.PaymentHistory_DBTableAdapter
+        Private Sub FetchPrevPayment()
+            Dim dt As ds_Payments.PaymentHistory_DBDataTable = _hTA.GetNewestPayment(CurrentCustomer)
+            If (dt.Rows.Count = 1) Then
+                Dim row As ds_Payments.PaymentHistory_DBRow = dt.Rows(0)
+                tb_Amount.Text = row.Amount
+                If (row.PaymentTypeID = TC_ENPaymentTypes.Cash) Then
+                    lbl_PrevRefNum.Visible = False
+                    tb_PrevRefNum.Visible = False
+                    lbl_PrevDateOnCheck.Visible = False
+                    dtp_PrevDateOnCheck.Visible = False
+                Else
+                    If (Not row.IsRefNumberNull) Then
+                        lbl_PrevRefNum.Visible = True
+                        tb_PrevRefNum.Visible = True
+                        tb_PrevRefNum.Text = row.RefNumber
+                    End If
+                    If (Not row.IsDateOnCheckNull) Then
+                        lbl_PrevDateOnCheck.Visible = True
+                        dtp_PrevDateOnCheck.Visible = True
+                        dtp_PrevDateOnCheck.Value = row.DateOnCheck
+                    End If
+                End If
+            End If
+        End Sub
 
         Private Sub btn_AddPayment_Click(sender As System.Object, e As System.EventArgs) Handles btn_AddPayment.Click
             If (OkToCommit()) Then
@@ -145,7 +174,7 @@
                     If (ck_Override.Checked) Then
                         ' inserting override date chosen as time inserted
                         ' insert with current time and check if dateoncheck is nothing (cash payment)
-                        If (cmb_PayTypes.SelectedValue = 1) Then
+                        If (cmb_PayTypes.SelectedValue = TC_ENPaymentTypes.Cash) Then
                             BATCH_WorkingPaymentsTableAdapter.WorkingPayments_Insert_ReturnID(CurrentCustomer, tb_Amount.Text, cmb_PayTypes.SelectedValue, Nothing,
                             TC_ENItemStatus.Ready, dtp_Override.Value.Date, Nothing, CurrentUser.USER_NAME)
                         Else
@@ -154,7 +183,7 @@
                         End If
                     Else
                         ' insert with current time and check if dateoncheck is nothing (cash payment)
-                        If (cmb_PayTypes.SelectedValue = 1) Then
+                        If (cmb_PayTypes.SelectedValue = TC_ENPaymentTypes.Cash) Then
                             BATCH_WorkingPaymentsTableAdapter.WorkingPayments_Insert_ReturnID(CurrentCustomer, tb_Amount.Text, cmb_PayTypes.SelectedValue, Nothing,
                              TC_ENItemStatus.Ready, Date.Now, Nothing, CurrentUser.USER_NAME)
                         Else
