@@ -312,7 +312,7 @@ Namespace RecurringService
             Dim newCredit As Boolean = False
 
             ' string var for different reasons end credit could be voided
-            Dim voidEndCreditReason As String
+            Dim voidEndCreditReason As String = ""
             If (ck_EndDate.Checked) Then
                 ' end date set, was there an end date before?
                 If (Not RecurringServiceRow.IsRecurringServiceEndDateNull) Then

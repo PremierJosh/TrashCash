@@ -285,7 +285,8 @@ Public Class TrashCashHome
         Try
             Dim connected As Boolean = GlobalConMgr.InitCon()
             If (Not connected) Then
-                Application.Exit()
+                Application.Restart()
+                Exit Sub
             End If
             'temp: setting vars here for other forms
             AppSessMgr = GlobalConMgr.SessionManager
@@ -430,18 +431,20 @@ Public Class TrashCashHome
 
     Private Sub Batch_RefreshBalance_Tick(sender As Object, e As EventArgs) Handles Batch_RefreshBalance.Tick
         ' refresh balances on timer tick (every 10 seconds)
-        If (Customer IsNot Nothing) Then
-            Customer.CustomerToolstrip1.GetCustomerBalance()
-        End If
-        If (PayForm IsNot Nothing) Then
-            PayForm.CustomerToolstrip1.GetCustomerBalance()
-        End If
-        If (InvForm IsNot Nothing) Then
-            InvForm.CustomerToolstrip1.GetCustomerBalance()
-        End If
-        If (TrashCashAdmin IsNot Nothing) Then
-            If (TrashCashAdmin.AdminPay IsNot Nothing) Then
-                TrashCashAdmin.AdminPay.CustomerToolstrip1.GetCustomerBalance()
+        If (GlobalConMgr.MessageSetRequest.RequestList.Count = 0) Then
+            If (Customer IsNot Nothing) Then
+                Customer.CustomerToolstrip1.GetCustomerBalance()
+            End If
+            If (PayForm IsNot Nothing) Then
+                PayForm.CustomerToolstrip1.GetCustomerBalance()
+            End If
+            If (InvForm IsNot Nothing) Then
+                InvForm.CustomerToolstrip1.GetCustomerBalance()
+            End If
+            If (TrashCashAdmin IsNot Nothing) Then
+                If (TrashCashAdmin.AdminPay IsNot Nothing) Then
+                    TrashCashAdmin.AdminPay.CustomerToolstrip1.GetCustomerBalance()
+                End If
             End If
         End If
     End Sub

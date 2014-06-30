@@ -117,7 +117,7 @@ Namespace Batching
                                 errOnPrevRun = False
                             End If
                             ' checking for cancel request
-                            If (worker.CancellationPending = True) Then
+                            If (worker.CancellationPending) Then
                                 e.Cancel = True
                                 batchRow.Canceled = True
                                 Exit For

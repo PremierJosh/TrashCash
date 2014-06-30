@@ -26,9 +26,9 @@ Namespace QBStuff
                     connected = True
                 Catch ex As Exception
                     If (DateAdd(DateInterval.Second, 5, startTime) < Date.Now) Then
-                        MsgBox("Connection error: " & ex.Message & vbCrLf & "Restart TrashCash...")
-                        Application.Restart()
-                        Exit While
+                        MsgBox("Connection error: " & ex.Message & vbCrLf & "Restarting TrashCash...")
+                        'SessionManager.CloseConnection()
+                       Exit While
                     End If
                     SessionManager.CloseConnection()
                     connected = False
