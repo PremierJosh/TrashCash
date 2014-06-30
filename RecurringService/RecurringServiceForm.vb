@@ -410,12 +410,12 @@ Namespace RecurringService
                 grp_BasicInfo.Enabled = False
                 dtp_StartDate.Enabled = False
                 grp_PickupDay.Enabled = False
-                grp_SrvcAddr.Enabled = False
+                'grp_SrvcAddr.Enabled = False
             Else
                 grp_BasicInfo.Enabled = True
                 dtp_StartDate.Enabled = True
                 grp_PickupDay.Enabled = True
-                grp_SrvcAddr.Enabled = True
+                'grp_SrvcAddr.Enabled = True
             End If
         End Sub
 
