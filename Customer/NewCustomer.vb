@@ -13,6 +13,7 @@ Namespace Customer
             CustRow = Ds_Customer.Customer.NewCustomerRow
             ' setting bill interval to at least 1
             CustRow.CustomerBillInterval = 1
+            nud_BillInterval.Value = 1
             Ds_Customer.Customer.AddCustomerRow(CustRow)
         End Sub
 
@@ -194,7 +195,6 @@ Namespace Customer
             If (ck_SingleInv.Checked = True) Then
                 lbl_BillInterval.Visible = True
                 nud_BillInterval.Visible = True
-                nud_BillInterval.Value = 1
             Else
                 lbl_BillInterval.Visible = False
                 nud_BillInterval.Visible = False
