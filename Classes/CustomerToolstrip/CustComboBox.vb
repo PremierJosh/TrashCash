@@ -31,6 +31,10 @@ Namespace Classes.CustomerToolstrip
             _dv.RowFilter = cString
         End Sub
 
+        Friend Sub Search_Clear()
+            _dv.RowFilter = ""
+        End Sub
+
         Friend Event SelectionChangeCommitted(ByVal customerNumber As Integer, ByVal e As EventArgs)
         Protected Overrides Sub OnSelectionChangeCommitted(ByVal e As EventArgs)
             RaiseEvent SelectionChangeCommitted(CInt(ComboBox.SelectedValue), e)

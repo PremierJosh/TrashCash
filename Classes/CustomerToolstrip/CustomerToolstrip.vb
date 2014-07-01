@@ -236,5 +236,8 @@ Namespace Classes.CustomerToolstrip
         Private Sub SearchByName(ByVal str As String) Handles QuickSearch.NameSearch
             CustComboBox.Search_CustName(str)
         End Sub
+        Private Sub ClearSearchFilter() Handles QuickSearch.ClearSearch
+            CustComboBox.Search_Clear()
+        End Sub
     End Class
 End Namespace
