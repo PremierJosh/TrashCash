@@ -19,7 +19,7 @@
                     ' update window title text
                     Text = CustomerToolstrip1.ToString
                     ' fetch most recent payment and display in group box
-                    FetchPrevPayment()
+                    FetchPrevPayment(value)
                 End If
             End Set
         End Property
@@ -65,6 +65,8 @@
                 ck_Override.Visible = True
                 dtp_Override.Visible = True
             End If
+
+            _hTA = New ds_PaymentsTableAdapters.PaymentHistory_DBTableAdapter
             
             ' if number is passed, lock ts
             If (customerNumber <> 0) Then
@@ -95,7 +97,7 @@
             PaymentTypesTableAdapter.Fill(Ds_Types.PaymentTypes)
             ' setting uc info boxes to display only
             UC_CustomerInfoBoxes.AllowUpdate = False
-            _hTA = New ds_PaymentsTableAdapters.PaymentHistory_DBTableAdapter
+
         End Sub
 
         Private Sub cmb_PayTypes_SelectedValueChanged(sender As System.Object, e As System.EventArgs) Handles cmb_PayTypes.SelectedValueChanged
@@ -136,11 +138,16 @@
         End Function
         ' ta for fetching prev payment
         Private _hTA As ds_PaymentsTableAdapters.PaymentHistory_DBTableAdapter
-        Private Sub FetchPrevPayment()
-            Dim dt As ds_Payments.PaymentHistory_DBDataTable = _hTA.GetNewestPayment(CurrentCustomer)
+        Private Sub FetchPrevPayment(ByVal customerNumber As Integer)
+            Dim dt As New ds_Payments.PaymentHistory_DBDataTable
+            _hTA.FillNewestPayment(dt, customerNumber)
+
             If (dt.Rows.Count = 1) Then
+                grp_PrevPayInfo.Visible = True
                 Dim row As ds_Payments.PaymentHistory_DBRow = dt.Rows(0)
-                tb_Amount.Text = row.Amount
+                ' set basic info
+                tb_PrevAmount.Text = FormatCurrency(row.Amount)
+                lbl_PrevPayInfo.Text = "Received on " & FormatDateTime(row.DateReceived, DateFormat.ShortDate) & vbCrLf & "by " & row.InsertedByUser
                 If (row.PaymentTypeID = TC_ENPaymentTypes.Cash) Then
                     lbl_PrevRefNum.Visible = False
                     tb_PrevRefNum.Visible = False
@@ -158,6 +165,8 @@
                         dtp_PrevDateOnCheck.Value = row.DateOnCheck
                     End If
                 End If
+            Else
+                grp_PrevPayInfo.Visible = False
             End If
         End Sub
 

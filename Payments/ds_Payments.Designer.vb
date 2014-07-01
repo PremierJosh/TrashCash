@@ -2596,17 +2596,19 @@ Namespace ds_PaymentsTableAdapters
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0"),  _
          Global.System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter"),  _
-         Global.System.ComponentModel.DataObjectMethodAttribute(Global.System.ComponentModel.DataObjectMethodType.[Select], false)>  _
-        Public Overloads Overridable Function GetNewestPayment(ByVal CustomerNumber As Global.System.Nullable(Of Decimal)) As ds_Payments.PaymentHistory_DBDataTable
+         Global.System.ComponentModel.DataObjectMethodAttribute(Global.System.ComponentModel.DataObjectMethodType.Fill, false)>  _
+        Public Overloads Overridable Function FillNewestPayment(ByVal dataTable As ds_Payments.PaymentHistory_DBDataTable, ByVal CustomerNumber As Global.System.Nullable(Of Decimal)) As Integer
             Me.Adapter.SelectCommand = Me.CommandCollection(1)
             If (CustomerNumber.HasValue = true) Then
                 Me.Adapter.SelectCommand.Parameters(1).Value = CType(CustomerNumber.Value,Decimal)
             Else
                 Me.Adapter.SelectCommand.Parameters(1).Value = Global.System.DBNull.Value
             End If
-            Dim dataTable As ds_Payments.PaymentHistory_DBDataTable = New ds_Payments.PaymentHistory_DBDataTable()
-            Me.Adapter.Fill(dataTable)
-            Return dataTable
+            If (Me.ClearBeforeFill = true) Then
+                dataTable.Clear
+            End If
+            Dim returnValue As Integer = Me.Adapter.Fill(dataTable)
+            Return returnValue
         End Function
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _

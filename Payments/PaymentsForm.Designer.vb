@@ -63,12 +63,14 @@ Namespace Payments
             Me.Label1 = New System.Windows.Forms.Label()
             Me.BATCH_WorkingPaymentsTableAdapter = New TrashCash.ds_BatchingTableAdapters.BATCH_WorkingPaymentsTableAdapter()
             Me.grp_PrevPayInfo = New System.Windows.Forms.GroupBox()
+            Me.lbl_PrevPayInfo = New System.Windows.Forms.Label()
             Me.dtp_PrevDateOnCheck = New System.Windows.Forms.DateTimePicker()
             Me.tb_PrevRefNum = New System.Windows.Forms.TextBox()
             Me.lbl_PrevDateOnCheck = New System.Windows.Forms.Label()
             Me.lbl_PrevRefNum = New System.Windows.Forms.Label()
             Me.tb_PrevAmount = New TrashCash.Classes.CurrencyTextBox()
             Me.lbl_PrevAmount = New System.Windows.Forms.Label()
+            Me.grp_NewPayInfo = New System.Windows.Forms.GroupBox()
             Me.cm_PayGrid.SuspendLayout()
             Me.tc_Master.SuspendLayout()
             Me.tc_p_CustNotes.SuspendLayout()
@@ -82,6 +84,7 @@ Namespace Payments
             CType(Me.PaymentTypesBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
             CType(Me.Ds_Types, System.ComponentModel.ISupportInitialize).BeginInit()
             Me.grp_PrevPayInfo.SuspendLayout()
+            Me.grp_NewPayInfo.SuspendLayout()
             Me.SuspendLayout()
             '
             'cm_PayGrid
@@ -134,7 +137,7 @@ Namespace Payments
             Me.tc_p_CustInfo.Location = New System.Drawing.Point(4, 22)
             Me.tc_p_CustInfo.Name = "tc_p_CustInfo"
             Me.tc_p_CustInfo.Padding = New System.Windows.Forms.Padding(3)
-            Me.tc_p_CustInfo.Size = New System.Drawing.Size(908, 179)
+            Me.tc_p_CustInfo.Size = New System.Drawing.Size(958, 179)
             Me.tc_p_CustInfo.TabIndex = 0
             Me.tc_p_CustInfo.Text = "Customer Information"
             '
@@ -146,7 +149,7 @@ Namespace Payments
             Me.UC_CustomerInfoBoxes.IsUpdating = False
             Me.UC_CustomerInfoBoxes.Location = New System.Drawing.Point(3, 3)
             Me.UC_CustomerInfoBoxes.Name = "UC_CustomerInfoBoxes"
-            Me.UC_CustomerInfoBoxes.Size = New System.Drawing.Size(902, 173)
+            Me.UC_CustomerInfoBoxes.Size = New System.Drawing.Size(952, 173)
             Me.UC_CustomerInfoBoxes.TabIndex = 0
             '
             'Panel1
@@ -262,7 +265,7 @@ Namespace Payments
             Me.cmb_PayTypes.DataSource = Me.PaymentTypesBindingSource
             Me.cmb_PayTypes.DisplayMember = "PaymentTypeName"
             Me.cmb_PayTypes.FormattingEnabled = True
-            Me.cmb_PayTypes.Location = New System.Drawing.Point(58, 83)
+            Me.cmb_PayTypes.Location = New System.Drawing.Point(26, 32)
             Me.cmb_PayTypes.Name = "cmb_PayTypes"
             Me.cmb_PayTypes.Size = New System.Drawing.Size(175, 21)
             Me.cmb_PayTypes.TabIndex = 0
@@ -285,7 +288,7 @@ Namespace Payments
             'lbl_PayType
             '
             Me.lbl_PayType.AutoSize = True
-            Me.lbl_PayType.Location = New System.Drawing.Point(60, 67)
+            Me.lbl_PayType.Location = New System.Drawing.Point(28, 16)
             Me.lbl_PayType.Name = "lbl_PayType"
             Me.lbl_PayType.Size = New System.Drawing.Size(78, 13)
             Me.lbl_PayType.TabIndex = 100
@@ -294,7 +297,7 @@ Namespace Payments
             'dtp_Override
             '
             Me.dtp_Override.Format = System.Windows.Forms.DateTimePickerFormat.[Short]
-            Me.dtp_Override.Location = New System.Drawing.Point(149, 185)
+            Me.dtp_Override.Location = New System.Drawing.Point(117, 134)
             Me.dtp_Override.Name = "dtp_Override"
             Me.dtp_Override.Size = New System.Drawing.Size(84, 20)
             Me.dtp_Override.TabIndex = 5
@@ -303,7 +306,7 @@ Namespace Payments
             'ck_Override
             '
             Me.ck_Override.AutoSize = True
-            Me.ck_Override.Location = New System.Drawing.Point(69, 186)
+            Me.ck_Override.Location = New System.Drawing.Point(37, 135)
             Me.ck_Override.Name = "ck_Override"
             Me.ck_Override.Size = New System.Drawing.Size(63, 17)
             Me.ck_Override.TabIndex = 4
@@ -313,7 +316,7 @@ Namespace Payments
             '
             'btn_AddPayment
             '
-            Me.btn_AddPayment.Location = New System.Drawing.Point(58, 215)
+            Me.btn_AddPayment.Location = New System.Drawing.Point(26, 164)
             Me.btn_AddPayment.Name = "btn_AddPayment"
             Me.btn_AddPayment.Size = New System.Drawing.Size(187, 23)
             Me.btn_AddPayment.TabIndex = 6
@@ -323,7 +326,7 @@ Namespace Payments
             'dtp_DateOnCheck
             '
             Me.dtp_DateOnCheck.Format = System.Windows.Forms.DateTimePickerFormat.[Short]
-            Me.dtp_DateOnCheck.Location = New System.Drawing.Point(149, 159)
+            Me.dtp_DateOnCheck.Location = New System.Drawing.Point(117, 108)
             Me.dtp_DateOnCheck.Name = "dtp_DateOnCheck"
             Me.dtp_DateOnCheck.Size = New System.Drawing.Size(84, 20)
             Me.dtp_DateOnCheck.TabIndex = 3
@@ -331,7 +334,7 @@ Namespace Payments
             '
             'tb_RefNum
             '
-            Me.tb_RefNum.Location = New System.Drawing.Point(133, 133)
+            Me.tb_RefNum.Location = New System.Drawing.Point(101, 82)
             Me.tb_RefNum.Name = "tb_RefNum"
             Me.tb_RefNum.Size = New System.Drawing.Size(100, 20)
             Me.tb_RefNum.TabIndex = 2
@@ -340,7 +343,7 @@ Namespace Payments
             'lbl_DateOnCheck
             '
             Me.lbl_DateOnCheck.AutoSize = True
-            Me.lbl_DateOnCheck.Location = New System.Drawing.Point(62, 163)
+            Me.lbl_DateOnCheck.Location = New System.Drawing.Point(30, 112)
             Me.lbl_DateOnCheck.Name = "lbl_DateOnCheck"
             Me.lbl_DateOnCheck.Size = New System.Drawing.Size(81, 13)
             Me.lbl_DateOnCheck.TabIndex = 114
@@ -350,7 +353,7 @@ Namespace Payments
             'lbl_RefNumber
             '
             Me.lbl_RefNumber.AutoSize = True
-            Me.lbl_RefNumber.Location = New System.Drawing.Point(60, 136)
+            Me.lbl_RefNumber.Location = New System.Drawing.Point(28, 85)
             Me.lbl_RefNumber.Name = "lbl_RefNumber"
             Me.lbl_RefNumber.Size = New System.Drawing.Size(70, 13)
             Me.lbl_RefNumber.TabIndex = 113
@@ -359,7 +362,7 @@ Namespace Payments
             '
             'tb_Amount
             '
-            Me.tb_Amount.Location = New System.Drawing.Point(133, 110)
+            Me.tb_Amount.Location = New System.Drawing.Point(101, 59)
             Me.tb_Amount.Name = "tb_Amount"
             Me.tb_Amount.Size = New System.Drawing.Size(100, 20)
             Me.tb_Amount.TabIndex = 1
@@ -367,7 +370,7 @@ Namespace Payments
             'Label1
             '
             Me.Label1.AutoSize = True
-            Me.Label1.Location = New System.Drawing.Point(84, 113)
+            Me.Label1.Location = New System.Drawing.Point(52, 62)
             Me.Label1.Name = "Label1"
             Me.Label1.Size = New System.Drawing.Size(46, 13)
             Me.Label1.TabIndex = 112
@@ -379,24 +382,34 @@ Namespace Payments
             '
             'grp_PrevPayInfo
             '
+            Me.grp_PrevPayInfo.Controls.Add(Me.lbl_PrevPayInfo)
             Me.grp_PrevPayInfo.Controls.Add(Me.dtp_PrevDateOnCheck)
             Me.grp_PrevPayInfo.Controls.Add(Me.tb_PrevRefNum)
             Me.grp_PrevPayInfo.Controls.Add(Me.lbl_PrevDateOnCheck)
             Me.grp_PrevPayInfo.Controls.Add(Me.lbl_PrevRefNum)
             Me.grp_PrevPayInfo.Controls.Add(Me.tb_PrevAmount)
             Me.grp_PrevPayInfo.Controls.Add(Me.lbl_PrevAmount)
-            Me.grp_PrevPayInfo.Enabled = False
-            Me.grp_PrevPayInfo.Location = New System.Drawing.Point(254, 103)
+            Me.grp_PrevPayInfo.Location = New System.Drawing.Point(254, 148)
             Me.grp_PrevPayInfo.Name = "grp_PrevPayInfo"
-            Me.grp_PrevPayInfo.Size = New System.Drawing.Size(193, 100)
+            Me.grp_PrevPayInfo.Size = New System.Drawing.Size(193, 119)
             Me.grp_PrevPayInfo.TabIndex = 115
             Me.grp_PrevPayInfo.TabStop = False
             Me.grp_PrevPayInfo.Text = "Last Batched Payment"
             '
+            'lbl_PrevPayInfo
+            '
+            Me.lbl_PrevPayInfo.Location = New System.Drawing.Point(14, 14)
+            Me.lbl_PrevPayInfo.Name = "lbl_PrevPayInfo"
+            Me.lbl_PrevPayInfo.Size = New System.Drawing.Size(168, 30)
+            Me.lbl_PrevPayInfo.TabIndex = 121
+            Me.lbl_PrevPayInfo.Text = "Received on: 12/31/14" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "by Premier"
+            Me.lbl_PrevPayInfo.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+            '
             'dtp_PrevDateOnCheck
             '
+            Me.dtp_PrevDateOnCheck.Enabled = False
             Me.dtp_PrevDateOnCheck.Format = System.Windows.Forms.DateTimePickerFormat.[Short]
-            Me.dtp_PrevDateOnCheck.Location = New System.Drawing.Point(95, 65)
+            Me.dtp_PrevDateOnCheck.Location = New System.Drawing.Point(98, 95)
             Me.dtp_PrevDateOnCheck.Name = "dtp_PrevDateOnCheck"
             Me.dtp_PrevDateOnCheck.Size = New System.Drawing.Size(84, 20)
             Me.dtp_PrevDateOnCheck.TabIndex = 117
@@ -404,7 +417,8 @@ Namespace Payments
             '
             'tb_PrevRefNum
             '
-            Me.tb_PrevRefNum.Location = New System.Drawing.Point(79, 39)
+            Me.tb_PrevRefNum.Enabled = False
+            Me.tb_PrevRefNum.Location = New System.Drawing.Point(82, 69)
             Me.tb_PrevRefNum.Name = "tb_PrevRefNum"
             Me.tb_PrevRefNum.Size = New System.Drawing.Size(100, 20)
             Me.tb_PrevRefNum.TabIndex = 116
@@ -413,7 +427,8 @@ Namespace Payments
             'lbl_PrevDateOnCheck
             '
             Me.lbl_PrevDateOnCheck.AutoSize = True
-            Me.lbl_PrevDateOnCheck.Location = New System.Drawing.Point(8, 69)
+            Me.lbl_PrevDateOnCheck.Enabled = False
+            Me.lbl_PrevDateOnCheck.Location = New System.Drawing.Point(11, 99)
             Me.lbl_PrevDateOnCheck.Name = "lbl_PrevDateOnCheck"
             Me.lbl_PrevDateOnCheck.Size = New System.Drawing.Size(81, 13)
             Me.lbl_PrevDateOnCheck.TabIndex = 120
@@ -423,7 +438,8 @@ Namespace Payments
             'lbl_PrevRefNum
             '
             Me.lbl_PrevRefNum.AutoSize = True
-            Me.lbl_PrevRefNum.Location = New System.Drawing.Point(6, 42)
+            Me.lbl_PrevRefNum.Enabled = False
+            Me.lbl_PrevRefNum.Location = New System.Drawing.Point(9, 72)
             Me.lbl_PrevRefNum.Name = "lbl_PrevRefNum"
             Me.lbl_PrevRefNum.Size = New System.Drawing.Size(70, 13)
             Me.lbl_PrevRefNum.TabIndex = 119
@@ -432,7 +448,8 @@ Namespace Payments
             '
             'tb_PrevAmount
             '
-            Me.tb_PrevAmount.Location = New System.Drawing.Point(79, 16)
+            Me.tb_PrevAmount.Enabled = False
+            Me.tb_PrevAmount.Location = New System.Drawing.Point(82, 46)
             Me.tb_PrevAmount.Name = "tb_PrevAmount"
             Me.tb_PrevAmount.Size = New System.Drawing.Size(100, 20)
             Me.tb_PrevAmount.TabIndex = 115
@@ -440,29 +457,40 @@ Namespace Payments
             'lbl_PrevAmount
             '
             Me.lbl_PrevAmount.AutoSize = True
-            Me.lbl_PrevAmount.Location = New System.Drawing.Point(30, 19)
+            Me.lbl_PrevAmount.Enabled = False
+            Me.lbl_PrevAmount.Location = New System.Drawing.Point(33, 49)
             Me.lbl_PrevAmount.Name = "lbl_PrevAmount"
             Me.lbl_PrevAmount.Size = New System.Drawing.Size(46, 13)
             Me.lbl_PrevAmount.TabIndex = 118
             Me.lbl_PrevAmount.Text = "Amount:"
+            '
+            'grp_NewPayInfo
+            '
+            Me.grp_NewPayInfo.Controls.Add(Me.lbl_PayType)
+            Me.grp_NewPayInfo.Controls.Add(Me.cmb_PayTypes)
+            Me.grp_NewPayInfo.Controls.Add(Me.Label1)
+            Me.grp_NewPayInfo.Controls.Add(Me.dtp_Override)
+            Me.grp_NewPayInfo.Controls.Add(Me.tb_Amount)
+            Me.grp_NewPayInfo.Controls.Add(Me.ck_Override)
+            Me.grp_NewPayInfo.Controls.Add(Me.lbl_RefNumber)
+            Me.grp_NewPayInfo.Controls.Add(Me.btn_AddPayment)
+            Me.grp_NewPayInfo.Controls.Add(Me.lbl_DateOnCheck)
+            Me.grp_NewPayInfo.Controls.Add(Me.dtp_DateOnCheck)
+            Me.grp_NewPayInfo.Controls.Add(Me.tb_RefNum)
+            Me.grp_NewPayInfo.Location = New System.Drawing.Point(12, 61)
+            Me.grp_NewPayInfo.Name = "grp_NewPayInfo"
+            Me.grp_NewPayInfo.Size = New System.Drawing.Size(236, 202)
+            Me.grp_NewPayInfo.TabIndex = 116
+            Me.grp_NewPayInfo.TabStop = False
+            Me.grp_NewPayInfo.Text = "New Payment Information"
             '
             'PaymentsForm
             '
             Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
             Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
             Me.ClientSize = New System.Drawing.Size(966, 472)
+            Me.Controls.Add(Me.grp_NewPayInfo)
             Me.Controls.Add(Me.grp_PrevPayInfo)
-            Me.Controls.Add(Me.dtp_Override)
-            Me.Controls.Add(Me.ck_Override)
-            Me.Controls.Add(Me.btn_AddPayment)
-            Me.Controls.Add(Me.dtp_DateOnCheck)
-            Me.Controls.Add(Me.tb_RefNum)
-            Me.Controls.Add(Me.lbl_DateOnCheck)
-            Me.Controls.Add(Me.lbl_RefNumber)
-            Me.Controls.Add(Me.tb_Amount)
-            Me.Controls.Add(Me.Label1)
-            Me.Controls.Add(Me.lbl_PayType)
-            Me.Controls.Add(Me.cmb_PayTypes)
             Me.Controls.Add(Me.pnl_Right)
             Me.Controls.Add(Me.Panel1)
             Me.Controls.Add(Me.tc_Master)
@@ -485,8 +513,9 @@ Namespace Payments
             CType(Me.Ds_Types, System.ComponentModel.ISupportInitialize).EndInit()
             Me.grp_PrevPayInfo.ResumeLayout(False)
             Me.grp_PrevPayInfo.PerformLayout()
+            Me.grp_NewPayInfo.ResumeLayout(False)
+            Me.grp_NewPayInfo.PerformLayout()
             Me.ResumeLayout(False)
-            Me.PerformLayout()
 
         End Sub
         Friend WithEvents tc_Master As System.Windows.Forms.TabControl
@@ -531,5 +560,7 @@ Namespace Payments
         Friend WithEvents lbl_PrevRefNum As System.Windows.Forms.Label
         Friend WithEvents tb_PrevAmount As TrashCash.Classes.CurrencyTextBox
         Friend WithEvents lbl_PrevAmount As System.Windows.Forms.Label
+        Friend WithEvents lbl_PrevPayInfo As System.Windows.Forms.Label
+        Friend WithEvents grp_NewPayInfo As System.Windows.Forms.GroupBox
     End Class
 End Namespace
