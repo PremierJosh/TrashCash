@@ -27,7 +27,7 @@ Namespace QBStuff
             End Set
         End Property
 
-        ' property refrence
+        ' field for refrence
         Friend CurrentCustomer As Decimal
 
         Friend Sub FetchInvoices(ByVal paidStatus As Integer)

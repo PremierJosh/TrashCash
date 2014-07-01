@@ -5,6 +5,7 @@
         Friend Event CustomerPaymentAdded(ByVal customerNumber As Integer)
         Friend Event ApprovalsChanged()
 
+
         Private _currentCustomer As Integer
 
         Public Property CurrentCustomer As Integer
@@ -13,6 +14,10 @@
             End Get
             Set(value As Integer)
                 _currentCustomer = value
+                ' update window title
+                Text = CustomerToolstrip1.ToString
+                ' send name to uc_recsrvc
+                UC_RecurringService.CustomerName = CustomerToolstrip1.ToString
 
                 UC_CustomerInfoBoxes.CurrentCustomer = value
                 UC_CustomerNotes.CurrentCustomer = value
@@ -20,10 +25,7 @@
                 UC_Quickbooks.CurrentCustomer = value
                 UC_Quickbooks.CustomerListID = UC_CustomerInfoBoxes.CustomerListID
 
-                ' update window title
-                Text = CustomerToolstrip1.ToString
-                ' send name to uc_recsrvc
-                UC_RecurringService.CustomerName = CustomerToolstrip1.ToString
+               
             End Set
         End Property
 
@@ -92,20 +94,28 @@
         End Sub
 
         Private Sub btn_Payments_Click(sender As Object, e As EventArgs) Handles btn_Payments.Click
-            PayForm = New Payments.PaymentsForm(CBool(AppQTA.APP_GetDebugMode), customerNumber:=CurrentCustomer)
-            PayForm.ShowDialog()
-            PayForm.Dispose()
-            PayForm = Nothing
+            If (Not UC_CustomerInfoBoxes.CustomerDeactive) Then
+                PayForm = New Payments.PaymentsForm(CBool(AppQTA.APP_GetDebugMode), customerNumber:=CurrentCustomer)
+                PayForm.ShowDialog()
+                PayForm.Dispose()
+                PayForm = Nothing
+            Else
+                MessageBox.Show("Current Customer is Deactive", "Deactive Customer", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            End If
         End Sub
         Private Sub PaymentAddedCatch(ByVal customerNumber As Integer) Handles PayForm.CustomerPaymentAdded
             RaiseEvent CustomerPaymentAdded(customerNumber)
           End Sub
 
         Private Sub btn_Credit_Click(sender As Object, e As EventArgs) Handles btn_Credit.Click
-            CreditForm = New CustomerCredit(CurrentCustomer)
-            CreditForm.ShowDialog()
-            CreditForm.Dispose()
-            CreditForm = Nothing
+            If (Not UC_CustomerInfoBoxes.CustomerDeactive) Then
+                CreditForm = New CustomerCredit(CurrentCustomer)
+                CreditForm.ShowDialog()
+                CreditForm.Dispose()
+                CreditForm = Nothing
+            Else
+                MessageBox.Show("Current Customer is Deactive", "Deactive Customer", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            End If
         End Sub
         Private Sub CreditAddCatch(ByVal customerNumber As Integer) Handles CreditForm.CreditAdded
             RaiseEvent CustomerBalanceChanged(CurrentCustomer)
@@ -114,10 +124,14 @@
         End Sub
         
         Private Sub btn_Inv_Click(sender As Object, e As EventArgs) Handles btn_Inv.Click
-            InvForm = New Invoicing.CustomInvoicingForm(CurrentCustomer)
-            InvForm.ShowDialog()
-            InvForm.Dispose()
-            InvForm = Nothing
+            If (Not UC_CustomerInfoBoxes.CustomerDeactive) Then
+                InvForm = New Invoicing.CustomInvoicingForm(CurrentCustomer)
+                InvForm.ShowDialog()
+                InvForm.Dispose()
+                InvForm = Nothing
+            Else
+                MessageBox.Show("Current Customer is Deactive", "Deactive Customer", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            End If
         End Sub
         Private Sub InvoiceAddCatch(ByVal customerNumber As Integer) Handles InvForm.CustomerInvoiceAdded
             RaiseEvent CustomerBalanceChanged(customerNumber)
@@ -136,10 +150,14 @@
         Friend WithEvents PayForm As Payments.PaymentsForm
 
         Private Sub btn_NewSrvc_Click(sender As System.Object, e As System.EventArgs) Handles btn_NewSrvc.Click
-            Dim f As New RecurringService.RecurringServiceForm(CustomerToolstrip1.ToString, CurrentCustomer)
-            f.ShowDialog()
-            UC_RecurringService.CurrentCustomer = CurrentCustomer
-            RaiseEvent ApprovalsChanged()
+            If (Not UC_CustomerInfoBoxes.CustomerDeactive) Then
+                Dim f As New RecurringService.RecurringServiceForm(CustomerToolstrip1.ToString, CurrentCustomer)
+                f.ShowDialog()
+                UC_RecurringService.CurrentCustomer = CurrentCustomer
+                RaiseEvent ApprovalsChanged()
+            Else
+                MessageBox.Show("Current Customer is Deactive", "Deactive Customer", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            End If
         End Sub
     End Class
 End Namespace

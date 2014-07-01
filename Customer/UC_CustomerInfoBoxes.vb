@@ -7,6 +7,7 @@ Namespace Customer
         Private _custRow As ds_Customer.CustomerRow
         Private ReadOnly _ta As ds_CustomerTableAdapters.CustomerTableAdapter
 
+
         ' writeonly property for batching status
         Private _batchInProgress As Boolean
         Public WriteOnly Property BatchInProgress As Boolean
@@ -65,7 +66,7 @@ Namespace Customer
                         ' checking if deactive
                         If (_custRow.CustomerIsDeactive) Then
                             chk_CustDeactive.Visible = True
-                        End If
+                            End If
                     Else
                         UpdateCheck()
                     End If
@@ -73,11 +74,17 @@ Namespace Customer
             End Set
         End Property
 
-        ' property
+        ' property for list id
         Public ReadOnly Property CustomerListID As String
             Get
                 ' grabbing custListID
                 Return _custRow.CustomerListID
+            End Get
+        End Property
+        ' property for customer active state
+        Friend ReadOnly Property CustomerDeactive As Boolean
+            Get
+                Return _custRow.CustomerIsDeactive
             End Get
         End Property
 
