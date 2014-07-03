@@ -88,6 +88,7 @@ Namespace Batching
                         Catch ex As SqlException
                             MessageBox.Show("Message: " & ex.Message & vbCrLf & "LineNumber: " & ex.LineNumber,
                                             "Sql Error: " & ex.Procedure, MessageBoxButtons.OK, MessageBoxIcon.Error)
+                            e.Cancel = True
                         End Try
                     Else
                         ' row is passed and this is a continuation so we need to set vars
