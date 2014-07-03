@@ -684,24 +684,26 @@ Namespace RecurringService
         End Sub
 
         Private Sub btn_Approve_Click(sender As System.Object, e As System.EventArgs) Handles btn_Approve.Click
-            Dim result As DialogResult = MessageBox.Show("Confirm the following details are accurate to Approve this Recurring Service for billing:" & vbCrLf & vbCrLf & _
-                                                            "Rate: " & FormatCurrency(RecurringServiceRow.RecurringServiceRate) & " x " & RecurringServiceRow.RecurringServiceQuantity & " billed every " & RecurringServiceRow.RecurringServiceBillLength & " month(s)." & vbCrLf & _
-                                                            "The first invoice will be for " & RecurringServiceRow.RecurringServiceStartDate.Date & " through " & DateAdd(DateInterval.Day, -1, DateAdd(DateInterval.Month, RecurringServiceRow.RecurringServiceBillLength, RecurringServiceRow.RecurringServiceStartDate)) & " for " & FormatCurrency(RecurringServiceRow.RecurringServiceRate * RecurringServiceRow.RecurringServiceQuantity) & vbCrLf, "Confirm Details for Approval", MessageBoxButtons.YesNo, MessageBoxIcon.Question)
+            If (ValidForEntry()) Then
+                Dim result As DialogResult = MessageBox.Show("Confirm the following details are accurate to Approve this Recurring Service for billing:" & vbCrLf & vbCrLf & _
+                                                                "Rate: " & FormatCurrency(RecurringServiceRow.RecurringServiceRate) & " x " & RecurringServiceRow.RecurringServiceQuantity & " billed every " & RecurringServiceRow.RecurringServiceBillLength & " month(s)." & vbCrLf & _
+                                                                "The first invoice will be for " & RecurringServiceRow.RecurringServiceStartDate.Date & " through " & DateAdd(DateInterval.Day, -1, DateAdd(DateInterval.Month, RecurringServiceRow.RecurringServiceBillLength, RecurringServiceRow.RecurringServiceStartDate)) & " for " & FormatCurrency(RecurringServiceRow.RecurringServiceRate * RecurringServiceRow.RecurringServiceQuantity) & vbCrLf, "Confirm Details for Approval", MessageBoxButtons.YesNo, MessageBoxIcon.Question)
 
-            If (result = Windows.Forms.DialogResult.Yes) Then
-                Cursor = Cursors.WaitCursor
-                Try
-                    RecurringServiceRow.Approved = True
-                    RecurringServiceRow.EndEdit()
-                    RsTA.Update(RecurringServiceRow)
-                Catch ex As SqlException
-                    MessageBox.Show("Message: " & ex.Message & vbCrLf & "LineNumber: " & ex.LineNumber,
-                                    "Sql Error: " & ex.Procedure, MessageBoxButtons.OK, MessageBoxIcon.Error)
-                End Try
-                ' raise approval event so approval form can refresh
-                RaiseEvent ServiceApproved()
-                ServiceUpdated = True
-                Close()
+                If (result = Windows.Forms.DialogResult.Yes) Then
+                    Cursor = Cursors.WaitCursor
+                    Try
+                        RecurringServiceRow.Approved = True
+                        RecurringServiceRow.EndEdit()
+                        RsTA.Update(RecurringServiceRow)
+                    Catch ex As SqlException
+                        MessageBox.Show("Message: " & ex.Message & vbCrLf & "LineNumber: " & ex.LineNumber,
+                                        "Sql Error: " & ex.Procedure, MessageBoxButtons.OK, MessageBoxIcon.Error)
+                    End Try
+                    ' raise approval event so approval form can refresh
+                    RaiseEvent ServiceApproved()
+                    ServiceUpdated = True
+                    Close()
+                End If
             End If
         End Sub
 
@@ -841,7 +843,8 @@ Namespace RecurringService
                         ' creating credit if good
                         If (okToCredit) Then
                             Dim srvcRow As ds_Types.ServiceTypesRow = CType(CType(cmb_ServiceTypes.SelectedItem, DataRowView).Row, ds_Types.ServiceTypesRow)
-                            RecurringService_Credit(RecurringServiceRow, srvcRow.ServiceListID, tb_CreditAmount.Text, creditForDate, ck_PrintCredit.Checked, tb_CreditReason.Text)
+                            RecurringService_Credit(RecurringServiceRow, srvcRow.ServiceListID, tb_CreditAmount.Text, creditForDate,
+                                                    ck_PrintCredit.Checked, tb_CreditReason.Text, rb_Newest.Checked)
                             ' balance has changed now
                             BalanceChanged = True
                             ' refresh grid

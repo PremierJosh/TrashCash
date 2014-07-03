@@ -76,7 +76,7 @@ Namespace RecurringService
         End Sub
 
         Friend Sub RecurringService_Credit(ByRef row As ds_RecurringService.RecurringServiceRow, ByVal itemListID As String, ByVal creditAmount As Double,
-                                            ByVal dateOfCredit As Date, ByVal print As Boolean, ByVal reason As String)
+                                            ByVal dateOfCredit As Date, ByVal print As Boolean, ByVal reason As String, ByVal newestInvoicesFirst As Boolean)
             Dim creditObj As New QBCreditObj
             With creditObj
                 .CustomerListID = GetCustomerListID(row.CustomerNumber)
@@ -110,8 +110,8 @@ Namespace RecurringService
                                     "Sql Error: " & ex.Procedure, MessageBoxButtons.OK, MessageBoxIcon.Error)
                 End Try
                 ' use credit
-                QBMethods.UseNewCredit(creditObj)
-        End If
+                QBMethods.UseNewCredit(creditObj, newestInvsFirst:=newestInvoicesFirst)
+            End If
         End Sub
 
         Friend Sub RecurringService_Credit_Void(ByRef row As ds_RecurringService.RecurringService_CreditsRow, ByVal voidReason As String)
