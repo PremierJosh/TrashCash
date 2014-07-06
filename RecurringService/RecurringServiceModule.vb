@@ -75,7 +75,7 @@ Namespace RecurringService
             End If
         End Sub
 
-        Friend Sub RecurringService_Credit(ByRef row As ds_RecurringService.RecurringServiceRow, ByVal itemListID As String, ByVal creditAmount As Double,
+        Friend Sub RecurringService_Credit(ByRef row As ds_RecurringService.RecurringServiceRow, ByVal itemListID As String, ByVal itemTypeID As Integer, ByVal creditAmount As Double,
                                             ByVal dateOfCredit As Date, ByVal print As Boolean, ByVal reason As String, ByVal newestInvoicesFirst As Boolean)
             Dim creditObj As New QBCreditObj
             With creditObj
@@ -92,6 +92,7 @@ Namespace RecurringService
                 Try
                     ' insert record
                     RsCreditTA.Insert(row.RecurringServiceID,
+                                      itemTypeID,
                                             creditObj.TxnID,
                                             dateOfCredit,
                                             creditObj.TotalAmount,

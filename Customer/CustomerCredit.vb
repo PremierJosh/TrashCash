@@ -30,7 +30,7 @@ Namespace Customer
                     If (_cDT.Rows.Count > 0) Then
                         cmb_Types.DataSource = _cDT
                         cmb_Types.DisplayMember = _cDT.ServiceNameColumn.ColumnName
-                        cmb_Types.ValueMember = _cDT.ServiceListIDColumn.ColumnName
+                        cmb_Types.ValueMember = _cDT.ServiceTypeIDColumn.ColumnName
                     Else
                         ' no services for customer
                         Using ta As New ds_TypesTableAdapters.ServiceTypesTableAdapter
@@ -40,7 +40,7 @@ Namespace Customer
                         ' binding combo box
                         cmb_Types.DataSource = _sDT
                         cmb_Types.DisplayMember = _sDT.ServiceNameColumn.ColumnName
-                        cmb_Types.ValueMember = _sDT.ServiceListIDColumn.ColumnName
+                        cmb_Types.ValueMember = _sDT.ServiceTypeIDColumn.ColumnName
                     End If
                 End If
 
@@ -113,11 +113,13 @@ Namespace Customer
                     Dim confirmPrompt As DialogResult = MessageBox.Show("Create Credit for " & CustomerToolstrip1.ToString & " - " & FormatCurrency(tb_Amount.Text) & vbCrLf & _
                                                                         "Reason:" & vbCrLf & tb_Reason.Text, "Confirm Credit for Customer", MessageBoxButtons.YesNo, MessageBoxIcon.Question)
                     If (confirmPrompt = Windows.Forms.DialogResult.Yes) Then
+                        ' get service type row
+                        Dim row As ds_Types.ServiceTypesRow = CType(cmb_Types.SelectedItem, DataRowView).Row
                         ' create creditObj
                         Dim creditObj As New QBCreditObj
                         With creditObj
                             .CustomerListID = GetCustomerListID(CurrentCustomer)
-                            .ItemListID = cmb_Types.SelectedValue
+                            .ItemListID = row.ServiceListID
                             .TotalAmount = tb_Amount.Text
                             .Desc = tb_Reason.Text
                             .IsToBePrinted = ck_Print.Checked
@@ -125,7 +127,7 @@ Namespace Customer
                         Dim resp As Integer = QBRequests.CreditMemoAdd(creditObj)
                         If (resp = 0) Then
                             Try
-                                Customer_CreditsTableAdapter.Insert(CurrentCustomer, creditObj.TxnID, creditObj.TotalAmount, Date.Now, tb_Reason.Text, CurrentUser.USER_NAME,
+                                Customer_CreditsTableAdapter.Insert(CurrentCustomer, row.ServiceTypeID, creditObj.TxnID, creditObj.TotalAmount, Date.Now, tb_Reason.Text, CurrentUser.USER_NAME,
                                                                     False, Nothing, Nothing, Nothing)
                             Catch ex As SqlException
                                 MessageBox.Show("Message: " & ex.Message & vbCrLf & "LineNumber: " & ex.LineNumber,

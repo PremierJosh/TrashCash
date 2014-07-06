@@ -843,7 +843,7 @@ Namespace RecurringService
                         ' creating credit if good
                         If (okToCredit) Then
                             Dim srvcRow As ds_Types.ServiceTypesRow = CType(CType(cmb_ServiceTypes.SelectedItem, DataRowView).Row, ds_Types.ServiceTypesRow)
-                            RecurringService_Credit(RecurringServiceRow, srvcRow.ServiceListID, tb_CreditAmount.Text, creditForDate,
+                            RecurringService_Credit(RecurringServiceRow, srvcRow.ServiceListID, srvcRow.ServiceTypeID, tb_CreditAmount.Text, creditForDate,
                                                     ck_PrintCredit.Checked, tb_CreditReason.Text, rb_Newest.Checked)
                             ' balance has changed now
                             BalanceChanged = True
