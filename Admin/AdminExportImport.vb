@@ -27,6 +27,7 @@ Namespace Admin
         ' form global tas
         Dim _cqta As ds_CustomerTableAdapters.QueriesTableAdapter
         Private _cta As ds_CustomerTableAdapters.CustomerTableAdapter
+        Private _rsta As ds_RecurringServiceTableAdapters.RecurringServiceTableAdapter
 
         Private Sub AdminExportImport_FormClosing(sender As Object, e As System.Windows.Forms.FormClosingEventArgs) Handles Me.FormClosing
             Select Case e.CloseReason
@@ -44,6 +45,7 @@ Namespace Admin
             ServiceTypesTableAdapter.Fill(Ds_Types.ServiceTypes)
             _cqta = New ds_CustomerTableAdapters.QueriesTableAdapter
             _cta = New ds_CustomerTableAdapters.CustomerTableAdapter
+            _rsta = New ds_RecurringServiceTableAdapters.RecurringServiceTableAdapter
 
             ' update missing list id count
             MissingCustomerCount = _cqta.Customer_MissingListIDCount
@@ -283,5 +285,87 @@ Namespace Admin
             End If
         End Sub
 
+        Private Sub btn_CreateCredits_Click(sender As System.Object, e As System.EventArgs) Handles btn_CreateCredits.Click
+            Dim result As DialogResult = MessageBox.Show("Re-Create All Credits?", "Confirm", MessageBoxButtons.YesNo)
+            If (result = Windows.Forms.DialogResult.Yes) Then
+                ' customer credits first
+                Using ta As New ds_CustomerTableAdapters.Customer_CreditsTableAdapter
+                    Dim dt As ds_Customer.Customer_CreditsDataTable = ta.GetMissingTxnID
+                    If (dt.Rows.Count > 0) Then
+                        For Each row As ds_Customer.Customer_CreditsRow In dt
+                            If (row.IsCreditTxnIDNull) Then
+                                ' get service typw row
+                                Dim srow As ds_Types.ServiceTypesRow = ServiceTypesTableAdapter.GetDataByID(row.ServiceTypeID).Rows(0)
+                                ' create creditObj
+                                Dim creditObj As New QBCreditObj
+                                With creditObj
+                                    .CustomerListID = GetCustomerListID(row.CustomerNumber)
+                                    .ItemListID = srow.ServiceListID
+                                    .TotalAmount = row.CreditAmount
+                                    .Desc = row.Reason
+                                    .IsToBePrinted = False
+                                End With
+                                Dim resp As Integer = QBRequests.CreditMemoAdd(creditObj)
+                                If (resp = 0) Then
+                                    ' update with new txnid
+                                    row.CreditTxnID = creditObj.TxnID
+                                    Try
+                                        ta.Update(row)
+                                    Catch ex As SqlException
+                                        MessageBox.Show("Message: " & ex.Message & vbCrLf & "LineNumber: " & ex.LineNumber,
+                                                        "Sql Error: " & ex.Procedure, MessageBoxButtons.OK, MessageBoxIcon.Error)
+                                    End Try
+                                Else
+                                    MsgBox("Error adding customer credit")
+                                    Exit Sub
+                                End If
+
+                            End If
+                        Next
+                    End If
+                End Using
+
+                ' recurring service credits now
+                Using ta As New ds_RecurringServiceTableAdapters.RecurringService_CreditsTableAdapter
+                    Dim dt As ds_RecurringService.RecurringService_CreditsDataTable = ta.GetMissingTxnID
+                    If (dt.Rows.Count > 0) Then
+                        For Each row As ds_RecurringService.RecurringService_CreditsRow In dt
+                            ' get rec row for customer number
+                            Dim rrow As ds_RecurringService.RecurringServiceRow = _rsta.GetDataByID(row.RecurringServiceID).Rows(0)
+                            Dim srow As ds_Types.ServiceTypesRow = ServiceTypesTableAdapter.GetDataByID(row.ServiceTypeID).Rows(0)
+                            If (row.IsCreditMemoTxnIDNull) Then
+                                Dim creditObj As New QBCreditObj
+                                With creditObj
+                                    .CustomerListID = GetCustomerListID(rrow.CustomerNumber)
+                                    .IsToBePrinted = False
+                                    .ItemListID = srow.ServiceListID
+                                    .TotalAmount = row.CreditAmount
+                                    .DateOfCredit = row.DateOfCredit
+                                    .Desc = "Credit Issued for Service on " & FormatDateTime(row.DateOfCredit, DateFormat.ShortDate) & ". Reason: " & row.Reason
+                                End With
+
+                                Dim resp As Integer = QBRequests.CreditMemoAdd(creditObj)
+                                If (resp = 0) Then
+                                    row.CreditMemoTxnID = creditObj.TxnID
+                                    Try
+                                        ta.Update(row)
+                                    Catch ex as SqlException
+                                        MessageBox.Show(
+                                            "Message: " & ex.Message & vbCrLf & "LineNumber: " & ex.LineNumber,
+                                            "Sql Error: " & ex.Procedure, MessageBoxButtons.OK, MessageBoxIcon.Error)
+                                    End Try
+                                Else
+                                    MsgBox("Error adding recurring service credit.")
+                                    Exit Sub
+                                End If
+                            End If
+                        Next
+                    End If
+                End Using
+
+                ' completed
+                MsgBox("All credits re-created successfully")
+            End If
+        End Sub
     End Class
 End Namespace

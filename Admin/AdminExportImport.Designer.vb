@@ -54,6 +54,9 @@
             Me.lbl_PrepCheckBounce = New System.Windows.Forms.Label()
             Me.ServiceTypesTableAdapter = New TrashCash.ds_TypesTableAdapters.ServiceTypesTableAdapter()
             Me.CustomInvoice_LineTypesTableAdapter = New TrashCash.ds_InvoicingTableAdapters.CustomInvoice_LineTypesTableAdapter()
+            Me.Label1 = New System.Windows.Forms.Label()
+            Me.Panel4 = New System.Windows.Forms.Panel()
+            Me.btn_CreateCredits = New System.Windows.Forms.Button()
             Me.FlowLayoutPanel1.SuspendLayout()
             Me.pnl_CustAdd.SuspendLayout()
             Me.Panel1.SuspendLayout()
@@ -63,6 +66,7 @@
             CType(Me.CustomInvoiceLineTypesBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
             CType(Me.Ds_Invoicing, System.ComponentModel.ISupportInitialize).BeginInit()
             Me.Panel2.SuspendLayout()
+            Me.Panel4.SuspendLayout()
             Me.SuspendLayout()
             '
             'FlowLayoutPanel1
@@ -71,6 +75,7 @@
             Me.FlowLayoutPanel1.Controls.Add(Me.Panel1)
             Me.FlowLayoutPanel1.Controls.Add(Me.Panel3)
             Me.FlowLayoutPanel1.Controls.Add(Me.Panel2)
+            Me.FlowLayoutPanel1.Controls.Add(Me.Panel4)
             Me.FlowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill
             Me.FlowLayoutPanel1.Location = New System.Drawing.Point(0, 0)
             Me.FlowLayoutPanel1.Name = "FlowLayoutPanel1"
@@ -297,7 +302,7 @@
             Me.Panel2.Controls.Add(Me.lbl_PrepCheckBounce)
             Me.Panel2.Location = New System.Drawing.Point(3, 286)
             Me.Panel2.Name = "Panel2"
-            Me.Panel2.Size = New System.Drawing.Size(585, 91)
+            Me.Panel2.Size = New System.Drawing.Size(585, 76)
             Me.Panel2.TabIndex = 5
             '
             'btn_AddCheckBounce
@@ -337,6 +342,36 @@
             '
             Me.CustomInvoice_LineTypesTableAdapter.ClearBeforeFill = True
             '
+            'Label1
+            '
+            Me.Label1.Dock = System.Windows.Forms.DockStyle.Top
+            Me.Label1.Location = New System.Drawing.Point(0, 0)
+            Me.Label1.Name = "Label1"
+            Me.Label1.Size = New System.Drawing.Size(583, 27)
+            Me.Label1.TabIndex = 0
+            Me.Label1.Text = "This will re-create all existing Customer and Recurring Service Credits."
+            Me.Label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+            '
+            'Panel4
+            '
+            Me.Panel4.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+            Me.Panel4.Controls.Add(Me.btn_CreateCredits)
+            Me.Panel4.Controls.Add(Me.Label1)
+            Me.Panel4.Location = New System.Drawing.Point(3, 368)
+            Me.Panel4.Name = "Panel4"
+            Me.Panel4.Size = New System.Drawing.Size(585, 76)
+            Me.Panel4.TabIndex = 6
+            '
+            'btn_CreateCredits
+            '
+            Me.btn_CreateCredits.AutoSize = True
+            Me.btn_CreateCredits.Location = New System.Drawing.Point(214, 38)
+            Me.btn_CreateCredits.Name = "btn_CreateCredits"
+            Me.btn_CreateCredits.Size = New System.Drawing.Size(99, 23)
+            Me.btn_CreateCredits.TabIndex = 1
+            Me.btn_CreateCredits.Text = "Re-create Credits"
+            Me.btn_CreateCredits.UseVisualStyleBackColor = True
+            '
             'AdminExportImport
             '
             Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -358,6 +393,8 @@
             CType(Me.Ds_Invoicing, System.ComponentModel.ISupportInitialize).EndInit()
             Me.Panel2.ResumeLayout(False)
             Me.Panel2.PerformLayout()
+            Me.Panel4.ResumeLayout(False)
+            Me.Panel4.PerformLayout()
             Me.ResumeLayout(False)
 
         End Sub
@@ -391,5 +428,8 @@
         Friend WithEvents lbl_PrepCheckBounce As System.Windows.Forms.Label
         Friend WithEvents btn_AddCheckBounce As System.Windows.Forms.Button
         Friend WithEvents cmb_BankAccs As System.Windows.Forms.ComboBox
+        Friend WithEvents Panel4 As System.Windows.Forms.Panel
+        Friend WithEvents btn_CreateCredits As System.Windows.Forms.Button
+        Friend WithEvents Label1 As System.Windows.Forms.Label
     End Class
 End Namespace
