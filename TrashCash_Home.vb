@@ -305,9 +305,6 @@ Public Class TrashCashHome
         ' getting approvals pending on load
         RefreshApprovCount(True)
 
-        ' testing report lib button
-        toolstripbtn1.DropDown = New ReportingLib.ReportsDropDown
-
         ' checking if a batch didn't complete last time the program was run
         Dim row As ds_Application.APP_SETTINGSRow = AppTA.GetData().Rows(0)
         Dim finBatch As Batching.BatchInterruption = Nothing

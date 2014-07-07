@@ -44,7 +44,6 @@ Partial Class TrashCashHome
         Me.UnderOverEvenCustomerToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.menu_Admin = New System.Windows.Forms.ToolStripButton()
         Me.btn_PendApprovs = New System.Windows.Forms.ToolStripButton()
-        Me.toolstripbtn1 = New System.Windows.Forms.ToolStripDropDownButton()
         Me.RecurringService_PendingApprovalsTableAdapter = New TrashCash.ds_RecurringServiceTableAdapters.RecurringService_PendingApprovalsTableAdapter()
         Me.Batch_RefreshBalance = New System.Windows.Forms.Timer(Me.components)
         Me.tt_AdminItem = New System.Windows.Forms.ToolTip(Me.components)
@@ -105,7 +104,7 @@ Partial Class TrashCashHome
         'ts_AppBtns
         '
         Me.ts_AppBtns.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden
-        Me.ts_AppBtns.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.btn_CustTab, Me.btn_Invoicing, Me.btn_Payments, Me.btn_BatchWork, Me.btn_Reports, Me.menu_Admin, Me.btn_PendApprovs, Me.toolstripbtn1})
+        Me.ts_AppBtns.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.btn_CustTab, Me.btn_Invoicing, Me.btn_Payments, Me.btn_BatchWork, Me.btn_Reports, Me.menu_Admin, Me.btn_PendApprovs})
         Me.ts_AppBtns.Location = New System.Drawing.Point(0, 0)
         Me.ts_AppBtns.Name = "ts_AppBtns"
         Me.ts_AppBtns.Size = New System.Drawing.Size(931, 26)
@@ -206,16 +205,6 @@ Partial Class TrashCashHome
         Me.btn_PendApprovs.Text = "Pending Approvals: 100"
         Me.btn_PendApprovs.Visible = False
         '
-        'toolstripbtn1
-        '
-        Me.toolstripbtn1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
-        Me.toolstripbtn1.Image = CType(resources.GetObject("toolstripbtn1.Image"), System.Drawing.Image)
-        Me.toolstripbtn1.ImageTransparentColor = System.Drawing.Color.Magenta
-        Me.toolstripbtn1.Name = "toolstripbtn1"
-        Me.toolstripbtn1.Size = New System.Drawing.Size(29, 23)
-        Me.toolstripbtn1.Text = "ToolStripDropDownButton1"
-        Me.toolstripbtn1.Visible = False
-        '
         'RecurringService_PendingApprovalsTableAdapter
         '
         Me.RecurringService_PendingApprovalsTableAdapter.ClearBeforeFill = True
@@ -266,6 +255,5 @@ Partial Class TrashCashHome
     Friend WithEvents btn_Rpt_PayReceived As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents btn_Rpt_DaysEvents As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents UnderOverEvenCustomerToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
-    Friend WithEvents toolstripbtn1 As System.Windows.Forms.ToolStripDropDownButton
 
 End Class
