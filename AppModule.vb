@@ -23,6 +23,7 @@ Module AppModule
     ''' </remarks>
     Public Function ConCheck(ByRef paramConMgr As QBConMgr) As QBConMgr
         If (paramConMgr Is Nothing) Then
+
             Return GlobalConMgr
         End If
         Return paramConMgr

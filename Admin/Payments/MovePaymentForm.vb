@@ -160,20 +160,20 @@ Namespace Admin.Payments
                 resp = QBRequests.PaymentQuery(payList, customerListID:=GetCustomerListID(NewCustomerNumber), fromDate:=_payHisRow.DateReceived)
                 If (resp = 0) Then
                     If (payList.Count > 0) Then
-                        ' reset payments in this list
-                        For Each o As QBRecievePaymentObj In payList
-                            resp = QBRequests.PaymentMod(payObj:=o, wipeAppList:=True)
-                            If (resp = 0) Then
-                                Try
-                                    ' attempt top update history
-                                    _payTA.UpdateEditSeq(o.TxnID, o.EditSequence)
-                                Catch ex As SqlException
-                                    MessageBox.Show(
-                                        "Message: " & ex.Message & vbCrLf & "LineNumber: " & ex.LineNumber,
-                                        "Sql Error: " & ex.Procedure, MessageBoxButtons.OK, MessageBoxIcon.Error)
-                                End Try
-                            End If
-                        Next
+                    ' reset payments in this list
+                    For i = 0 To payList.Count - 1
+                        resp = QBRequests.PaymentMod(payObj:=payList.Item(i), wipeAppList:=True)
+                        If (resp = 0) Then
+                            Try
+                                ' attempt top update history
+                                _payTA.UpdateEditSeq(payList.Item(i).TxnID, payList.Item(i).EditSequence)
+                            Catch ex As SqlException
+                                MessageBox.Show(
+                                    "Message: " & ex.Message & vbCrLf & "LineNumber: " & ex.LineNumber,
+                                    "Sql Error: " & ex.Procedure, MessageBoxButtons.OK, MessageBoxIcon.Error)
+                            End Try
+                        End If
+                    Next
                         ' get list of open invoices
                         QBRequests.InvoiceQuery(invList, customerListID:=GetCustomerListID(NewCustomerNumber), paidStatus:=ENPaidStatus.psNotPaidOnly)
                     End If
@@ -193,20 +193,20 @@ Namespace Admin.Payments
                 resp = QBRequests.InvoiceQuery(invList, customerListID:=GetCustomerListID(OrigCustomerNumber), fromDate:=startResetDate, incLinkTxn:=True)
                 If (resp = 0) Then
                     If (payList.Count > 0) Then
-                        ' reset payments in this list
-                        For Each o As QBRecievePaymentObj In payList
-                            resp = QBRequests.PaymentMod(payObj:=o, wipeAppList:=True)
-                            If (resp = 0) Then
-                                Try
-                                    ' attempt top update history
-                                    _payTA.UpdateEditSeq(o.TxnID, o.EditSequence)
-                                Catch ex As SqlException
-                                    MessageBox.Show(
-                                        "Message: " & ex.Message & vbCrLf & "LineNumber: " & ex.LineNumber,
-                                        "Sql Error: " & ex.Procedure, MessageBoxButtons.OK, MessageBoxIcon.Error)
-                                End Try
-                            End If
-                        Next
+                    ' reset payments in this list
+                    For i = 0 To payList.Count - 1
+                        resp = QBRequests.PaymentMod(payObj:=payList.Item(i), wipeAppList:=True)
+                        If (resp = 0) Then
+                            Try
+                                ' attempt top update history
+                                _payTA.UpdateEditSeq(payList.Item(i).TxnID, payList.Item(i).EditSequence)
+                            Catch ex As SqlException
+                                MessageBox.Show(
+                                    "Message: " & ex.Message & vbCrLf & "LineNumber: " & ex.LineNumber,
+                                    "Sql Error: " & ex.Procedure, MessageBoxButtons.OK, MessageBoxIcon.Error)
+                            End Try
+                        End If
+                    Next
                         ' get list of open invoices
                         QBRequests.InvoiceQuery(invList, customerListID:=GetCustomerListID(OrigCustomerNumber), paidStatus:=ENPaidStatus.psNotPaidOnly)
                     End If

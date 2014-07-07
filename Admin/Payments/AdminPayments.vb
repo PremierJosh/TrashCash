@@ -169,6 +169,7 @@ Namespace Admin.Payments
         End Sub
 
        
+
         Private Sub dg_PaymentHistory_RowPrePaint(sender As System.Object, e As System.Windows.Forms.DataGridViewRowPrePaintEventArgs) Handles dg_PaymentHistory.RowPrePaint
             ' easier refrence
             Dim row As DataRowView = dg_PaymentHistory.Rows(e.RowIndex).DataBoundItem
