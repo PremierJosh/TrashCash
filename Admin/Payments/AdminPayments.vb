@@ -211,5 +211,67 @@ Namespace Admin.Payments
                 End If
             End If
         End Sub
+
+        Private Sub btn_AlterCheckNum_Click(sender As System.Object, e As System.EventArgs) Handles btn_AlterCheckNum.Click
+            If (dg_PaymentHistory.SelectedRows.Count = 1) Then
+                ' easier refrence
+                Dim row As ds_Payments.PaymentHistory_DisplayRow = CType(dg_PaymentHistory.SelectedRows(0).DataBoundItem, DataRowView).Row
+                Dim aRow As ds_Payments.PaymentHistory_DBRow
+                Dim ta As New ds_PaymentsTableAdapters.PaymentHistory_DBTableAdapter
+                aRow = ta.GetData(row.PaymentID).Rows(0)
+                If (aRow IsNot Nothing) Then
+                    Select Case row.PaymentTypeID
+                        Case 2, 3
+                            Dim newRefNum As String = InputBox("Please enter the new Check #", "New Check #")
+                            ' making sure we have a check number
+                            If (newRefNum <> "") Then
+                                ' trim new number and compare
+                                Trim(newRefNum)
+                                Replace(LTrim(Replace(newRefNum, "0", " ")), " ", "0")
+                                If (newRefNum <> row.RefNumber) Then
+                                    Dim payObj As New QBRecievePaymentObj
+                                    With payObj
+                                        .TxnID = aRow.PaymentTxnID
+                                    End With
+                                    ' reusable resp var
+                                    Dim resp As Integer
+                                    ' need current edit sequence
+                                    resp = QBRequests.PaymentQuery(payObj)
+                                    If (resp = 0) Then
+                                        ' now alter check number
+                                        payObj.RefNumber = newRefNum
+                                        resp = QBRequests.PaymentMod(payObj)
+                                        If (resp = 0) Then
+                                            aRow.RefNumber = payObj.RefNumber
+                                            ' update edit sequence and change check number
+                                            Try
+                                                ta.UpdateEditSeq(payObj.TxnID, payObj.EditSequence)
+                                                ta.AlterRefNum(aRow.PaymentID, payObj.RefNumber)
+                                            Catch ex As SqlException
+                                                MessageBox.Show(
+                                                    "Message: " & ex.Message & vbCrLf & "LineNumber: " & ex.LineNumber,
+                                                    "Sql Error: " & ex.Procedure, MessageBoxButtons.OK,
+                                                    MessageBoxIcon.Error)
+                                            End Try
+                                        End If
+                                    Else
+                                        Exit Sub
+                                    End If
+                                Else
+                                    MessageBox.Show("New Check # is the same as the previous Check #", "Check # Same", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                                End If
+                            End If
+                        Case Else
+                            MessageBox.Show("Selected Payment is not a Check.", "Payment is Cash", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                    End Select
+                Else
+                    MessageBox.Show("No DB row found - Contact Premier")
+                End If
+            Else
+                MessageBox.Show("Please select a Payment", "No Payment Selected", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            End If
+
+        End Sub
+
     End Class
 End Namespace

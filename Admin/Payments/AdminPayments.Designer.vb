@@ -42,6 +42,7 @@ Namespace Admin.Payments
             Me.PaymentHistoryDisplayBindingSource = New System.Windows.Forms.BindingSource(Me.components)
             Me.Payments = New TrashCash.ds_Payments()
             Me.pnl_Filter = New System.Windows.Forms.Panel()
+            Me.Panel1 = New System.Windows.Forms.Panel()
             Me.cmb_PayTypes = New System.Windows.Forms.ComboBox()
             Me.PaymentTypesBindingSource = New System.Windows.Forms.BindingSource(Me.components)
             Me.Ds_Types = New TrashCash.ds_Types()
@@ -53,7 +54,7 @@ Namespace Admin.Payments
             Me.lbl_DateFilter = New System.Windows.Forms.Label()
             Me.PaymentHistory_DisplayTableAdapter = New TrashCash.ds_PaymentsTableAdapters.PaymentHistory_DisplayTableAdapter()
             Me.PaymentTypesTableAdapter = New TrashCash.ds_TypesTableAdapters.PaymentTypesTableAdapter()
-            Me.Panel1 = New System.Windows.Forms.Panel()
+            Me.btn_AlterCheckNum = New System.Windows.Forms.ToolStripMenuItem()
             Me.pnl_Top.SuspendLayout()
             Me.pnl_TopContent.SuspendLayout()
             CType(Me.dg_PaymentHistory, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -156,9 +157,9 @@ Namespace Admin.Payments
             '
             'cm_AlterPayment
             '
-            Me.cm_AlterPayment.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.cm_i_BounceCheck, Me.cm_i_MovePayment})
+            Me.cm_AlterPayment.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.cm_i_BounceCheck, Me.cm_i_MovePayment, Me.btn_AlterCheckNum})
             Me.cm_AlterPayment.Name = "cm_BounceCheck"
-            Me.cm_AlterPayment.Size = New System.Drawing.Size(155, 48)
+            Me.cm_AlterPayment.Size = New System.Drawing.Size(155, 92)
             '
             'cm_i_BounceCheck
             '
@@ -197,6 +198,13 @@ Namespace Admin.Payments
             Me.pnl_Filter.Name = "pnl_Filter"
             Me.pnl_Filter.Size = New System.Drawing.Size(869, 64)
             Me.pnl_Filter.TabIndex = 17
+            '
+            'Panel1
+            '
+            Me.Panel1.Location = New System.Drawing.Point(843, 26)
+            Me.Panel1.Name = "Panel1"
+            Me.Panel1.Size = New System.Drawing.Size(25, 21)
+            Me.Panel1.TabIndex = 11
             '
             'cmb_PayTypes
             '
@@ -277,12 +285,11 @@ Namespace Admin.Payments
             '
             Me.PaymentTypesTableAdapter.ClearBeforeFill = True
             '
-            'Panel1
+            'btn_AlterCheckNum
             '
-            Me.Panel1.Location = New System.Drawing.Point(843, 26)
-            Me.Panel1.Name = "Panel1"
-            Me.Panel1.Size = New System.Drawing.Size(25, 21)
-            Me.Panel1.TabIndex = 11
+            Me.btn_AlterCheckNum.Name = "btn_AlterCheckNum"
+            Me.btn_AlterCheckNum.Size = New System.Drawing.Size(154, 22)
+            Me.btn_AlterCheckNum.Text = "Alter Check #"
             '
             'AdminPayments
             '
@@ -339,5 +346,6 @@ Namespace Admin.Payments
         Friend WithEvents PaymentTypesBindingSource As System.Windows.Forms.BindingSource
         Friend WithEvents PaymentTypesTableAdapter As TrashCash.ds_TypesTableAdapters.PaymentTypesTableAdapter
         Friend WithEvents Panel1 As System.Windows.Forms.Panel
+        Friend WithEvents btn_AlterCheckNum As System.Windows.Forms.ToolStripMenuItem
     End Class
 End Namespace

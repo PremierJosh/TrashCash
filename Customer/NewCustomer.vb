@@ -84,7 +84,7 @@ Namespace Customer
                     End If
                 Else
                     ' error logging
-                    GlobalConMgr.ResponseErr_Misc(resp)
+                    QBMethods.ResponseErr_Misc(resp)
                     MessageBox.Show("Customer Add failed. Contact Premier.")
                     ' delete row
                     Using qta As New ds_CustomerTableAdapters.QueriesTableAdapter

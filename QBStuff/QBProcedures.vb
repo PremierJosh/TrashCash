@@ -774,7 +774,7 @@ Namespace QBStuff
                 If (resp.StatusCode = 0) Then
                     Return resp.Detail
                 Else
-                    GlobalConMgr.ResponseErr_Misc(resp)
+                    QBMethods.ResponseErr_Misc(resp)
                 End If
             Next
 
@@ -1420,21 +1420,43 @@ Namespace QBStuff
 
 
         Public Shared Sub ResponseErr_Misc(ByVal resp As IResponse)
-            If (resp.StatusCode = 1) Then
-                MsgBox("No matching results from Quickbooks")
-            Else
+            ' resuable unknown var
+            Dim unknownErr As Boolean = False
+
+            ' get type of response that errored
+            Select Case resp.Type.GetValue
+                Case Is = 1415
+                    ' 1415 = PaymentModify response
+                    Select Case resp.StatusCode
+                        Case Is = 3170
+                            '3170 - You need to delete this transaction from the deposit before you can edit its name or amount.
+                            MessageBox.Show("This Payment has already been deposited. You cannot change it.", "", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                        Case Is = 3171
+                            '3171 - An attempt was made to modify a ReceivePayment with a date that is on or before the closing date of the company.
+                            MessageBox.Show("The post date for this Payment is before the current company closing date.", "", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                        Case Is = 3175
+                            '3175 - Transaction could not be locked
+                            MessageBox.Show("Transaction could not be locked - most likely a user has this payment open in Quickbooks.", "", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                        Case Else
+                            unknownErr = True
+                    End Select
+                Case Else
+                    unknownErr = True
+            End Select
+
+            If (unknownErr) Then
                 Try
                     AppQTA.ERR_MISC_Insert(resp.Type.GetValue.ToString,
-                                           resp.StatusCode.ToString,
-                                           resp.StatusMessage,
-                                           Date.Now)
-
-
+                                            resp.StatusCode.ToString,
+                                            resp.StatusMessage,
+                                            Date.Now)
                     MsgBox("Error Encounterd with Quickbooks. Contact Premier.", MsgBoxStyle.Critical)
-                Catch ex As Exception
-                    MsgBox("ERR_MISC_Insert: " & ex.Message)
+                Catch ex As SqlException
+                    MessageBox.Show("Message: " & ex.Message & vbCrLf & "LineNumber: " & ex.LineNumber,
+                                    "Sql Error: " & ex.Procedure, MessageBoxButtons.OK, MessageBoxIcon.Error)
                 End Try
             End If
+
         End Sub
     End Class
 End Namespace

@@ -461,6 +461,15 @@ Namespace Batching
                     End If
                     .Memo = row.WorkingPaymentsID
                 End With
+
+                ' update for submitted
+                Try
+                    row.WorkingPaymentsStatus = TC_ENItemStatus.Submitted
+                    _ta.Update(row)
+                Catch ex as SqlException
+                    MessageBox.Show("Message: " & ex.Message & vbCrLf & "LineNumber: " & ex.LineNumber,
+                                    "Sql Error: " & ex.Procedure, MessageBoxButtons.OK, MessageBoxIcon.Error)
+                End Try
                 ' i want the status message back for err writing
                 Dim s As String = "s"
                 Dim resp As Integer = QBRequests.PaymentAdd(payObj:=payObj, qbConMgr:=ConMgr, message:=s)

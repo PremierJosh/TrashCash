@@ -2528,7 +2528,7 @@ Namespace ds_PaymentsTableAdapters
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
         Private Sub InitCommandCollection()
-            Me._commandCollection = New Global.System.Data.SqlClient.SqlCommand(5) {}
+            Me._commandCollection = New Global.System.Data.SqlClient.SqlCommand(6) {}
             Me._commandCollection(0) = New Global.System.Data.SqlClient.SqlCommand()
             Me._commandCollection(0).Connection = Me.Connection
             Me._commandCollection(0).CommandText = "dbo.PaymentHistory_GetByID"
@@ -2537,44 +2537,51 @@ Namespace ds_PaymentsTableAdapters
             Me._commandCollection(0).Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@PaymentID", Global.System.Data.SqlDbType.[Decimal], 9, Global.System.Data.ParameterDirection.Input, 18, 0, Nothing, Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
             Me._commandCollection(1) = New Global.System.Data.SqlClient.SqlCommand()
             Me._commandCollection(1).Connection = Me.Connection
-            Me._commandCollection(1).CommandText = "dbo.PaymentHistory_SelectNewestByCustomer"
+            Me._commandCollection(1).CommandText = "dbo.PaymentHistory_AlterRefNum"
             Me._commandCollection(1).CommandType = Global.System.Data.CommandType.StoredProcedure
             Me._commandCollection(1).Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@RETURN_VALUE", Global.System.Data.SqlDbType.Int, 4, Global.System.Data.ParameterDirection.ReturnValue, 10, 0, Nothing, Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
-            Me._commandCollection(1).Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@CustomerNumber", Global.System.Data.SqlDbType.[Decimal], 9, Global.System.Data.ParameterDirection.Input, 18, 0, Nothing, Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
+            Me._commandCollection(1).Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@PaymentID", Global.System.Data.SqlDbType.[Decimal], 9, Global.System.Data.ParameterDirection.Input, 18, 0, Nothing, Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
+            Me._commandCollection(1).Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@NewRefNum", Global.System.Data.SqlDbType.VarChar, 50, Global.System.Data.ParameterDirection.Input, 0, 0, Nothing, Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
             Me._commandCollection(2) = New Global.System.Data.SqlClient.SqlCommand()
             Me._commandCollection(2).Connection = Me.Connection
-            Me._commandCollection(2).CommandText = "dbo.PaymentHistory_MovePayToCust"
+            Me._commandCollection(2).CommandText = "dbo.PaymentHistory_SelectNewestByCustomer"
             Me._commandCollection(2).CommandType = Global.System.Data.CommandType.StoredProcedure
             Me._commandCollection(2).Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@RETURN_VALUE", Global.System.Data.SqlDbType.Int, 4, Global.System.Data.ParameterDirection.ReturnValue, 10, 0, Nothing, Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
-            Me._commandCollection(2).Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@PaymentID", Global.System.Data.SqlDbType.[Decimal], 9, Global.System.Data.ParameterDirection.Input, 18, 0, Nothing, Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
-            Me._commandCollection(2).Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@NewCustomerNumber", Global.System.Data.SqlDbType.[Decimal], 9, Global.System.Data.ParameterDirection.Input, 18, 0, Nothing, Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
-            Me._commandCollection(2).Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@NewEditSeq", Global.System.Data.SqlDbType.VarChar, 16, Global.System.Data.ParameterDirection.Input, 0, 0, Nothing, Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
+            Me._commandCollection(2).Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@CustomerNumber", Global.System.Data.SqlDbType.[Decimal], 9, Global.System.Data.ParameterDirection.Input, 18, 0, Nothing, Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
             Me._commandCollection(3) = New Global.System.Data.SqlClient.SqlCommand()
             Me._commandCollection(3).Connection = Me.Connection
-            Me._commandCollection(3).CommandText = "dbo.PaymentHistory_Insert"
+            Me._commandCollection(3).CommandText = "dbo.PaymentHistory_MovePayToCust"
             Me._commandCollection(3).CommandType = Global.System.Data.CommandType.StoredProcedure
             Me._commandCollection(3).Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@RETURN_VALUE", Global.System.Data.SqlDbType.Int, 4, Global.System.Data.ParameterDirection.ReturnValue, 10, 0, Nothing, Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
-            Me._commandCollection(3).Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@WorkingPaymentID", Global.System.Data.SqlDbType.[Decimal], 9, Global.System.Data.ParameterDirection.Input, 18, 0, Nothing, Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
-            Me._commandCollection(3).Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@PaymentTxnID", Global.System.Data.SqlDbType.VarChar, 50, Global.System.Data.ParameterDirection.Input, 0, 0, Nothing, Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
-            Me._commandCollection(3).Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@EditSequence", Global.System.Data.SqlDbType.VarChar, 16, Global.System.Data.ParameterDirection.Input, 0, 0, Nothing, Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
-            Me._commandCollection(3).Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@PayBatch_ID", Global.System.Data.SqlDbType.Int, 4, Global.System.Data.ParameterDirection.Input, 10, 0, Nothing, Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
-            Me._commandCollection(3).Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@InsertedByUser", Global.System.Data.SqlDbType.VarChar, 50, Global.System.Data.ParameterDirection.Input, 0, 0, Nothing, Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
+            Me._commandCollection(3).Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@PaymentID", Global.System.Data.SqlDbType.[Decimal], 9, Global.System.Data.ParameterDirection.Input, 18, 0, Nothing, Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
+            Me._commandCollection(3).Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@NewCustomerNumber", Global.System.Data.SqlDbType.[Decimal], 9, Global.System.Data.ParameterDirection.Input, 18, 0, Nothing, Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
+            Me._commandCollection(3).Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@NewEditSeq", Global.System.Data.SqlDbType.VarChar, 16, Global.System.Data.ParameterDirection.Input, 0, 0, Nothing, Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
             Me._commandCollection(4) = New Global.System.Data.SqlClient.SqlCommand()
             Me._commandCollection(4).Connection = Me.Connection
-            Me._commandCollection(4).CommandText = "dbo.PaymentHistory_SetBounced"
+            Me._commandCollection(4).CommandText = "dbo.PaymentHistory_Insert"
             Me._commandCollection(4).CommandType = Global.System.Data.CommandType.StoredProcedure
             Me._commandCollection(4).Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@RETURN_VALUE", Global.System.Data.SqlDbType.Int, 4, Global.System.Data.ParameterDirection.ReturnValue, 10, 0, Nothing, Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
-            Me._commandCollection(4).Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@PaymentID", Global.System.Data.SqlDbType.[Decimal], 9, Global.System.Data.ParameterDirection.Input, 18, 0, Nothing, Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
-            Me._commandCollection(4).Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@CurrentUser", Global.System.Data.SqlDbType.VarChar, 50, Global.System.Data.ParameterDirection.Input, 0, 0, Nothing, Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
-            Me._commandCollection(4).Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@InvTxnID", Global.System.Data.SqlDbType.VarChar, 50, Global.System.Data.ParameterDirection.Input, 0, 0, Nothing, Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
-            Me._commandCollection(4).Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@CheckTxnID", Global.System.Data.SqlDbType.VarChar, 50, Global.System.Data.ParameterDirection.Input, 0, 0, Nothing, Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
+            Me._commandCollection(4).Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@WorkingPaymentID", Global.System.Data.SqlDbType.[Decimal], 9, Global.System.Data.ParameterDirection.Input, 18, 0, Nothing, Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
+            Me._commandCollection(4).Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@PaymentTxnID", Global.System.Data.SqlDbType.VarChar, 50, Global.System.Data.ParameterDirection.Input, 0, 0, Nothing, Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
+            Me._commandCollection(4).Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@EditSequence", Global.System.Data.SqlDbType.VarChar, 16, Global.System.Data.ParameterDirection.Input, 0, 0, Nothing, Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
+            Me._commandCollection(4).Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@PayBatch_ID", Global.System.Data.SqlDbType.Int, 4, Global.System.Data.ParameterDirection.Input, 10, 0, Nothing, Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
+            Me._commandCollection(4).Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@InsertedByUser", Global.System.Data.SqlDbType.VarChar, 50, Global.System.Data.ParameterDirection.Input, 0, 0, Nothing, Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
             Me._commandCollection(5) = New Global.System.Data.SqlClient.SqlCommand()
             Me._commandCollection(5).Connection = Me.Connection
-            Me._commandCollection(5).CommandText = "dbo.PaymentHistory_UpdateEditSeq"
+            Me._commandCollection(5).CommandText = "dbo.PaymentHistory_SetBounced"
             Me._commandCollection(5).CommandType = Global.System.Data.CommandType.StoredProcedure
             Me._commandCollection(5).Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@RETURN_VALUE", Global.System.Data.SqlDbType.Int, 4, Global.System.Data.ParameterDirection.ReturnValue, 10, 0, Nothing, Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
-            Me._commandCollection(5).Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@TxnID", Global.System.Data.SqlDbType.VarChar, 50, Global.System.Data.ParameterDirection.Input, 0, 0, Nothing, Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
-            Me._commandCollection(5).Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@EditSeq", Global.System.Data.SqlDbType.VarChar, 50, Global.System.Data.ParameterDirection.Input, 0, 0, Nothing, Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
+            Me._commandCollection(5).Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@PaymentID", Global.System.Data.SqlDbType.[Decimal], 9, Global.System.Data.ParameterDirection.Input, 18, 0, Nothing, Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
+            Me._commandCollection(5).Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@CurrentUser", Global.System.Data.SqlDbType.VarChar, 50, Global.System.Data.ParameterDirection.Input, 0, 0, Nothing, Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
+            Me._commandCollection(5).Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@InvTxnID", Global.System.Data.SqlDbType.VarChar, 50, Global.System.Data.ParameterDirection.Input, 0, 0, Nothing, Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
+            Me._commandCollection(5).Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@CheckTxnID", Global.System.Data.SqlDbType.VarChar, 50, Global.System.Data.ParameterDirection.Input, 0, 0, Nothing, Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
+            Me._commandCollection(6) = New Global.System.Data.SqlClient.SqlCommand()
+            Me._commandCollection(6).Connection = Me.Connection
+            Me._commandCollection(6).CommandText = "dbo.PaymentHistory_UpdateEditSeq"
+            Me._commandCollection(6).CommandType = Global.System.Data.CommandType.StoredProcedure
+            Me._commandCollection(6).Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@RETURN_VALUE", Global.System.Data.SqlDbType.Int, 4, Global.System.Data.ParameterDirection.ReturnValue, 10, 0, Nothing, Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
+            Me._commandCollection(6).Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@TxnID", Global.System.Data.SqlDbType.VarChar, 50, Global.System.Data.ParameterDirection.Input, 0, 0, Nothing, Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
+            Me._commandCollection(6).Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@EditSeq", Global.System.Data.SqlDbType.VarChar, 50, Global.System.Data.ParameterDirection.Input, 0, 0, Nothing, Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
         End Sub
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
@@ -2598,7 +2605,7 @@ Namespace ds_PaymentsTableAdapters
          Global.System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter"),  _
          Global.System.ComponentModel.DataObjectMethodAttribute(Global.System.ComponentModel.DataObjectMethodType.Fill, false)>  _
         Public Overloads Overridable Function FillNewestPayment(ByVal dataTable As ds_Payments.PaymentHistory_DBDataTable, ByVal CustomerNumber As Global.System.Nullable(Of Decimal)) As Integer
-            Me.Adapter.SelectCommand = Me.CommandCollection(1)
+            Me.Adapter.SelectCommand = Me.CommandCollection(2)
             If (CustomerNumber.HasValue = true) Then
                 Me.Adapter.SelectCommand.Parameters(1).Value = CType(CustomerNumber.Value,Decimal)
             Else
@@ -2614,8 +2621,39 @@ Namespace ds_PaymentsTableAdapters
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0"),  _
          Global.System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")>  _
+        Public Overloads Overridable Function AlterRefNum(ByVal PaymentID As Global.System.Nullable(Of Decimal), ByVal NewRefNum As String) As Integer
+            Dim command As Global.System.Data.SqlClient.SqlCommand = Me.CommandCollection(1)
+            If (PaymentID.HasValue = true) Then
+                command.Parameters(1).Value = CType(PaymentID.Value,Decimal)
+            Else
+                command.Parameters(1).Value = Global.System.DBNull.Value
+            End If
+            If (NewRefNum Is Nothing) Then
+                command.Parameters(2).Value = Global.System.DBNull.Value
+            Else
+                command.Parameters(2).Value = CType(NewRefNum,String)
+            End If
+            Dim previousConnectionState As Global.System.Data.ConnectionState = command.Connection.State
+            If ((command.Connection.State And Global.System.Data.ConnectionState.Open)  _
+                        <> Global.System.Data.ConnectionState.Open) Then
+                command.Connection.Open
+            End If
+            Dim returnValue As Integer
+            Try 
+                returnValue = command.ExecuteNonQuery
+            Finally
+                If (previousConnectionState = Global.System.Data.ConnectionState.Closed) Then
+                    command.Connection.Close
+                End If
+            End Try
+            Return returnValue
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0"),  _
+         Global.System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")>  _
         Public Overloads Overridable Function MovePayToCust(ByVal PaymentID As Global.System.Nullable(Of Decimal), ByVal NewCustomerNumber As Global.System.Nullable(Of Decimal), ByVal NewEditSeq As String) As Integer
-            Dim command As Global.System.Data.SqlClient.SqlCommand = Me.CommandCollection(2)
+            Dim command As Global.System.Data.SqlClient.SqlCommand = Me.CommandCollection(3)
             If (PaymentID.HasValue = true) Then
                 command.Parameters(1).Value = CType(PaymentID.Value,Decimal)
             Else
@@ -2651,7 +2689,7 @@ Namespace ds_PaymentsTableAdapters
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0"),  _
          Global.System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")>  _
         Public Overloads Overridable Function PaymentHistory_Insert(ByVal WorkingPaymentID As Global.System.Nullable(Of Decimal), ByVal PaymentTxnID As String, ByVal EditSequence As String, ByVal PayBatch_ID As Global.System.Nullable(Of Integer), ByVal InsertedByUser As String) As Integer
-            Dim command As Global.System.Data.SqlClient.SqlCommand = Me.CommandCollection(3)
+            Dim command As Global.System.Data.SqlClient.SqlCommand = Me.CommandCollection(4)
             If (WorkingPaymentID.HasValue = true) Then
                 command.Parameters(1).Value = CType(WorkingPaymentID.Value,Decimal)
             Else
@@ -2697,7 +2735,7 @@ Namespace ds_PaymentsTableAdapters
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0"),  _
          Global.System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")>  _
         Public Overloads Overridable Function SetBounced(ByVal PaymentID As Global.System.Nullable(Of Decimal), ByVal CurrentUser As String, ByVal InvTxnID As String, ByVal CheckTxnID As String) As Integer
-            Dim command As Global.System.Data.SqlClient.SqlCommand = Me.CommandCollection(4)
+            Dim command As Global.System.Data.SqlClient.SqlCommand = Me.CommandCollection(5)
             If (PaymentID.HasValue = true) Then
                 command.Parameters(1).Value = CType(PaymentID.Value,Decimal)
             Else
@@ -2738,7 +2776,7 @@ Namespace ds_PaymentsTableAdapters
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0"),  _
          Global.System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")>  _
         Public Overloads Overridable Function UpdateEditSeq(ByVal TxnID As String, ByVal EditSeq As String) As Integer
-            Dim command As Global.System.Data.SqlClient.SqlCommand = Me.CommandCollection(5)
+            Dim command As Global.System.Data.SqlClient.SqlCommand = Me.CommandCollection(6)
             If (TxnID Is Nothing) Then
                 command.Parameters(1).Value = Global.System.DBNull.Value
             Else

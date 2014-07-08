@@ -103,7 +103,7 @@ Namespace Reports
 
                     Next c
                 Else
-                    GlobalConMgr.ResponseErr_Misc(response)
+                    QBStuff.QBMethods.ResponseErr_Misc(response)
                 End If
             Next r
 
@@ -151,7 +151,7 @@ Namespace Reports
                         End If
                     Next j
                 Else
-                    GlobalConMgr.ResponseErr_Misc(response)
+                    QBStuff.QBMethods.ResponseErr_Misc(response)
                 End If
             Next i
         End Sub
@@ -243,7 +243,7 @@ Namespace Reports
 skip:
                     Next c
                 Else
-                    GlobalConMgr.ResponseErr_Misc(response)
+                    QBStuff.QBMethods.ResponseErr_Misc(response)
                 End If
             Next r
 

@@ -92,7 +92,7 @@ Namespace QBStuff
             Public PayTypeName As String
             Public CustomerListID As String
             Public EditSequence As String
-            Public Property UnusedPayment As Double
+            Public UnusedPayment As Double
             Public RefNumber As String
             Public Memo As String
 

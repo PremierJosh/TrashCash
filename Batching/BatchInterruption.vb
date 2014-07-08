@@ -161,10 +161,10 @@ Namespace Batching
                 lbl_CustName.Visible = True
                 If (InvoiceBatch) Then
                     ' date passed here doesn't matter
-                    Dim batchInv As New Batching.QB_Batching.Invoicing()
+                    Dim batchInv As New QB_Batching.Invoicing()
                     BatchWorker.RunWorkerAsync(batchInv)
                 ElseIf (PaymentBatch) Then
-                    Dim batchPay As New Batching.QB_Batching.Payments
+                    Dim batchPay As New QB_Batching.Payments
                     BatchWorker.RunWorkerAsync(batchPay)
                 End If
             End If

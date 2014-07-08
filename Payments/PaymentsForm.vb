@@ -242,6 +242,7 @@
                 End Try
                 'refresh grid
                 BATCH_WorkingPaymentsTableAdapter.Fill(Ds_Batching.BATCH_WorkingPayments)
+                RaiseEvent CustomerPaymentAdded(row.CustomerNumber)
             End If
         End Sub
 

@@ -30,8 +30,7 @@ Namespace QBStuff
                         'SessionManager.CloseConnection()
                        Exit While
                     End If
-                    SessionManager.CloseConnection()
-                    connected = False
+                   connected = False
                 End Try
             End While
             Return connected
@@ -90,30 +89,12 @@ Namespace QBStuff
                 Dim ret As ICustomerRet = retList.GetAt(0)
                 b = ret.TotalBalance.GetValue
             Else
-                ResponseErr_Misc(resp)
+                QBMethods.ResponseErr_Misc(resp)
             End If
 
             Return b
         End Function
-        ' copy kept here
-        Public Sub ResponseErr_Misc(ByVal resp As IResponse)
-            If (resp.StatusCode = 1) Then
-                MsgBox("No matching results from Quickbooks")
-            Else
-                Try
-                    AppQTA.ERR_MISC_Insert(resp.Type.GetValue.ToString,
-                                           resp.StatusCode.ToString,
-                                           resp.StatusMessage,
-                                           Date.Now)
-
-
-                    MsgBox("Error Encounterd with Quickbooks. Contact Premier.", MsgBoxStyle.Critical)
-                Catch ex As Exception
-                    MsgBox("ERR_MISC_Insert: " & ex.Message)
-                End Try
-            End If
-        End Sub
-
+       
 
         '    Private Sub KillQBProcess()
         '        ' QBW32.exe killing
