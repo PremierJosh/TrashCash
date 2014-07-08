@@ -3,21 +3,7 @@
 Namespace QBStuff
     Public Module QBObjects
 
-        'Public Class QBAddCreditObj
-        '    Public CustomerListID As String
-        '    Public IsToBePrinted As Boolean
-        '    Public ItemListID As String
-        '    Public CreditAmount As Double
-        '    Public Desc As String
-
-        '    ' internal reference
-        '    Public DateOfCredit As Date
-
-        '    ' status response from qb
-        '    Public StatusCode As Integer
-        'End Class
-
-        Public Class QBCreditObj
+     Public Class QBCreditObj
             Public TxnID As String
             Public CreditRemaining As Double
             Public TxnDate As Date

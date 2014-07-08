@@ -1,10 +1,13 @@
-﻿Namespace Reports
+﻿Imports QBFC12Lib
+Imports TrashCash.QBStuff
+
+Namespace Reports
     ' ReSharper disable once InconsistentNaming
     Public Class Report_AllCustBalances
 
         Private Sub btn_BuildRpt_Click(sender As System.Object, e As System.EventArgs) Handles btn_BuildRpt.Click
             Cursor = Cursors.WaitCursor
-            If (mtb_DaysPastDue.TextLength > 0) Then
+            If (nud_MindDays.Value > 0) Then
                 ' build ds
                 Report_DataSet = _home.Reporting.Report_AllCustomerBalances(mtb_DaysPastDue.Text, ck_IncludeInactive.Checked)
             End If
@@ -19,6 +22,19 @@
             Cursor = Cursors.Default
         End Sub
 
+        Private Sub ReportFoo()
+            Dim resp As IResponse = QBRequests.CustomerQuery(activeOnly:=ck_ActiveOnly.Checked)
+            If (resp.StatusCode = 0) Then
+                Dim custRetList As ICustomerRetList = resp.Detail
+                For c = 0 To custRetList.Count - 1
+                    Dim cust As ICustomerRet = custRetList.GetAt(c)
+
+
+                Next
+            Else
+                QBMethods.ResponseErr_Misc(resp)
+            End If
+        End Sub
 
         ' var to keep track of last clicked
         Private _lastCustClickedIndex As Integer
@@ -31,14 +47,7 @@
             End If
         End Sub
 
-        Private ReadOnly _home As TrashCashHome
-        Public Sub New(ByRef homeForm As TrashCashHome)
 
-            ' This call is required by the designer.
-            InitializeComponent()
 
-            ' Add any initialization after the InitializeComponent() call.
-            _home = HomeForm
-        End Sub
     End Class
 End Namespace

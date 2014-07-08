@@ -716,11 +716,14 @@ Namespace QBStuff
 
 
 
-        Public Shared Function CustomerQuery(Optional ByVal listID As String = Nothing, Optional ByVal retEleList As List(Of String) = Nothing,
+        Public Shared Function CustomerQuery(Optional ByVal listID As String = Nothing, Optional ByVal retEleList As List(Of String) = Nothing, Optional ByVal activeOnly As Boolean = False,
                                              Optional ByVal balanceFilter As ITotalBalanceFilter = Nothing, Optional ByRef qbConMgr As QBConMgr = Nothing) As IResponse
             Dim custQuery As ICustomerQuery = ConCheck(qbConMgr).MessageSetRequest.AppendCustomerQueryRq
             If (listID IsNot Nothing) Then
                 custQuery.ORCustomerListQuery.ListIDList.Add(listID)
+            End If
+            If (activeOnly) Then
+                custQuery.ORCustomerListQuery.CustomerListFilter.ActiveStatus.SetValue(ENActiveStatus.asActiveOnly)
             End If
             ' checking if balance filter transfered
             If (balanceFilter IsNot Nothing) Then

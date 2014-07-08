@@ -35,7 +35,7 @@
             Me.InvoiceTotalDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
             Me.BalanceDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
             Me.InvoiceBalancesBindingSource = New System.Windows.Forms.BindingSource(Me.components)
-            Me.Report_DataSet = New DS_Reports()
+            Me.Report_DataSet = New TrashCash.Reports.DS_Reports()
             Me.dg_Customers = New System.Windows.Forms.DataGridView()
             Me.CustomerNameDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
             Me.CustomerBalanceDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
@@ -46,9 +46,9 @@
             Me.lbl_Invoices = New System.Windows.Forms.Label()
             Me.lbl_Days = New System.Windows.Forms.Label()
             Me.lbl_RptInfo = New System.Windows.Forms.Label()
-            Me.mtb_DaysPastDue = New System.Windows.Forms.MaskedTextBox()
             Me.btn_BuildRpt = New System.Windows.Forms.Button()
-            Me.ck_IncludeInactive = New System.Windows.Forms.CheckBox()
+            Me.ck_ActiveOnly = New System.Windows.Forms.CheckBox()
+            Me.nud_MindDays = New System.Windows.Forms.NumericUpDown()
             Me.tc_Report.SuspendLayout()
             Me.tp_RepView.SuspendLayout()
             Me.tp_GridView.SuspendLayout()
@@ -58,13 +58,14 @@
             CType(Me.dg_Customers, System.ComponentModel.ISupportInitialize).BeginInit()
             CType(Me.CustomerBalancesBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
             Me.pnl_TopSpacer.SuspendLayout()
+            CType(Me.nud_MindDays, System.ComponentModel.ISupportInitialize).BeginInit()
             Me.SuspendLayout()
             '
             'tc_Report
             '
             Me.tc_Report.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-                                          Or System.Windows.Forms.AnchorStyles.Left) _
-                                         Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+                Or System.Windows.Forms.AnchorStyles.Left) _
+                Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
             Me.tc_Report.Controls.Add(Me.tp_RepView)
             Me.tc_Report.Controls.Add(Me.tp_GridView)
             Me.tc_Report.Location = New System.Drawing.Point(0, 78)
@@ -267,15 +268,7 @@
             Me.lbl_RptInfo.Size = New System.Drawing.Size(568, 13)
             Me.lbl_RptInfo.TabIndex = 3
             Me.lbl_RptInfo.Text = "This Report will generate a list of all Customers who have an outstanding balance" & _
-                                  ", listing the Invoices that are still open."
-            '
-            'mtb_DaysPastDue
-            '
-            Me.mtb_DaysPastDue.Location = New System.Drawing.Point(453, 25)
-            Me.mtb_DaysPastDue.Mask = "099"
-            Me.mtb_DaysPastDue.Name = "mtb_DaysPastDue"
-            Me.mtb_DaysPastDue.Size = New System.Drawing.Size(52, 20)
-            Me.mtb_DaysPastDue.TabIndex = 4
+        ", listing the Invoices that are still open."
             '
             'btn_BuildRpt
             '
@@ -286,24 +279,34 @@
             Me.btn_BuildRpt.Text = "Build Report"
             Me.btn_BuildRpt.UseVisualStyleBackColor = True
             '
-            'ck_IncludeInactive
+            'ck_ActiveOnly
             '
-            Me.ck_IncludeInactive.AutoSize = True
-            Me.ck_IncludeInactive.Location = New System.Drawing.Point(259, 53)
-            Me.ck_IncludeInactive.Name = "ck_IncludeInactive"
-            Me.ck_IncludeInactive.Size = New System.Drawing.Size(154, 17)
-            Me.ck_IncludeInactive.TabIndex = 6
-            Me.ck_IncludeInactive.Text = "Include Inactive Customers"
-            Me.ck_IncludeInactive.UseVisualStyleBackColor = True
+            Me.ck_ActiveOnly.AutoSize = True
+            Me.ck_ActiveOnly.Checked = True
+            Me.ck_ActiveOnly.CheckState = System.Windows.Forms.CheckState.Checked
+            Me.ck_ActiveOnly.Location = New System.Drawing.Point(259, 53)
+            Me.ck_ActiveOnly.Name = "ck_ActiveOnly"
+            Me.ck_ActiveOnly.Size = New System.Drawing.Size(132, 17)
+            Me.ck_ActiveOnly.TabIndex = 6
+            Me.ck_ActiveOnly.Text = "Active Customers Only"
+            Me.ck_ActiveOnly.UseVisualStyleBackColor = True
             '
-            'f_AllCustBalances
+            'nud_MindDays
+            '
+            Me.nud_MindDays.Location = New System.Drawing.Point(453, 26)
+            Me.nud_MindDays.Name = "nud_MindDays"
+            Me.nud_MindDays.Size = New System.Drawing.Size(52, 20)
+            Me.nud_MindDays.TabIndex = 7
+            Me.nud_MindDays.Value = New Decimal(New Integer() {1, 0, 0, 0})
+            '
+            'Report_AllCustBalances
             '
             Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
             Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
             Me.ClientSize = New System.Drawing.Size(892, 562)
-            Me.Controls.Add(Me.ck_IncludeInactive)
+            Me.Controls.Add(Me.nud_MindDays)
+            Me.Controls.Add(Me.ck_ActiveOnly)
             Me.Controls.Add(Me.btn_BuildRpt)
-            Me.Controls.Add(Me.mtb_DaysPastDue)
             Me.Controls.Add(Me.lbl_RptInfo)
             Me.Controls.Add(Me.lbl_Days)
             Me.Controls.Add(Me.tc_Report)
@@ -319,6 +322,7 @@
             CType(Me.CustomerBalancesBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
             Me.pnl_TopSpacer.ResumeLayout(False)
             Me.pnl_TopSpacer.PerformLayout()
+            CType(Me.nud_MindDays, System.ComponentModel.ISupportInitialize).EndInit()
             Me.ResumeLayout(False)
             Me.PerformLayout()
 
@@ -329,7 +333,6 @@
         Friend WithEvents tp_GridView As System.Windows.Forms.TabPage
         Friend WithEvents lbl_Days As System.Windows.Forms.Label
         Friend WithEvents lbl_RptInfo As System.Windows.Forms.Label
-        Friend WithEvents mtb_DaysPastDue As System.Windows.Forms.MaskedTextBox
         Friend WithEvents btn_BuildRpt As System.Windows.Forms.Button
         Friend WithEvents Report_DataSet As DS_Reports
         Friend WithEvents lbl_Invoices As System.Windows.Forms.Label
@@ -347,6 +350,7 @@
         Friend WithEvents CustomerPhoneDataGridViewTextBoxColumn As System.Windows.Forms.DataGridViewTextBoxColumn
         Friend WithEvents CustomerBalancesBindingSource As System.Windows.Forms.BindingSource
         Friend WithEvents pnl_TopSpacer As System.Windows.Forms.Panel
-        Friend WithEvents ck_IncludeInactive As System.Windows.Forms.CheckBox
+        Friend WithEvents ck_ActiveOnly As System.Windows.Forms.CheckBox
+        Friend WithEvents nud_MindDays As System.Windows.Forms.NumericUpDown
     End Class
 End Namespace
