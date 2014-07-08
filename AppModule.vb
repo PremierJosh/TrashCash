@@ -31,6 +31,8 @@ Module AppModule
 
     Public HomeForm As TrashCashHome
 
+    Public CompanyClosingDate As Date
+
     Public Function GetCustomerListID(ByVal customerNumber As Integer) As String
         Return CustTA.GetListID(customerNumber)
     End Function

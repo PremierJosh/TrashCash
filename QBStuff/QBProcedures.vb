@@ -814,6 +814,22 @@ Namespace QBStuff
 
             Return Nothing
         End Function
+
+        Public Shared Function CompanyClosingDateQuery() As Date
+            Dim prefQ As IPreferencesQuery = GlobalConMgr.MessageSetRequest.AppendPreferencesQueryRq
+            prefQ.IncludeRetElementList.Add("AccountingPreferences")
+            prefQ.IncludeRetElementList.Add("ClosingDate")
+
+            Dim resp As IResponse = GlobalConMgr.GetRespList.GetAt(0)
+            If (resp.StatusCode = 0) Then
+                Dim ret As IPreferencesRet = resp.Detail
+                If (ret.AccountingPreferences.ClosingDate IsNot Nothing) Then
+                    Return ret.AccountingPreferences.ClosingDate.GetValue
+                End If
+            End If
+
+            Return Date.MaxValue
+        End Function
     End Class
 
     Friend Class QBMethods
@@ -1422,9 +1438,16 @@ Namespace QBStuff
         Public Shared Sub ResponseErr_Misc(ByVal resp As IResponse)
             ' resuable unknown var
             Dim unknownErr As Boolean = False
-
+            MsgBox(resp.Type.GetValue)
             ' get type of response that errored
             Select Case resp.Type.GetValue
+                Case Is = 1033
+                    '1033 - PaymentAdd
+                    Select Case resp.StatusCode
+                        Case Is = 3170
+                            '3171 - An attempt was made to modify a ReceivePayment with a date that is on or before the closing date of the company.
+                            MessageBox.Show("The post date for this Payment is before the current company closing date.", "", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                    End Select
                 Case Is = 1415
                     ' 1415 = PaymentModify response
                     Select Case resp.StatusCode

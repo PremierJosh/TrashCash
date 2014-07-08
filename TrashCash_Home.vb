@@ -297,6 +297,9 @@ Public Class TrashCashHome
             MsgBox(ex.Message)
         End Try
 
+        ' get current company closing date
+        CompanyClosingDate = QBRequests.CompanyClosingDateQuery
+
         _splash.Close()
 
         ' maximize window
