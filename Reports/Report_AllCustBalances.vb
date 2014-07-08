@@ -9,7 +9,7 @@ Namespace Reports
             Cursor = Cursors.WaitCursor
             If (nud_MindDays.Value > 0) Then
                 ' build ds
-                Report_DataSet = _home.Reporting.Report_AllCustomerBalances(mtb_DaysPastDue.Text, ck_IncludeInactive.Checked)
+                'Report_DataSet = _home.Reporting.Report_AllCustomerBalances(mtb_DaysPastDue.Text, ck_IncludeInactive.Checked)
             End If
             ' create report
             Dim report As New r_AllCustBalances

@@ -28,7 +28,7 @@ Namespace Payments
         <System.Diagnostics.DebuggerStepThrough()> _
         Private Sub InitializeComponent()
             Me.components = New System.ComponentModel.Container()
-            Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+            Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
             Me.cm_PayGrid = New System.Windows.Forms.ContextMenuStrip(Me.components)
             Me.btn_DeletePay = New System.Windows.Forms.ToolStripMenuItem()
             Me.tc_Master = New System.Windows.Forms.TabControl()
@@ -53,7 +53,6 @@ Namespace Payments
             Me.PaymentTypesTableAdapter = New TrashCash.ds_TypesTableAdapters.PaymentTypesTableAdapter()
             Me.lbl_PayType = New System.Windows.Forms.Label()
             Me.dtp_Override = New System.Windows.Forms.DateTimePicker()
-            Me.ck_Override = New System.Windows.Forms.CheckBox()
             Me.btn_AddPayment = New System.Windows.Forms.Button()
             Me.dtp_DateOnCheck = New System.Windows.Forms.DateTimePicker()
             Me.tb_RefNum = New System.Windows.Forms.TextBox()
@@ -71,6 +70,7 @@ Namespace Payments
             Me.tb_PrevAmount = New TrashCash.Classes.CurrencyTextBox()
             Me.lbl_PrevAmount = New System.Windows.Forms.Label()
             Me.grp_NewPayInfo = New System.Windows.Forms.GroupBox()
+            Me.ck_Backdate = New System.Windows.Forms.CheckBox()
             Me.cm_PayGrid.SuspendLayout()
             Me.tc_Master.SuspendLayout()
             Me.tc_p_CustNotes.SuspendLayout()
@@ -224,8 +224,8 @@ Namespace Payments
             '
             Me.WorkingPaymentsAmountDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
             Me.WorkingPaymentsAmountDataGridViewTextBoxColumn.DataPropertyName = "WorkingPaymentsAmount"
-            DataGridViewCellStyle1.Format = "C2"
-            Me.WorkingPaymentsAmountDataGridViewTextBoxColumn.DefaultCellStyle = DataGridViewCellStyle1
+            DataGridViewCellStyle2.Format = "C2"
+            Me.WorkingPaymentsAmountDataGridViewTextBoxColumn.DefaultCellStyle = DataGridViewCellStyle2
             Me.WorkingPaymentsAmountDataGridViewTextBoxColumn.HeaderText = "Amount"
             Me.WorkingPaymentsAmountDataGridViewTextBoxColumn.Name = "WorkingPaymentsAmountDataGridViewTextBoxColumn"
             Me.WorkingPaymentsAmountDataGridViewTextBoxColumn.ReadOnly = True
@@ -278,7 +278,6 @@ Namespace Payments
             '
             'Ds_Types
             '
-            Me.Ds_Types.DataSetName = "ds_Types"
             Me.Ds_Types.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema
             '
             'PaymentTypesTableAdapter
@@ -302,17 +301,6 @@ Namespace Payments
             Me.dtp_Override.Size = New System.Drawing.Size(84, 20)
             Me.dtp_Override.TabIndex = 5
             Me.dtp_Override.Visible = False
-            '
-            'ck_Override
-            '
-            Me.ck_Override.AutoSize = True
-            Me.ck_Override.Location = New System.Drawing.Point(37, 135)
-            Me.ck_Override.Name = "ck_Override"
-            Me.ck_Override.Size = New System.Drawing.Size(63, 17)
-            Me.ck_Override.TabIndex = 4
-            Me.ck_Override.Text = "Overide"
-            Me.ck_Override.UseVisualStyleBackColor = True
-            Me.ck_Override.Visible = False
             '
             'btn_AddPayment
             '
@@ -466,12 +454,12 @@ Namespace Payments
             '
             'grp_NewPayInfo
             '
+            Me.grp_NewPayInfo.Controls.Add(Me.ck_Backdate)
             Me.grp_NewPayInfo.Controls.Add(Me.lbl_PayType)
             Me.grp_NewPayInfo.Controls.Add(Me.cmb_PayTypes)
             Me.grp_NewPayInfo.Controls.Add(Me.Label1)
             Me.grp_NewPayInfo.Controls.Add(Me.dtp_Override)
             Me.grp_NewPayInfo.Controls.Add(Me.tb_Amount)
-            Me.grp_NewPayInfo.Controls.Add(Me.ck_Override)
             Me.grp_NewPayInfo.Controls.Add(Me.lbl_RefNumber)
             Me.grp_NewPayInfo.Controls.Add(Me.btn_AddPayment)
             Me.grp_NewPayInfo.Controls.Add(Me.lbl_DateOnCheck)
@@ -483,6 +471,16 @@ Namespace Payments
             Me.grp_NewPayInfo.TabIndex = 116
             Me.grp_NewPayInfo.TabStop = False
             Me.grp_NewPayInfo.Text = "New Payment Information"
+            '
+            'ck_Backdate
+            '
+            Me.ck_Backdate.AutoSize = True
+            Me.ck_Backdate.Location = New System.Drawing.Point(30, 136)
+            Me.ck_Backdate.Name = "ck_Backdate"
+            Me.ck_Backdate.Size = New System.Drawing.Size(72, 17)
+            Me.ck_Backdate.TabIndex = 117
+            Me.ck_Backdate.Text = "Backdate"
+            Me.ck_Backdate.UseVisualStyleBackColor = True
             '
             'PaymentsForm
             '
@@ -538,7 +536,6 @@ Namespace Payments
         Friend WithEvents PaymentTypesTableAdapter As TrashCash.ds_TypesTableAdapters.PaymentTypesTableAdapter
         Friend WithEvents lbl_PayType As System.Windows.Forms.Label
         Friend WithEvents dtp_Override As System.Windows.Forms.DateTimePicker
-        Friend WithEvents ck_Override As System.Windows.Forms.CheckBox
         Friend WithEvents btn_AddPayment As System.Windows.Forms.Button
         Friend WithEvents dtp_DateOnCheck As System.Windows.Forms.DateTimePicker
         Friend WithEvents tb_RefNum As System.Windows.Forms.TextBox
@@ -562,5 +559,6 @@ Namespace Payments
         Friend WithEvents lbl_PrevAmount As System.Windows.Forms.Label
         Friend WithEvents lbl_PrevPayInfo As System.Windows.Forms.Label
         Friend WithEvents grp_NewPayInfo As System.Windows.Forms.GroupBox
-    End Class
+        Friend WithEvents ck_Backdate As System.Windows.Forms.CheckBox
+     End Class
 End Namespace

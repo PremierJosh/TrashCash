@@ -47,7 +47,7 @@
 
             ' checking if in debug mode
             If (_debug) Then
-                ck_Override.Checked = False
+                ck_BackDate.Checked = False
                 dtp_Override.Value = Date.Now
             End If
         End Sub
@@ -62,12 +62,11 @@
             ' Add any initialization after the InitializeComponent() call.
             _debug = debug
             If (debug) Then
-                ck_Override.Visible = True
-                dtp_Override.Visible = True
+                ck_BackDate.Visible = True
             End If
 
             _hTA = New ds_PaymentsTableAdapters.PaymentHistory_DBTableAdapter
-            
+
             ' if number is passed, lock ts
             If (customerNumber <> 0) Then
                 CustomerToolstrip1.Enabled = False
@@ -137,7 +136,7 @@
             End If
         End Function
         ' ta for fetching prev payment
-        Private _hTA As ds_PaymentsTableAdapters.PaymentHistory_DBTableAdapter
+        Private ReadOnly _hTA As ds_PaymentsTableAdapters.PaymentHistory_DBTableAdapter
         Private Sub FetchPrevPayment(ByVal customerNumber As Integer)
             Dim dt As New ds_Payments.PaymentHistory_DBDataTable
             _hTA.FillNewestPayment(dt, customerNumber)
@@ -178,9 +177,22 @@
                 'The external Replace replaces the spaces left in the string to their initial 0 character.
                 Replace(LTrim(Replace(checkRefNum, "0", " ")), " ", "0")
 
+                ' having them confirm check number
+                If (checkRefNum <> "") Then
+                    Dim reEntry As String = InputBox("Please enter the check number again:", "Confirm Check #")
+                    Trim(reEntry)
+                    Replace(LTrim(Replace(reEntry, "0", " ")), " ", "0")
+                    ' do these match
+                    If (reEntry <> checkRefNum) Then
+                        MessageBox.Show("Check numbers do not match. Please re-enter the check number and double check information.", "Check # Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                        tb_RefNum.Clear()
+                        Exit Sub
+                    End If
+                End If
+
                 Try
                     ' checking if override checked
-                    If (ck_Override.Checked) Then
+                    If (ck_BackDate.Checked) Then
                         ' inserting override date chosen as time inserted
                         ' insert with current time and check if dateoncheck is nothing (cash payment)
                         If (cmb_PayTypes.SelectedValue = TC_ENPaymentTypes.Cash) Then
@@ -219,12 +231,21 @@
                 Dim row As ds_Batching.BATCH_WorkingPaymentsRow = CType(dg_PrepPay.SelectedRows(0).DataBoundItem, DataRowView).Row
                 Try
                     BATCH_WorkingPaymentsTableAdapter.DeleteByID(row.WorkingPaymentsID)
-                Catch ex as SqlException
+                Catch ex As SqlException
                     MessageBox.Show("Message: " & ex.Message & vbCrLf & "LineNumber: " & ex.LineNumber,
                                     "Sql Error: " & ex.Procedure, MessageBoxButtons.OK, MessageBoxIcon.Error)
                 End Try
                 'refresh grid
                 BATCH_WorkingPaymentsTableAdapter.Fill(Ds_Batching.BATCH_WorkingPayments)
+            End If
+        End Sub
+
+
+        Private Sub ck_Backdate_Click(sender As System.Object, e As System.EventArgs) Handles ck_Backdate.Click
+            If (ck_Backdate.Checked) Then
+                dtp_Override.Visible = True
+            Else
+                dtp_Override.Visible = False
             End If
         End Sub
     End Class

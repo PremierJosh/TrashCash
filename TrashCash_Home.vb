@@ -378,7 +378,7 @@ Public Class TrashCashHome
     End Sub
 
     Private Sub btn_Rpt_AllCustomerBalances_Click(sender As Object, e As EventArgs) Handles btn_Rpt_AllCustomerBalances.Click
-        Dim rf As New Reports.Report_AllCustBalances(Me)
+        Dim rf As New Reports.Report_AllCustBalances()
         rf.Show()
     End Sub
 
