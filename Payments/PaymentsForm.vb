@@ -179,7 +179,12 @@
 
                 ' having them confirm check number
                 If (checkRefNum <> "") Then
+                    ' hide current ref number
+                    tb_RefNum.Visible = False
                     Dim reEntry As String = InputBox("Please enter the check number again:", "Confirm Check #")
+                    ' show ref number after input
+                    tb_RefNum.Visible = True
+                    ' trim entry number and compare
                     Trim(reEntry)
                     Replace(LTrim(Replace(reEntry, "0", " ")), " ", "0")
                     ' do these match
