@@ -125,15 +125,21 @@
                         Return False
                     Else
                         tb_RefNum.BackColor = AppColors.TextBoxDef
-                        Return True
                     End If
-                Else
-                    Return True
                 End If
             Else
                 tb_Amount.BackColor = AppColors.TextBoxErr
                 Return False
             End If
+            ' checking for override back date into closed period
+            If (ck_Backdate.Checked) Then
+                If (dtp_Override.Value.Date < CompanyClosingDate) Then
+                    MessageBox.Show("Company books have been closed up to " & FormatDateTime(CompanyClosingDate, DateFormat.LongDate))
+                    Return False
+                End If
+            End If
+
+            Return True
         End Function
         ' ta for fetching prev payment
         Private ReadOnly _hTA As ds_PaymentsTableAdapters.PaymentHistory_DBTableAdapter
