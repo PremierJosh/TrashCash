@@ -1444,7 +1444,7 @@ Namespace QBStuff
         Public Shared Sub ResponseErr_Misc(ByVal resp As IResponse)
             ' resuable unknown var
             Dim unknownErr As Boolean = False
-            MsgBox(resp.Type.GetValue)
+
             ' get type of response that errored
             Select Case resp.Type.GetValue
                 Case Is = 1033
@@ -1452,20 +1452,20 @@ Namespace QBStuff
                     Select Case resp.StatusCode
                         Case Is = 3170
                             '3171 - An attempt was made to modify a ReceivePayment with a date that is on or before the closing date of the company.
-                            MessageBox.Show("The post date for this Payment is before the current company closing date.", "", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                            MessageBox.Show("The post date for this Payment is before the current company closing date.", "Type: 1033 |Code: 3170", MessageBoxButtons.OK, MessageBoxIcon.Error)
                     End Select
                 Case Is = 1415
                     ' 1415 = PaymentModify response
                     Select Case resp.StatusCode
                         Case Is = 3170
                             '3170 - You need to delete this transaction from the deposit before you can edit its name or amount.
-                            MessageBox.Show("This Payment has already been deposited. You cannot change it.", "", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                            MessageBox.Show("This Payment has already been deposited. You cannot change it.", "Type: 1415 |Code: 3170", MessageBoxButtons.OK, MessageBoxIcon.Error)
                         Case Is = 3171
                             '3171 - An attempt was made to modify a ReceivePayment with a date that is on or before the closing date of the company.
-                            MessageBox.Show("The post date for this Payment is before the current company closing date.", "", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                            MessageBox.Show("The post date for this Payment is before the current company closing date.", "Type: 1415 |Code: 3171", MessageBoxButtons.OK, MessageBoxIcon.Error)
                         Case Is = 3175
                             '3175 - Transaction could not be locked
-                            MessageBox.Show("Transaction could not be locked - most likely a user has this payment open in Quickbooks.", "", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                            MessageBox.Show("Transaction could not be locked - most likely a user has this payment open in Quickbooks.", "Type: 1415 |Code: 3175", MessageBoxButtons.OK, MessageBoxIcon.Error)
                         Case Else
                             unknownErr = True
                     End Select

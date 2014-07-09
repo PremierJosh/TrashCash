@@ -217,7 +217,7 @@ Namespace Admin.Payments
                 Moved = True
             Else
                 ' error on moving to new customer, exit now
-                MessageBox.Show("Error Moving Payment. Contact Premier.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                'MessageBox.Show("Error Moving Payment. Contact Premier.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
                 Moved = False
             End If
 
