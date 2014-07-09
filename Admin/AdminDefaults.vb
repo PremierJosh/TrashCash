@@ -68,6 +68,13 @@ Namespace Admin
             _row.BAD_CHECK_CHECKITEM_LISTID = cmb_BadCheckItem.SelectedValue
             _row.BAD_CHECK_CUST_FEE = tb_BadCheckCustFee.Text
             _row.EndEdit()
+
+            ' update inv day count restrictions
+            _row.InvPost_MaxAdvDays = nud_InvAdvLimit.Value
+            _row.InvPost_MaxArrDays = nud_InvArrLimit.Value
+            ' update on global module
+            InvMaxAdvancedDays = _row.InvPost_MaxAdvDays
+            InvMaxArrearageDays = _row.InvPost_MaxArrDays
             If (_row.RowState = DataRowState.Modified) Then
                 Try
                     AppTA.Update(_row)

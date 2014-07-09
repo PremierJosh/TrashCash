@@ -202,8 +202,30 @@ Namespace Invoicing
             pnl_3.Visible = False
         End Sub
 
+        Private Function PostDateValidate() As Boolean
+            Dim post As Date = dtp_PostDate.Value.Date
+            ' checking if date too far
+            If (post > DateAdd(DateInterval.Day, InvMaxAdvancedDays, Date.Now)) Then
+                ' date is too far in advance
+                MessageBox.Show("Post date cannot be further than " & InvMaxAdvancedDays & " days out. Currently it is " & DateDiff(DateInterval.Day, Date.Now, post) & " days.", "Post Date too far", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                Return False
+            End If
+            ' is it too far back
+            If (post < DateAdd(DateInterval.Day, -InvMaxArrearageDays, Date.Now)) Then
+                MessageBox.Show("Post date cannot be back dated beyond " & InvMaxArrearageDays & " days. Currently it is " & DateDiff(DateInterval.Day, Date.Now, post) & " days.", "Post Date back dated too far", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                Return False
+            End If
+            ' is post date before due date?
+            If (post > dtp_DueDate.Value.Date) Then
+                MessageBox.Show("Due Date cannot be earlier than Post Date", "Error with Post/Due Dates", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                Return False
+            End If
+
+            Return True
+        End Function
+
         Private Sub btn_CreateInv_Click(sender As System.Object, e As System.EventArgs) Handles btn_CreateInv.Click
-            If (InvoiceValidation()) Then
+            If (PostDateValidate()) Then
                 ' get balance for payment of invoice after
                 Dim custBalance As Double
                 CustomerToolstrip1.GetCustomerBalance(custBalance)
@@ -224,7 +246,7 @@ Namespace Invoicing
                 If (Not succeed) Then
                     MessageBox.Show("Error - Invoice not created.", "QB Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
                 Else
-                  ' refill history grid
+                    ' refill history grid
                     HistoryInv.Clear()
                     ResetInvoice()
                     CiTA.Fill(HistoryInv.CustomInvoices, CurrentCustomer)
