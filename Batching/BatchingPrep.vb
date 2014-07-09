@@ -130,6 +130,8 @@ Namespace Batching
         End Sub
 
         Private Sub BatchingPrep_Load(sender As System.Object, e As System.EventArgs) Handles Me.Load
+            'TODO: This line of code loads data into the 'Ds_Types.PaymentTypes' table. You can move, or remove it, as needed.
+            Me.PaymentTypesTableAdapter.Fill(Me.Ds_Types.PaymentTypes)
             RefreshBatchQueue()
         End Sub
 
@@ -162,7 +164,7 @@ Namespace Batching
             End If
         End Sub
 
-        Private Sub btn_Batch_Click(sender As System.Object, e As System.EventArgs) Handles btn_PayBatch.Click, btn_InvBatch.Click
+        Private Sub btn_Batch_Click(sender As System.Object, e As System.EventArgs) Handles btn_InvBatch.Click
             ' first build string
             Dim promptS As String
 
@@ -219,8 +221,8 @@ Namespace Batching
                     MsgBox("You cannot generate Invoices more than 30 days ahead of time.")
                 Else
                     btn_GenerateInv.UseWaitCursor = True
-                    qta.GenerateRecurringInvoices(dtp_GenInvTo.Value.Date)
-                    BATCH_WorkingInvoiceTableAdapter.Fill(Ds_Batching.BATCH_WorkingInvoice)
+                    QTA.GenerateRecurringInvoices(dtp_GenInvTo.Value.Date)
+                    BATCH_WorkingInvoiceTableAdapter.Fill(DS_Batching.BATCH_WorkingInvoice)
                     btn_GenerateInv.UseWaitCursor = False
                     _targetedBillDate = dtp_GenInvTo.Value.Date
                 End If
@@ -236,9 +238,9 @@ Namespace Batching
                     Dim actualRow As ds_Batching.BATCH_WorkingInvoiceRow = row.Row
 
                     If (dg_PrepInv.Rows(e.RowIndex).Cells(e.ColumnIndex).EditedFormattedValue = True) Then
-                        qta.WorkingInvoice_UpdatePrint(actualRow.WorkingInvoiceID, "True")
+                        QTA.WorkingInvoice_UpdatePrint(actualRow.WorkingInvoiceID, "True")
                     Else
-                        qta.WorkingInvoice_UpdatePrint(actualRow.WorkingInvoiceID, "False")
+                        QTA.WorkingInvoice_UpdatePrint(actualRow.WorkingInvoiceID, "False")
                     End If
                 Catch ex As Exception
                     MsgBox(ex.Message)
@@ -280,7 +282,7 @@ Namespace Batching
             RefreshBatchQueue()
         End Sub
 
-        Private Sub btn_CancelInvBatch_Click(sender As System.Object, e As System.EventArgs) Handles btn_CancelInvBatch.Click, btn_CancelPayBatch.Click
+        Private Sub btn_CancelInvBatch_Click(sender As System.Object, e As System.EventArgs) Handles btn_CancelInvBatch.Click
             If (BatchWorker.WorkerSupportsCancellation = True) Then
                 If (BatchWorker.CancellationPending = False) Then
                     BatchWorker.CancelAsync()
@@ -299,11 +301,11 @@ Namespace Batching
         End Sub
 
 
-        Private Sub dg_PrepPay_RowsAdded(sender As System.Object, e As System.Windows.Forms.DataGridViewRowsAddedEventArgs) Handles dg_PrepPay.RowsAdded, dg_PrepInv.RowsAdded
+        Private Sub dg_PrepPay_RowsAdded(sender As System.Object, e As System.Windows.Forms.DataGridViewRowsAddedEventArgs)
             PrepItemCountChanging()
         End Sub
 
-        Private Sub dg_PrepPay_RowsRemoved(sender As System.Object, e As System.Windows.Forms.DataGridViewRowsRemovedEventArgs) Handles dg_PrepPay.RowsRemoved, dg_PrepInv.RowsRemoved
+        Private Sub dg_PrepPay_RowsRemoved(sender As System.Object, e As System.Windows.Forms.DataGridViewRowsRemovedEventArgs)
             PrepItemCountChanging()
         End Sub
         Private Sub PrepItemCountChanging()
@@ -356,6 +358,145 @@ Namespace Batching
                 End If
             Else
                 MessageBox.Show("Please select a Prepared Payment first", "No Prepared Payment selected", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            End If
+        End Sub
+
+        Private _totalCash As Double
+        Private Property TotalCash As Double
+            Get
+                Return _totalCash
+            End Get
+            Set(value As Double)
+                _totalCash = value
+
+                If (value > 0) Then
+                    lbl_TotalCash.Visible = True
+                    tb_TotalCash.Visible = True
+                Else
+                    lbl_TotalCash.Visible = False
+                    tb_TotalCash.Visible = False
+                End If
+            End Set
+        End Property
+
+        Private _totalChecks As Double
+        Private Property TotalChecks As Double
+            Get
+                Return _totalChecks
+            End Get
+            Set(value As Double)
+                _totalChecks = value
+
+                If (value > 0) Then
+                    lbl_TotalCheck.Visible = True
+                    tb_TotalCheck.Visible = True
+                Else
+                    lbl_TotalCheck.Visible = False
+                    tb_TotalCheck.Visible = False
+                End If
+            End Set
+        End Property
+
+        Private _totalMoneyOrder As Double
+        Private Property TotalMoneyOrder As Double
+            Get
+                Return _totalMoneyOrder
+            End Get
+            Set(value As Double)
+                _totalMoneyOrder = value
+
+                If (value > 0) Then
+                    lbl_TotalMoneyOrder.Visible = True
+                    tb_TotalMoneyOrder.Visible = True
+                Else
+                    lbl_TotalMoneyOrder.Visible = False
+                    tb_TotalMoneyOrder.Visible = False
+                End If
+            End Set
+        End Property
+
+        Private Sub PayBatch_TotalsPrep()
+            Dim cash As Double
+            Dim checks As Double
+            Dim moneyO As Double
+
+            For Each row As ds_Batching.BATCH_WorkingPaymentsRow In DS_Batching.BATCH_WorkingPayments
+                If (row.WorkingPaymentsType = TC_ENPaymentTypes.Cash) Then
+                    cash += row.WorkingPaymentsAmount
+                ElseIf (row.WorkingPaymentsType = TC_ENPaymentTypes.Check) Then
+                    checks += row.WorkingPaymentsAmount
+                ElseIf (row.WorkingPaymentsType = TC_ENPaymentTypes.MoneyOrder) Then
+                    moneyO += row.WorkingPaymentsAmount
+                End If
+            Next
+
+            ' set properties
+            TotalCash = cash
+            TotalChecks = checks
+            TotalMoneyOrder = moneyO
+        End Sub
+
+        Private Function PayBatch_VerifyTotals() As Boolean
+            Dim err As Boolean
+            Dim s As New System.Text.StringBuilder
+
+            ' cash total
+            If (TotalCash > 0) Then
+                If (CDbl(tb_TotalCash.Text) <> TotalCash) Then
+                    tb_TotalCash.BackColor = AppColors.TextBoxErr
+                    err = True
+                    s.Append("- Total Cash incorrect").AppendLine()
+                    tb_TotalCash.Clear()
+                Else
+                    tb_TotalCash.BackColor = AppColors.TextBoxDef
+                End If
+            End If
+
+            ' check total
+            If (TotalChecks > 0) Then
+                If (CDbl(tb_TotalCheck.Text) <> TotalChecks) Then
+                    tb_TotalCheck.BackColor = AppColors.TextBoxErr
+                    err = True
+                    s.Append("- Total Checks incorrect").AppendLine()
+                    tb_TotalCheck.Clear()
+                Else
+                    tb_TotalCheck.BackColor = AppColors.TextBoxDef
+                End If
+            End If
+
+            ' money order total
+            If (TotalMoneyOrder > 0) Then
+                If (CDbl(tb_TotalMoneyOrder.Text) <> TotalMoneyOrder) Then
+                    tb_TotalMoneyOrder.BackColor = AppColors.TextBoxErr
+                    err = True
+                    s.Append("- Total Money Orders incorrect")
+                    tb_TotalMoneyOrder.Clear()
+                Else
+                    tb_TotalMoneyOrder.BackColor = AppColors.TextBoxDef
+                End If
+            End If
+
+            If (Not err) Then
+                Return True
+            Else
+                MessageBox.Show("Please correct the following totals before batching can begin:" & vbCrLf & s.ToString, "Totals Incorrect", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                Return False
+            End If
+        End Function
+
+        Private Sub btn_PayBatch_Click(sender As System.Object, e As System.EventArgs) Handles btn_PayBatch.Click
+            If (PayBatch_VerifyTotals()) Then
+
+            Else
+                ' totals did not match - err message is in validation
+            End If
+        End Sub
+
+        Private Sub tc_Master_SelectedIndexChanged(sender As System.Object, e As System.EventArgs) Handles tc_Master.SelectedIndexChanged
+            If (tc_Master.SelectedIndex = 0) Then
+                BATCH_WorkingInvoiceTableAdapter.Fill(DS_Batching.BATCH_WorkingInvoice)
+            Else
+                BATCH_WorkingPaymentsTableAdapter.Fill(DS_Batching.BATCH_WorkingPayments)
             End If
         End Sub
     End Class
