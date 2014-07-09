@@ -114,7 +114,7 @@ Namespace Customer
                                                                         "Reason:" & vbCrLf & tb_Reason.Text, "Confirm Credit for Customer", MessageBoxButtons.YesNo, MessageBoxIcon.Question)
                     If (confirmPrompt = Windows.Forms.DialogResult.Yes) Then
                         ' get service type row
-                        Dim row As ds_Types.ServiceTypesRow = CType(cmb_Types.SelectedItem, DataRowView).Row
+                        Dim row As ds_Customer.Customer_RecurringServiceTypesRow = CType(cmb_Types.SelectedItem, DataRowView).Row
                         ' create creditObj
                         Dim creditObj As New QBCreditObj
                         With creditObj
