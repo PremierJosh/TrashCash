@@ -33,6 +33,9 @@ Module AppModule
 
     Public CompanyClosingDate As Date
 
+    Public InvMaxAdvancedDays As Integer
+    Public InvMaxArrearageDays As Integer
+
     Public Function GetCustomerListID(ByVal customerNumber As Integer) As String
         Return CustTA.GetListID(customerNumber)
     End Function

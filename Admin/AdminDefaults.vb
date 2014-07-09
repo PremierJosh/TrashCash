@@ -33,6 +33,12 @@ Namespace Admin
             ' fill table
             _dt = AppTA.GetData
             _row = _dt.Rows(0)
+
+            ' set company closed date
+            dtp_CurrClosedDate.Value = CompanyClosingDate
+            ' setting inv post date info
+            nud_InvAdvLimit.Value = _row.InvPost_MaxAdvDays
+            nud_InvArrLimit.Value = _row.InvPost_MaxArrDays
             
             SetControls()
             End Sub

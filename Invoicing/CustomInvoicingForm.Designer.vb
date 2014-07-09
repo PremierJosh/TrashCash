@@ -565,12 +565,12 @@ Namespace Invoicing
             '
             Me.ContextMenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.btn_DeleteLine})
             Me.ContextMenuStrip1.Name = "ContextMenuStrip1"
-            Me.ContextMenuStrip1.Size = New System.Drawing.Size(153, 48)
+            Me.ContextMenuStrip1.Size = New System.Drawing.Size(133, 26)
             '
             'btn_DeleteLine
             '
             Me.btn_DeleteLine.Name = "btn_DeleteLine"
-            Me.btn_DeleteLine.Size = New System.Drawing.Size(152, 22)
+            Me.btn_DeleteLine.Size = New System.Drawing.Size(132, 22)
             Me.btn_DeleteLine.Text = "Delete Line"
             '
             'lbl_LineItems

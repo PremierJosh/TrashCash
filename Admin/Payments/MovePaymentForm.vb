@@ -30,7 +30,10 @@ Namespace Admin.Payments
 
                 ' checking if its cash - if not set controls and make visible
                 If (value.PaymentTypeID <> 1) Then
-                    tb_RefNum.Text = value.RefNumber
+                    If (Not value.IsRefNumberNull) Then
+                        tb_RefNum.Text = value.RefNumber
+                    End If
+
                     dtp_DateOnChk.Value = value.DateOnCheck
 
                     ' making controls visible

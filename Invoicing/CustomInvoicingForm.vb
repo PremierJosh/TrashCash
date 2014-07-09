@@ -224,13 +224,7 @@ Namespace Invoicing
                 If (Not succeed) Then
                     MessageBox.Show("Error - Invoice not created.", "QB Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
                 Else
-                    ' creating reminders
-                    For Each row As ds_Invoicing.CustomInvoice_LineItemsRow In Invoicing.CustomInvoice_LineItems
-                        If (row.Reminder) Then
-                            LiTA.Reminder_CustomInvoice_Insert(row.CI_ID, row.RenderedOnDate, row.CompiledDescText, CurrentUser.USER_NAME)
-                        End If
-                    Next
-                    ' refill history grid
+                  ' refill history grid
                     HistoryInv.Clear()
                     ResetInvoice()
                     CiTA.Fill(HistoryInv.CustomInvoices, CurrentCustomer)

@@ -279,8 +279,7 @@ Public Class TrashCashHome
 
         ' create new conMgrObj
         GlobalConMgr = New QBConMgr
-        ' create global reference to this form
-        HomeForm = Me
+       
 
         Try
             Dim connected As Boolean = GlobalConMgr.InitCon()
@@ -297,8 +296,13 @@ Public Class TrashCashHome
             MsgBox(ex.Message)
         End Try
 
-        ' get current company closing date
+        ' get current company closing date and max adv and arr post date limites
         CompanyClosingDate = QBRequests.CompanyClosingDateQuery
+        Dim row As ds_Application.App_SettingsRow = AppTA.GetData().Rows(0)
+        InvMaxAdvancedDays = row.InvPost_MaxAdvDays
+        InvMaxArrearageDays = row.InvPost_MaxArrDays
+        ' create global reference to this form
+        HomeForm = Me
 
         _splash.Close()
 
@@ -309,8 +313,7 @@ Public Class TrashCashHome
         RefreshApprovCount(True)
 
         ' checking if a batch didn't complete last time the program was run
-        Dim row As ds_Application.APP_SETTINGSRow = AppTA.GetData().Rows(0)
-        Dim finBatch As Batching.BatchInterruption = Nothing
+       Dim finBatch As Batching.BatchInterruption = Nothing
         If (row.Batching_Invoices) Then
             finBatch = New Batching.BatchInterruption
             finBatch.InvoiceBatch = True

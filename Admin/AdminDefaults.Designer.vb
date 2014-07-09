@@ -35,11 +35,24 @@ Namespace Admin
             Me.cmb_BadCheckItem = New System.Windows.Forms.ComboBox()
             Me.cmb_BadCheckCustInvItem = New System.Windows.Forms.ComboBox()
             Me.btn_Save = New System.Windows.Forms.Button()
+            Me.lbl_DateLimits = New System.Windows.Forms.Label()
+            Me.Panel2 = New System.Windows.Forms.Panel()
+            Me.Label1 = New System.Windows.Forms.Label()
+            Me.GroupBox1 = New System.Windows.Forms.GroupBox()
+            Me.nud_InvAdvLimit = New System.Windows.Forms.NumericUpDown()
+            Me.nud_InvArrLimit = New System.Windows.Forms.NumericUpDown()
+            Me.Label2 = New System.Windows.Forms.Label()
+            Me.Label3 = New System.Windows.Forms.Label()
+            Me.dtp_CurrClosedDate = New System.Windows.Forms.DateTimePicker()
             lbl_CustInfoDesc = New System.Windows.Forms.Label()
             lbl_CheckItem = New System.Windows.Forms.Label()
             CustomerChargeRateLabel = New System.Windows.Forms.Label()
             Me.FlowLayoutPanel.SuspendLayout()
             Me.Panel1.SuspendLayout()
+            Me.Panel2.SuspendLayout()
+            Me.GroupBox1.SuspendLayout()
+            CType(Me.nud_InvAdvLimit, System.ComponentModel.ISupportInitialize).BeginInit()
+            CType(Me.nud_InvArrLimit, System.ComponentModel.ISupportInitialize).BeginInit()
             Me.SuspendLayout()
             '
             'lbl_CustInfoDesc
@@ -72,11 +85,13 @@ Namespace Admin
             '
             Me.FlowLayoutPanel.Controls.Add(Me.hdr_BadCheck)
             Me.FlowLayoutPanel.Controls.Add(Me.Panel1)
+            Me.FlowLayoutPanel.Controls.Add(Me.lbl_DateLimits)
+            Me.FlowLayoutPanel.Controls.Add(Me.Panel2)
             Me.FlowLayoutPanel.Dock = System.Windows.Forms.DockStyle.Top
             Me.FlowLayoutPanel.FlowDirection = System.Windows.Forms.FlowDirection.TopDown
             Me.FlowLayoutPanel.Location = New System.Drawing.Point(0, 0)
             Me.FlowLayoutPanel.Name = "FlowLayoutPanel"
-            Me.FlowLayoutPanel.Size = New System.Drawing.Size(593, 249)
+            Me.FlowLayoutPanel.Size = New System.Drawing.Size(666, 283)
             Me.FlowLayoutPanel.TabIndex = 1
             '
             'hdr_BadCheck
@@ -100,7 +115,7 @@ Namespace Admin
             Me.Panel1.Controls.Add(CustomerChargeRateLabel)
             Me.Panel1.Location = New System.Drawing.Point(3, 19)
             Me.Panel1.Name = "Panel1"
-            Me.Panel1.Size = New System.Drawing.Size(578, 133)
+            Me.Panel1.Size = New System.Drawing.Size(578, 107)
             Me.Panel1.TabIndex = 4
             '
             'tb_BadCheckCustFee
@@ -128,18 +143,102 @@ Namespace Admin
             '
             'btn_Save
             '
-            Me.btn_Save.Location = New System.Drawing.Point(264, 264)
+            Me.btn_Save.Location = New System.Drawing.Point(263, 289)
             Me.btn_Save.Name = "btn_Save"
             Me.btn_Save.Size = New System.Drawing.Size(75, 23)
             Me.btn_Save.TabIndex = 2
             Me.btn_Save.Text = "Save"
             Me.btn_Save.UseVisualStyleBackColor = True
             '
+            'lbl_DateLimits
+            '
+            Me.lbl_DateLimits.AutoSize = True
+            Me.lbl_DateLimits.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+            Me.lbl_DateLimits.Location = New System.Drawing.Point(3, 129)
+            Me.lbl_DateLimits.Name = "lbl_DateLimits"
+            Me.lbl_DateLimits.Size = New System.Drawing.Size(88, 16)
+            Me.lbl_DateLimits.TabIndex = 7
+            Me.lbl_DateLimits.Text = "Date Limits"
+            '
+            'Panel2
+            '
+            Me.Panel2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+            Me.Panel2.Controls.Add(Me.dtp_CurrClosedDate)
+            Me.Panel2.Controls.Add(Me.Label3)
+            Me.Panel2.Controls.Add(Me.GroupBox1)
+            Me.Panel2.Location = New System.Drawing.Point(3, 148)
+            Me.Panel2.Name = "Panel2"
+            Me.Panel2.Size = New System.Drawing.Size(578, 107)
+            Me.Panel2.TabIndex = 8
+            '
+            'Label1
+            '
+            Me.Label1.AutoSize = True
+            Me.Label1.Location = New System.Drawing.Point(6, 29)
+            Me.Label1.Name = "Label1"
+            Me.Label1.Size = New System.Drawing.Size(134, 13)
+            Me.Label1.TabIndex = 0
+            Me.Label1.Text = "Max post days in advance:"
+            '
+            'GroupBox1
+            '
+            Me.GroupBox1.Controls.Add(Me.nud_InvArrLimit)
+            Me.GroupBox1.Controls.Add(Me.Label2)
+            Me.GroupBox1.Controls.Add(Me.nud_InvAdvLimit)
+            Me.GroupBox1.Controls.Add(Me.Label1)
+            Me.GroupBox1.Location = New System.Drawing.Point(34, 3)
+            Me.GroupBox1.Name = "GroupBox1"
+            Me.GroupBox1.Size = New System.Drawing.Size(200, 86)
+            Me.GroupBox1.TabIndex = 1
+            Me.GroupBox1.TabStop = False
+            Me.GroupBox1.Text = "Invoicing"
+            '
+            'nud_InvAdvLimit
+            '
+            Me.nud_InvAdvLimit.Location = New System.Drawing.Point(146, 27)
+            Me.nud_InvAdvLimit.Name = "nud_InvAdvLimit"
+            Me.nud_InvAdvLimit.Size = New System.Drawing.Size(42, 20)
+            Me.nud_InvAdvLimit.TabIndex = 1
+            '
+            'nud_InvArrLimit
+            '
+            Me.nud_InvArrLimit.Location = New System.Drawing.Point(146, 54)
+            Me.nud_InvArrLimit.Name = "nud_InvArrLimit"
+            Me.nud_InvArrLimit.Size = New System.Drawing.Size(42, 20)
+            Me.nud_InvArrLimit.TabIndex = 3
+            '
+            'Label2
+            '
+            Me.Label2.AutoSize = True
+            Me.Label2.Location = New System.Drawing.Point(6, 56)
+            Me.Label2.Name = "Label2"
+            Me.Label2.Size = New System.Drawing.Size(137, 13)
+            Me.Label2.TabIndex = 2
+            Me.Label2.Text = "Max post days in arrearage:"
+            '
+            'Label3
+            '
+            Me.Label3.Location = New System.Drawing.Point(273, 8)
+            Me.Label3.Name = "Label3"
+            Me.Label3.Size = New System.Drawing.Size(282, 42)
+            Me.Label3.TabIndex = 2
+            Me.Label3.Text = "Current Quickbooks Company file closing date. This is only adjustable within Quic" & _
+        "kbooks by an Administrator." & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10)
+            '
+            'dtp_CurrClosedDate
+            '
+            Me.dtp_CurrClosedDate.Enabled = False
+            Me.dtp_CurrClosedDate.Format = System.Windows.Forms.DateTimePickerFormat.[Short]
+            Me.dtp_CurrClosedDate.Location = New System.Drawing.Point(349, 53)
+            Me.dtp_CurrClosedDate.Name = "dtp_CurrClosedDate"
+            Me.dtp_CurrClosedDate.Size = New System.Drawing.Size(98, 20)
+            Me.dtp_CurrClosedDate.TabIndex = 3
+            '
             'AdminDefaults
             '
             Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
             Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-            Me.ClientSize = New System.Drawing.Size(593, 299)
+            Me.ClientSize = New System.Drawing.Size(666, 324)
             Me.Controls.Add(Me.btn_Save)
             Me.Controls.Add(Me.FlowLayoutPanel)
             Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
@@ -151,6 +250,11 @@ Namespace Admin
             Me.FlowLayoutPanel.PerformLayout()
             Me.Panel1.ResumeLayout(False)
             Me.Panel1.PerformLayout()
+            Me.Panel2.ResumeLayout(False)
+            Me.GroupBox1.ResumeLayout(False)
+            Me.GroupBox1.PerformLayout()
+            CType(Me.nud_InvAdvLimit, System.ComponentModel.ISupportInitialize).EndInit()
+            CType(Me.nud_InvArrLimit, System.ComponentModel.ISupportInitialize).EndInit()
             Me.ResumeLayout(False)
 
         End Sub
@@ -160,6 +264,15 @@ Namespace Admin
         Friend WithEvents cmb_BadCheckCustInvItem As System.Windows.Forms.ComboBox
         Friend WithEvents hdr_BadCheck As System.Windows.Forms.Label
         Friend WithEvents tb_BadCheckCustFee As CurrencyTextBox
-      Friend WithEvents btn_Save As System.Windows.Forms.Button
+        Friend WithEvents btn_Save As System.Windows.Forms.Button
+        Friend WithEvents lbl_DateLimits As System.Windows.Forms.Label
+        Friend WithEvents Panel2 As System.Windows.Forms.Panel
+        Friend WithEvents dtp_CurrClosedDate As System.Windows.Forms.DateTimePicker
+        Friend WithEvents Label3 As System.Windows.Forms.Label
+        Friend WithEvents GroupBox1 As System.Windows.Forms.GroupBox
+        Friend WithEvents nud_InvArrLimit As System.Windows.Forms.NumericUpDown
+        Friend WithEvents Label2 As System.Windows.Forms.Label
+        Friend WithEvents nud_InvAdvLimit As System.Windows.Forms.NumericUpDown
+        Friend WithEvents Label1 As System.Windows.Forms.Label
     End Class
 End Namespace

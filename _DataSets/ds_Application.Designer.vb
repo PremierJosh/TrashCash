@@ -27,7 +27,7 @@ Partial Public Class ds_Application
     
     Private tableUSERS As USERSDataTable
     
-    Private tableAPP_SETTINGS As APP_SETTINGSDataTable
+    Private tableApp_Settings As App_SettingsDataTable
     
     Private _schemaSerializationMode As Global.System.Data.SchemaSerializationMode = Global.System.Data.SchemaSerializationMode.IncludeSchema
     
@@ -62,7 +62,7 @@ Partial Public Class ds_Application
                 MyBase.Tables.Add(New USERSDataTable(ds.Tables("Users")))
             End If
             If (Not (ds.Tables("App_Settings")) Is Nothing) Then
-                MyBase.Tables.Add(New APP_SETTINGSDataTable(ds.Tables("App_Settings")))
+                MyBase.Tables.Add(New App_SettingsDataTable(ds.Tables("App_Settings")))
             End If
             Me.DataSetName = ds.DataSetName
             Me.Prefix = ds.Prefix
@@ -95,9 +95,9 @@ Partial Public Class ds_Application
      Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0"),  _
      Global.System.ComponentModel.Browsable(false),  _
      Global.System.ComponentModel.DesignerSerializationVisibility(Global.System.ComponentModel.DesignerSerializationVisibility.Content)>  _
-    Public ReadOnly Property APP_SETTINGS() As APP_SETTINGSDataTable
+    Public ReadOnly Property App_Settings() As App_SettingsDataTable
         Get
-            Return Me.tableAPP_SETTINGS
+            Return Me.tableApp_Settings
         End Get
     End Property
     
@@ -172,7 +172,7 @@ Partial Public Class ds_Application
                 MyBase.Tables.Add(New USERSDataTable(ds.Tables("Users")))
             End If
             If (Not (ds.Tables("App_Settings")) Is Nothing) Then
-                MyBase.Tables.Add(New APP_SETTINGSDataTable(ds.Tables("App_Settings")))
+                MyBase.Tables.Add(New App_SettingsDataTable(ds.Tables("App_Settings")))
             End If
             Me.DataSetName = ds.DataSetName
             Me.Prefix = ds.Prefix
@@ -212,10 +212,10 @@ Partial Public Class ds_Application
                 Me.tableUSERS.InitVars
             End If
         End If
-        Me.tableAPP_SETTINGS = CType(MyBase.Tables("App_Settings"),APP_SETTINGSDataTable)
+        Me.tableApp_Settings = CType(MyBase.Tables("App_Settings"),App_SettingsDataTable)
         If (initTable = true) Then
-            If (Not (Me.tableAPP_SETTINGS) Is Nothing) Then
-                Me.tableAPP_SETTINGS.InitVars
+            If (Not (Me.tableApp_Settings) Is Nothing) Then
+                Me.tableApp_Settings.InitVars
             End If
         End If
     End Sub
@@ -230,8 +230,8 @@ Partial Public Class ds_Application
         Me.SchemaSerializationMode = Global.System.Data.SchemaSerializationMode.IncludeSchema
         Me.tableUSERS = New USERSDataTable()
         MyBase.Tables.Add(Me.tableUSERS)
-        Me.tableAPP_SETTINGS = New APP_SETTINGSDataTable()
-        MyBase.Tables.Add(Me.tableAPP_SETTINGS)
+        Me.tableApp_Settings = New App_SettingsDataTable()
+        MyBase.Tables.Add(Me.tableApp_Settings)
     End Sub
     
     <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
@@ -242,7 +242,7 @@ Partial Public Class ds_Application
     
     <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
      Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-    Private Function ShouldSerializeAPP_SETTINGS() As Boolean
+    Private Function ShouldSerializeApp_Settings() As Boolean
         Return false
     End Function
     
@@ -308,7 +308,7 @@ Partial Public Class ds_Application
     Public Delegate Sub USERSRowChangeEventHandler(ByVal sender As Object, ByVal e As USERSRowChangeEvent)
     
     <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-    Public Delegate Sub APP_SETTINGSRowChangeEventHandler(ByVal sender As Object, ByVal e As APP_SETTINGSRowChangeEvent)
+    Public Delegate Sub App_SettingsRowChangeEventHandler(ByVal sender As Object, ByVal e As App_SettingsRowChangeEvent)
     
     '''<summary>
     '''Represents the strongly named DataTable class.
@@ -612,8 +612,8 @@ Partial Public Class ds_Application
     '''</summary>
     <Global.System.Serializable(),  _
      Global.System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedTableSchema")>  _
-    Partial Public Class APP_SETTINGSDataTable
-        Inherits Global.System.Data.TypedTableBase(Of APP_SETTINGSRow)
+    Partial Public Class App_SettingsDataTable
+        Inherits Global.System.Data.TypedTableBase(Of App_SettingsRow)
         
         Private columnID As Global.System.Data.DataColumn
         
@@ -627,9 +627,13 @@ Partial Public Class ds_Application
         
         Private columnDEBUG_MODE As Global.System.Data.DataColumn
         
+        Private columnBatching_Payments As Global.System.Data.DataColumn
+        
         Private columnBatching_Invoices As Global.System.Data.DataColumn
         
-        Private columnBatching_Payments As Global.System.Data.DataColumn
+        Private columnInvPost_MaxAdvDays As Global.System.Data.DataColumn
+        
+        Private columnInvPost_MaxArrDays As Global.System.Data.DataColumn
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
@@ -716,6 +720,14 @@ Partial Public Class ds_Application
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        Public ReadOnly Property Batching_PaymentsColumn() As Global.System.Data.DataColumn
+            Get
+                Return Me.columnBatching_Payments
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
         Public ReadOnly Property Batching_InvoicesColumn() As Global.System.Data.DataColumn
             Get
                 Return Me.columnBatching_Invoices
@@ -724,9 +736,17 @@ Partial Public Class ds_Application
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public ReadOnly Property Batching_PaymentsColumn() As Global.System.Data.DataColumn
+        Public ReadOnly Property InvPost_MaxAdvDaysColumn() As Global.System.Data.DataColumn
             Get
-                Return Me.columnBatching_Payments
+                Return Me.columnInvPost_MaxAdvDays
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        Public ReadOnly Property InvPost_MaxArrDaysColumn() As Global.System.Data.DataColumn
+            Get
+                Return Me.columnInvPost_MaxArrDays
             End Get
         End Property
         
@@ -741,50 +761,50 @@ Partial Public Class ds_Application
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Default ReadOnly Property Item(ByVal index As Integer) As APP_SETTINGSRow
+        Public Default ReadOnly Property Item(ByVal index As Integer) As App_SettingsRow
             Get
-                Return CType(Me.Rows(index),APP_SETTINGSRow)
+                Return CType(Me.Rows(index),App_SettingsRow)
             End Get
         End Property
         
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Event APP_SETTINGSRowChanging As APP_SETTINGSRowChangeEventHandler
+        Public Event App_SettingsRowChanging As App_SettingsRowChangeEventHandler
         
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Event APP_SETTINGSRowChanged As APP_SETTINGSRowChangeEventHandler
+        Public Event App_SettingsRowChanged As App_SettingsRowChangeEventHandler
         
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Event APP_SETTINGSRowDeleting As APP_SETTINGSRowChangeEventHandler
+        Public Event App_SettingsRowDeleting As App_SettingsRowChangeEventHandler
         
         <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Event APP_SETTINGSRowDeleted As APP_SETTINGSRowChangeEventHandler
+        Public Event App_SettingsRowDeleted As App_SettingsRowChangeEventHandler
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Overloads Sub AddAPP_SETTINGSRow(ByVal row As APP_SETTINGSRow)
+        Public Overloads Sub AddApp_SettingsRow(ByVal row As App_SettingsRow)
             Me.Rows.Add(row)
         End Sub
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Overloads Function AddAPP_SETTINGSRow(ByVal QB_FILE_LOCATION As String, ByVal BAD_CHECK_CHECKITEM_LISTID As String, ByVal BAD_CHECK_CUSTITEM_LISTID As String, ByVal BAD_CHECK_CUST_FEE As Decimal, ByVal DEBUG_MODE As Boolean, ByVal Batching_Invoices As Boolean, ByVal Batching_Payments As Boolean) As APP_SETTINGSRow
-            Dim rowAPP_SETTINGSRow As APP_SETTINGSRow = CType(Me.NewRow,APP_SETTINGSRow)
-            Dim columnValuesArray() As Object = New Object() {Nothing, QB_FILE_LOCATION, BAD_CHECK_CHECKITEM_LISTID, BAD_CHECK_CUSTITEM_LISTID, BAD_CHECK_CUST_FEE, DEBUG_MODE, Batching_Invoices, Batching_Payments}
-            rowAPP_SETTINGSRow.ItemArray = columnValuesArray
-            Me.Rows.Add(rowAPP_SETTINGSRow)
-            Return rowAPP_SETTINGSRow
+        Public Overloads Function AddApp_SettingsRow(ByVal QB_FILE_LOCATION As String, ByVal BAD_CHECK_CHECKITEM_LISTID As String, ByVal BAD_CHECK_CUSTITEM_LISTID As String, ByVal BAD_CHECK_CUST_FEE As Decimal, ByVal DEBUG_MODE As Boolean, ByVal Batching_Payments As Boolean, ByVal Batching_Invoices As Boolean, ByVal InvPost_MaxAdvDays As Integer, ByVal InvPost_MaxArrDays As Integer) As App_SettingsRow
+            Dim rowApp_SettingsRow As App_SettingsRow = CType(Me.NewRow,App_SettingsRow)
+            Dim columnValuesArray() As Object = New Object() {Nothing, QB_FILE_LOCATION, BAD_CHECK_CHECKITEM_LISTID, BAD_CHECK_CUSTITEM_LISTID, BAD_CHECK_CUST_FEE, DEBUG_MODE, Batching_Payments, Batching_Invoices, InvPost_MaxAdvDays, InvPost_MaxArrDays}
+            rowApp_SettingsRow.ItemArray = columnValuesArray
+            Me.Rows.Add(rowApp_SettingsRow)
+            Return rowApp_SettingsRow
         End Function
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Function FindByID(ByVal ID As Integer) As APP_SETTINGSRow
-            Return CType(Me.Rows.Find(New Object() {ID}),APP_SETTINGSRow)
+        Public Function FindByID(ByVal ID As Integer) As App_SettingsRow
+            Return CType(Me.Rows.Find(New Object() {ID}),App_SettingsRow)
         End Function
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
         Public Overrides Function Clone() As Global.System.Data.DataTable
-            Dim cln As APP_SETTINGSDataTable = CType(MyBase.Clone,APP_SETTINGSDataTable)
+            Dim cln As App_SettingsDataTable = CType(MyBase.Clone,App_SettingsDataTable)
             cln.InitVars
             Return cln
         End Function
@@ -792,7 +812,7 @@ Partial Public Class ds_Application
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
         Protected Overrides Function CreateInstance() As Global.System.Data.DataTable
-            Return New APP_SETTINGSDataTable()
+            Return New App_SettingsDataTable()
         End Function
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
@@ -804,8 +824,10 @@ Partial Public Class ds_Application
             Me.columnBAD_CHECK_CUSTITEM_LISTID = MyBase.Columns("BAD_CHECK_CUSTITEM_LISTID")
             Me.columnBAD_CHECK_CUST_FEE = MyBase.Columns("BAD_CHECK_CUST_FEE")
             Me.columnDEBUG_MODE = MyBase.Columns("DEBUG_MODE")
-            Me.columnBatching_Invoices = MyBase.Columns("Batching_Invoices")
             Me.columnBatching_Payments = MyBase.Columns("Batching_Payments")
+            Me.columnBatching_Invoices = MyBase.Columns("Batching_Invoices")
+            Me.columnInvPost_MaxAdvDays = MyBase.Columns("InvPost_MaxAdvDays")
+            Me.columnInvPost_MaxArrDays = MyBase.Columns("InvPost_MaxArrDays")
         End Sub
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
@@ -823,10 +845,14 @@ Partial Public Class ds_Application
             MyBase.Columns.Add(Me.columnBAD_CHECK_CUST_FEE)
             Me.columnDEBUG_MODE = New Global.System.Data.DataColumn("DEBUG_MODE", GetType(Boolean), Nothing, Global.System.Data.MappingType.Element)
             MyBase.Columns.Add(Me.columnDEBUG_MODE)
-            Me.columnBatching_Invoices = New Global.System.Data.DataColumn("Batching_Invoices", GetType(Boolean), Nothing, Global.System.Data.MappingType.Element)
-            MyBase.Columns.Add(Me.columnBatching_Invoices)
             Me.columnBatching_Payments = New Global.System.Data.DataColumn("Batching_Payments", GetType(Boolean), Nothing, Global.System.Data.MappingType.Element)
             MyBase.Columns.Add(Me.columnBatching_Payments)
+            Me.columnBatching_Invoices = New Global.System.Data.DataColumn("Batching_Invoices", GetType(Boolean), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnBatching_Invoices)
+            Me.columnInvPost_MaxAdvDays = New Global.System.Data.DataColumn("InvPost_MaxAdvDays", GetType(Integer), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnInvPost_MaxAdvDays)
+            Me.columnInvPost_MaxArrDays = New Global.System.Data.DataColumn("InvPost_MaxArrDays", GetType(Integer), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnInvPost_MaxArrDays)
             Me.Constraints.Add(New Global.System.Data.UniqueConstraint("Constraint1", New Global.System.Data.DataColumn() {Me.columnID}, true))
             Me.columnID.AutoIncrement = true
             Me.columnID.AutoIncrementSeed = -1
@@ -837,41 +863,36 @@ Partial Public Class ds_Application
             Me.columnQB_FILE_LOCATION.MaxLength = 100
             Me.columnBAD_CHECK_CHECKITEM_LISTID.MaxLength = 50
             Me.columnBAD_CHECK_CUSTITEM_LISTID.MaxLength = 50
-            Me.columnBatching_Invoices.AllowDBNull = false
             Me.columnBatching_Payments.AllowDBNull = false
-            Me.ExtendedProperties.Add("Generator_RowClassName", "APP_SETTINGSRow")
-            Me.ExtendedProperties.Add("Generator_RowEvArgName", "APP_SETTINGSRowChangeEvent")
-            Me.ExtendedProperties.Add("Generator_RowEvHandlerName", "APP_SETTINGSRowChangeEventHandler")
-            Me.ExtendedProperties.Add("Generator_TableClassName", "APP_SETTINGSDataTable")
-            Me.ExtendedProperties.Add("Generator_TablePropName", "APP_SETTINGS")
-            Me.ExtendedProperties.Add("Generator_TableVarName", "tableAPP_SETTINGS")
-            Me.ExtendedProperties.Add("Generator_UserTableName", "App_Settings")
+            Me.columnBatching_Invoices.AllowDBNull = false
+            Me.columnInvPost_MaxAdvDays.AllowDBNull = false
+            Me.columnInvPost_MaxArrDays.AllowDBNull = false
         End Sub
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Function NewAPP_SETTINGSRow() As APP_SETTINGSRow
-            Return CType(Me.NewRow,APP_SETTINGSRow)
+        Public Function NewApp_SettingsRow() As App_SettingsRow
+            Return CType(Me.NewRow,App_SettingsRow)
         End Function
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
         Protected Overrides Function NewRowFromBuilder(ByVal builder As Global.System.Data.DataRowBuilder) As Global.System.Data.DataRow
-            Return New APP_SETTINGSRow(builder)
+            Return New App_SettingsRow(builder)
         End Function
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
         Protected Overrides Function GetRowType() As Global.System.Type
-            Return GetType(APP_SETTINGSRow)
+            Return GetType(App_SettingsRow)
         End Function
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
         Protected Overrides Sub OnRowChanged(ByVal e As Global.System.Data.DataRowChangeEventArgs)
             MyBase.OnRowChanged(e)
-            If (Not (Me.APP_SETTINGSRowChangedEvent) Is Nothing) Then
-                RaiseEvent APP_SETTINGSRowChanged(Me, New APP_SETTINGSRowChangeEvent(CType(e.Row,APP_SETTINGSRow), e.Action))
+            If (Not (Me.App_SettingsRowChangedEvent) Is Nothing) Then
+                RaiseEvent App_SettingsRowChanged(Me, New App_SettingsRowChangeEvent(CType(e.Row,App_SettingsRow), e.Action))
             End If
         End Sub
         
@@ -879,8 +900,8 @@ Partial Public Class ds_Application
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
         Protected Overrides Sub OnRowChanging(ByVal e As Global.System.Data.DataRowChangeEventArgs)
             MyBase.OnRowChanging(e)
-            If (Not (Me.APP_SETTINGSRowChangingEvent) Is Nothing) Then
-                RaiseEvent APP_SETTINGSRowChanging(Me, New APP_SETTINGSRowChangeEvent(CType(e.Row,APP_SETTINGSRow), e.Action))
+            If (Not (Me.App_SettingsRowChangingEvent) Is Nothing) Then
+                RaiseEvent App_SettingsRowChanging(Me, New App_SettingsRowChangeEvent(CType(e.Row,App_SettingsRow), e.Action))
             End If
         End Sub
         
@@ -888,8 +909,8 @@ Partial Public Class ds_Application
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
         Protected Overrides Sub OnRowDeleted(ByVal e As Global.System.Data.DataRowChangeEventArgs)
             MyBase.OnRowDeleted(e)
-            If (Not (Me.APP_SETTINGSRowDeletedEvent) Is Nothing) Then
-                RaiseEvent APP_SETTINGSRowDeleted(Me, New APP_SETTINGSRowChangeEvent(CType(e.Row,APP_SETTINGSRow), e.Action))
+            If (Not (Me.App_SettingsRowDeletedEvent) Is Nothing) Then
+                RaiseEvent App_SettingsRowDeleted(Me, New App_SettingsRowChangeEvent(CType(e.Row,App_SettingsRow), e.Action))
             End If
         End Sub
         
@@ -897,14 +918,14 @@ Partial Public Class ds_Application
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
         Protected Overrides Sub OnRowDeleting(ByVal e As Global.System.Data.DataRowChangeEventArgs)
             MyBase.OnRowDeleting(e)
-            If (Not (Me.APP_SETTINGSRowDeletingEvent) Is Nothing) Then
-                RaiseEvent APP_SETTINGSRowDeleting(Me, New APP_SETTINGSRowChangeEvent(CType(e.Row,APP_SETTINGSRow), e.Action))
+            If (Not (Me.App_SettingsRowDeletingEvent) Is Nothing) Then
+                RaiseEvent App_SettingsRowDeleting(Me, New App_SettingsRowChangeEvent(CType(e.Row,App_SettingsRow), e.Action))
             End If
         End Sub
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Sub RemoveAPP_SETTINGSRow(ByVal row As APP_SETTINGSRow)
+        Public Sub RemoveApp_SettingsRow(ByVal row As App_SettingsRow)
             Me.Rows.Remove(row)
         End Sub
         
@@ -931,7 +952,7 @@ Partial Public Class ds_Application
             type.Attributes.Add(attribute1)
             Dim attribute2 As Global.System.Xml.Schema.XmlSchemaAttribute = New Global.System.Xml.Schema.XmlSchemaAttribute()
             attribute2.Name = "tableTypeName"
-            attribute2.FixedValue = "APP_SETTINGSDataTable"
+            attribute2.FixedValue = "App_SettingsDataTable"
             type.Attributes.Add(attribute2)
             type.Particle = sequence
             Dim dsSchema As Global.System.Xml.Schema.XmlSchema = ds.GetSchemaSerializable
@@ -1027,26 +1048,26 @@ Partial Public Class ds_Application
     '''<summary>
     '''Represents strongly named DataRow class.
     '''</summary>
-    Partial Public Class APP_SETTINGSRow
+    Partial Public Class App_SettingsRow
         Inherits Global.System.Data.DataRow
         
-        Private tableAPP_SETTINGS As APP_SETTINGSDataTable
+        Private tableApp_Settings As App_SettingsDataTable
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
         Friend Sub New(ByVal rb As Global.System.Data.DataRowBuilder)
             MyBase.New(rb)
-            Me.tableAPP_SETTINGS = CType(Me.Table,APP_SETTINGSDataTable)
+            Me.tableApp_Settings = CType(Me.Table,App_SettingsDataTable)
         End Sub
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
         Public Property ID() As Integer
             Get
-                Return CType(Me(Me.tableAPP_SETTINGS.IDColumn),Integer)
+                Return CType(Me(Me.tableApp_Settings.IDColumn),Integer)
             End Get
             Set
-                Me(Me.tableAPP_SETTINGS.IDColumn) = value
+                Me(Me.tableApp_Settings.IDColumn) = value
             End Set
         End Property
         
@@ -1055,13 +1076,13 @@ Partial Public Class ds_Application
         Public Property QB_FILE_LOCATION() As String
             Get
                 Try 
-                    Return CType(Me(Me.tableAPP_SETTINGS.QB_FILE_LOCATIONColumn),String)
+                    Return CType(Me(Me.tableApp_Settings.QB_FILE_LOCATIONColumn),String)
                 Catch e As Global.System.InvalidCastException
                     Throw New Global.System.Data.StrongTypingException("The value for column 'QB_FILE_LOCATION' in table 'App_Settings' is DBNull.", e)
                 End Try
             End Get
             Set
-                Me(Me.tableAPP_SETTINGS.QB_FILE_LOCATIONColumn) = value
+                Me(Me.tableApp_Settings.QB_FILE_LOCATIONColumn) = value
             End Set
         End Property
         
@@ -1070,14 +1091,14 @@ Partial Public Class ds_Application
         Public Property BAD_CHECK_CHECKITEM_LISTID() As String
             Get
                 Try 
-                    Return CType(Me(Me.tableAPP_SETTINGS.BAD_CHECK_CHECKITEM_LISTIDColumn),String)
+                    Return CType(Me(Me.tableApp_Settings.BAD_CHECK_CHECKITEM_LISTIDColumn),String)
                 Catch e As Global.System.InvalidCastException
                     Throw New Global.System.Data.StrongTypingException("The value for column 'BAD_CHECK_CHECKITEM_LISTID' in table 'App_Settings' is DBNu"& _ 
                             "ll.", e)
                 End Try
             End Get
             Set
-                Me(Me.tableAPP_SETTINGS.BAD_CHECK_CHECKITEM_LISTIDColumn) = value
+                Me(Me.tableApp_Settings.BAD_CHECK_CHECKITEM_LISTIDColumn) = value
             End Set
         End Property
         
@@ -1086,14 +1107,14 @@ Partial Public Class ds_Application
         Public Property BAD_CHECK_CUSTITEM_LISTID() As String
             Get
                 Try 
-                    Return CType(Me(Me.tableAPP_SETTINGS.BAD_CHECK_CUSTITEM_LISTIDColumn),String)
+                    Return CType(Me(Me.tableApp_Settings.BAD_CHECK_CUSTITEM_LISTIDColumn),String)
                 Catch e As Global.System.InvalidCastException
                     Throw New Global.System.Data.StrongTypingException("The value for column 'BAD_CHECK_CUSTITEM_LISTID' in table 'App_Settings' is DBNul"& _ 
                             "l.", e)
                 End Try
             End Get
             Set
-                Me(Me.tableAPP_SETTINGS.BAD_CHECK_CUSTITEM_LISTIDColumn) = value
+                Me(Me.tableApp_Settings.BAD_CHECK_CUSTITEM_LISTIDColumn) = value
             End Set
         End Property
         
@@ -1102,13 +1123,13 @@ Partial Public Class ds_Application
         Public Property BAD_CHECK_CUST_FEE() As Decimal
             Get
                 Try 
-                    Return CType(Me(Me.tableAPP_SETTINGS.BAD_CHECK_CUST_FEEColumn),Decimal)
+                    Return CType(Me(Me.tableApp_Settings.BAD_CHECK_CUST_FEEColumn),Decimal)
                 Catch e As Global.System.InvalidCastException
                     Throw New Global.System.Data.StrongTypingException("The value for column 'BAD_CHECK_CUST_FEE' in table 'App_Settings' is DBNull.", e)
                 End Try
             End Get
             Set
-                Me(Me.tableAPP_SETTINGS.BAD_CHECK_CUST_FEEColumn) = value
+                Me(Me.tableApp_Settings.BAD_CHECK_CUST_FEEColumn) = value
             End Set
         End Property
         
@@ -1117,24 +1138,13 @@ Partial Public Class ds_Application
         Public Property DEBUG_MODE() As Boolean
             Get
                 Try 
-                    Return CType(Me(Me.tableAPP_SETTINGS.DEBUG_MODEColumn),Boolean)
+                    Return CType(Me(Me.tableApp_Settings.DEBUG_MODEColumn),Boolean)
                 Catch e As Global.System.InvalidCastException
                     Throw New Global.System.Data.StrongTypingException("The value for column 'DEBUG_MODE' in table 'App_Settings' is DBNull.", e)
                 End Try
             End Get
             Set
-                Me(Me.tableAPP_SETTINGS.DEBUG_MODEColumn) = value
-            End Set
-        End Property
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Property Batching_Invoices() As Boolean
-            Get
-                Return CType(Me(Me.tableAPP_SETTINGS.Batching_InvoicesColumn),Boolean)
-            End Get
-            Set
-                Me(Me.tableAPP_SETTINGS.Batching_InvoicesColumn) = value
+                Me(Me.tableApp_Settings.DEBUG_MODEColumn) = value
             End Set
         End Property
         
@@ -1142,71 +1152,104 @@ Partial Public Class ds_Application
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
         Public Property Batching_Payments() As Boolean
             Get
-                Return CType(Me(Me.tableAPP_SETTINGS.Batching_PaymentsColumn),Boolean)
+                Return CType(Me(Me.tableApp_Settings.Batching_PaymentsColumn),Boolean)
             End Get
             Set
-                Me(Me.tableAPP_SETTINGS.Batching_PaymentsColumn) = value
+                Me(Me.tableApp_Settings.Batching_PaymentsColumn) = value
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        Public Property Batching_Invoices() As Boolean
+            Get
+                Return CType(Me(Me.tableApp_Settings.Batching_InvoicesColumn),Boolean)
+            End Get
+            Set
+                Me(Me.tableApp_Settings.Batching_InvoicesColumn) = value
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        Public Property InvPost_MaxAdvDays() As Integer
+            Get
+                Return CType(Me(Me.tableApp_Settings.InvPost_MaxAdvDaysColumn),Integer)
+            End Get
+            Set
+                Me(Me.tableApp_Settings.InvPost_MaxAdvDaysColumn) = value
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        Public Property InvPost_MaxArrDays() As Integer
+            Get
+                Return CType(Me(Me.tableApp_Settings.InvPost_MaxArrDaysColumn),Integer)
+            End Get
+            Set
+                Me(Me.tableApp_Settings.InvPost_MaxArrDaysColumn) = value
             End Set
         End Property
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
         Public Function IsQB_FILE_LOCATIONNull() As Boolean
-            Return Me.IsNull(Me.tableAPP_SETTINGS.QB_FILE_LOCATIONColumn)
+            Return Me.IsNull(Me.tableApp_Settings.QB_FILE_LOCATIONColumn)
         End Function
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
         Public Sub SetQB_FILE_LOCATIONNull()
-            Me(Me.tableAPP_SETTINGS.QB_FILE_LOCATIONColumn) = Global.System.Convert.DBNull
+            Me(Me.tableApp_Settings.QB_FILE_LOCATIONColumn) = Global.System.Convert.DBNull
         End Sub
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
         Public Function IsBAD_CHECK_CHECKITEM_LISTIDNull() As Boolean
-            Return Me.IsNull(Me.tableAPP_SETTINGS.BAD_CHECK_CHECKITEM_LISTIDColumn)
+            Return Me.IsNull(Me.tableApp_Settings.BAD_CHECK_CHECKITEM_LISTIDColumn)
         End Function
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
         Public Sub SetBAD_CHECK_CHECKITEM_LISTIDNull()
-            Me(Me.tableAPP_SETTINGS.BAD_CHECK_CHECKITEM_LISTIDColumn) = Global.System.Convert.DBNull
+            Me(Me.tableApp_Settings.BAD_CHECK_CHECKITEM_LISTIDColumn) = Global.System.Convert.DBNull
         End Sub
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
         Public Function IsBAD_CHECK_CUSTITEM_LISTIDNull() As Boolean
-            Return Me.IsNull(Me.tableAPP_SETTINGS.BAD_CHECK_CUSTITEM_LISTIDColumn)
+            Return Me.IsNull(Me.tableApp_Settings.BAD_CHECK_CUSTITEM_LISTIDColumn)
         End Function
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
         Public Sub SetBAD_CHECK_CUSTITEM_LISTIDNull()
-            Me(Me.tableAPP_SETTINGS.BAD_CHECK_CUSTITEM_LISTIDColumn) = Global.System.Convert.DBNull
+            Me(Me.tableApp_Settings.BAD_CHECK_CUSTITEM_LISTIDColumn) = Global.System.Convert.DBNull
         End Sub
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
         Public Function IsBAD_CHECK_CUST_FEENull() As Boolean
-            Return Me.IsNull(Me.tableAPP_SETTINGS.BAD_CHECK_CUST_FEEColumn)
+            Return Me.IsNull(Me.tableApp_Settings.BAD_CHECK_CUST_FEEColumn)
         End Function
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
         Public Sub SetBAD_CHECK_CUST_FEENull()
-            Me(Me.tableAPP_SETTINGS.BAD_CHECK_CUST_FEEColumn) = Global.System.Convert.DBNull
+            Me(Me.tableApp_Settings.BAD_CHECK_CUST_FEEColumn) = Global.System.Convert.DBNull
         End Sub
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
         Public Function IsDEBUG_MODENull() As Boolean
-            Return Me.IsNull(Me.tableAPP_SETTINGS.DEBUG_MODEColumn)
+            Return Me.IsNull(Me.tableApp_Settings.DEBUG_MODEColumn)
         End Function
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
         Public Sub SetDEBUG_MODENull()
-            Me(Me.tableAPP_SETTINGS.DEBUG_MODEColumn) = Global.System.Convert.DBNull
+            Me(Me.tableApp_Settings.DEBUG_MODEColumn) = Global.System.Convert.DBNull
         End Sub
     End Class
     
@@ -1250,16 +1293,16 @@ Partial Public Class ds_Application
     '''Row event argument class
     '''</summary>
     <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-    Public Class APP_SETTINGSRowChangeEvent
+    Public Class App_SettingsRowChangeEvent
         Inherits Global.System.EventArgs
         
-        Private eventRow As APP_SETTINGSRow
+        Private eventRow As App_SettingsRow
         
         Private eventAction As Global.System.Data.DataRowAction
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Sub New(ByVal row As APP_SETTINGSRow, ByVal action As Global.System.Data.DataRowAction)
+        Public Sub New(ByVal row As App_SettingsRow, ByVal action As Global.System.Data.DataRowAction)
             MyBase.New
             Me.eventRow = row
             Me.eventAction = action
@@ -1267,7 +1310,7 @@ Partial Public Class ds_Application
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public ReadOnly Property Row() As APP_SETTINGSRow
+        Public ReadOnly Property Row() As App_SettingsRow
             Get
                 Return Me.eventRow
             End Get
@@ -1584,7 +1627,7 @@ Namespace ds_ApplicationTableAdapters
      Global.System.ComponentModel.DesignerAttribute("Microsoft.VSDesigner.DataSource.Design.TableAdapterDesigner, Microsoft.VSDesigner"& _ 
         ", Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a"),  _
      Global.System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")>  _
-    Partial Public Class APP_SETTINGSTableAdapter
+    Partial Public Class App_SettingsTableAdapter
         Inherits Global.System.ComponentModel.Component
         
         Private WithEvents _adapter As Global.System.Data.SqlClient.SqlDataAdapter
@@ -1708,31 +1751,41 @@ Namespace ds_ApplicationTableAdapters
             tableMapping.ColumnMappings.Add("BAD_CHECK_CUSTITEM_LISTID", "BAD_CHECK_CUSTITEM_LISTID")
             tableMapping.ColumnMappings.Add("BAD_CHECK_CUST_FEE", "BAD_CHECK_CUST_FEE")
             tableMapping.ColumnMappings.Add("DEBUG_MODE", "DEBUG_MODE")
-            tableMapping.ColumnMappings.Add("Batching_Invoices", "Batching_Invoices")
             tableMapping.ColumnMappings.Add("Batching_Payments", "Batching_Payments")
+            tableMapping.ColumnMappings.Add("Batching_Invoices", "Batching_Invoices")
+            tableMapping.ColumnMappings.Add("InvPost_MaxAdvDays", "InvPost_MaxAdvDays")
+            tableMapping.ColumnMappings.Add("InvPost_MaxArrDays", "InvPost_MaxArrDays")
             Me._adapter.TableMappings.Add(tableMapping)
             Me._adapter.UpdateCommand = New Global.System.Data.SqlClient.SqlCommand()
             Me._adapter.UpdateCommand.Connection = Me.Connection
             Me._adapter.UpdateCommand.CommandText = "dbo.App_Settings_Update"
             Me._adapter.UpdateCommand.CommandType = Global.System.Data.CommandType.StoredProcedure
-            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@RETURN_VALUE", Global.System.Data.SqlDbType.Int, 4, Global.System.Data.ParameterDirection.ReturnValue, 10, 0, Nothing, Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
-            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@QB_FILE_LOCATION", Global.System.Data.SqlDbType.VarChar, 100, Global.System.Data.ParameterDirection.Input, 0, 0, "QB_FILE_LOCATION", Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
-            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@BAD_CHECK_CHECKITEM_LISTID", Global.System.Data.SqlDbType.VarChar, 50, Global.System.Data.ParameterDirection.Input, 0, 0, "BAD_CHECK_CHECKITEM_LISTID", Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
-            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@BAD_CHECK_CUSTITEM_LISTID", Global.System.Data.SqlDbType.VarChar, 50, Global.System.Data.ParameterDirection.Input, 0, 0, "BAD_CHECK_CUSTITEM_LISTID", Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
-            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@BAD_CHECK_CUST_FEE", Global.System.Data.SqlDbType.[Decimal], 9, Global.System.Data.ParameterDirection.Input, 18, 2, "BAD_CHECK_CUST_FEE", Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
-            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@DEBUG_MODE", Global.System.Data.SqlDbType.Bit, 1, Global.System.Data.ParameterDirection.Input, 1, 0, "DEBUG_MODE", Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
-            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@Original_ID", Global.System.Data.SqlDbType.Int, 4, Global.System.Data.ParameterDirection.Input, 10, 0, "ID", Global.System.Data.DataRowVersion.Original, false, Nothing, "", "", ""))
-            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@IsNull_QB_FILE_LOCATION", Global.System.Data.SqlDbType.Int, 4, Global.System.Data.ParameterDirection.Input, 10, 0, "QB_FILE_LOCATION", Global.System.Data.DataRowVersion.Original, true, Nothing, "", "", ""))
-            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@Original_QB_FILE_LOCATION", Global.System.Data.SqlDbType.VarChar, 100, Global.System.Data.ParameterDirection.Input, 0, 0, "QB_FILE_LOCATION", Global.System.Data.DataRowVersion.Original, false, Nothing, "", "", ""))
-            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@IsNull_BAD_CHECK_CHECKITEM_LISTID", Global.System.Data.SqlDbType.Int, 4, Global.System.Data.ParameterDirection.Input, 10, 0, "BAD_CHECK_CHECKITEM_LISTID", Global.System.Data.DataRowVersion.Original, true, Nothing, "", "", ""))
-            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@Original_BAD_CHECK_CHECKITEM_LISTID", Global.System.Data.SqlDbType.VarChar, 50, Global.System.Data.ParameterDirection.Input, 0, 0, "BAD_CHECK_CHECKITEM_LISTID", Global.System.Data.DataRowVersion.Original, false, Nothing, "", "", ""))
-            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@IsNull_BAD_CHECK_CUSTITEM_LISTID", Global.System.Data.SqlDbType.Int, 4, Global.System.Data.ParameterDirection.Input, 10, 0, "BAD_CHECK_CUSTITEM_LISTID", Global.System.Data.DataRowVersion.Original, true, Nothing, "", "", ""))
-            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@Original_BAD_CHECK_CUSTITEM_LISTID", Global.System.Data.SqlDbType.VarChar, 50, Global.System.Data.ParameterDirection.Input, 0, 0, "BAD_CHECK_CUSTITEM_LISTID", Global.System.Data.DataRowVersion.Original, false, Nothing, "", "", ""))
-            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@IsNull_BAD_CHECK_CUST_FEE", Global.System.Data.SqlDbType.Int, 4, Global.System.Data.ParameterDirection.Input, 10, 0, "BAD_CHECK_CUST_FEE", Global.System.Data.DataRowVersion.Original, true, Nothing, "", "", ""))
-            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@Original_BAD_CHECK_CUST_FEE", Global.System.Data.SqlDbType.[Decimal], 9, Global.System.Data.ParameterDirection.Input, 18, 2, "BAD_CHECK_CUST_FEE", Global.System.Data.DataRowVersion.Original, false, Nothing, "", "", ""))
-            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@IsNull_DEBUG_MODE", Global.System.Data.SqlDbType.Int, 4, Global.System.Data.ParameterDirection.Input, 10, 0, "DEBUG_MODE", Global.System.Data.DataRowVersion.Original, true, Nothing, "", "", ""))
-            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@Original_DEBUG_MODE", Global.System.Data.SqlDbType.Bit, 1, Global.System.Data.ParameterDirection.Input, 1, 0, "DEBUG_MODE", Global.System.Data.DataRowVersion.Original, false, Nothing, "", "", ""))
-            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@ID", Global.System.Data.SqlDbType.Int, 4, Global.System.Data.ParameterDirection.Input, 10, 0, "ID", Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
+            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@RETURN_VALUE", Global.System.Data.SqlDbType.[Variant], 0, Global.System.Data.ParameterDirection.ReturnValue, 0, 0, Nothing, Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
+            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@QB_FILE_LOCATION", Global.System.Data.SqlDbType.VarChar, 0, Global.System.Data.ParameterDirection.Input, 0, 0, "QB_FILE_LOCATION", Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
+            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@BAD_CHECK_CHECKITEM_LISTID", Global.System.Data.SqlDbType.VarChar, 0, Global.System.Data.ParameterDirection.Input, 0, 0, "BAD_CHECK_CHECKITEM_LISTID", Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
+            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@BAD_CHECK_CUSTITEM_LISTID", Global.System.Data.SqlDbType.VarChar, 0, Global.System.Data.ParameterDirection.Input, 0, 0, "BAD_CHECK_CUSTITEM_LISTID", Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
+            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@BAD_CHECK_CUST_FEE", Global.System.Data.SqlDbType.[Decimal], 0, Global.System.Data.ParameterDirection.Input, 18, 2, "BAD_CHECK_CUST_FEE", Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
+            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@DEBUG_MODE", Global.System.Data.SqlDbType.Bit, 0, Global.System.Data.ParameterDirection.Input, 0, 0, "DEBUG_MODE", Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
+            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@Batching_Payments", Global.System.Data.SqlDbType.Bit, 0, Global.System.Data.ParameterDirection.Input, 0, 0, "Batching_Payments", Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
+            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@Batching_Invoices", Global.System.Data.SqlDbType.Bit, 0, Global.System.Data.ParameterDirection.Input, 0, 0, "Batching_Invoices", Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
+            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@InvPost_MaxAdvDays", Global.System.Data.SqlDbType.Int, 0, Global.System.Data.ParameterDirection.Input, 0, 0, "InvPost_MaxAdvDays", Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
+            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@InvPost_MaxArrDays", Global.System.Data.SqlDbType.Int, 0, Global.System.Data.ParameterDirection.Input, 0, 0, "InvPost_MaxArrDays", Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
+            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@Original_ID", Global.System.Data.SqlDbType.Int, 0, Global.System.Data.ParameterDirection.Input, 0, 0, "ID", Global.System.Data.DataRowVersion.Original, false, Nothing, "", "", ""))
+            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@IsNull_QB_FILE_LOCATION", Global.System.Data.SqlDbType.Int, 0, Global.System.Data.ParameterDirection.Input, 0, 0, "QB_FILE_LOCATION", Global.System.Data.DataRowVersion.Original, true, Nothing, "", "", ""))
+            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@Original_QB_FILE_LOCATION", Global.System.Data.SqlDbType.VarChar, 0, Global.System.Data.ParameterDirection.Input, 0, 0, "QB_FILE_LOCATION", Global.System.Data.DataRowVersion.Original, false, Nothing, "", "", ""))
+            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@IsNull_BAD_CHECK_CHECKITEM_LISTID", Global.System.Data.SqlDbType.Int, 0, Global.System.Data.ParameterDirection.Input, 0, 0, "BAD_CHECK_CHECKITEM_LISTID", Global.System.Data.DataRowVersion.Original, true, Nothing, "", "", ""))
+            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@Original_BAD_CHECK_CHECKITEM_LISTID", Global.System.Data.SqlDbType.VarChar, 0, Global.System.Data.ParameterDirection.Input, 0, 0, "BAD_CHECK_CHECKITEM_LISTID", Global.System.Data.DataRowVersion.Original, false, Nothing, "", "", ""))
+            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@IsNull_BAD_CHECK_CUSTITEM_LISTID", Global.System.Data.SqlDbType.Int, 0, Global.System.Data.ParameterDirection.Input, 0, 0, "BAD_CHECK_CUSTITEM_LISTID", Global.System.Data.DataRowVersion.Original, true, Nothing, "", "", ""))
+            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@Original_BAD_CHECK_CUSTITEM_LISTID", Global.System.Data.SqlDbType.VarChar, 0, Global.System.Data.ParameterDirection.Input, 0, 0, "BAD_CHECK_CUSTITEM_LISTID", Global.System.Data.DataRowVersion.Original, false, Nothing, "", "", ""))
+            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@IsNull_BAD_CHECK_CUST_FEE", Global.System.Data.SqlDbType.Int, 0, Global.System.Data.ParameterDirection.Input, 0, 0, "BAD_CHECK_CUST_FEE", Global.System.Data.DataRowVersion.Original, true, Nothing, "", "", ""))
+            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@Original_BAD_CHECK_CUST_FEE", Global.System.Data.SqlDbType.[Decimal], 0, Global.System.Data.ParameterDirection.Input, 18, 2, "BAD_CHECK_CUST_FEE", Global.System.Data.DataRowVersion.Original, false, Nothing, "", "", ""))
+            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@IsNull_DEBUG_MODE", Global.System.Data.SqlDbType.Int, 0, Global.System.Data.ParameterDirection.Input, 0, 0, "DEBUG_MODE", Global.System.Data.DataRowVersion.Original, true, Nothing, "", "", ""))
+            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@Original_DEBUG_MODE", Global.System.Data.SqlDbType.Bit, 0, Global.System.Data.ParameterDirection.Input, 0, 0, "DEBUG_MODE", Global.System.Data.DataRowVersion.Original, false, Nothing, "", "", ""))
+            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@Original_Batching_Payments", Global.System.Data.SqlDbType.Bit, 0, Global.System.Data.ParameterDirection.Input, 0, 0, "Batching_Payments", Global.System.Data.DataRowVersion.Original, false, Nothing, "", "", ""))
+            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@Original_Batching_Invoices", Global.System.Data.SqlDbType.Bit, 0, Global.System.Data.ParameterDirection.Input, 0, 0, "Batching_Invoices", Global.System.Data.DataRowVersion.Original, false, Nothing, "", "", ""))
+            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@Original_InvPost_MaxAdvDays", Global.System.Data.SqlDbType.Int, 0, Global.System.Data.ParameterDirection.Input, 0, 0, "InvPost_MaxAdvDays", Global.System.Data.DataRowVersion.Original, false, Nothing, "", "", ""))
+            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@Original_InvPost_MaxArrDays", Global.System.Data.SqlDbType.Int, 0, Global.System.Data.ParameterDirection.Input, 0, 0, "InvPost_MaxArrDays", Global.System.Data.DataRowVersion.Original, false, Nothing, "", "", ""))
+            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@ID", Global.System.Data.SqlDbType.Int, 4, Global.System.Data.ParameterDirection.Input, 0, 0, "ID", Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
         End Sub
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
@@ -1750,14 +1803,14 @@ Namespace ds_ApplicationTableAdapters
             Me._commandCollection(0).Connection = Me.Connection
             Me._commandCollection(0).CommandText = "dbo.App_Settings_Select"
             Me._commandCollection(0).CommandType = Global.System.Data.CommandType.StoredProcedure
-            Me._commandCollection(0).Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@RETURN_VALUE", Global.System.Data.SqlDbType.Int, 4, Global.System.Data.ParameterDirection.ReturnValue, 10, 0, Nothing, Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
+            Me._commandCollection(0).Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@RETURN_VALUE", Global.System.Data.SqlDbType.[Variant], 0, Global.System.Data.ParameterDirection.ReturnValue, 0, 0, Nothing, Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
         End Sub
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0"),  _
          Global.System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter"),  _
          Global.System.ComponentModel.DataObjectMethodAttribute(Global.System.ComponentModel.DataObjectMethodType.Fill, true)>  _
-        Public Overloads Overridable Function Fill(ByVal dataTable As ds_Application.APP_SETTINGSDataTable) As Integer
+        Public Overloads Overridable Function Fill(ByVal dataTable As ds_Application.App_SettingsDataTable) As Integer
             Me.Adapter.SelectCommand = Me.CommandCollection(0)
             If (Me.ClearBeforeFill = true) Then
                 dataTable.Clear
@@ -1770,9 +1823,9 @@ Namespace ds_ApplicationTableAdapters
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0"),  _
          Global.System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter"),  _
          Global.System.ComponentModel.DataObjectMethodAttribute(Global.System.ComponentModel.DataObjectMethodType.[Select], true)>  _
-        Public Overloads Overridable Function GetData() As ds_Application.APP_SETTINGSDataTable
+        Public Overloads Overridable Function GetData() As ds_Application.App_SettingsDataTable
             Me.Adapter.SelectCommand = Me.CommandCollection(0)
-            Dim dataTable As ds_Application.APP_SETTINGSDataTable = New ds_Application.APP_SETTINGSDataTable()
+            Dim dataTable As ds_Application.App_SettingsDataTable = New ds_Application.App_SettingsDataTable()
             Me.Adapter.Fill(dataTable)
             Return dataTable
         End Function
@@ -1780,7 +1833,7 @@ Namespace ds_ApplicationTableAdapters
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0"),  _
          Global.System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")>  _
-        Public Overloads Overridable Function Update(ByVal dataTable As ds_Application.APP_SETTINGSDataTable) As Integer
+        Public Overloads Overridable Function Update(ByVal dataTable As ds_Application.App_SettingsDataTable) As Integer
             Return Me.Adapter.Update(dataTable)
         End Function
         
@@ -1809,7 +1862,27 @@ Namespace ds_ApplicationTableAdapters
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0"),  _
          Global.System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter"),  _
          Global.System.ComponentModel.DataObjectMethodAttribute(Global.System.ComponentModel.DataObjectMethodType.Update, true)>  _
-        Public Overloads Overridable Function Update(ByVal QB_FILE_LOCATION As String, ByVal BAD_CHECK_CHECKITEM_LISTID As String, ByVal BAD_CHECK_CUSTITEM_LISTID As String, ByVal BAD_CHECK_CUST_FEE As Global.System.Nullable(Of Decimal), ByVal DEBUG_MODE As Global.System.Nullable(Of Boolean), ByVal Original_ID As Global.System.Nullable(Of Integer), ByVal Original_QB_FILE_LOCATION As String, ByVal Original_BAD_CHECK_CHECKITEM_LISTID As String, ByVal Original_BAD_CHECK_CUSTITEM_LISTID As String, ByVal Original_BAD_CHECK_CUST_FEE As Global.System.Nullable(Of Decimal), ByVal Original_DEBUG_MODE As Global.System.Nullable(Of Boolean), ByVal ID As Global.System.Nullable(Of Integer)) As Integer
+        Public Overloads Overridable Function Update( _
+                    ByVal QB_FILE_LOCATION As String,  _
+                    ByVal BAD_CHECK_CHECKITEM_LISTID As String,  _
+                    ByVal BAD_CHECK_CUSTITEM_LISTID As String,  _
+                    ByVal BAD_CHECK_CUST_FEE As Global.System.Nullable(Of Decimal),  _
+                    ByVal DEBUG_MODE As Global.System.Nullable(Of Boolean),  _
+                    ByVal Batching_Payments As Boolean,  _
+                    ByVal Batching_Invoices As Boolean,  _
+                    ByVal InvPost_MaxAdvDays As Integer,  _
+                    ByVal InvPost_MaxArrDays As Integer,  _
+                    ByVal Original_ID As Integer,  _
+                    ByVal Original_QB_FILE_LOCATION As String,  _
+                    ByVal Original_BAD_CHECK_CHECKITEM_LISTID As String,  _
+                    ByVal Original_BAD_CHECK_CUSTITEM_LISTID As String,  _
+                    ByVal Original_BAD_CHECK_CUST_FEE As Global.System.Nullable(Of Decimal),  _
+                    ByVal Original_DEBUG_MODE As Global.System.Nullable(Of Boolean),  _
+                    ByVal Original_Batching_Payments As Boolean,  _
+                    ByVal Original_Batching_Invoices As Boolean,  _
+                    ByVal Original_InvPost_MaxAdvDays As Integer,  _
+                    ByVal Original_InvPost_MaxArrDays As Integer,  _
+                    ByVal ID As Integer) As Integer
             If (QB_FILE_LOCATION Is Nothing) Then
                 Me.Adapter.UpdateCommand.Parameters(1).Value = Global.System.DBNull.Value
             Else
@@ -1835,51 +1908,51 @@ Namespace ds_ApplicationTableAdapters
             Else
                 Me.Adapter.UpdateCommand.Parameters(5).Value = Global.System.DBNull.Value
             End If
-            If (Original_ID.HasValue = true) Then
-                Me.Adapter.UpdateCommand.Parameters(6).Value = CType(Original_ID.Value,Integer)
-            Else
-                Me.Adapter.UpdateCommand.Parameters(6).Value = Global.System.DBNull.Value
-            End If
+            Me.Adapter.UpdateCommand.Parameters(6).Value = CType(Batching_Payments,Boolean)
+            Me.Adapter.UpdateCommand.Parameters(7).Value = CType(Batching_Invoices,Boolean)
+            Me.Adapter.UpdateCommand.Parameters(8).Value = CType(InvPost_MaxAdvDays,Integer)
+            Me.Adapter.UpdateCommand.Parameters(9).Value = CType(InvPost_MaxArrDays,Integer)
+            Me.Adapter.UpdateCommand.Parameters(10).Value = CType(Original_ID,Integer)
             If (Original_QB_FILE_LOCATION Is Nothing) Then
-                Me.Adapter.UpdateCommand.Parameters(7).Value = CType(1,Object)
-                Me.Adapter.UpdateCommand.Parameters(8).Value = Global.System.DBNull.Value
-            Else
-                Me.Adapter.UpdateCommand.Parameters(7).Value = CType(0,Object)
-                Me.Adapter.UpdateCommand.Parameters(8).Value = CType(Original_QB_FILE_LOCATION,String)
-            End If
-            If (Original_BAD_CHECK_CHECKITEM_LISTID Is Nothing) Then
-                Me.Adapter.UpdateCommand.Parameters(9).Value = CType(1,Object)
-                Me.Adapter.UpdateCommand.Parameters(10).Value = Global.System.DBNull.Value
-            Else
-                Me.Adapter.UpdateCommand.Parameters(9).Value = CType(0,Object)
-                Me.Adapter.UpdateCommand.Parameters(10).Value = CType(Original_BAD_CHECK_CHECKITEM_LISTID,String)
-            End If
-            If (Original_BAD_CHECK_CUSTITEM_LISTID Is Nothing) Then
                 Me.Adapter.UpdateCommand.Parameters(11).Value = CType(1,Object)
                 Me.Adapter.UpdateCommand.Parameters(12).Value = Global.System.DBNull.Value
             Else
                 Me.Adapter.UpdateCommand.Parameters(11).Value = CType(0,Object)
-                Me.Adapter.UpdateCommand.Parameters(12).Value = CType(Original_BAD_CHECK_CUSTITEM_LISTID,String)
+                Me.Adapter.UpdateCommand.Parameters(12).Value = CType(Original_QB_FILE_LOCATION,String)
             End If
-            If (Original_BAD_CHECK_CUST_FEE.HasValue = true) Then
-                Me.Adapter.UpdateCommand.Parameters(13).Value = CType(0,Object)
-                Me.Adapter.UpdateCommand.Parameters(14).Value = CType(Original_BAD_CHECK_CUST_FEE.Value,Decimal)
-            Else
+            If (Original_BAD_CHECK_CHECKITEM_LISTID Is Nothing) Then
                 Me.Adapter.UpdateCommand.Parameters(13).Value = CType(1,Object)
                 Me.Adapter.UpdateCommand.Parameters(14).Value = Global.System.DBNull.Value
-            End If
-            If (Original_DEBUG_MODE.HasValue = true) Then
-                Me.Adapter.UpdateCommand.Parameters(15).Value = CType(0,Object)
-                Me.Adapter.UpdateCommand.Parameters(16).Value = CType(Original_DEBUG_MODE.Value,Boolean)
             Else
+                Me.Adapter.UpdateCommand.Parameters(13).Value = CType(0,Object)
+                Me.Adapter.UpdateCommand.Parameters(14).Value = CType(Original_BAD_CHECK_CHECKITEM_LISTID,String)
+            End If
+            If (Original_BAD_CHECK_CUSTITEM_LISTID Is Nothing) Then
                 Me.Adapter.UpdateCommand.Parameters(15).Value = CType(1,Object)
                 Me.Adapter.UpdateCommand.Parameters(16).Value = Global.System.DBNull.Value
-            End If
-            If (ID.HasValue = true) Then
-                Me.Adapter.UpdateCommand.Parameters(17).Value = CType(ID.Value,Integer)
             Else
-                Me.Adapter.UpdateCommand.Parameters(17).Value = Global.System.DBNull.Value
+                Me.Adapter.UpdateCommand.Parameters(15).Value = CType(0,Object)
+                Me.Adapter.UpdateCommand.Parameters(16).Value = CType(Original_BAD_CHECK_CUSTITEM_LISTID,String)
             End If
+            If (Original_BAD_CHECK_CUST_FEE.HasValue = true) Then
+                Me.Adapter.UpdateCommand.Parameters(17).Value = CType(0,Object)
+                Me.Adapter.UpdateCommand.Parameters(18).Value = CType(Original_BAD_CHECK_CUST_FEE.Value,Decimal)
+            Else
+                Me.Adapter.UpdateCommand.Parameters(17).Value = CType(1,Object)
+                Me.Adapter.UpdateCommand.Parameters(18).Value = Global.System.DBNull.Value
+            End If
+            If (Original_DEBUG_MODE.HasValue = true) Then
+                Me.Adapter.UpdateCommand.Parameters(19).Value = CType(0,Object)
+                Me.Adapter.UpdateCommand.Parameters(20).Value = CType(Original_DEBUG_MODE.Value,Boolean)
+            Else
+                Me.Adapter.UpdateCommand.Parameters(19).Value = CType(1,Object)
+                Me.Adapter.UpdateCommand.Parameters(20).Value = Global.System.DBNull.Value
+            End If
+            Me.Adapter.UpdateCommand.Parameters(21).Value = CType(Original_Batching_Payments,Boolean)
+            Me.Adapter.UpdateCommand.Parameters(22).Value = CType(Original_Batching_Invoices,Boolean)
+            Me.Adapter.UpdateCommand.Parameters(23).Value = CType(Original_InvPost_MaxAdvDays,Integer)
+            Me.Adapter.UpdateCommand.Parameters(24).Value = CType(Original_InvPost_MaxArrDays,Integer)
+            Me.Adapter.UpdateCommand.Parameters(25).Value = CType(ID,Integer)
             Dim previousConnectionState As Global.System.Data.ConnectionState = Me.Adapter.UpdateCommand.Connection.State
             If ((Me.Adapter.UpdateCommand.Connection.State And Global.System.Data.ConnectionState.Open)  _
                         <> Global.System.Data.ConnectionState.Open) Then
@@ -1899,8 +1972,27 @@ Namespace ds_ApplicationTableAdapters
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0"),  _
          Global.System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter"),  _
          Global.System.ComponentModel.DataObjectMethodAttribute(Global.System.ComponentModel.DataObjectMethodType.Update, true)>  _
-        Public Overloads Overridable Function Update(ByVal QB_FILE_LOCATION As String, ByVal BAD_CHECK_CHECKITEM_LISTID As String, ByVal BAD_CHECK_CUSTITEM_LISTID As String, ByVal BAD_CHECK_CUST_FEE As Global.System.Nullable(Of Decimal), ByVal DEBUG_MODE As Global.System.Nullable(Of Boolean), ByVal Original_ID As Global.System.Nullable(Of Integer), ByVal Original_QB_FILE_LOCATION As String, ByVal Original_BAD_CHECK_CHECKITEM_LISTID As String, ByVal Original_BAD_CHECK_CUSTITEM_LISTID As String, ByVal Original_BAD_CHECK_CUST_FEE As Global.System.Nullable(Of Decimal), ByVal Original_DEBUG_MODE As Global.System.Nullable(Of Boolean)) As Integer
-            Return Me.Update(QB_FILE_LOCATION, BAD_CHECK_CHECKITEM_LISTID, BAD_CHECK_CUSTITEM_LISTID, BAD_CHECK_CUST_FEE, DEBUG_MODE, Original_ID, Original_QB_FILE_LOCATION, Original_BAD_CHECK_CHECKITEM_LISTID, Original_BAD_CHECK_CUSTITEM_LISTID, Original_BAD_CHECK_CUST_FEE, Original_DEBUG_MODE, Original_ID)
+        Public Overloads Overridable Function Update( _
+                    ByVal QB_FILE_LOCATION As String,  _
+                    ByVal BAD_CHECK_CHECKITEM_LISTID As String,  _
+                    ByVal BAD_CHECK_CUSTITEM_LISTID As String,  _
+                    ByVal BAD_CHECK_CUST_FEE As Global.System.Nullable(Of Decimal),  _
+                    ByVal DEBUG_MODE As Global.System.Nullable(Of Boolean),  _
+                    ByVal Batching_Payments As Boolean,  _
+                    ByVal Batching_Invoices As Boolean,  _
+                    ByVal InvPost_MaxAdvDays As Integer,  _
+                    ByVal InvPost_MaxArrDays As Integer,  _
+                    ByVal Original_ID As Integer,  _
+                    ByVal Original_QB_FILE_LOCATION As String,  _
+                    ByVal Original_BAD_CHECK_CHECKITEM_LISTID As String,  _
+                    ByVal Original_BAD_CHECK_CUSTITEM_LISTID As String,  _
+                    ByVal Original_BAD_CHECK_CUST_FEE As Global.System.Nullable(Of Decimal),  _
+                    ByVal Original_DEBUG_MODE As Global.System.Nullable(Of Boolean),  _
+                    ByVal Original_Batching_Payments As Boolean,  _
+                    ByVal Original_Batching_Invoices As Boolean,  _
+                    ByVal Original_InvPost_MaxAdvDays As Integer,  _
+                    ByVal Original_InvPost_MaxArrDays As Integer) As Integer
+            Return Me.Update(QB_FILE_LOCATION, BAD_CHECK_CHECKITEM_LISTID, BAD_CHECK_CUSTITEM_LISTID, BAD_CHECK_CUST_FEE, DEBUG_MODE, Batching_Payments, Batching_Invoices, InvPost_MaxAdvDays, InvPost_MaxArrDays, Original_ID, Original_QB_FILE_LOCATION, Original_BAD_CHECK_CHECKITEM_LISTID, Original_BAD_CHECK_CUSTITEM_LISTID, Original_BAD_CHECK_CUST_FEE, Original_DEBUG_MODE, Original_Batching_Payments, Original_Batching_Invoices, Original_InvPost_MaxAdvDays, Original_InvPost_MaxArrDays, Original_ID)
         End Function
     End Class
     
@@ -2030,7 +2122,7 @@ Namespace ds_ApplicationTableAdapters
         
         Private _updateOrder As UpdateOrderOption
         
-        Private _aPP_SETTINGSTableAdapter As APP_SETTINGSTableAdapter
+        Private _app_SettingsTableAdapter As App_SettingsTableAdapter
         
         Private _backupDataSetBeforeUpdate As Boolean
         
@@ -2052,12 +2144,12 @@ Namespace ds_ApplicationTableAdapters
          Global.System.ComponentModel.EditorAttribute("Microsoft.VSDesigner.DataSource.Design.TableAdapterManagerPropertyEditor, Microso"& _ 
             "ft.VSDesigner, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3"& _ 
             "a", "System.Drawing.Design.UITypeEditor")>  _
-        Public Property APP_SETTINGSTableAdapter() As APP_SETTINGSTableAdapter
+        Public Property App_SettingsTableAdapter() As App_SettingsTableAdapter
             Get
-                Return Me._aPP_SETTINGSTableAdapter
+                Return Me._app_SettingsTableAdapter
             End Get
             Set
-                Me._aPP_SETTINGSTableAdapter = value
+                Me._app_SettingsTableAdapter = value
             End Set
         End Property
         
@@ -2080,9 +2172,9 @@ Namespace ds_ApplicationTableAdapters
                 If (Not (Me._connection) Is Nothing) Then
                     Return Me._connection
                 End If
-                If ((Not (Me._aPP_SETTINGSTableAdapter) Is Nothing)  _
-                            AndAlso (Not (Me._aPP_SETTINGSTableAdapter.Connection) Is Nothing)) Then
-                    Return Me._aPP_SETTINGSTableAdapter.Connection
+                If ((Not (Me._app_SettingsTableAdapter) Is Nothing)  _
+                            AndAlso (Not (Me._app_SettingsTableAdapter.Connection) Is Nothing)) Then
+                    Return Me._app_SettingsTableAdapter.Connection
                 End If
                 Return Nothing
             End Get
@@ -2097,7 +2189,7 @@ Namespace ds_ApplicationTableAdapters
         Public ReadOnly Property TableAdapterInstanceCount() As Integer
             Get
                 Dim count As Integer = 0
-                If (Not (Me._aPP_SETTINGSTableAdapter) Is Nothing) Then
+                If (Not (Me._app_SettingsTableAdapter) Is Nothing) Then
                     count = (count + 1)
                 End If
                 Return count
@@ -2111,12 +2203,12 @@ Namespace ds_ApplicationTableAdapters
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
         Private Function UpdateUpdatedRows(ByVal dataSet As ds_Application, ByVal allChangedRows As Global.System.Collections.Generic.List(Of Global.System.Data.DataRow), ByVal allAddedRows As Global.System.Collections.Generic.List(Of Global.System.Data.DataRow)) As Integer
             Dim result As Integer = 0
-            If (Not (Me._aPP_SETTINGSTableAdapter) Is Nothing) Then
-                Dim updatedRows() As Global.System.Data.DataRow = dataSet.APP_SETTINGS.Select(Nothing, Nothing, Global.System.Data.DataViewRowState.ModifiedCurrent)
+            If (Not (Me._app_SettingsTableAdapter) Is Nothing) Then
+                Dim updatedRows() As Global.System.Data.DataRow = dataSet.App_Settings.Select(Nothing, Nothing, Global.System.Data.DataViewRowState.ModifiedCurrent)
                 updatedRows = Me.GetRealUpdatedRows(updatedRows, allAddedRows)
                 If ((Not (updatedRows) Is Nothing)  _
                             AndAlso (0 < updatedRows.Length)) Then
-                    result = (result + Me._aPP_SETTINGSTableAdapter.Update(updatedRows))
+                    result = (result + Me._app_SettingsTableAdapter.Update(updatedRows))
                     allChangedRows.AddRange(updatedRows)
                 End If
             End If
@@ -2130,11 +2222,11 @@ Namespace ds_ApplicationTableAdapters
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
         Private Function UpdateInsertedRows(ByVal dataSet As ds_Application, ByVal allAddedRows As Global.System.Collections.Generic.List(Of Global.System.Data.DataRow)) As Integer
             Dim result As Integer = 0
-            If (Not (Me._aPP_SETTINGSTableAdapter) Is Nothing) Then
-                Dim addedRows() As Global.System.Data.DataRow = dataSet.APP_SETTINGS.Select(Nothing, Nothing, Global.System.Data.DataViewRowState.Added)
+            If (Not (Me._app_SettingsTableAdapter) Is Nothing) Then
+                Dim addedRows() As Global.System.Data.DataRow = dataSet.App_Settings.Select(Nothing, Nothing, Global.System.Data.DataViewRowState.Added)
                 If ((Not (addedRows) Is Nothing)  _
                             AndAlso (0 < addedRows.Length)) Then
-                    result = (result + Me._aPP_SETTINGSTableAdapter.Update(addedRows))
+                    result = (result + Me._app_SettingsTableAdapter.Update(addedRows))
                     allAddedRows.AddRange(addedRows)
                 End If
             End If
@@ -2148,11 +2240,11 @@ Namespace ds_ApplicationTableAdapters
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
         Private Function UpdateDeletedRows(ByVal dataSet As ds_Application, ByVal allChangedRows As Global.System.Collections.Generic.List(Of Global.System.Data.DataRow)) As Integer
             Dim result As Integer = 0
-            If (Not (Me._aPP_SETTINGSTableAdapter) Is Nothing) Then
-                Dim deletedRows() As Global.System.Data.DataRow = dataSet.APP_SETTINGS.Select(Nothing, Nothing, Global.System.Data.DataViewRowState.Deleted)
+            If (Not (Me._app_SettingsTableAdapter) Is Nothing) Then
+                Dim deletedRows() As Global.System.Data.DataRow = dataSet.App_Settings.Select(Nothing, Nothing, Global.System.Data.DataViewRowState.Deleted)
                 If ((Not (deletedRows) Is Nothing)  _
                             AndAlso (0 < deletedRows.Length)) Then
-                    result = (result + Me._aPP_SETTINGSTableAdapter.Update(deletedRows))
+                    result = (result + Me._app_SettingsTableAdapter.Update(deletedRows))
                     allChangedRows.AddRange(deletedRows)
                 End If
             End If
@@ -2197,8 +2289,8 @@ Namespace ds_ApplicationTableAdapters
             If (dataSet.HasChanges = false) Then
                 Return 0
             End If
-            If ((Not (Me._aPP_SETTINGSTableAdapter) Is Nothing)  _
-                        AndAlso (Me.MatchTableAdapterConnection(Me._aPP_SETTINGSTableAdapter.Connection) = false)) Then
+            If ((Not (Me._app_SettingsTableAdapter) Is Nothing)  _
+                        AndAlso (Me.MatchTableAdapterConnection(Me._app_SettingsTableAdapter.Connection) = false)) Then
                 Throw New Global.System.ArgumentException("All TableAdapters managed by a TableAdapterManager must use the same connection s"& _ 
                         "tring.")
             End If
@@ -2234,13 +2326,13 @@ Namespace ds_ApplicationTableAdapters
             Try 
                 '---- Prepare for update -----------
                 '
-                If (Not (Me._aPP_SETTINGSTableAdapter) Is Nothing) Then
-                    revertConnections.Add(Me._aPP_SETTINGSTableAdapter, Me._aPP_SETTINGSTableAdapter.Connection)
-                    Me._aPP_SETTINGSTableAdapter.Connection = CType(workConnection,Global.System.Data.SqlClient.SqlConnection)
-                    Me._aPP_SETTINGSTableAdapter.Transaction = CType(workTransaction,Global.System.Data.SqlClient.SqlTransaction)
-                    If Me._aPP_SETTINGSTableAdapter.Adapter.AcceptChangesDuringUpdate Then
-                        Me._aPP_SETTINGSTableAdapter.Adapter.AcceptChangesDuringUpdate = false
-                        adaptersWithAcceptChangesDuringUpdate.Add(Me._aPP_SETTINGSTableAdapter.Adapter)
+                If (Not (Me._app_SettingsTableAdapter) Is Nothing) Then
+                    revertConnections.Add(Me._app_SettingsTableAdapter, Me._app_SettingsTableAdapter.Connection)
+                    Me._app_SettingsTableAdapter.Connection = CType(workConnection,Global.System.Data.SqlClient.SqlConnection)
+                    Me._app_SettingsTableAdapter.Transaction = CType(workTransaction,Global.System.Data.SqlClient.SqlTransaction)
+                    If Me._app_SettingsTableAdapter.Adapter.AcceptChangesDuringUpdate Then
+                        Me._app_SettingsTableAdapter.Adapter.AcceptChangesDuringUpdate = false
+                        adaptersWithAcceptChangesDuringUpdate.Add(Me._app_SettingsTableAdapter.Adapter)
                     End If
                 End If
                 '
@@ -2303,9 +2395,9 @@ Namespace ds_ApplicationTableAdapters
                 If workConnOpened Then
                     workConnection.Close
                 End If
-                If (Not (Me._aPP_SETTINGSTableAdapter) Is Nothing) Then
-                    Me._aPP_SETTINGSTableAdapter.Connection = CType(revertConnections(Me._aPP_SETTINGSTableAdapter),Global.System.Data.SqlClient.SqlConnection)
-                    Me._aPP_SETTINGSTableAdapter.Transaction = Nothing
+                If (Not (Me._app_SettingsTableAdapter) Is Nothing) Then
+                    Me._app_SettingsTableAdapter.Connection = CType(revertConnections(Me._app_SettingsTableAdapter),Global.System.Data.SqlClient.SqlConnection)
+                    Me._app_SettingsTableAdapter.Transaction = Nothing
                 End If
                 If (0 < adaptersWithAcceptChangesDuringUpdate.Count) Then
                     Dim adapters((adaptersWithAcceptChangesDuringUpdate.Count) - 1) As Global.System.Data.Common.DataAdapter

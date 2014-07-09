@@ -405,8 +405,14 @@ Namespace QBStuff
             With payMod
                 .TxnID.SetValue(payObj.TxnID)
                 .EditSequence.SetValue(payObj.EditSequence)
-                .CustomerRef.ListID.SetValue(payObj.CustomerListID)
+                If (payObj.CustomerListID IsNot Nothing) Then
+                    .CustomerRef.ListID.SetValue(payObj.CustomerListID)
+                End If
+                If (payObj.RefNumber IsNot Nothing) Then
+                    .RefNumber.SetValue(payObj.RefNumber)
+                End If
             End With
+            
 
             ' set applied to txns if not nothing
             If (payObj.AppliedInvList IsNot Nothing) Then
