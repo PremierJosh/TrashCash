@@ -84,7 +84,7 @@ Public Class TrashCashHome
     Friend WithEvents InvForm As Invoicing.CustomInvoicingForm
 
     ' event handles
-    Private Sub PaymentAddedCatch(ByVal customerNumber As Integer) Handles PayForm.CustomerPaymentAdded, Customer.CustomerPaymentAdded
+    Private Sub PaymentModCatch(ByVal customerNumber As Integer) Handles PayForm.CustomerPaymentMod, Customer.CustomerPaymentMod, BatchForm.CustomerPaymentMod
         ' came from custom invoicing form, need to update customer form balance if matches
         If (Customer IsNot Nothing) Then
             If (Customer.CurrentCustomer = customerNumber) Then
@@ -111,6 +111,10 @@ Public Class TrashCashHome
             If (InvForm.CurrentCustomer = customerNumber) Then
                 InvForm.CustomerToolstrip1.GetQueueAmount()
             End If
+        End If
+        ' checking for batch prep form
+        If (BatchForm IsNot Nothing) Then
+            BatchForm.BATCH_WorkingPaymentsTableAdapter.Fill(BatchForm.DS_Batching.BATCH_WorkingPayments)
         End If
 
         ' checking for admin payments

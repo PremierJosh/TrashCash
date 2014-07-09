@@ -8,6 +8,11 @@ Namespace Batching
 
         ' event to update progress % on home mdi parent
         Friend Event BatchProgPerc(ByVal batchPercent As Integer)
+        Friend Event CustomerPaymentMod(ByVal customerNumber As Integer)
+
+        Private _payBatchRunning As Boolean
+        Private _invBatchRunning As Boolean
+
 
         Friend Event BatchRunning(ByVal running As Boolean)
         Public Property Batching As Boolean
@@ -19,32 +24,33 @@ Namespace Batching
                     _batching = value
 
                     If (value = True) Then
-                        btn_InvBatch.UseWaitCursor = True
-                        btn_PayBatch.UseWaitCursor = True
-                        ' hide batch btns
-                        btn_PayBatch.Visible = False
-                        btn_InvBatch.Visible = False
-                        btn_DeleteAllWrkInv.Visible = False
-                        ' hide cm for deleting payments
+                        ' disable batch buttons
+                        btn_PayBatch.Enabled = False
+
+                        btn_DeleteAllWrkInv.Enabled = False
+                        btn_GenerateInv.Enabled = False
+                        ' cancel buttons visibility will be handled by that batch button changing to a cancel call
+                        ' disable mod and del pay menu
                         cm_PayGrid.Enabled = False
                     Else
-                        btn_InvBatch.UseWaitCursor = False
-                        btn_PayBatch.UseWaitCursor = False
                         ' reset pb max var
                         PbMaximumValue = Nothing
                         PbCurrentValue = 1
                         PbCustomer = Nothing
                         _lastPercent = -1
                         PbPercent = 0
+                        ' change button text to normal
+                        If (_invBatchRunning) Then
 
-                        ' hide both panels again
-                        pnl_LeftBot.Visible = False
-                        pnl_RightBot.Visible = False
+                        ElseIf (_payBatchRunning) Then
+                            btn_PayBatch.Text = "Batch Payments"
+                            btn_PayBatch.ForeColor = SystemColors.ControlText
+                        End If
+                        ' set type bools for batch to false
+                        _payBatchRunning = False
+                        _invBatchRunning = False
 
-                        ' hide cancel buttons
-                        btn_CancelInvBatch.Visible = False
-                        btn_CancelPayBatch.Visible = False
-                        ' show delete payment cm
+                        ' show delete and payment menu
                         cm_PayGrid.Enabled = True
                     End If
 
@@ -68,9 +74,9 @@ Namespace Batching
         ' this gets updated from the batch worker and updates the count labels
         Private WriteOnly Property PbCurrentValue As Integer
             Set(value As Integer)
-                If (pnl_LeftBot.Visible = True) Then
+                If (_invBatchRunning) Then
                     lbl_InvBatchCount.Text = value & "/" & PbMaximumValue
-                ElseIf (pnl_RightBot.Visible = True) Then
+                ElseIf (_payBatchRunning) Then
                     lbl_PayBatchCount.Text = value & "/" & PbMaximumValue
                 End If
             End Set
@@ -78,9 +84,9 @@ Namespace Batching
         ' this gets updated from the batch worker and sets the associated customer label
         Private WriteOnly Property PbCustomer As String
             Set(value As String)
-                If (pnl_LeftBot.Visible = True) Then
+                If (_invBatchRunning) Then
                     lbl_InvBatchCust.Text = value
-                ElseIf (pnl_RightBot.Visible = True) Then
+                ElseIf (_payBatchRunning) Then
                     ' payments
                     lbl_PayBatchCust.Text = value
                 End If
@@ -96,10 +102,10 @@ Namespace Batching
                     ' raise event for home status bar update
                     RaiseEvent BatchProgPerc(value)
 
-                    If (pnl_LeftBot.Visible) Then
+                    If (_invBatchRunning) Then
                         ' invoices
                         pb_Invoices.Value = value
-                    ElseIf (pnl_RightBot.Visible) Then
+                    ElseIf (_payBatchRunning) Then
                         ' payments
                         pb_Invoices.Increment(1)
                         pb_Payments.Value = value
@@ -108,14 +114,13 @@ Namespace Batching
             End Set
         End Property
 
-        Public Property MasterForm As CustomerForm
         Protected QTA As ds_BatchingTableAdapters.QueriesTableAdapter
 
         Private Sub BatchingPrep_FormClosed(sender As Object, e As System.Windows.Forms.FormClosingEventArgs) Handles Me.FormClosing
             If (e.CloseReason <> CloseReason.ApplicationExitCall) Then
                 e.Cancel = True
                 If (Batching) Then
-                    MsgBox("You cannot close this screen with Batching is in progress.")
+                    MsgBox("You cannot close this screen while Batching is in progress.")
                 Else
                     Hide()
                 End If
@@ -131,7 +136,7 @@ Namespace Batching
 
         Private Sub BatchingPrep_Load(sender As System.Object, e As System.EventArgs) Handles Me.Load
             'TODO: This line of code loads data into the 'Ds_Types.PaymentTypes' table. You can move, or remove it, as needed.
-            Me.PaymentTypesTableAdapter.Fill(Me.Ds_Types.PaymentTypes)
+            PaymentTypesTableAdapter.Fill(Ds_Types.PaymentTypes)
             RefreshBatchQueue()
         End Sub
 
@@ -164,7 +169,7 @@ Namespace Batching
             End If
         End Sub
 
-        Private Sub btn_Batch_Click(sender As System.Object, e As System.EventArgs) Handles btn_InvBatch.Click
+        Private Sub btn_Batch_Click(sender As System.Object, e As System.EventArgs)
             ' first build string
             Dim promptS As String
 
@@ -282,7 +287,7 @@ Namespace Batching
             RefreshBatchQueue()
         End Sub
 
-        Private Sub btn_CancelInvBatch_Click(sender As System.Object, e As System.EventArgs) Handles btn_CancelInvBatch.Click
+        Private Sub btn_CancelInvBatch_Click(sender As System.Object, e As System.EventArgs)
             If (BatchWorker.WorkerSupportsCancellation = True) Then
                 If (BatchWorker.CancellationPending = False) Then
                     BatchWorker.CancelAsync()
@@ -300,43 +305,7 @@ Namespace Batching
             QTA = New ds_BatchingTableAdapters.QueriesTableAdapter
         End Sub
 
-
-        Private Sub dg_PrepPay_RowsAdded(sender As System.Object, e As System.Windows.Forms.DataGridViewRowsAddedEventArgs)
-            PrepItemCountChanging()
-        End Sub
-
-        Private Sub dg_PrepPay_RowsRemoved(sender As System.Object, e As System.Windows.Forms.DataGridViewRowsRemovedEventArgs)
-            PrepItemCountChanging()
-        End Sub
-        Private Sub PrepItemCountChanging()
-            ' inv grid first
-            If (dg_PrepInv.RowCount > 0) Then
-                If (Not Batching) Then
-                    btn_InvBatch.Visible = True
-                    btn_InvBatch.Text = "Batch " & dg_PrepInv.RowCount & " Invoices"
-                    btn_GenerateInv.Enabled = False
-                    ' show delete all btn
-                    btn_DeleteAllWrkInv.Visible = True
-                End If
-            Else
-                btn_InvBatch.Visible = False
-                btn_GenerateInv.Enabled = True
-                ' hide delete all btn
-                btn_DeleteAllWrkInv.Visible = False
-            End If
-
-            ' pay grid
-            If (dg_PrepPay.RowCount > 0) Then
-                If (Not Batching) Then
-                    btn_PayBatch.Visible = True
-                    btn_PayBatch.Text = "Batch " & dg_PrepPay.RowCount & " Payments"
-                End If
-            Else
-                btn_PayBatch.Visible = False
-            End If
-        End Sub
-
-        Private Sub btn_DeleteAllWrkInv_Click(sender As System.Object, e As System.EventArgs) Handles btn_DeleteAllWrkInv.Click
+      Private Sub btn_DeleteAllWrkInv_Click(sender As System.Object, e As System.EventArgs) Handles btn_DeleteAllWrkInv.Click
             Dim result As MsgBoxResult = MsgBox("Are you sure you want to delete all Prepared Invoices?", MsgBoxStyle.YesNo)
             If (result = MsgBoxResult.Yes) Then
                 Try
@@ -348,13 +317,14 @@ Namespace Batching
             End If
         End Sub
 
-        Private Sub DeleteToolStripMenuItem_Click(sender As System.Object, e As System.EventArgs) Handles DeleteToolStripMenuItem.Click
+        Private Sub btn_DeletePay_Click(sender As System.Object, e As System.EventArgs) Handles btn_DeletePay.Click
             If (dg_PrepPay.SelectedRows.Count = 1) Then
                 Dim row As ds_Batching.BATCH_WorkingPaymentsRow = CType(dg_PrepPay.SelectedRows(0).DataBoundItem, DataRowView).Row
                 Dim result As DialogResult = MessageBox.Show("Delete this Prepared Payment?", "Confirm Prepared Payment delete", MessageBoxButtons.YesNo, MessageBoxIcon.Question)
                 If (result = Windows.Forms.DialogResult.Yes) Then
                     BATCH_WorkingPaymentsTableAdapter.DeleteByID(row.WorkingPaymentsID)
-                    dg_PrepPay.Rows.RemoveAt(dg_PrepPay.SelectedRows.Item(0).Index)
+                    ' raise event
+                    RaiseEvent CustomerPaymentMod(row.CustomerNumber)
                 End If
             Else
                 MessageBox.Show("Please select a Prepared Payment first", "No Prepared Payment selected", MessageBoxButtons.OK, MessageBoxIcon.Error)
@@ -485,19 +455,171 @@ Namespace Batching
         End Function
 
         Private Sub btn_PayBatch_Click(sender As System.Object, e As System.EventArgs) Handles btn_PayBatch.Click
-            If (PayBatch_VerifyTotals()) Then
-
+            If (Not _payBatchRunning) Then
+                If (PayBatch_VerifyTotals()) Then
+                    Dim result As DialogResult = MessageBox.Show("Payment Totals Match. Begin Batching " & dg_PrepPay.RowCount & " payments?", "Begin Payment Batch", MessageBoxButtons.YesNo, MessageBoxIcon.Question)
+                    If (result = Windows.Forms.DialogResult.Yes) Then
+                        ' change button and set form var
+                        btn_PayBatch.Text = "Cancel Batch"
+                        btn_PayBatch.ForeColor = Color.Red
+                        _payBatchRunning = True
+                        ' init the object that the worker calls
+                        Dim payBatcher As New QB_Batching.Payments()
+                        ' start the worker
+                        BatchWorker.RunWorkerAsync(payBatcher)
+                    End If
+                Else
+                    ' totals did not match - err message is in validation
+                End If
             Else
-                ' totals did not match - err message is in validation
+                ' batch is running, this is a cancel call
+                Dim result As DialogResult = MessageBox.Show("Are you sure you want to stop this Payment Batch?", "Stop Batch", MessageBoxButtons.YesNo, MessageBoxIcon.Warning)
+                If (result = Windows.Forms.DialogResult.Yes) Then
+                    BatchWorker.CancelAsync()
+                End If
             End If
+
         End Sub
 
         Private Sub tc_Master_SelectedIndexChanged(sender As System.Object, e As System.EventArgs) Handles tc_Master.SelectedIndexChanged
-            If (tc_Master.SelectedIndex = 0) Then
-                BATCH_WorkingInvoiceTableAdapter.Fill(DS_Batching.BATCH_WorkingInvoice)
+            If (_lockTab) Then
+                If (tc_Master.SelectedIndex = 0) Then
+                    MessageBox.Show("You must finish modifying the payment first.", "Finish Modifying Payment", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                    tc_Master.SelectedIndex = 1
+                End If
             Else
-                BATCH_WorkingPaymentsTableAdapter.Fill(DS_Batching.BATCH_WorkingPayments)
+                If (tc_Master.SelectedIndex = 0) Then
+                    BATCH_WorkingInvoiceTableAdapter.Fill(DS_Batching.BATCH_WorkingInvoice)
+                Else
+                    BATCH_WorkingPaymentsTableAdapter.Fill(DS_Batching.BATCH_WorkingPayments)
+                End If
             End If
+            
+        End Sub
+
+        Private Sub dg_PrepPay_CellMouseDown(sender As System.Object, e As System.Windows.Forms.DataGridViewCellMouseEventArgs) Handles dg_PrepPay.CellMouseDown
+            If (e.Button = Windows.Forms.MouseButtons.Right) Then
+                For Each row As DataGridViewRow In dg_PrepPay
+                    row.Selected = False
+                Next
+                dg_PrepPay.Rows(e.RowIndex).Selected = True
+            End If
+        End Sub
+
+        Private Sub dg_PrepPay_RowsAdded(sender As System.Object, e As System.Windows.Forms.DataGridViewRowsAddedEventArgs) Handles dg_PrepPay.RowsAdded
+            PayBatch_TotalsPrep()
+        End Sub
+
+        Private Sub cmb_PayTypes_SelectedValueChanged(sender As System.Object, e As System.EventArgs) Handles cmb_PayTypes.SelectedValueChanged
+            If (cmb_PayTypes.SelectedValue = TC_ENPaymentTypes.Cash) Then
+                lbl_RefNumber.Visible = False
+                tb_RefNum.Visible = False
+                lbl_DateOnCheck.Visible = False
+                dtp_DateOnCheck.Visible = False
+            Else
+                lbl_RefNumber.Visible = True
+                tb_RefNum.Visible = True
+                lbl_DateOnCheck.Visible = True
+                dtp_DateOnCheck.Visible = True
+            End If
+        End Sub
+
+        Private _lockTab As Boolean
+        Private Sub btn_ModPayment_Click(sender As System.Object, e As System.EventArgs) Handles btn_ModPayment.Click
+            If (dg_PrepPay.SelectedRows.Count = 1) Then
+                grp_ModPayInfo.Visible = True
+            End If
+        End Sub
+
+        Private Sub grp_ModPayInfo_VisibleChanged(sender As System.Object, e As System.EventArgs) Handles grp_ModPayInfo.VisibleChanged
+            If (grp_ModPayInfo.Visible = True) Then
+                ' lock form to this tab
+                _lockTab = True
+                pnl_PayRight.Enabled = False
+                cm_PayGrid.Enabled = False
+                ' visible - get row and set boxes
+                Dim row As ds_Batching.BATCH_WorkingPaymentsRow = CType(dg_PrepPay.SelectedRows(0).DataBoundItem, DataRowView).Row
+                cmb_PayTypes.SelectedValue = row.WorkingPaymentsType
+                tb_Amount.Text = row.WorkingPaymentsAmount
+                If (Not row.IsWorkingPaymentsCheckNumNull) Then
+                    tb_RefNum.Text = row.WorkingPaymentsCheckNum
+                End If
+                If (Not row.IsDATE_ON_CHECKNull) Then
+                    dtp_DateOnCheck.Value = row.DATE_ON_CHECK
+                End If
+            Else
+                _lockTab = False
+                cm_PayGrid.Enabled = True
+                ' hidden
+                cmb_PayTypes.SelectedIndex = 0
+                tb_Amount.Clear()
+                tb_RefNum.Clear()
+                dtp_DateOnCheck.Value = Date.Now
+            End If
+
+        End Sub
+
+        
+        Private Sub btn_CancelPayMod_Click(sender As System.Object, e As System.EventArgs) Handles btn_CancelPayMod.Click
+            grp_ModPayInfo.Visible = False
+        End Sub
+
+        Private Sub btn_SavePayment_Click(sender As System.Object, e As System.EventArgs) Handles btn_SavePayment.Click
+            Dim checkRefNum As String
+            Dim dateOnCheck As Date?
+
+            If (cmb_PayTypes.SelectedValue <> TC_ENPaymentTypes.Cash) Then
+                ' get date
+                dateOnCheck = dtp_DateOnCheck.Value.Date
+
+                ' remove all spaces from begining and end
+                checkRefNum = Trim(tb_RefNum.Text)
+                ' replace all zeros by spaces, and then, left-trim that result, ie, remove starting spaces. 
+                'The external Replace replaces the spaces left in the string to their initial 0 character.
+                Replace(LTrim(Replace(checkRefNum, "0", " ")), " ", "0")
+
+                ' having them confirm check number
+                If (checkRefNum <> "") Then
+                    ' hide current ref number
+                    tb_RefNum.Visible = False
+                    Dim reEntry As String = InputBox("Please enter the check number again:", "Confirm Check #")
+                    ' show ref number after input
+                    tb_RefNum.Visible = True
+                    ' trim entry number and compare
+                    Trim(reEntry)
+                    Replace(LTrim(Replace(reEntry, "0", " ")), " ", "0")
+                    ' do these match
+                    If (reEntry <> checkRefNum) Then
+                        MessageBox.Show("Check numbers do not match. Please re-enter the check number and double check information.", "Check # Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                        tb_RefNum.Clear()
+                        Exit Sub
+                    End If
+                End If
+            End If
+
+
+            Dim row As ds_Batching.BATCH_WorkingPaymentsRow = CType(dg_PrepPay.SelectedRows(0).DataBoundItem, DataRowView).Row
+            With row
+                .WorkingPaymentsType = cmb_PayTypes.SelectedValue
+                .WorkingPaymentsAmount = tb_Amount.Text
+                If (checkRefNum IsNot Nothing) Then
+                    .WorkingPaymentsCheckNum = checkRefNum
+                End If
+                If (dateOnCheck IsNot Nothing) Then
+                    .DATE_ON_CHECK = dateOnCheck
+                End If
+            End With
+
+            ' save row
+            Try
+                row.EndEdit()
+                BATCH_WorkingPaymentsTableAdapter.Update(row)
+                RaiseEvent CustomerPaymentMod(row.CustomerNumber)
+                grp_ModPayInfo.Visible = False
+            Catch ex as SqlException
+                MessageBox.Show("Message: " & ex.Message & vbCrLf & "LineNumber: " & ex.LineNumber,
+                                "Sql Error: " & ex.Procedure, MessageBoxButtons.OK, MessageBoxIcon.Error)
+            End Try
         End Sub
     End Class
 End Namespace

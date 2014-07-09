@@ -24,16 +24,17 @@
         <System.Diagnostics.DebuggerStepThrough()> _
         Private Sub InitializeComponent()
             Me.components = New System.ComponentModel.Container()
-            Dim DataGridViewCellStyle17 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-            Dim DataGridViewCellStyle18 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-            Dim DataGridViewCellStyle19 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-            Dim DataGridViewCellStyle20 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+            Dim DataGridViewCellStyle6 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+            Dim DataGridViewCellStyle7 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+            Dim DataGridViewCellStyle8 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+            Dim DataGridViewCellStyle9 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
             Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(BatchingPrep))
-            Dim DataGridViewCellStyle16 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+            Dim DataGridViewCellStyle10 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
             Me.BATCHWorkingInvoiceBindingSource = New System.Windows.Forms.BindingSource(Me.components)
             Me.DS_Batching = New TrashCash.ds_Batching()
             Me.cm_PayGrid = New System.Windows.Forms.ContextMenuStrip(Me.components)
-            Me.DeleteToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+            Me.btn_ModPayment = New System.Windows.Forms.ToolStripMenuItem()
+            Me.btn_DeletePay = New System.Windows.Forms.ToolStripMenuItem()
             Me.BATCHWorkingPaymentsBindingSource = New System.Windows.Forms.BindingSource(Me.components)
             Me.ToolStrip1 = New System.Windows.Forms.ToolStrip()
             Me.btn_Refresh = New System.Windows.Forms.ToolStripButton()
@@ -55,10 +56,6 @@
             Me.Label1 = New System.Windows.Forms.Label()
             Me.lbl_InvBatchCount = New System.Windows.Forms.Label()
             Me.pb_Invoices = New System.Windows.Forms.ProgressBar()
-            Me.pnl_LeftTop = New System.Windows.Forms.Panel()
-            Me.btn_CancelInvBatch = New System.Windows.Forms.Button()
-            Me.btn_InvBatch = New System.Windows.Forms.Button()
-            Me.lbl_InvHeader = New System.Windows.Forms.Label()
             Me.pnl_Top = New System.Windows.Forms.Panel()
             Me.pnl_TopContent = New System.Windows.Forms.Panel()
             Me.btn_DeleteAllWrkInv = New System.Windows.Forms.Button()
@@ -85,13 +82,14 @@
             Me.WorkingPaymentsAmountDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
             Me.WorkingPaymentsCheckNum = New System.Windows.Forms.DataGridViewTextBoxColumn()
             Me.btn_PayBatch = New System.Windows.Forms.Button()
-            Me.grp_NewPayInfo = New System.Windows.Forms.GroupBox()
+            Me.grp_ModPayInfo = New System.Windows.Forms.GroupBox()
+            Me.btn_CancelPayMod = New System.Windows.Forms.Button()
             Me.lbl_PayType = New System.Windows.Forms.Label()
             Me.cmb_PayTypes = New System.Windows.Forms.ComboBox()
             Me.Label4 = New System.Windows.Forms.Label()
             Me.tb_Amount = New TrashCash.Classes.CurrencyTextBox()
             Me.lbl_RefNumber = New System.Windows.Forms.Label()
-            Me.btn_AddPayment = New System.Windows.Forms.Button()
+            Me.btn_SavePayment = New System.Windows.Forms.Button()
             Me.lbl_DateOnCheck = New System.Windows.Forms.Label()
             Me.dtp_DateOnCheck = New System.Windows.Forms.DateTimePicker()
             Me.tb_RefNum = New System.Windows.Forms.TextBox()
@@ -106,7 +104,6 @@
             Me.pnl_Left.SuspendLayout()
             CType(Me.dg_PrepInv, System.ComponentModel.ISupportInitialize).BeginInit()
             Me.pnl_LeftBot.SuspendLayout()
-            Me.pnl_LeftTop.SuspendLayout()
             Me.pnl_Top.SuspendLayout()
             Me.pnl_TopContent.SuspendLayout()
             Me.tp_Pay.SuspendLayout()
@@ -114,7 +111,7 @@
             CType(Me.dg_PrepPay, System.ComponentModel.ISupportInitialize).BeginInit()
             CType(Me.PaymentTypesBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
             CType(Me.Ds_Types, System.ComponentModel.ISupportInitialize).BeginInit()
-            Me.grp_NewPayInfo.SuspendLayout()
+            Me.grp_ModPayInfo.SuspendLayout()
             Me.SuspendLayout()
             '
             'BATCHWorkingInvoiceBindingSource
@@ -129,15 +126,21 @@
             '
             'cm_PayGrid
             '
-            Me.cm_PayGrid.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.DeleteToolStripMenuItem})
+            Me.cm_PayGrid.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.btn_ModPayment, Me.btn_DeletePay})
             Me.cm_PayGrid.Name = "cm_PayGrid"
-            Me.cm_PayGrid.Size = New System.Drawing.Size(205, 26)
+            Me.cm_PayGrid.Size = New System.Drawing.Size(163, 48)
             '
-            'DeleteToolStripMenuItem
+            'btn_ModPayment
             '
-            Me.DeleteToolStripMenuItem.Name = "DeleteToolStripMenuItem"
-            Me.DeleteToolStripMenuItem.Size = New System.Drawing.Size(204, 22)
-            Me.DeleteToolStripMenuItem.Text = "Delete Selected Payment"
+            Me.btn_ModPayment.Name = "btn_ModPayment"
+            Me.btn_ModPayment.Size = New System.Drawing.Size(162, 22)
+            Me.btn_ModPayment.Text = "Modify Payment"
+            '
+            'btn_DeletePay
+            '
+            Me.btn_DeletePay.Name = "btn_DeletePay"
+            Me.btn_DeletePay.Size = New System.Drawing.Size(162, 22)
+            Me.btn_DeletePay.Text = "Delete Payment"
             '
             'BATCHWorkingPaymentsBindingSource
             '
@@ -149,7 +152,7 @@
             Me.ToolStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.btn_Refresh})
             Me.ToolStrip1.Location = New System.Drawing.Point(0, 0)
             Me.ToolStrip1.Name = "ToolStrip1"
-            Me.ToolStrip1.Size = New System.Drawing.Size(1098, 26)
+            Me.ToolStrip1.Size = New System.Drawing.Size(1034, 26)
             Me.ToolStrip1.TabIndex = 2
             Me.ToolStrip1.Text = "ToolStrip1"
             '
@@ -184,7 +187,7 @@
             Me.tc_Master.Location = New System.Drawing.Point(0, 26)
             Me.tc_Master.Name = "tc_Master"
             Me.tc_Master.SelectedIndex = 0
-            Me.tc_Master.Size = New System.Drawing.Size(1098, 613)
+            Me.tc_Master.Size = New System.Drawing.Size(1034, 613)
             Me.tc_Master.TabIndex = 4
             '
             'tp_Inv
@@ -195,7 +198,7 @@
             Me.tp_Inv.Location = New System.Drawing.Point(4, 22)
             Me.tp_Inv.Name = "tp_Inv"
             Me.tp_Inv.Padding = New System.Windows.Forms.Padding(3)
-            Me.tp_Inv.Size = New System.Drawing.Size(1090, 587)
+            Me.tp_Inv.Size = New System.Drawing.Size(1026, 587)
             Me.tp_Inv.TabIndex = 0
             Me.tp_Inv.Text = "Recurring Service Invoices"
             '
@@ -203,7 +206,6 @@
             '
             Me.pnl_Left.Controls.Add(Me.dg_PrepInv)
             Me.pnl_Left.Controls.Add(Me.pnl_LeftBot)
-            Me.pnl_Left.Controls.Add(Me.pnl_LeftTop)
             Me.pnl_Left.Dock = System.Windows.Forms.DockStyle.Left
             Me.pnl_Left.Location = New System.Drawing.Point(3, 117)
             Me.pnl_Left.Name = "pnl_Left"
@@ -221,12 +223,12 @@
             Me.dg_PrepInv.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.InvoiceToBePrintedDataGridViewCheckBoxColumn, Me.CustomerFullNameDataGridViewTextBoxColumn1, Me.InvoicePostDateDataGridViewTextBoxColumn, Me.StartBillingDateDataGridViewTextBoxColumn, Me.EndBillingDateDataGridViewTextBoxColumn, Me.TotalDataGridViewTextBoxColumn})
             Me.dg_PrepInv.DataSource = Me.BATCHWorkingInvoiceBindingSource
             Me.dg_PrepInv.Dock = System.Windows.Forms.DockStyle.Fill
-            Me.dg_PrepInv.Location = New System.Drawing.Point(3, 30)
+            Me.dg_PrepInv.Location = New System.Drawing.Point(3, 3)
             Me.dg_PrepInv.MultiSelect = False
             Me.dg_PrepInv.Name = "dg_PrepInv"
             Me.dg_PrepInv.RowHeadersVisible = False
             Me.dg_PrepInv.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-            Me.dg_PrepInv.Size = New System.Drawing.Size(610, 395)
+            Me.dg_PrepInv.Size = New System.Drawing.Size(610, 422)
             Me.dg_PrepInv.TabIndex = 2
             '
             'InvoiceToBePrintedDataGridViewCheckBoxColumn
@@ -248,8 +250,8 @@
             '
             Me.InvoicePostDateDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
             Me.InvoicePostDateDataGridViewTextBoxColumn.DataPropertyName = "InvoicePostDate"
-            DataGridViewCellStyle17.Format = "d"
-            Me.InvoicePostDateDataGridViewTextBoxColumn.DefaultCellStyle = DataGridViewCellStyle17
+            DataGridViewCellStyle6.Format = "d"
+            Me.InvoicePostDateDataGridViewTextBoxColumn.DefaultCellStyle = DataGridViewCellStyle6
             Me.InvoicePostDateDataGridViewTextBoxColumn.HeaderText = "Post Date"
             Me.InvoicePostDateDataGridViewTextBoxColumn.Name = "InvoicePostDateDataGridViewTextBoxColumn"
             Me.InvoicePostDateDataGridViewTextBoxColumn.Width = 79
@@ -258,8 +260,8 @@
             '
             Me.StartBillingDateDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
             Me.StartBillingDateDataGridViewTextBoxColumn.DataPropertyName = "StartBillingDate"
-            DataGridViewCellStyle18.Format = "d"
-            Me.StartBillingDateDataGridViewTextBoxColumn.DefaultCellStyle = DataGridViewCellStyle18
+            DataGridViewCellStyle7.Format = "d"
+            Me.StartBillingDateDataGridViewTextBoxColumn.DefaultCellStyle = DataGridViewCellStyle7
             Me.StartBillingDateDataGridViewTextBoxColumn.HeaderText = "Start Billing"
             Me.StartBillingDateDataGridViewTextBoxColumn.Name = "StartBillingDateDataGridViewTextBoxColumn"
             Me.StartBillingDateDataGridViewTextBoxColumn.ReadOnly = True
@@ -269,8 +271,8 @@
             '
             Me.EndBillingDateDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
             Me.EndBillingDateDataGridViewTextBoxColumn.DataPropertyName = "EndBillingDate"
-            DataGridViewCellStyle19.Format = "d"
-            Me.EndBillingDateDataGridViewTextBoxColumn.DefaultCellStyle = DataGridViewCellStyle19
+            DataGridViewCellStyle8.Format = "d"
+            Me.EndBillingDateDataGridViewTextBoxColumn.DefaultCellStyle = DataGridViewCellStyle8
             Me.EndBillingDateDataGridViewTextBoxColumn.HeaderText = "End Billing"
             Me.EndBillingDateDataGridViewTextBoxColumn.Name = "EndBillingDateDataGridViewTextBoxColumn"
             Me.EndBillingDateDataGridViewTextBoxColumn.ReadOnly = True
@@ -280,8 +282,8 @@
             '
             Me.TotalDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
             Me.TotalDataGridViewTextBoxColumn.DataPropertyName = "Total"
-            DataGridViewCellStyle20.Format = "C2"
-            Me.TotalDataGridViewTextBoxColumn.DefaultCellStyle = DataGridViewCellStyle20
+            DataGridViewCellStyle9.Format = "C2"
+            Me.TotalDataGridViewTextBoxColumn.DefaultCellStyle = DataGridViewCellStyle9
             Me.TotalDataGridViewTextBoxColumn.HeaderText = "Total"
             Me.TotalDataGridViewTextBoxColumn.Name = "TotalDataGridViewTextBoxColumn"
             Me.TotalDataGridViewTextBoxColumn.ReadOnly = True
@@ -334,56 +336,6 @@
             Me.pb_Invoices.Style = System.Windows.Forms.ProgressBarStyle.Continuous
             Me.pb_Invoices.TabIndex = 0
             '
-            'pnl_LeftTop
-            '
-            Me.pnl_LeftTop.Controls.Add(Me.btn_CancelInvBatch)
-            Me.pnl_LeftTop.Controls.Add(Me.btn_InvBatch)
-            Me.pnl_LeftTop.Controls.Add(Me.lbl_InvHeader)
-            Me.pnl_LeftTop.Dock = System.Windows.Forms.DockStyle.Top
-            Me.pnl_LeftTop.Location = New System.Drawing.Point(3, 3)
-            Me.pnl_LeftTop.Name = "pnl_LeftTop"
-            Me.pnl_LeftTop.Padding = New System.Windows.Forms.Padding(2)
-            Me.pnl_LeftTop.Size = New System.Drawing.Size(610, 27)
-            Me.pnl_LeftTop.TabIndex = 0
-            '
-            'btn_CancelInvBatch
-            '
-            Me.btn_CancelInvBatch.AutoSize = True
-            Me.btn_CancelInvBatch.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
-            Me.btn_CancelInvBatch.Dock = System.Windows.Forms.DockStyle.Right
-            Me.btn_CancelInvBatch.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-            Me.btn_CancelInvBatch.ForeColor = System.Drawing.Color.Red
-            Me.btn_CancelInvBatch.Location = New System.Drawing.Point(440, 2)
-            Me.btn_CancelInvBatch.Name = "btn_CancelInvBatch"
-            Me.btn_CancelInvBatch.Size = New System.Drawing.Size(80, 23)
-            Me.btn_CancelInvBatch.TabIndex = 2
-            Me.btn_CancelInvBatch.Text = "Stop Batch"
-            Me.btn_CancelInvBatch.UseVisualStyleBackColor = True
-            Me.btn_CancelInvBatch.Visible = False
-            '
-            'btn_InvBatch
-            '
-            Me.btn_InvBatch.AutoSize = True
-            Me.btn_InvBatch.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
-            Me.btn_InvBatch.Dock = System.Windows.Forms.DockStyle.Right
-            Me.btn_InvBatch.Location = New System.Drawing.Point(520, 2)
-            Me.btn_InvBatch.Name = "btn_InvBatch"
-            Me.btn_InvBatch.Size = New System.Drawing.Size(88, 23)
-            Me.btn_InvBatch.TabIndex = 1
-            Me.btn_InvBatch.Text = "Batch Invoices"
-            Me.btn_InvBatch.UseVisualStyleBackColor = True
-            Me.btn_InvBatch.Visible = False
-            '
-            'lbl_InvHeader
-            '
-            Me.lbl_InvHeader.AutoSize = True
-            Me.lbl_InvHeader.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-            Me.lbl_InvHeader.Location = New System.Drawing.Point(5, 3)
-            Me.lbl_InvHeader.Name = "lbl_InvHeader"
-            Me.lbl_InvHeader.Size = New System.Drawing.Size(138, 16)
-            Me.lbl_InvHeader.TabIndex = 0
-            Me.lbl_InvHeader.Text = "Prepared Invoices"
-            '
             'pnl_Top
             '
             Me.pnl_Top.Controls.Add(Me.pnl_TopContent)
@@ -392,7 +344,7 @@
             Me.pnl_Top.Margin = New System.Windows.Forms.Padding(10)
             Me.pnl_Top.Name = "pnl_Top"
             Me.pnl_Top.Padding = New System.Windows.Forms.Padding(100, 10, 100, 10)
-            Me.pnl_Top.Size = New System.Drawing.Size(1084, 114)
+            Me.pnl_Top.Size = New System.Drawing.Size(1020, 114)
             Me.pnl_Top.TabIndex = 4
             '
             'pnl_TopContent
@@ -406,7 +358,7 @@
             Me.pnl_TopContent.Location = New System.Drawing.Point(100, 10)
             Me.pnl_TopContent.Name = "pnl_TopContent"
             Me.pnl_TopContent.Padding = New System.Windows.Forms.Padding(3)
-            Me.pnl_TopContent.Size = New System.Drawing.Size(884, 94)
+            Me.pnl_TopContent.Size = New System.Drawing.Size(820, 94)
             Me.pnl_TopContent.TabIndex = 0
             '
             'btn_DeleteAllWrkInv
@@ -435,7 +387,7 @@
             Me.Label2.Dock = System.Windows.Forms.DockStyle.Top
             Me.Label2.Location = New System.Drawing.Point(3, 3)
             Me.Label2.Name = "Label2"
-            Me.Label2.Size = New System.Drawing.Size(876, 59)
+            Me.Label2.Size = New System.Drawing.Size(812, 59)
             Me.Label2.TabIndex = 1
             Me.Label2.Text = resources.GetString("Label2.Text")
             Me.Label2.TextAlign = System.Drawing.ContentAlignment.TopCenter
@@ -451,11 +403,11 @@
             '
             Me.tp_Pay.BackColor = System.Drawing.SystemColors.Control
             Me.tp_Pay.Controls.Add(Me.pnl_PayRight)
-            Me.tp_Pay.Controls.Add(Me.grp_NewPayInfo)
+            Me.tp_Pay.Controls.Add(Me.grp_ModPayInfo)
             Me.tp_Pay.Location = New System.Drawing.Point(4, 22)
             Me.tp_Pay.Name = "tp_Pay"
             Me.tp_Pay.Padding = New System.Windows.Forms.Padding(3)
-            Me.tp_Pay.Size = New System.Drawing.Size(1090, 587)
+            Me.tp_Pay.Size = New System.Drawing.Size(1026, 587)
             Me.tp_Pay.TabIndex = 1
             Me.tp_Pay.Text = "Payments"
             '
@@ -474,7 +426,7 @@
             Me.pnl_PayRight.Controls.Add(Me.dg_PrepPay)
             Me.pnl_PayRight.Controls.Add(Me.btn_PayBatch)
             Me.pnl_PayRight.Dock = System.Windows.Forms.DockStyle.Right
-            Me.pnl_PayRight.Location = New System.Drawing.Point(466, 3)
+            Me.pnl_PayRight.Location = New System.Drawing.Point(402, 3)
             Me.pnl_PayRight.Name = "pnl_PayRight"
             Me.pnl_PayRight.Size = New System.Drawing.Size(621, 581)
             Me.pnl_PayRight.TabIndex = 120
@@ -575,7 +527,6 @@
             Me.dg_PrepPay.DataSource = Me.BATCHWorkingPaymentsBindingSource
             Me.dg_PrepPay.Dock = System.Windows.Forms.DockStyle.Top
             Me.dg_PrepPay.Location = New System.Drawing.Point(0, 0)
-            Me.dg_PrepPay.MultiSelect = False
             Me.dg_PrepPay.Name = "dg_PrepPay"
             Me.dg_PrepPay.ReadOnly = True
             Me.dg_PrepPay.RowHeadersVisible = False
@@ -616,8 +567,8 @@
             '
             Me.WorkingPaymentsAmountDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
             Me.WorkingPaymentsAmountDataGridViewTextBoxColumn.DataPropertyName = "WorkingPaymentsAmount"
-            DataGridViewCellStyle16.Format = "C2"
-            Me.WorkingPaymentsAmountDataGridViewTextBoxColumn.DefaultCellStyle = DataGridViewCellStyle16
+            DataGridViewCellStyle10.Format = "C2"
+            Me.WorkingPaymentsAmountDataGridViewTextBoxColumn.DefaultCellStyle = DataGridViewCellStyle10
             Me.WorkingPaymentsAmountDataGridViewTextBoxColumn.HeaderText = "Amount"
             Me.WorkingPaymentsAmountDataGridViewTextBoxColumn.Name = "WorkingPaymentsAmountDataGridViewTextBoxColumn"
             Me.WorkingPaymentsAmountDataGridViewTextBoxColumn.ReadOnly = True
@@ -642,23 +593,36 @@
             Me.btn_PayBatch.UseVisualStyleBackColor = True
             Me.btn_PayBatch.Visible = False
             '
-            'grp_NewPayInfo
+            'grp_ModPayInfo
             '
-            Me.grp_NewPayInfo.Controls.Add(Me.lbl_PayType)
-            Me.grp_NewPayInfo.Controls.Add(Me.cmb_PayTypes)
-            Me.grp_NewPayInfo.Controls.Add(Me.Label4)
-            Me.grp_NewPayInfo.Controls.Add(Me.tb_Amount)
-            Me.grp_NewPayInfo.Controls.Add(Me.lbl_RefNumber)
-            Me.grp_NewPayInfo.Controls.Add(Me.btn_AddPayment)
-            Me.grp_NewPayInfo.Controls.Add(Me.lbl_DateOnCheck)
-            Me.grp_NewPayInfo.Controls.Add(Me.dtp_DateOnCheck)
-            Me.grp_NewPayInfo.Controls.Add(Me.tb_RefNum)
-            Me.grp_NewPayInfo.Location = New System.Drawing.Point(114, 125)
-            Me.grp_NewPayInfo.Name = "grp_NewPayInfo"
-            Me.grp_NewPayInfo.Size = New System.Drawing.Size(236, 171)
-            Me.grp_NewPayInfo.TabIndex = 117
-            Me.grp_NewPayInfo.TabStop = False
-            Me.grp_NewPayInfo.Text = "New Payment Information"
+            Me.grp_ModPayInfo.Controls.Add(Me.btn_CancelPayMod)
+            Me.grp_ModPayInfo.Controls.Add(Me.lbl_PayType)
+            Me.grp_ModPayInfo.Controls.Add(Me.cmb_PayTypes)
+            Me.grp_ModPayInfo.Controls.Add(Me.Label4)
+            Me.grp_ModPayInfo.Controls.Add(Me.tb_Amount)
+            Me.grp_ModPayInfo.Controls.Add(Me.lbl_RefNumber)
+            Me.grp_ModPayInfo.Controls.Add(Me.btn_SavePayment)
+            Me.grp_ModPayInfo.Controls.Add(Me.lbl_DateOnCheck)
+            Me.grp_ModPayInfo.Controls.Add(Me.dtp_DateOnCheck)
+            Me.grp_ModPayInfo.Controls.Add(Me.tb_RefNum)
+            Me.grp_ModPayInfo.Location = New System.Drawing.Point(63, 54)
+            Me.grp_ModPayInfo.Name = "grp_ModPayInfo"
+            Me.grp_ModPayInfo.Size = New System.Drawing.Size(236, 209)
+            Me.grp_ModPayInfo.TabIndex = 117
+            Me.grp_ModPayInfo.TabStop = False
+            Me.grp_ModPayInfo.Text = "Modify Payment Information"
+            Me.grp_ModPayInfo.Visible = False
+            '
+            'btn_CancelPayMod
+            '
+            Me.btn_CancelPayMod.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+            Me.btn_CancelPayMod.ForeColor = System.Drawing.Color.Red
+            Me.btn_CancelPayMod.Location = New System.Drawing.Point(26, 177)
+            Me.btn_CancelPayMod.Name = "btn_CancelPayMod"
+            Me.btn_CancelPayMod.Size = New System.Drawing.Size(187, 23)
+            Me.btn_CancelPayMod.TabIndex = 115
+            Me.btn_CancelPayMod.Text = "Cancel"
+            Me.btn_CancelPayMod.UseVisualStyleBackColor = True
             '
             'lbl_PayType
             '
@@ -706,14 +670,14 @@
             Me.lbl_RefNumber.Text = "Reference #:"
             Me.lbl_RefNumber.Visible = False
             '
-            'btn_AddPayment
+            'btn_SavePayment
             '
-            Me.btn_AddPayment.Location = New System.Drawing.Point(26, 134)
-            Me.btn_AddPayment.Name = "btn_AddPayment"
-            Me.btn_AddPayment.Size = New System.Drawing.Size(187, 23)
-            Me.btn_AddPayment.TabIndex = 6
-            Me.btn_AddPayment.Text = "Add Payment"
-            Me.btn_AddPayment.UseVisualStyleBackColor = True
+            Me.btn_SavePayment.Location = New System.Drawing.Point(26, 134)
+            Me.btn_SavePayment.Name = "btn_SavePayment"
+            Me.btn_SavePayment.Size = New System.Drawing.Size(187, 23)
+            Me.btn_SavePayment.TabIndex = 6
+            Me.btn_SavePayment.Text = "Save Payment"
+            Me.btn_SavePayment.UseVisualStyleBackColor = True
             '
             'lbl_DateOnCheck
             '
@@ -750,7 +714,7 @@
             '
             Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
             Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-            Me.ClientSize = New System.Drawing.Size(1098, 639)
+            Me.ClientSize = New System.Drawing.Size(1034, 639)
             Me.Controls.Add(Me.tc_Master)
             Me.Controls.Add(Me.ToolStrip1)
             Me.Name = "BatchingPrep"
@@ -768,8 +732,6 @@
             CType(Me.dg_PrepInv, System.ComponentModel.ISupportInitialize).EndInit()
             Me.pnl_LeftBot.ResumeLayout(False)
             Me.pnl_LeftBot.PerformLayout()
-            Me.pnl_LeftTop.ResumeLayout(False)
-            Me.pnl_LeftTop.PerformLayout()
             Me.pnl_Top.ResumeLayout(False)
             Me.pnl_TopContent.ResumeLayout(False)
             Me.pnl_TopContent.PerformLayout()
@@ -779,8 +741,8 @@
             CType(Me.dg_PrepPay, System.ComponentModel.ISupportInitialize).EndInit()
             CType(Me.PaymentTypesBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
             CType(Me.Ds_Types, System.ComponentModel.ISupportInitialize).EndInit()
-            Me.grp_NewPayInfo.ResumeLayout(False)
-            Me.grp_NewPayInfo.PerformLayout()
+            Me.grp_ModPayInfo.ResumeLayout(False)
+            Me.grp_ModPayInfo.PerformLayout()
             Me.ResumeLayout(False)
             Me.PerformLayout()
 
@@ -789,7 +751,7 @@
         Friend WithEvents btn_Refresh As System.Windows.Forms.ToolStripButton
         Friend WithEvents BatchWorker As System.ComponentModel.BackgroundWorker
         Friend WithEvents cm_PayGrid As System.Windows.Forms.ContextMenuStrip
-        Friend WithEvents DeleteToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
+        Friend WithEvents btn_DeletePay As System.Windows.Forms.ToolStripMenuItem
         Friend WithEvents DS_Batching As ds_Batching
         Friend WithEvents BATCHWorkingPaymentsBindingSource As System.Windows.Forms.BindingSource
         Friend WithEvents BATCH_WorkingPaymentsTableAdapter As ds_BatchingTableAdapters.BATCH_WorkingPaymentsTableAdapter
@@ -810,10 +772,6 @@
         Friend WithEvents Label1 As System.Windows.Forms.Label
         Public WithEvents lbl_InvBatchCount As System.Windows.Forms.Label
         Public WithEvents pb_Invoices As System.Windows.Forms.ProgressBar
-        Friend WithEvents pnl_LeftTop As System.Windows.Forms.Panel
-        Friend WithEvents btn_CancelInvBatch As System.Windows.Forms.Button
-        Friend WithEvents btn_InvBatch As System.Windows.Forms.Button
-        Friend WithEvents lbl_InvHeader As System.Windows.Forms.Label
         Friend WithEvents pnl_Top As System.Windows.Forms.Panel
         Friend WithEvents pnl_TopContent As System.Windows.Forms.Panel
         Friend WithEvents btn_DeleteAllWrkInv As System.Windows.Forms.Button
@@ -841,16 +799,18 @@
         Friend WithEvents WorkingPaymentsAmountDataGridViewTextBoxColumn As System.Windows.Forms.DataGridViewTextBoxColumn
         Friend WithEvents WorkingPaymentsCheckNum As System.Windows.Forms.DataGridViewTextBoxColumn
         Friend WithEvents btn_PayBatch As System.Windows.Forms.Button
-        Friend WithEvents grp_NewPayInfo As System.Windows.Forms.GroupBox
+        Friend WithEvents grp_ModPayInfo As System.Windows.Forms.GroupBox
         Friend WithEvents lbl_PayType As System.Windows.Forms.Label
         Friend WithEvents cmb_PayTypes As System.Windows.Forms.ComboBox
         Friend WithEvents Label4 As System.Windows.Forms.Label
         Friend WithEvents tb_Amount As TrashCash.Classes.CurrencyTextBox
         Friend WithEvents lbl_RefNumber As System.Windows.Forms.Label
-        Friend WithEvents btn_AddPayment As System.Windows.Forms.Button
+        Friend WithEvents btn_SavePayment As System.Windows.Forms.Button
         Friend WithEvents lbl_DateOnCheck As System.Windows.Forms.Label
         Friend WithEvents dtp_DateOnCheck As System.Windows.Forms.DateTimePicker
         Friend WithEvents tb_RefNum As System.Windows.Forms.TextBox
         Friend WithEvents lbl_TotalCash As System.Windows.Forms.Label
+        Friend WithEvents btn_ModPayment As System.Windows.Forms.ToolStripMenuItem
+        Friend WithEvents btn_CancelPayMod As System.Windows.Forms.Button
     End Class
 End Namespace

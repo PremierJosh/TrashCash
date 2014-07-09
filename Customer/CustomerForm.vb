@@ -2,7 +2,7 @@
     Public Class CustomerForm
         ' events for customer balance or in queue amount changing
         Friend Event CustomerBalanceChanged(ByVal customerNumber As Integer)
-        Friend Event CustomerPaymentAdded(ByVal customerNumber As Integer)
+        Friend Event CustomerPaymentMod(ByVal customerNumber As Integer)
         Friend Event ApprovalsChanged()
 
 
@@ -25,13 +25,13 @@
                 UC_Quickbooks.CurrentCustomer = value
                 UC_Quickbooks.CustomerListID = UC_CustomerInfoBoxes.CustomerListID
 
-               
+
             End Set
         End Property
 
         ' refresh balance event handleing
         Friend Sub RefreshCustBalance(ByVal customerNumber As Integer) Handles UC_RecurringService.BalanceChanged
-          ' let home form know customer balance changed from a credit
+            ' let home form know customer balance changed from a credit
             RaiseEvent CustomerBalanceChanged(customerNumber)
             ' rec srvc is raising this event, possible invoices were paid with credit
             UC_Quickbooks.FetchInvoices(0)
@@ -53,7 +53,7 @@
             CustomerToolstrip1.GetCustomerBalance()
             ' allow customer info changing
             UC_CustomerInfoBoxes.AllowUpdate = True
-            End Sub
+        End Sub
 
         Private Sub CustomerChanged(ByVal customerNumber As Integer) Handles CustomerToolstrip1.CustomerChanging
             CurrentCustomer = customerNumber
@@ -103,9 +103,9 @@
             'MessageBox.Show("Current Customer is Deactive", "Deactive Customer", MessageBoxButtons.OK, MessageBoxIcon.Error)
             'End If
         End Sub
-        Private Sub PaymentAddedCatch(ByVal customerNumber As Integer) Handles PayForm.CustomerPaymentAdded
-            RaiseEvent CustomerPaymentAdded(customerNumber)
-          End Sub
+        Private Sub PaymentAddedCatch(ByVal customerNumber As Integer) Handles PayForm.CustomerPaymentMod
+            RaiseEvent CustomerPaymentMod(customerNumber)
+        End Sub
 
         Private Sub btn_Credit_Click(sender As Object, e As EventArgs) Handles btn_Credit.Click
             'If (Not UC_CustomerInfoBoxes.CustomerDeactive) Then

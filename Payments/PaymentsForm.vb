@@ -3,8 +3,8 @@
         ' field to update if item added to queue
         Friend PaymentAdded As Boolean
         ' events for home form notification
-        Friend Event CustomerPaymentAdded(ByVal customerNumber As Integer)
-        
+        Friend Event CustomerPaymentMod(ByVal customerNumber As Integer)
+
         Private _currentCustomer As Integer
         Public Property CurrentCustomer As Integer
             Get
@@ -47,7 +47,7 @@
 
             ' checking if in debug mode
             If (_debug) Then
-                ck_BackDate.Checked = False
+                ck_Backdate.Checked = False
                 dtp_Override.Value = Date.Now
             End If
         End Sub
@@ -62,7 +62,7 @@
             ' Add any initialization after the InitializeComponent() call.
             _debug = debug
             If (debug) Then
-                ck_BackDate.Visible = True
+                ck_Backdate.Visible = True
             End If
 
             _hTA = New ds_PaymentsTableAdapters.PaymentHistory_DBTableAdapter
@@ -203,7 +203,7 @@
 
                 Try
                     ' checking if override checked
-                    If (ck_BackDate.Checked) Then
+                    If (ck_Backdate.Checked) Then
                         ' inserting override date chosen as time inserted
                         ' insert with current time and check if dateoncheck is nothing (cash payment)
                         If (cmb_PayTypes.SelectedValue = TC_ENPaymentTypes.Cash) Then
@@ -227,7 +227,7 @@
                     MessageBox.Show("Message: " & ex.Message & vbCrLf & "LineNumber: " & ex.LineNumber,
                                     "Sql Error: " & ex.Procedure, MessageBoxButtons.OK, MessageBoxIcon.Error)
                 End Try
-                RaiseEvent CustomerPaymentAdded(CurrentCustomer)
+                RaiseEvent CustomerPaymentMod(CurrentCustomer)
                 ResetPayment()
                 ' fill table
                 BATCH_WorkingPaymentsTableAdapter.Fill(Ds_Batching.BATCH_WorkingPayments)
@@ -248,7 +248,7 @@
                 End Try
                 'refresh grid
                 BATCH_WorkingPaymentsTableAdapter.Fill(Ds_Batching.BATCH_WorkingPayments)
-                RaiseEvent CustomerPaymentAdded(row.CustomerNumber)
+                RaiseEvent CustomerPaymentMod(row.CustomerNumber)
             End If
         End Sub
 

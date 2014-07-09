@@ -144,6 +144,11 @@
   <metadata name="BATCH_WorkingInvoiceTableAdapter.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 56</value>
   </metadata>
+  <data name="Label2.Text" xml:space="preserve">
+    <value>If you would like to generate Invoices based off Recurring Services, select a Date you would like to Invoice up to and click "Generate".
+If you need to make changes to any of these Invoices, you can select it from the list below, then right click and choose "Modify Invoice".
+If all items appear correct, you can click "Batch Invoices" to send them to Quickbooks.</value>
+  </data>
   <metadata name="WorkingPaymentsType.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
@@ -153,11 +158,6 @@
   <metadata name="WorkingPaymentsCheckNum.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
-  <data name="Label2.Text" xml:space="preserve">
-    <value>If you would like to generate Invoices based off Recurring Services, select a Date you would like to Invoice up to and click "Generate".
-If you need to make changes to any of these Invoices, you can select it from the list below, then right click and choose "Modify Invoice".
-If all items appear correct, you can click "Batch Invoices" to send them to Quickbooks.</value>
-  </data>
   <metadata name="PaymentTypesBindingSource.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>372, 56</value>
   </metadata>
