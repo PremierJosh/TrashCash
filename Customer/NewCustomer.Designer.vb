@@ -25,8 +25,6 @@
         Private Sub InitializeComponent()
             Me.components = New System.ComponentModel.Container()
             Me.startDatePicker = New System.Windows.Forms.DateTimePicker()
-            Me.CustomerBindingSource = New System.Windows.Forms.BindingSource(Me.components)
-            Me.Ds_Customer = New ds_Customer()
             Me.Label9 = New System.Windows.Forms.Label()
             Me.createCustBtn = New System.Windows.Forms.Button()
             Me.GroupBox2 = New System.Windows.Forms.GroupBox()
@@ -37,6 +35,7 @@
             Me.billedAdvanceChkBox = New System.Windows.Forms.CheckBox()
             Me.billedAdvanceTooltip = New System.Windows.Forms.ToolTip(Me.components)
             Me.tt_CustBillInterval = New System.Windows.Forms.ToolTip(Me.components)
+            Me.lbl_BillInter = New System.Windows.Forms.Label()
             Me.grp_GenInfo = New System.Windows.Forms.GroupBox()
             Me.tb_CompanyName = New System.Windows.Forms.TextBox()
             Me.lbl_CompName = New System.Windows.Forms.Label()
@@ -64,14 +63,15 @@
             Me.Label6 = New System.Windows.Forms.Label()
             Me.Label5 = New System.Windows.Forms.Label()
             Me.Label4 = New System.Windows.Forms.Label()
-            Me.CustomerTableAdapter = New ds_CustomerTableAdapters.CustomerTableAdapter()
-            Me.lbl_BillInter = New System.Windows.Forms.Label()
-            CType(Me.CustomerBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
-            CType(Me.Ds_Customer, System.ComponentModel.ISupportInitialize).BeginInit()
+            Me.CustomerBindingSource = New System.Windows.Forms.BindingSource(Me.components)
+            Me.Ds_Customer = New TrashCash.ds_Customer()
+            Me.CustomerTableAdapter = New TrashCash.ds_CustomerTableAdapters.CustomerTableAdapter()
             Me.GroupBox2.SuspendLayout()
             CType(Me.nud_BillInterval, System.ComponentModel.ISupportInitialize).BeginInit()
             Me.grp_GenInfo.SuspendLayout()
             Me.grp_BillAddr.SuspendLayout()
+            CType(Me.CustomerBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
+            CType(Me.Ds_Customer, System.ComponentModel.ISupportInitialize).BeginInit()
             Me.SuspendLayout()
             '
             'startDatePicker
@@ -82,16 +82,6 @@
             Me.startDatePicker.Name = "startDatePicker"
             Me.startDatePicker.Size = New System.Drawing.Size(81, 20)
             Me.startDatePicker.TabIndex = 4
-            '
-            'CustomerBindingSource
-            '
-            Me.CustomerBindingSource.DataMember = "Customer"
-            Me.CustomerBindingSource.DataSource = Me.Ds_Customer
-            '
-            'Ds_Customer
-            '
-            Me.Ds_Customer.EnforceConstraints = False
-            Me.Ds_Customer.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema
             '
             'Label9
             '
@@ -173,7 +163,7 @@
             Me.printInvoicesChkBox.TabIndex = 3
             Me.printInvoicesChkBox.Text = "Print Invoices"
             Me.billedAdvanceTooltip.SetToolTip(Me.printInvoicesChkBox, "If checked, Customer will be billed in advance for the services they will recieve" & _
-                                                                       " in the next billing cycle.")
+            " in the next billing cycle.")
             Me.printInvoicesChkBox.UseVisualStyleBackColor = True
             '
             'billedAdvanceChkBox
@@ -189,7 +179,7 @@
             Me.billedAdvanceChkBox.TabIndex = 2
             Me.billedAdvanceChkBox.Text = "Billed in Advance"
             Me.billedAdvanceTooltip.SetToolTip(Me.billedAdvanceChkBox, "If checked, Customer will be billed in advance for the services they will recieve" & _
-                                                                       " in the next billing cycle.")
+            " in the next billing cycle.")
             Me.billedAdvanceChkBox.UseVisualStyleBackColor = True
             '
             'billedAdvanceTooltip
@@ -198,6 +188,17 @@
             Me.billedAdvanceTooltip.AutoPopDelay = 10000
             Me.billedAdvanceTooltip.InitialDelay = 100
             Me.billedAdvanceTooltip.ReshowDelay = 20
+            '
+            'lbl_BillInter
+            '
+            Me.lbl_BillInter.AutoSize = True
+            Me.lbl_BillInter.Location = New System.Drawing.Point(99, 140)
+            Me.lbl_BillInter.Name = "lbl_BillInter"
+            Me.lbl_BillInter.Size = New System.Drawing.Size(61, 13)
+            Me.lbl_BillInter.TabIndex = 78
+            Me.lbl_BillInter.Text = "Bill Interval:"
+            Me.tt_CustBillInterval.SetToolTip(Me.lbl_BillInter, "How many months between this customer recieving an invoice.")
+            Me.lbl_BillInter.Visible = False
             '
             'grp_GenInfo
             '
@@ -458,20 +459,19 @@
             Me.Label4.TabIndex = 65
             Me.Label4.Text = "Address 1:"
             '
+            'CustomerBindingSource
+            '
+            Me.CustomerBindingSource.DataMember = "Customer"
+            Me.CustomerBindingSource.DataSource = Me.Ds_Customer
+            '
+            'Ds_Customer
+            '
+            Me.Ds_Customer.EnforceConstraints = False
+            Me.Ds_Customer.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema
+            '
             'CustomerTableAdapter
             '
             Me.CustomerTableAdapter.ClearBeforeFill = True
-            '
-            'lbl_BillInter
-            '
-            Me.lbl_BillInter.AutoSize = True
-            Me.lbl_BillInter.Location = New System.Drawing.Point(99, 140)
-            Me.lbl_BillInter.Name = "lbl_BillInter"
-            Me.lbl_BillInter.Size = New System.Drawing.Size(61, 13)
-            Me.lbl_BillInter.TabIndex = 78
-            Me.lbl_BillInter.Text = "Bill Interval:"
-            Me.tt_CustBillInterval.SetToolTip(Me.lbl_BillInter, "How many months between this customer recieving an invoice.")
-            Me.lbl_BillInter.Visible = False
             '
             'NewCustomer
             '
@@ -488,8 +488,6 @@
             Me.Name = "NewCustomer"
             Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent
             Me.Text = "TrashCash | New Customer"
-            CType(Me.CustomerBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
-            CType(Me.Ds_Customer, System.ComponentModel.ISupportInitialize).EndInit()
             Me.GroupBox2.ResumeLayout(False)
             Me.GroupBox2.PerformLayout()
             CType(Me.nud_BillInterval, System.ComponentModel.ISupportInitialize).EndInit()
@@ -497,6 +495,8 @@
             Me.grp_GenInfo.PerformLayout()
             Me.grp_BillAddr.ResumeLayout(False)
             Me.grp_BillAddr.PerformLayout()
+            CType(Me.CustomerBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
+            CType(Me.Ds_Customer, System.ComponentModel.ISupportInitialize).EndInit()
             Me.ResumeLayout(False)
             Me.PerformLayout()
 

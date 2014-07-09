@@ -1163,6 +1163,7 @@ Partial Public Class ds_Customer
             Me.columnCustomerBilledInAdvance.AllowDBNull = false
             Me.columnCustomerPrintInvoices.AllowDBNull = false
             Me.columnCustomerReceiveOneInvoice.AllowDBNull = false
+            Me.columnCustomerReceiveOneInvoice.DefaultValue = CType(false,Boolean)
             Me.columnCustomerBillInterval.AllowDBNull = false
             Me.columnCustomerBillInterval.DefaultValue = CType(1,Byte)
         End Sub

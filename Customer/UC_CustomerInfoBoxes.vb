@@ -291,11 +291,18 @@ Namespace Customer
                 count = qta.Customer_RecSrvcActive(CurrentCustomer)
             End Using
 
-            If (count > 0) Then
-                _custRow.CustomerIsDeactive = False
-                MsgBox("You must first end ALL Recurring Services for this Customer before you mark them Inactive. There are currently " & count.ToString & " Recurring Services still running.")
+            If (Not _custRow.CustomerIsDeactive) Then
+                If (count > 0) Then
+                    _custRow.CustomerIsDeactive = False
+                    MessageBox.Show("You must first end ALL Recurring Services for this Customer before you mark them Inactive. There are currently " &
+                                    count.ToString & " Recurring Services still running.", "Stop Running Services", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                Else
+                    _custRow.CustomerIsDeactive = True
+                    ' update customer
+                    Customer_Update()
+                End If
             Else
-                _custRow.CustomerIsDeactive = True
+                _custRow.CustomerIsDeactive = False
                 ' update customer
                 Customer_Update()
             End If

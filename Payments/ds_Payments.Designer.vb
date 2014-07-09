@@ -2584,14 +2584,14 @@ Namespace ds_PaymentsTableAdapters
             Me._commandCollection(6).Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@EditSeq", Global.System.Data.SqlDbType.VarChar, 50, Global.System.Data.ParameterDirection.Input, 0, 0, Nothing, Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
         End Sub
         
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0"),  _
-         Global.System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter"),  _
-         Global.System.ComponentModel.DataObjectMethodAttribute(Global.System.ComponentModel.DataObjectMethodType.[Select], true)>  _
-        Public Overloads Overridable Function GetData(ByVal PaymentID As Global.System.Nullable(Of Decimal)) As ds_Payments.PaymentHistory_DBDataTable
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),
+Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0"), _
+         Global.System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter"), _
+         Global.System.ComponentModel.DataObjectMethodAttribute(Global.System.ComponentModel.DataObjectMethodType.[Select], True)> _
+        Public Overridable Overloads Function GetData(ByVal PaymentID As Global.System.Nullable(Of Decimal)) As ds_Payments.PaymentHistory_DBDataTable
             Me.Adapter.SelectCommand = Me.CommandCollection(0)
-            If (PaymentID.HasValue = true) Then
-                Me.Adapter.SelectCommand.Parameters(1).Value = CType(PaymentID.Value,Decimal)
+            If (PaymentID.HasValue = True) Then
+                Me.Adapter.SelectCommand.Parameters(1).Value = CType(PaymentID.Value, Decimal)
             Else
                 Me.Adapter.SelectCommand.Parameters(1).Value = Global.System.DBNull.Value
             End If

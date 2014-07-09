@@ -13,8 +13,7 @@ Namespace Customer
             CustRow = Ds_Customer.Customer.NewCustomerRow
             ' setting bill interval to at least 1
             CustRow.CustomerBillInterval = 1
-            nud_BillInterval.Value = 1
-            Ds_Customer.Customer.AddCustomerRow(CustRow)
+           Ds_Customer.Customer.AddCustomerRow(CustRow)
         End Sub
 
         Private Sub createCustBtn_Click(sender As System.Object, e As System.EventArgs) Handles createCustBtn.Click
@@ -160,7 +159,7 @@ Namespace Customer
             Else
                 box_CustBillZip.BackColor = AppColors.TextBoxDef
             End If
-            If (nud_BillInterval.Value < 1) Then
+            If (CustRow.CustomerBillInterval < 1) Then
                 errorCount += 1
                 nud_BillInterval.BackColor = AppColors.TextBoxErr
             Else
