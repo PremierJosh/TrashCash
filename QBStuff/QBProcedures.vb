@@ -834,7 +834,7 @@ Namespace QBStuff
                 End If
             End If
 
-            Return Date.MaxValue
+            Return Nothing
         End Function
     End Class
 
