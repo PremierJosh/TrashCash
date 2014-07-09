@@ -247,11 +247,14 @@ Namespace Admin.Payments
                                             Try
                                                 ta.UpdateEditSeq(payObj.TxnID, payObj.EditSequence)
                                                 ta.AlterRefNum(aRow.PaymentID, payObj.RefNumber)
+                                                ' refil grid
+                                                Fetch_History()
+                                                MessageBox.Show("Check Number Changed to: " & newRefNum, "Complete", MessageBoxButtons.OK, MessageBoxIcon.Information)
                                             Catch ex As SqlException
                                                 MessageBox.Show(
                                                     "Message: " & ex.Message & vbCrLf & "LineNumber: " & ex.LineNumber,
                                                     "Sql Error: " & ex.Procedure, MessageBoxButtons.OK,
-                                                    MessageBoxIcon.Error)
+                                                MessageBoxIcon.Error)
                                             End Try
                                         End If
                                     Else
