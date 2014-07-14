@@ -13,8 +13,21 @@ Namespace Customer
 
         Private Sub createCustBtn_Click(sender As System.Object, e As System.EventArgs) Handles btn_CreateCust.Click
             If (TextCheck()) Then
-                Dim custRow As ds_Customer.CustomerRow = Ds_Customer.Customer.NewCustomerRow
+                Dim custRow As ds_Customer.CustomerRow
+                Dim newRow As Boolean = False
+                If (Ds_Customer.Customer.Rows.Count = 1) Then
+                    custRow = Ds_Customer.Customer.Rows(0)
+                ElseIf (Ds_Customer.Customer.Rows.Count = 0) Then
+                    custRow = Ds_Customer.Customer.NewCustomerRow
+                    newRow = True
+                Else
+                    MessageBox.Show("Customer table has more than 1 row, contact premier. Exiting")
+                    Exit Sub
+                End If
+
                 With custRow
+                    .BeginEdit()
+
                     ' required fields
                     .CustomerPhone = PhoneFormat(tb_Phone.Text)
                     .CustomerBillingAddr1 = tb_Addr1.Text
@@ -62,35 +75,39 @@ Namespace Customer
                 End With
 
                 ' add to table
-                Ds_Customer.Customer.AddCustomerRow(custRow)
+                If (newRow) Then
+                    Ds_Customer.Customer.AddCustomerRow(custRow)
+                End If
                 custRow.EndEdit()
 
                 Try
                     ' push to table so i have a customer number
-                    CustomerTableAdapter.Update(CustRow)
+                    CustomerTableAdapter.Update(custRow)
                 Catch ex As SqlException
                     MessageBox.Show("Message: " & ex.Message & vbCrLf & "LineNumber: " & ex.LineNumber,
                                     "Sql Error: " & ex.Procedure, MessageBoxButtons.OK, MessageBoxIcon.Error)
+                    MessageBox.Show("New Customer Add Failed - Exiting Save", "Contact Premier", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                    Exit Sub
                 End Try
                 ' build full name now that i have number
-                If (CustRow.IsCustomerCompanyNameNull = False) Then
-                    CustRow.CustomerFullName = CustRow.CustomerCompanyName & " - " & CustRow.CustomerNumber
+                If (custRow.IsCustomerCompanyNameNull = False) Then
+                    custRow.CustomerFullName = custRow.CustomerCompanyName & " - " & custRow.CustomerNumber
                 Else
-                    CustRow.CustomerFullName = CustRow.CustomerLastName & ", " & CustRow.CustomerFirstName & " - " & CustRow.CustomerNumber
+                    custRow.CustomerFullName = custRow.CustomerLastName & ", " & custRow.CustomerFirstName & " - " & custRow.CustomerNumber
                 End If
 
                 ' sending row to customer add function
-                Dim resp As IResponse = QBRequests.CustomerAdd(CustRow)
+                Dim resp As IResponse = QBRequests.CustomerAdd(custRow)
                 If (resp.StatusCode = 0) Then
                     Dim customerRet As ICustomerRet = resp.Detail
                     ' updating the custRow with ListID and EditSeq
-                    CustRow.BeginEdit()
-                    CustRow.CustomerListID = customerRet.ListID.GetValue
-                    CustRow.CustomerEditSeq = customerRet.EditSequence.GetValue
-                    CustRow.EndEdit()
+                    custRow.BeginEdit()
+                    custRow.CustomerListID = customerRet.ListID.GetValue
+                    custRow.CustomerEditSeq = customerRet.EditSequence.GetValue
+                    custRow.EndEdit()
                     Try
-                        CustomerTableAdapter.Update(CustRow)
-                        MessageBox.Show("Customer: '" & CustRow.CustomerFullName & "' added successfully.", "Customer Added", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                        CustomerTableAdapter.Update(custRow)
+                        MessageBox.Show("Customer: '" & custRow.CustomerFullName & "' added successfully.", "Customer Added", MessageBoxButtons.OK, MessageBoxIcon.Information)
                         NewCustomerNumber = custRow.CustomerNumber
                         Close()
                     Catch ex As SqlException
@@ -99,23 +116,24 @@ Namespace Customer
                     End Try
                 ElseIf (resp.StatusCode = 3100) Then
                     ' customer already exists with that name
-                    Dim input As String = InputBox("A Customer already exists with the Name " & CustRow.CustomerFullName & ". Please chose a different name.")
-                    If (input.Length > 0) Then
-                        CustRow.CustomerFullName = input
-                        Try
-                            CustomerTableAdapter.Update(CustRow)
-                        Catch ex As SqlException
-                            MessageBox.Show("Message: " & ex.Message & vbCrLf & "LineNumber: " & ex.LineNumber,
-                                            "Sql Error: " & ex.Procedure, MessageBoxButtons.OK, MessageBoxIcon.Error)
-                        End Try
-                    End If
+                    MessageBox.Show("A Customer already exists with the Name " & custRow.CustomerFullName & ". Please chose a different name.", "Name already taken", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                    'Dim input As String = InputBox("A Customer already exists with the Name " & CustRow.CustomerFullName & ". Please chose a different name.")
+                    'If (input.Length > 0) Then
+                    '    CustRow.CustomerFullName = input
+                    '    Try
+                    '        CustomerTableAdapter.Update(CustRow)
+                    '    Catch ex As SqlException
+                    '        MessageBox.Show("Message: " & ex.Message & vbCrLf & "LineNumber: " & ex.LineNumber,
+                    '                        "Sql Error: " & ex.Procedure, MessageBoxButtons.OK, MessageBoxIcon.Error)
+                    '    End Try
+                    'End If
                 Else
                     ' error logging
                     QBMethods.ResponseErr_Misc(resp)
                     MessageBox.Show("Customer Add failed. Contact Premier.")
                     ' delete row
                     Using qta As New ds_CustomerTableAdapters.QueriesTableAdapter
-                        qta.Customer_DeleteByNum(CustRow.CustomerNumber)
+                        qta.Customer_DeleteByNum(custRow.CustomerNumber)
                     End Using
                 End If
             Else
