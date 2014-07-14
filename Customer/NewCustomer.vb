@@ -148,9 +148,15 @@ Namespace Customer
                                                     "the same day as the Customers Start Date day." & vbCrLf & _
                                                     "Do you wish to change this Customer to Single Invoice?", "Confirm Single Invoice Change", MessageBoxButtons.YesNo, MessageBoxIcon.Warning)
                 If (result = Windows.Forms.DialogResult.No) Then
+                    ' dont check and hide bill interval
                     ck_SingleInv.Checked = False
+                    lbl_BillInterval.Visible = False
+                    nud_BillInterval.Visible = False
                 Else
+                    ' check and show bill interval
                     ck_SingleInv.Checked = True
+                    lbl_BillInterval.Visible = True
+                    nud_BillInterval.Visible = True
                 End If
 
             End If
@@ -248,14 +254,6 @@ Namespace Customer
             End If
         End Sub
 
-        Private Sub ck_SingleInv_CheckedChanged(sender As System.Object, e As System.EventArgs) Handles ck_SingleInv.CheckedChanged
-            If (ck_SingleInv.Checked = True) Then
-                lbl_BillInterval.Visible = True
-                nud_BillInterval.Visible = True
-            Else
-                lbl_BillInterval.Visible = False
-                nud_BillInterval.Visible = False
-            End If
-        End Sub
+      
     End Class
 End Namespace

@@ -267,8 +267,10 @@ Public Class TrashCashHome
             BatchForm.BringToFront()
         Else
             Try
-                AppSessMgr.EndSession()
-                AppSessMgr.CloseConnection()
+                If (AppSessMgr IsNot Nothing) Then
+                    AppSessMgr.EndSession()
+                    AppSessMgr.CloseConnection()
+                End If
             Catch ex As Exception
                 MsgBox(ex.Message)
             Finally
@@ -284,7 +286,6 @@ Public Class TrashCashHome
         ' create new conMgrObj
         GlobalConMgr = New QBConMgr
        
-
         Try
             Dim connected As Boolean = GlobalConMgr.InitCon()
             If (Not connected) Then

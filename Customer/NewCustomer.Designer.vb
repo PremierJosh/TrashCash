@@ -25,7 +25,6 @@
         Private Sub InitializeComponent()
             Me.components = New System.ComponentModel.Container()
             Me.dtp_StartDate = New System.Windows.Forms.DateTimePicker()
-            Me.CustomerBindingSource = New System.Windows.Forms.BindingSource(Me.components)
             Me.Ds_Customer = New TrashCash.ds_Customer()
             Me.Label9 = New System.Windows.Forms.Label()
             Me.btn_CreateCust = New System.Windows.Forms.Button()
@@ -66,7 +65,6 @@
             Me.Label5 = New System.Windows.Forms.Label()
             Me.Label4 = New System.Windows.Forms.Label()
             Me.CustomerTableAdapter = New TrashCash.ds_CustomerTableAdapters.CustomerTableAdapter()
-            CType(Me.CustomerBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
             CType(Me.Ds_Customer, System.ComponentModel.ISupportInitialize).BeginInit()
             Me.GroupBox2.SuspendLayout()
             CType(Me.nud_BillInterval, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -76,17 +74,11 @@
             '
             'dtp_StartDate
             '
-            Me.dtp_StartDate.DataBindings.Add(New System.Windows.Forms.Binding("Value", Me.CustomerBindingSource, "CustomerStartDate", True))
             Me.dtp_StartDate.Format = System.Windows.Forms.DateTimePickerFormat.[Short]
             Me.dtp_StartDate.Location = New System.Drawing.Point(116, 69)
             Me.dtp_StartDate.Name = "dtp_StartDate"
             Me.dtp_StartDate.Size = New System.Drawing.Size(81, 20)
             Me.dtp_StartDate.TabIndex = 4
-            '
-            'CustomerBindingSource
-            '
-            Me.CustomerBindingSource.DataMember = "Customer"
-            Me.CustomerBindingSource.DataSource = Me.Ds_Customer
             '
             'Ds_Customer
             '
@@ -131,7 +123,6 @@
             '
             'nud_BillInterval
             '
-            Me.nud_BillInterval.DataBindings.Add(New System.Windows.Forms.Binding("Value", Me.CustomerBindingSource, "CustomerBillInterval", True))
             Me.nud_BillInterval.Location = New System.Drawing.Point(166, 138)
             Me.nud_BillInterval.Name = "nud_BillInterval"
             Me.nud_BillInterval.Size = New System.Drawing.Size(31, 20)
@@ -154,7 +145,6 @@
             'ck_SingleInv
             '
             Me.ck_SingleInv.AutoSize = True
-            Me.ck_SingleInv.DataBindings.Add(New System.Windows.Forms.Binding("Checked", Me.CustomerBindingSource, "CustomerReceiveOneInvoice", True))
             Me.ck_SingleInv.Location = New System.Drawing.Point(53, 115)
             Me.ck_SingleInv.Name = "ck_SingleInv"
             Me.ck_SingleInv.RightToLeft = System.Windows.Forms.RightToLeft.Yes
@@ -166,7 +156,6 @@
             'ck_PrintInv
             '
             Me.ck_PrintInv.AutoSize = True
-            Me.ck_PrintInv.DataBindings.Add(New System.Windows.Forms.Binding("Checked", Me.CustomerBindingSource, "CustomerPrintInvoices", True))
             Me.ck_PrintInv.Location = New System.Drawing.Point(104, 46)
             Me.ck_PrintInv.Name = "ck_PrintInv"
             Me.ck_PrintInv.RightToLeft = System.Windows.Forms.RightToLeft.Yes
@@ -182,7 +171,6 @@
             Me.ck_BillInAdvance.AutoSize = True
             Me.ck_BillInAdvance.Checked = True
             Me.ck_BillInAdvance.CheckState = System.Windows.Forms.CheckState.Checked
-            Me.ck_BillInAdvance.DataBindings.Add(New System.Windows.Forms.Binding("Checked", Me.CustomerBindingSource, "CustomerBilledInAdvance", True))
             Me.ck_BillInAdvance.Location = New System.Drawing.Point(86, 23)
             Me.ck_BillInAdvance.Name = "ck_BillInAdvance"
             Me.ck_BillInAdvance.RightToLeft = System.Windows.Forms.RightToLeft.Yes
@@ -234,7 +222,6 @@
             '
             'tb_CompanyName
             '
-            Me.tb_CompanyName.DataBindings.Add(New System.Windows.Forms.Binding("Text", Me.CustomerBindingSource, "CustomerCompanyName", True))
             Me.tb_CompanyName.Location = New System.Drawing.Point(97, 19)
             Me.tb_CompanyName.MaxLength = 41
             Me.tb_CompanyName.Name = "tb_CompanyName"
@@ -262,7 +249,6 @@
             '
             'tb_LastName
             '
-            Me.tb_LastName.DataBindings.Add(New System.Windows.Forms.Binding("Text", Me.CustomerBindingSource, "CustomerLastName", True))
             Me.tb_LastName.Location = New System.Drawing.Point(303, 46)
             Me.tb_LastName.MaxLength = 25
             Me.tb_LastName.Name = "tb_LastName"
@@ -280,7 +266,6 @@
             '
             'tb_FirstName
             '
-            Me.tb_FirstName.DataBindings.Add(New System.Windows.Forms.Binding("Text", Me.CustomerBindingSource, "CustomerFirstName", True))
             Me.tb_FirstName.Location = New System.Drawing.Point(72, 46)
             Me.tb_FirstName.MaxLength = 25
             Me.tb_FirstName.Name = "tb_FirstName"
@@ -289,7 +274,6 @@
             '
             'tb_Phone
             '
-            Me.tb_Phone.DataBindings.Add(New System.Windows.Forms.Binding("Text", Me.CustomerBindingSource, "CustomerPhone", True))
             Me.tb_Phone.Location = New System.Drawing.Point(57, 76)
             Me.tb_Phone.Name = "tb_Phone"
             Me.tb_Phone.Size = New System.Drawing.Size(85, 20)
@@ -306,7 +290,6 @@
             '
             'tb_AltPhone
             '
-            Me.tb_AltPhone.DataBindings.Add(New System.Windows.Forms.Binding("Text", Me.CustomerBindingSource, "CustomerAltPhone", True))
             Me.tb_AltPhone.Location = New System.Drawing.Point(210, 76)
             Me.tb_AltPhone.Name = "tb_AltPhone"
             Me.tb_AltPhone.Size = New System.Drawing.Size(82, 20)
@@ -332,7 +315,6 @@
             '
             'tb_Contact
             '
-            Me.tb_Contact.DataBindings.Add(New System.Windows.Forms.Binding("Text", Me.CustomerBindingSource, "CustomerContact", True))
             Me.tb_Contact.Location = New System.Drawing.Point(351, 76)
             Me.tb_Contact.Name = "tb_Contact"
             Me.tb_Contact.Size = New System.Drawing.Size(108, 20)
@@ -371,7 +353,6 @@
             '
             'tb_Addr4
             '
-            Me.tb_Addr4.DataBindings.Add(New System.Windows.Forms.Binding("Text", Me.CustomerBindingSource, "CustomerBillingAddr4", True))
             Me.tb_Addr4.Location = New System.Drawing.Point(71, 93)
             Me.tb_Addr4.Name = "tb_Addr4"
             Me.tb_Addr4.Size = New System.Drawing.Size(144, 20)
@@ -397,7 +378,6 @@
             '
             'tb_Addr1
             '
-            Me.tb_Addr1.DataBindings.Add(New System.Windows.Forms.Binding("Text", Me.CustomerBindingSource, "CustomerBillingAddr1", True))
             Me.tb_Addr1.Location = New System.Drawing.Point(71, 15)
             Me.tb_Addr1.Name = "tb_Addr1"
             Me.tb_Addr1.Size = New System.Drawing.Size(144, 20)
@@ -405,7 +385,6 @@
             '
             'tb_Addr2
             '
-            Me.tb_Addr2.DataBindings.Add(New System.Windows.Forms.Binding("Text", Me.CustomerBindingSource, "CustomerBillingAddr2", True))
             Me.tb_Addr2.Location = New System.Drawing.Point(71, 41)
             Me.tb_Addr2.Name = "tb_Addr2"
             Me.tb_Addr2.Size = New System.Drawing.Size(144, 20)
@@ -413,7 +392,6 @@
             '
             'tb_City
             '
-            Me.tb_City.DataBindings.Add(New System.Windows.Forms.Binding("Text", Me.CustomerBindingSource, "CustomerBillingCity", True))
             Me.tb_City.Location = New System.Drawing.Point(71, 119)
             Me.tb_City.Name = "tb_City"
             Me.tb_City.Size = New System.Drawing.Size(105, 20)
@@ -421,7 +399,6 @@
             '
             'tb_Addr3
             '
-            Me.tb_Addr3.DataBindings.Add(New System.Windows.Forms.Binding("Text", Me.CustomerBindingSource, "CustomerBillingAddr3", True))
             Me.tb_Addr3.Location = New System.Drawing.Point(71, 67)
             Me.tb_Addr3.Name = "tb_Addr3"
             Me.tb_Addr3.Size = New System.Drawing.Size(144, 20)
@@ -429,7 +406,6 @@
             '
             'tb_State
             '
-            Me.tb_State.DataBindings.Add(New System.Windows.Forms.Binding("Text", Me.CustomerBindingSource, "CustomerBillingState", True))
             Me.tb_State.Location = New System.Drawing.Point(182, 119)
             Me.tb_State.Name = "tb_State"
             Me.tb_State.Size = New System.Drawing.Size(33, 20)
@@ -437,7 +413,6 @@
             '
             'tb_Zip
             '
-            Me.tb_Zip.DataBindings.Add(New System.Windows.Forms.Binding("Text", Me.CustomerBindingSource, "CustomerBillingZip", True))
             Me.tb_Zip.Location = New System.Drawing.Point(71, 145)
             Me.tb_Zip.Name = "tb_Zip"
             Me.tb_Zip.Size = New System.Drawing.Size(62, 20)
@@ -489,7 +464,6 @@
             Me.Name = "NewCustomer"
             Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent
             Me.Text = "TrashCash | New Customer"
-            CType(Me.CustomerBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
             CType(Me.Ds_Customer, System.ComponentModel.ISupportInitialize).EndInit()
             Me.GroupBox2.ResumeLayout(False)
             Me.GroupBox2.PerformLayout()
@@ -540,7 +514,6 @@
         Friend WithEvents Label6 As System.Windows.Forms.Label
         Friend WithEvents Label5 As System.Windows.Forms.Label
         Friend WithEvents Label4 As System.Windows.Forms.Label
-        Friend WithEvents CustomerBindingSource As System.Windows.Forms.BindingSource
         Friend WithEvents Ds_Customer As ds_Customer
         Friend WithEvents CustomerTableAdapter As ds_CustomerTableAdapters.CustomerTableAdapter
         Friend WithEvents lbl_BillInter As System.Windows.Forms.Label

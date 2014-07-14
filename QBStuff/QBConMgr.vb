@@ -10,7 +10,7 @@ Namespace QBStuff
         Public Function InitCon() As Boolean
             ' bool to return when connected
             Dim connected As Boolean = False
-            SessionManager = New QBSessionManager()
+
             ' attempt to start qbfc services
             StartQBFCServices()
             ' setting limit for inital con to 5 seconds
@@ -18,6 +18,7 @@ Namespace QBStuff
             While Not connected
                 Try
                     ' get connection
+                    SessionManager = New QBSessionManager()
                     With SessionManager
                         .OpenConnection2("V1", "TrashCash", ENConnectionType.ctLocalQBD)
                         .BeginSession(My.Settings.QB_FILE_LOCATION.ToString, ENOpenMode.omDontCare)
