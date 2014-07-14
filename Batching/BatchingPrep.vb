@@ -166,8 +166,7 @@
             ' fill with pay types
             PaymentTypesTableAdapter.Fill(Ds_Types.PaymentTypes)
             CheckBatchQueues(refillTables:=True)
-            PayBatch_TotalsPrep()
-        End Sub
+          End Sub
 
         Private Sub CheckBatchQueues(Optional ByVal refillTables As Boolean = False)
             Dim errCount As Integer
@@ -183,6 +182,8 @@
                 If (dg_PrepPay.RowCount > 0) Then
                     btn_PayBatch.Enabled = True
                     cm_PayGrid.Enabled = True
+                    ' check payment batching totals
+                    PayBatch_TotalsPrep()
                 Else
                     btn_PayBatch.Enabled = False
                     cm_PayGrid.Enabled = False
@@ -502,19 +503,11 @@
 
 
         Private Sub tc_Master_SelectedIndexChanged(sender As System.Object, e As System.EventArgs) Handles tc_Master.SelectedIndexChanged
-            If (_lockTab) Then
-                If (tc_Master.SelectedIndex = 0) Then
-                    MessageBox.Show("You must finish modifying the payment first.", "Finish Modifying Payment", MessageBoxButtons.OK, MessageBoxIcon.Stop)
-                    tc_Master.SelectedIndex = 1
-                End If
+            If (tc_Master.SelectedIndex = 0) Then
+                BATCH_WorkingInvoiceTableAdapter.Fill(DS_Batching.BATCH_WorkingInvoice)
             Else
-                If (tc_Master.SelectedIndex = 0) Then
-                    BATCH_WorkingInvoiceTableAdapter.Fill(DS_Batching.BATCH_WorkingInvoice)
-                Else
-                    BATCH_WorkingPaymentsTableAdapter.Fill(DS_Batching.BATCH_WorkingPayments)
-                End If
+                BATCH_WorkingPaymentsTableAdapter.Fill(DS_Batching.BATCH_WorkingPayments)
             End If
-
         End Sub
 
         Private Sub dg_PrepPay_CellMouseDown(sender As System.Object, e As System.Windows.Forms.DataGridViewCellMouseEventArgs) Handles dg_PrepPay.CellMouseDown
@@ -527,145 +520,8 @@
         End Sub
 
         Private Sub dg_PrepPay_RowsAdded(sender As System.Object, e As System.Windows.Forms.DataGridViewRowsAddedEventArgs) Handles dg_PrepPay.RowsAdded
-            PayBatch_TotalsPrep()
-            CheckBatchQueues()
+          CheckBatchQueues()
         End Sub
-
-        Private Sub cmb_PayTypes_SelectedValueChanged(sender As System.Object, e As System.EventArgs) Handles cmb_PayTypes.SelectedValueChanged
-            If (cmb_PayTypes.SelectedValue = TC_ENPaymentTypes.Cash) Then
-                lbl_RefNumber.Visible = False
-                tb_RefNum.Visible = False
-                lbl_DateOnCheck.Visible = False
-                dtp_DateOnCheck.Visible = False
-            Else
-                lbl_RefNumber.Visible = True
-                tb_RefNum.Visible = True
-                lbl_DateOnCheck.Visible = True
-                dtp_DateOnCheck.Visible = True
-            End If
-        End Sub
-
-        Private _lockTab As Boolean
-        Private Sub ModPaymentFoo(Optional ByVal modify As Boolean = False)
-            If (modify) Then
-                ' show panel
-                sc_PayBatching.Panel1Collapsed = False
-                ' lock form to tab
-                _lockTab = True
-                pnl_PayRight.Enabled = False
-                cm_PayGrid.Enabled = False
-            Else
-                ' hide panel
-                sc_PayBatching.Panel1Collapsed = True
-                ' unlock form from tab
-                _lockTab = False
-                pnl_PayRight.Enabled = True
-                cm_PayGrid.Enabled = True
-            End If
-        End Sub
-        Private Sub btn_ModPayment_Click(sender As System.Object, e As System.EventArgs) Handles btn_ModPayment.Click
-            If (dg_PrepPay.SelectedRows.Count = 1) Then
-                sc_PayBatching.Panel1Collapsed = False
-            End If
-        End Sub
-
-        Private Sub grp_ModPayInfo_VisibleChanged(sender As System.Object, e As System.EventArgs) Handles grp_ModPayInfo.VisibleChanged
-            If (grp_ModPayInfo.Visible = True) Then
-                ' lock form to this tab
-                _lockTab = True
-                pnl_PayRight.Enabled = False
-                cm_PayGrid.Enabled = False
-                ' show panel
-                sc_PayBatching.Panel1Collapsed = False
-                ' visible - get row and set boxes
-                Dim row As ds_Batching.BATCH_WorkingPaymentsRow = CType(dg_PrepPay.SelectedRows(0).DataBoundItem, DataRowView).Row
-                cmb_PayTypes.SelectedValue = row.WorkingPaymentsType
-                tb_Amount.Text = row.WorkingPaymentsAmount
-                If (Not row.IsWorkingPaymentsCheckNumNull) Then
-                    tb_RefNum.Text = row.WorkingPaymentsCheckNum
-                End If
-                If (Not row.IsDATE_ON_CHECKNull) Then
-                    dtp_DateOnCheck.Value = row.DATE_ON_CHECK
-                End If
-            Else
-                _lockTab = False
-                cm_PayGrid.Enabled = True
-                ' hide  panel
-                sc_PayBatching.Panel1Collapsed = True
-                ' hidden
-                If (cmb_PayTypes.Items.Count > 0) Then
-                    cmb_PayTypes.SelectedIndex = 0
-                End If
-                tb_Amount.Clear()
-                tb_RefNum.Clear()
-                dtp_DateOnCheck.Value = Date.Now
-                End If
-
-        End Sub
-
-
-        Private Sub btn_CancelPayMod_Click(sender As System.Object, e As System.EventArgs) Handles btn_CancelPayMod.Click
-            grp_ModPayInfo.Visible = False
-        End Sub
-
-        Private Sub btn_SavePayment_Click(sender As System.Object, e As System.EventArgs) Handles btn_SavePayment.Click
-            Dim checkRefNum As String = ""
-            Dim dateOnCheck As Date?
-
-            If (cmb_PayTypes.SelectedValue <> TC_ENPaymentTypes.Cash) Then
-                ' get date
-                dateOnCheck = dtp_DateOnCheck.Value.Date
-
-                ' remove all spaces from begining and end
-                checkRefNum = Trim(tb_RefNum.Text)
-                ' replace all zeros by spaces, and then, left-trim that result, ie, remove starting spaces. 
-                'The external Replace replaces the spaces left in the string to their initial 0 character.
-                Replace(LTrim(Replace(checkRefNum, "0", " ")), " ", "0")
-
-                ' having them confirm check number
-                If (checkRefNum <> "") Then
-                    ' hide current ref number
-                    tb_RefNum.Visible = False
-                    Dim reEntry As String = InputBox("Please enter the check number again:", "Confirm Check #")
-                    ' show ref number after input
-                    tb_RefNum.Visible = True
-                    ' trim entry number and compare
-                    Trim(reEntry)
-                    Replace(LTrim(Replace(reEntry, "0", " ")), " ", "0")
-                    ' do these match
-                    If (reEntry <> checkRefNum) Then
-                        MessageBox.Show("Check numbers do not match. Please re-enter the check number and double check information.", "Check # Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
-                        tb_RefNum.Clear()
-                        Exit Sub
-                    End If
-                End If
-            End If
-
-
-            Dim row As ds_Batching.BATCH_WorkingPaymentsRow = CType(dg_PrepPay.SelectedRows(0).DataBoundItem, DataRowView).Row
-            With row
-                .WorkingPaymentsType = cmb_PayTypes.SelectedValue
-                .WorkingPaymentsAmount = tb_Amount.Text
-                If (checkRefNum <> "") Then
-                    .WorkingPaymentsCheckNum = checkRefNum
-                End If
-                If (dateOnCheck IsNot Nothing) Then
-                    .DATE_ON_CHECK = dateOnCheck
-                End If
-            End With
-
-            ' save row
-            Try
-                row.EndEdit()
-                BATCH_WorkingPaymentsTableAdapter.Update(row)
-                RaiseEvent CustomerPaymentMod(row.CustomerNumber)
-                CheckBatchQueues(refillTables:=True)
-            Catch ex As SqlException
-                MessageBox.Show("Message: " & ex.Message & vbCrLf & "LineNumber: " & ex.LineNumber,
-                                "Sql Error: " & ex.Procedure, MessageBoxButtons.OK, MessageBoxIcon.Error)
-            End Try
-        End Sub
-
 
         Private Sub btn_InvBatch_Click(sender As System.Object, e As System.EventArgs) Handles btn_InvBatch.Click
             If (Not _invBatchRunning) Then
@@ -718,6 +574,17 @@
                 End If
             End If
 
+        End Sub
+
+        Private Sub btn_PayRefresh_Click(sender As System.Object, e As System.EventArgs) Handles btn_PayRefresh.Click
+            CheckBatchQueues(refillTables:=True)
+        End Sub
+
+        Private Sub btn_ModPayment_Click(sender As System.Object, e As System.EventArgs) Handles btn_ModPayment.Click
+            Dim row As ds_Batching.BATCH_WorkingPaymentsRow = CType(dg_PrepPay.SelectedRows(0).DataBoundItem, DataRowView).Row
+            Dim modForm As New PaymentModifyForm(row, BATCH_WorkingPaymentsTableAdapter, Ds_Types.PaymentTypes)
+            modForm.ShowDialog()
+            CheckBatchQueues(refillTables:=True)
         End Sub
     End Class
 End Namespace

@@ -163,6 +163,12 @@
     <Compile Include="Customer\ds_Customer.vb">
       <DependentUpon>ds_Customer.xsd</DependentUpon>
     </Compile>
+    <Compile Include="Payments\PaymentModifyForm.Designer.vb">
+      <DependentUpon>PaymentModifyForm.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Payments\PaymentModifyForm.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="RecurringService\ds_RecurringService.vb">
       <DependentUpon>ds_RecurringService.xsd</DependentUpon>
     </Compile>
@@ -467,6 +473,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Batching\BatchInterruption.resx">
       <DependentUpon>BatchInterruption.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Payments\PaymentModifyForm.resx">
+      <DependentUpon>PaymentModifyForm.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Types\AdminInvoiceTypes.resx">
       <DependentUpon>AdminInvoiceTypes.vb</DependentUpon>
@@ -811,7 +820,7 @@
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties BuildVersion_AssemblyInfoFilename="My Project\AssemblyInfo.vb" BuildVersion_UpdateAssemblyVersion="True" BuildVersion_UpdateFileVersion="True" BuildVersion_BuildVersioningStyle="None.None.None.Increment" BuildVersion_StartDate="2014/3/2" />
+      <UserProperties BuildVersion_StartDate="2014/3/2" BuildVersion_BuildVersioningStyle="None.None.None.Increment" BuildVersion_UpdateFileVersion="True" BuildVersion_UpdateAssemblyVersion="True" BuildVersion_AssemblyInfoFilename="My Project\AssemblyInfo.vb" />
     </VisualStudio>
   </ProjectExtensions>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -119,7 +119,7 @@
         Private Function OkToCommit()
             If (Trim(tb_Amount.Text) <> "") Then
                 tb_Amount.BackColor = AppColors.TextBoxDef
-                If (cmb_PayTypes.SelectedValue <> 1) Then
+                If (cmb_PayTypes.SelectedValue <> TC_ENPaymentTypes.Cash) Then
                     If (Trim(tb_RefNum.Text) = "") Then
                         tb_RefNum.BackColor = AppColors.TextBoxErr
                         Return False
