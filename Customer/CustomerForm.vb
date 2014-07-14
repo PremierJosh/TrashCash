@@ -87,9 +87,9 @@
         Private Sub btn_NewCust_Click(sender As Object, e As EventArgs) Handles btn_NewCust.Click
             Dim newCust As New NewCustomer()
             newCust.ShowDialog()
-            If (newCust.NewCustomerAdded) Then
+            If (newCust.NewCustomerNumber <> 0) Then
                 CustomerToolstrip1.RefreshCustomerList()
-                CustomerToolstrip1.SelectCustomer(newCust.CustRow.CustomerNumber, True)
+                CustomerToolstrip1.SelectCustomer(newCust.NewCustomerNumber, True)
             End If
         End Sub
 
