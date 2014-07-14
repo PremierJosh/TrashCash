@@ -1,6 +1,4 @@
-﻿Imports TrashCash.Customer
-
-Namespace Batching
+﻿Namespace Batching
 
     Public Class BatchingPrep
         ' private vart for tracking batching
@@ -24,12 +22,26 @@ Namespace Batching
                     _batching = value
 
                     If (value = True) Then
-                        ' disable batch buttons
-                        btn_PayBatch.Enabled = False
-
-                        btn_DeleteAllWrkInv.Enabled = False
+                        ' disable generating new invoices
                         btn_GenerateInv.Enabled = False
-                        ' cancel buttons visibility will be handled by that batch button changing to a cancel call
+                        '' change button text to cancel and disable other button
+                        If (_invBatchRunning) Then
+                            ' change button for cancelation and disable other batch btn
+                            btn_PayBatch.Enabled = False
+                            btn_InvBatch.Text = "Cancel Invoice Batch"
+                            btn_InvBatch.ForeColor = Color.Red
+                            ' show labels for batching
+                            lbl_InvBatchCust.Visible = True
+                            lbl_InvBatchCount.Visible = True
+                        ElseIf (_payBatchRunning) Then
+                            ' change button for cancelation and disable other batch btn
+                            btn_InvBatch.Enabled = False
+                            btn_PayBatch.Text = "Cancel Payment Batch"
+                            btn_PayBatch.ForeColor = Color.Red
+                            ' show labels for batching
+                            lbl_PayBatchCust.Visible = True
+                            lbl_PayBatchCount.Visible = True
+                        End If
                         ' disable mod and del pay menu
                         cm_PayGrid.Enabled = False
                     Else
@@ -41,14 +53,27 @@ Namespace Batching
                         PbPercent = 0
                         ' change button text to normal
                         If (_invBatchRunning) Then
-
+                            ' set buttons back to normal and enable clicking on other button
+                            btn_PayBatch.Enabled = True
+                            btn_InvBatch.Text = "Batch Invoices"
+                            btn_InvBatch.ForeColor = SystemColors.ControlText
+                            ' hide labels
+                            lbl_InvBatchCust.Visible = False
+                            lbl_InvBatchCount.Visible = False
                         ElseIf (_payBatchRunning) Then
+                            ' set buttons back to normal and enable clicking on other button
+                            btn_InvBatch.Enabled = True
                             btn_PayBatch.Text = "Batch Payments"
                             btn_PayBatch.ForeColor = SystemColors.ControlText
+                            ' hide labels
+                            lbl_PayBatchCust.Visible = False
+                            lbl_PayBatchCount.Visible = False
                         End If
                         ' set type bools for batch to false
                         _payBatchRunning = False
                         _invBatchRunning = False
+                        ' enable generating new invoices
+                        btn_GenerateInv.Enabled = True
 
                         ' show delete and payment menu
                         cm_PayGrid.Enabled = True
@@ -68,6 +93,11 @@ Namespace Batching
             Set(value As Integer)
                 If (_pbMax <> value) Then
                     _pbMax = value
+                    If (_invBatchRunning) Then
+                        pb_Invoices.Maximum = value
+                    ElseIf (_payBatchRunning) Then
+                        pb_Payments.Maximum = value
+                    End If
                 End If
             End Set
         End Property
@@ -85,10 +115,10 @@ Namespace Batching
         Private WriteOnly Property PbCustomer As String
             Set(value As String)
                 If (_invBatchRunning) Then
-                    lbl_InvBatchCust.Text = value
+                    lbl_InvBatchCust.Text = "Customer: " & value
                 ElseIf (_payBatchRunning) Then
                     ' payments
-                    lbl_PayBatchCust.Text = value
+                    lbl_PayBatchCust.Text = "Customer: " & value
                 End If
             End Set
         End Property
@@ -107,8 +137,7 @@ Namespace Batching
                         pb_Invoices.Value = value
                     ElseIf (_payBatchRunning) Then
                         ' payments
-                        pb_Invoices.Increment(1)
-                        pb_Payments.Value = value
+                       pb_Payments.Value = value
                     End If
                 End If
             End Set
@@ -120,7 +149,7 @@ Namespace Batching
             If (e.CloseReason <> CloseReason.ApplicationExitCall) Then
                 e.Cancel = True
                 If (Batching) Then
-                    MsgBox("You cannot close this screen while Batching is in progress.")
+                    MessageBox.Show("You cannot close this screen while Batching is in progress.", "Batch in progress", MessageBoxButtons.OK, MessageBoxIcon.Error)
                 Else
                     Hide()
                 End If
@@ -130,122 +159,136 @@ Namespace Batching
         ' overloading show method to refresh queues
         Public Overloads Sub Show()
             MyBase.Show()
-
-            RefreshBatchQueue()
+            CheckBatchQueues(refillTables:=True)
         End Sub
 
         Private Sub BatchingPrep_Load(sender As System.Object, e As System.EventArgs) Handles Me.Load
-            'TODO: This line of code loads data into the 'Ds_Types.PaymentTypes' table. You can move, or remove it, as needed.
+            ' fill with pay types
             PaymentTypesTableAdapter.Fill(Ds_Types.PaymentTypes)
-            RefreshBatchQueue()
+            CheckBatchQueues(refillTables:=True)
+            PayBatch_TotalsPrep()
         End Sub
 
-        Private Sub btn_Refresh_Click(sender As System.Object, e As System.EventArgs) Handles btn_Refresh.Click
-            RefreshBatchQueue()
-        End Sub
-        Private Sub RefreshBatchQueue()
+        Private Sub CheckBatchQueues(Optional ByVal refillTables As Boolean = False)
             Dim errCount As Integer
 
+            If (refillTables) Then
+                BATCH_WorkingInvoiceTableAdapter.Fill(DS_Batching.BATCH_WorkingInvoice)
+                BATCH_WorkingPaymentsTableAdapter.Fill(DS_Batching.BATCH_WorkingPayments)
+            End If
+
             ' payments
-            errCount = qta.WorkingPayments_ErrCount
+            errCount = QTA.WorkingPayments_ErrCount
             If (errCount = 0) Then
-                BATCH_WorkingPaymentsTableAdapter.Fill(Ds_Batching.BATCH_WorkingPayments)
+                If (dg_PrepPay.RowCount > 0) Then
+                    btn_PayBatch.Enabled = True
+                    cm_PayGrid.Enabled = True
+                Else
+                    btn_PayBatch.Enabled = False
+                    cm_PayGrid.Enabled = False
+                End If
             Else
-                'btn_PayBatch.Visible = False
+                btn_PayBatch.Enabled = False
                 MessageBox.Show("There are Payments with errors. You will be unable to batch payments till the errors are cleared.", "Payments with errors", MessageBoxButtons.OK, MessageBoxIcon.Error)
             End If
 
             ' invoices
-            errCount = qta.WorkingInvoice_ErrCount
+            errCount = QTA.WorkingInvoice_ErrCount
             If (errCount = 0) Then
-                Dim recCount As Integer = qta.WorkingInvoice_ErrCount
-                If (recCount = 0) Then
-                    BATCH_WorkingInvoiceTableAdapter.Fill(Ds_Batching.BATCH_WorkingInvoice)
+                If (dg_PrepInv.RowCount > 0) Then
+                    btn_InvBatch.Enabled = True
+                Else
+                    btn_InvBatch.Enabled = False
                 End If
             Else
-                'btn_GenerateInv.Visible = False
-                'btn_InvBatch.Visible = False
+                btn_InvBatch.Enabled = False
                 MessageBox.Show("There are Invoices with errors. You will be unable to batch or generate invoices till the errors are cleared.", "Invoices with errors", MessageBoxButtons.OK, MessageBoxIcon.Error)
             End If
-        End Sub
 
-        Private Sub btn_Batch_Click(sender As System.Object, e As System.EventArgs)
-            ' first build string
-            Dim promptS As String
-
-            If (sender.Name = btn_PayBatch.Name) Then
-                ' payment batch click
-                promptS = "Begin batching " & dg_PrepPay.RowCount.ToString & " payment(s)?"
-                Dim result As MsgBoxResult = MsgBox(promptS, MsgBoxStyle.YesNo)
-
-                If (result = MsgBoxResult.Yes) Then
-                    ' set personal propert which updates master
-                    Batching = True
-                    ' show pay batch pb pnl
-                    pnl_RightBot.Visible = True
-                    ' show cancel btn
-                    btn_CancelPayBatch.Visible = True
-                    btn_CancelPayBatch.Enabled = True
-                    ' init the object that the worker calls
-                    Dim payment As New QB_Batching.Payments()
-                    ' start the worker
-                    BatchWorker.RunWorkerAsync(payment)
-                End If
-            ElseIf (sender.Name = btn_InvBatch.Name) Then
-                ' inv click
-                promptS = "Begin batching " & dg_PrepInv.RowCount.ToString & " invoice(s)?"
-                Dim result As MsgBoxResult = MsgBox(promptS, MsgBoxStyle.YesNo)
-
-                If (result = MsgBoxResult.Yes) Then
-                    ' set personal propert which updates master
-                    Batching = True
-                    ' show inv batch pb panel
-                    pnl_LeftBot.Visible = True
-                    ' show cancel btn
-                    btn_CancelInvBatch.Visible = True
-                    btn_CancelInvBatch.Enabled = True
-                    ' init the object that the worker calls
-                    Dim invoice As New QB_Batching.Invoicing(_targetedBillDate)
-                    ' start the work
-                    BatchWorker.RunWorkerAsync(invoice)
-                End If
-            End If
 
         End Sub
+
+        'Private Sub btn_Batch_Click(sender As System.Object, e As System.EventArgs)
+        '    ' first build string
+        '    Dim promptS As String
+
+        '    If (sender.Name = btn_PayBatch.Name) Then
+        '        ' payment batch click
+        '        promptS = "Begin batching " & dg_PrepPay.RowCount.ToString & " payment(s)?"
+        '        Dim result As MsgBoxResult = MsgBox(promptS, MsgBoxStyle.YesNo)
+
+        '        If (result = MsgBoxResult.Yes) Then
+        '            ' set personal propert which updates master
+        '            Batching = True
+        '            ' show pay batch pb pnl
+        '            pnl_RightBot.Visible = True
+        '            ' show cancel btn
+        '            btn_CancelPayBatch.Visible = True
+        '            btn_CancelPayBatch.Enabled = True
+        '            ' init the object that the worker calls
+        '            Dim payment As New QB_Batching.Payments()
+        '            ' start the worker
+        '            BatchWorker.RunWorkerAsync(payment)
+        '        End If
+        '    ElseIf (sender.Name = btn_InvBatch.Name) Then
+        '        ' inv click
+        '        promptS = "Begin batching " & dg_PrepInv.RowCount.ToString & " invoice(s)?"
+        '        Dim result As MsgBoxResult = MsgBox(promptS, MsgBoxStyle.YesNo)
+
+        '        If (result = MsgBoxResult.Yes) Then
+        '            ' set personal propert which updates master
+        '            Batching = True
+        '            ' show inv batch pb panel
+        '            pnl_LeftBot.Visible = True
+        '            ' init the object that the worker calls
+        '            Dim invoice As New QB_Batching.Invoicing(_targetedBillDate)
+        '            ' start the work
+        '            BatchWorker.RunWorkerAsync(invoice)
+        '        End If
+        '    End If
+
+        'End Sub
 
         Private _targetedBillDate As Date
         Private Sub btn_GenerateInv_Click(sender As System.Object, e As System.EventArgs) Handles btn_GenerateInv.Click
             ' if there are invoices already, we cannot generate
-            'Dim qta As New DataSetTableAdapters.QueriesTableAdapter
             Dim count As Integer = QTA.WorkingInvoice_Count
 
             If (count = 0) Then
                 ' checking if dtp is more than 30 days our
                 Dim futureDate As Date = DateAdd(DateInterval.Day, 30, Date.Now).Date
                 If (dtp_GenInvTo.Value.Date > futureDate) Then
-                    MsgBox("You cannot generate Invoices more than 30 days ahead of time.")
-                Else
-                    btn_GenerateInv.UseWaitCursor = True
-                    QTA.GenerateRecurringInvoices(dtp_GenInvTo.Value.Date)
-                    BATCH_WorkingInvoiceTableAdapter.Fill(DS_Batching.BATCH_WorkingInvoice)
-                    btn_GenerateInv.UseWaitCursor = False
-                    _targetedBillDate = dtp_GenInvTo.Value.Date
+                    MessageBox.Show("You cannot generate Invoices more than 30 days ahead of time.", "Generate Date too far", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                    Exit Sub
                 End If
             Else
-                MsgBox("You cannot Generate Recurring Service Invoices while there are other Recurring Service Invoices prepared. You must first Batch or Delete them.", MsgBoxStyle.Exclamation)
+                Dim result As DialogResult = MessageBox.Show("There are currently invoices in queue. You must delete or batch them before generating again." & vbCrLf &
+                                "Do you wish to delete these invoices and generate again?", "Invoices Already in Queue", MessageBoxButtons.YesNo, MessageBoxIcon.Stop)
+                If (result = Windows.Forms.DialogResult.Yes) Then
+                    BATCH_WorkingInvoiceTableAdapter.DeleteAll()
+                Else
+                    Exit Sub
+                End If
             End If
+
+            btn_GenerateInv.UseWaitCursor = True
+            QTA.GenerateRecurringInvoices(dtp_GenInvTo.Value.Date)
+            ' refil table
+            BATCH_WorkingInvoiceTableAdapter.Fill(DS_Batching.BATCH_WorkingInvoice)
+            btn_GenerateInv.UseWaitCursor = False
+            ' carrying targeted date here for batch record
+            _targetedBillDate = dtp_GenInvTo.Value.Date
         End Sub
 
         Private Sub dg_PrepInv_CellContentClick(sender As System.Object, e As System.Windows.Forms.DataGridViewCellEventArgs) Handles dg_PrepInv.CellContentClick
             If (e.ColumnIndex = 5) Then
                 Try
-                    Dim row As DataRowView = dg_PrepInv.Rows(dg_PrepInv.SelectedRows(0).Index).DataBoundItem
-                    Dim actualRow As ds_Batching.BATCH_WorkingInvoiceRow = row.Row
+                    Dim row As ds_Batching.BATCH_WorkingInvoiceRow = CType(dg_PrepInv.Rows(dg_PrepInv.SelectedRows(0).Index).DataBoundItem, DataRowView).Row
 
                     If (dg_PrepInv.Rows(e.RowIndex).Cells(e.ColumnIndex).EditedFormattedValue = True) Then
-                        QTA.WorkingInvoice_UpdatePrint(actualRow.WorkingInvoiceID, "True")
+                        QTA.WorkingInvoice_UpdatePrint(row.WorkingInvoiceID, "True")
                     Else
-                        QTA.WorkingInvoice_UpdatePrint(actualRow.WorkingInvoiceID, "False")
+                        QTA.WorkingInvoice_UpdatePrint(row.WorkingInvoiceID, "False")
                     End If
                 Catch ex As Exception
                     MsgBox(ex.Message)
@@ -272,7 +315,7 @@ Namespace Batching
             PbCustomer = progress.CurrentCustomer
             ' progress
             PbPercent = e.ProgressPercentage
-            End Sub
+        End Sub
 
         Private Sub InvoiceBatchWorker_RunWorkerCompleted(sender As Object, e As System.ComponentModel.RunWorkerCompletedEventArgs) Handles BatchWorker.RunWorkerCompleted
             If (e.Error IsNot Nothing) Then
@@ -284,16 +327,7 @@ Namespace Batching
             End If
             Batching = False
             ' refil dataset
-            RefreshBatchQueue()
-        End Sub
-
-        Private Sub btn_CancelInvBatch_Click(sender As System.Object, e As System.EventArgs)
-            If (BatchWorker.WorkerSupportsCancellation = True) Then
-                If (BatchWorker.CancellationPending = False) Then
-                    BatchWorker.CancelAsync()
-                    sender.enabled = False
-                End If
-            End If
+            CheckBatchQueues(refillTables:=True)
         End Sub
 
         Public Sub New()
@@ -303,18 +337,6 @@ Namespace Batching
 
             ' Add any initialization after the InitializeComponent() call.
             QTA = New ds_BatchingTableAdapters.QueriesTableAdapter
-        End Sub
-
-      Private Sub btn_DeleteAllWrkInv_Click(sender As System.Object, e As System.EventArgs) Handles btn_DeleteAllWrkInv.Click
-            Dim result As MsgBoxResult = MsgBox("Are you sure you want to delete all Prepared Invoices?", MsgBoxStyle.YesNo)
-            If (result = MsgBoxResult.Yes) Then
-                Try
-                    BATCH_WorkingInvoiceTableAdapter.DeleteAll()
-                    RefreshBatchQueue()
-                Catch ex As Exception
-                    MsgBox(ex.Message)
-                End Try
-            End If
         End Sub
 
         Private Sub btn_DeletePay_Click(sender As System.Object, e As System.EventArgs) Handles btn_DeletePay.Click
@@ -407,46 +429,69 @@ Namespace Batching
         End Sub
 
         Private Function PayBatch_VerifyTotals() As Boolean
-            Dim err As Boolean
+            Dim cashErr As Boolean = False
+            Dim checkErr As Boolean = False
+            Dim moErr As Boolean = False
             Dim s As New System.Text.StringBuilder
 
             ' cash total
             If (TotalCash > 0) Then
-                If (CDbl(tb_TotalCash.Text) <> TotalCash) Then
-                    tb_TotalCash.BackColor = AppColors.TextBoxErr
-                    err = True
-                    s.Append("- Total Cash incorrect").AppendLine()
-                    tb_TotalCash.Clear()
+                If (Trim(tb_TotalCash.Text) <> "") Then
+                    If (CDbl(tb_TotalCash.Text) <> TotalCash) Then
+                        cashErr = True
+                        s.Append("- Total Cash incorrect").AppendLine()
+                    End If
                 Else
-                    tb_TotalCash.BackColor = AppColors.TextBoxDef
+                    cashErr = True
+                    s.Append("- Total Cash empty").AppendLine()
                 End If
+            End If
+            If (cashErr) Then
+                tb_TotalCash.BackColor = AppColors.TextBoxErr
+                tb_TotalCash.Clear()
+            Else
+                tb_TotalCash.BackColor = AppColors.TextBoxDef
             End If
 
             ' check total
             If (TotalChecks > 0) Then
-                If (CDbl(tb_TotalCheck.Text) <> TotalChecks) Then
-                    tb_TotalCheck.BackColor = AppColors.TextBoxErr
-                    err = True
-                    s.Append("- Total Checks incorrect").AppendLine()
-                    tb_TotalCheck.Clear()
+                If (Trim(tb_TotalCheck.Text) <> "") Then
+                    If (CDbl(tb_TotalCheck.Text) <> TotalChecks) Then
+                       checkErr = True
+                        s.Append("- Total Checks incorrect").AppendLine()
+                    End If
                 Else
-                    tb_TotalCheck.BackColor = AppColors.TextBoxDef
+                    checkErr = True
+                    s.Append("- Total Checks empty").AppendLine()
                 End If
             End If
+            If (checkErr) Then
+                tb_TotalCheck.BackColor = AppColors.TextBoxErr
+                tb_TotalCheck.Clear()
+            Else
+                tb_TotalCheck.BackColor = AppColors.TextBoxDef
+            End If
 
-            ' money order total
+                ' money order total
             If (TotalMoneyOrder > 0) Then
-                If (CDbl(tb_TotalMoneyOrder.Text) <> TotalMoneyOrder) Then
-                    tb_TotalMoneyOrder.BackColor = AppColors.TextBoxErr
-                    err = True
-                    s.Append("- Total Money Orders incorrect")
-                    tb_TotalMoneyOrder.Clear()
+                If (Trim(tb_TotalMoneyOrder.Text) <> "") Then
+                    If (CDbl(tb_TotalMoneyOrder.Text) <> TotalMoneyOrder) Then
+                        moErr = True
+                        s.Append("- Total Money Orders incorrect")
+                    End If
                 Else
-                    tb_TotalMoneyOrder.BackColor = AppColors.TextBoxDef
+                    moErr = True
+                    s.Append("- Total Money Orders empty")
                 End If
             End If
+            If (moErr) Then
+                tb_TotalMoneyOrder.BackColor = AppColors.TextBoxErr
+                tb_TotalMoneyOrder.Clear()
+            Else
+                tb_TotalMoneyOrder.BackColor = AppColors.TextBoxDef
+            End If
 
-            If (Not err) Then
+            If (Not cashErr And Not checkErr And Not moErr) Then
                 Return True
             Else
                 MessageBox.Show("Please correct the following totals before batching can begin:" & vbCrLf & s.ToString, "Totals Incorrect", MessageBoxButtons.OK, MessageBoxIcon.Error)
@@ -454,32 +499,7 @@ Namespace Batching
             End If
         End Function
 
-        Private Sub btn_PayBatch_Click(sender As System.Object, e As System.EventArgs) Handles btn_PayBatch.Click
-            If (Not _payBatchRunning) Then
-                If (PayBatch_VerifyTotals()) Then
-                    Dim result As DialogResult = MessageBox.Show("Payment Totals Match. Begin Batching " & dg_PrepPay.RowCount & " payments?", "Begin Payment Batch", MessageBoxButtons.YesNo, MessageBoxIcon.Question)
-                    If (result = Windows.Forms.DialogResult.Yes) Then
-                        ' change button and set form var
-                        btn_PayBatch.Text = "Cancel Batch"
-                        btn_PayBatch.ForeColor = Color.Red
-                        _payBatchRunning = True
-                        ' init the object that the worker calls
-                        Dim payBatcher As New QB_Batching.Payments()
-                        ' start the worker
-                        BatchWorker.RunWorkerAsync(payBatcher)
-                    End If
-                Else
-                    ' totals did not match - err message is in validation
-                End If
-            Else
-                ' batch is running, this is a cancel call
-                Dim result As DialogResult = MessageBox.Show("Are you sure you want to stop this Payment Batch?", "Stop Batch", MessageBoxButtons.YesNo, MessageBoxIcon.Warning)
-                If (result = Windows.Forms.DialogResult.Yes) Then
-                    BatchWorker.CancelAsync()
-                End If
-            End If
 
-        End Sub
 
         Private Sub tc_Master_SelectedIndexChanged(sender As System.Object, e As System.EventArgs) Handles tc_Master.SelectedIndexChanged
             If (_lockTab) Then
@@ -494,12 +514,12 @@ Namespace Batching
                     BATCH_WorkingPaymentsTableAdapter.Fill(DS_Batching.BATCH_WorkingPayments)
                 End If
             End If
-            
+
         End Sub
 
         Private Sub dg_PrepPay_CellMouseDown(sender As System.Object, e As System.Windows.Forms.DataGridViewCellMouseEventArgs) Handles dg_PrepPay.CellMouseDown
             If (e.Button = Windows.Forms.MouseButtons.Right) Then
-                For Each row As DataGridViewRow In dg_PrepPay
+                For Each row As DataGridViewRow In dg_PrepPay.SelectedRows
                     row.Selected = False
                 Next
                 dg_PrepPay.Rows(e.RowIndex).Selected = True
@@ -508,6 +528,7 @@ Namespace Batching
 
         Private Sub dg_PrepPay_RowsAdded(sender As System.Object, e As System.Windows.Forms.DataGridViewRowsAddedEventArgs) Handles dg_PrepPay.RowsAdded
             PayBatch_TotalsPrep()
+            CheckBatchQueues()
         End Sub
 
         Private Sub cmb_PayTypes_SelectedValueChanged(sender As System.Object, e As System.EventArgs) Handles cmb_PayTypes.SelectedValueChanged
@@ -525,9 +546,26 @@ Namespace Batching
         End Sub
 
         Private _lockTab As Boolean
+        Private Sub ModPaymentFoo(Optional ByVal modify As Boolean = False)
+            If (modify) Then
+                ' show panel
+                sc_PayBatching.Panel1Collapsed = False
+                ' lock form to tab
+                _lockTab = True
+                pnl_PayRight.Enabled = False
+                cm_PayGrid.Enabled = False
+            Else
+                ' hide panel
+                sc_PayBatching.Panel1Collapsed = True
+                ' unlock form from tab
+                _lockTab = False
+                pnl_PayRight.Enabled = True
+                cm_PayGrid.Enabled = True
+            End If
+        End Sub
         Private Sub btn_ModPayment_Click(sender As System.Object, e As System.EventArgs) Handles btn_ModPayment.Click
             If (dg_PrepPay.SelectedRows.Count = 1) Then
-                grp_ModPayInfo.Visible = True
+                sc_PayBatching.Panel1Collapsed = False
             End If
         End Sub
 
@@ -537,6 +575,8 @@ Namespace Batching
                 _lockTab = True
                 pnl_PayRight.Enabled = False
                 cm_PayGrid.Enabled = False
+                ' show panel
+                sc_PayBatching.Panel1Collapsed = False
                 ' visible - get row and set boxes
                 Dim row As ds_Batching.BATCH_WorkingPaymentsRow = CType(dg_PrepPay.SelectedRows(0).DataBoundItem, DataRowView).Row
                 cmb_PayTypes.SelectedValue = row.WorkingPaymentsType
@@ -550,22 +590,26 @@ Namespace Batching
             Else
                 _lockTab = False
                 cm_PayGrid.Enabled = True
+                ' hide  panel
+                sc_PayBatching.Panel1Collapsed = True
                 ' hidden
-                cmb_PayTypes.SelectedIndex = 0
+                If (cmb_PayTypes.Items.Count > 0) Then
+                    cmb_PayTypes.SelectedIndex = 0
+                End If
                 tb_Amount.Clear()
                 tb_RefNum.Clear()
                 dtp_DateOnCheck.Value = Date.Now
-            End If
+                End If
 
         End Sub
 
-        
+
         Private Sub btn_CancelPayMod_Click(sender As System.Object, e As System.EventArgs) Handles btn_CancelPayMod.Click
             grp_ModPayInfo.Visible = False
         End Sub
 
         Private Sub btn_SavePayment_Click(sender As System.Object, e As System.EventArgs) Handles btn_SavePayment.Click
-            Dim checkRefNum As String
+            Dim checkRefNum As String = ""
             Dim dateOnCheck As Date?
 
             If (cmb_PayTypes.SelectedValue <> TC_ENPaymentTypes.Cash) Then
@@ -602,7 +646,7 @@ Namespace Batching
             With row
                 .WorkingPaymentsType = cmb_PayTypes.SelectedValue
                 .WorkingPaymentsAmount = tb_Amount.Text
-                If (checkRefNum IsNot Nothing) Then
+                If (checkRefNum <> "") Then
                     .WorkingPaymentsCheckNum = checkRefNum
                 End If
                 If (dateOnCheck IsNot Nothing) Then
@@ -615,11 +659,65 @@ Namespace Batching
                 row.EndEdit()
                 BATCH_WorkingPaymentsTableAdapter.Update(row)
                 RaiseEvent CustomerPaymentMod(row.CustomerNumber)
-                grp_ModPayInfo.Visible = False
-            Catch ex as SqlException
+                CheckBatchQueues(refillTables:=True)
+            Catch ex As SqlException
                 MessageBox.Show("Message: " & ex.Message & vbCrLf & "LineNumber: " & ex.LineNumber,
                                 "Sql Error: " & ex.Procedure, MessageBoxButtons.OK, MessageBoxIcon.Error)
             End Try
+        End Sub
+
+
+        Private Sub btn_InvBatch_Click(sender As System.Object, e As System.EventArgs) Handles btn_InvBatch.Click
+            If (Not _invBatchRunning) Then
+                Dim result As DialogResult = MessageBox.Show("Begin Batching " & dg_PrepInv.RowCount & " invoices?", "Begin Invoice Batch", MessageBoxButtons.YesNo, MessageBoxIcon.Question)
+                If (result = Windows.Forms.DialogResult.Yes) Then
+                    _invBatchRunning = True
+                    Batching = True
+                    ' init the object that the worker calls
+                    Dim invoice As New QB_Batching.Invoicing(_targetedBillDate)
+                    ' start the work
+                    BatchWorker.RunWorkerAsync(invoice)
+                End If
+            Else
+                ' batch is running, this is a cancel
+                Dim result As DialogResult = MessageBox.Show("Are you sure you want to stop this Invoice Batch?", "Stop Batch", MessageBoxButtons.YesNo, MessageBoxIcon.Warning)
+                If (result = Windows.Forms.DialogResult.Yes) Then
+                    If (BatchWorker.WorkerSupportsCancellation) Then
+                        If (Not BatchWorker.CancellationPending) Then
+                            BatchWorker.CancelAsync()
+                        End If
+                    End If
+                End If
+            End If
+
+        End Sub
+
+        Private Sub btn_PayBatch_Click(sender As System.Object, e As System.EventArgs) Handles btn_PayBatch.Click
+            If (Not _payBatchRunning) Then
+                If (PayBatch_VerifyTotals()) Then
+                    Dim result As DialogResult = MessageBox.Show("Payment Totals Match. Begin Batching " & dg_PrepPay.RowCount & " payments?", "Begin Payment Batch", MessageBoxButtons.YesNo, MessageBoxIcon.Question)
+                    If (result = Windows.Forms.DialogResult.Yes) Then
+                        ' set properties to set controls
+                        _payBatchRunning = True
+                        Batching = True
+                        ' init the object that the worker calls
+                        Dim payBatcher As New QB_Batching.Payments()
+                        ' start the worker
+                        BatchWorker.RunWorkerAsync(payBatcher)
+                    End If
+                End If
+            Else
+                ' batch is running, this is a cancel call
+                Dim result As DialogResult = MessageBox.Show("Are you sure you want to stop this Payment Batch?", "Stop Batch", MessageBoxButtons.YesNo, MessageBoxIcon.Warning)
+                If (result = Windows.Forms.DialogResult.Yes) Then
+                    If (BatchWorker.WorkerSupportsCancellation) Then
+                        If (Not BatchWorker.CancellationPending) Then
+                            BatchWorker.CancelAsync()
+                        End If
+                    End If
+                End If
+            End If
+
         End Sub
     End Class
 End Namespace
