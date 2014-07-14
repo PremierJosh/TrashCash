@@ -180,38 +180,6 @@ Namespace Admin.Payments
             End If
         End Sub
 
-        Private Sub Panel1_MouseClick(sender As System.Object, e As System.Windows.Forms.MouseEventArgs) Handles Panel1.MouseClick
-            If (e.Button = Windows.Forms.MouseButtons.Middle) Then
-                Dim f As New UserSelection("Login for Payment Re-Sync")
-                f.ShowDialog()
-                If (f.AuthUserRow.USER_AUTHLVL = 1) Then
-                    Cursor = Cursors.WaitCursor
-                    ' get full payment history
-                    Dim s As New List(Of String)
-                    s.Add("AppliedToTxnRet")
-                    s.Add("TxnID")
-                    s.Add("EditSequence")
-                    s.Add("CustomerRef")
-                    s.Add("UnusedPayment")
-                    Dim payObjList As New List(Of QBRecievePaymentObj)
-                    QBRequests.PaymentQuery(payObjList, GetCustomerListID(CurrentCustomer), retEleList:=s)
-                    ' wipe applied payments
-                    For i = 0 To payObjList.Count - 1
-                        If (payObjList.Item(i).AppliedInvList IsNot Nothing) Then
-                            QBRequests.PaymentMod(payObjList.Item(i), wipeAppList:=True)
-                        End If
-                    Next
-                    ' get list of open invoices
-                    Dim invObjList As New List(Of QBInvoiceObj)
-                    QBRequests.InvoiceQuery(invObjList, GetCustomerListID(CurrentCustomer), paidStatus:=2)
-                    ' pay invoices with unapplied payments
-                    QBMethods.UseOverpaymentsOnInvoices(payObjList, invObjList)
-                    Cursor = Cursors.Default
-                    MessageBox.Show("Payment Re-Sync completed", "Payment Re-Sync completed", MessageBoxButtons.OK, MessageBoxIcon.Information)
-                End If
-            End If
-        End Sub
-
         Private Sub btn_AlterCheckNum_Click(sender As System.Object, e As System.EventArgs) Handles btn_AlterCheckNum.Click
             If (dg_PaymentHistory.SelectedRows.Count = 1) Then
                 ' easier refrence
@@ -276,5 +244,34 @@ Namespace Admin.Payments
 
         End Sub
 
+        Private Sub btn_ReSyncPays_Click(sender As System.Object, e As System.EventArgs) Handles btn_ReSyncPays.Click
+            Dim f As New UserSelection("Login for Payment Re-Sync")
+            f.ShowDialog()
+            If (f.AuthUserRow.USER_AUTHLVL = 1) Then
+                Cursor = Cursors.WaitCursor
+                ' get full payment history
+                Dim s As New List(Of String)
+                s.Add("AppliedToTxnRet")
+                s.Add("TxnID")
+                s.Add("EditSequence")
+                s.Add("CustomerRef")
+                s.Add("UnusedPayment")
+                Dim payObjList As New List(Of QBRecievePaymentObj)
+                QBRequests.PaymentQuery(payObjList, GetCustomerListID(CurrentCustomer), retEleList:=s)
+                ' wipe applied payments
+                For i = 0 To payObjList.Count - 1
+                    If (payObjList.Item(i).AppliedInvList IsNot Nothing) Then
+                        QBRequests.PaymentMod(payObjList.Item(i), wipeAppList:=True)
+                    End If
+                Next
+                ' get list of open invoices
+                Dim invObjList As New List(Of QBInvoiceObj)
+                QBRequests.InvoiceQuery(invObjList, GetCustomerListID(CurrentCustomer), paidStatus:=2)
+                ' pay invoices with unapplied payments
+                QBMethods.UseOverpaymentsOnInvoices(payObjList, invObjList)
+                Cursor = Cursors.Default
+                MessageBox.Show("Payment Re-Sync completed", "Payment Re-Sync completed", MessageBoxButtons.OK, MessageBoxIcon.Information)
+            End If
+        End Sub
     End Class
 End Namespace

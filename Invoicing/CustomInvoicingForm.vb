@@ -175,15 +175,7 @@ Namespace Invoicing
             End If
         End Function
 
-        Private Function InvoiceValidation() As Boolean
-            If (dtp_PostDate.Value.Date <= dtp_DueDate.Value.Date) Then
-                Return True
-            Else
-                MessageBox.Show("Due Date cannot be before Post Date", "Error with Post/Due Dates", MessageBoxButtons.OK, MessageBoxIcon.Error)
-                Return False
-            End If
-        End Function
-        Private Sub btn_CancelInv_Click(sender As System.Object, e As System.EventArgs) Handles btn_CancelInv.Click
+      Private Sub btn_CancelInv_Click(sender As System.Object, e As System.EventArgs) Handles btn_CancelInv.Click
             Dim prompt As DialogResult = MessageBox.Show("Cancel creation of Custom Invoice?", "Confirm cancel", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation)
             If (prompt = Windows.Forms.DialogResult.Yes) Then
                 ResetInvoice()

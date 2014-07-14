@@ -39,10 +39,10 @@ Namespace Admin.Payments
             Me.cm_AlterPayment = New System.Windows.Forms.ContextMenuStrip(Me.components)
             Me.cm_i_BounceCheck = New System.Windows.Forms.ToolStripMenuItem()
             Me.cm_i_MovePayment = New System.Windows.Forms.ToolStripMenuItem()
+            Me.btn_AlterCheckNum = New System.Windows.Forms.ToolStripMenuItem()
             Me.PaymentHistoryDisplayBindingSource = New System.Windows.Forms.BindingSource(Me.components)
             Me.Payments = New TrashCash.ds_Payments()
             Me.pnl_Filter = New System.Windows.Forms.Panel()
-            Me.Panel1 = New System.Windows.Forms.Panel()
             Me.cmb_PayTypes = New System.Windows.Forms.ComboBox()
             Me.PaymentTypesBindingSource = New System.Windows.Forms.BindingSource(Me.components)
             Me.Ds_Types = New TrashCash.ds_Types()
@@ -54,7 +54,7 @@ Namespace Admin.Payments
             Me.lbl_DateFilter = New System.Windows.Forms.Label()
             Me.PaymentHistory_DisplayTableAdapter = New TrashCash.ds_PaymentsTableAdapters.PaymentHistory_DisplayTableAdapter()
             Me.PaymentTypesTableAdapter = New TrashCash.ds_TypesTableAdapters.PaymentTypesTableAdapter()
-            Me.btn_AlterCheckNum = New System.Windows.Forms.ToolStripMenuItem()
+            Me.btn_ReSyncPays = New System.Windows.Forms.Button()
             Me.pnl_Top.SuspendLayout()
             Me.pnl_TopContent.SuspendLayout()
             CType(Me.dg_PaymentHistory, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -159,7 +159,7 @@ Namespace Admin.Payments
             '
             Me.cm_AlterPayment.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.cm_i_BounceCheck, Me.cm_i_MovePayment, Me.btn_AlterCheckNum})
             Me.cm_AlterPayment.Name = "cm_BounceCheck"
-            Me.cm_AlterPayment.Size = New System.Drawing.Size(155, 92)
+            Me.cm_AlterPayment.Size = New System.Drawing.Size(155, 70)
             '
             'cm_i_BounceCheck
             '
@@ -173,6 +173,12 @@ Namespace Admin.Payments
             Me.cm_i_MovePayment.Size = New System.Drawing.Size(154, 22)
             Me.cm_i_MovePayment.Text = "Move Payment"
             '
+            'btn_AlterCheckNum
+            '
+            Me.btn_AlterCheckNum.Name = "btn_AlterCheckNum"
+            Me.btn_AlterCheckNum.Size = New System.Drawing.Size(154, 22)
+            Me.btn_AlterCheckNum.Text = "Alter Check #"
+            '
             'PaymentHistoryDisplayBindingSource
             '
             Me.PaymentHistoryDisplayBindingSource.DataMember = "PaymentHistory_Display"
@@ -185,7 +191,7 @@ Namespace Admin.Payments
             '
             'pnl_Filter
             '
-            Me.pnl_Filter.Controls.Add(Me.Panel1)
+            Me.pnl_Filter.Controls.Add(Me.btn_ReSyncPays)
             Me.pnl_Filter.Controls.Add(Me.cmb_PayTypes)
             Me.pnl_Filter.Controls.Add(Me.ck_All)
             Me.pnl_Filter.Controls.Add(Me.Label2)
@@ -198,13 +204,6 @@ Namespace Admin.Payments
             Me.pnl_Filter.Name = "pnl_Filter"
             Me.pnl_Filter.Size = New System.Drawing.Size(869, 64)
             Me.pnl_Filter.TabIndex = 17
-            '
-            'Panel1
-            '
-            Me.Panel1.Location = New System.Drawing.Point(843, 26)
-            Me.Panel1.Name = "Panel1"
-            Me.Panel1.Size = New System.Drawing.Size(25, 21)
-            Me.Panel1.TabIndex = 11
             '
             'cmb_PayTypes
             '
@@ -285,11 +284,15 @@ Namespace Admin.Payments
             '
             Me.PaymentTypesTableAdapter.ClearBeforeFill = True
             '
-            'btn_AlterCheckNum
+            'btn_ReSyncPays
             '
-            Me.btn_AlterCheckNum.Name = "btn_AlterCheckNum"
-            Me.btn_AlterCheckNum.Size = New System.Drawing.Size(154, 22)
-            Me.btn_AlterCheckNum.Text = "Alter Check #"
+            Me.btn_ReSyncPays.AutoSize = True
+            Me.btn_ReSyncPays.Location = New System.Drawing.Point(759, 38)
+            Me.btn_ReSyncPays.Name = "btn_ReSyncPays"
+            Me.btn_ReSyncPays.Size = New System.Drawing.Size(107, 23)
+            Me.btn_ReSyncPays.TabIndex = 12
+            Me.btn_ReSyncPays.Text = "Re-Sync Payments"
+            Me.btn_ReSyncPays.UseVisualStyleBackColor = True
             '
             'AdminPayments
             '
@@ -345,7 +348,7 @@ Namespace Admin.Payments
         Friend WithEvents Ds_Types As TrashCash.ds_Types
         Friend WithEvents PaymentTypesBindingSource As System.Windows.Forms.BindingSource
         Friend WithEvents PaymentTypesTableAdapter As TrashCash.ds_TypesTableAdapters.PaymentTypesTableAdapter
-        Friend WithEvents Panel1 As System.Windows.Forms.Panel
         Friend WithEvents btn_AlterCheckNum As System.Windows.Forms.ToolStripMenuItem
+        Friend WithEvents btn_ReSyncPays As System.Windows.Forms.Button
     End Class
 End Namespace

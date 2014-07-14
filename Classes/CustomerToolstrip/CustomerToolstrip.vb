@@ -45,15 +45,15 @@ Namespace Classes.CustomerToolstrip
         ' balance setting
         Private ReadOnly _ta As ds_CustomerTableAdapters.QueriesTableAdapter
         Private _lastFetchedBalance As Double
-        Friend Sub GetCustomerAdjustedBalance(Optional ByRef returnVal As Double = Nothing)
-           
+        Friend Sub GetCustomerAdjustedBalance(Optional ByRef retQBBalance As Double = 1)
+
             'Dim queueAmount As Double = _ta.Customer_PaymentTotalInQueue(CurrentCustomer)
 
             ' getting quickbooks balance
             Dim qbBalance As Double = GlobalConMgr.GetCustomerBalance(GetCustomerListID(CurrentCustomer))
             _lastFetchedBalance = qbBalance
-            If (returnVal <> Nothing) Then
-                returnVal = qbBalance
+            If (retQBBalance = Nothing) Then
+                retQBBalance = qbBalance
             End If
 
             ' set balance labels

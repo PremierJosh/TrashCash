@@ -1321,7 +1321,7 @@ Namespace QBStuff
                     .Add("CustomerRef")
                     .Add("PaymentMethodRef")
                     .Add("UnusedPayment")
-                    .Add("AppliedToTxnRetList")
+                    .Add("AppliedToTxnRet")
                 End With
                 ' getting list of payments on customer
                 Dim payObjList As New List(Of QBRecievePaymentObj)
