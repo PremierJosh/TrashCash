@@ -1335,7 +1335,7 @@ Namespace QBStuff
                 invList.Add(invObj)
                 Dim pass As Boolean = UseOverpaymentsOnInvoices(payObjList:=payObjList, invObjList:=invList, qbConMgr:=ConCheck(qbConMgr))
                 If (Not pass) Then
-                    MsgBox("Overpayment use fail on PayInvoice sub. Contact premier.")
+                    MsgBox("Overpayment use fail on PayInvoice sub. contact Premier Innovisions.")
                 End If
             End If
         End Sub
@@ -1479,7 +1479,7 @@ Namespace QBStuff
                                             resp.StatusCode.ToString,
                                             resp.StatusMessage,
                                             Date.Now)
-                    MsgBox("Error Encounterd with Quickbooks. Contact Premier.", MsgBoxStyle.Critical)
+                    MsgBox("Error Encounterd with Quickbooks. contact Premier Innovisions.", MsgBoxStyle.Critical)
                 Catch ex As SqlException
                     MessageBox.Show("Message: " & ex.Message & vbCrLf & "LineNumber: " & ex.LineNumber,
                                     "Sql Error: " & ex.Procedure, MessageBoxButtons.OK, MessageBoxIcon.Error)

@@ -268,7 +268,7 @@ Namespace Admin.Payments
                             MessageBox.Show("Selected Payment is not a Check.", "Payment is Cash", MessageBoxButtons.OK, MessageBoxIcon.Error)
                     End Select
                 Else
-                    MessageBox.Show("No DB row found - Contact Premier")
+                    MessageBox.Show("No DB row found - contact Premier Innovisions")
                 End If
             Else
                 MessageBox.Show("Please select a Payment", "No Payment Selected", MessageBoxButtons.OK, MessageBoxIcon.Error)

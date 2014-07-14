@@ -21,7 +21,7 @@ Namespace Customer
                     custRow = Ds_Customer.Customer.NewCustomerRow
                     newRow = True
                 Else
-                    MessageBox.Show("Customer table has more than 1 row, contact premier. Exiting")
+                    MessageBox.Show("Customer table has more than 1 row, contact Premier Innovisions. Exiting")
                     Exit Sub
                 End If
 
@@ -86,7 +86,7 @@ Namespace Customer
                 Catch ex As SqlException
                     MessageBox.Show("Message: " & ex.Message & vbCrLf & "LineNumber: " & ex.LineNumber,
                                     "Sql Error: " & ex.Procedure, MessageBoxButtons.OK, MessageBoxIcon.Error)
-                    MessageBox.Show("New Customer Add Failed - Exiting Save", "Contact Premier", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                    MessageBox.Show("New Customer Add Failed - Exiting Save", "contact Premier Innovisions", MessageBoxButtons.OK, MessageBoxIcon.Error)
                     Exit Sub
                 End Try
                 ' build full name now that i have number
@@ -130,7 +130,7 @@ Namespace Customer
                 Else
                     ' error logging
                     QBMethods.ResponseErr_Misc(resp)
-                    MessageBox.Show("Customer Add failed. Contact Premier.")
+                    MessageBox.Show("Customer Add failed. contact Premier Innovisions.")
                     ' delete row
                     Using qta As New ds_CustomerTableAdapters.QueriesTableAdapter
                         qta.Customer_DeleteByNum(custRow.CustomerNumber)

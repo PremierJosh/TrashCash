@@ -177,7 +177,7 @@ Namespace Admin
                     QBMethods.ResponseErr_Misc(resp)
                 End If
             Else
-                MessageBox.Show("Item already has ListID. Contact Premier to resolve.", "Contact Premier", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                MessageBox.Show("Item already has ListID. contact Premier Innovisions to resolve.", "contact Premier Innovisions", MessageBoxButtons.OK, MessageBoxIcon.Error)
             End If
         End Sub
       
