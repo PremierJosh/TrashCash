@@ -31,6 +31,7 @@ Namespace Payments
             Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
             Me.cm_PayGrid = New System.Windows.Forms.ContextMenuStrip(Me.components)
             Me.btn_DeletePay = New System.Windows.Forms.ToolStripMenuItem()
+            Me.btn_ModPayment = New System.Windows.Forms.ToolStripMenuItem()
             Me.tc_Master = New System.Windows.Forms.TabControl()
             Me.tc_p_CustNotes = New System.Windows.Forms.TabPage()
             Me.UC_CustomerNotes = New TrashCash.Customer.UC_CustomerNotes()
@@ -89,15 +90,21 @@ Namespace Payments
             '
             'cm_PayGrid
             '
-            Me.cm_PayGrid.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.btn_DeletePay})
+            Me.cm_PayGrid.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.btn_DeletePay, Me.btn_ModPayment})
             Me.cm_PayGrid.Name = "cm_PayGrid"
-            Me.cm_PayGrid.Size = New System.Drawing.Size(205, 26)
+            Me.cm_PayGrid.Size = New System.Drawing.Size(163, 48)
             '
             'btn_DeletePay
             '
             Me.btn_DeletePay.Name = "btn_DeletePay"
-            Me.btn_DeletePay.Size = New System.Drawing.Size(204, 22)
-            Me.btn_DeletePay.Text = "Delete Selected Payment"
+            Me.btn_DeletePay.Size = New System.Drawing.Size(162, 22)
+            Me.btn_DeletePay.Text = "Delete Payment"
+            '
+            'btn_ModPayment
+            '
+            Me.btn_ModPayment.Name = "btn_ModPayment"
+            Me.btn_ModPayment.Size = New System.Drawing.Size(162, 22)
+            Me.btn_ModPayment.Text = "Modify Payment"
             '
             'tc_Master
             '
@@ -278,6 +285,7 @@ Namespace Payments
             '
             'Ds_Types
             '
+            Me.Ds_Types.DataSetName = "ds_Types"
             Me.Ds_Types.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema
             '
             'PaymentTypesTableAdapter
@@ -560,5 +568,6 @@ Namespace Payments
         Friend WithEvents lbl_PrevPayInfo As System.Windows.Forms.Label
         Friend WithEvents grp_NewPayInfo As System.Windows.Forms.GroupBox
         Friend WithEvents ck_Backdate As System.Windows.Forms.CheckBox
+        Friend WithEvents btn_ModPayment As System.Windows.Forms.ToolStripMenuItem
      End Class
 End Namespace

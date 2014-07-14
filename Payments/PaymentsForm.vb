@@ -240,6 +240,8 @@
             ' making sure only 1 row is selected
             If (dg_PrepPay.SelectedRows.Count = 1) Then
                 Dim row As ds_Batching.BATCH_WorkingPaymentsRow = CType(dg_PrepPay.SelectedRows(0).DataBoundItem, DataRowView).Row
+                ' grabbing customer number
+                Dim custNum As Integer = row.CustomerNumber
                 Try
                     BATCH_WorkingPaymentsTableAdapter.DeleteByID(row.WorkingPaymentsID)
                 Catch ex As SqlException
@@ -248,7 +250,7 @@
                 End Try
                 'refresh grid
                 BATCH_WorkingPaymentsTableAdapter.Fill(Ds_Batching.BATCH_WorkingPayments)
-                RaiseEvent CustomerPaymentMod(row.CustomerNumber)
+                RaiseEvent CustomerPaymentMod(custNum)
             End If
         End Sub
 
@@ -260,5 +262,18 @@
                 dtp_Override.Visible = False
             End If
         End Sub
+  
+
+        Private Sub btn_ModPayment_Click(sender As System.Object, e As System.EventArgs) Handles btn_ModPayment.Click
+            Dim row As ds_Batching.BATCH_WorkingPaymentsRow = CType(dg_PrepPay.SelectedRows(0).DataBoundItem, DataRowView).Row
+            Dim custNum As Integer = row.CustomerNumber
+            Dim modForm As New PaymentModifyForm(row, BATCH_WorkingPaymentsTableAdapter, Ds_Types.PaymentTypes)
+            modForm.ShowDialog()
+            'refresh grid and raise event
+            BATCH_WorkingPaymentsTableAdapter.Fill(Ds_Batching.BATCH_WorkingPayments)
+            RaiseEvent CustomerPaymentMod(custNum)
+
+         End Sub
+
     End Class
 End Namespace

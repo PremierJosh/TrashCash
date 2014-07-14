@@ -114,7 +114,7 @@ Public Class TrashCashHome
         End If
         ' checking for batch prep form
         If (BatchForm IsNot Nothing) Then
-            BatchForm.BATCH_WorkingPaymentsTableAdapter.Fill(BatchForm.DS_Batching.BATCH_WorkingPayments)
+            BatchForm.CheckBatchQueues(refillTables:=True)
         End If
 
         ' checking for admin payments

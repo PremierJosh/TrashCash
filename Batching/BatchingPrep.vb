@@ -24,7 +24,11 @@
                     If (value = True) Then
                         ' disable generating new invoices
                         btn_GenerateInv.Enabled = False
-                        '' change button text to cancel and disable other button
+                        ' disbable delete invoices
+                        If (dg_PrepInv.RowCount > 0) Then
+                            btn_DeleteInvs.Enabled = False
+                        End If
+                        ' change button text to cancel and disable other button
                         If (_invBatchRunning) Then
                             ' change button for cancelation and disable other batch btn
                             btn_PayBatch.Enabled = False
@@ -74,6 +78,9 @@
                         _invBatchRunning = False
                         ' enable generating new invoices
                         btn_GenerateInv.Enabled = True
+                        If (dg_PrepInv.RowCount > 0) Then
+                            btn_DeleteInvs.Enabled = True
+                        End If
 
                         ' show delete and payment menu
                         cm_PayGrid.Enabled = True
@@ -94,9 +101,9 @@
                 If (_pbMax <> value) Then
                     _pbMax = value
                     If (_invBatchRunning) Then
-                        pb_Invoices.Maximum = value
+                        pb_Invoices.Maximum = 100
                     ElseIf (_payBatchRunning) Then
-                        pb_Payments.Maximum = value
+                        pb_Payments.Maximum = 100
                     End If
                 End If
             End Set
@@ -168,7 +175,7 @@
             CheckBatchQueues(refillTables:=True)
           End Sub
 
-        Private Sub CheckBatchQueues(Optional ByVal refillTables As Boolean = False)
+        Friend Sub CheckBatchQueues(Optional ByVal refillTables As Boolean = False)
             Dim errCount As Integer
 
             If (refillTables) Then
@@ -179,14 +186,18 @@
             ' payments
             errCount = QTA.WorkingPayments_ErrCount
             If (errCount = 0) Then
+                ' check payment batching totals
+                PayBatch_TotalsPrep()
                 If (dg_PrepPay.RowCount > 0) Then
                     btn_PayBatch.Enabled = True
                     cm_PayGrid.Enabled = True
-                    ' check payment batching totals
-                    PayBatch_TotalsPrep()
+                    ' update count lbl
+                    lbl_PayQueueCount.Text = "Payments in Queue: " & dg_PrepPay.RowCount
                 Else
                     btn_PayBatch.Enabled = False
                     cm_PayGrid.Enabled = False
+                    ' hide count lbl
+                    lbl_PayQueueCount.Text = ""
                 End If
             Else
                 btn_PayBatch.Enabled = False
@@ -198,8 +209,14 @@
             If (errCount = 0) Then
                 If (dg_PrepInv.RowCount > 0) Then
                     btn_InvBatch.Enabled = True
+                    ' update count label
+                    lbl_InvQueueCount.Text = "Invoices in Queue: " & dg_PrepInv.RowCount
+                    btn_DeleteInvs.Visible = True
                 Else
                     btn_InvBatch.Enabled = False
+                    ' hide count lbl
+                    lbl_InvQueueCount.Text = ""
+                    btn_DeleteInvs.Visible = False
                 End If
             Else
                 btn_InvBatch.Enabled = False
@@ -279,6 +296,8 @@
             btn_GenerateInv.UseWaitCursor = False
             ' carrying targeted date here for batch record
             _targetedBillDate = dtp_GenInvTo.Value.Date
+            ' update queue
+            CheckBatchQueues()
         End Sub
 
         Private Sub dg_PrepInv_CellContentClick(sender As System.Object, e As System.Windows.Forms.DataGridViewCellEventArgs) Handles dg_PrepInv.CellContentClick
@@ -343,11 +362,13 @@
         Private Sub btn_DeletePay_Click(sender As System.Object, e As System.EventArgs) Handles btn_DeletePay.Click
             If (dg_PrepPay.SelectedRows.Count = 1) Then
                 Dim row As ds_Batching.BATCH_WorkingPaymentsRow = CType(dg_PrepPay.SelectedRows(0).DataBoundItem, DataRowView).Row
+                Dim custNum As Integer = row.CustomerNumber
                 Dim result As DialogResult = MessageBox.Show("Delete this Prepared Payment?", "Confirm Prepared Payment delete", MessageBoxButtons.YesNo, MessageBoxIcon.Question)
                 If (result = Windows.Forms.DialogResult.Yes) Then
                     BATCH_WorkingPaymentsTableAdapter.DeleteByID(row.WorkingPaymentsID)
-                    ' raise event
-                    RaiseEvent CustomerPaymentMod(row.CustomerNumber)
+                    ' raise event and refil table
+                    RaiseEvent CustomerPaymentMod(custNum)
+                    CheckBatchQueues(refillTables:=True)
                 End If
             Else
                 MessageBox.Show("Please select a Prepared Payment first", "No Prepared Payment selected", MessageBoxButtons.OK, MessageBoxIcon.Error)
@@ -423,10 +444,14 @@
                 End If
             Next
 
+            ' round to 2 decimal places
+            
+
+
             ' set properties
-            TotalCash = cash
-            TotalChecks = checks
-            TotalMoneyOrder = moneyO
+            TotalCash = Math.Round(cash, 2)
+            TotalChecks = Math.Round(checks, 2)
+            TotalMoneyOrder = Math.Round(moneyO, 2)
         End Sub
 
         Private Function PayBatch_VerifyTotals() As Boolean
@@ -519,9 +544,6 @@
             End If
         End Sub
 
-        Private Sub dg_PrepPay_RowsAdded(sender As System.Object, e As System.Windows.Forms.DataGridViewRowsAddedEventArgs) Handles dg_PrepPay.RowsAdded
-          CheckBatchQueues()
-        End Sub
 
         Private Sub btn_InvBatch_Click(sender As System.Object, e As System.EventArgs) Handles btn_InvBatch.Click
             If (Not _invBatchRunning) Then
@@ -582,9 +604,20 @@
 
         Private Sub btn_ModPayment_Click(sender As System.Object, e As System.EventArgs) Handles btn_ModPayment.Click
             Dim row As ds_Batching.BATCH_WorkingPaymentsRow = CType(dg_PrepPay.SelectedRows(0).DataBoundItem, DataRowView).Row
+            Dim custNum As Integer = row.CustomerNumber
             Dim modForm As New PaymentModifyForm(row, BATCH_WorkingPaymentsTableAdapter, Ds_Types.PaymentTypes)
             modForm.ShowDialog()
+            ' raise event
+            RaiseEvent CustomerPaymentMod(custNum)
             CheckBatchQueues(refillTables:=True)
+        End Sub
+
+        Private Sub btn_DeleteInvs_Click(sender As System.Object, e As System.EventArgs) Handles btn_DeleteInvs.Click
+            Dim result As DialogResult = MessageBox.Show("Delete all prepared invoices?", "Delete Invoices", MessageBoxButtons.YesNo, MessageBoxIcon.Question)
+            If (result = Windows.Forms.DialogResult.Yes) Then
+                BATCH_WorkingInvoiceTableAdapter.DeleteAll()
+                CheckBatchQueues(refillTables:=True)
+            End If
         End Sub
     End Class
 End Namespace
