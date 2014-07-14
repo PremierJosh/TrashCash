@@ -6,7 +6,8 @@
 
         ' event to update progress % on home mdi parent
         Friend Event BatchProgPerc(ByVal batchPercent As Integer)
-        Friend Event CustomerPaymentMod(ByVal customerNumber As Integer)
+        Friend Event CustomerQueueAdjusted(ByVal customerNumber As Integer)
+        Friend Event InvoiceQueueAdjusted()
 
         Private _payBatchRunning As Boolean
         Private _invBatchRunning As Boolean
@@ -144,7 +145,7 @@
                         pb_Invoices.Value = value
                     ElseIf (_payBatchRunning) Then
                         ' payments
-                       pb_Payments.Value = value
+                        pb_Payments.Value = value
                     End If
                 End If
             End Set
@@ -172,8 +173,8 @@
         Private Sub BatchingPrep_Load(sender As System.Object, e As System.EventArgs) Handles Me.Load
             ' fill with pay types
             PaymentTypesTableAdapter.Fill(Ds_Types.PaymentTypes)
-            CheckBatchQueues(refillTables:=True)
-          End Sub
+            'CheckBatchQueues(refillTables:=True)
+        End Sub
 
         Friend Sub CheckBatchQueues(Optional ByVal refillTables As Boolean = False)
             Dim errCount As Integer
@@ -289,15 +290,16 @@
                 End If
             End If
 
-            btn_GenerateInv.UseWaitCursor = True
+            Cursor = Cursors.WaitCursor
             QTA.GenerateRecurringInvoices(dtp_GenInvTo.Value.Date)
             ' refil table
             BATCH_WorkingInvoiceTableAdapter.Fill(DS_Batching.BATCH_WorkingInvoice)
-            btn_GenerateInv.UseWaitCursor = False
             ' carrying targeted date here for batch record
             _targetedBillDate = dtp_GenInvTo.Value.Date
-            ' update queue
+            ' update queue and raise event
             CheckBatchQueues()
+            RaiseEvent InvoiceQueueAdjusted()
+            Cursor = Cursors.Default
         End Sub
 
         Private Sub dg_PrepInv_CellContentClick(sender As System.Object, e As System.Windows.Forms.DataGridViewCellEventArgs) Handles dg_PrepInv.CellContentClick
@@ -348,6 +350,7 @@
             Batching = False
             ' refil dataset
             CheckBatchQueues(refillTables:=True)
+            RaiseEvent InvoiceQueueAdjusted()
         End Sub
 
         Public Sub New()
@@ -367,8 +370,7 @@
                 If (result = Windows.Forms.DialogResult.Yes) Then
                     BATCH_WorkingPaymentsTableAdapter.DeleteByID(row.WorkingPaymentsID)
                     ' raise event and refil table
-                    RaiseEvent CustomerPaymentMod(custNum)
-                    CheckBatchQueues(refillTables:=True)
+                    RaiseEvent CustomerQueueAdjusted(custNum)
                 End If
             Else
                 MessageBox.Show("Please select a Prepared Payment first", "No Prepared Payment selected", MessageBoxButtons.OK, MessageBoxIcon.Error)
@@ -444,11 +446,7 @@
                 End If
             Next
 
-            ' round to 2 decimal places
-            
-
-
-            ' set properties
+          ' set properties
             TotalCash = Math.Round(cash, 2)
             TotalChecks = Math.Round(checks, 2)
             TotalMoneyOrder = Math.Round(moneyO, 2)
@@ -483,7 +481,7 @@
             If (TotalChecks > 0) Then
                 If (Trim(tb_TotalCheck.Text) <> "") Then
                     If (CDbl(tb_TotalCheck.Text) <> TotalChecks) Then
-                       checkErr = True
+                        checkErr = True
                         s.Append("- Total Checks incorrect").AppendLine()
                     End If
                 Else
@@ -498,7 +496,7 @@
                 tb_TotalCheck.BackColor = AppColors.TextBoxDef
             End If
 
-                ' money order total
+            ' money order total
             If (TotalMoneyOrder > 0) Then
                 If (Trim(tb_TotalMoneyOrder.Text) <> "") Then
                     If (CDbl(tb_TotalMoneyOrder.Text) <> TotalMoneyOrder) Then
@@ -524,8 +522,7 @@
                 Return False
             End If
         End Function
-
-
+        
 
         Private Sub tc_Master_SelectedIndexChanged(sender As System.Object, e As System.EventArgs) Handles tc_Master.SelectedIndexChanged
             If (tc_Master.SelectedIndex = 0) Then
@@ -608,15 +605,16 @@
             Dim modForm As New PaymentModifyForm(row, BATCH_WorkingPaymentsTableAdapter, Ds_Types.PaymentTypes)
             modForm.ShowDialog()
             ' raise event
-            RaiseEvent CustomerPaymentMod(custNum)
-            CheckBatchQueues(refillTables:=True)
-        End Sub
+            RaiseEvent CustomerQueueAdjusted(custNum)
+     End Sub
 
         Private Sub btn_DeleteInvs_Click(sender As System.Object, e As System.EventArgs) Handles btn_DeleteInvs.Click
             Dim result As DialogResult = MessageBox.Show("Delete all prepared invoices?", "Delete Invoices", MessageBoxButtons.YesNo, MessageBoxIcon.Question)
             If (result = Windows.Forms.DialogResult.Yes) Then
                 BATCH_WorkingInvoiceTableAdapter.DeleteAll()
-                CheckBatchQueues(refillTables:=True)
+                DS_Batching.BATCH_WorkingInvoice.Clear()
+                CheckBatchQueues()
+                RaiseEvent InvoiceQueueAdjusted()
             End If
         End Sub
     End Class

@@ -84,7 +84,7 @@ Public Class TrashCashHome
     Friend WithEvents InvForm As Invoicing.CustomInvoicingForm
 
     ' event handles
-    Private Sub PaymentModCatch(ByVal customerNumber As Integer) Handles PayForm.CustomerPaymentMod, Customer.CustomerPaymentMod, BatchForm.CustomerPaymentMod
+    Private Sub PaymentModCatch(ByVal customerNumber As Integer) Handles PayForm.CustomerPaymentMod, Customer.CustomerPaymentMod, BatchForm.CustomerQueueAdjusted
         ' came from custom invoicing form, need to update customer form balance if matches
         If (Customer IsNot Nothing) Then
             If (Customer.CurrentCustomer = customerNumber) Then
@@ -126,6 +126,39 @@ Public Class TrashCashHome
             End If
         End If
     End Sub
+    Private Sub InvoiceQueueAdjusted() Handles BatchForm.InvoiceQueueAdjusted
+        ' came from custom invoicing form, need to update customer form balance if matches
+        If (Customer IsNot Nothing) Then
+            Customer.CustomerToolstrip1.GetQueueAmount()
+            ' checking for 1 of 3 showdialog forms
+            If (Customer.CreditForm IsNot Nothing) Then
+                Customer.CreditForm.CustomerToolstrip1.GetQueueAmount()
+            End If
+            If (Customer.InvForm IsNot Nothing) Then
+                Customer.InvForm.CustomerToolstrip1.GetQueueAmount()
+            End If
+            If (Customer.PayForm IsNot Nothing) Then
+                Customer.PayForm.CustomerToolstrip1.GetQueueAmount()
+            End If
+        End If
+        ' need to update in queue on other forms if exist and match new customer
+        If (PayForm IsNot Nothing) Then
+            PayForm.CustomerToolstrip1.GetQueueAmount()
+        End If
+        If (InvForm IsNot Nothing) Then
+            InvForm.CustomerToolstrip1.GetQueueAmount()
+        End If
+    
+        ' checking for admin payments
+        If (TrashCashAdmin IsNot Nothing) Then
+            If (TrashCashAdmin.AdminPay IsNot Nothing) Then
+                TrashCashAdmin.AdminPay.CustomerToolstrip1.GetQueueAmount()
+            End If
+        End If
+    End Sub
+ 
+
+
     Private Sub BalanceChangeCatch(ByVal customerNumber As Integer) Handles InvForm.CustomerInvoiceAdded, Customer.CustomerBalanceChanged
         RefreshCustomerBalance(customerNumber)
     End Sub
@@ -146,28 +179,28 @@ Public Class TrashCashHome
     Private Sub RefreshCustomerBalance(ByVal customerNumber As Integer)
         If (Customer IsNot Nothing) Then
             If (Customer.CurrentCustomer = customerNumber) Then
-                Customer.CustomerToolstrip1.GetCustomerBalance()
+                Customer.CustomerToolstrip1.GetCustomerAdjustedBalance()
                 ' checking for 1 of 3 showdialog forms
                 If (Customer.CreditForm IsNot Nothing) Then
-                    Customer.CreditForm.CustomerToolstrip1.GetCustomerBalance()
+                    Customer.CreditForm.CustomerToolstrip1.GetCustomerAdjustedBalance()
                 End If
                 If (Customer.InvForm IsNot Nothing) Then
-                    Customer.InvForm.CustomerToolstrip1.GetCustomerBalance()
+                    Customer.InvForm.CustomerToolstrip1.GetCustomerAdjustedBalance()
                 End If
                 If (Customer.PayForm IsNot Nothing) Then
-                    Customer.PayForm.CustomerToolstrip1.GetCustomerBalance()
+                    Customer.PayForm.CustomerToolstrip1.GetCustomerAdjustedBalance()
                 End If
             End If
         End If
         ' need to update balances on other forms if exist and match new customer
         If (PayForm IsNot Nothing) Then
             If (PayForm.CurrentCustomer = customerNumber) Then
-                PayForm.CustomerToolstrip1.GetCustomerBalance()
+                PayForm.CustomerToolstrip1.GetCustomerAdjustedBalance()
             End If
         End If
         If (InvForm IsNot Nothing) Then
             If (InvForm.CurrentCustomer = customerNumber) Then
-                InvForm.CustomerToolstrip1.GetCustomerBalance()
+                InvForm.CustomerToolstrip1.GetCustomerAdjustedBalance()
             End If
         End If
 
@@ -175,7 +208,7 @@ Public Class TrashCashHome
         If (TrashCashAdmin IsNot Nothing) Then
             If (TrashCashAdmin.AdminPay IsNot Nothing) Then
                 If (TrashCashAdmin.AdminPay.CurrentCustomer = customerNumber) Then
-                    TrashCashAdmin.AdminPay.CustomerToolstrip1.GetCustomerBalance()
+                    TrashCashAdmin.AdminPay.CustomerToolstrip1.GetCustomerAdjustedBalance()
                 End If
             End If
         End If
@@ -267,10 +300,7 @@ Public Class TrashCashHome
             BatchForm.BringToFront()
         Else
             Try
-                If (AppSessMgr IsNot Nothing) Then
-                    AppSessMgr.EndSession()
-                    AppSessMgr.CloseConnection()
-                End If
+                GlobalConMgr.CloseCon()
             Catch ex As Exception
                 MsgBox(ex.Message)
             Finally
@@ -285,7 +315,7 @@ Public Class TrashCashHome
 
         ' create new conMgrObj
         GlobalConMgr = New QBConMgr
-       
+
         Try
             Dim connected As Boolean = GlobalConMgr.InitCon()
             If (Not connected) Then
@@ -318,7 +348,7 @@ Public Class TrashCashHome
         RefreshApprovCount(True)
 
         ' checking if a batch didn't complete last time the program was run
-       Dim finBatch As Batching.BatchInterruption = Nothing
+        Dim finBatch As Batching.BatchInterruption = Nothing
         If (row.Batching_Invoices) Then
             finBatch = New Batching.BatchInterruption
             finBatch.InvoiceBatch = True
@@ -441,17 +471,17 @@ Public Class TrashCashHome
         ' refresh balances on timer tick (every 10 seconds)
         If (GlobalConMgr.MessageSetRequest.RequestList.Count = 0) Then
             If (Customer IsNot Nothing) Then
-                Customer.CustomerToolstrip1.GetCustomerBalance()
+                Customer.CustomerToolstrip1.GetCustomerAdjustedBalance()
             End If
             If (PayForm IsNot Nothing) Then
-                PayForm.CustomerToolstrip1.GetCustomerBalance()
+                PayForm.CustomerToolstrip1.GetCustomerAdjustedBalance()
             End If
             If (InvForm IsNot Nothing) Then
-                InvForm.CustomerToolstrip1.GetCustomerBalance()
+                InvForm.CustomerToolstrip1.GetCustomerAdjustedBalance()
             End If
             If (TrashCashAdmin IsNot Nothing) Then
                 If (TrashCashAdmin.AdminPay IsNot Nothing) Then
-                    TrashCashAdmin.AdminPay.CustomerToolstrip1.GetCustomerBalance()
+                    TrashCashAdmin.AdminPay.CustomerToolstrip1.GetCustomerAdjustedBalance()
                 End If
             End If
         End If

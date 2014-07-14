@@ -103,6 +103,9 @@ Partial Class Connection
         Me.Controls.Add(Me.cmb_Server)
         Me.Controls.Add(Me.tb_QBFileLoc)
         Me.Controls.Add(Me.btn_FindQBFile)
+        Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog
+        Me.MaximizeBox = False
+        Me.MinimizeBox = False
         Me.Name = "Connection"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "Connection"

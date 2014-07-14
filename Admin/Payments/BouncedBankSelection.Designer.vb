@@ -259,7 +259,7 @@ Namespace Admin.Payments
             Me.Controls.Add(Me.tb_CheckAmount)
             Me.Controls.Add(Me.pnl_Bot)
             Me.Controls.Add(lbl_checkAmount)
-            Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
+            Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog
             Me.MaximizeBox = False
             Me.MinimizeBox = False
             Me.Name = "BouncedBankSelection"

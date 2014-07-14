@@ -29,10 +29,10 @@
             Me.lbl_Username = New System.Windows.Forms.Label()
             Me.btn_Login = New System.Windows.Forms.Button()
             Me.cmb_Users = New System.Windows.Forms.ComboBox()
-            Me.Ds_Application = New TrashCash.ds_Application()
             Me.USERSBindingSource = New System.Windows.Forms.BindingSource(Me.components)
-            CType(Me.Ds_Application, System.ComponentModel.ISupportInitialize).BeginInit()
+            Me.Ds_Application = New TrashCash.ds_Application()
             CType(Me.USERSBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
+            CType(Me.Ds_Application, System.ComponentModel.ISupportInitialize).BeginInit()
             Me.SuspendLayout()
             '
             'mtb_Password
@@ -81,15 +81,15 @@
             Me.cmb_Users.TabIndex = 8
             Me.cmb_Users.ValueMember = "USER_ID"
             '
-            'Ds_Application
-            '
-            Me.Ds_Application.DataSetName = "ds_Application"
-            Me.Ds_Application.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema
-            '
             'USERSBindingSource
             '
             Me.USERSBindingSource.DataMember = "USERS"
             Me.USERSBindingSource.DataSource = Me.Ds_Application
+            '
+            'Ds_Application
+            '
+            Me.Ds_Application.DataSetName = "ds_Application"
+            Me.Ds_Application.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema
             '
             'UserSelection
             '
@@ -101,11 +101,14 @@
             Me.Controls.Add(Me.mtb_Password)
             Me.Controls.Add(Me.lbl_PW)
             Me.Controls.Add(Me.lbl_Username)
+            Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog
+            Me.MaximizeBox = False
+            Me.MinimizeBox = False
             Me.Name = "UserSelection"
             Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent
             Me.Text = "User Selection"
-            CType(Me.Ds_Application, System.ComponentModel.ISupportInitialize).EndInit()
             CType(Me.USERSBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
+            CType(Me.Ds_Application, System.ComponentModel.ISupportInitialize).EndInit()
             Me.ResumeLayout(False)
             Me.PerformLayout()
 

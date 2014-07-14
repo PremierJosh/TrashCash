@@ -28,7 +28,7 @@ Namespace Payments
         <System.Diagnostics.DebuggerStepThrough()> _
         Private Sub InitializeComponent()
             Me.components = New System.ComponentModel.Container()
-            Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+            Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
             Me.cm_PayGrid = New System.Windows.Forms.ContextMenuStrip(Me.components)
             Me.btn_DeletePay = New System.Windows.Forms.ToolStripMenuItem()
             Me.btn_ModPayment = New System.Windows.Forms.ToolStripMenuItem()
@@ -111,7 +111,7 @@ Namespace Payments
             Me.tc_Master.Controls.Add(Me.tc_p_CustNotes)
             Me.tc_Master.Controls.Add(Me.tc_p_CustInfo)
             Me.tc_Master.Dock = System.Windows.Forms.DockStyle.Bottom
-            Me.tc_Master.Location = New System.Drawing.Point(0, 267)
+            Me.tc_Master.Location = New System.Drawing.Point(0, 339)
             Me.tc_Master.Name = "tc_Master"
             Me.tc_Master.SelectedIndex = 0
             Me.tc_Master.Size = New System.Drawing.Size(966, 205)
@@ -196,7 +196,7 @@ Namespace Payments
             Me.pnl_Right.Dock = System.Windows.Forms.DockStyle.Right
             Me.pnl_Right.Location = New System.Drawing.Point(453, 53)
             Me.pnl_Right.Name = "pnl_Right"
-            Me.pnl_Right.Size = New System.Drawing.Size(513, 214)
+            Me.pnl_Right.Size = New System.Drawing.Size(513, 286)
             Me.pnl_Right.TabIndex = 98
             '
             'dg_PrepPay
@@ -216,7 +216,7 @@ Namespace Payments
             Me.dg_PrepPay.ReadOnly = True
             Me.dg_PrepPay.RowHeadersVisible = False
             Me.dg_PrepPay.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-            Me.dg_PrepPay.Size = New System.Drawing.Size(513, 193)
+            Me.dg_PrepPay.Size = New System.Drawing.Size(513, 265)
             Me.dg_PrepPay.TabIndex = 99
             '
             'CustomerFullName
@@ -231,8 +231,8 @@ Namespace Payments
             '
             Me.WorkingPaymentsAmountDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
             Me.WorkingPaymentsAmountDataGridViewTextBoxColumn.DataPropertyName = "WorkingPaymentsAmount"
-            DataGridViewCellStyle2.Format = "C2"
-            Me.WorkingPaymentsAmountDataGridViewTextBoxColumn.DefaultCellStyle = DataGridViewCellStyle2
+            DataGridViewCellStyle3.Format = "C2"
+            Me.WorkingPaymentsAmountDataGridViewTextBoxColumn.DefaultCellStyle = DataGridViewCellStyle3
             Me.WorkingPaymentsAmountDataGridViewTextBoxColumn.HeaderText = "Amount"
             Me.WorkingPaymentsAmountDataGridViewTextBoxColumn.Name = "WorkingPaymentsAmountDataGridViewTextBoxColumn"
             Me.WorkingPaymentsAmountDataGridViewTextBoxColumn.ReadOnly = True
@@ -254,7 +254,6 @@ Namespace Payments
             '
             'Ds_Batching
             '
-            Me.Ds_Batching.DataSetName = "ds_Batching"
             Me.Ds_Batching.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema
             '
             'lbl_PaysInQueue
@@ -285,7 +284,6 @@ Namespace Payments
             '
             'Ds_Types
             '
-            Me.Ds_Types.DataSetName = "ds_Types"
             Me.Ds_Types.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema
             '
             'PaymentTypesTableAdapter
@@ -385,7 +383,7 @@ Namespace Payments
             Me.grp_PrevPayInfo.Controls.Add(Me.lbl_PrevRefNum)
             Me.grp_PrevPayInfo.Controls.Add(Me.tb_PrevAmount)
             Me.grp_PrevPayInfo.Controls.Add(Me.lbl_PrevAmount)
-            Me.grp_PrevPayInfo.Location = New System.Drawing.Point(254, 148)
+            Me.grp_PrevPayInfo.Location = New System.Drawing.Point(254, 220)
             Me.grp_PrevPayInfo.Name = "grp_PrevPayInfo"
             Me.grp_PrevPayInfo.Size = New System.Drawing.Size(193, 119)
             Me.grp_PrevPayInfo.TabIndex = 115
@@ -494,13 +492,15 @@ Namespace Payments
             '
             Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
             Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-            Me.ClientSize = New System.Drawing.Size(966, 472)
+            Me.ClientSize = New System.Drawing.Size(966, 544)
             Me.Controls.Add(Me.grp_NewPayInfo)
             Me.Controls.Add(Me.grp_PrevPayInfo)
             Me.Controls.Add(Me.pnl_Right)
             Me.Controls.Add(Me.Panel1)
             Me.Controls.Add(Me.tc_Master)
+            Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
             Me.MaximizeBox = False
+            Me.MinimizeBox = False
             Me.Name = "PaymentsForm"
             Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent
             Me.Text = "Payments"

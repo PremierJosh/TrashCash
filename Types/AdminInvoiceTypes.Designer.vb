@@ -34,8 +34,8 @@ Namespace Types
             Me.InactiveDataGridViewCheckBoxColumn = New System.Windows.Forms.DataGridViewCheckBoxColumn()
             Me.NAMEDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
             Me.CustomInvoiceLineTypesBindingSource = New System.Windows.Forms.BindingSource(Me.components)
-            Me.Invoicing = New DS_Invoicing()
-            Me.CustomInvoice_LineTypesTableAdapter = New ds_InvoicingTableAdapters.CustomInvoice_LineTypesTableAdapter()
+            Me.Invoicing = New TrashCash.ds_Invoicing()
+            Me.CustomInvoice_LineTypesTableAdapter = New TrashCash.ds_InvoicingTableAdapters.CustomInvoice_LineTypesTableAdapter()
             Me.tb_Name = New System.Windows.Forms.TextBox()
             Me.tb_Desc = New System.Windows.Forms.TextBox()
             Me.cmb_QBAccount = New System.Windows.Forms.ComboBox()
@@ -113,7 +113,7 @@ Namespace Types
             Me.CustomInvoiceLineTypesBindingSource.DataMember = "CustomInvoice_LineTypes"
             Me.CustomInvoiceLineTypesBindingSource.DataSource = Me.Invoicing
             '
-            'Ds_Invoicing
+            'Invoicing
             '
             Me.Invoicing.DataSetName = "ds_Invoicing"
             Me.Invoicing.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema
@@ -204,6 +204,9 @@ Namespace Types
             Me.Controls.Add(Me.tb_Desc)
             Me.Controls.Add(Me.tb_Name)
             Me.Controls.Add(Me.DataGridView1)
+            Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
+            Me.MaximizeBox = False
+            Me.MinimizeBox = False
             Me.Name = "AdminInvoiceTypes"
             Me.Text = "Invoice Types"
             CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).EndInit()

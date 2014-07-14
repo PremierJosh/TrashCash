@@ -49,6 +49,7 @@
             Me.EndBillingDateDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
             Me.TotalDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
             Me.pnl_InvGen = New System.Windows.Forms.Panel()
+            Me.btn_DeleteInvs = New System.Windows.Forms.Button()
             Me.lbl_InvQueueCount = New System.Windows.Forms.Label()
             Me.btn_GenerateInv = New System.Windows.Forms.Button()
             Me.Label2 = New System.Windows.Forms.Label()
@@ -79,7 +80,6 @@
             Me.btn_PayBatch = New System.Windows.Forms.Button()
             Me.PaymentTypesTableAdapter = New TrashCash.ds_TypesTableAdapters.PaymentTypesTableAdapter()
             Me.btn_PayRefresh = New System.Windows.Forms.Button()
-            Me.btn_DeleteInvs = New System.Windows.Forms.Button()
             CType(Me.BATCHWorkingInvoiceBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
             CType(Me.DS_Batching, System.ComponentModel.ISupportInitialize).BeginInit()
             Me.cm_PayGrid.SuspendLayout()
@@ -102,7 +102,6 @@
             '
             'DS_Batching
             '
-            Me.DS_Batching.DataSetName = "ds_Batching"
             Me.DS_Batching.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema
             '
             'cm_PayGrid
@@ -255,6 +254,16 @@
             Me.pnl_InvGen.Padding = New System.Windows.Forms.Padding(3)
             Me.pnl_InvGen.Size = New System.Drawing.Size(745, 111)
             Me.pnl_InvGen.TabIndex = 7
+            '
+            'btn_DeleteInvs
+            '
+            Me.btn_DeleteInvs.ForeColor = System.Drawing.Color.Red
+            Me.btn_DeleteInvs.Location = New System.Drawing.Point(643, 67)
+            Me.btn_DeleteInvs.Name = "btn_DeleteInvs"
+            Me.btn_DeleteInvs.Size = New System.Drawing.Size(75, 23)
+            Me.btn_DeleteInvs.TabIndex = 142
+            Me.btn_DeleteInvs.Text = "Delete All"
+            Me.btn_DeleteInvs.UseVisualStyleBackColor = True
             '
             'lbl_InvQueueCount
             '
@@ -508,7 +517,6 @@
             '
             'Ds_Types
             '
-            Me.Ds_Types.DataSetName = "ds_Types"
             Me.Ds_Types.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema
             '
             'WorkingPaymentsAmountDataGridViewTextBoxColumn
@@ -555,16 +563,6 @@
             Me.btn_PayRefresh.Text = "Refresh"
             Me.btn_PayRefresh.UseVisualStyleBackColor = True
             '
-            'btn_DeleteInvs
-            '
-            Me.btn_DeleteInvs.ForeColor = System.Drawing.Color.Red
-            Me.btn_DeleteInvs.Location = New System.Drawing.Point(643, 67)
-            Me.btn_DeleteInvs.Name = "btn_DeleteInvs"
-            Me.btn_DeleteInvs.Size = New System.Drawing.Size(75, 23)
-            Me.btn_DeleteInvs.TabIndex = 142
-            Me.btn_DeleteInvs.Text = "Delete All"
-            Me.btn_DeleteInvs.UseVisualStyleBackColor = True
-            '
             'BatchingPrep
             '
             Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -572,6 +570,9 @@
             Me.ClientSize = New System.Drawing.Size(759, 646)
             Me.Controls.Add(Me.btn_PayRefresh)
             Me.Controls.Add(Me.tc_Master)
+            Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
+            Me.MaximizeBox = False
+            Me.MinimizeBox = False
             Me.Name = "BatchingPrep"
             Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent
             Me.Text = "Batching Work"

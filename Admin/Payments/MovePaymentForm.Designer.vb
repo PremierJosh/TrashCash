@@ -258,6 +258,7 @@ Namespace Admin.Payments
             Me.Controls.Add(Me.lbl_NewCust)
             Me.Controls.Add(Me.grp_CurPayInfo)
             Me.Controls.Add(Me.pnl_top)
+            Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog
             Me.MaximizeBox = False
             Me.MinimizeBox = False
             Me.Name = "MovePaymentForm"

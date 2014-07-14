@@ -77,7 +77,7 @@
                 _dispose = True
             Else
                 CurrentCustomer = CustomerToolstrip1.CurrentCustomer
-                CustomerToolstrip1.GetCustomerBalance()
+                CustomerToolstrip1.GetCustomerAdjustedBalance()
                 ' keep open after
                 _dispose = False
             End If

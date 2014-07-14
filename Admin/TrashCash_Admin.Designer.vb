@@ -46,9 +46,9 @@
             'StatusStrip
             '
             Me.StatusStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.lbl_AdminUser})
-            Me.StatusStrip.Location = New System.Drawing.Point(0, 431)
+            Me.StatusStrip.Location = New System.Drawing.Point(0, 678)
             Me.StatusStrip.Name = "StatusStrip"
-            Me.StatusStrip.Size = New System.Drawing.Size(848, 22)
+            Me.StatusStrip.Size = New System.Drawing.Size(1115, 22)
             Me.StatusStrip.TabIndex = 7
             Me.StatusStrip.Text = "StatusStrip"
             '
@@ -64,7 +64,7 @@
             Me.ts_Admin.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.btn_AdminPay, Me.ToolStripSeparator5, Me.btn_ServiceTypes, Me.ToolStripSeparator4, Me.btn_Banks, Me.ToolStripSeparator2, Me.btn_Defaults, Me.btn_ExportImport, Me.ToolStripSeparator3, Me.btn_InvTypes, Me.ToolStripSeparator1})
             Me.ts_Admin.Location = New System.Drawing.Point(0, 0)
             Me.ts_Admin.Name = "ts_Admin"
-            Me.ts_Admin.Size = New System.Drawing.Size(848, 25)
+            Me.ts_Admin.Size = New System.Drawing.Size(1115, 25)
             Me.ts_Admin.TabIndex = 9
             Me.ts_Admin.Text = "ToolStrip1"
             '
@@ -149,11 +149,11 @@
             Me.ToolStripSeparator1.Name = "ToolStripSeparator1"
             Me.ToolStripSeparator1.Size = New System.Drawing.Size(6, 25)
             '
-            'TrashCash_Admin
+            'TrashCashAdmin
             '
             Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
             Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-            Me.ClientSize = New System.Drawing.Size(848, 453)
+            Me.ClientSize = New System.Drawing.Size(1115, 700)
             Me.Controls.Add(Me.ts_Admin)
             Me.Controls.Add(Me.StatusStrip)
             Me.IsMdiContainer = True

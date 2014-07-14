@@ -100,7 +100,7 @@ Namespace Admin
             Me.hdr_BadCheck.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
             Me.hdr_BadCheck.Location = New System.Drawing.Point(3, 0)
             Me.hdr_BadCheck.Name = "hdr_BadCheck"
-            Me.hdr_BadCheck.Size = New System.Drawing.Size(149, 16)
+            Me.hdr_BadCheck.Size = New System.Drawing.Size(143, 16)
             Me.hdr_BadCheck.TabIndex = 5
             Me.hdr_BadCheck.Text = "Bad Check Settings"
             '
@@ -147,7 +147,7 @@ Namespace Admin
             Me.lbl_DateLimits.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
             Me.lbl_DateLimits.Location = New System.Drawing.Point(3, 129)
             Me.lbl_DateLimits.Name = "lbl_DateLimits"
-            Me.lbl_DateLimits.Size = New System.Drawing.Size(88, 16)
+            Me.lbl_DateLimits.Size = New System.Drawing.Size(85, 16)
             Me.lbl_DateLimits.TabIndex = 7
             Me.lbl_DateLimits.Text = "Date Limits"
             '
@@ -243,6 +243,7 @@ Namespace Admin
             Me.Controls.Add(Me.FlowLayoutPanel)
             Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
             Me.MaximizeBox = False
+            Me.MinimizeBox = False
             Me.Name = "AdminDefaults"
             Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent
             Me.Text = "TrashCash Defaults"

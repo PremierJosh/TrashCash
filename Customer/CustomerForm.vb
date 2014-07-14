@@ -50,7 +50,7 @@
                 CurrentCustomer = CustomerToolstrip1.CurrentCustomer
             End If
             ' set focus to quick search
-            CustomerToolstrip1.GetCustomerBalance()
+            CustomerToolstrip1.GetCustomerAdjustedBalance()
             ' allow customer info changing
             UC_CustomerInfoBoxes.AllowUpdate = True
         End Sub

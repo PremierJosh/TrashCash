@@ -228,7 +228,7 @@ Namespace Invoicing
             If (PostDateValidate()) Then
                 ' get balance for payment of invoice after
                 Dim custBalance As Double
-                CustomerToolstrip1.GetCustomerBalance(custBalance)
+                CustomerToolstrip1.GetCustomerAdjustedBalance(custBalance)
                 ' update time inserted
                 _invRow.Time_Inserted = Date.Now
                 ' submit invoice and line items
@@ -261,7 +261,7 @@ Namespace Invoicing
             End If
         End Sub
 
-      Private Sub btn_DeleteLine_Click(sender As System.Object, e As System.EventArgs) Handles btn_DeleteLine.Click
+        Private Sub btn_DeleteLine_Click(sender As System.Object, e As System.EventArgs) Handles btn_DeleteLine.Click
             Dim row As DataRow = CType(dg_LineItems.SelectedRows(0).DataBoundItem, DataRowView).Row
             row.Delete()
         End Sub
@@ -281,7 +281,7 @@ Namespace Invoicing
                             MessageBox.Show("Invoice Voided.", "Invoice voided", MessageBoxButtons.OK, MessageBoxIcon.Information)
                             tb_VoidReason.Text = ""
                             ' get new customer balance
-                            CustomerToolstrip1.GetCustomerBalance()
+                            CustomerToolstrip1.GetCustomerAdjustedBalance()
                         Else
                             MessageBox.Show("Error - Invoice not voided.", "QB Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
                         End If
@@ -312,7 +312,7 @@ Namespace Invoicing
                 _dispose = True
             Else
                 CurrentCustomer = CustomerToolstrip1.CurrentCustomer
-                CustomerToolstrip1.GetCustomerBalance()
+                CustomerToolstrip1.GetCustomerAdjustedBalance()
                 ' keep form alive
                 _dispose = False
             End If

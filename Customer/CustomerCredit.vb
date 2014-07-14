@@ -58,7 +58,7 @@ Namespace Customer
             CustomerToolstrip1.SelectCustomer(customerNumber)
             CustomerToolstrip1.Enabled = False
             CustomerToolstrip1.HideQuickSearch()
-            CustomerToolstrip1.GetCustomerBalance()
+            CustomerToolstrip1.GetCustomerAdjustedBalance()
         End Sub
 
         Private Sub btn_VoidCredit_Click(sender As System.Object, e As System.EventArgs) Handles btn_VoidCredit.Click
@@ -89,7 +89,7 @@ Namespace Customer
                                 End Try
                             End If
                             RaiseEvent CreditAdded(CurrentCustomer)
-                            CustomerToolstrip1.GetCustomerBalance()
+                            CustomerToolstrip1.GetCustomerAdjustedBalance()
                             For Each dgvRow As DataGridViewRow In dg_Credits.Rows
                                 AppColors.ColorGridRow(dgvRow, "Voided")
                             Next

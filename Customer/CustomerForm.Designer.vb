@@ -41,12 +41,12 @@ Namespace Customer
             Me.pnl_TopContent = New System.Windows.Forms.Panel()
             Me.CustomerToolstrip1 = New TrashCash.Classes.CustomerToolstrip.CustomerToolstrip()
             Me.ts_Top = New System.Windows.Forms.ToolStrip()
-            Me.UC_CustomerInfoBoxes = New TrashCash.Customer.UC_CustomerInfoBoxes()
             Me.btn_Inv = New System.Windows.Forms.ToolStripButton()
             Me.btn_Payments = New System.Windows.Forms.ToolStripButton()
             Me.btn_NewCust = New System.Windows.Forms.ToolStripButton()
             Me.btn_Credit = New System.Windows.Forms.ToolStripButton()
             Me.btn_NewSrvc = New System.Windows.Forms.ToolStripButton()
+            Me.UC_CustomerInfoBoxes = New TrashCash.Customer.UC_CustomerInfoBoxes()
             Me.tc_Master.SuspendLayout()
             Me.tc_p_Notes.SuspendLayout()
             Me.tc_p_RecSrvcs.SuspendLayout()
@@ -169,19 +169,6 @@ Namespace Customer
             Me.ts_Top.TabIndex = 0
             Me.ts_Top.Text = "ToolStrip1"
             '
-            'UC_CustomerInfoBoxes
-            '
-            Me.UC_CustomerInfoBoxes.AllowUpdate = False
-            Me.UC_CustomerInfoBoxes.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-            Me.UC_CustomerInfoBoxes.CurrentCustomer = 0
-            Me.UC_CustomerInfoBoxes.Dock = System.Windows.Forms.DockStyle.Top
-            Me.UC_CustomerInfoBoxes.IsUpdating = False
-            Me.UC_CustomerInfoBoxes.Location = New System.Drawing.Point(0, 78)
-            Me.UC_CustomerInfoBoxes.Name = "UC_CustomerInfoBoxes"
-            Me.UC_CustomerInfoBoxes.Size = New System.Drawing.Size(902, 172)
-            Me.UC_CustomerInfoBoxes.TabIndex = 9
-            Me.UC_CustomerInfoBoxes.TabStop = False
-            '
             'btn_Inv
             '
             Me.btn_Inv.Image = Global.TrashCash.My.Resources.Resources.invoicingIcon
@@ -224,6 +211,19 @@ Namespace Customer
             Me.btn_NewSrvc.Size = New System.Drawing.Size(145, 22)
             Me.btn_NewSrvc.Text = "New Recurring Service"
             '
+            'UC_CustomerInfoBoxes
+            '
+            Me.UC_CustomerInfoBoxes.AllowUpdate = False
+            Me.UC_CustomerInfoBoxes.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+            Me.UC_CustomerInfoBoxes.CurrentCustomer = 0
+            Me.UC_CustomerInfoBoxes.Dock = System.Windows.Forms.DockStyle.Top
+            Me.UC_CustomerInfoBoxes.IsUpdating = False
+            Me.UC_CustomerInfoBoxes.Location = New System.Drawing.Point(0, 78)
+            Me.UC_CustomerInfoBoxes.Name = "UC_CustomerInfoBoxes"
+            Me.UC_CustomerInfoBoxes.Size = New System.Drawing.Size(902, 172)
+            Me.UC_CustomerInfoBoxes.TabIndex = 9
+            Me.UC_CustomerInfoBoxes.TabStop = False
+            '
             'CustomerForm
             '
             Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -235,6 +235,7 @@ Namespace Customer
             Me.Controls.Add(Me.ts_Top)
             Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
             Me.MaximizeBox = False
+            Me.MinimizeBox = False
             Me.Name = "CustomerForm"
             Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent
             Me.Text = "Current Customer: Fife Abby - 1000"

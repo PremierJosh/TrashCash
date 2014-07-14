@@ -152,6 +152,7 @@ Partial Class PaymentModifyForm
         Me.Controls.Add(Me.lbl_DateOnCheck)
         Me.Controls.Add(Me.lbl_RefNumber)
         Me.Controls.Add(Me.btn_SavePayment)
+        Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog
         Me.MaximizeBox = False
         Me.MinimizeBox = False
         Me.Name = "PaymentModifyForm"

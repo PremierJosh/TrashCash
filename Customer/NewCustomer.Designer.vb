@@ -458,7 +458,7 @@
             Me.Controls.Add(Me.grp_GenInfo)
             Me.Controls.Add(Me.GroupBox2)
             Me.Controls.Add(Me.btn_CreateCust)
-            Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
+            Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog
             Me.MaximizeBox = False
             Me.MinimizeBox = False
             Me.Name = "NewCustomer"

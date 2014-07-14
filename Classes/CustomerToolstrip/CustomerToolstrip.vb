@@ -26,18 +26,18 @@ Namespace Classes.CustomerToolstrip
                 RaiseEvent CustomerChanging(CurrentCustomer)
             End If
             ' get new balance
-            GetCustomerBalance()
+            GetCustomerAdjustedBalance()
         End Sub
 
         ' handles when cmb box selection changes
         Private Sub CustomerChanged(ByVal customerNumber As Integer, ByVal e As EventArgs) Handles CustComboBox.SelectionChangeCommitted
             RaiseEvent CustomerChanging(customerNumber)
-            GetCustomerBalance()
+            GetCustomerAdjustedBalance()
         End Sub
         ' handles when enter is pressed in the quick search tb
         Private Sub QuickSearchEnterKey() Handles QuickSearch.EnterPressed
             If (CurrentCustomer <> Nothing) Then
-                GetCustomerBalance(CurrentCustomer)
+                GetCustomerAdjustedBalance(CurrentCustomer)
                 RaiseEvent CustomerChanging(CurrentCustomer)
             End If
         End Sub
@@ -45,9 +45,9 @@ Namespace Classes.CustomerToolstrip
         ' balance setting
         Private ReadOnly _ta As ds_CustomerTableAdapters.QueriesTableAdapter
         Private _lastFetchedBalance As Double
-        Friend Sub GetCustomerBalance(Optional ByRef returnVal As Double = Nothing)
-            ' getting queue amount
-            Dim queueAmount As Double = _ta.Customer_PaymentTotalInQueue(CurrentCustomer)
+        Friend Sub GetCustomerAdjustedBalance(Optional ByRef returnVal As Double = Nothing)
+           
+            'Dim queueAmount As Double = _ta.Customer_PaymentTotalInQueue(CurrentCustomer)
 
             ' getting quickbooks balance
             Dim qbBalance As Double = GlobalConMgr.GetCustomerBalance(GetCustomerListID(CurrentCustomer))
@@ -66,54 +66,57 @@ Namespace Classes.CustomerToolstrip
                 _lblCustBalanceAmount.ForeColor = Color.Red
             End If
 
-            ' coloring and showing queue label
-            If (queueAmount > 0) Then
-                ' show queue controls
-                _sepQueue.Visible = True
-                _lblQueueHeader.Visible = True
-                _lblQueueAmount.Visible = True
-                ' show adjusted controls
-                _sepAdjustedBal.Visible = True
-                _lblAdjustedBalHeader.Visible = True
-                _lblAdjustedBalAmount.Visible = True
+            ' getting queue amount
+            GetQueueAmount()
 
-                ' set queue amount
-                _lblQueueAmount.Text = FormatCurrency(queueAmount)
+            '' coloring and showing queue label
+            'If (queueAmount > 0) Then
+            '    ' show queue controls
+            '    _sepQueue.Visible = True
+            '    _lblQueueHeader.Visible = True
+            '    _lblQueueAmount.Visible = True
+            '    ' show adjusted controls
+            '    _sepAdjustedBal.Visible = True
+            '    _lblAdjustedBalHeader.Visible = True
+            '    _lblAdjustedBalAmount.Visible = True
 
-                ' get adjusted amount
-                Dim adjustedBalance As Double = qbBalance - queueAmount
-                _lblAdjustedBalAmount.Text = FormatCurrency(adjustedBalance)
+            '    ' set queue amount
+            '    _lblQueueAmount.Text = FormatCurrency(queueAmount)
 
-                ' coloring
-                If (adjustedBalance <= 0) Then
-                    _lblAdjustedBalAmount.ForeColor = Color.Green
-                Else
-                    _lblAdjustedBalAmount.ForeColor = Color.Red
-                End If
+            '    ' get adjusted amount
+            '    Dim adjustedBalance As Double = qbBalance - queueAmount
+            '    _lblAdjustedBalAmount.Text = FormatCurrency(adjustedBalance)
 
-                ' shrink cmb_Customer
-                CustComboBox.Size = New Size(275, 25)
-            Else
-                ' hide queue controls
-                _sepQueue.Visible = False
-                _lblQueueHeader.Visible = False
-                _lblQueueAmount.Visible = False
-                ' hide adjusted controls
-                _sepAdjustedBal.Visible = False
-                _lblAdjustedBalHeader.Visible = False
-                _lblAdjustedBalAmount.Visible = False
+            '    ' coloring
+            '    If (adjustedBalance <= 0) Then
+            '        _lblAdjustedBalAmount.ForeColor = Color.Green
+            '    Else
+            '        _lblAdjustedBalAmount.ForeColor = Color.Red
+            '    End If
 
-                ' grow cmb_Customer
-                CustComboBox.Size = New Size(350, 25)
-            End If
+            '    ' shrink cmb_Customer
+            '    CustComboBox.Size = New Size(275, 25)
+            'Else
+            '    ' hide queue controls
+            '    _sepQueue.Visible = False
+            '    _lblQueueHeader.Visible = False
+            '    _lblQueueAmount.Visible = False
+            '    ' hide adjusted controls
+            '    _sepAdjustedBal.Visible = False
+            '    _lblAdjustedBalHeader.Visible = False
+            '    _lblAdjustedBalAmount.Visible = False
+
+            '    ' grow cmb_Customer
+            '    CustComboBox.Size = New Size(350, 25)
+            'End If
         End Sub
 
         Friend Sub GetQueueAmount(Optional ByRef returnVal As Double = Nothing)
             ' getting queue amount
-            Dim queueAmount As Double = _ta.Customer_PaymentTotalInQueue(CurrentCustomer)
+            Dim queueBalance As Double = _ta.Customer_InQueueBalance(CurrentCustomer)
 
             ' coloring and showing queue label
-            If (queueAmount > 0) Then
+            If (queueBalance <> 0) Then
                 ' show queue controls
                 _sepQueue.Visible = True
                 _lblQueueHeader.Visible = True
@@ -123,14 +126,19 @@ Namespace Classes.CustomerToolstrip
                 _lblAdjustedBalHeader.Visible = True
                 _lblAdjustedBalAmount.Visible = True
 
-                ' set queue amount
-                _lblQueueAmount.Text = FormatCurrency(queueAmount)
+                ' set queue balance color and lbl
+                _lblQueueAmount.Text = FormatCurrency(queueBalance)
+                If (queueBalance < 0) Then
+                    _lblQueueAmount.ForeColor = Color.Green
+                Else
+                    _lblQueueAmount.ForeColor = Color.Red
+                End If
 
                 ' get adjusted amount
-                Dim adjustedBalance As Double = _lastFetchedBalance - queueAmount
+                Dim adjustedBalance As Double = _lastFetchedBalance + queueBalance
                 _lblAdjustedBalAmount.Text = FormatCurrency(adjustedBalance)
 
-                ' coloring
+                ' coloring adjusted
                 If (adjustedBalance <= 0) Then
                     _lblAdjustedBalAmount.ForeColor = Color.Green
                 Else

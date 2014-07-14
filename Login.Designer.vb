@@ -81,7 +81,7 @@ Partial Class Login
         Me.Controls.Add(Me.tb_Username)
         Me.Controls.Add(Me.lbl_PW)
         Me.Controls.Add(Me.lbl_Username)
-        Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
+        Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog
         Me.MaximizeBox = False
         Me.MinimizeBox = False
         Me.Name = "Login"

@@ -86,12 +86,12 @@ Namespace Admin.Payments
 
             ' setting initial customer to screen isnt blank
             CurrentCustomer = CustomerToolstrip1.CurrentCustomer
-            CustomerToolstrip1.GetCustomerBalance()
+            CustomerToolstrip1.GetCustomerAdjustedBalance()
         End Sub
 
         Private Sub CustomerCatch(ByVal customerNumber As Integer) Handles CustomerToolstrip1.CustomerChanging
             CurrentCustomer = customerNumber
-            CustomerToolstrip1.GetCustomerBalance()
+            CustomerToolstrip1.GetCustomerAdjustedBalance()
         End Sub
 
         Public Sub Fetch_History() Handles dtp_EndDate.ValueChanged, dtp_StartDate.ValueChanged

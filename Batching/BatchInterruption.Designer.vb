@@ -93,6 +93,7 @@
             Me.Controls.Add(Me.lbl_CustName)
             Me.Controls.Add(Me.lbl_Count)
             Me.Controls.Add(Me.pb_Batch)
+            Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog
             Me.MaximizeBox = False
             Me.MinimizeBox = False
             Me.Name = "BatchInterruption"
