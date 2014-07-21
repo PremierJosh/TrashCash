@@ -14,7 +14,7 @@
             End Using
 
             If (Ds_Reporting.Report_DaysEvents.Rows.Count > 0) Then
-                tc_Report.Visible = True
+                CrystalReportViewer.Visible = True
 
                 ' making header row
                 Dim hRow As ds_Reporting.ReportHeadersRow = Ds_Reporting.ReportHeaders.NewReportHeadersRow
@@ -27,7 +27,7 @@
                 CrystalReportViewer.ReportSource = report
                 CrystalReportViewer.Refresh()
             Else
-                tc_Report.Visible = False
+                CrystalReportViewer.Visible = False
             End If
             
             Cursor = Cursors.Default

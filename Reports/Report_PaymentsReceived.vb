@@ -39,7 +39,7 @@
             End If
 
             If (Ds_Reporting.ReceivedPaymentsOnDay.Rows.Count > 0) Then
-                tc_Report.Visible = True
+                CrystalReportViewer.Visible = True
 
                 ' create report
                 Dim report As New r_PaymentsReceived
@@ -49,7 +49,7 @@
                 CrystalReportViewer.ReportSource = report
                 CrystalReportViewer.Refresh()
             Else
-                tc_Report.Visible = False
+                CrystalReportViewer.Visible = False
             End If
             
             Cursor = Cursors.Default

@@ -236,7 +236,6 @@
     <Compile Include="QBStuff\QBProcedures.vb" />
     <Compile Include="AppModule.vb" />
     <Compile Include="QBStuff\QBObjects.vb" />
-    <Compile Include="Reports\Reporting.vb" />
     <Compile Include="Batching\QB_Batching.vb" />
     <Compile Include="Connection.Designer.vb">
       <DependentUpon>Connection.vb</DependentUpon>
@@ -454,14 +453,6 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>ds_Types.xsd</DependentUpon>
-    </Compile>
-    <Compile Include="Reports\Report_DataSet.Designer.vb">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Report_DataSet.xsd</DependentUpon>
-    </Compile>
-    <Compile Include="Reports\DS_Reports.vb">
-      <DependentUpon>Report_DataSet.xsd</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -703,17 +694,6 @@
     <None Include="Types\ds_Types.xss">
       <DependentUpon>ds_Types.xsd</DependentUpon>
     </None>
-    <None Include="Reports\Report_DataSet.xsc">
-      <DependentUpon>Report_DataSet.xsd</DependentUpon>
-    </None>
-    <None Include="Reports\Report_DataSet.xsd">
-      <SubType>Designer</SubType>
-      <Generator>MSDataSetGenerator</Generator>
-      <LastGenOutput>Report_DataSet.Designer.vb</LastGenOutput>
-    </None>
-    <None Include="Reports\Report_DataSet.xss">
-      <DependentUpon>Report_DataSet.xsd</DependentUpon>
-    </None>
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.0,Profile=Client">
@@ -820,7 +800,7 @@
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties BuildVersion_AssemblyInfoFilename="My Project\AssemblyInfo.vb" BuildVersion_UpdateAssemblyVersion="True" BuildVersion_UpdateFileVersion="True" BuildVersion_BuildVersioningStyle="None.None.None.Increment" BuildVersion_StartDate="2014/3/2" />
+      <UserProperties BuildVersion_StartDate="2014/3/2" BuildVersion_BuildVersioningStyle="None.None.None.Increment" BuildVersion_UpdateFileVersion="True" BuildVersion_UpdateAssemblyVersion="True" BuildVersion_AssemblyInfoFilename="My Project\AssemblyInfo.vb" />
     </VisualStudio>
   </ProjectExtensions>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

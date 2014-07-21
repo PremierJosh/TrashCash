@@ -14,8 +14,8 @@ Namespace Reports
 
             ' checking if we have rows here
             If (Ds_Reporting.CustomerBalances.Rows.Count > 0) Then
-                tc_Report.Visible = True
-
+                CrystalReportViewer.Visible = True
+              
                 ' create report
                 Dim report As New r_AllCustBalances
                 ' set ds
@@ -25,7 +25,7 @@ Namespace Reports
                 CrystalReportViewer.Refresh()
             Else
                 MessageBox.Show("No Customers meet search criteria.", "Report Finished", MessageBoxButtons.OK, MessageBoxIcon.Information)
-                tc_Report.Visible = False
+                CrystalReportViewer.Visible = False
             End If
 
             Cursor = Cursors.Default

@@ -69,13 +69,6 @@ Public Class TrashCashHome
     'var for batching
     Private _batchRunning As Boolean
 
-    ' var for class files
-    Protected CReporting As Reports.Reporting
-    Public ReadOnly Property Reporting As Reports.Reporting
-        Get
-            Return CReporting
-        End Get
-    End Property
     ' var for all child forms
     Friend WithEvents PayForm As Payments.PaymentsForm
     Friend WithEvents BatchForm As Batching.BatchingPrep
@@ -325,8 +318,6 @@ Public Class TrashCashHome
             'temp: setting vars here for other forms
             AppSessMgr = GlobalConMgr.SessionManager
             AppMsgSetReq = GlobalConMgr.MessageSetRequest
-            ' dim all classes
-            CreateAllClasses()
         Catch ex As Exception
             MsgBox(ex.Message)
         End Try
@@ -387,9 +378,6 @@ Public Class TrashCashHome
         End If
     End Sub
 
-    Private Sub CreateAllClasses()
-        CReporting = New Reports.Reporting(SessionManager, MsgSetRequest)
-    End Sub
 
     Private Sub GetQBFileLocation()
         Try
@@ -448,7 +436,7 @@ Public Class TrashCashHome
     End Sub
 
     Private Sub UnderOverEvenCustomerToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles UnderOverEvenCustomerToolStripMenuItem.Click
-        Dim rf As New Reports.Report_UnderOverEven(Me)
+        Dim rf As New Reports.Report_UnderOverEven()
         rf.Show()
     End Sub
 
