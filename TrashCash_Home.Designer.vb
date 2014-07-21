@@ -104,7 +104,7 @@ Partial Class TrashCashHome
         'ts_AppBtns
         '
         Me.ts_AppBtns.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden
-        Me.ts_AppBtns.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.btn_CustTab, Me.btn_Invoicing, Me.btn_Payments, Me.btn_BatchWork, Me.btn_Reports, Me.menu_Admin, Me.btn_PendApprovs})
+        Me.ts_AppBtns.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.btn_CustTab, Me.btn_Invoicing, Me.btn_Payments, Me.btn_Reports, Me.menu_Admin, Me.btn_BatchWork, Me.btn_PendApprovs})
         Me.ts_AppBtns.Location = New System.Drawing.Point(0, 0)
         Me.ts_AppBtns.Name = "ts_AppBtns"
         Me.ts_AppBtns.Size = New System.Drawing.Size(931, 26)
@@ -140,13 +140,12 @@ Partial Class TrashCashHome
         '
         'btn_BatchWork
         '
-        Me.btn_BatchWork.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right
-        Me.btn_BatchWork.Font = New System.Drawing.Font("Segoe UI", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btn_BatchWork.Font = New System.Drawing.Font("Segoe UI", 10.0!)
         Me.btn_BatchWork.Image = Global.TrashCash.My.Resources.Resources.batchIcon
         Me.btn_BatchWork.ImageTransparentColor = System.Drawing.Color.Magenta
         Me.btn_BatchWork.Name = "btn_BatchWork"
-        Me.btn_BatchWork.Size = New System.Drawing.Size(99, 23)
-        Me.btn_BatchWork.Text = "Batch Work"
+        Me.btn_BatchWork.Size = New System.Drawing.Size(82, 23)
+        Me.btn_BatchWork.Text = "Batching"
         '
         'btn_Reports
         '
