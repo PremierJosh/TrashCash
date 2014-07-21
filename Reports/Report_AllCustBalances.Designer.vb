@@ -78,6 +78,7 @@
             Me.CrystalReportViewer.Name = "CrystalReportViewer"
             Me.CrystalReportViewer.Size = New System.Drawing.Size(879, 452)
             Me.CrystalReportViewer.TabIndex = 0
+            Me.CrystalReportViewer.ToolPanelView = CrystalDecisions.Windows.Forms.ToolPanelViewType.None
             '
             'InvoiceBalancesBindingSource
             '
