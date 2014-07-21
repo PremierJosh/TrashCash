@@ -737,10 +737,12 @@ Namespace QBStuff
                 custQuery.ORCustomerListQuery.CustomerListFilter.TotalBalanceFilter.Amount.SetValue(balanceFilter.Amount.GetValue)
             End If
             ' checking for ret element list
-            For Each s As String In retEleList
-                custQuery.IncludeRetElementList.Add(s)
-            Next
-
+            If (retEleList IsNot Nothing) Then
+                For Each s As String In retEleList
+                    custQuery.IncludeRetElementList.Add(s)
+                Next
+            End If
+            
             Return ConCheck(qbConMgr).GetRespList.GetAt(0)
         End Function
 
