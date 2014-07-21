@@ -22,6 +22,12 @@
                 If (_batching <> value) Then
                     _batching = value
 
+                    ' clear text values from labels
+                    lbl_InvBatchCount.Text = ""
+                    lbl_InvBatchCust.Text = ""
+                    lbl_PayBatchCount.Text = ""
+                    lbl_PayBatchCust.Text = ""
+
                     If (value = True) Then
                         ' disable generating new invoices
                         btn_GenerateInv.Enabled = False
@@ -167,13 +173,13 @@
         ' overloading show method to refresh queues
         Public Overloads Sub Show()
             MyBase.Show()
-            CheckBatchQueues(refillTables:=True)
+            'CheckBatchQueues(refillTables:=True)
         End Sub
 
         Private Sub BatchingPrep_Load(sender As System.Object, e As System.EventArgs) Handles Me.Load
             ' fill with pay types
             PaymentTypesTableAdapter.Fill(Ds_Types.PaymentTypes)
-            'CheckBatchQueues(refillTables:=True)
+            CheckBatchQueues(refillTables:=True)
         End Sub
 
         Friend Sub CheckBatchQueues(Optional ByVal refillTables As Boolean = False)
@@ -596,7 +602,9 @@
         End Sub
 
         Private Sub btn_PayRefresh_Click(sender As System.Object, e As System.EventArgs) Handles btn_PayRefresh.Click
-            CheckBatchQueues(refillTables:=True)
+            If (Not Batching) Then
+                CheckBatchQueues(refillTables:=True)
+            End If
         End Sub
 
         Private Sub btn_ModPayment_Click(sender As System.Object, e As System.EventArgs) Handles btn_ModPayment.Click
