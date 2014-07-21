@@ -23,24 +23,19 @@
         'Do not modify it using the code editor.
         <System.Diagnostics.DebuggerStepThrough()> _
         Private Sub InitializeComponent()
-            Me.components = New System.ComponentModel.Container()
             Me.tc_Report = New System.Windows.Forms.TabControl()
             Me.tp_RepView = New System.Windows.Forms.TabPage()
             Me.CrystalReportViewer = New CrystalDecisions.Windows.Forms.CrystalReportViewer()
-            Me.InvoiceBalancesBindingSource = New System.Windows.Forms.BindingSource(Me.components)
-            Me.Report_DataSet = New TrashCash.Reports.DS_Reports()
-            Me.CustomerBalancesBindingSource = New System.Windows.Forms.BindingSource(Me.components)
             Me.lbl_Days = New System.Windows.Forms.Label()
             Me.lbl_RptInfo = New System.Windows.Forms.Label()
             Me.btn_BuildRpt = New System.Windows.Forms.Button()
             Me.ck_ActiveOnly = New System.Windows.Forms.CheckBox()
             Me.nud_MindDays = New System.Windows.Forms.NumericUpDown()
+            Me.Ds_Reporting = New TrashCash.ds_Reporting()
             Me.tc_Report.SuspendLayout()
             Me.tp_RepView.SuspendLayout()
-            CType(Me.InvoiceBalancesBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
-            CType(Me.Report_DataSet, System.ComponentModel.ISupportInitialize).BeginInit()
-            CType(Me.CustomerBalancesBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
             CType(Me.nud_MindDays, System.ComponentModel.ISupportInitialize).BeginInit()
+            CType(Me.Ds_Reporting, System.ComponentModel.ISupportInitialize).BeginInit()
             Me.SuspendLayout()
             '
             'tc_Report
@@ -55,6 +50,7 @@
             Me.tc_Report.SelectedIndex = 0
             Me.tc_Report.Size = New System.Drawing.Size(893, 484)
             Me.tc_Report.TabIndex = 1
+            Me.tc_Report.Visible = False
             '
             'tp_RepView
             '
@@ -79,21 +75,6 @@
             Me.CrystalReportViewer.Size = New System.Drawing.Size(879, 452)
             Me.CrystalReportViewer.TabIndex = 0
             Me.CrystalReportViewer.ToolPanelView = CrystalDecisions.Windows.Forms.ToolPanelViewType.None
-            '
-            'InvoiceBalancesBindingSource
-            '
-            Me.InvoiceBalancesBindingSource.DataMember = "InvoiceBalances"
-            Me.InvoiceBalancesBindingSource.DataSource = Me.Report_DataSet
-            '
-            'Report_DataSet
-            '
-            Me.Report_DataSet.DataSetName = "Report_DataSet"
-            Me.Report_DataSet.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema
-            '
-            'CustomerBalancesBindingSource
-            '
-            Me.CustomerBalancesBindingSource.DataMember = "CustomerBalances"
-            Me.CustomerBalancesBindingSource.DataSource = Me.Report_DataSet
             '
             'lbl_Days
             '
@@ -143,6 +124,11 @@
             Me.nud_MindDays.TabIndex = 7
             Me.nud_MindDays.Value = New Decimal(New Integer() {1, 0, 0, 0})
             '
+            'Ds_Reporting
+            '
+            Me.Ds_Reporting.DataSetName = "ds_Reporting"
+            Me.Ds_Reporting.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema
+            '
             'Report_AllCustBalances
             '
             Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -158,10 +144,8 @@
             Me.Text = "Report: All Customer Balances"
             Me.tc_Report.ResumeLayout(False)
             Me.tp_RepView.ResumeLayout(False)
-            CType(Me.InvoiceBalancesBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
-            CType(Me.Report_DataSet, System.ComponentModel.ISupportInitialize).EndInit()
-            CType(Me.CustomerBalancesBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
             CType(Me.nud_MindDays, System.ComponentModel.ISupportInitialize).EndInit()
+            CType(Me.Ds_Reporting, System.ComponentModel.ISupportInitialize).EndInit()
             Me.ResumeLayout(False)
             Me.PerformLayout()
 
@@ -172,10 +156,8 @@
         Friend WithEvents lbl_Days As System.Windows.Forms.Label
         Friend WithEvents lbl_RptInfo As System.Windows.Forms.Label
         Friend WithEvents btn_BuildRpt As System.Windows.Forms.Button
-        Friend WithEvents Report_DataSet As DS_Reports
-        Friend WithEvents InvoiceBalancesBindingSource As System.Windows.Forms.BindingSource
-        Friend WithEvents CustomerBalancesBindingSource As System.Windows.Forms.BindingSource
         Friend WithEvents ck_ActiveOnly As System.Windows.Forms.CheckBox
         Friend WithEvents nud_MindDays As System.Windows.Forms.NumericUpDown
+        Friend WithEvents Ds_Reporting As TrashCash.ds_Reporting
     End Class
 End Namespace

@@ -723,7 +723,7 @@ Namespace QBStuff
 
 
         Public Shared Function CustomerQuery(Optional ByVal listID As String = Nothing, Optional ByVal retEleList As List(Of String) = Nothing, Optional ByVal activeOnly As Boolean = False,
-                                             Optional ByVal balanceFilter As ITotalBalanceFilter = Nothing, Optional ByRef qbConMgr As QBConMgr = Nothing) As IResponse
+                                             Optional ByRef qbConMgr As QBConMgr = Nothing) As IResponse
             Dim custQuery As ICustomerQuery = ConCheck(qbConMgr).MessageSetRequest.AppendCustomerQueryRq
             If (listID IsNot Nothing) Then
                 custQuery.ORCustomerListQuery.ListIDList.Add(listID)
@@ -731,18 +731,13 @@ Namespace QBStuff
             If (activeOnly) Then
                 custQuery.ORCustomerListQuery.CustomerListFilter.ActiveStatus.SetValue(ENActiveStatus.asActiveOnly)
             End If
-            ' checking if balance filter transfered
-            If (balanceFilter IsNot Nothing) Then
-                custQuery.ORCustomerListQuery.CustomerListFilter.TotalBalanceFilter.Operator.SetValue(balanceFilter.Operator.GetValue)
-                custQuery.ORCustomerListQuery.CustomerListFilter.TotalBalanceFilter.Amount.SetValue(balanceFilter.Amount.GetValue)
-            End If
-            ' checking for ret element list
+           ' checking for ret element list
             If (retEleList IsNot Nothing) Then
                 For Each s As String In retEleList
                     custQuery.IncludeRetElementList.Add(s)
                 Next
             End If
-            
+
             Return ConCheck(qbConMgr).GetRespList.GetAt(0)
         End Function
 

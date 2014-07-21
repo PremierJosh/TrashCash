@@ -11,20 +11,44 @@ Namespace Reports
                 ' build ds
                 ReportFoo()
             End If
-            ' create report
-            Dim report As New r_AllCustBalances
-            ' set ds
-            report.SetDataSource(Report_DataSet)
-            ' pass to viewer
-            CrystalReportViewer.ReportSource = report
-            CrystalReportViewer.Refresh()
+
+            ' checking if we have rows here
+            If (Ds_Reporting.CustomerBalances.Rows.Count > 0) Then
+                tc_Report.Visible = True
+
+                ' create report
+                Dim report As New r_AllCustBalances
+                ' set ds
+                report.SetDataSource(Ds_Reporting)
+                ' pass to viewer
+                CrystalReportViewer.ReportSource = report
+                CrystalReportViewer.Refresh()
+            Else
+                MessageBox.Show("No Customers meet search criteria.", "Report Finished", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                tc_Report.Visible = False
+            End If
 
             Cursor = Cursors.Default
+
         End Sub
 
         Private Sub ReportFoo()
-           Dim resp As IResponse = QBRequests.CustomerQuery(activeOnly:=ck_ActiveOnly.Checked)
-            If (resp.StatusCode = 0) Then
+            ' clear ds
+            Ds_Reporting.Clear()
+
+            Dim custQuery As ICustomerQuery = GlobalConMgr.MessageSetRequest.AppendCustomerQueryRq
+            ' active or all
+            If (ck_ActiveOnly.Checked) Then
+                custQuery.ORCustomerListQuery.CustomerListFilter.ActiveStatus.SetValue(ENActiveStatus.asActiveOnly)
+            Else
+                custQuery.ORCustomerListQuery.CustomerListFilter.ActiveStatus.SetValue(ENActiveStatus.asAll)
+            End If
+            ' default balance filter
+            custQuery.ORCustomerListQuery.CustomerListFilter.TotalBalanceFilter.Amount.SetValue(0)
+            custQuery.ORCustomerListQuery.CustomerListFilter.TotalBalanceFilter.Operator.SetValue(ENOperator.oGreaterThan)
+
+            Dim resp As IResponse = GlobalConMgr.GetRespList.GetAt(0)
+           If (resp.StatusCode = 0) Then
                 Dim custRetList As ICustomerRetList = resp.Detail
                 For c = 0 To custRetList.Count - 1
                     Dim cust As ICustomerRet = custRetList.GetAt(c)
@@ -34,7 +58,7 @@ Namespace Reports
 
                     If (customerNumber <> 0) Then
                         ' create new row for cust balances
-                        Dim custRow As DS_Reports.CustomerBalancesRow = Report_DataSet.CustomerBalances.NewCustomerBalancesRow
+                        Dim custRow As ds_Reporting.CustomerBalancesRow = Ds_Reporting.CustomerBalances.NewCustomerBalancesRow
                         custRow.CustomerName = cust.FullName.GetValue
                         custRow.CustomerNumber = customerNumber
                         custRow.CustomerBalance = cust.TotalBalance.GetValue
@@ -59,9 +83,7 @@ Namespace Reports
                         custRow.State = cust.BillAddress.State.GetValue
                         custRow.Zip = cust.BillAddress.PostalCode.GetValue
 
-
-
-                        Report_DataSet.CustomerBalances.AddCustomerBalancesRow(custRow)
+                        Ds_Reporting.CustomerBalances.AddCustomerBalancesRow(custRow)
                         ' get invoices for customer if balance greater than 0
                         If (custRow.CustomerBalance > 0) Then
                             InvoiceReport(custRow.ListID, custRow.CustomerNumber, nud_MindDays.Value)
@@ -82,7 +104,7 @@ Namespace Reports
                 For Each inv As QBInvoiceObj In invObjList
                     Dim daysPastDue As Integer = DateDiff(DateInterval.Day, inv.DueDate, Date.Now.Date)
                     If (daysPastDue >= minDaysPastDue) Then
-                        Dim row As DS_Reports.InvoiceBalancesRow = Report_DataSet.InvoiceBalances.NewInvoiceBalancesRow
+                        Dim row As ds_Reporting.InvoiceBalancesRow = Ds_Reporting.InvoiceBalances.NewInvoiceBalancesRow
                         ' passing cust num here for relationship
                         row.CustomerListID = customerListID
                         row.CustomerNumber = customerNumber
@@ -92,7 +114,7 @@ Namespace Reports
                         row.DueDate = inv.DueDate
                         row.DaysPastDue = daysPastDue
                         ' add row to table
-                        Report_DataSet.InvoiceBalances.AddInvoiceBalancesRow(row)
+                        Ds_Reporting.InvoiceBalances.AddInvoiceBalancesRow(row)
                     End If
                 Next
             End If

@@ -23,7 +23,6 @@
         'Do not modify it using the code editor.
         <System.Diagnostics.DebuggerStepThrough()> _
         Private Sub InitializeComponent()
-            Me.components = New System.ComponentModel.Container()
             Me.lbl_RptInfo = New System.Windows.Forms.Label()
             Me.lbl_To = New System.Windows.Forms.Label()
             Me.lbl_From = New System.Windows.Forms.Label()
@@ -33,19 +32,15 @@
             Me.tc_Report = New System.Windows.Forms.TabControl()
             Me.tp_RepView = New System.Windows.Forms.TabPage()
             Me.CrystalReportViewer = New CrystalDecisions.Windows.Forms.CrystalReportViewer()
-            Me.tp_GridView = New System.Windows.Forms.TabPage()
             Me.rdo_BetweenDates = New System.Windows.Forms.RadioButton()
             Me.rdo_OnDate = New System.Windows.Forms.RadioButton()
             Me.dtp_SingleDate = New System.Windows.Forms.DateTimePicker()
             Me.rdo_Batch = New System.Windows.Forms.RadioButton()
-            Me.Report_DataSet = New DS_Reports()
             Me.cmb_BatchHistory = New System.Windows.Forms.ComboBox()
-            Me.BatchPaymentsListBindingSource = New System.Windows.Forms.BindingSource(Me.components)
-            Me.BatchPayments_ListTableAdapter = New BatchPayments_ListTableAdapter()
+            Me.Ds_Reporting = New TrashCash.ds_Reporting()
             Me.tc_Report.SuspendLayout()
             Me.tp_RepView.SuspendLayout()
-            CType(Me.Report_DataSet, System.ComponentModel.ISupportInitialize).BeginInit()
-            CType(Me.BatchPaymentsListBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
+            CType(Me.Ds_Reporting, System.ComponentModel.ISupportInitialize).BeginInit()
             Me.SuspendLayout()
             '
             'lbl_RptInfo
@@ -56,7 +51,7 @@
             Me.lbl_RptInfo.Size = New System.Drawing.Size(395, 13)
             Me.lbl_RptInfo.TabIndex = 0
             Me.lbl_RptInfo.Text = "This Report will show all payments received from all Customers using various filt" & _
-                                  "ers."
+        "ers."
             '
             'lbl_To
             '
@@ -104,15 +99,15 @@
             'tc_Report
             '
             Me.tc_Report.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-                                          Or System.Windows.Forms.AnchorStyles.Left) _
-                                         Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+                Or System.Windows.Forms.AnchorStyles.Left) _
+                Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
             Me.tc_Report.Controls.Add(Me.tp_RepView)
-            Me.tc_Report.Controls.Add(Me.tp_GridView)
             Me.tc_Report.Location = New System.Drawing.Point(0, 116)
             Me.tc_Report.Name = "tc_Report"
             Me.tc_Report.SelectedIndex = 0
             Me.tc_Report.Size = New System.Drawing.Size(831, 484)
             Me.tc_Report.TabIndex = 14
+            Me.tc_Report.Visible = False
             '
             'tp_RepView
             '
@@ -136,16 +131,6 @@
             Me.CrystalReportViewer.Name = "CrystalReportViewer"
             Me.CrystalReportViewer.Size = New System.Drawing.Size(817, 452)
             Me.CrystalReportViewer.TabIndex = 0
-            '
-            'tp_GridView
-            '
-            Me.tp_GridView.Location = New System.Drawing.Point(4, 22)
-            Me.tp_GridView.Name = "tp_GridView"
-            Me.tp_GridView.Padding = New System.Windows.Forms.Padding(3)
-            Me.tp_GridView.Size = New System.Drawing.Size(823, 458)
-            Me.tp_GridView.TabIndex = 1
-            Me.tp_GridView.Text = "Grid View"
-            Me.tp_GridView.UseVisualStyleBackColor = True
             '
             'rdo_BetweenDates
             '
@@ -188,32 +173,24 @@
             Me.rdo_Batch.Text = "By Batch"
             Me.rdo_Batch.UseVisualStyleBackColor = True
             '
-            'Report_DataSet
-            '
-            Me.Report_DataSet.DataSetName = "Report_DataSet"
-            Me.Report_DataSet.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema
-            '
             'cmb_BatchHistory
             '
-            Me.cmb_BatchHistory.DataSource = Me.BatchPaymentsListBindingSource
-            Me.cmb_BatchHistory.DisplayMember = "BatchPaymentInfoText"
+            Me.cmb_BatchHistory.DataSource = Me.Ds_Reporting
+            Me.cmb_BatchHistory.DisplayMember = "Batch_Payments_History.DisplayMember"
+            Me.cmb_BatchHistory.Enabled = False
             Me.cmb_BatchHistory.FormattingEnabled = True
             Me.cmb_BatchHistory.Location = New System.Drawing.Point(556, 56)
             Me.cmb_BatchHistory.Name = "cmb_BatchHistory"
             Me.cmb_BatchHistory.Size = New System.Drawing.Size(236, 21)
             Me.cmb_BatchHistory.TabIndex = 19
-            Me.cmb_BatchHistory.ValueMember = "BATCH_PAY_ID"
+            Me.cmb_BatchHistory.ValueMember = "Batch_Payments_History.ValueMember"
             '
-            'BatchPaymentsListBindingSource
+            'Ds_Reporting
             '
-            Me.BatchPaymentsListBindingSource.DataMember = "BatchPayments_List"
-            Me.BatchPaymentsListBindingSource.DataSource = Me.Report_DataSet
+            Me.Ds_Reporting.DataSetName = "ds_Reporting"
+            Me.Ds_Reporting.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema
             '
-            'BatchPayments_ListTableAdapter
-            '
-            Me.BatchPayments_ListTableAdapter.ClearBeforeFill = True
-            '
-            'f_PaymentsReceived
+            'Report_PaymentsReceived
             '
             Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
             Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
@@ -234,8 +211,7 @@
             Me.Text = "Reports: Payments Received"
             Me.tc_Report.ResumeLayout(False)
             Me.tp_RepView.ResumeLayout(False)
-            CType(Me.Report_DataSet, System.ComponentModel.ISupportInitialize).EndInit()
-            CType(Me.BatchPaymentsListBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
+            CType(Me.Ds_Reporting, System.ComponentModel.ISupportInitialize).EndInit()
             Me.ResumeLayout(False)
             Me.PerformLayout()
 
@@ -249,14 +225,11 @@
         Friend WithEvents tc_Report As System.Windows.Forms.TabControl
         Friend WithEvents tp_RepView As System.Windows.Forms.TabPage
         Friend WithEvents CrystalReportViewer As CrystalDecisions.Windows.Forms.CrystalReportViewer
-        Friend WithEvents tp_GridView As System.Windows.Forms.TabPage
-        Friend WithEvents Report_DataSet As DS_Reports
         Friend WithEvents rdo_BetweenDates As System.Windows.Forms.RadioButton
         Friend WithEvents rdo_OnDate As System.Windows.Forms.RadioButton
         Friend WithEvents dtp_SingleDate As System.Windows.Forms.DateTimePicker
         Friend WithEvents rdo_Batch As System.Windows.Forms.RadioButton
         Friend WithEvents cmb_BatchHistory As System.Windows.Forms.ComboBox
-        Friend WithEvents BatchPaymentsListBindingSource As System.Windows.Forms.BindingSource
-        Friend WithEvents BatchPayments_ListTableAdapter As BatchPayments_ListTableAdapter
+        Friend WithEvents Ds_Reporting As TrashCash.ds_Reporting
     End Class
 End Namespace

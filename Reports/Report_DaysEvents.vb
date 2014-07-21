@@ -3,25 +3,34 @@
     Public Class Report_DaysEvents
 
         Private Sub btn_GenReport_Click(sender As System.Object, e As System.EventArgs) Handles btn_GenReport.Click
-            UseWaitCursor = True
+            Cursor = Cursors.WaitCursor
 
+            
             ' create report
             Dim report As New r_DaysEvents
             ' fill ds
-            Report_DaysEventsTableAdapter.Fill(Report_DataSet.Report_DaysEvents, dtp_Date.Value.Date)
+            Using ta As New ds_ReportingTableAdapters.Report_DaysEventsTableAdapter
+                ta.Fill(Ds_Reporting.Report_DaysEvents, dtp_Date.Value.Date)
+            End Using
 
-            ' making header row
-            Dim hRow As DS_Reports.ReportHeadersRow = Report_DataSet.ReportHeaders.NewReportHeadersRow
-            hRow.HeaderText = "Days Events for: " & dtp_Date.Value.Date
-            Report_DataSet.ReportHeaders.AddReportHeadersRow(hRow)
+            If (Ds_Reporting.Report_DaysEvents.Rows.Count > 0) Then
+                tc_Report.Visible = True
 
-            ' set ds
-            report.SetDataSource(Report_DataSet)
-            ' pass to viewer
-            CrystalReportViewer.ReportSource = report
-            CrystalReportViewer.Refresh()
+                ' making header row
+                Dim hRow As ds_Reporting.ReportHeadersRow = Ds_Reporting.ReportHeaders.NewReportHeadersRow
+                hRow.HeaderText = "Days Events for: " & dtp_Date.Value.Date
+                Ds_Reporting.ReportHeaders.AddReportHeadersRow(hRow)
 
-            UseWaitCursor = False
+                ' set ds
+                report.SetDataSource(Ds_Reporting)
+                ' pass to viewer
+                CrystalReportViewer.ReportSource = report
+                CrystalReportViewer.Refresh()
+            Else
+                tc_Report.Visible = False
+            End If
+            
+            Cursor = Cursors.Default
         End Sub
     End Class
 End Namespace
