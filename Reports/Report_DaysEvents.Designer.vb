@@ -66,6 +66,7 @@
             Me.CrystalReportViewer.Name = "CrystalReportViewer"
             Me.CrystalReportViewer.Size = New System.Drawing.Size(939, 474)
             Me.CrystalReportViewer.TabIndex = 6
+            Me.CrystalReportViewer.Visible = False
             '
             'Panel1
             '

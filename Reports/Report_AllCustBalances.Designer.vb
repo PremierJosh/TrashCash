@@ -94,6 +94,7 @@
             Me.CrystalReportViewer.Size = New System.Drawing.Size(892, 471)
             Me.CrystalReportViewer.TabIndex = 8
             Me.CrystalReportViewer.ToolPanelView = CrystalDecisions.Windows.Forms.ToolPanelViewType.None
+            Me.CrystalReportViewer.Visible = False
             '
             'Panel1
             '
