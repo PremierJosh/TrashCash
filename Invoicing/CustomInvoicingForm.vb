@@ -273,7 +273,7 @@ Namespace Invoicing
                             MessageBox.Show("Invoice Voided.", "Invoice voided", MessageBoxButtons.OK, MessageBoxIcon.Information)
                             tb_VoidReason.Text = ""
                             ' get new customer balance
-                            CustomerToolstrip1.GetCustomerAdjustedBalance()
+                            RaiseEvent CustomerInvoiceAdded(CurrentCustomer)
                         Else
                             MessageBox.Show("Error - Invoice not voided.", "QB Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
                         End If
@@ -290,7 +290,7 @@ Namespace Invoicing
         ' if customer number is passed at new, this is locked form and should be disposed when closed
         Private ReadOnly _dispose As Boolean
 
-        Public Sub New(Optional ByVal customerNumber As Integer = Nothing)
+        Public Sub New(Optional ByVal customerNumber As Integer = Nothing, Optional ByVal historyFocus As Boolean = False)
             ' This call is required by the designer.
             InitializeComponent()
 
@@ -306,6 +306,9 @@ Namespace Invoicing
                 CustomerToolstrip1.SelectCustomer(customerNumber)
                 ' mark for disposal
                 _dispose = True
+                If (historyFocus) Then
+                    TabControl1.SelectedIndex = 1
+                End If
             Else
                 CurrentCustomer = CustomerToolstrip1.CurrentCustomer
                 CustomerToolstrip1.GetCustomerAdjustedBalance()
@@ -338,9 +341,11 @@ Namespace Invoicing
 
         Private Sub dg_InvHistory_SelectionChanged(sender As System.Object, e As System.EventArgs) Handles dg_InvHistory.SelectionChanged
             ' clear incase no line items are returned
-            HistoryInv.CustomInvoice_LineItems.Clear()
-            Dim row As ds_Invoicing.CustomInvoicesRow = CType(dg_InvHistory.SelectedRows(0).DataBoundItem, DataRowView).Row
-            LiTA.Fill(HistoryInv.CustomInvoice_LineItems, row.CI_ID)
+            If (dg_InvHistory.SelectedRows.Count = 1) Then
+                HistoryInv.CustomInvoice_LineItems.Clear()
+                Dim row As ds_Invoicing.CustomInvoicesRow = CType(dg_InvHistory.SelectedRows(0).DataBoundItem, DataRowView).Row
+                LiTA.Fill(HistoryInv.CustomInvoice_LineItems, row.CI_ID)
+            End If
         End Sub
 
         Private Sub tb_DescText_KeyDown(sender As System.Object, e As System.Windows.Forms.KeyEventArgs) Handles tb_DescText.KeyDown

@@ -400,6 +400,12 @@ Partial Public Class ds_Display
 
         Private columnInvoiceCreationDate As Global.System.Data.DataColumn
 
+        Private columnLineItemID As Global.System.Data.DataColumn
+
+        Private columnMultiServiceInv As Global.System.Data.DataColumn
+
+        Private columnCustomInvoice As Global.System.Data.DataColumn
+
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
         Public Sub New()
@@ -484,6 +490,30 @@ Partial Public Class ds_Display
         End Property
 
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
+        Public ReadOnly Property LineItemIDColumn() As Global.System.Data.DataColumn
+            Get
+                Return Me.columnLineItemID
+            End Get
+        End Property
+
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
+        Public ReadOnly Property MultiServiceInvColumn() As Global.System.Data.DataColumn
+            Get
+                Return Me.columnMultiServiceInv
+            End Get
+        End Property
+
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
+        Public ReadOnly Property CustomInvoiceColumn() As Global.System.Data.DataColumn
+            Get
+                Return Me.columnCustomInvoice
+            End Get
+        End Property
+
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0"), _
          Global.System.ComponentModel.Browsable(False)> _
         Public ReadOnly Property Count() As Integer
@@ -520,9 +550,9 @@ Partial Public Class ds_Display
 
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
-        Public Overloads Function AddQB_InvoiceDisplayRow(ByVal InvoiceRefNumber As String, ByVal InvoicePostDate As Date, ByVal InvoiceDueDate As Date, ByVal InvoiceTotal As Double, ByVal InvoiceBalance As Double, ByVal InvoiceCreationDate As Date) As QB_InvoiceDisplayRow
+        Public Overloads Function AddQB_InvoiceDisplayRow(ByVal InvoiceRefNumber As String, ByVal InvoicePostDate As Date, ByVal InvoiceDueDate As Date, ByVal InvoiceTotal As Double, ByVal InvoiceBalance As Double, ByVal InvoiceCreationDate As Date, ByVal LineItemID As Decimal, ByVal MultiServiceInv As Boolean, ByVal CustomInvoice As Boolean) As QB_InvoiceDisplayRow
             Dim rowQB_InvoiceDisplayRow As QB_InvoiceDisplayRow = CType(Me.NewRow, QB_InvoiceDisplayRow)
-            Dim columnValuesArray() As Object = New Object() {InvoiceRefNumber, InvoicePostDate, InvoiceDueDate, InvoiceTotal, InvoiceBalance, InvoiceCreationDate}
+            Dim columnValuesArray() As Object = New Object() {InvoiceRefNumber, InvoicePostDate, InvoiceDueDate, InvoiceTotal, InvoiceBalance, InvoiceCreationDate, LineItemID, MultiServiceInv, CustomInvoice}
             rowQB_InvoiceDisplayRow.ItemArray = columnValuesArray
             Me.Rows.Add(rowQB_InvoiceDisplayRow)
             Return rowQB_InvoiceDisplayRow
@@ -551,6 +581,9 @@ Partial Public Class ds_Display
             Me.columnInvoiceTotal = MyBase.Columns("InvoiceTotal")
             Me.columnInvoiceBalance = MyBase.Columns("InvoiceBalance")
             Me.columnInvoiceCreationDate = MyBase.Columns("InvoiceCreationDate")
+            Me.columnLineItemID = MyBase.Columns("LineItemID")
+            Me.columnMultiServiceInv = MyBase.Columns("MultiServiceInv")
+            Me.columnCustomInvoice = MyBase.Columns("CustomInvoice")
         End Sub
 
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
@@ -568,6 +601,14 @@ Partial Public Class ds_Display
             MyBase.Columns.Add(Me.columnInvoiceBalance)
             Me.columnInvoiceCreationDate = New Global.System.Data.DataColumn("InvoiceCreationDate", GetType(Date), Nothing, Global.System.Data.MappingType.Element)
             MyBase.Columns.Add(Me.columnInvoiceCreationDate)
+            Me.columnLineItemID = New Global.System.Data.DataColumn("LineItemID", GetType(Decimal), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnLineItemID)
+            Me.columnMultiServiceInv = New Global.System.Data.DataColumn("MultiServiceInv", GetType(Boolean), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnMultiServiceInv)
+            Me.columnCustomInvoice = New Global.System.Data.DataColumn("CustomInvoice", GetType(Boolean), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnCustomInvoice)
+            Me.columnMultiServiceInv.DefaultValue = CType(False, Boolean)
+            Me.columnCustomInvoice.DefaultValue = CType(False, Boolean)
         End Sub
 
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
@@ -1691,6 +1732,51 @@ Partial Public Class ds_Display
 
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
+        Public Property LineItemID() As Decimal
+            Get
+                Try
+                    Return CType(Me(Me.tableQB_InvoiceDisplay.LineItemIDColumn), Decimal)
+                Catch e As Global.System.InvalidCastException
+                    Throw New Global.System.Data.StrongTypingException("The value for column 'LineItemID' in table 'QB_InvoiceDisplay' is DBNull.", e)
+                End Try
+            End Get
+            Set(value As Decimal)
+                Me(Me.tableQB_InvoiceDisplay.LineItemIDColumn) = value
+            End Set
+        End Property
+
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
+        Public Property MultiServiceInv() As Boolean
+            Get
+                Try
+                    Return CType(Me(Me.tableQB_InvoiceDisplay.MultiServiceInvColumn), Boolean)
+                Catch e As Global.System.InvalidCastException
+                    Throw New Global.System.Data.StrongTypingException("The value for column 'MultiServiceInv' in table 'QB_InvoiceDisplay' is DBNull.", e)
+                End Try
+            End Get
+            Set(value As Boolean)
+                Me(Me.tableQB_InvoiceDisplay.MultiServiceInvColumn) = value
+            End Set
+        End Property
+
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
+        Public Property CustomInvoice() As Boolean
+            Get
+                Try
+                    Return CType(Me(Me.tableQB_InvoiceDisplay.CustomInvoiceColumn), Boolean)
+                Catch e As Global.System.InvalidCastException
+                    Throw New Global.System.Data.StrongTypingException("The value for column 'CustomInvoice' in table 'QB_InvoiceDisplay' is DBNull.", e)
+                End Try
+            End Get
+            Set(value As Boolean)
+                Me(Me.tableQB_InvoiceDisplay.CustomInvoiceColumn) = value
+            End Set
+        End Property
+
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
         Public Function IsInvoiceRefNumberNull() As Boolean
             Return Me.IsNull(Me.tableQB_InvoiceDisplay.InvoiceRefNumberColumn)
         End Function
@@ -1759,6 +1845,42 @@ Partial Public Class ds_Display
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
         Public Sub SetInvoiceCreationDateNull()
             Me(Me.tableQB_InvoiceDisplay.InvoiceCreationDateColumn) = Global.System.Convert.DBNull
+        End Sub
+
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
+        Public Function IsLineItemIDNull() As Boolean
+            Return Me.IsNull(Me.tableQB_InvoiceDisplay.LineItemIDColumn)
+        End Function
+
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
+        Public Sub SetLineItemIDNull()
+            Me(Me.tableQB_InvoiceDisplay.LineItemIDColumn) = Global.System.Convert.DBNull
+        End Sub
+
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
+        Public Function IsMultiServiceInvNull() As Boolean
+            Return Me.IsNull(Me.tableQB_InvoiceDisplay.MultiServiceInvColumn)
+        End Function
+
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
+        Public Sub SetMultiServiceInvNull()
+            Me(Me.tableQB_InvoiceDisplay.MultiServiceInvColumn) = Global.System.Convert.DBNull
+        End Sub
+
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
+        Public Function IsCustomInvoiceNull() As Boolean
+            Return Me.IsNull(Me.tableQB_InvoiceDisplay.CustomInvoiceColumn)
+        End Function
+
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
+        Public Sub SetCustomInvoiceNull()
+            Me(Me.tableQB_InvoiceDisplay.CustomInvoiceColumn) = Global.System.Convert.DBNull
         End Sub
     End Class
 

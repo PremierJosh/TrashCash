@@ -18,6 +18,7 @@
                 Text = CustomerToolstrip1.ToString
                 ' send name to uc_recsrvc
                 UC_RecurringService.CustomerName = CustomerToolstrip1.ToString
+                UC_Quickbooks.CustomerName = CustomerToolstrip1.ToString
 
                 UC_CustomerInfoBoxes.CurrentCustomer = value
                 UC_CustomerNotes.CurrentCustomer = value
@@ -30,11 +31,16 @@
         End Property
 
         ' refresh balance event handleing
-        Friend Sub RefreshCustBalance(ByVal customerNumber As Integer) Handles UC_RecurringService.BalanceChanged
+        Friend Sub RefreshCustBalance(ByVal customerNumber As Integer) Handles UC_RecurringService.BalanceChanged, UC_Quickbooks.BalanceChanged
             ' let home form know customer balance changed from a credit
             RaiseEvent CustomerBalanceChanged(customerNumber)
             ' rec srvc is raising this event, possible invoices were paid with credit
             UC_Quickbooks.FetchInvoices(0)
+        End Sub
+        Friend Sub ServiceChangedFromQBTab(ByVal customerNumber As Integer) Handles UC_Quickbooks.ServiceUpdated
+            If (CurrentCustomer = customerNumber) Then
+                UC_RecurringService.CurrentCustomer = customerNumber
+            End If
         End Sub
 
         Private Sub Customer_FormClosing(sender As Object, e As FormClosingEventArgs) Handles Me.FormClosing

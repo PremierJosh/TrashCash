@@ -10,6 +10,12 @@ Namespace QBStuff
         ' these will limit excessive payment fetching
         Private _lastFetchTime As DateTime
 
+        Friend Event BalanceChanged(ByVal customerNumber As Integer)
+        Friend Event ServiceUpdated(ByVal customerNumber As Integer)
+
+        ' need invoicing form here for event catching
+        Friend WithEvents InvoicingForm As Invoicing.CustomInvoicingForm
+
         ' custListID property
         Private _custListID As String
         Public Property CustomerListID As String
@@ -26,6 +32,8 @@ Namespace QBStuff
                 End If
             End Set
         End Property
+        Public Property CustomerName As String
+
 
         ' field for refrence
         Friend CurrentCustomer As Decimal
@@ -37,13 +45,13 @@ Namespace QBStuff
             Dim resp As Integer
             Dim invObjList As New List(Of QBInvoiceObj)
             If (chk_ItemTo.Checked = True And chk_ItemFrom.Checked = False) Then
-                resp = QBRequests.InvoiceQuery(invObjList, customerListID:=CustomerListID, paidStatus:=paidStatus, toDate:=dtp_ItemTo.Value.Date, retEleList:=_invRetEle)
+                resp = QBRequests.InvoiceQuery(invObjList, customerListID:=CustomerListID, paidStatus:=paidStatus, toDate:=dtp_ItemTo.Value.Date, retEleList:=_invRetEle, incLineItems:=True)
             ElseIf (chk_ItemTo.Checked = False And chk_ItemFrom.Checked = True) Then
-                resp = QBRequests.InvoiceQuery(invObjList, customerListID:=CustomerListID, paidStatus:=paidStatus, fromDate:=dtp_ItemFrom.Value.Date, retEleList:=_invRetEle)
+                resp = QBRequests.InvoiceQuery(invObjList, customerListID:=CustomerListID, paidStatus:=paidStatus, fromDate:=dtp_ItemFrom.Value.Date, retEleList:=_invRetEle, incLineItems:=True)
             ElseIf (chk_ItemTo.Checked = True And chk_ItemFrom.Checked = True) Then
-                resp = QBRequests.InvoiceQuery(invObjList, customerListID:=CustomerListID, paidStatus:=paidStatus, fromDate:=dtp_ItemFrom.Value.Date, toDate:=dtp_ItemTo.Value.Date, retEleList:=_invRetEle)
+                resp = QBRequests.InvoiceQuery(invObjList, customerListID:=CustomerListID, paidStatus:=paidStatus, fromDate:=dtp_ItemFrom.Value.Date, toDate:=dtp_ItemTo.Value.Date, retEleList:=_invRetEle, incLineItems:=True)
             Else
-                resp = QBRequests.InvoiceQuery(invObjList, customerListID:=CustomerListID, paidStatus:=paidStatus, retEleList:=_invRetEle)
+                resp = QBRequests.InvoiceQuery(invObjList, customerListID:=CustomerListID, paidStatus:=paidStatus, incLineItems:=True)
             End If
 
             If (resp = 0) Then
@@ -59,6 +67,21 @@ Namespace QBStuff
                         .InvoiceBalance = inv.BalanceRemaining
                         .InvoiceDueDate = inv.DueDate
                     End With
+                    ' checking type of inv this is
+                    If (inv.Other IsNot Nothing) Then
+                        If (inv.Other = "Custom") Then
+                            newRow.CustomInvoice = True
+                        End If
+                    ElseIf (inv.LineList IsNot Nothing) Then
+                        ' more than 1 line?
+                        If (inv.LineList.Count = 1) Then
+                            If (inv.LineList.Item(0).Other1 IsNot Nothing) Then
+                                newRow.LineItemID = inv.LineList.Item(0).Other1
+                            End If
+                        Else
+                            newRow.MultiServiceInv = True
+                        End If
+                    End If
                     ' adding
                     Ds_Display.QB_InvoiceDisplay.AddQB_InvoiceDisplayRow(newRow)
                 Next
@@ -169,6 +192,8 @@ Namespace QBStuff
                 .Add("Subtotal")
                 .Add("BalanceRemaining")
                 .Add("DueDate")
+                .Add("Other")
+                .Add("OR")
             End With
             ' limiting response for pay query
             With _payRetEle
@@ -205,5 +230,38 @@ Namespace QBStuff
         Private Sub UC_Quickbooks_Load(sender As Object, e As System.EventArgs) Handles Me.Load
 
         End Sub
+
+        Private Sub btn_ViewInvDetail_Click(sender As System.Object, e As System.EventArgs) Handles btn_ViewInvDetail.Click
+            If (dg_Invoices.SelectedRows.Count = 1) Then
+                Dim recurringServiceID As Integer = 0
+                Dim row As ds_Display.QB_InvoiceDisplayRow = CType(dg_Invoices.SelectedRows(0).DataBoundItem, DataRowView).Row
+                If (Not row.IsLineItemIDNull) Then
+                    Using ta As New ds_RecurringServiceTableAdapters.RecurringService_BillHistoryTableAdapter
+                        recurringServiceID = ta.GetRecurringIDFromLineItemID(CType(CType(dg_Invoices.SelectedRows(0).DataBoundItem, DataRowView).Row, ds_Display.QB_InvoiceDisplayRow).LineItemID)
+                    End Using
+                ElseIf (row.CustomInvoice) Then
+                    InvoicingForm = New Invoicing.CustomInvoicingForm(CurrentCustomer, historyFocus:=True)
+                    InvoicingForm.ShowDialog()
+                End If
+
+                If (recurringServiceID <> 0) Then
+                    Dim recurringForm As New RecurringService.RecurringServiceForm(CustomerName, CurrentCustomer, recurringServiceID)
+                    recurringForm.ShowDialog()
+                    ' get what has updated and refresh controls
+                    If (recurringForm.BalanceChanged) Then
+                        RaiseEvent BalanceChanged(CurrentCustomer)
+                    End If
+                    If (recurringForm.ServiceUpdated) Then
+                        RaiseEvent ServiceUpdated(CurrentCustomer)
+                    End If
+                End If
+
+            End If
+        End Sub
+
+        Private Sub InvoiceAddHandle(ByVal customerNumber As Integer) Handles InvoicingForm.CustomerInvoiceAdded
+            RaiseEvent BalanceChanged(customerNumber)
+        End Sub
+
     End Class
 End Namespace

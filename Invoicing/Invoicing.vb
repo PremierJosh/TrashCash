@@ -26,6 +26,7 @@ Namespace Invoicing
                         .DueDate = invRow.DueDate
                         .TxnDate = invRow.PostDate
                         .IsToBePrinted = print
+                        .Other = "Custom"
                     End With
 
                     ' getting line items
