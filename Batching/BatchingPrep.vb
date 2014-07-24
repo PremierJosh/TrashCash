@@ -52,6 +52,10 @@
                             ' show labels for batching
                             lbl_PayBatchCust.Visible = True
                             lbl_PayBatchCount.Visible = True
+                            ' disable total fields
+                            tb_TotalCash.Enabled = False
+                            tb_TotalCheck.Enabled = False
+                            tb_TotalMoneyOrder.Enabled = False
                         End If
                         ' disable mod and del pay menu
                         cm_PayGrid.Enabled = False
@@ -79,6 +83,13 @@
                             ' hide labels
                             lbl_PayBatchCust.Visible = False
                             lbl_PayBatchCount.Visible = False
+                            ' enable total fields and clear the text
+                            tb_TotalCash.Enabled = True
+                            tb_TotalCash.Clear()
+                            tb_TotalCheck.Enabled = True
+                            tb_TotalCheck.Clear()
+                            tb_TotalMoneyOrder.Enabled = True
+                            tb_TotalMoneyOrder.Clear()
                         End If
                         ' set type bools for batch to false
                         _payBatchRunning = False

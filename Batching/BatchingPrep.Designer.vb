@@ -422,6 +422,7 @@
             Me.tb_TotalMoneyOrder.Name = "tb_TotalMoneyOrder"
             Me.tb_TotalMoneyOrder.Size = New System.Drawing.Size(100, 20)
             Me.tb_TotalMoneyOrder.TabIndex = 136
+            Me.tb_TotalMoneyOrder.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
             '
             'tb_TotalCheck
             '
@@ -430,6 +431,7 @@
             Me.tb_TotalCheck.Name = "tb_TotalCheck"
             Me.tb_TotalCheck.Size = New System.Drawing.Size(100, 20)
             Me.tb_TotalCheck.TabIndex = 135
+            Me.tb_TotalCheck.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
             '
             'tb_TotalCash
             '
@@ -438,6 +440,7 @@
             Me.tb_TotalCash.Name = "tb_TotalCash"
             Me.tb_TotalCash.Size = New System.Drawing.Size(100, 20)
             Me.tb_TotalCash.TabIndex = 134
+            Me.tb_TotalCash.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
             '
             'pb_Payments
             '
