@@ -1452,6 +1452,13 @@ Namespace QBStuff
                             '3171 - An attempt was made to modify a ReceivePayment with a date that is on or before the closing date of the company.
                             MessageBox.Show("The post date for this Payment is before the current company closing date.", "Type: 1033 |Code: 3170", MessageBoxButtons.OK, MessageBoxIcon.Error)
                     End Select
+                Case Is = 1040
+                    '1040 - ServiceItemAdd
+                    Select Case resp.StatusCode
+                        Case Is = 3100
+                            ' 3100 - The name "xxx" of the list element is already in use.
+                            MessageBox.Show("There is already an item in Quickbooks with this name.", "Choose another name", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                    End Select
                 Case Is = 1415
                     ' 1415 = PaymentModify response
                     Select Case resp.StatusCode

@@ -23,17 +23,11 @@ Namespace Types
         End Sub
 
         Private Sub BindComboBox()
-            Dim resp As IResponse = QBRequests.AccountQuery(ENAccountType.atIncome)
-            If (resp.StatusCode = 0) Then
-                Dim retList As IAccountRetList = resp.Detail
-                Dim ds As List(Of ComboBoxPair) = QBMethods.GetComboBoxPair(retList)
-                ' binding
-                cmb_QBAccount.DisplayMember = "DisplayMember"
-                cmb_QBAccount.ValueMember = "ValueMember"
-                cmb_QBAccount.DataSource = ds
-            Else
-                QBMethods.ResponseErr_Misc(resp)
-            End If
+            ' bind account cmb for adding items
+            Dim incomes As List(Of ComboBoxPair) = QBMethods.GetComboBoxPair(QBRequests.AccountQuery(ENAccountType.atIncome))
+            cmb_QBAccount.DisplayMember = "DisplayMember"
+            cmb_QBAccount.ValueMember = "ValueMember"
+            cmb_QBAccount.DataSource = incomes
 
         End Sub
 
