@@ -29,6 +29,7 @@ Namespace Invoicing
         Private Sub CustomInvoicingForm_FormClosing(sender As Object, e As System.Windows.Forms.FormClosingEventArgs) Handles Me.FormClosing
             If (Not _dispose) Then
                 e.Cancel = True
+                ResetInvoice()
                 Hide()
             End If
         End Sub

@@ -91,9 +91,21 @@
             End If
         End Sub
 
-        Private Sub Payments_Load(sender As Object, e As System.EventArgs) Handles Me.Load
+        Public Sub RefreshQueuedPayments()
             BATCH_WorkingPaymentsTableAdapter.Fill(Ds_Batching.BATCH_WorkingPayments)
+        End Sub
+
+    
+        ' overloading show method to refresh queues
+        Public Overloads Sub Show()
+            MyBase.Show()
             PaymentTypesTableAdapter.Fill(Ds_Types.PaymentTypes)
+            RefreshQueuedPayments()
+        End Sub
+
+        Private Sub Payments_Load(sender As Object, e As System.EventArgs) Handles Me.Load
+            PaymentTypesTableAdapter.Fill(Ds_Types.PaymentTypes)
+            RefreshQueuedPayments()
             ' setting uc info boxes to display only
             UC_CustomerInfoBoxes.AllowUpdate = False
 
@@ -143,6 +155,8 @@
         End Function
         ' ta for fetching prev payment
         Private ReadOnly _hTA As ds_PaymentsTableAdapters.PaymentHistory_DBTableAdapter
+
+    
         Private Sub FetchPrevPayment(ByVal customerNumber As Integer)
             Dim dt As New ds_Payments.PaymentHistory_DBDataTable
             _hTA.FillNewestPayment(dt, customerNumber)
@@ -227,10 +241,9 @@
                     MessageBox.Show("Message: " & ex.Message & vbCrLf & "LineNumber: " & ex.LineNumber,
                                     "Sql Error: " & ex.Procedure, MessageBoxButtons.OK, MessageBoxIcon.Error)
                 End Try
-                RaiseEvent CustomerPaymentMod(CurrentCustomer)
                 ResetPayment()
-                ' fill table
-                BATCH_WorkingPaymentsTableAdapter.Fill(Ds_Batching.BATCH_WorkingPayments)
+                'refresh grid through event on home form
+                RaiseEvent CustomerPaymentMod(CurrentCustomer)
             Else
                 MessageBox.Show("Please correct the required fields.", "Invalid Information", MessageBoxButtons.OK, MessageBoxIcon.Error)
             End If
@@ -248,8 +261,7 @@
                     MessageBox.Show("Message: " & ex.Message & vbCrLf & "LineNumber: " & ex.LineNumber,
                                     "Sql Error: " & ex.Procedure, MessageBoxButtons.OK, MessageBoxIcon.Error)
                 End Try
-                'refresh grid
-                BATCH_WorkingPaymentsTableAdapter.Fill(Ds_Batching.BATCH_WorkingPayments)
+                'refresh grid through event on home form
                 RaiseEvent CustomerPaymentMod(custNum)
             End If
         End Sub
@@ -269,11 +281,9 @@
             Dim custNum As Integer = row.CustomerNumber
             Dim modForm As New PaymentModifyForm(row, BATCH_WorkingPaymentsTableAdapter, Ds_Types.PaymentTypes)
             modForm.ShowDialog()
-            'refresh grid and raise event
-            BATCH_WorkingPaymentsTableAdapter.Fill(Ds_Batching.BATCH_WorkingPayments)
+            'refresh grid through event on home form
             RaiseEvent CustomerPaymentMod(custNum)
-
-         End Sub
+        End Sub
 
     End Class
 End Namespace

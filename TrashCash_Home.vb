@@ -90,12 +90,15 @@ Public Class TrashCashHome
                     Customer.InvForm.CustomerToolstrip1.GetQueueAmount()
                 End If
                 If (Customer.PayForm IsNot Nothing) Then
+                    Customer.PayForm.RefreshQueuedPayments()
                     Customer.PayForm.CustomerToolstrip1.GetQueueAmount()
                 End If
             End If
         End If
         ' need to update in queue on other forms if exist and match new customer
         If (PayForm IsNot Nothing) Then
+            ' update queue alwaus
+            PayForm.RefreshQueuedPayments()
             If (PayForm.CurrentCustomer = customerNumber) Then
                 PayForm.CustomerToolstrip1.GetQueueAmount()
             End If
@@ -161,8 +164,10 @@ Public Class TrashCashHome
     Friend Sub CustomerCheckBounced(ByVal customerNumber As Integer)
         RefreshCustomerBalance(customerNumber)
         ' fetch customer notes
-        If (Customer.UC_CustomerNotes.CurrentCustomer = customerNumber) Then
-            Customer.UC_CustomerNotes.CurrentCustomer = customerNumber
+        If (Customer IsNot Nothing) Then
+            If (Customer.UC_CustomerNotes.CurrentCustomer = customerNumber) Then
+                Customer.UC_CustomerNotes.CurrentCustomer = customerNumber
+            End If
         End If
     End Sub
     Friend Sub CustomerPaymentMoved(ByVal origCustomerNumber As Integer, ByVal newCustomerNumber As Integer)

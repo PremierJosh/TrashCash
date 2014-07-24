@@ -458,7 +458,8 @@ Namespace QBStuff
                 ' wiping applied list if there were any returned with a 0 applied amount
                 If (wipeAppList) Then
                     If (payObj.AppliedInvList IsNot Nothing) Then
-                        For i = 0 To payObj.AppliedInvList.Count - 1
+                        ' looping through list in reverse since we are removing by index within loop
+                        For i = payObj.AppliedInvList.Count - 1 To 0 Step -1
                             If (payObj.AppliedInvList.Item(i).AppliedAmount = 0) Then
                                 payObj.AppliedInvList.RemoveAt(i)
                             End If
