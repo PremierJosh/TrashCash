@@ -53,6 +53,8 @@ Namespace Types
             '
             Me.DataGridView1.AllowUserToAddRows = False
             Me.DataGridView1.AllowUserToDeleteRows = False
+            Me.DataGridView1.AllowUserToResizeColumns = False
+            Me.DataGridView1.AllowUserToResizeRows = False
             Me.DataGridView1.AutoGenerateColumns = False
             Me.DataGridView1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
             Me.DataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize

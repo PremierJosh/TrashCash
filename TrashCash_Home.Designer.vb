@@ -36,13 +36,13 @@ Partial Class TrashCashHome
         Me.btn_CustTab = New System.Windows.Forms.ToolStripButton()
         Me.btn_Invoicing = New System.Windows.Forms.ToolStripButton()
         Me.btn_Payments = New System.Windows.Forms.ToolStripButton()
-        Me.btn_BatchWork = New System.Windows.Forms.ToolStripButton()
         Me.btn_Reports = New System.Windows.Forms.ToolStripDropDownButton()
         Me.btn_Rpt_AllCustomerBalances = New System.Windows.Forms.ToolStripMenuItem()
         Me.btn_Rpt_PayReceived = New System.Windows.Forms.ToolStripMenuItem()
         Me.btn_Rpt_DaysEvents = New System.Windows.Forms.ToolStripMenuItem()
         Me.UnderOverEvenCustomerToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.menu_Admin = New System.Windows.Forms.ToolStripButton()
+        Me.btn_BatchWork = New System.Windows.Forms.ToolStripButton()
         Me.btn_PendApprovs = New System.Windows.Forms.ToolStripButton()
         Me.RecurringService_PendingApprovalsTableAdapter = New TrashCash.ds_RecurringServiceTableAdapters.RecurringService_PendingApprovalsTableAdapter()
         Me.Batch_RefreshBalance = New System.Windows.Forms.Timer(Me.components)
@@ -138,15 +138,6 @@ Partial Class TrashCashHome
         Me.btn_Payments.Size = New System.Drawing.Size(89, 23)
         Me.btn_Payments.Text = "Payments"
         '
-        'btn_BatchWork
-        '
-        Me.btn_BatchWork.Font = New System.Drawing.Font("Segoe UI", 10.0!)
-        Me.btn_BatchWork.Image = Global.TrashCash.My.Resources.Resources.batchIcon
-        Me.btn_BatchWork.ImageTransparentColor = System.Drawing.Color.Magenta
-        Me.btn_BatchWork.Name = "btn_BatchWork"
-        Me.btn_BatchWork.Size = New System.Drawing.Size(82, 23)
-        Me.btn_BatchWork.Text = "Batching"
-        '
         'btn_Reports
         '
         Me.btn_Reports.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.btn_Rpt_AllCustomerBalances, Me.btn_Rpt_PayReceived, Me.btn_Rpt_DaysEvents, Me.UnderOverEvenCustomerToolStripMenuItem})
@@ -191,6 +182,15 @@ Partial Class TrashCashHome
         Me.menu_Admin.Name = "menu_Admin"
         Me.menu_Admin.Size = New System.Drawing.Size(103, 23)
         Me.menu_Admin.Text = "Administration"
+        '
+        'btn_BatchWork
+        '
+        Me.btn_BatchWork.Font = New System.Drawing.Font("Segoe UI", 10.0!)
+        Me.btn_BatchWork.Image = Global.TrashCash.My.Resources.Resources.batchIcon
+        Me.btn_BatchWork.ImageTransparentColor = System.Drawing.Color.Magenta
+        Me.btn_BatchWork.Name = "btn_BatchWork"
+        Me.btn_BatchWork.Size = New System.Drawing.Size(82, 23)
+        Me.btn_BatchWork.Text = "Batching"
         '
         'btn_PendApprovs
         '

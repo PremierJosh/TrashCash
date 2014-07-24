@@ -176,10 +176,21 @@ Public Class TrashCashHome
     End Sub
 
     ' sub to refresh customer balance on all forms
-    Private Sub RefreshCustomerBalance(ByVal customerNumber As Integer)
+    Private Sub RefreshCustomerBalance(Optional ByVal customerNumber As Integer = 0)
         If (Customer IsNot Nothing) Then
-            If (Customer.CurrentCustomer = customerNumber) Then
+            ' bool for fetching on child forms
+            Dim refreshChildren As Boolean = False
+            If (customerNumber <> 0) Then
+                If (Customer.CurrentCustomer = customerNumber) Then
+                    Customer.CustomerToolstrip1.GetCustomerAdjustedBalance()
+                    refreshChildren = True
+                End If
+            Else
                 Customer.CustomerToolstrip1.GetCustomerAdjustedBalance()
+                refreshChildren = True
+            End If
+
+            If (refreshChildren) Then
                 ' checking for 1 of 3 showdialog forms
                 If (Customer.CreditForm IsNot Nothing) Then
                     Customer.CreditForm.CustomerToolstrip1.GetCustomerAdjustedBalance()
@@ -194,12 +205,20 @@ Public Class TrashCashHome
         End If
         ' need to update balances on other forms if exist and match new customer
         If (PayForm IsNot Nothing) Then
-            If (PayForm.CurrentCustomer = customerNumber) Then
+            If (customerNumber <> 0) Then
+                If (PayForm.CurrentCustomer = customerNumber) Then
+                    PayForm.CustomerToolstrip1.GetCustomerAdjustedBalance()
+                End If
+            Else
                 PayForm.CustomerToolstrip1.GetCustomerAdjustedBalance()
             End If
         End If
         If (InvForm IsNot Nothing) Then
-            If (InvForm.CurrentCustomer = customerNumber) Then
+            If (customerNumber <> 0) Then
+                If (InvForm.CurrentCustomer = customerNumber) Then
+                    InvForm.CustomerToolstrip1.GetCustomerAdjustedBalance()
+                End If
+            Else
                 InvForm.CustomerToolstrip1.GetCustomerAdjustedBalance()
             End If
         End If
@@ -207,7 +226,11 @@ Public Class TrashCashHome
         ' checking for admin payments
         If (TrashCashAdmin IsNot Nothing) Then
             If (TrashCashAdmin.AdminPay IsNot Nothing) Then
-                If (TrashCashAdmin.AdminPay.CurrentCustomer = customerNumber) Then
+                If (customerNumber <> 0) Then
+                    If (TrashCashAdmin.AdminPay.CurrentCustomer = customerNumber) Then
+                        TrashCashAdmin.AdminPay.CustomerToolstrip1.GetCustomerAdjustedBalance()
+                    End If
+                Else
                     TrashCashAdmin.AdminPay.CustomerToolstrip1.GetCustomerAdjustedBalance()
                 End If
             End If
@@ -258,6 +281,16 @@ Public Class TrashCashHome
         pb_Batching.Value = 0
         pb_Batching.Visible = running
         lbl_BatchProg.Visible = running
+
+        ' when batching is finished, refresh all balances and fetch invoices/payments in qb and fetch rec services
+        If (Not running) Then
+            RefreshCustomerBalance()
+            If (Customer IsNot Nothing) Then
+                Customer.UC_Quickbooks.FetchInvoices(0)
+                Customer.UC_Quickbooks.FetchPayments()
+                Customer.UC_RecurringService.CurrentCustomer = Customer.CurrentCustomer
+            End If
+        End If
     End Sub
     Private Sub BatchProgPercUpdate(ByVal batchProg As Integer) Handles BatchForm.BatchProgPerc
         lbl_BatchProg.Text = batchProg & "%"
@@ -306,6 +339,7 @@ Public Class TrashCashHome
             Finally
                 Application.Exit()
             End Try
+            Application.Exit()
         End If
 
     End Sub

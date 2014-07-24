@@ -18,7 +18,7 @@ Namespace Types
             ' fill grid
             ServiceTypesTableAdapter.Fill(ds_Types.ServiceTypes)
             ' bind combo box
-            Dim list As List(Of ComboBoxPair) = QBMethods.GetComboBoxPair(QBRequests.ServiceItemQuery)
+            Dim list As List(Of ComboBoxPair) = QBMethods.GetComboBoxPair(QBRequests.AccountQuery(ENAccountType.atIncome))
             cmb_QBAcc.DisplayMember = "DisplayMember"
             cmb_QBAcc.ValueMember = "ValueMember"
             cmb_QBAcc.DataSource = list

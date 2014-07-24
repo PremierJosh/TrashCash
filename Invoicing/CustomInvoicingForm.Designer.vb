@@ -31,13 +31,13 @@ Namespace Invoicing
             Dim lbl_Addr3 As System.Windows.Forms.Label
             Dim lbl_CityState As System.Windows.Forms.Label
             Dim ZipLabel As System.Windows.Forms.Label
-            Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-            Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-            Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-            Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-            Dim DataGridViewCellStyle5 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-            Dim DataGridViewCellStyle6 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-            Dim DataGridViewCellStyle7 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+            Dim DataGridViewCellStyle22 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+            Dim DataGridViewCellStyle23 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+            Dim DataGridViewCellStyle24 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+            Dim DataGridViewCellStyle25 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+            Dim DataGridViewCellStyle26 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+            Dim DataGridViewCellStyle27 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+            Dim DataGridViewCellStyle28 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
             Me.CustomInvoiceLineTypesBindingSource = New System.Windows.Forms.BindingSource(Me.components)
             Me.Invoicing = New TrashCash.ds_Invoicing()
             Me.CustomerRecentAddrsBindingSource = New System.Windows.Forms.BindingSource(Me.components)
@@ -88,13 +88,14 @@ Namespace Invoicing
             Me.ck_Print = New System.Windows.Forms.CheckBox()
             Me.tp_History = New System.Windows.Forms.TabPage()
             Me.lbl_VoidInfo = New System.Windows.Forms.Label()
-            Me.DataGridView1 = New System.Windows.Forms.DataGridView()
+            Me.dg_HistoryLineItems = New System.Windows.Forms.DataGridView()
             Me.CITypeIDDataGridViewTextBoxColumn1 = New System.Windows.Forms.DataGridViewComboBoxColumn()
+            Me.HistoryInvoiceLineTypesBindingSource = New System.Windows.Forms.BindingSource(Me.components)
+            Me.HistoryInv = New TrashCash.ds_Invoicing()
             Me.RateDataGridViewTextBoxColumn1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
             Me.RenderedOnDateDataGridViewTextBoxColumn1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
             Me.DescTextDataGridViewTextBoxColumn1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
             Me.Addr1DataGridViewTextBoxColumn1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-            Me.HistoryInv = New TrashCash.ds_Invoicing()
             Me.lbl_HistoryLines = New System.Windows.Forms.Label()
             Me.lbl_VoidReason = New System.Windows.Forms.Label()
             Me.tb_VoidReason = New System.Windows.Forms.TextBox()
@@ -130,7 +131,8 @@ Namespace Invoicing
             Me.ContextMenuStrip1.SuspendLayout()
             Me.grp_InvDets.SuspendLayout()
             Me.tp_History.SuspendLayout()
-            CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).BeginInit()
+            CType(Me.dg_HistoryLineItems, System.ComponentModel.ISupportInitialize).BeginInit()
+            CType(Me.HistoryInvoiceLineTypesBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
             CType(Me.HistoryInv, System.ComponentModel.ISupportInitialize).BeginInit()
             CType(Me.dg_InvHistory, System.ComponentModel.ISupportInitialize).BeginInit()
             CType(Me.CustomInvoicesBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -140,7 +142,7 @@ Namespace Invoicing
             'lbl_Addr1
             '
             lbl_Addr1.AutoSize = True
-            lbl_Addr1.Location = New System.Drawing.Point(10, 62)
+            lbl_Addr1.Location = New System.Drawing.Point(7, 16)
             lbl_Addr1.Name = "lbl_Addr1"
             lbl_Addr1.Size = New System.Drawing.Size(57, 13)
             lbl_Addr1.TabIndex = 4
@@ -149,7 +151,7 @@ Namespace Invoicing
             'lbl_Addr2
             '
             lbl_Addr2.AutoSize = True
-            lbl_Addr2.Location = New System.Drawing.Point(10, 88)
+            lbl_Addr2.Location = New System.Drawing.Point(7, 42)
             lbl_Addr2.Name = "lbl_Addr2"
             lbl_Addr2.Size = New System.Drawing.Size(57, 13)
             lbl_Addr2.TabIndex = 6
@@ -158,7 +160,7 @@ Namespace Invoicing
             'lbl_Addr3
             '
             lbl_Addr3.AutoSize = True
-            lbl_Addr3.Location = New System.Drawing.Point(10, 114)
+            lbl_Addr3.Location = New System.Drawing.Point(7, 68)
             lbl_Addr3.Name = "lbl_Addr3"
             lbl_Addr3.Size = New System.Drawing.Size(57, 13)
             lbl_Addr3.TabIndex = 8
@@ -167,7 +169,7 @@ Namespace Invoicing
             'lbl_CityState
             '
             lbl_CityState.AutoSize = True
-            lbl_CityState.Location = New System.Drawing.Point(10, 140)
+            lbl_CityState.Location = New System.Drawing.Point(7, 94)
             lbl_CityState.Name = "lbl_CityState"
             lbl_CityState.Size = New System.Drawing.Size(57, 13)
             lbl_CityState.TabIndex = 10
@@ -176,7 +178,7 @@ Namespace Invoicing
             'ZipLabel
             '
             ZipLabel.AutoSize = True
-            ZipLabel.Location = New System.Drawing.Point(42, 167)
+            ZipLabel.Location = New System.Drawing.Point(39, 121)
             ZipLabel.Name = "ZipLabel"
             ZipLabel.Size = New System.Drawing.Size(25, 13)
             ZipLabel.TabIndex = 14
@@ -280,11 +282,13 @@ Namespace Invoicing
             Me.pnl_2.Controls.Add(Me.ck_Reminder)
             Me.pnl_2.Controls.Add(Me.lbl_DescText)
             Me.pnl_2.Controls.Add(Me.lbl_DateOfSrvc)
+            Me.pnl_2.Controls.Add(Me.lbl_RecentAddrs)
+            Me.pnl_2.Controls.Add(Me.cmb_RecentAddr)
             Me.pnl_2.Controls.Add(Me.grp_Address)
             Me.pnl_2.Controls.Add(Me.dtp_DateOfSrvc)
             Me.pnl_2.Location = New System.Drawing.Point(3, 3)
             Me.pnl_2.Name = "pnl_2"
-            Me.pnl_2.Size = New System.Drawing.Size(840, 229)
+            Me.pnl_2.Size = New System.Drawing.Size(840, 193)
             Me.pnl_2.TabIndex = 101
             '
             'lbl_Rate
@@ -316,7 +320,7 @@ Namespace Invoicing
             '
             Me.btn_AddLine.AutoSize = True
             Me.btn_AddLine.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-            Me.btn_AddLine.Location = New System.Drawing.Point(168, 189)
+            Me.btn_AddLine.Location = New System.Drawing.Point(198, 157)
             Me.btn_AddLine.Name = "btn_AddLine"
             Me.btn_AddLine.Size = New System.Drawing.Size(99, 26)
             Me.btn_AddLine.TabIndex = 17
@@ -336,7 +340,7 @@ Namespace Invoicing
             '
             'tb_DescText
             '
-            Me.tb_DescText.Location = New System.Drawing.Point(83, 82)
+            Me.tb_DescText.Location = New System.Drawing.Point(83, 69)
             Me.tb_DescText.MaxLength = 4000
             Me.tb_DescText.Multiline = True
             Me.tb_DescText.Name = "tb_DescText"
@@ -346,9 +350,9 @@ Namespace Invoicing
             'ck_Reminder
             '
             Me.ck_Reminder.AutoSize = True
-            Me.ck_Reminder.Location = New System.Drawing.Point(263, 167)
+            Me.ck_Reminder.Location = New System.Drawing.Point(374, 131)
             Me.ck_Reminder.Name = "ck_Reminder"
-            Me.ck_Reminder.RightToLeft = System.Windows.Forms.RightToLeft.Yes
+            Me.ck_Reminder.RightToLeft = System.Windows.Forms.RightToLeft.No
             Me.ck_Reminder.Size = New System.Drawing.Size(105, 17)
             Me.ck_Reminder.TabIndex = 16
             Me.ck_Reminder.Text = "Create Reminder"
@@ -357,7 +361,7 @@ Namespace Invoicing
             'lbl_DescText
             '
             Me.lbl_DescText.AutoSize = True
-            Me.lbl_DescText.Location = New System.Drawing.Point(80, 65)
+            Me.lbl_DescText.Location = New System.Drawing.Point(80, 52)
             Me.lbl_DescText.Name = "lbl_DescText"
             Me.lbl_DescText.Size = New System.Drawing.Size(159, 13)
             Me.lbl_DescText.TabIndex = 11
@@ -366,7 +370,7 @@ Namespace Invoicing
             'lbl_DateOfSrvc
             '
             Me.lbl_DateOfSrvc.AutoSize = True
-            Me.lbl_DateOfSrvc.Location = New System.Drawing.Point(80, 144)
+            Me.lbl_DateOfSrvc.Location = New System.Drawing.Point(80, 131)
             Me.lbl_DateOfSrvc.Name = "lbl_DateOfSrvc"
             Me.lbl_DateOfSrvc.Size = New System.Drawing.Size(82, 13)
             Me.lbl_DateOfSrvc.TabIndex = 14
@@ -383,48 +387,46 @@ Namespace Invoicing
             Me.grp_Address.Controls.Add(lbl_CityState)
             Me.grp_Address.Controls.Add(Me.tb_City)
             Me.grp_Address.Controls.Add(Me.tb_State)
-            Me.grp_Address.Controls.Add(Me.lbl_RecentAddrs)
             Me.grp_Address.Controls.Add(ZipLabel)
-            Me.grp_Address.Controls.Add(Me.cmb_RecentAddr)
             Me.grp_Address.Controls.Add(Me.tb_Zip)
-            Me.grp_Address.Location = New System.Drawing.Point(450, 11)
+            Me.grp_Address.Location = New System.Drawing.Point(521, 36)
             Me.grp_Address.Name = "grp_Address"
-            Me.grp_Address.Size = New System.Drawing.Size(285, 205)
+            Me.grp_Address.Size = New System.Drawing.Size(226, 145)
             Me.grp_Address.TabIndex = 12
             Me.grp_Address.TabStop = False
             Me.grp_Address.Text = "Location"
             '
             'tb_Addr1
             '
-            Me.tb_Addr1.Location = New System.Drawing.Point(73, 59)
+            Me.tb_Addr1.Location = New System.Drawing.Point(70, 13)
             Me.tb_Addr1.Name = "tb_Addr1"
             Me.tb_Addr1.Size = New System.Drawing.Size(147, 20)
             Me.tb_Addr1.TabIndex = 5
             '
             'tb_Addr2
             '
-            Me.tb_Addr2.Location = New System.Drawing.Point(73, 85)
+            Me.tb_Addr2.Location = New System.Drawing.Point(70, 39)
             Me.tb_Addr2.Name = "tb_Addr2"
             Me.tb_Addr2.Size = New System.Drawing.Size(147, 20)
             Me.tb_Addr2.TabIndex = 6
             '
             'tb_Addr3
             '
-            Me.tb_Addr3.Location = New System.Drawing.Point(73, 111)
+            Me.tb_Addr3.Location = New System.Drawing.Point(70, 65)
             Me.tb_Addr3.Name = "tb_Addr3"
             Me.tb_Addr3.Size = New System.Drawing.Size(147, 20)
             Me.tb_Addr3.TabIndex = 7
             '
             'tb_City
             '
-            Me.tb_City.Location = New System.Drawing.Point(73, 137)
+            Me.tb_City.Location = New System.Drawing.Point(70, 91)
             Me.tb_City.Name = "tb_City"
             Me.tb_City.Size = New System.Drawing.Size(100, 20)
             Me.tb_City.TabIndex = 11
             '
             'tb_State
             '
-            Me.tb_State.Location = New System.Drawing.Point(179, 137)
+            Me.tb_State.Location = New System.Drawing.Point(176, 91)
             Me.tb_State.Name = "tb_State"
             Me.tb_State.Size = New System.Drawing.Size(41, 20)
             Me.tb_State.TabIndex = 13
@@ -432,7 +434,7 @@ Namespace Invoicing
             'lbl_RecentAddrs
             '
             Me.lbl_RecentAddrs.AutoSize = True
-            Me.lbl_RecentAddrs.Location = New System.Drawing.Point(10, 16)
+            Me.lbl_RecentAddrs.Location = New System.Drawing.Point(418, 12)
             Me.lbl_RecentAddrs.Name = "lbl_RecentAddrs"
             Me.lbl_RecentAddrs.Size = New System.Drawing.Size(97, 13)
             Me.lbl_RecentAddrs.TabIndex = 0
@@ -443,22 +445,22 @@ Namespace Invoicing
             Me.cmb_RecentAddr.DataSource = Me.CustomerRecentAddrsBindingSource
             Me.cmb_RecentAddr.DisplayMember = "Addr1"
             Me.cmb_RecentAddr.FormattingEnabled = True
-            Me.cmb_RecentAddr.Location = New System.Drawing.Point(13, 32)
+            Me.cmb_RecentAddr.Location = New System.Drawing.Point(521, 9)
             Me.cmb_RecentAddr.Name = "cmb_RecentAddr"
-            Me.cmb_RecentAddr.Size = New System.Drawing.Size(266, 21)
+            Me.cmb_RecentAddr.Size = New System.Drawing.Size(226, 21)
             Me.cmb_RecentAddr.TabIndex = 4
             Me.cmb_RecentAddr.ValueMember = "ID"
             '
             'tb_Zip
             '
-            Me.tb_Zip.Location = New System.Drawing.Point(73, 163)
+            Me.tb_Zip.Location = New System.Drawing.Point(70, 117)
             Me.tb_Zip.Name = "tb_Zip"
             Me.tb_Zip.Size = New System.Drawing.Size(100, 20)
             Me.tb_Zip.TabIndex = 15
             '
             'dtp_DateOfSrvc
             '
-            Me.dtp_DateOfSrvc.Location = New System.Drawing.Point(168, 141)
+            Me.dtp_DateOfSrvc.Location = New System.Drawing.Point(168, 128)
             Me.dtp_DateOfSrvc.Name = "dtp_DateOfSrvc"
             Me.dtp_DateOfSrvc.Size = New System.Drawing.Size(200, 20)
             Me.dtp_DateOfSrvc.TabIndex = 3
@@ -471,10 +473,10 @@ Namespace Invoicing
             Me.pnl_3.Controls.Add(Me.lbl_LineItems)
             Me.pnl_3.Controls.Add(Me.btn_CreateInv)
             Me.pnl_3.Controls.Add(Me.grp_InvDets)
-            Me.pnl_3.Location = New System.Drawing.Point(3, 238)
+            Me.pnl_3.Location = New System.Drawing.Point(3, 202)
             Me.pnl_3.Name = "pnl_3"
             Me.pnl_3.Padding = New System.Windows.Forms.Padding(5)
-            Me.pnl_3.Size = New System.Drawing.Size(840, 266)
+            Me.pnl_3.Size = New System.Drawing.Size(840, 303)
             Me.pnl_3.TabIndex = 102
             Me.pnl_3.Visible = False
             '
@@ -482,7 +484,7 @@ Namespace Invoicing
             '
             Me.btn_CancelInv.AutoSize = True
             Me.btn_CancelInv.ForeColor = System.Drawing.Color.Red
-            Me.btn_CancelInv.Location = New System.Drawing.Point(740, 233)
+            Me.btn_CancelInv.Location = New System.Drawing.Point(742, 270)
             Me.btn_CancelInv.Name = "btn_CancelInv"
             Me.btn_CancelInv.Size = New System.Drawing.Size(88, 23)
             Me.btn_CancelInv.TabIndex = 19
@@ -505,7 +507,7 @@ Namespace Invoicing
             Me.dg_LineItems.ReadOnly = True
             Me.dg_LineItems.RowHeadersVisible = False
             Me.dg_LineItems.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-            Me.dg_LineItems.Size = New System.Drawing.Size(828, 108)
+            Me.dg_LineItems.Size = New System.Drawing.Size(828, 162)
             Me.dg_LineItems.TabIndex = 18
             '
             'CITypeIDDataGridViewTextBoxColumn
@@ -527,8 +529,8 @@ Namespace Invoicing
             '
             Me.RateDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
             Me.RateDataGridViewTextBoxColumn.DataPropertyName = "Rate"
-            DataGridViewCellStyle1.Format = "C2"
-            Me.RateDataGridViewTextBoxColumn.DefaultCellStyle = DataGridViewCellStyle1
+            DataGridViewCellStyle22.Format = "C2"
+            Me.RateDataGridViewTextBoxColumn.DefaultCellStyle = DataGridViewCellStyle22
             Me.RateDataGridViewTextBoxColumn.HeaderText = "Rate"
             Me.RateDataGridViewTextBoxColumn.Name = "RateDataGridViewTextBoxColumn"
             Me.RateDataGridViewTextBoxColumn.ReadOnly = True
@@ -538,8 +540,8 @@ Namespace Invoicing
             '
             Me.RenderedOnDateDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
             Me.RenderedOnDateDataGridViewTextBoxColumn.DataPropertyName = "RenderedOnDate"
-            DataGridViewCellStyle2.Format = "d"
-            Me.RenderedOnDateDataGridViewTextBoxColumn.DefaultCellStyle = DataGridViewCellStyle2
+            DataGridViewCellStyle23.Format = "d"
+            Me.RenderedOnDateDataGridViewTextBoxColumn.DefaultCellStyle = DataGridViewCellStyle23
             Me.RenderedOnDateDataGridViewTextBoxColumn.HeaderText = "Date of service"
             Me.RenderedOnDateDataGridViewTextBoxColumn.Name = "RenderedOnDateDataGridViewTextBoxColumn"
             Me.RenderedOnDateDataGridViewTextBoxColumn.ReadOnly = True
@@ -588,10 +590,10 @@ Namespace Invoicing
             '
             Me.btn_CreateInv.AutoSize = True
             Me.btn_CreateInv.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-            Me.btn_CreateInv.Location = New System.Drawing.Point(459, 160)
+            Me.btn_CreateInv.Location = New System.Drawing.Point(461, 207)
             Me.btn_CreateInv.Name = "btn_CreateInv"
             Me.btn_CreateInv.Size = New System.Drawing.Size(111, 76)
-            Me.btn_CreateInv.TabIndex = 16
+            Me.btn_CreateInv.TabIndex = 18
             Me.btn_CreateInv.Text = "Create Invoice"
             Me.btn_CreateInv.UseVisualStyleBackColor = True
             '
@@ -602,7 +604,7 @@ Namespace Invoicing
             Me.grp_InvDets.Controls.Add(Me.lbl_PostDate)
             Me.grp_InvDets.Controls.Add(Me.lbl_DueDate)
             Me.grp_InvDets.Controls.Add(Me.ck_Print)
-            Me.grp_InvDets.Location = New System.Drawing.Point(223, 146)
+            Me.grp_InvDets.Location = New System.Drawing.Point(225, 193)
             Me.grp_InvDets.Name = "grp_InvDets"
             Me.grp_InvDets.Size = New System.Drawing.Size(200, 100)
             Me.grp_InvDets.TabIndex = 15
@@ -659,7 +661,7 @@ Namespace Invoicing
             '
             Me.tp_History.BackColor = System.Drawing.SystemColors.Control
             Me.tp_History.Controls.Add(Me.lbl_VoidInfo)
-            Me.tp_History.Controls.Add(Me.DataGridView1)
+            Me.tp_History.Controls.Add(Me.dg_HistoryLineItems)
             Me.tp_History.Controls.Add(Me.lbl_HistoryLines)
             Me.tp_History.Controls.Add(Me.lbl_VoidReason)
             Me.tp_History.Controls.Add(Me.tb_VoidReason)
@@ -676,34 +678,34 @@ Namespace Invoicing
             'lbl_VoidInfo
             '
             Me.lbl_VoidInfo.AutoSize = True
-            Me.lbl_VoidInfo.Location = New System.Drawing.Point(239, 377)
+            Me.lbl_VoidInfo.Location = New System.Drawing.Point(240, 405)
             Me.lbl_VoidInfo.Name = "lbl_VoidInfo"
             Me.lbl_VoidInfo.Size = New System.Drawing.Size(380, 13)
             Me.lbl_VoidInfo.TabIndex = 20
             Me.lbl_VoidInfo.Text = "You must provide a reason if you want to void the selected Invoice from above."
             '
-            'DataGridView1
+            'dg_HistoryLineItems
             '
-            Me.DataGridView1.AllowUserToAddRows = False
-            Me.DataGridView1.AllowUserToDeleteRows = False
-            Me.DataGridView1.AutoGenerateColumns = False
-            Me.DataGridView1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
-            Me.DataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-            Me.DataGridView1.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.CITypeIDDataGridViewTextBoxColumn1, Me.RateDataGridViewTextBoxColumn1, Me.RenderedOnDateDataGridViewTextBoxColumn1, Me.DescTextDataGridViewTextBoxColumn1, Me.Addr1DataGridViewTextBoxColumn1})
-            Me.DataGridView1.DataMember = "CustomInvoice_LineItems"
-            Me.DataGridView1.DataSource = Me.HistoryInv
-            Me.DataGridView1.Dock = System.Windows.Forms.DockStyle.Top
-            Me.DataGridView1.Location = New System.Drawing.Point(3, 193)
-            Me.DataGridView1.Name = "DataGridView1"
-            Me.DataGridView1.ReadOnly = True
-            Me.DataGridView1.RowHeadersVisible = False
-            Me.DataGridView1.Size = New System.Drawing.Size(847, 150)
-            Me.DataGridView1.TabIndex = 1
+            Me.dg_HistoryLineItems.AllowUserToAddRows = False
+            Me.dg_HistoryLineItems.AllowUserToDeleteRows = False
+            Me.dg_HistoryLineItems.AutoGenerateColumns = False
+            Me.dg_HistoryLineItems.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
+            Me.dg_HistoryLineItems.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+            Me.dg_HistoryLineItems.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.CITypeIDDataGridViewTextBoxColumn1, Me.RateDataGridViewTextBoxColumn1, Me.RenderedOnDateDataGridViewTextBoxColumn1, Me.DescTextDataGridViewTextBoxColumn1, Me.Addr1DataGridViewTextBoxColumn1})
+            Me.dg_HistoryLineItems.DataMember = "CustomInvoice_LineItems"
+            Me.dg_HistoryLineItems.DataSource = Me.HistoryInv
+            Me.dg_HistoryLineItems.Dock = System.Windows.Forms.DockStyle.Top
+            Me.dg_HistoryLineItems.Location = New System.Drawing.Point(3, 193)
+            Me.dg_HistoryLineItems.Name = "dg_HistoryLineItems"
+            Me.dg_HistoryLineItems.ReadOnly = True
+            Me.dg_HistoryLineItems.RowHeadersVisible = False
+            Me.dg_HistoryLineItems.Size = New System.Drawing.Size(847, 197)
+            Me.dg_HistoryLineItems.TabIndex = 1
             '
             'CITypeIDDataGridViewTextBoxColumn1
             '
             Me.CITypeIDDataGridViewTextBoxColumn1.DataPropertyName = "CI_TypeID"
-            Me.CITypeIDDataGridViewTextBoxColumn1.DataSource = Me.CustomInvoiceLineTypesBindingSource
+            Me.CITypeIDDataGridViewTextBoxColumn1.DataSource = Me.HistoryInvoiceLineTypesBindingSource
             Me.CITypeIDDataGridViewTextBoxColumn1.DisplayMember = "NAME"
             Me.CITypeIDDataGridViewTextBoxColumn1.DisplayStyle = System.Windows.Forms.DataGridViewComboBoxDisplayStyle.[Nothing]
             Me.CITypeIDDataGridViewTextBoxColumn1.HeaderText = "Line Type"
@@ -713,11 +715,21 @@ Namespace Invoicing
             Me.CITypeIDDataGridViewTextBoxColumn1.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic
             Me.CITypeIDDataGridViewTextBoxColumn1.ValueMember = "CI_TypeID"
             '
+            'HistoryInvoiceLineTypesBindingSource
+            '
+            Me.HistoryInvoiceLineTypesBindingSource.DataMember = "CustomInvoice_LineTypes"
+            Me.HistoryInvoiceLineTypesBindingSource.DataSource = Me.HistoryInv
+            '
+            'HistoryInv
+            '
+            Me.HistoryInv.DataSetName = "ds_Invoicing"
+            Me.HistoryInv.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema
+            '
             'RateDataGridViewTextBoxColumn1
             '
             Me.RateDataGridViewTextBoxColumn1.DataPropertyName = "Rate"
-            DataGridViewCellStyle3.Format = "C2"
-            Me.RateDataGridViewTextBoxColumn1.DefaultCellStyle = DataGridViewCellStyle3
+            DataGridViewCellStyle24.Format = "C2"
+            Me.RateDataGridViewTextBoxColumn1.DefaultCellStyle = DataGridViewCellStyle24
             Me.RateDataGridViewTextBoxColumn1.HeaderText = "Rate"
             Me.RateDataGridViewTextBoxColumn1.Name = "RateDataGridViewTextBoxColumn1"
             Me.RateDataGridViewTextBoxColumn1.ReadOnly = True
@@ -725,8 +737,8 @@ Namespace Invoicing
             'RenderedOnDateDataGridViewTextBoxColumn1
             '
             Me.RenderedOnDateDataGridViewTextBoxColumn1.DataPropertyName = "RenderedOnDate"
-            DataGridViewCellStyle4.Format = "d"
-            Me.RenderedOnDateDataGridViewTextBoxColumn1.DefaultCellStyle = DataGridViewCellStyle4
+            DataGridViewCellStyle25.Format = "d"
+            Me.RenderedOnDateDataGridViewTextBoxColumn1.DefaultCellStyle = DataGridViewCellStyle25
             Me.RenderedOnDateDataGridViewTextBoxColumn1.HeaderText = "Date of Service"
             Me.RenderedOnDateDataGridViewTextBoxColumn1.Name = "RenderedOnDateDataGridViewTextBoxColumn1"
             Me.RenderedOnDateDataGridViewTextBoxColumn1.ReadOnly = True
@@ -745,11 +757,6 @@ Namespace Invoicing
             Me.Addr1DataGridViewTextBoxColumn1.Name = "Addr1DataGridViewTextBoxColumn1"
             Me.Addr1DataGridViewTextBoxColumn1.ReadOnly = True
             '
-            'HistoryInv
-            '
-            Me.HistoryInv.DataSetName = "ds_Invoicing"
-            Me.HistoryInv.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema
-            '
             'lbl_HistoryLines
             '
             Me.lbl_HistoryLines.Dock = System.Windows.Forms.DockStyle.Top
@@ -758,7 +765,7 @@ Namespace Invoicing
             Me.lbl_HistoryLines.Name = "lbl_HistoryLines"
             Me.lbl_HistoryLines.Size = New System.Drawing.Size(847, 20)
             Me.lbl_HistoryLines.TabIndex = 19
-            Me.lbl_HistoryLines.Text = "Invoice Line Items"
+            Me.lbl_HistoryLines.Text = "Line Items"
             '
             'lbl_VoidReason
             '
@@ -771,7 +778,7 @@ Namespace Invoicing
             '
             'tb_VoidReason
             '
-            Me.tb_VoidReason.Location = New System.Drawing.Point(302, 393)
+            Me.tb_VoidReason.Location = New System.Drawing.Point(303, 421)
             Me.tb_VoidReason.Multiline = True
             Me.tb_VoidReason.Name = "tb_VoidReason"
             Me.tb_VoidReason.Size = New System.Drawing.Size(230, 56)
@@ -781,7 +788,7 @@ Namespace Invoicing
             '
             Me.btn_VoidInv.AutoSize = True
             Me.btn_VoidInv.ForeColor = System.Drawing.Color.Red
-            Me.btn_VoidInv.Location = New System.Drawing.Point(385, 455)
+            Me.btn_VoidInv.Location = New System.Drawing.Point(386, 483)
             Me.btn_VoidInv.Name = "btn_VoidInv"
             Me.btn_VoidInv.Size = New System.Drawing.Size(76, 23)
             Me.btn_VoidInv.TabIndex = 2
@@ -818,8 +825,8 @@ Namespace Invoicing
             'TimeCreatedDataGridViewTextBoxColumn
             '
             Me.TimeCreatedDataGridViewTextBoxColumn.DataPropertyName = "Time_Created"
-            DataGridViewCellStyle5.Format = "d"
-            Me.TimeCreatedDataGridViewTextBoxColumn.DefaultCellStyle = DataGridViewCellStyle5
+            DataGridViewCellStyle26.Format = "d"
+            Me.TimeCreatedDataGridViewTextBoxColumn.DefaultCellStyle = DataGridViewCellStyle26
             Me.TimeCreatedDataGridViewTextBoxColumn.HeaderText = "Time Created"
             Me.TimeCreatedDataGridViewTextBoxColumn.Name = "TimeCreatedDataGridViewTextBoxColumn"
             Me.TimeCreatedDataGridViewTextBoxColumn.ReadOnly = True
@@ -827,8 +834,8 @@ Namespace Invoicing
             'DueDateDataGridViewTextBoxColumn
             '
             Me.DueDateDataGridViewTextBoxColumn.DataPropertyName = "DueDate"
-            DataGridViewCellStyle6.Format = "d"
-            Me.DueDateDataGridViewTextBoxColumn.DefaultCellStyle = DataGridViewCellStyle6
+            DataGridViewCellStyle27.Format = "d"
+            Me.DueDateDataGridViewTextBoxColumn.DefaultCellStyle = DataGridViewCellStyle27
             Me.DueDateDataGridViewTextBoxColumn.HeaderText = "Due Date"
             Me.DueDateDataGridViewTextBoxColumn.Name = "DueDateDataGridViewTextBoxColumn"
             Me.DueDateDataGridViewTextBoxColumn.ReadOnly = True
@@ -836,8 +843,8 @@ Namespace Invoicing
             'PostDateDataGridViewTextBoxColumn
             '
             Me.PostDateDataGridViewTextBoxColumn.DataPropertyName = "PostDate"
-            DataGridViewCellStyle7.Format = "d"
-            Me.PostDateDataGridViewTextBoxColumn.DefaultCellStyle = DataGridViewCellStyle7
+            DataGridViewCellStyle28.Format = "d"
+            Me.PostDateDataGridViewTextBoxColumn.DefaultCellStyle = DataGridViewCellStyle28
             Me.PostDateDataGridViewTextBoxColumn.HeaderText = "Post Date"
             Me.PostDateDataGridViewTextBoxColumn.Name = "PostDateDataGridViewTextBoxColumn"
             Me.PostDateDataGridViewTextBoxColumn.ReadOnly = True
@@ -908,7 +915,8 @@ Namespace Invoicing
             Me.grp_InvDets.PerformLayout()
             Me.tp_History.ResumeLayout(False)
             Me.tp_History.PerformLayout()
-            CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).EndInit()
+            CType(Me.dg_HistoryLineItems, System.ComponentModel.ISupportInitialize).EndInit()
+            CType(Me.HistoryInvoiceLineTypesBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
             CType(Me.HistoryInv, System.ComponentModel.ISupportInitialize).EndInit()
             CType(Me.dg_InvHistory, System.ComponentModel.ISupportInitialize).EndInit()
             CType(Me.CustomInvoicesBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
@@ -962,7 +970,7 @@ Namespace Invoicing
         Friend WithEvents tp_History As System.Windows.Forms.TabPage
         Friend WithEvents dg_InvHistory As System.Windows.Forms.DataGridView
         Friend WithEvents CustomInvoicesBindingSource As System.Windows.Forms.BindingSource
-        Friend WithEvents DataGridView1 As System.Windows.Forms.DataGridView
+        Friend WithEvents dg_HistoryLineItems As System.Windows.Forms.DataGridView
         Friend WithEvents HistoryInv As ds_Invoicing
         Friend WithEvents InvoiceHistoryBindingSource As System.Windows.Forms.BindingSource
         Friend WithEvents lbl_VoidReason As System.Windows.Forms.Label
@@ -974,11 +982,6 @@ Namespace Invoicing
         Friend WithEvents RenderedOnDateDataGridViewTextBoxColumn As System.Windows.Forms.DataGridViewTextBoxColumn
         Friend WithEvents Addr1DataGridViewTextBoxColumn As System.Windows.Forms.DataGridViewTextBoxColumn
         Friend WithEvents DescTextDataGridViewTextBoxColumn As System.Windows.Forms.DataGridViewTextBoxColumn
-        Friend WithEvents CITypeIDDataGridViewTextBoxColumn1 As System.Windows.Forms.DataGridViewComboBoxColumn
-        Friend WithEvents RateDataGridViewTextBoxColumn1 As System.Windows.Forms.DataGridViewTextBoxColumn
-        Friend WithEvents RenderedOnDateDataGridViewTextBoxColumn1 As System.Windows.Forms.DataGridViewTextBoxColumn
-        Friend WithEvents DescTextDataGridViewTextBoxColumn1 As System.Windows.Forms.DataGridViewTextBoxColumn
-        Friend WithEvents Addr1DataGridViewTextBoxColumn1 As System.Windows.Forms.DataGridViewTextBoxColumn
         Friend WithEvents lbl_HistoryLines As System.Windows.Forms.Label
         Friend WithEvents InvoiceRefNumDataGridViewTextBoxColumn As System.Windows.Forms.DataGridViewTextBoxColumn
         Friend WithEvents TimeCreatedDataGridViewTextBoxColumn As System.Windows.Forms.DataGridViewTextBoxColumn
@@ -987,5 +990,11 @@ Namespace Invoicing
         Friend WithEvents InsertedUserDataGridViewTextBoxColumn As System.Windows.Forms.DataGridViewTextBoxColumn
         Friend WithEvents lbl_InvHistory As System.Windows.Forms.Label
         Friend WithEvents lbl_VoidInfo As System.Windows.Forms.Label
-       End Class
+        Friend WithEvents HistoryInvoiceLineTypesBindingSource As System.Windows.Forms.BindingSource
+        Friend WithEvents CITypeIDDataGridViewTextBoxColumn1 As System.Windows.Forms.DataGridViewComboBoxColumn
+        Friend WithEvents RateDataGridViewTextBoxColumn1 As System.Windows.Forms.DataGridViewTextBoxColumn
+        Friend WithEvents RenderedOnDateDataGridViewTextBoxColumn1 As System.Windows.Forms.DataGridViewTextBoxColumn
+        Friend WithEvents DescTextDataGridViewTextBoxColumn1 As System.Windows.Forms.DataGridViewTextBoxColumn
+        Friend WithEvents Addr1DataGridViewTextBoxColumn1 As System.Windows.Forms.DataGridViewTextBoxColumn
+    End Class
 End Namespace

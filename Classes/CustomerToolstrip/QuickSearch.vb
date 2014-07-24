@@ -16,6 +16,7 @@
 
         Private Sub ts_tb_QuickSearch_KeyDown(sender As Object, e As Windows.Forms.KeyEventArgs) Handles Me.KeyDown
             If (e.KeyCode = Keys.Enter) Then
+                e.SuppressKeyPress = True
                 RaiseEvent EnterPressed()
             End If
         End Sub

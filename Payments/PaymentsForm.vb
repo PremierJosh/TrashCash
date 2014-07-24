@@ -285,5 +285,10 @@
             RaiseEvent CustomerPaymentMod(custNum)
         End Sub
 
+        Private Sub tb_Amount_KeyDown(sender As System.Object, e As System.Windows.Forms.KeyEventArgs) Handles tb_RefNum.KeyDown, tb_Amount.KeyDown
+            If (e.KeyCode = Keys.Enter) Then
+                btn_AddPayment.PerformClick()
+            End If
+        End Sub
     End Class
 End Namespace

@@ -19,7 +19,7 @@ Namespace Invoicing
                 ' recent addr fill and select nothing
                 RaTA.Fill(Invoicing.Customer_RecentAddrs, CurrentCustomer)
                 ' fill history tables
-                CiTA.Fill(HistoryInv.CustomInvoices, CurrentCustomer)
+               CiTA.Fill(HistoryInv.CustomInvoices, CurrentCustomer)
             End Set
         End Property
 
@@ -35,8 +35,7 @@ Namespace Invoicing
         End Sub
 
         Private Sub CustomInvoicingForm_Load(sender As Object, e As System.EventArgs) Handles Me.Load
-            ' line type fill
-            LtTA.Fill(Invoicing.CustomInvoice_LineTypes)
+          
             End Sub
 
         Private Sub CustomerChanged(ByVal customerNumber As Integer) Handles CustomerToolstrip1.CustomerChanging
@@ -280,7 +279,7 @@ Namespace Invoicing
                         End If
                     End If
                 Else
-                    MessageBox.Show("This invoice was already voided on " & row.VoidTime & " by user" & row.VoidUser & ". Reason given: " & vbCrLf & row.VoidReason,
+                    MessageBox.Show("This invoice was already voided on " & row.VoidTime & " by user: " & row.VoidUser & ". Reason given: " & vbCrLf & row.VoidReason,
                                     "Already Voided", MessageBoxButtons.OK, MessageBoxIcon.Hand)
                 End If
             Else
@@ -296,6 +295,10 @@ Namespace Invoicing
             InitializeComponent()
 
             ' Add any initialization after the InitializeComponent() call.
+            ' line type fill
+            LtTA.Fill(HistoryInv.CustomInvoice_LineTypes)
+            LtTA.Fill(Invoicing.CustomInvoice_LineTypes)
+
             If (customerNumber <> 0) Then
                 CustomerToolstrip1.Enabled = False
                 CustomerToolstrip1.HideQuickSearch()
@@ -333,11 +336,18 @@ Namespace Invoicing
 
         End Sub
 
-        'Private Sub dg_InvHistory_SelectionChanged(sender As System.Object, e As System.EventArgs) Handles dg_InvHistory.SelectionChanged
-        '    ' clear incase no line items are returned
-        '    HistoryInv.CustomInvoice_LineItems.Clear()
-        '    LiTA.Fill(HistoryInv.CustomInvoice_LineItems,
-        '                                             CType(CType(dg_InvHistory.SelectedRows(0).DataBoundItem, DataRowView).Row, ds_Invoicing.CustomInvoicesRow).CI_ID)
-        'End Sub
-    End Class
+        Private Sub dg_InvHistory_SelectionChanged(sender As System.Object, e As System.EventArgs) Handles dg_InvHistory.SelectionChanged
+            ' clear incase no line items are returned
+            HistoryInv.CustomInvoice_LineItems.Clear()
+            Dim row As ds_Invoicing.CustomInvoicesRow = CType(dg_InvHistory.SelectedRows(0).DataBoundItem, DataRowView).Row
+            LiTA.Fill(HistoryInv.CustomInvoice_LineItems, row.CI_ID)
+        End Sub
+
+        Private Sub tb_DescText_KeyDown(sender As System.Object, e As System.Windows.Forms.KeyEventArgs) Handles tb_DescText.KeyDown
+            If (e.KeyCode = Keys.Enter) Then
+                btn_AddLine.PerformClick()
+            End If
+        End Sub
+
+      End Class
 End Namespace
