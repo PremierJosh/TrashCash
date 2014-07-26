@@ -444,6 +444,8 @@ Namespace RecurringService
         Private Sub ck_EndDate_Click(sender As System.Object, e As System.EventArgs) Handles ck_EndDate.Click
             If (ck_EndDate.Checked = True) Then
                 dtp_EndDate.Visible = True
+                ' check for credits with this end date
+                CreditCheckFoo()
             Else
                 ' not going to credit if we dont have an end date
                 Crediting = 0
@@ -710,6 +712,11 @@ Namespace RecurringService
         ' this is the minimum date we can move the end date back. this will either be the service start, or the batch id of 99999 end billing date
         Private _minEndDate As Date
         Private Sub dtp_EndDate_ValueChanged(sender As System.Object, e As System.EventArgs) Handles dtp_EndDate.ValueChanged
+            CreditCheckFoo()
+        End Sub
+
+        ' sub to check if a credit will be issued
+        Private Sub CreditCheckFoo()
             If (ck_EndDate.Checked = True) Then
                 ' checking if its a valid date
                 If (_minEndDate <= dtp_EndDate.Value.Date) Then
