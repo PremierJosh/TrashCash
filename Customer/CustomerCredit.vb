@@ -114,12 +114,13 @@ Namespace Customer
                                                                         "Reason:" & vbCrLf & tb_Reason.Text, "Confirm Credit for Customer", MessageBoxButtons.YesNo, MessageBoxIcon.Question)
                     If (confirmPrompt = Windows.Forms.DialogResult.Yes) Then
                         ' get service type row
-                        Dim row As ds_Customer.Customer_RecurringServiceTypesRow = CType(cmb_Types.SelectedItem, DataRowView).Row
+                        Dim serviceListID As String = CType(cmb_Types.SelectedItem, DataRowView).Row.Item("ServiceListID")
+                        Dim serviceTypeID As Integer = CType(cmb_Types.SelectedItem, DataRowView).Row.Item("ServiceTypeID")
                         ' create creditObj
                         Dim creditObj As New QBCreditObj
                         With creditObj
                             .CustomerListID = GetCustomerListID(CurrentCustomer)
-                            .ItemListID = row.ServiceListID
+                            .ItemListID = serviceListID
                             .TotalAmount = tb_Amount.Text
                             .Desc = tb_Reason.Text
                             .IsToBePrinted = ck_Print.Checked
@@ -127,7 +128,7 @@ Namespace Customer
                         Dim resp As Integer = QBRequests.CreditMemoAdd(creditObj)
                         If (resp = 0) Then
                             Try
-                                Customer_CreditsTableAdapter.Insert(CurrentCustomer, row.ServiceTypeID, creditObj.TxnID, creditObj.TotalAmount, Date.Now, tb_Reason.Text, CurrentUser.USER_NAME,
+                                Customer_CreditsTableAdapter.Insert(CurrentCustomer, serviceTypeID, creditObj.TxnID, creditObj.TotalAmount, Date.Now, tb_Reason.Text, CurrentUser.USER_NAME,
                                                                     False, Nothing, Nothing, Nothing)
                             Catch ex As SqlException
                                 MessageBox.Show("Message: " & ex.Message & vbCrLf & "LineNumber: " & ex.LineNumber,
