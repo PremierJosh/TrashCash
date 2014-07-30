@@ -694,6 +694,10 @@ Namespace RecurringService
                 If (result = Windows.Forms.DialogResult.Yes) Then
                     Cursor = Cursors.WaitCursor
                     Try
+                        ' bringing over end date
+                        If (ck_EndDate.Checked) Then
+                            RecurringServiceRow.RecurringServiceEndDate = dtp_EndDate.Value
+                        End If
                         RecurringServiceRow.Approved = True
                         RecurringServiceRow.EndEdit()
                         RsTA.Update(RecurringServiceRow)

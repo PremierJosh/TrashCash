@@ -289,6 +289,12 @@ Public Class TrashCashHome
                 Customer.UC_Quickbooks.FetchInvoices(0)
                 Customer.UC_Quickbooks.FetchPayments()
                 Customer.UC_RecurringService.CurrentCustomer = Customer.CurrentCustomer
+                If (Customer.PayForm IsNot Nothing) Then
+                    Customer.PayForm.RefreshQueuedPayments()
+                End If
+            End If
+            If (PayForm IsNot Nothing) Then
+                PayForm.RefreshQueuedPayments()
             End If
         End If
     End Sub

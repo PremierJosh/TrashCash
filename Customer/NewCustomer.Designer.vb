@@ -150,7 +150,7 @@
             Me.ck_SingleInv.RightToLeft = System.Windows.Forms.RightToLeft.Yes
             Me.ck_SingleInv.Size = New System.Drawing.Size(141, 17)
             Me.ck_SingleInv.TabIndex = 1
-            Me.ck_SingleInv.Text = "Recieves Single Invoice"
+            Me.ck_SingleInv.Text = "Receives Single Invoice"
             Me.ck_SingleInv.UseVisualStyleBackColor = True
             '
             'ck_PrintInv
