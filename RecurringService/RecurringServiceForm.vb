@@ -160,6 +160,28 @@ Namespace RecurringService
                     Else
                         Invoiced = False
                     End If
+                    ' calculate how many days are marked for pickup
+                    If (RecurringServiceRow.PU_Sunday) Then
+                        _pickupDayCount += 1
+                    End If
+                    If (RecurringServiceRow.PU_Monday) Then
+                        _pickupDayCount += 1
+                    End If
+                    If (RecurringServiceRow.PU_Tuesday) Then
+                        _pickupDayCount += 1
+                    End If
+                    If (RecurringServiceRow.PU_Wednesday) Then
+                        _pickupDayCount += 1
+                    End If
+                    If (RecurringServiceRow.PU_Thursday) Then
+                        _pickupDayCount += 1
+                    End If
+                    If (RecurringServiceRow.PU_Friday) Then
+                        _pickupDayCount += 1
+                    End If
+                    If (RecurringServiceRow.PU_Saturday) Then
+                        _pickupDayCount += 1
+                    End If
                 Else
                     ' creating new row with dummy values
                     Dim row As ds_RecurringService.RecurringServiceRow = Ds_RecurringService.RecurringService.NewRecurringServiceRow
@@ -192,7 +214,11 @@ Namespace RecurringService
         Friend Event ServiceApproved()
 
         ' bool property for service approval
-        Private WriteOnly Property Approved As Boolean
+        Private _approved As Boolean
+        Private Property Approved As Boolean
+            Get
+                Return _approved
+            End Get
             Set(value As Boolean)
                 If (value = False) Then
                     ' show approve and delete buttons
@@ -303,101 +329,106 @@ Namespace RecurringService
 
         End Sub
 
+        Private _pickupDayCount As Integer
+
 
         Private Function CreditFoo() As Boolean
-            Dim resList As New System.Text.StringBuilder
-            ' bools so i know what to do at the end
-            Dim voidCreditsOverlap As Boolean = False
-            Dim voidEndCredit As Boolean = False
-            Dim newCredit As Boolean = False
+            ' only need to do this for approved services, otherwise return true
+            If (Approved) Then
+                Dim resList As New System.Text.StringBuilder
+                ' bools so i know what to do at the end
+                Dim voidCreditsOverlap As Boolean = False
+                Dim voidEndCredit As Boolean = False
+                Dim newCredit As Boolean = False
 
-            ' string var for different reasons end credit could be voided
-            Dim voidEndCreditReason As String = ""
-            If (ck_EndDate.Checked) Then
-                ' end date set, was there an end date before?
-                If (Not RecurringServiceRow.IsRecurringServiceEndDateNull) Then
-                    ' date was there before, is there an end date credit
-                    If (EndDateCreditRow IsNot Nothing) Then
-                        ' was it voided?
-                        If (Not EndDateCreditRow.Voided) Then
-                            ' needs to be voided
-                            resList.Append("- Void Previous End Date Credit of " & FormatCurrency(EndDateCreditRow.CreditAmount) & " for previous End Date " &
-                                           FormatDateTime(EndDateCreditRow.New_EndDate, DateFormat.ShortDate)).AppendLine()
-                            voidEndCredit = True
-                            ' set the reason here
-                            voidEndCreditReason = "Credit for Date overlaped with End Date. New End Date: " & FormatDateTime(dtp_EndDate.Value, DateFormat.ShortDate) &
-                                                    " | Billed Through: " & FormatDateTime(_billThruDate, DateFormat.ShortDate)
+                ' string var for different reasons end credit could be voided
+                Dim voidEndCreditReason As String = ""
+                If (ck_EndDate.Checked) Then
+                    ' end date set, was there an end date before?
+                    If (Not RecurringServiceRow.IsRecurringServiceEndDateNull) Then
+                        ' date was there before, is there an end date credit
+                        If (EndDateCreditRow IsNot Nothing) Then
+                            ' was it voided?
+                            If (Not EndDateCreditRow.Voided) Then
+                                ' needs to be voided
+                                resList.Append("- Void Previous End Date Credit of " & FormatCurrency(EndDateCreditRow.CreditAmount) & " for previous End Date " &
+                                               FormatDateTime(EndDateCreditRow.New_EndDate, DateFormat.ShortDate)).AppendLine()
+                                voidEndCredit = True
+                                ' set the reason here
+                                voidEndCreditReason = "Credit for Date overlaped with End Date. New End Date: " & FormatDateTime(dtp_EndDate.Value, DateFormat.ShortDate) &
+                                                        " | Billed Through: " & FormatDateTime(_billThruDate, DateFormat.ShortDate)
+                            Else
+                                ' already voided, does new one need to be issued now - also check for overlaps
+                            End If
                         Else
-                            ' already voided, does new one need to be issued now - also check for overlaps
+                            ' no end date credit before, do we need to make one now
                         End If
                     Else
-                        ' no end date credit before, do we need to make one now
+                        ' no date before, do we need to create a credit now and void credits for overlap
+                    End If
+                    ' end date is set, always need to check for new credit and void overlap
+                    If (Crediting > 0) Then
+                        resList.Append("- Service invoiced through " & FormatDateTime(_billThruDate, DateFormat.ShortDate) & ". New Credit of " &
+                                       FormatCurrency(Crediting) & " will be issued to correct.").AppendLine()
+                        newCredit = True
+                    End If
+                    If (_dvEndDateOverlap.Count > 0) Then
+                        resList.Append("- Keeping this End Date will Void " & _dvEndDateOverlap.Count & " Credit(s) for a total of " &
+                                       FormatCurrency(_dvEndDateOverlap.Table.Compute("SUM(CreditAmount)", "Voided = 0 AND DateOfCredit >= '" & dtp_EndDate.Value.Date & "'"))).AppendLine()
+                        voidCreditsOverlap = True
                     End If
                 Else
-                    ' no date before, do we need to create a credit now and void credits for overlap
-                End If
-                ' end date is set, always need to check for new credit and void overlap
-                If (Crediting > 0) Then
-                    resList.Append("- Service invoiced through " & FormatDateTime(_billThruDate, DateFormat.ShortDate) & ". New Credit of " &
-                                   FormatCurrency(Crediting) & " will be issued to correct.").AppendLine()
-                    newCredit = True
-                End If
-                If (_dvEndDateOverlap.Count > 0) Then
-                    resList.Append("- Keeping this End Date will Void " & _dvEndDateOverlap.Count & " Credit(s) for a total of " &
-                                   FormatCurrency(_dvEndDateOverlap.Table.Compute("SUM(CreditAmount)", "Voided = 0 AND DateOfCredit >= '" & dtp_EndDate.Value.Date & "'"))).AppendLine()
-                    voidCreditsOverlap = True
-                End If
-            Else
-                ' no end date set now. was there one before?
-                If (Not RecurringServiceRow.IsRecurringServiceEndDateNull) Then
-                    ' there was a date before, was a credit issued for it?
-                    If (EndDateCreditRow IsNot Nothing) Then
-                        ' credit was issued before, was it voided?
-                        If (Not EndDateCreditRow.Voided) Then
-                            ' not voided, needs to be voided to resume billing
-                            voidEndCredit = True
-                            resList.Append("- Previous End Date Credit of " & FormatCurrency(EndDateCreditRow.CreditAmount) & " will be voided")
-                            voidEndCreditReason = "Service continuation."
+                    ' no end date set now. was there one before?
+                    If (Not RecurringServiceRow.IsRecurringServiceEndDateNull) Then
+                        ' there was a date before, was a credit issued for it?
+                        If (EndDateCreditRow IsNot Nothing) Then
+                            ' credit was issued before, was it voided?
+                            If (Not EndDateCreditRow.Voided) Then
+                                ' not voided, needs to be voided to resume billing
+                                voidEndCredit = True
+                                resList.Append("- Previous End Date Credit of " & FormatCurrency(EndDateCreditRow.CreditAmount) & " will be voided")
+                                voidEndCreditReason = "Service continuation."
+                            Else
+                                ' already voided, this will resume billing
+                            End If
                         Else
-                            ' already voided, this will resume billing
+                            ' no credit was issued before, resume billing
+                        End If
+                        ' message that billing will continue now
+                        resList.Append("- Billing will resume. Previous End Date of " & FormatDateTime(RecurringServiceRow.RecurringServiceEndDate, DateFormat.ShortDate) & " removed")
+                    Else
+                        ' end date was null before, no date now
+                    End If
+                End If
+
+                ' checking if anything needs to be display here and do work
+                If (Len(Trim(resList.ToString)) > 0) Then
+                    Dim fooResult As DialogResult = MessageBox.Show("Please confirm the following to save your changes: " & vbCrLf & resList.ToString,
+                                                                    "Confirm to save changes", MessageBoxButtons.OKCancel, MessageBoxIcon.Exclamation)
+                    If (fooResult = Windows.Forms.DialogResult.OK) Then
+                        ' void old end date credit
+                        If (voidEndCredit) Then
+                            RecurringService_EndDateCredit_Void(EndDateCreditRow, voidEndCreditReason)
+                            BalanceChanged = True
+                        End If
+                        ' void overlapping credits
+                        If (voidCreditsOverlap) Then
+                            For i = 0 To _dvEndDateOverlap.Count - 1
+                                Dim row As ds_RecurringService.RecurringService_CreditsRow = CType(_dvEndDateOverlap.Item(i).Row, ds_RecurringService.RecurringService_CreditsRow)
+                                RecurringService_Credit_Void(row, "Credit for Date overlaped with new End Date: " & FormatDateTime(dtp_EndDate.Value, DateFormat.ShortDate))
+                            Next
+                            BalanceChanged = True
+                        End If
+                        ' issue new credit
+                        If (newCredit) Then
+                            ' getting service item listid for credit
+                            Dim srvcRow As ds_Types.ServiceTypesRow = CType(CType(cmb_ServiceTypes.SelectedItem, DataRowView).Row, ds_Types.ServiceTypesRow)
+                            RecurringService_EndDateCredit(RecurringServiceRow, srvcRow.ServiceListID, Crediting, dtp_EndDate.Value.Date, _billThruDate)
+                            BalanceChanged = True
                         End If
                     Else
-                        ' no credit was issued before, resume billing
+                        Return False
                     End If
-                    ' message that billing will continue now
-                    resList.Append("- Billing will resume. Previous End Date of " & FormatDateTime(RecurringServiceRow.RecurringServiceEndDate, DateFormat.ShortDate) & " removed")
-                Else
-                    ' end date was null before, no date now
-                End If
-            End If
-
-            ' checking if anything needs to be display here and do work
-            If (Len(Trim(resList.ToString)) > 0) Then
-                Dim fooResult As DialogResult = MessageBox.Show("Please confirm the following to save your changes: " & vbCrLf & resList.ToString,
-                                                                "Confirm to save changes", MessageBoxButtons.OKCancel, MessageBoxIcon.Exclamation)
-                If (fooResult = Windows.Forms.DialogResult.OK) Then
-                    ' void old end date credit
-                    If (voidEndCredit) Then
-                        RecurringService_EndDateCredit_Void(EndDateCreditRow, voidEndCreditReason)
-                        BalanceChanged = True
-                    End If
-                    ' void overlapping credits
-                    If (voidCreditsOverlap) Then
-                        For i = 0 To _dvEndDateOverlap.Count - 1
-                            Dim row As ds_RecurringService.RecurringService_CreditsRow = CType(_dvEndDateOverlap.Item(i).Row, ds_RecurringService.RecurringService_CreditsRow)
-                            RecurringService_Credit_Void(row, "Credit for Date overlaped with new End Date: " & FormatDateTime(dtp_EndDate.Value, DateFormat.ShortDate))
-                        Next
-                        BalanceChanged = True
-                    End If
-                    ' issue new credit
-                    If (newCredit) Then
-                        ' getting service item listid for credit
-                        Dim srvcRow As ds_Types.ServiceTypesRow = CType(CType(cmb_ServiceTypes.SelectedItem, DataRowView).Row, ds_Types.ServiceTypesRow)
-                        RecurringService_EndDateCredit(RecurringServiceRow, srvcRow.ServiceListID, Crediting, dtp_EndDate.Value.Date, _billThruDate)
-                        BalanceChanged = True
-                    End If
-                Else
-                    Return False
                 End If
             End If
 
@@ -596,7 +627,7 @@ Namespace RecurringService
             ' return var
             Dim validated As Boolean = True
 
-            ' address validation
+      ' address validation
             For Each control As Control In grp_SrvcAddr.Controls
                 Dim skip As Boolean = False
                 If (TypeOf control Is TextBox) Then
@@ -619,6 +650,8 @@ Namespace RecurringService
                 End If
             Next
 
+         
+
             ' rate validation
             If (tb_Rate.Text < 1) Then
                 MessageBox.Show("Rate must be greater than 0.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
@@ -639,6 +672,15 @@ Namespace RecurringService
 
             ' pickup day
             Dim c As Integer = grp_PickupDay.Controls.OfType(Of CheckBox)().Count(Function(control) (control.Checked = True))
+            ' checking pickup day the same as before
+            If (Approved) Then
+                If (c <> _pickupDayCount) Then
+                    MessageBox.Show("This Service had " & c & " pickup day(s) before modification, but now has " & _pickupDayCount &
+                                    " day(s) marked. Count must remain the same, or a new Recurring Service is required.", "Pickup Day Count Error",
+                                    MessageBoxButtons.OK, MessageBoxIcon.Error)
+                    validated = False
+                End If
+            End If
 
             If (c = 0) Then
                 validated = False
@@ -928,6 +970,6 @@ Namespace RecurringService
             End If
         End Sub
 
-       
+
     End Class
 End Namespace
