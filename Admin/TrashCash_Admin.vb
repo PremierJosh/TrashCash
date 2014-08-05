@@ -106,6 +106,7 @@ Namespace Admin
             If (open) Then
                 AdminPay.BringToFront()
                 AdminPay.Show()
+                AdminPay.CustomerToolstrip1.QuickSearch.TextBox.Select()
             End If
 
         End Sub

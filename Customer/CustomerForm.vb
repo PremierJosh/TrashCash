@@ -149,11 +149,22 @@
         Private Sub ApprovalsChanging() Handles UC_RecurringService.ApprovalCountChange
             RaiseEvent ApprovalsChanged()
         End Sub
+
+        ' customer search requesting new customer select
+        Private Sub CustomerSwitchReq(ByVal customerNumber As Integer) Handles SearchForm.CustomerSwitch
+            If (CurrentCustomer <> customerNumber) Then
+                CustomerToolstrip1.SelectCustomer(customerNumber, True)
+                Show()
+                BringToFront()
+                CustomerToolstrip1.QuickSearch.TextBox.Select()
+            End If
+        End Sub
         
         ' forms
         Friend WithEvents CreditForm As CustomerCredit
         Friend WithEvents InvForm As Invoicing.CustomInvoicingForm
         Friend WithEvents PayForm As Payments.PaymentsForm
+        Friend WithEvents SearchForm As CustomerSearch
 
         Private Sub btn_NewSrvc_Click(sender As System.Object, e As System.EventArgs) Handles btn_NewSrvc.Click
             If (Not UC_CustomerInfoBoxes.CustomerDeactive) Then
@@ -164,6 +175,15 @@
             Else
                 MessageBox.Show("Current Customer is Deactive", "Deactive Customer", MessageBoxButtons.OK, MessageBoxIcon.Error)
             End If
+        End Sub
+
+        Private Sub btn_Search_Click(sender As System.Object, e As System.EventArgs) Handles btn_Search.Click
+            If (SearchForm Is Nothing) Then
+                SearchForm = New CustomerSearch
+                SearchForm.MdiParent = HomeForm
+            End If
+            SearchForm.Show()
+            SearchForm.BringToFront()
         End Sub
     End Class
 End Namespace

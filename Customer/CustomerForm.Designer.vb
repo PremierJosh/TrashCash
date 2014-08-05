@@ -47,6 +47,7 @@ Namespace Customer
             Me.btn_Credit = New System.Windows.Forms.ToolStripButton()
             Me.btn_NewSrvc = New System.Windows.Forms.ToolStripButton()
             Me.UC_CustomerInfoBoxes = New TrashCash.Customer.UC_CustomerInfoBoxes()
+            Me.btn_Search = New System.Windows.Forms.ToolStripButton()
             Me.tc_Master.SuspendLayout()
             Me.tc_p_Notes.SuspendLayout()
             Me.tc_p_RecSrvcs.SuspendLayout()
@@ -122,6 +123,7 @@ Namespace Customer
             'UC_Quickbooks
             '
             Me.UC_Quickbooks.CustomerListID = Nothing
+            Me.UC_Quickbooks.CustomerName = Nothing
             Me.UC_Quickbooks.Dock = System.Windows.Forms.DockStyle.Fill
             Me.UC_Quickbooks.Location = New System.Drawing.Point(3, 3)
             Me.UC_Quickbooks.Name = "UC_Quickbooks"
@@ -161,7 +163,7 @@ Namespace Customer
             'ts_Top
             '
             Me.ts_Top.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden
-            Me.ts_Top.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.btn_Inv, Me.btn_Payments, Me.btn_NewCust, Me.btn_Credit, Me.btn_NewSrvc})
+            Me.ts_Top.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.btn_Search, Me.btn_Inv, Me.btn_Payments, Me.btn_NewCust, Me.btn_Credit, Me.btn_NewSrvc})
             Me.ts_Top.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.HorizontalStackWithOverflow
             Me.ts_Top.Location = New System.Drawing.Point(0, 0)
             Me.ts_Top.Name = "ts_Top"
@@ -224,6 +226,14 @@ Namespace Customer
             Me.UC_CustomerInfoBoxes.TabIndex = 9
             Me.UC_CustomerInfoBoxes.TabStop = False
             '
+            'btn_Search
+            '
+            Me.btn_Search.Image = Global.TrashCash.My.Resources.Resources.search_icon
+            Me.btn_Search.ImageTransparentColor = System.Drawing.Color.Magenta
+            Me.btn_Search.Name = "btn_Search"
+            Me.btn_Search.Size = New System.Drawing.Size(62, 22)
+            Me.btn_Search.Text = "Search"
+            '
             'CustomerForm
             '
             Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -269,5 +279,6 @@ Namespace Customer
         Friend WithEvents CustomerToolstrip1 As TrashCash.Classes.CustomerToolstrip.CustomerToolstrip
         Friend WithEvents UC_CustomerNotes As TrashCash.Customer.UC_CustomerNotes
         Friend WithEvents btn_NewSrvc As System.Windows.Forms.ToolStripButton
+        Friend WithEvents btn_Search As System.Windows.Forms.ToolStripButton
     End Class
 End Namespace
