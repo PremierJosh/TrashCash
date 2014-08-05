@@ -794,6 +794,12 @@ Namespace RecurringService
                                 ' no end credit row
                                 Crediting = creditAmount
                             End If
+                        ElseIf (EndDateCreditRow IsNot Nothing) Then
+                            ' not crediting now, but there was a credit before, was it voided
+                            If (Not EndDateCreditRow.Voided) Then
+                                Crediting = 0
+                                lbl_CreditMsg.Text = "Keeping this End Service Date will void the previous credit of " & FormatCurrency(EndDateCreditRow.CreditAmount) & "."
+                            End If
                         End If
                     Else
                         Crediting = 0
